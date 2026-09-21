@@ -1,0 +1,4 @@
+export type Mission = { id: string; title: string; concept: string; summary: string; explanation: string; objective: string; starter: string; solution: string; hints: string[]; xp: number; minutes: number; tests: string[]; reference: string };
+export type RunResult = { passed: boolean; tests: {label:string; passed:boolean}[]; actions: {type:string; value:unknown}[]; logs:string[]; error?:string; duration:number };
+export type Progress = { version:1; completed:string[]; drafts:Record<string,string>; attempts:Record<string,number>; hints:Record<string,number>; history:Record<string,{code:string; date:string}[]>; review:Record<string,string>; activeDays:string[]; name:string };
+export type EnvironmentState = { latitude:number; longitude:number; city:string; wind:number; gust:number; direction:number; rain:number; clouds:number; temperature:number; humidity:number; code:number; source:'default'|'live'|'cached'; updatedAt:number };
