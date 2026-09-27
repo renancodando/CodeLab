@@ -1,0 +1,17 @@
+import {describe,it,expect,vi,beforeEach} from 'vitest';
+import {normalizeProgress,replaceProgress,progress,saveProgress} from '../../src/state';
+import {courses,lessons} from '../../src/content/curriculum';
+import {evaluate} from '../../src/execution/evaluate';
+beforeEach(()=>{vi.stubGlobal('window',new EventTarget());vi.stubGlobal('localStorage',{getItem:vi.fn(),setItem:vi.fn()});});
+describe('dados locais',()=>{
+ it('migra jornada antiga sem contas e preserva conquistas',()=>{const p=normalizeProgress({version:1,name:'Lia',completed:['primeira-luz']});expect(p.lessons).toEqual([]);expect(p.projects).toEqual([]);expect(p.name).toBe('Lia');expect(p.completed).toEqual(['primeira-luz']);});
+ it('rejeita chaves perigosas e limita dados importados',()=>{const p=normalizeProgress(JSON.parse('{"drafts":{"__proto__":"x","constructor":"y","energia":"ok"},"hints":{"energia":999},"history":{"constructor":[]}}'));expect(Object.keys(p.drafts)).toEqual(['energia']);expect(p.hints.energia).toBe(5);expect(Object.keys(p.history)).toEqual([]);expect(({} as Record<string,unknown>).polluted).toBeUndefined();});
+ it('limita projetos, código e histórico',()=>{const p=normalizeProgress({projects:Array.from({length:30},(_,i)=>({id:'p'+i,title:'Nome',code:'x'.repeat(50000),language:'html'})),history:{energia:Array.from({length:30},()=>({code:'a',date:'hoje'}))}});expect(p.projects).toHaveLength(12);expect(p.projects[0].code).toHaveLength(30000);expect(p.history.energia).toHaveLength(5);});
+ it('salva e restaura aulas e projetos somente no navegador',()=>{replaceProgress({name:'Lia',lessons:['programar'],projects:[{id:'p1',title:'Teste',language:'html',code:'<h1>Oi</h1>'}]});expect(progress.lessons).toEqual(['programar']);expect(localStorage.setItem).toHaveBeenCalledWith('codelab.progress.v1',expect.stringContaining('p1'));});
+ it('comunica falha de cota sem apagar dados',()=>{const notify=vi.fn();window.addEventListener('storageerror',notify);vi.mocked(localStorage.setItem).mockImplementation(()=>{throw new Error('quota');});saveProgress();expect(notify).toHaveBeenCalledOnce();expect(progress.name).toBe('Lia');});
+});
+describe('currículo',()=>{
+ it('possui 12 trilhas completas, 60 aulas únicas e todos os vínculos válidos',()=>{expect(courses).toHaveLength(12);expect(lessons).toHaveLength(60);expect(new Set(lessons.map(l=>l.id)).size).toBe(60);for(const c of courses){expect(c.lessonIds).toHaveLength(5);for(const id of c.lessonIds)expect(lessons.find(l=>l.id===id)?.track).toBe(c.id);}});
+ it('cada aula tem explicação, exercício, solução e avaliação utilizável',()=>{for(const l of lessons){expect(l.body.length,l.id).toBeGreaterThan(200);expect(l.exercise.length,l.id).toBeGreaterThan(30);expect(l.solution.length,l.id).toBeGreaterThan(30);expect(l.error.length,l.id).toBeGreaterThan(30);expect(l.options,l.id).toHaveLength(3);expect(new Set(l.options).size,l.id).toBe(3);expect(l.options[l.correct],l.id).toBeTruthy();expect(l.source).toMatch(/^https:\/\//);}});
+ for(const l of lessons.filter(l=>l.language==='javascript'))it('exemplo JavaScript: '+l.id,async()=>{const result=await evaluate(l.code,'laboratorio');expect(result.error).toBeUndefined();expect(result.passed).toBe(true);});
+});

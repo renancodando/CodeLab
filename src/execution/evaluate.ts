@@ -1,4 +1,8 @@
-import { getQuickJS } from 'quickjs-emscripten';
+import {newQuickJSWASMModuleFromVariant,newVariant,type QuickJSWASMModule} from 'quickjs-emscripten-core';
+import variant from '@jitl/quickjs-wasmfile-release-sync';
+import wasmUrl from '@jitl/quickjs-wasmfile-release-sync/wasm?url';
+let modulePromise:Promise<QuickJSWASMModule>|undefined;
+const getQuickJS=()=>modulePromise??=newQuickJSWASMModuleFromVariant(typeof self==='undefined'?variant:newVariant(variant,{wasmLocation:new URL(wasmUrl,self.location.origin).href}));
 import type { RunResult } from '../types';
 export async function evaluate(code:string, missionId:string): Promise<RunResult> {
  const started = performance.now();
@@ -6,7 +10,7 @@ export async function evaluate(code:string, missionId:string): Promise<RunResult
  if (code.length > 30000) return {...response,error:'Seu código ultrapassa 30.000 caracteres. Divida o problema em partes menores.'};
  const QuickJS = await getQuickJS();
  const runtime = QuickJS.newRuntime();
- runtime.setMemoryLimit(16 * 1024 * 1024);
+ runtime.setMemoryLimit(4 * 1024 * 1024);
  runtime.setMaxStackSize(256 * 1024);
  const deadline = performance.now() + 1200;
  runtime.setInterruptHandler(() => performance.now() > deadline);
@@ -20,11 +24,17 @@ export async function evaluate(code:string, missionId:string): Promise<RunResult
  const consoleObject = vm.newObject();
  const log = vm.newFunction('log',(...args) => { if (recording && response.logs.length < 50) response.logs.push(args.slice(0,10).map(arg => { const value = vm.typeof(arg)==='undefined'?'undefined':boundedValue(arg); return typeof value === 'string' ? value : JSON.stringify(value); }).join(' ').slice(0,1000)); });
  vm.setProp(consoleObject,'log',log); vm.setProp(vm.global,'console',consoleObject); log.dispose(); consoleObject.dispose();
- const run = (source:string):unknown => { const result = vm.evalCode(source,'missao.js'); if (result.error) { const error = vm.dump(result.error); result.error.dispose(); throw new Error(`${error.name || 'Error'}: ${error.message || error}`); } const value = vm.dump(result.value); result.value.dispose(); return value; };
+ const run = (source:string):unknown => { const result = vm.evalCode(source,'missao.js'); if (result.error) { const error = vm.dump(result.error); result.error.dispose(); throw new Error(`${error.name || 'Error'}: ${error.message || error}`); } const value = boundedValue(result.value); result.value.dispose(); return value; };
  const check = (label:string,passed:boolean) => response.tests.push({label,passed});
  const callActions = (source:string,type:string) => { actions = []; run(source); return actions.filter(x => x.type === type).length; };
  try {
-  run(code); response.actions = [...actions]; recording = false;
+  run(code);
+  for(let jobs=0;runtime.hasPendingJob();jobs++){
+   if(jobs>=1000||performance.now()>deadline)throw new Error('interrupted');
+   const pending=runtime.executePendingJobs(1);
+   if(pending.error){const error=vm.dump(pending.error);pending.error.dispose();throw new Error(error.message||'Falha em Promise');}
+  }
+  response.actions = [...actions]; recording = false;
   switch (missionId) {
    case 'primeira-luz': check('A lanterna foi acesa.',actions.some(x => x.type === 'light')); check('A ação foi chamada uma única vez.',actions.filter(x=>x.type==='light').length===1); break;
    case 'seu-nome': { const messages = actions.filter(x=>x.type==='message'); check('Uma mensagem foi apresentada.',messages.length>0); check('A mensagem tem pelo menos duas letras.',messages.some(x=>typeof x.value==='string' && x.value.trim().length>=2)); break; }
