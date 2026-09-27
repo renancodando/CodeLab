@@ -4,6 +4,7 @@ test('60 aulas acessíveis, resposta correta persiste e resposta errada não con
  await page.goto('/#/aprender');await expect(page.locator('.trail-grid .trail')).toHaveCount(12);
  await page.getByRole('link',{name:/Começando.*Do primeiro/}).click();await expect(page.locator('.mission-list .mission-row')).toHaveCount(5);
  await page.getByRole('link',{name:/Programas, código e instruções/}).click();
+ await expect(page.locator('.lesson-chapter')).toHaveCount(12);await expect(page.locator('.lesson-map a')).toHaveCount(12);await expect(page.getByText('Onde esta aula entra na jornada')).toBeVisible();
  await page.getByLabel('Um algoritmo só existe dentro de um computador.').check();await page.getByRole('button',{name:'Conferir resposta'}).click();await expect(page.locator('#lesson-feedback')).toContainText('Ainda não');
  await page.getByLabel('O algoritmo descreve passos; o código os expressa em uma linguagem.').check();await page.getByRole('button',{name:'Conferir resposta'}).click();await expect(page.locator('#lesson-feedback')).toContainText('Aula concluída');
  await page.reload();await expect(page.locator('#lesson-feedback')).toContainText('já concluída');
@@ -45,3 +46,5 @@ test('renderização 3D sem erros e progresso sem chamadas de conta',async({page
 test('build de produção executa a missão com WebAssembly e CSP do servidor',async({page})=>{
  await page.goto('http://127.0.0.1:5080/#/missao/primeira-luz');await expect(page.getByRole('textbox',{name:'É aqui que você escreve seu código'})).toBeVisible({timeout:25000});await writeCode(page,'acender();');await page.locator('#run').click();await expect(page.locator('#result')).toContainText('Você fez o mundo responder.',{timeout:15000});
 });
+
+test('a comunidade foi removida da navegação',async({page})=>{await page.goto('/');await expect(page.getByRole('link',{name:'Comunidade'})).toHaveCount(0);await expect(page.locator('a[href="#/comunidade"]')).toHaveCount(0);});
