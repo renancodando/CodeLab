@@ -22,7 +22,7 @@ O servidor atende em `http://127.0.0.1:5080/` e também serve o conteúdo de `di
 
 ## Aprender e criar
 
-Cada uma das 12 trilhas tem cinco aulas com explicação, aprofundamento, orientação de raciocínio, leitura guiada do exemplo, exercício, solução possível, erro comum, pergunta de compreensão e referência técnica:
+Cada uma das 12 trilhas tem cinco aulas transformadas em estudos profundos com **12 capítulos internos por aula**: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
 
 | Trilha | Conteúdo |
 | --- | --- |
@@ -39,7 +39,7 @@ Cada uma das 12 trilhas tem cinco aulas com explicação, aprofundamento, orient
 | Full stack | Arquitetura, integração, testes de jornada, publicação e desempenho |
 | Projetos reais | Diário, tarefas, painel de clima, catálogo e entrega documentada |
 
-As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As 60 aulas agora priorizam entendimento antes de memorização: cada aula explica como pensar sobre o problema, como acompanhar o exemplo em camadas e como prever o resultado antes de executar. As perguntas registram compreensão; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
+As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As **60 aulas possuem roteiro próprio**, sem reutilizar o mesmo texto de aprofundamento entre temas. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram compreensão; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
 
 O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **66 páginas educacionais estáticas**, incluindo as 60 aulas, legíveis sem JavaScript.
 
