@@ -22,7 +22,7 @@ O servidor atende em `http://127.0.0.1:5080/` e também serve o conteúdo de `di
 
 ## Aprender e criar
 
-Cada uma das 12 trilhas tem cinco aulas com explicação, exemplo, exercício, solução, erro comum, pergunta de compreensão e referência técnica:
+Cada uma das 12 trilhas tem cinco aulas com explicação, aprofundamento, orientação de raciocínio, leitura guiada do exemplo, exercício, solução possível, erro comum, pergunta de compreensão e referência técnica:
 
 | Trilha | Conteúdo |
 | --- | --- |
@@ -39,7 +39,7 @@ Cada uma das 12 trilhas tem cinco aulas com explicação, exemplo, exercício, s
 | Full stack | Arquitetura, integração, testes de jornada, publicação e desempenho |
 | Projetos reais | Diário, tarefas, painel de clima, catálogo e entrega documentada |
 
-As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As 60 aulas registram a compreensão por perguntas; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
+As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As 60 aulas agora priorizam entendimento antes de memorização: cada aula explica como pensar sobre o problema, como acompanhar o exemplo em camadas e como prever o resultado antes de executar. As perguntas registram compreensão; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
 
 O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **66 páginas educacionais estáticas**, incluindo as 60 aulas, legíveis sem JavaScript.
 
@@ -49,10 +49,11 @@ O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em int
 - Uma consulta compartilhada por local, cancelamento ao trocar de seleção, timeout de dez segundos e cache limitado a quatro locais. Sem gravar coordenadas no perfil; localização aproximada, solicitada apenas ao acionar a opção.
 - Dados atuais, previsão horária e nascer/pôr do sol. Códigos WMO distinguem garoa, chuva, neve, neblina e trovoadas. A previsão prepara nuvens e não é apresentada como chuva atual.
 - Falha de rede reaproveita dados da mesma cidade por no máximo duas horas, com identificação de cache. Depois disso o ambiente fica neutro e explicitamente ilustrativo.
-- Transições graduais, umidade acumulada, secagem conforme temperatura/sol/vento/umidade, materiais mais escuros e menos ásperos, poças e ondulações aproximadas por shaders.
-- Chuva inclinada, partículas reaproveitadas, respingos, neve/granizo, folhas, vento coerente na vegetação, água e nuvens. Aves diminuem com chuva, vento e tempestade; cachoeiras respondem ao histórico de chuva.
+- Transições mais lentas e graduais, umidade acumulada, secagem conforme temperatura/sol/vento/umidade, materiais mais escuros e menos ásperos, poças e ondulações aproximadas por shaders.
+- O mundo prioriza microanimações discretas: vegetação com dois ritmos de vento de baixa amplitude, nuvens com deslocamento lento, água com ondas menores, estrelas com oscilação quase imperceptível, janelas com variação sutil de luz, aves com voo menos mecânico e parallax reduzido.
+- Chuva inclinada, partículas reaproveitadas, respingos menores, neve/granizo, folhas, vento coerente na vegetação, água e nuvens. Aves diminuem progressivamente com chuva, vento e tempestade; cachoeiras respondem ao histórico de chuva.
 - Sol e Lua calculados com SunCalc, fase lunar, estrelas e iluminação noturna. Clarões suaves só com códigos de trovoada, desativados por padrão e suprimidos com movimento reduzido. Trovão tem atraso estimado pela distância simulada.
-- Áudio procedural de vento, chuva, cobertura, água, aves, noite e trovões. Só começa após interação; pausa quando a aba fica oculta.
+- Áudio procedural de vento, chuva, cobertura, água, aves, noite e trovões, agora com volumes e transições mais discretos. Só começa após interação; pausa quando a aba fica oculta.
 - Mundo continua em todas as páginas, com menor frequência fora da home. Aba oculta pausa desenho; qualidade se adapta aos tempos medidos. Movimento reduzido acompanha o sistema.
 
 O interior é uma imagem com janelas transparentes; o exterior é 3D estilizado. Reflexos e efeitos de água são aproximações visuais, não simulações físicas ou um ambiente fotorealista integralmente 3D. O intervalo de consulta de cinco minutos não altera a frequência de atualização dos dados fornecidos pela Open-Meteo.
@@ -88,7 +89,7 @@ Na medição automatizada de 20 trocas de tela no Edge, após coleta de lixo, o 
 1. **Python, C# e C++ na bancada:** exigem uma instância Judge0 configurada. A integração .NET está preparada, mas não há instância/credenciais incluídas. Exemplos C# também podem ser executados num projeto local com SDK .NET 10. ASP.NET completo precisa de um projeto local, não de um único arquivo no executor.
 2. **SQL:** aulas e exemplos estão disponíveis e testados; a bancada permite escrever/exportar `.sql`, mas não inclui um motor SQL no navegador. Execute em um banco SQLite local descartável.
 3. **Preview HTML:** sandbox e CSP isolam o documento pai, armazenamento e rede. Scripts de DOM não têm o limite de CPU do QuickJS. Use código conhecido e o botão Parar; um script infinito pode ainda exigir fechar a aba. Módulos, rede e localStorage devem ser testados no projeto exportado servido por HTTP.
-4. **Projetos:** um arquivo por bancada, com exportação local. Não há publicação de aplicações, integração com repositórios pessoais ou fórum próprio; a comunidade aponta ao GitHub do projeto.
+4. **Projetos:** um arquivo por bancada, com exportação local. Não há publicação de aplicações nem integração direta com repositórios pessoais. A área de comunidade foi removida para manter o foco em estudo, prática e construção.
 5. **Dados locais:** limpar dados do navegador apaga a jornada. Não há sincronização remota. Exportar regularmente é o mecanismo de backup. A versão antiga de progresso é migrada; bancos de contas antigos, se existentes localmente, não são utilizados nem apagados automaticamente.
 6. **Publicação:** enviar ao GitHub não configura hospedagem, domínio ou HTTPS. Defina `CODELAB_PUBLIC_URL` antes do build para canonical/sitemap/indexação. Sem domínio real, a indexação fica desativada. O build conserva chunks grandes de Monaco e Three.js, carregados sob demanda.
 7. **Validação:** testes automatizados não substituem revisão pedagógica humana, leitor de tela real ou medição em todos os celulares/GPUs. Progresso local não deve fundamentar certificação ou ranking competitivo.
