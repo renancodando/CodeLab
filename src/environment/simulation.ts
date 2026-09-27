@@ -11,19 +11,19 @@ export function wetnessAfter(wetness:number,dt:number,rain:number,temp:number,su
 export function stepEnvironment(frame:AmbientFrame,target:EnvironmentState,dt:number,now=Date.now()):void {
  dt=clamp(dt,0,5);const kind=classifyWeather(target.code);const precipitation=rainIntensity(target.rain,target.code);
  frame.preparation=forecastPreparation(target,now);
- frame.clouds=ease(frame.clouds,clamp(target.clouds/100+frame.preparation),dt,12);
+ frame.clouds=ease(frame.clouds,clamp(target.clouds/100+frame.preparation),dt,28);
  const ready=precipitation===0||target.clouds<35||frame.clouds>=Math.min(.5,target.clouds/100)*.8;
- frame.rain=ease(frame.rain,ready?precipitation:0,dt,precipitation>frame.rain?20:12);
- frame.hail=ease(frame.hail,kind==='hail'?precipitation:0,dt,20);frame.snow=ease(frame.snow,target.snow??0,dt,20);frame.wind=ease(frame.wind,target.wind,dt,12);frame.gust=ease(frame.gust,target.gust,dt,10);
+ frame.rain=ease(frame.rain,ready?precipitation:0,dt,precipitation>frame.rain?32:20);
+ frame.hail=ease(frame.hail,kind==='hail'?precipitation:0,dt,24);frame.snow=ease(frame.snow,target.snow??0,dt,30);frame.wind=ease(frame.wind,target.wind,dt,26);frame.gust=ease(frame.gust,target.gust,dt,18);
  const angle=((target.direction-frame.direction+540)%360)-180;frame.direction=windDirection(frame.direction+angle*(1-Math.exp(-dt/10)));
- frame.humidity=ease(frame.humidity,target.humidity,dt,25);frame.temperature=ease(frame.temperature,target.temperature,dt,30);
- frame.visibility=ease(frame.visibility,target.visibility??(kind==='fog'?1000:30000),dt,25);
- frame.storm=ease(frame.storm,kind==='storm'||kind==='hail'?1:0,dt,18);
+ frame.humidity=ease(frame.humidity,target.humidity,dt,55);frame.temperature=ease(frame.temperature,target.temperature,dt,75);
+ frame.visibility=ease(frame.visibility,target.visibility??(kind==='fog'?1000:30000),dt,40);
+ frame.storm=ease(frame.storm,kind==='storm'||kind==='hail'?1:0,dt,26);
  const fog=clamp(3/Math.max(250,frame.visibility),.002,.014)+(kind==='fog'?.006:0)+frame.rain*.0008;
- frame.fog=ease(frame.fog,fog,dt,20);
+ frame.fog=ease(frame.fog,fog,dt,36);
  frame.wetness=wetnessAfter(frame.wetness,dt,frame.rain,frame.temperature,frame.daylight,frame.wind,frame.humidity);
  frame.runoff=ease(frame.runoff,frame.wetness*frame.rain,dt,frame.rain>.2?120:480);
- frame.birdActivity=clamp(frame.daylight*(1-frame.storm)*(1-frame.rain*1.7)*(1-clamp(frame.wind/120)));
+ const atividadeAlvo=clamp(frame.daylight*(1-frame.storm)*(1-frame.rain*1.7)*(1-clamp(frame.wind/120)));frame.birdActivity=ease(frame.birdActivity,atividadeAlvo,dt,35);
 }
 export type ThunderEvent={delay:number;distance:number;strength:number};
 export class StormClock {
