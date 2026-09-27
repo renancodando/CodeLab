@@ -1,0 +1,42 @@
+name: Validação do CODELAB
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    name: Testes e compilação
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Preparar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Validar as aulas e a lógica
+        run: npm test
+
+      - name: Compilar a aplicação
+        run: npm run build
+
+      - name: Compilar a API
+        run: dotnet build server/CodeLab.Api.csproj --configuration Release
