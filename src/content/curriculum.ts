@@ -1,74 +1,11 @@
 import {criarCapitulosAula} from './explicacoes';
 import type {CapituloAula} from './explicacoes';
-export type Lesson={id:string;track:string;title:string;body:string;aprofundamento:string;leitura:string;pratica:string;capitulos:CapituloAula[];code:string;exercise:string;solution:string;error:string;question:string;options:string[];correct:number;language:string;source:string};
+export type Lesson={id:string;track:string;title:string;body:string;capitulos:CapituloAula[];code:string;exercise:string;solution:string;error:string;question:string;options:string[];correct:number;language:string;source:string};
 export type Course={id:string;title:string;description:string;icon:string;lessonIds:string[]};
 export const courses:Course[]=[];
 export const lessons:Lesson[]=[];
 type Entry=[id:string,title:string,body:string,code:string,exercise:string,solution:string,error:string,question:string,answer:string,wrong:string,other:string];
-type GuiaDaTrilha={aprofundamento:string;leitura:string;pratica:string};
-const guiasDaTrilha:Record<string,GuiaDaTrilha>={
- comecando:{
-  aprofundamento:'Pense primeiro no problema fora do computador. Separe o que entra, o que precisa acontecer e o que deve sair. Quando você consegue explicar esses três pontos com palavras simples, escrever o código deixa de ser adivinhação.',
-  leitura:'Leia o exemplo de cima para baixo e acompanhe o valor de cada nome como se estivesse executando à mão. Não tente decorar a sintaxe inteira de uma vez; procure a intenção de cada linha e depois observe como as linhas se conectam.',
-  pratica:'Faça uma previsão antes de executar. Depois compare o que você esperava com o que realmente aconteceu. Se houver diferença, investigue uma única hipótese por vez.'
- },
- logica:{
-  aprofundamento:'Lógica de programação é acompanhar estados e decisões. Pergunte quais valores existem agora, quais condições podem mudar o caminho e qual resultado cada caminho produz. Esse hábito vale mais do que memorizar operadores.',
-  leitura:'Marque mentalmente onde um valor nasce, onde ele muda e onde é usado numa decisão ou repetição. Em condições, teste também exatamente os limites, porque é neles que erros de maior, menor e igualdade aparecem.',
-  pratica:'Teste pelo menos um caso comum, um caso de fronteira e um caso inesperado. Explique o resultado com suas próprias palavras antes de olhar a solução.'
- },
- javascript:{
-  aprofundamento:'JavaScript mistura valores, funções, objetos e tarefas assíncronas no mesmo programa. Para não se perder, acompanhe o tipo de cada valor e diferencie claramente o que retorna um resultado do que apenas causa um efeito.',
-  leitura:'Observe primeiro os dados, depois a transformação aplicada e por último o resultado devolvido ou exibido. Em Promises e fetch, acompanhe também quando cada etapa acontece, não apenas o que ela faz.',
-  pratica:'Mude uma entrada pequena, repita a execução e tente prever o efeito. Quando algo falhar, reduza o exemplo até sobrar a menor versão que ainda reproduz o problema.'
- },
- html:{
-  aprofundamento:'HTML descreve significado e estrutura antes de aparência. Pergunte qual é o papel de cada conteúdo para uma pessoa e para tecnologias assistivas. Escolher o elemento certo costuma reduzir CSS, JavaScript e ARIA desnecessários.',
-  leitura:'Leia a árvore do documento como uma hierarquia: página, regiões, títulos, controles e conteúdo. Confira se a ordem continua fazendo sentido mesmo sem estilos.',
-  pratica:'Teste a estrutura com teclado e imagine a página sem CSS. Se ainda der para entender onde você está e o que cada controle faz, a base está ficando sólida.'
- },
- css:{
-  aprofundamento:'CSS é um sistema de restrições, não uma coleção de posições fixas. Pense em espaço disponível, tamanho mínimo, tamanho máximo, fluxo e relação entre elementos. Isso produz layouts que resistem melhor a conteúdos e telas diferentes.',
-  leitura:'Antes de alterar uma propriedade, identifique quem define o tamanho: o próprio elemento, o contêiner, o conteúdo ou a viewport. Depois veja como cascata, especificidade e herança influenciam o valor final.',
-  pratica:'Redimensione gradualmente a tela e procure o ponto exato em que o layout começa a sofrer. Corrija a restrição que causa o problema em vez de esconder ou cortar conteúdo.'
- },
- dom:{
-  aprofundamento:'O DOM é a representação viva da página. JavaScript deve reagir a eventos, alterar o estado necessário e refletir esse estado na interface. Separar estado, evento e renderização deixa o comportamento previsível.',
-  leitura:'Localize o elemento selecionado, o evento observado, os dados que mudam e a atualização visual. Verifique também quando listeners, timers e observers precisam ser removidos.',
-  pratica:'Repita a mesma ação várias vezes e teste teclado, clique e estados vazios. Uma interface correta na primeira interação ainda pode acumular listeners ou ficar inconsistente depois.'
- },
- apis:{
-  aprofundamento:'Uma API é um contrato entre sistemas que podem falhar independentemente. Pense em entrada, formato da resposta, códigos de status, tempo limite, cancelamento e o que a interface fará quando os dados não chegarem.',
-  leitura:'Separe transporte de regra de negócio. Primeiro confirme se a requisição terminou corretamente; depois valide se os dados recebidos realmente têm a estrutura que o programa espera.',
-  pratica:'Simule sucesso, resposta vazia, erro HTTP, falha de rede e cancelamento. A experiência precisa continuar compreensível em todos esses estados.'
- },
- csharp:{
-  aprofundamento:'C# favorece contratos explícitos por meio de tipos, métodos, classes e interfaces. Use isso para tornar estados inválidos mais difíceis de representar e para deixar responsabilidades claras.',
-  leitura:'Acompanhe os tipos de entrada e saída de cada método. Em classes, diferencie dados que pertencem ao objeto de operações que poderiam existir como funções independentes.',
-  pratica:'Compile depois de mudanças pequenas e leia a primeira mensagem de erro com atenção. Teste também valores nulos, coleções vazias e limites do domínio quando forem possíveis.'
- },
- aspnet:{
-  aprofundamento:'ASP.NET Core organiza uma aplicação em uma sequência de responsabilidades: receber HTTP, validar, executar uma regra e produzir uma resposta. Quanto menos uma camada souber sobre detalhes das outras, mais fácil fica testar e evoluir.',
-  leitura:'Siga uma requisição desde a rota até a resposta. Identifique onde entram validação, injeção de dependência, serviço, persistência e tratamento de erro.',
-  pratica:'Teste a rota válida e pelo menos uma entrada inválida. Confirme não apenas o status HTTP, mas também o corpo retornado e se alguma alteração de estado aconteceu ou não.'
- },
- banco:{
-  aprofundamento:'Banco de dados trabalha com conjuntos, relações e garantias. Antes da consulta, defina o que cada linha representa, quais relações existem e quais regras precisam continuar verdadeiras mesmo com acessos simultâneos.',
-  leitura:'Leia uma consulta por partes: fonte dos dados, junções, filtros, agrupamentos, projeção e ordenação. Em comandos de escrita, pense também em transação e restrições.',
-  pratica:'Teste com tabela vazia, uma linha, dados duplicados permitidos e casos que devem violar uma restrição. Use parâmetros para valores externos em vez de montar SQL por concatenação.'
- },
- fullstack:{
-  aprofundamento:'Full stack é principalmente coordenação de fronteiras. Navegador, API e banco possuem responsabilidades diferentes e podem falhar em momentos diferentes. Um bom desenho deixa claro quem valida, quem decide e quem persiste.',
-  leitura:'Acompanhe uma ação completa da interface até o armazenamento e de volta. Procure conversões de formato, validações repetidas com propósitos diferentes e pontos onde um erro precisa virar uma mensagem útil.',
-  pratica:'Teste a jornada completa e depois quebre uma dependência de propósito, como rede ou API. O sistema deve falhar de forma compreensível e sem corromper dados.'
- },
- projetos:{
-  aprofundamento:'Projetos reais juntam vários conceitos e obrigam você a decidir prioridades. Comece por uma versão pequena que funcione de ponta a ponta e só depois aumente o escopo.',
-  leitura:'Transforme o projeto em estados e ações observáveis. Liste o que a pessoa pode fazer, quais dados precisam existir e qual resultado confirma que cada etapa funcionou.',
-  pratica:'Construa em incrementos curtos. A cada incremento, use a aplicação como uma pessoa real, anote o que incomoda e corrija antes de adicionar outra camada de complexidade.'
- }
-};
-function course(id:string,title:string,description:string,icon:string,language:string,source:string,entries:Entry[]){courses.push({id,title,description,icon,lessonIds:entries.map(e=>e[0])});const guia=guiasDaTrilha[id];for(const [index,e] of entries.entries()){const correct=lessons.length%3,options=[e[9],e[10]];options.splice(correct,0,e[8]);const base={id:e[0],track:id,title:e[1],body:e[2],code:e[3],exercise:e[4],solution:e[5],error:e[6],question:e[7],language,anterior:entries[index-1]?.[1],proxima:entries[index+1]?.[1]};lessons.push({...base,aprofundamento:`${guia.aprofundamento} Nesta aula, use o tema “${e[1]}” como um problema para compreender, não como uma receita para copiar.`,leitura:guia.leitura,pratica:guia.pratica,capitulos:criarCapitulosAula(base),options,correct,source});}}
+function course(id:string,title:string,description:string,icon:string,language:string,source:string,entries:Entry[]){courses.push({id,title,description,icon,lessonIds:entries.map(e=>e[0])});for(const [index,e] of entries.entries()){const correct=lessons.length%3,options=[e[9],e[10]];options.splice(correct,0,e[8]);const base={id:e[0],track:id,title:e[1],body:e[2],code:e[3],exercise:e[4],solution:e[5],error:e[6],question:e[7],language,anterior:entries[index-1]?.[1],proxima:entries[index+1]?.[1]};lessons.push({...base,capitulos:criarCapitulosAula(base),options,correct,source});}}
 const mdn='https://developer.mozilla.org/pt-BR/docs/';
 course('comecando','Começando','Do primeiro passo ao diagnóstico de um erro.','compass','javascript',mdn+'Learn_web_development',[
  ['programar','Programas, código e instruções','Um programa é uma sequência de instruções executáveis. O código é a forma escrita dessas instruções em uma linguagem. Um algoritmo descreve uma solução em passos, mesmo antes de escolher a linguagem. O computador não deduz intenções: a ordem e os valores precisam ser explícitos. console.log mostra um resultado; ele não muda uma variável por conta própria.',`console.log("Abrir o caderno");\nconsole.log("Escrever uma ideia");\nconsole.log("Experimentar");`,'Escreva três instruções que descrevam preparar um café. Troque a ordem e observe o resultado.','console.log("Aquecer a água");\nconsole.log("Colocar o pó no filtro");\nconsole.log("Despejar a água");','Texto precisa de aspas. Café sem aspas será interpretado como um nome de variável.','O que distingue um algoritmo de um código?','O algoritmo descreve passos; o código os expressa em uma linguagem.','Um algoritmo só existe dentro de um computador.','Código sempre resolve corretamente qualquer entrada.'],
