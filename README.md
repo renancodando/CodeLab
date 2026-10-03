@@ -76,9 +76,9 @@ dotnet build server/CodeLab.Api.csproj
 npm run test:e2e
 ```
 
-Playwright usa Edge instalado no Windows. Em CI, usa Chromium (`npx playwright install --with-deps chromium`). Os testes usam Node 24, inclusive seu SQLite em memória para validar exemplos SQL. Vitest, Playwright e axe são dependências de desenvolvimento; nenhuma dessas ferramentas integra o bundle da aplicação.
+Playwright testa o build servido por `vite preview` e usa Edge instalado no Windows. A workflow de CI instala Chromium, executa `npm run test:e2e` e guarda capturas, traces e relatório quando há falha. A suíte ainda inicia a API .NET para verificar suas rotas e páginas estáticas enquanto a migração local não termina. Os testes usam Node 24, inclusive seu SQLite em memória para validar exemplos SQL. Vitest, Playwright e axe são dependências de desenvolvimento; nenhuma dessas ferramentas integra o bundle da aplicação.
 
-A suíte verifica missões, loops infinitos, memória, Promises, currículo, importação de dados, WMO, chuva, umidade, secagem, previsão, timers, cache, cancelamento, modo offline e qualidade gráfica. A integração verifica API sem contas, editor, projeto, exportação/importação, quizzes, clima, áudio optativo, acessibilidade, larguras de 280 a 3840 pixels e descarte de modelos em 20 trocas de tela.
+A suíte verifica missões, loops infinitos, memória, Promises, currículo, importação de dados, WMO, chuva, umidade, secagem, previsão, timers, cache, cancelamento, modo offline e qualidade gráfica. A integração verifica API sem contas, editor, projeto, exportação/importação, quizzes, clima, áudio optativo, acessibilidade, larguras de 280 a 3840 pixels e, em 20 trocas de tela, a remoção de editores visíveis, Workers, crescimento do heap e estabilidade das geometrias.
 
 Validação realizada em 26/09/2026: instalação limpa com `npm ci`, 82 testes locais e 17 testes de navegador aprovados, build de produção e build .NET concluídos sem erros. A missão também foi executada no build de produção servido pelo .NET. Cinco exemplos C# foram compilados/executados e uma consulta real ao Open-Meteo foi conferida.
 

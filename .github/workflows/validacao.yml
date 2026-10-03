@@ -13,7 +13,7 @@ jobs:
   validar:
     name: Testes e compilação
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Baixar o código
         uses: actions/checkout@v4
@@ -40,3 +40,19 @@ jobs:
 
       - name: Compilar a API
         run: dotnet build server/CodeLab.Api.csproj --configuration Release
+
+      - name: Instalar Chromium para os testes de navegador
+        run: npx playwright install --with-deps chromium
+
+      - name: Validar os fluxos no navegador
+        run: npm run test:e2e
+
+      - name: Guardar relatório, capturas e traces em caso de falha
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-falhas
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore

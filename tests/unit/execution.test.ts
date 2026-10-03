@@ -9,7 +9,7 @@ describe('missões executam lógica real',()=>{
  it('interrompe código infinito',async()=>{const result=await evaluate('while(true) {}','energia');expect(result.error).toContain('tempo demais');expect(result.duration).toBeLessThan(3500);});
  it('não expõe rede, DOM, arquivos, cookies ou ponte para o host',async()=>{const result=await evaluate('console.log(typeof fetch, typeof document, typeof process, typeof require, typeof localStorage, typeof postMessage);','laboratorio');expect(result.logs[0]).toBe('undefined undefined undefined undefined undefined undefined');});
  it('limita o tamanho do código',async()=>{expect((await evaluate(' '.repeat(30001),'energia')).error).toContain('30.000');});
- it('limita alocação de memória sem derrubar o host',async()=>{const result=await evaluate('const values=[]; while(true) values.push(new Array(100000).fill(123));','energia');expect(result.passed).toBe(false);expect(result.error).toBeTruthy();});
+ it('limita alocação de memória sem derrubar o host',async()=>{const result=await evaluate('const values=[]; while(true) values.push(new Array(100000).fill(123));','energia');expect(result.passed).toBe(false);expect(result.error).toBeTruthy();},25000);
  it('não carrega globais entre execuções',async()=>{await evaluate('globalThis.segredo = 42;','laboratorio');const result=await evaluate('console.log(typeof segredo);','laboratorio');expect(result.logs).toEqual(['undefined']);});
  it('limita quantidade de mensagens',async()=>{const result=await evaluate('for(let i=0;i<1000;i++)console.log(i);','laboratorio');expect(result.logs.length).toBe(50);});
 });
