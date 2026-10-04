@@ -1,5 +1,6 @@
 import type { RunResult } from '../types';
-export function execute(code:string,missionId:string) {
+import type { CodeCheck } from '../learning/types';
+export function execute(code:string,missionId:string,checks:CodeCheck[]=[]) {
  const worker = new Worker(new URL('./runner.worker.ts',import.meta.url),{type:'module'});
  let stop:()=>void = ()=>{};
  const result = new Promise<RunResult>(resolve=>{
@@ -10,7 +11,7 @@ export function execute(code:string,missionId:string) {
   stop=()=>finish(failure('Execução cancelada. Seu código está preservado.'));
   worker.onmessage=e=>finish(e.data);
   worker.onerror=()=>finish(failure('O executor não carregou. Verifique sua conexão e tente novamente.'));
-  worker.postMessage({code,missionId});
+  worker.postMessage({code,missionId,checks});
  });
  return {result,cancel:()=>stop()};
 }
