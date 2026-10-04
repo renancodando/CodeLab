@@ -24,7 +24,8 @@ test('exportação e importação preservam jornada local',async({page})=>{
  await page.locator('#import-progress').setInputFiles({name:'jornada.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({version:1,name:'Bia',completed:['primeira-luz'],lessons:['programar'],projects:[]}))});await page.getByRole('button',{name:'Restaurar jornada',exact:true}).click();await page.reload();await expect(page.getByRole('heading',{name:'Sua jornada, Bia.'})).toBeVisible();
 });
 test('cancelamento, limite de memória e recuperação do executor',async({page})=>{
- await page.goto('/#/missao/primeira-luz');await expect(page.locator('.monaco-editor')).toBeVisible();await writeCode(page,'while(true) {}');await page.locator('#run').click();await page.getByRole('button',{name:'Cancelar',exact:true}).click();await expect(page.locator('#result')).toContainText('cancelada');
+ await page.goto('/#/missao/primeira-luz');await expect(page.locator('.monaco-editor')).toBeVisible();await writeCode(page,'while(true) {}');// Inicia e cancela no mesmo turno do navegador, antes de o limite do Worker competir com o clique.
+ await page.locator('#run').evaluate(button=>{(button as HTMLButtonElement).click();if(!button.textContent?.includes('Cancelar'))throw new Error('O controle não entrou em execução.');(button as HTMLButtonElement).click();});await expect(page.locator('#result')).toContainText('cancelada');
  await writeCode(page,'const lista=[]; while(true) lista.push("x".repeat(10000));');await page.locator('#run').click();await expect(page.locator('#result')).toContainText(/memória|tempo limite|tempo demais/,{timeout:15000});
  await writeCode(page,'acender();');await page.locator('#run').click();await expect(page.locator('#result')).toContainText('Você fez o mundo responder.',{timeout:15000});
 });
