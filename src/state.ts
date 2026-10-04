@@ -35,6 +35,37 @@ export function prepareBackup(value:unknown):Progress {
   const a=(session as {answers?:Record<string,{value?:unknown}>}).answers;
   if(a&&(Object.keys(a).length>100||Object.values(a).some(v=>v&&typeof v.value==='string'&&v.value.length>30000)))throw new Error('Uma sessão de aula excede o limite. Nenhum dado foi substituído.');
  }
+ const invalid=(message:string):never=>{throw new Error(message+' A jornada atual foi preservada.');};
+ if(p.name!==undefined&&(typeof p.name!=='string'||p.name.length>40))invalid('O nome da jornada é inválido ou excede 40 caracteres.');
+ for(const field of ['completed','lessons','activeDays'])if(p[field]!==undefined){
+  if(!Array.isArray(p[field])||(p[field] as unknown[]).some(v=>!safeKey(v)))invalid('Há dados inválidos em '+field+'.');
+ }
+ for(const field of ['drafts','review','attempts','hints','history','lessonSessions'])if(p[field]!==undefined){
+  const mapping=p[field];if(!mapping||typeof mapping!=='object'||Array.isArray(mapping)||Object.keys(mapping).some(k=>!safeKey(k)))invalid('Há dados inválidos em '+field+'.');
+ }
+ for(const field of ['drafts','review'])if(p[field]&&Object.values(p[field]).some(v=>typeof v!=='string'||v.length>(field==='drafts'?30000:40)))invalid('Há valores inválidos ou maiores que o limite em '+field+'.');
+ for(const field of ['attempts','hints'])if(p[field]&&Object.values(p[field]).some(v=>typeof v!=='number'||!Number.isInteger(v)||v<0||v>(field==='hints'?5:100000)))invalid('Há contadores inválidos em '+field+'.');
+ if(p.projects!==undefined){
+  if(!Array.isArray(p.projects))invalid('A lista de projetos é inválida.');
+  for(const value of p.projects as unknown[]){
+   if(!value||typeof value!=='object')invalid('Há um projeto inválido.');
+   const project=value as Record<string,unknown>;
+   if(!safeKey(project.id)||typeof project.title!=='string'||project.title.length>60||typeof project.code!=='string'||project.code.length>30000||!['html','javascript','python','csharp','cpp','sql'].includes(String(project.language)))invalid('Há um projeto inválido ou maior que o limite.');
+  }
+ }
+ if(p.history)for(const value of Object.values(p.history)){
+  if(!Array.isArray(value)||value.length>5||value.some(entry=>!entry||typeof entry.code!=='string'||entry.code.length>15000||typeof entry.date!=='string'||entry.date.length>40))invalid('Há um histórico inválido ou maior que o limite.');
+ }
+ if(p.lessonSessions)for(const [id,value] of Object.entries(p.lessonSessions)){
+  const normalized=normalizeSessions({[id]:value});if(!normalized[id])invalid('Há uma sessão de aula inválida.');
+  const session=value as Record<string,unknown>;
+  if(!session.answers||typeof session.answers!=='object'||Array.isArray(session.answers))invalid('As respostas da sessão são inválidas.');
+  for(const [step,value] of Object.entries(session.answers as Record<string,unknown>)){
+   if(!safeKey(step)||!value||typeof value!=='object')invalid('Há uma resposta de aula inválida.');
+   const a=value as Record<string,unknown>;
+   if(typeof a.value!=='string'||a.value.length>30000||typeof a.attempts!=='number'||!Number.isInteger(a.attempts)||a.attempts<0||a.attempts>100000||typeof a.hints!=='number'||!Number.isInteger(a.hints)||a.hints<0||a.hints>10||['passed','assisted','firstTry'].some(field=>typeof a[field]!=='boolean'))invalid('Há uma resposta de aula inválida ou maior que o limite.');
+  }
+ }
  return normalizeProgress(value);
 }
 export let progress=readProgress();
