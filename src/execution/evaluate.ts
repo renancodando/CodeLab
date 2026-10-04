@@ -4,7 +4,8 @@ import wasmUrl from '@jitl/quickjs-wasmfile-release-sync/wasm?url';
 let modulePromise:Promise<QuickJSWASMModule>|undefined;
 const getQuickJS=()=>modulePromise??=newQuickJSWASMModuleFromVariant(typeof self==='undefined'?variant:newVariant(variant,{wasmLocation:new URL(wasmUrl,self.location.origin).href}));
 import type { RunResult } from '../types';
-export async function evaluate(code:string, missionId:string): Promise<RunResult> {
+import type { CodeCheck } from '../learning/types';
+export async function evaluate(code:string, missionId:string, checks:CodeCheck[]=[]): Promise<RunResult> {
  const started = performance.now();
  const response: RunResult = {passed:false,tests:[],actions:[],logs:[],duration:0};
  if (code.length > 30000) return {...response,error:'Seu código ultrapassa 30.000 caracteres. Divida o problema em partes menores.'};
@@ -43,6 +44,7 @@ export async function evaluate(code:string, missionId:string): Promise<RunResult
    case 'jardim': case 'debug': { const n = missionId==='debug'?3:5; check(`${n===3?'Três':'Cinco'} árvores para quantidade ${n}.`,callActions(`cultivar(${n})`,'tree')===n); check('Zero árvores para quantidade 0.',callActions('cultivar(0)','tree')===0); check('Outras quantidades também funcionam.',[1,2,7,11].every(n=>callActions(`cultivar(${n})`,'tree')===n)); break; }
    case 'inventario': check('A lista de exemplo resulta em [12, 20].',JSON.stringify(run('selecionar([4,12,7,20])'))==='[12,20]'); check('Uma lista vazia continua vazia.',JSON.stringify(run('selecionar([])'))==='[]'); check('Valores diferentes e o limite 10 são tratados.',JSON.stringify(run('selecionar([-3,10,9,30,10])'))==='[10,30,10]'); break;
    case 'farol': check('O farol recebe energia 100.',response.actions.some(x=>x.type==='beacon' && x.value===100)); check('A soma funciona com outros números.',run('somar(7,8)')===15 && run('somar(2,5)')===7); check('Zero e números negativos funcionam.',run('somar(0,0)')===0 && run('somar(-7,2)')===-5); break;
+   case 'aula': for(const item of checks)check(item.label,JSON.stringify(run(item.expression))===JSON.stringify(item.expected)); break;
    case 'laboratorio': check('O programa terminou sem erros.',true); break;
    default: throw new Error('Missão desconhecida.');
   }

@@ -1,0 +1,9 @@
+import {describe,it,expect,vi,beforeEach} from 'vitest';
+import {readProgress,prepareBackup} from '../../src/state';
+beforeEach(()=>vi.stubGlobal('localStorage',{getItem:vi.fn(),setItem:vi.fn()}));
+describe('migração e backup de jornada',()=>{
+ it('lê v1 sem apagar conquistas, projetos ou rascunhos',()=>{vi.mocked(localStorage.getItem).mockImplementation(key=>key==='codelab.progress.v1'?JSON.stringify({version:1,name:'Lia',completed:['energia'],lessons:['programar'],drafts:{energia:'let energia=100;'},projects:[{id:'p1',title:'Teste',code:'Oi',language:'html'}]}):null);const p=readProgress();expect(p.version).toBe(2);expect(p.completed).toEqual(['energia']);expect(p.lessons).toEqual(['programar']);expect(p.drafts.energia).toContain('100');expect(p.projects).toHaveLength(1);expect(p.lessonSessions).toEqual({});expect(localStorage.setItem).not.toHaveBeenCalled();});
+ it('prioriza v2 e recupera v1 se v2 estiver corrompida',()=>{vi.mocked(localStorage.getItem).mockImplementation(key=>key.endsWith('v2')?'{quebrado':JSON.stringify({version:1,name:'Antigo'}));expect(readProgress().name).toBe('Antigo');});
+ it('restaura backup v2 com código, tentativas e passo atual',()=>{const p=prepareBackup({version:2,lessonSessions:{valores:{revision:1,currentStep:'produzir-texto',answers:{'produzir-texto':{value:'const nome="Lia";',attempts:3,hints:1,passed:false,assisted:true,firstTry:false}}}}});expect(p.lessonSessions.valores.answers['produzir-texto'].attempts).toBe(3);expect(p.lessonSessions.valores.currentStep).toBe('produzir-texto');});
+ it('rejeita versões desconhecidas e projetos que seriam truncados',()=>{expect(()=>prepareBackup({version:3})).toThrow('Versão');expect(()=>prepareBackup({version:1,projects:[{code:'x'.repeat(30001)}]})).toThrow('maior');expect(()=>prepareBackup({version:1,projects:Array.from({length:13},()=>({}))})).toThrow('limite');});
+});
