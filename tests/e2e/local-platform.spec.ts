@@ -1,7 +1,8 @@
 import {test,expect,type Page} from '@playwright/test';
+import {courses} from '../../src/content/curriculum';
 async function writeCode(page:Page,code:string){const input=page.getByRole('textbox',{name:'É aqui que você escreve seu código'});await input.focus();await page.keyboard.press('Control+a');await page.getByRole('textbox',{name:'É aqui que você escreve seu código'}).evaluate((element,text)=>{const transfer=new DataTransfer();transfer.setData('text/plain',text);element.dispatchEvent(new ClipboardEvent('paste',{clipboardData:transfer,bubbles:true,cancelable:true}));},code);}
-test('60 aulas acessíveis, resposta correta persiste e resposta errada não conclui',async({page})=>{
- await page.goto('/#/aprender');await expect(page.locator('.trail-grid .trail')).toHaveCount(12);
+test('Catálogo de aulas acessíveis, resposta correta persiste e resposta errada não conclui',async({page})=>{
+ await page.goto('/#/aprender');await expect(page.locator('.trail-grid .trail')).toHaveCount(courses.length);
  await page.getByRole('link',{name:/Começando.*Do primeiro/}).click();await expect(page.locator('.mission-list .mission-row')).toHaveCount(5);
  await page.getByRole('link',{name:/Programas, código e instruções/}).click();
  await expect(page.locator('.lesson-chapter')).toHaveCount(12);await expect(page.locator('.lesson-map a')).toHaveCount(12);await expect(page.getByRole('heading',{name:'Onde esta aula entra na jornada'})).toBeVisible();

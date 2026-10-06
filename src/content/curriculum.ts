@@ -1,6 +1,7 @@
 import {criarCapitulosAula} from './explicacoes';
+import {expandedCourses,expandedLessons,resolveExpandedLesson} from './deep/index';
 import type {CapituloAula} from './explicacoes';
-export type Lesson={id:string;track:string;title:string;body:string;capitulos:CapituloAula[];code:string;exercise:string;solution:string;error:string;question:string;options:string[];correct:number;language:string;source:string};
+export type Lesson={id:string;track:string;title:string;body:string;capitulos:CapituloAula[];code:string;exercise:string;solution:string;error:string;question:string;options:string[];correct:number;language:string;source:string;level?:string;topics?:string[]};
 export type Course={id:string;title:string;description:string;icon:string;lessonIds:string[]};
 export const courses:Course[]=[];
 export const lessons:Lesson[]=[];
@@ -93,3 +94,14 @@ course('projetos','Projetos reais','Planejar, construir, testar e compartilhar.'
  ['projeto-api','Catálogo com ASP.NET e SQLite','Modele produtos com id, nome e preço; publique consulta, criação, edição e remoção numa API local. Use DTOs, validação e consultas parametrizadas. Crie um banco temporário para os testes. O catálogo completo conecta o front-end à API por contrato e trata os estados de rede. Não acrescente login ao CODELAB para fazer este exercício: ele é um projeto separado.',`GET /produtos → 200 + lista\nPOST /produtos → 201 + produto\nPUT /produtos/{id} → 200 ou 404\nDELETE /produtos/{id} → 204 ou 404\nRegra: nome de 1 a 80 caracteres, preço não negativo`,'Implemente uma fatia completa: criar produto, consultar por id e mostrar na interface.','Comece pela migração da tabela e teste de integração da API. Depois faça o formulário aguardar 201 e consultar o recurso criado. Garanta que preço negativo é rejeitado sem gravar uma linha.','Uma lista em memória demonstra rotas, mas não substitui persistência num catálogo que promete sobreviver a reinícios.','Que teste confirma persistência real?','Criar, reiniciar o serviço e consultar o mesmo produto no banco de teste.','Mostrar uma lista fixa no HTML.','Retornar 200 sem gravar.'],
  ['projeto-entrega','Revisar, documentar e entregar','Antes de compartilhar, execute o projeto num ambiente limpo seguindo seu próprio README. Registre requisitos, comandos, decisões e limitações reais. Teste teclado, celular, erro de rede e dados vazios. Versione fontes e lockfile; não envie node_modules, caches, builds duplicados, arquivos pessoais ou segredos. Um bom portfólio explica um problema concreto e mostra evidência do resultado.',`Checklist de entrega:\n1. Instalar e executar com os comandos documentados.\n2. Concluir a jornada principal.\n3. Verificar erros, teclado e telas pequenas.\n4. Conferir arquivos e segredos antes do commit.\n5. Publicar e verificar o endereço final quando houver hospedagem.`,'Escreva um README com objetivo, instalação, uso, testes e limites do seu projeto.','Inclua versões necessárias, comandos copiáveis, um cenário de uso completo, resultados dos testes realmente executados e dependências externas. Não declare um teste aprovado se ele não pôde ser executado.','Confundir conteúdo planejado com funcionalidade entregue dificulta revisão e manutenção.','O que deve entrar no repositório para reproduzir o projeto?','Código fonte, configuração necessária e lockfile, sem segredos.','Todas as pastas node_modules e caches pessoais.','Somente uma captura de tela.']
 ]);
+
+// O índice é leve; capítulos das novas trilhas são carregados por linguagem.
+courses.push(...expandedCourses);
+lessons.push(...expandedLessons);
+export async function resolveLesson(id:string):Promise<Lesson|undefined>{
+ const lesson=lessons.find(entry=>entry.id===id);
+ if(!lesson||lesson.capitulos.length)return lesson;
+ const full=await resolveExpandedLesson(id);
+ if(full)Object.assign(lesson,full);
+ return full?lesson:undefined;
+}

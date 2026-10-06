@@ -26,3 +26,10 @@ Preservar a aparência e a identidade visual. Trabalhar no repositório renancod
 O executor local falhou antes de iniciar comandos com erro de aplicação de ACLs, mesmo após autorização de acesso. A implementação desta etapa foi feita pelo conector GitHub, com validação pelo CI; não declarar testes locais dela.
 
 A primeira solicitação de automação foi rejeitada pela política de aprovação. Após a atualização do ambiente em 6 de outubro de 2026, foi criada e ativada a automação continuar-melhorias-do-codelab, vinculada a este chat, a cada quatro horas. Ela verifica limites de uso e retoma a partir deste registro, sem notificações repetidas para estado inalterado. A retomada ocorre em execuções agendadas; não há garantia de execução no instante exato do reset.
+
+
+## 6 de outubro: expansão de conteúdo solicitada
+
+Prioridade: currículo aprofundado de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL. Branch: `conteudo/curriculo-do-zero-ao-avancado`. Leia `docs/curriculo-completo.md` e inspecione o catálogo antes de continuar. O pacote Python e a arquitetura de conteúdo carregado por linguagem são o primeiro checkpoint; a expansão está em produção e não deve ser descrita como concluída antes de todos os pacotes e gates passarem.
+
+A automação existente continua ativa a cada quatro horas, agora com a prioridade de conteúdo. A limitação de ACL do executor local permanece; alterações são feitas pelo conector GitHub e verificadas pelo CI. Não sobrescreva clones locais sem inspecionar alterações quando o executor voltar.
