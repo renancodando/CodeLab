@@ -48,7 +48,7 @@ jobs:
       - name: Validar as aulas e a lógica
         run: npm test
 
-      - name: Validar exemplos de Python, C++, C# e PostgreSQL
+      - name: Validar exemplos de Python, C++, C#, PostgreSQL e TypeScript
         run: node scripts/verify-content-examples.mjs
         env:
           PGHOST: 127.0.0.1

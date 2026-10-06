@@ -1,8 +1,13 @@
 import type {Lesson} from '../curriculum';
 export type Section={title:string;text:string[];code?:string};
+export type PracticeProblem={
+ id:string;title:string;prompt:string;topics:string[];starter?:string;solution:string;
+ explanation:string[];checks:string[];expectedOutput?:string[];
+};
 export type DeepLesson={
  id:string;title:string;level:'Fundamentos'|'Intermediário'|'Avançado'|'Especialização';
  summary:string;topics:string[];sections:Section[];
+ source?:string;practices?:PracticeProblem[];expectedOutput?:string[];solutionOutput?:string[];
  code:string;output:string;trace:string[];
  exercise:string;solution:string;bug:string;bugCode:string;repair:string;
  checks:string[];project:string;question:string;answer:string;distractors:[string,string];
@@ -12,7 +17,7 @@ export function materialize(course:DeepCourse,entry:DeepLesson):Lesson{
  const index=course.lessons.indexOf(entry),correct=index%3,options=[...entry.distractors];
  options.splice(correct,0,entry.answer);
  const before=course.lessons[index-1]?.title,after=course.lessons[index+1]?.title;
- return {id:entry.id,track:course.id,title:entry.title,body:entry.summary,language:course.language,source:course.source,
+ return {id:entry.id,track:course.id,title:entry.title,body:entry.summary,language:course.language,source:entry.source??course.source,
  level:entry.level,topics:entry.topics,environment:course.environment,code:entry.code,exercise:entry.exercise,solution:entry.solution,error:entry.bug,
  question:entry.question,options,correct,capitulos:[
  {id:'conexao',titulo:'Objetivos e pré-requisitos',subtitulo:entry.level,paragrafos:[entry.summary,
@@ -29,6 +34,10 @@ export function materialize(course:DeepCourse,entry:DeepLesson):Lesson{
  {id:'solucao',titulo:'Solução de referência',subtitulo:'Compare decisões',paragrafos:[
  'Esta implementação atende ao exercício proposto. Compare os casos de borda e as escolhas de representação com sua versão. Uma solução diferente pode ser válida quando satisfaz o mesmo contrato.',
  'Altere uma hipótese do problema, feche a solução e reescreva o trecho afetado. Explique por que o código anterior deixou de atender à nova regra.'],codigo:entry.solution},
+ ...(entry.practices??[]).flatMap(problem=>[
+ {id:'problema-'+problem.id,titulo:problem.title,subtitulo:'Prática independente',paragrafos:[problem.prompt],pontos:problem.checks,codigo:problem.starter},
+ {id:'resolucao-'+problem.id,titulo:'Resolução: '+problem.title,subtitulo:'Explique cada decisão',paragrafos:problem.explanation,pontos:problem.expectedOutput?.map(line=>'Saída: '+line),codigo:problem.solution}
+ ]),
  {id:'projeto',titulo:'Aplique em um projeto',subtitulo:'Transfira o conhecimento',paragrafos:[entry.project,
  'Defina um resultado observável, uma entrada válida, uma entrada inválida e uma condição de limite. Guarde o código, os resultados e uma explicação da decisão mais difícil. Esses artefatos permitem revisar o projeto depois.']},
  {id:'dominio',titulo:'Critérios de domínio e próxima revisão',subtitulo:'Avance com evidências',paragrafos:[
