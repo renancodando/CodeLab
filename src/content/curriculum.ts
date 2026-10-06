@@ -1,7 +1,7 @@
 import {criarCapitulosAula} from './explicacoes';
 import {expandedCourses,expandedLessons,resolveExpandedLesson} from './deep/index';
 import type {CapituloAula} from './explicacoes';
-export type Lesson={id:string;track:string;title:string;body:string;capitulos:CapituloAula[];code:string;exercise:string;solution:string;error:string;question:string;options:string[];correct:number;language:string;source:string;level?:string;topics?:string[]};
+export type Lesson={id:string;track:string;title:string;body:string;capitulos:CapituloAula[];code:string;exercise:string;solution:string;error:string;question:string;options:string[];correct:number;language:string;source:string;level?:string;topics?:string[];environment?:string};
 export type Course={id:string;title:string;description:string;icon:string;lessonIds:string[]};
 export const courses:Course[]=[];
 export const lessons:Lesson[]=[];

@@ -8,12 +8,23 @@ async function contentModule(path){
  if(moduleUrls.has(path))return moduleUrls.get(path);
  const {posix}=await import('node:path');
  let output=ts.transpileModule(await readFile(path,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
- const imports=[...output.matchAll(/(?:from\s*|import\s*\()(['"])(\.[^'"]+)\1/g)];
- for(const match of imports){
-  const dependency=posix.normalize(posix.join(posix.dirname(path),match[2]))+'.ts';
-  if(!dependency.startsWith('src/content/'))throw new Error('Importação fora do conteúdo: '+dependency);
-  const url=await contentModule(dependency);output=output.replaceAll(match[1]+match[2]+match[1],match[1]+url+match[1]);
+ const syntax=ts.createSourceFile(path,output,ts.ScriptTarget.ESNext,true,ts.ScriptKind.JS);
+ const specifiers=[];
+ const visit=node=>{
+  if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier))specifiers.push(node.moduleSpecifier);
+  if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&node.arguments[0]&&ts.isStringLiteral(node.arguments[0]))specifiers.push(node.arguments[0]);
+  ts.forEachChild(node,visit);
+ };
+ visit(syntax);
+ const replacements=[];
+ for(const specifier of specifiers){
+  if(!specifier.text.startsWith('.'))throw new Error('Dependência de conteúdo não relativa: '+specifier.text);
+  const dependency=posix.normalize(posix.join(posix.dirname(path),specifier.text)).replace(/\.js$/,'.ts');
+  const target=dependency.endsWith('.ts')?dependency:dependency+'.ts';
+  if(!target.startsWith('src/content/'))throw new Error('Importação fora do conteúdo: '+target);
+  replacements.push({start:specifier.getStart(syntax),end:specifier.getEnd(),value:JSON.stringify(await contentModule(target))});
  }
+ for(const replacement of replacements.sort((a,b)=>b.start-a.start))output=output.slice(0,replacement.start)+replacement.value+output.slice(replacement.end);
  const url='data:text/javascript;base64,'+Buffer.from(output).toString('base64');moduleUrls.set(path,url);return url;
 }
 const {courses,lessons,resolveLesson}=await import(await contentModule('src/content/curriculum.ts'));

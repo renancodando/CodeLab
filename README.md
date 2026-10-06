@@ -1,6 +1,6 @@
 # CODELAB
 
-Plataforma de estudo de programação com **12 trilhas, 60 aulas e oito missões de código**. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
+Plataforma de estudo de programação com **20 trilhas, 108 aulas e oito missões de código**. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
 
 ## Executar
 
@@ -22,7 +22,7 @@ O servidor atende em `http://127.0.0.1:5080/` e também serve o conteúdo de `di
 
 ## Aprender e criar
 
-Cada uma das 12 trilhas tem cinco aulas transformadas em estudos profundos com **12 capítulos internos por aula**: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
+As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. As oito trilhas novas têm seis módulos e **13 capítulos internos por aula**. A leitura original segue esta sequência: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
 
 | Trilha | Conteúdo |
 | --- | --- |
@@ -39,9 +39,9 @@ Cada uma das 12 trilhas tem cinco aulas transformadas em estudos profundos com *
 | Full stack | Arquitetura, integração, testes de jornada, publicação e desempenho |
 | Projetos reais | Diário, tarefas, painel de clima, catálogo e entrega documentada |
 
-As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As **60 aulas possuem roteiro próprio**, sem reutilizar o mesmo texto de aprofundamento entre temas. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram compreensão; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
+As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As aulas originais possuem roteiros por tema e a expansão acrescenta seis seções de teoria própria por módulo. Todas as **108 aulas têm conteúdo, prática e aplicação específicos**. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram compreensão; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
 
-O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **66 páginas educacionais estáticas**, incluindo as 60 aulas, legíveis sem JavaScript.
+O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **114 páginas educacionais estáticas**, incluindo as 108 aulas, legíveis sem JavaScript.
 
 ## Ambiente vivo
 
@@ -87,7 +87,7 @@ Na medição automatizada de 20 trocas de tela no Edge, após coleta de lixo, o 
 ## Limites e dependências externas
 
 1. **Python, C# e C++ na bancada:** exigem uma instância Judge0 configurada. A integração .NET está preparada, mas não há instância/credenciais incluídas. Exemplos C# também podem ser executados num projeto local com SDK .NET 10. ASP.NET completo precisa de um projeto local, não de um único arquivo no executor.
-2. **SQL:** aulas e exemplos estão disponíveis e testados; a bancada permite escrever/exportar `.sql`, mas não inclui um motor SQL no navegador. Execute em um banco SQLite local descartável.
+2. **SQL:** aulas e exemplos estão disponíveis e testados; a bancada permite escrever/exportar `.sql`, mas não inclui um motor SQL no navegador. Use uma base descartável e o dialeto indicado na aula. A expansão avançada utiliza PostgreSQL, verificado no CI; os exemplos SQLite do currículo original conservam seu contexto.
 3. **Preview HTML:** sandbox e CSP isolam o documento pai, armazenamento e rede. Scripts de DOM não têm o limite de CPU do QuickJS. Use código conhecido e o botão Parar; um script infinito pode ainda exigir fechar a aba. Módulos, rede e localStorage devem ser testados no projeto exportado servido por HTTP.
 4. **Projetos:** um arquivo por bancada, com exportação local. Não há publicação de aplicações nem integração direta com repositórios pessoais. A área de comunidade foi removida para manter o foco em estudo, prática e construção.
 5. **Dados locais:** limpar dados do navegador apaga a jornada. Não há sincronização remota. Exportar regularmente é o mecanismo de backup. A versão antiga de progresso é migrada; bancos de contas antigos, se existentes localmente, não são utilizados nem apagados automaticamente.
@@ -111,3 +111,12 @@ A fila é volátil. O identificador aleatório do trabalho permite consultar/can
 `src/content/` contém aulas e missões; `src/state.ts` cuida da jornada local; `src/laboratory.ts` administra bancadas; `src/execution/` contém o interpretador; `src/environment/` separa consulta, normalização, simulação, partículas, nuvens, qualidade, áudio e cena. `server/` é a API opcional; `scripts/prerender.mjs` gera páginas e catálogo. `public/assets/casa.png` é a arte do interior. Fontes são carregadas do Google Fonts, com alternativas locais.
 
 Referências técnicas: [MDN](https://developer.mozilla.org/pt-BR/docs/), [Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/), [SQLite](https://www.sqlite.org/lang.html), [QuickJS Emscripten](https://github.com/justjake/quickjs-emscripten), [SunCalc](https://github.com/mourner/suncalc) e [Open-Meteo](https://open-meteo.com/en/docs).
+
+
+## Currículo aprofundado por linguagem
+
+O catálogo tem 108 aulas em 20 trilhas. A expansão acrescenta percursos de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL, com 48 módulos de treze capítulos. Consulte [a matriz de cobertura](docs/curriculo-completo.md) para temas, ambientes, gates e os aprofundamentos editoriais ainda previstos.
+
+O conteúdo novo carrega por linguagem ao abrir a aula, mantendo um índice leve para navegação e busca. O build também entrega capítulos completos em páginas públicas sem JavaScript. TypeScript e PostgreSQL têm seu ambiente indicado, sem simular execução no laboratório atual.
+
+Para verificar exemplos externos em um ambiente de CI com Python, g++, .NET 10 e PostgreSQL disponível: `node scripts/verify-content-examples.mjs`. Esse script executa somente exemplos publicados do repositório; código de usuário continua no executor isolado do aplicativo.

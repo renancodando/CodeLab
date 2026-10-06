@@ -7,13 +7,13 @@ export type DeepLesson={
  exercise:string;solution:string;bug:string;bugCode:string;repair:string;
  checks:string[];project:string;question:string;answer:string;distractors:[string,string];
 };
-export type DeepCourse={id:string;title:string;description:string;icon:string;language:string;source:string;lessons:DeepLesson[]};
+export type DeepCourse={id:string;title:string;description:string;icon:string;language:string;source:string;environment?:string;lessons:DeepLesson[]};
 export function materialize(course:DeepCourse,entry:DeepLesson):Lesson{
  const index=course.lessons.indexOf(entry),correct=index%3,options=[...entry.distractors];
  options.splice(correct,0,entry.answer);
  const before=course.lessons[index-1]?.title,after=course.lessons[index+1]?.title;
  return {id:entry.id,track:course.id,title:entry.title,body:entry.summary,language:course.language,source:course.source,
- level:entry.level,topics:entry.topics,code:entry.code,exercise:entry.exercise,solution:entry.solution,error:entry.bug,
+ level:entry.level,topics:entry.topics,environment:course.environment,code:entry.code,exercise:entry.exercise,solution:entry.solution,error:entry.bug,
  question:entry.question,options,correct,capitulos:[
  {id:'conexao',titulo:'Objetivos e pré-requisitos',subtitulo:entry.level,paragrafos:[entry.summary,
  before?'Antes desta aula, pratique '+before+'. Reconstrua o exemplo anterior e explique suas decisões.':'Comece por esta aula. Instale as ferramentas indicadas na referência oficial e execute um programa mínimo antes de avançar.',
@@ -22,7 +22,7 @@ export function materialize(course:DeepCourse,entry:DeepLesson):Lesson{
  ...entry.sections.slice(1).map((s,i)=>({id:'teoria-'+(i+1),titulo:s.title,subtitulo:'Entenda os mecanismos',paragrafos:s.text,codigo:s.code})),
  {id:'codigo',titulo:'Exemplo completo e rastreamento',subtitulo:'Preveja antes de executar',paragrafos:[
  'Leia o exemplo e escreva sua previsão. Compare valores e efeitos em cada etapa, seguindo o rastreamento abaixo.',
- entry.output],pontos:entry.trace,codigo:entry.code},
+ entry.output,...(course.environment?['Ambiente do exemplo: PostgreSQL. Execute com psql em uma base de estudo; o laboratório atual não oferece esse dialeto como execução local.']:[])],pontos:entry.trace,codigo:entry.code},
  {id:'erro',titulo:'Encontre e explique a falha',subtitulo:'Depuração',paragrafos:[entry.bug,entry.repair],codigo:entry.bugCode},
  {id:'pratica',titulo:'Exercício com critérios verificáveis',subtitulo:'Faça sem copiar',paragrafos:[entry.exercise,
  'Primeiro escreva casos de entrada e a saída esperada. Implemente a menor versão correta, confronte cada caso e registre o que mudou ao corrigir uma falha. Só então consulte a solução.'],pontos:entry.checks},

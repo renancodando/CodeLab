@@ -1,35 +1,26 @@
 # Continuidade do CODELAB
 
-## Restrições que permanecem
+## Estado em 6 de outubro de 2026
 
-Preservar a aparência e a identidade visual. Trabalhar no repositório renancodando/CodeLab em pequenos commits. Preservar as 60 aulas profundas. A experiência deve permanecer local, sem login, conta ou armazenamento remoto de jornada.
+- PR #1 integrada em main: aula Valores com 25 passos, progresso v2, verificação QuickJS, domínio por capacidade e revisões locais.
+- Última validação anterior: 105 testes de unidade, 20 E2E, build frontend e .NET aprovados.
+- PR #2: `conteudo/curriculo-do-zero-ao-avancado`, expansão para 108 aulas em 20 trilhas. Ainda em validação: confira o head e o CI antes de integrar.
+- Oito novos percursos escritos: HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e PostgreSQL. 48 aulas de 13 capítulos, com 414 entradas de cobertura introduzidas. Leia `docs/curriculo-completo.md` e a matriz JSON para distinguir introdução e prática independente.
 
-## Trabalho desta etapa
+## Próximo passo imediato
 
-- Auditoria arquitetural publicada em main.
-- Validação de produção com Playwright no CI; corrigido o formato do relatório específico do CI.
-- Aula modelo valores em 25 passos e motor reutilizável no PR #1, branch melhoria/aula-pratica-valores.
-- Migração de progresso v1 para v2, retomada, indicadores por capacidade e revisão local.
-- Backup validado antes de substituir jornada; dados maiores que os limites são recusados explicitamente.
-- Testes unitários e de navegador para a aula completa.
+Validar o head atual da PR #2. Corrigir qualquer falha nos exemplos, na pré-renderização e no fluxo de produção. Tornar a PR pronta para revisão, resolver achados sustentados por evidência e integrar somente o conteúdo verificado. Atualizar este checkpoint com o resultado do CI e a integração.
 
-## Retomada
+## Depois da integração
 
-1. Conferir o último commit do PR #1 e os resultados do GitHub Actions; as correções incluem impedir resultados fixos na transferência, invalidar o resumo de conclusão e reagendar revisão após nova conclusão. Integrar apenas após validação.
-2. Conferir navegação, retomada, execução real, descarte de recursos e apresentação com os estilos existentes.
-3. Criar uma aula avançada com autoria própria e validar a extensão do motor antes de migrar as demais aulas.
-4. Evoluir revisão com desafios novos, IndexedDB e projetos com vários arquivos.
-5. Migrar runtimes gradualmente; remover dependências de backend somente depois de substituição e validação.
+Aprofundar os temas agrupados em aulas próprias, seguindo as prioridades editoriais do mapa de currículo. Acrescentar problemas, explicações do mecanismo, depuração e exercícios verificáveis; não publicar apenas títulos. Retomar a migração gradual para passos interativos depois das prioridades de conteúdo. Preservar leitura extensa e progresso local, sem conta ou backend de progresso.
 
-## Limitações desta sessão
+## Restrições e execução
 
-O executor local falhou antes de iniciar comandos com erro de aplicação de ACLs, mesmo após autorização de acesso. A implementação desta etapa foi feita pelo conector GitHub, com validação pelo CI; não declarar testes locais dela.
+O executor local continua falhando por ACL antes de iniciar processos. Não alterar ACLs do sistema nem sobrescrever clones locais. As mudanças atuais são feitas pelo conector autenticado do GitHub e verificadas por GitHub Actions. Quando o executor local voltar, inspecionar alterações e arquivos não rastreados antes de sincronizar.
 
-A primeira solicitação de automação foi rejeitada pela política de aprovação. Após a atualização do ambiente em 6 de outubro de 2026, foi criada e ativada a automação continuar-melhorias-do-codelab, vinculada a este chat, a cada quatro horas. Ela verifica limites de uso e retoma a partir deste registro, sem notificações repetidas para estado inalterado. A retomada ocorre em execuções agendadas; não há garantia de execução no instante exato do reset.
+Não alterar aparência, mundo, clima, áudio ou CSS durante esta expansão. TypeScript é conferido por tsc strict. Exemplos SQL desta trilha são PostgreSQL e têm ambiente explícito. Exemplos externos são validados em recursos temporários no CI.
 
+## Retomada automática
 
-## 6 de outubro: expansão de conteúdo solicitada
-
-Prioridade: currículo aprofundado de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL. Branch: `conteudo/curriculo-do-zero-ao-avancado`. Leia `docs/curriculo-completo.md` e inspecione o catálogo antes de continuar. O pacote Python e a arquitetura de conteúdo carregado por linguagem são o primeiro checkpoint; a expansão está em produção e não deve ser descrita como concluída antes de todos os pacotes e gates passarem.
-
-A automação existente continua ativa a cada quatro horas, agora com a prioridade de conteúdo. A limitação de ACL do executor local permanece; alterações são feitas pelo conector GitHub e verificadas pelo CI. Não sobrescreva clones locais sem inspecionar alterações quando o executor voltar.
+A automação `continuar-melhorias-do-codelab` está ACTIVE, ligada a este chat, com execução a cada quatro horas. O prompt prioriza o currículo aprofundado e mantém notificações para progresso relevante, falha ou ação necessária. Se o limite impedir trabalho, preservar este checkpoint e retomar quando houver disponibilidade; o agendamento não garante retorno no segundo exato de um reset.

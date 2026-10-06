@@ -14,6 +14,19 @@ jobs:
     name: Testes e compilação
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: codelab
+          POSTGRES_PASSWORD: codelab
+          POSTGRES_DB: codelab
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Baixar o código
         uses: actions/checkout@v4
@@ -34,6 +47,15 @@ jobs:
 
       - name: Validar as aulas e a lógica
         run: npm test
+
+      - name: Validar exemplos de Python, C++, C# e PostgreSQL
+        run: node scripts/verify-content-examples.mjs
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: codelab
+          PGPASSWORD: codelab
+          PGDATABASE: codelab
 
       - name: Compilar a aplicação
         run: npm run build
