@@ -395,3 +395,7 @@ Este é o percurso principal publicado; a solicitação de conteúdo completo co
 - Algoritmos, estruturas de dados, redes, Git, testes e arquitetura: acrescentar percursos próprios além do contexto presente nos módulos.
 
 A automação existente retoma a expansão a cada quatro horas. Deve conferir o checkpoint e a PR antes de editar e avisar apenas sobre mudanças relevantes.
+
+## Manutenção do catálogo
+
+As definições por linguagem são a fonte de verdade. `npm run content:generate` recria o índice de navegação e a matriz JSON; `npm run build` confere que os dois estão sincronizados. Uma aula nova exige revisar também o mapa editorial, os limites de cobertura da edição e as contagens dos testes. Não reduza os critérios de profundidade para acomodar conteúdo incompleto.

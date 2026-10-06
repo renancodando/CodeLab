@@ -120,3 +120,5 @@ O catálogo tem 108 aulas em 20 trilhas. A expansão acrescenta percursos de HTM
 O conteúdo novo carrega por linguagem ao abrir a aula, mantendo um índice leve para navegação e busca. O build também entrega capítulos completos em páginas públicas sem JavaScript. TypeScript e PostgreSQL têm seu ambiente indicado, sem simular execução no laboratório atual.
 
 Para verificar exemplos externos em um ambiente de CI com Python, g++, .NET 10 e PostgreSQL disponível: `node scripts/verify-content-examples.mjs`. Esse script executa somente exemplos publicados do repositório; código de usuário continua no executor isolado do aplicativo.
+
+Ao editar uma definição em `src/content/deep/`, execute `npm run content:generate` para atualizar o índice leve e a matriz JSON. O build rejeita artefatos desatualizados. Revise também o mapa editorial e as contagens esperadas nos testes ao publicar novas aulas; conserve os critérios de profundidade e execução.
