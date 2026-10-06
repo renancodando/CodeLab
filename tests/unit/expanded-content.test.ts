@@ -36,7 +36,7 @@ describe('expansão por linguagem',()=>{
    const aula=(await resolveLesson(metadata.id))!;
    for(const [kind,code] of [['exemplo',aula.code],['solução',aula.solution]]){
     const name='/codelab-'+metadata.id+'-'+kind+'.ts',source="export {};\n"+code;
-    const options:ts.CompilerOptions={strict:true,noEmit:true,target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,lib:['lib.es2022.d.ts','lib.dom.d.ts']};
+    const options:ts.CompilerOptions={strict:true,noEmit:true,types:[],target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,lib:['lib.es2022.d.ts','lib.dom.d.ts']};
     const host=ts.createCompilerHost(options),original=host.getSourceFile.bind(host);
     host.getSourceFile=(file,version,onError,shouldCreate)=>file===name?ts.createSourceFile(name,source,version,true):original(file,version,onError,shouldCreate);
     const program=ts.createProgram([name],options,host);
