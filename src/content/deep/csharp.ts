@@ -67,15 +67,15 @@ export default {
           ]
         }
       ],
-      "code": "using System;\nusing System.Collections.Generic;\n\nstatic int SomarPositivos(IEnumerable<int> valores)\n{\n    int total = 0;\n    foreach (int valor in valores)\n        if (valor > 0) total = checked(total + valor);\n    return total;\n}\nConsole.WriteLine(SomarPositivos(new[] { -2, 0, 3, 5 }));\nConsole.WriteLine(SomarPositivos(Array.Empty<int>()));",
+      "code": "using System;\n\nstatic int SomarPositivos(int[] valores)\n{\n    int total = 0;\n    foreach (int valor in valores)\n        if (valor > 0) total = checked(total + valor);\n    return total;\n}\nConsole.WriteLine(SomarPositivos(new[] { -2, 0, 3, 5 }));\nConsole.WriteLine(SomarPositivos(Array.Empty<int>()));",
       "output": "A saída é 8 e 0. checked faz uma soma fora do intervalo falhar em vez de aceitar silenciosamente um resultado integral incorreto.",
       "trace": [
         "A função recebe uma sequência e inicializa seu acumulador.",
         "A condição filtra antes da soma.",
         "O resultado vazio é zero porque o corpo nunca altera o acumulador."
       ],
-      "exercise": "Crie ContarIntervalo para IEnumerable<int>, limites inclusivos e rejeição de intervalo invertido. Teste vazio e os dois limites sem usar leitura do terminal na função.",
-      "solution": "using System;\nusing System.Collections.Generic;\nstatic int ContarIntervalo(IEnumerable<int> dados,int minimo,int maximo)\n{\n    if(minimo>maximo)throw new ArgumentException(\"Intervalo invertido\");\n    int total=0;\n    foreach(int x in dados)if(x>=minimo&&x<=maximo)total=checked(total+1);\n    return total;\n}\nif(ContarIntervalo(new[]{0,1,2,3},1,2)!=2)throw new Exception(\"Falhou\");\nif(ContarIntervalo(Array.Empty<int>(),1,2)!=0)throw new Exception(\"Falhou\");",
+      "exercise": "Crie ContarIntervalo para int[], limites inclusivos e rejeição de intervalo invertido. Teste vazio e os dois limites sem usar leitura do terminal na função.",
+      "solution": "using System;\nstatic int ContarIntervalo(int[] dados,int minimo,int maximo)\n{\n    if(minimo>maximo)throw new ArgumentException(\"Intervalo invertido\");\n    int total=0;\n    foreach(int x in dados)if(x>=minimo&&x<=maximo)total=checked(total+1);\n    return total;\n}\nif(ContarIntervalo(new[]{0,1,2,3},1,2)!=2)throw new Exception(\"Falhou\");\nif(ContarIntervalo(Array.Empty<int>(),1,2)!=0)throw new Exception(\"Falhou\");",
       "bug": "O operador de supressão de nullable não torna um valor não nulo. Uma referência ausente continua falhando quando seu membro é acessado.",
       "bugCode": "string? nome = null;\nConsole.WriteLine(nome!.Length);",
       "repair": "Valide a ausência antes do acesso e defina se ela é permitida ou um erro. Use ?? para um padrão quando esse for o contrato, e não ! apenas para remover o aviso.",

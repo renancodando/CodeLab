@@ -75,7 +75,7 @@ export default {
         "return só executa depois do laço e devolve o total para print."
       ],
       "exercise": "Implemente contar_intervalo(valores, minimo, maximo), contando valores dentro dos limites inclusivos. Rejeite minimo maior que maximo com ValueError. Não leia input dentro da função.",
-      "solution": "def contar_intervalo(valores, minimo, maximo):\n    if minimo > maximo:\n        raise ValueError(\"intervalo invertido\")\n    return sum(1 for valor in valores if minimo <= valor <= maximo)\n\nassert contar_intervalo([0, 1, 2, 3], 1, 2) == 2\nassert contar_intervalo([], 1, 2) == 0",
+      "solution": "def contar_intervalo(valores, minimo, maximo):\n    if minimo > maximo:\n        raise ValueError(\"intervalo invertido\")\n    total = 0\n    for valor in valores:\n        if minimo <= valor <= maximo:\n            total += 1\n    return total\n\nassert contar_intervalo([0, 1, 2, 3], 1, 2) == 2\nassert contar_intervalo([], 1, 2) == 0",
       "bug": "range não inclui seu limite final. Percorrer range(1, n) omite n; isso muda resultados exatamente na fronteira e passa despercebido em testes que só verificam valores internos.",
       "bugCode": "n = 3\nfor numero in range(1, n):\n    print(numero)",
       "repair": "Se o contrato é listar de 1 até n inclusive, use range(1, n + 1). Para n menor que 1, decida se a lista vazia é válida ou se a função deve rejeitar a entrada.",
