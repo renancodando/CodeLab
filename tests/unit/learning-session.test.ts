@@ -11,5 +11,6 @@ describe('aula em passos',()=>{
  it('tem 25 passos próprios, seis capacidades e IDs únicos',()=>{expect(valores.steps).toHaveLength(25);expect(new Set(valores.steps.map(s=>s.id)).size).toBe(25);expect(new Set(valores.steps.flatMap(s=>s.capability?[s.capability]:[])).size).toBe(6);});
  for(const step of valores.steps.filter(s=>s.type==='code'))it('executa solução real: '+step.id,async()=>{expect(step.checks!.length).toBeGreaterThan(0);const result=await evaluate(step.solution!,'aula',step.checks);expect(result.error).toBeUndefined();expect(result.passed).toBe(true);});
  it('recusa orçamento fixo que falha para novas entradas',async()=>{const step=valores.steps.at(-1)!;const result=await evaluate('function saldoAposCompra(){return 64;}','aula',step.checks);expect(result.passed).toBe(false);expect(result.tests.filter(t=>!t.passed).length).toBe(3);});
+ it('recusa valores fixos na transferência para outras compras',async()=>{const step=valores.steps.find(s=>s.id==='transferir-orcamento')!;const result=await evaluate('function calcularCompra(){const custo=28;const saldoFinal=52;return {custo,saldoFinal};}','aula',step.checks);expect(result.passed).toBe(false);expect(result.tests.filter(t=>!t.passed)).toHaveLength(2);});
  it('não aprova uma avaliação sem verificações',async()=>{expect((await evaluate('let energia = 100;','aula')).passed).toBe(false);});
 });

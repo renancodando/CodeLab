@@ -1,7 +1,7 @@
 import type {InteractiveLesson} from './types';
 export const valores:InteractiveLesson = {
   "id": "valores",
-  "revision": 1,
+  "revision": 2,
   "steps": [
     {
       "id": "uma-caixa",
@@ -448,26 +448,40 @@ export const valores:InteractiveLesson = {
     {
       "id": "transferir-orcamento",
       "title": "Adapte a outro cenário",
-      "prompt": "Agora o saldo é 80, o preço é 7 e a quantidade é 4. Refaça o cálculo usando essas entradas. Não reutilize os resultados numéricos da compra anterior.",
+      "prompt": "Agora pratique compras diferentes. A estrutura abaixo recebe saldoInicial, preco e quantidade, e entrega os valores calculados. Complete apenas as declarações de custo e saldoFinal. Os testes usam entradas diferentes, incluindo quantidade zero.",
       "type": "code",
       "capability": "aplicacao",
-      "code": "const saldoInicial = 80;\nconst preco = 7;\nconst quantidade = 4;\n// Calcule custo e saldoFinal.",
-      "solution": "const saldoInicial = 80;\nconst preco = 7;\nconst quantidade = 4;\nconst custo = preco * quantidade;\nconst saldoFinal = saldoInicial - custo;",
+      "code": "function calcularCompra(saldoInicial, preco, quantidade) {\n  // Declare custo e saldoFinal a partir das entradas.\n  return { custo, saldoFinal };\n}",
+      "solution": "function calcularCompra(saldoInicial, preco, quantidade) {\n  const custo = preco * quantidade;\n  const saldoFinal = saldoInicial - custo;\n  return { custo, saldoFinal };\n}",
       "checks": [
         {
-          "label": "custo é 28.",
-          "expression": "custo",
-          "expected": 28
+          "label": "Saldo 80, preço 7 e quatro itens deixam 52.",
+          "expression": "calcularCompra(80, 7, 4)",
+          "expected": {
+            "custo": 28,
+            "saldoFinal": 52
+          }
         },
         {
-          "label": "saldoFinal é 52.",
-          "expression": "saldoFinal",
-          "expected": 52
+          "label": "Outra compra calcula custo e saldo a partir de novas entradas.",
+          "expression": "calcularCompra(100, 12, 3)",
+          "expected": {
+            "custo": 36,
+            "saldoFinal": 64
+          }
+        },
+        {
+          "label": "Quantidade zero preserva o saldo inicial.",
+          "expression": "calcularCompra(25, 9, 0)",
+          "expected": {
+            "custo": 0,
+            "saldoFinal": 25
+          }
         }
       ],
       "hints": [
-        "A relação entre os valores continua igual.",
-        "O resultado anterior 64 pertencia a outras entradas."
+        "Use os três nomes recebidos pela estrutura; evite guardar os resultados de uma compra específica.",
+        "Declare custo como preco * quantidade e saldoFinal como saldoInicial - custo."
       ],
       "success": "O seu programa passou nas verificações.",
       "failure": "Veja qual verificação falhou e ajuste o programa."

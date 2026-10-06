@@ -24,6 +24,11 @@ test('aula prática retoma, exige respostas reais e conclui todos os 25 passos l
  expect(requests).toEqual([]);
  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
  expect(saved.lessons).toContain('valores');expect(saved.lessonSessions.valores.completedAt).toBeTruthy();expect(saved.review['aula-valores']).toBeTruthy();
+ await writeCode(page,'function saldoAposCompra(){return 64;}');await expect(page.getByRole('heading',{name:'Aula concluída',exact:true})).toHaveCount(0);await expect(page.locator('#step-next')).toBeDisabled();
+ const changed=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(changed.lessonSessions.valores.completedAt).toBeUndefined();expect(changed.review['aula-valores']).toBeUndefined();
+ await writeCode(page,valores.steps.at(-1)!.solution!);await page.locator('#check-step').click();await expect(page.locator('#step-next')).toBeEnabled({timeout:15000});await page.locator('#step-next').click();
+ await page.locator('#step-solution').click();await expect(page.getByRole('heading',{name:'Aula concluída',exact:true})).toHaveCount(0);await page.locator('#step-next').click();await expect(page.getByRole('heading',{name:'Aula concluída',exact:true})).toBeVisible();
+ const revised=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).review['aula-valores']);expect(Date.parse(revised)-Date.now()).toBeLessThan(86400000+10000);expect(Date.parse(revised)-Date.now()).toBeGreaterThan(0);
  await page.goto('/#/home');await expect(page.locator('.monaco-editor')).toHaveCount(0);
  expect(page.workers().filter(worker=>worker.url().includes('runner.worker'))).toHaveLength(0);
  await page.goto('/#/aula/valores');await expect(page.locator('#step-title')).toHaveText(valores.steps.at(-1)!.title);

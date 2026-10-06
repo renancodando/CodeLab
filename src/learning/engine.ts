@@ -12,9 +12,13 @@ export function mountLesson(container:HTMLElement,lesson:InteractiveLesson,title
  if(!lesson.steps.some(s=>s.id===session.currentStep))session.currentStep=lesson.steps[0].id;
  const persist=()=>saveProgress();
  const release=()=>{generation++;pending?.cancel();pending=undefined;editor?.dispose();editor=undefined;};
+ const invalidateCompletion=()=>{
+  if(session.completedAt){delete session.completedAt;progress.lessons=progress.lessons.filter(id=>id!==lesson.id);delete progress.review['aula-'+lesson.id];}
+  container.querySelector('#lesson-summary')?.replaceChildren();
+ };
  const invalidate=(answer:StepAnswer,value:string)=>{
   if(answer.value===value)return;answer.value=value;answer.passed=false;answer.firstTry=false;
-  if(session.completedAt){delete session.completedAt;progress.lessons=progress.lessons.filter(id=>id!==lesson.id);}
+  invalidateCompletion();
   persist();
  };
  async function render(){
@@ -36,8 +40,8 @@ export function mountLesson(container:HTMLElement,lesson:InteractiveLesson,title
    const today=new Date().toLocaleDateString('en-CA');if(!progress.activeDays.includes(today))progress.activeDays.push(today);persist();
    container.querySelector('#lesson-summary')!.innerHTML='<h2>Aula concluída</h2><p>Você praticou todas as etapas. As evidências abaixo consideram acertos, tentativas, pistas e consulta à solução. São indicadores para orientar a revisão.</p><div class="mastery">'+scores.map(s=>'<div><span>'+labels[s.capability]+'</span><b>'+(s.score===null?'Ainda não praticado':s.score+' / 100')+'</b></div>').join('')+'</div><p>Próxima revisão: '+esc(new Date(progress.review['aula-'+lesson.id]).toLocaleDateString('pt-BR'))+'.</p>';
   }else{const incomplete=lesson.steps.find(s=>!canAdvance(session,s));if(incomplete){session.currentStep=incomplete.id;persist();void render();}}});
-  container.querySelector('#step-hint')?.addEventListener('click',()=>{if(answer.hints<(step.hints?.length??0)){answer.hints++;answer.firstTry=false;persist();showHelp();}});
-  container.querySelector('#step-solution')?.addEventListener('click',()=>{answer.assisted=true;answer.firstTry=false;persist();showHelp();feedback.textContent='A solução é uma referência. Reconstrua o código e confira; consultar não conclui o passo.';});
+  container.querySelector('#step-hint')?.addEventListener('click',()=>{if(answer.hints<(step.hints?.length??0)){answer.hints++;answer.firstTry=false;invalidateCompletion();persist();showHelp();}});
+  container.querySelector('#step-solution')?.addEventListener('click',()=>{if(!answer.assisted)invalidateCompletion();answer.assisted=true;answer.firstTry=false;persist();showHelp();feedback.textContent='A solução é uma referência. Reconstrua o código e confira; consultar não conclui o passo.';});
   const changed=(value:string)=>{invalidate(answer,value);next.disabled=!canAdvance(session,step);feedback.textContent='';};
   container.querySelectorAll<HTMLInputElement>('input[name="answer"]').forEach(input=>input.addEventListener('change',()=>changed(input.value)));
   container.querySelector<HTMLInputElement>('#step-answer')?.addEventListener('input',e=>changed((e.target as HTMLInputElement).value));
