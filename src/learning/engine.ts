@@ -36,7 +36,7 @@ export function mountLesson(container:HTMLElement,lesson:InteractiveLesson,title
   next.addEventListener('click',()=>{if(index<lesson.steps.length-1){if(move(session,lesson,1)){persist();void render();}}else if(isComplete(session,lesson)){
    session.completedAt??=new Date().toISOString();if(!progress.lessons.includes(lesson.id))progress.lessons.push(lesson.id);
    const scores=mastery(session,lesson);const independent=scores.every(s=>s.score!==null&&s.score>=80);
-   progress.review['aula-'+lesson.id]??=new Date(Date.now()+(independent?7:1)*86400000).toISOString();
+   progress.review['aula-'+lesson.id]=new Date(Date.now()+(independent?7:1)*86400000).toISOString();
    const today=new Date().toLocaleDateString('en-CA');if(!progress.activeDays.includes(today))progress.activeDays.push(today);persist();
    container.querySelector('#lesson-summary')!.innerHTML='<h2>Aula concluída</h2><p>Você praticou todas as etapas. As evidências abaixo consideram acertos, tentativas, pistas e consulta à solução. São indicadores para orientar a revisão.</p><div class="mastery">'+scores.map(s=>'<div><span>'+labels[s.capability]+'</span><b>'+(s.score===null?'Ainda não praticado':s.score+' / 100')+'</b></div>').join('')+'</div><p>Próxima revisão: '+esc(new Date(progress.review['aula-'+lesson.id]).toLocaleDateString('pt-BR'))+'.</p>';
   }else{const incomplete=lesson.steps.find(s=>!canAdvance(session,s));if(incomplete){session.currentStep=incomplete.id;persist();void render();}}});
