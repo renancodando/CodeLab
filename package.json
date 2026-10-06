@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --configLoader runner --host 127.0.0.1",
-    "build": "tsc --noEmit && vite build --configLoader runner && node scripts/prerender.mjs",
+    "build": "node scripts/generate-curriculum-index.mjs --check && tsc --noEmit && vite build --configLoader runner && node scripts/prerender.mjs",
     "preview": "vite preview --configLoader runner --host 127.0.0.1",
     "test": "vitest run --configLoader runner",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "content:generate": "node scripts/generate-curriculum-index.mjs"
   },
   "dependencies": {
     "@jitl/quickjs-wasmfile-release-sync": "0.31.0",

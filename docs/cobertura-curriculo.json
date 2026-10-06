@@ -1,0 +1,2101 @@
+{
+  "edition": "2026-10-06",
+  "originalLessons": 60,
+  "expandedLessons": 48,
+  "totalLessons": 108,
+  "totalCourses": 20,
+  "statusLegend": {
+    "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
+    "praticaDoModulo": "Exemplo, depuração, exercício e projeto publicados para o módulo."
+  },
+  "courses": [
+    {
+      "id": "python-completo",
+      "title": "Python · do zero ao avançado",
+      "lessons": [
+        {
+          "id": "py-fundamentos",
+          "title": "Python: execução, tipos e controle",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "interpretador e REPL",
+              "status": "introduzido"
+            },
+            {
+              "title": "indentação",
+              "status": "introduzido"
+            },
+            {
+              "title": "int float bool None",
+              "status": "introduzido"
+            },
+            {
+              "title": "str e Unicode",
+              "status": "introduzido"
+            },
+            {
+              "title": "conversões e entrada",
+              "status": "introduzido"
+            },
+            {
+              "title": "if elif else",
+              "status": "introduzido"
+            },
+            {
+              "title": "for range while",
+              "status": "introduzido"
+            },
+            {
+              "title": "break continue else",
+              "status": "introduzido"
+            },
+            {
+              "title": "comparação e identidade",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-colecoes-funcoes",
+          "title": "Python: coleções, funções e iteração",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "list tuple dict set",
+              "status": "introduzido"
+            },
+            {
+              "title": "mutabilidade e cópia",
+              "status": "introduzido"
+            },
+            {
+              "title": "slicing e desempacotamento",
+              "status": "introduzido"
+            },
+            {
+              "title": "comprehensions",
+              "status": "introduzido"
+            },
+            {
+              "title": "parâmetros posicionais e nomeados",
+              "status": "introduzido"
+            },
+            {
+              "title": "args kwargs",
+              "status": "introduzido"
+            },
+            {
+              "title": "escopo LEGB closures",
+              "status": "introduzido"
+            },
+            {
+              "title": "iteradores e yield",
+              "status": "introduzido"
+            },
+            {
+              "title": "complexidade",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-objetos-protocolos",
+          "title": "Python: classes, protocolos e metaprogramação",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "classes instâncias self",
+              "status": "introduzido"
+            },
+            {
+              "title": "dataclasses",
+              "status": "introduzido"
+            },
+            {
+              "title": "herança composição MRO super",
+              "status": "introduzido"
+            },
+            {
+              "title": "property descritores",
+              "status": "introduzido"
+            },
+            {
+              "title": "dunder repr eq hash",
+              "status": "introduzido"
+            },
+            {
+              "title": "duck typing protocolos",
+              "status": "introduzido"
+            },
+            {
+              "title": "decoradores functools.wraps",
+              "status": "introduzido"
+            },
+            {
+              "title": "context managers",
+              "status": "introduzido"
+            },
+            {
+              "title": "slots metaclasses",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-biblioteca-dados",
+          "title": "Python: arquivos, exceções e biblioteca padrão",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "pathlib arquivos encoding",
+              "status": "introduzido"
+            },
+            {
+              "title": "with e exceções",
+              "status": "introduzido"
+            },
+            {
+              "title": "JSON CSV validação",
+              "status": "introduzido"
+            },
+            {
+              "title": "datetime zoneinfo",
+              "status": "introduzido"
+            },
+            {
+              "title": "decimal fractions",
+              "status": "introduzido"
+            },
+            {
+              "title": "collections itertools functools",
+              "status": "introduzido"
+            },
+            {
+              "title": "re Unicode",
+              "status": "introduzido"
+            },
+            {
+              "title": "logging argparse",
+              "status": "introduzido"
+            },
+            {
+              "title": "os subprocess segurança",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-concorrencia",
+          "title": "Python: concorrência, async e paralelismo",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "concorrência versus paralelismo",
+              "status": "introduzido"
+            },
+            {
+              "title": "async await corrotinas",
+              "status": "introduzido"
+            },
+            {
+              "title": "TaskGroup cancelamento",
+              "status": "introduzido"
+            },
+            {
+              "title": "timeouts semáforos filas",
+              "status": "introduzido"
+            },
+            {
+              "title": "threads locks",
+              "status": "introduzido"
+            },
+            {
+              "title": "ProcessPoolExecutor",
+              "status": "introduzido"
+            },
+            {
+              "title": "GIL builds free-threaded",
+              "status": "introduzido"
+            },
+            {
+              "title": "backpressure",
+              "status": "introduzido"
+            },
+            {
+              "title": "falhas e recursos",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-engenharia",
+          "title": "Python: tipagem, testes, pacotes e desempenho",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "módulos imports __main__",
+              "status": "introduzido"
+            },
+            {
+              "title": "venv pip pyproject.toml",
+              "status": "introduzido"
+            },
+            {
+              "title": "typing Protocol Generic",
+              "status": "introduzido"
+            },
+            {
+              "title": "testes unittest mocks",
+              "status": "introduzido"
+            },
+            {
+              "title": "propriedades casos de borda",
+              "status": "introduzido"
+            },
+            {
+              "title": "profiling timeit tracemalloc",
+              "status": "introduzido"
+            },
+            {
+              "title": "algoritmos complexidade",
+              "status": "introduzido"
+            },
+            {
+              "title": "distribuição wheels",
+              "status": "introduzido"
+            },
+            {
+              "title": "documentação e evolução",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    },
+    {
+      "id": "typescript-completo",
+      "title": "TypeScript · do zero ao avançado",
+      "lessons": [
+        {
+          "id": "ts-fundamentos",
+          "title": "TypeScript: tipos, inferência e execução",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "tsc e apagamento de tipos",
+              "status": "introduzido"
+            },
+            {
+              "title": "inferência",
+              "status": "introduzido"
+            },
+            {
+              "title": "string number boolean",
+              "status": "introduzido"
+            },
+            {
+              "title": "arrays readonly tuples",
+              "status": "introduzido"
+            },
+            {
+              "title": "literal types unions",
+              "status": "introduzido"
+            },
+            {
+              "title": "strictNullChecks",
+              "status": "introduzido"
+            },
+            {
+              "title": "unknown versus any",
+              "status": "introduzido"
+            },
+            {
+              "title": "type assertions satisfies",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-contratos",
+          "title": "TypeScript: objetos, narrowing e uniões discriminadas",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "type interface tipagem estrutural",
+              "status": "introduzido"
+            },
+            {
+              "title": "optional readonly",
+              "status": "introduzido"
+            },
+            {
+              "title": "excess property checks",
+              "status": "introduzido"
+            },
+            {
+              "title": "typeof in instanceof",
+              "status": "introduzido"
+            },
+            {
+              "title": "type predicates assertions",
+              "status": "introduzido"
+            },
+            {
+              "title": "discriminated unions",
+              "status": "introduzido"
+            },
+            {
+              "title": "never exhaustiveness",
+              "status": "introduzido"
+            },
+            {
+              "title": "intersections index signatures",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-genericos",
+          "title": "TypeScript: genéricos, coleções e variância",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "generic functions interfaces",
+              "status": "introduzido"
+            },
+            {
+              "title": "constraints extends",
+              "status": "introduzido"
+            },
+            {
+              "title": "keyof indexed access",
+              "status": "introduzido"
+            },
+            {
+              "title": "defaults inference",
+              "status": "introduzido"
+            },
+            {
+              "title": "overloads",
+              "status": "introduzido"
+            },
+            {
+              "title": "callbacks variance",
+              "status": "introduzido"
+            },
+            {
+              "title": "readonly collections",
+              "status": "introduzido"
+            },
+            {
+              "title": "generic classes factories",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-tipos-avancados",
+          "title": "TypeScript: transformação e programação de tipos",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "mapped types modifiers",
+              "status": "introduzido"
+            },
+            {
+              "title": "Pick Omit Partial Required Readonly",
+              "status": "introduzido"
+            },
+            {
+              "title": "Record Exclude Extract",
+              "status": "introduzido"
+            },
+            {
+              "title": "conditional types distribution",
+              "status": "introduzido"
+            },
+            {
+              "title": "infer ReturnType Parameters Awaited",
+              "status": "introduzido"
+            },
+            {
+              "title": "template literal types",
+              "status": "introduzido"
+            },
+            {
+              "title": "key remapping",
+              "status": "introduzido"
+            },
+            {
+              "title": "recursive types limits",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-modulos-configuracao",
+          "title": "TypeScript: módulos, configuração e declarações",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "tsconfig strict",
+              "status": "introduzido"
+            },
+            {
+              "title": "target lib module",
+              "status": "introduzido"
+            },
+            {
+              "title": "NodeNext bundler resolution",
+              "status": "introduzido"
+            },
+            {
+              "title": "ESM CommonJS",
+              "status": "introduzido"
+            },
+            {
+              "title": "import type verbatimModuleSyntax",
+              "status": "introduzido"
+            },
+            {
+              "title": "declaration d.ts",
+              "status": "introduzido"
+            },
+            {
+              "title": "ambient declarations",
+              "status": "introduzido"
+            },
+            {
+              "title": "project references",
+              "status": "introduzido"
+            },
+            {
+              "title": "source maps packaging",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-fronteiras-qualidade",
+          "title": "TypeScript: validação, assíncrono e qualidade",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "JSON unknown validation",
+              "status": "introduzido"
+            },
+            {
+              "title": "Result discriminated unions",
+              "status": "introduzido"
+            },
+            {
+              "title": "Promise async errors",
+              "status": "introduzido"
+            },
+            {
+              "title": "AbortController",
+              "status": "introduzido"
+            },
+            {
+              "title": "static versus runtime tests",
+              "status": "introduzido"
+            },
+            {
+              "title": "ts-expect-error",
+              "status": "introduzido"
+            },
+            {
+              "title": "gradual migration checkJs JSDoc",
+              "status": "introduzido"
+            },
+            {
+              "title": "domain DTO boundaries",
+              "status": "introduzido"
+            },
+            {
+              "title": "security and serialization",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    },
+    {
+      "id": "cpp-completo",
+      "title": "C++ · do zero ao avançado",
+      "lessons": [
+        {
+          "id": "cpp-fundamentos",
+          "title": "C++: compilação, tipos e controle",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "compilação ligação main",
+              "status": "introduzido"
+            },
+            {
+              "title": "headers namespaces",
+              "status": "introduzido"
+            },
+            {
+              "title": "tipos fundamentais auto",
+              "status": "introduzido"
+            },
+            {
+              "title": "inicialização narrowing",
+              "status": "introduzido"
+            },
+            {
+              "title": "signed unsigned overflow",
+              "status": "introduzido"
+            },
+            {
+              "title": "if switch loops",
+              "status": "introduzido"
+            },
+            {
+              "title": "funções parâmetros retorno",
+              "status": "introduzido"
+            },
+            {
+              "title": "const constexpr",
+              "status": "introduzido"
+            },
+            {
+              "title": "entrada e streams",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-classes-raii",
+          "title": "C++: classes, RAII e semântica de valor",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "struct class encapsulamento",
+              "status": "introduzido"
+            },
+            {
+              "title": "constructors invariants",
+              "status": "introduzido"
+            },
+            {
+              "title": "RAII destructors",
+              "status": "introduzido"
+            },
+            {
+              "title": "rule of zero five",
+              "status": "introduzido"
+            },
+            {
+              "title": "copy move semantics",
+              "status": "introduzido"
+            },
+            {
+              "title": "composition inheritance",
+              "status": "introduzido"
+            },
+            {
+              "title": "virtual destructor slicing",
+              "status": "introduzido"
+            },
+            {
+              "title": "exceptions guarantees",
+              "status": "introduzido"
+            },
+            {
+              "title": "explicit const methods",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-stl-algoritmos",
+          "title": "C++: STL, iteradores, algoritmos e ranges",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "vector array deque list",
+              "status": "introduzido"
+            },
+            {
+              "title": "map set unordered_map",
+              "status": "introduzido"
+            },
+            {
+              "title": "iterator categories invalidation",
+              "status": "introduzido"
+            },
+            {
+              "title": "algorithms sort find accumulate",
+              "status": "introduzido"
+            },
+            {
+              "title": "lambdas captures",
+              "status": "introduzido"
+            },
+            {
+              "title": "comparators strict weak ordering",
+              "status": "introduzido"
+            },
+            {
+              "title": "ranges views lifetime",
+              "status": "introduzido"
+            },
+            {
+              "title": "complexity",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-templates",
+          "title": "C++: templates, concepts e avaliação constante",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "function class templates",
+              "status": "introduzido"
+            },
+            {
+              "title": "deduction instantiation",
+              "status": "introduzido"
+            },
+            {
+              "title": "concepts requires",
+              "status": "introduzido"
+            },
+            {
+              "title": "constraints overloads",
+              "status": "introduzido"
+            },
+            {
+              "title": "if constexpr type_traits",
+              "status": "introduzido"
+            },
+            {
+              "title": "variadic templates folds",
+              "status": "introduzido"
+            },
+            {
+              "title": "constexpr consteval",
+              "status": "introduzido"
+            },
+            {
+              "title": "specialization ODR headers",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-memoria-posse",
+          "title": "C++: memória, posse e segurança de vida",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "storage duration lifetime",
+              "status": "introduzido"
+            },
+            {
+              "title": "pointers references nullptr",
+              "status": "introduzido"
+            },
+            {
+              "title": "unique_ptr shared_ptr weak_ptr",
+              "status": "introduzido"
+            },
+            {
+              "title": "ownership cycles",
+              "status": "introduzido"
+            },
+            {
+              "title": "span string_view dangling",
+              "status": "introduzido"
+            },
+            {
+              "title": "value categories move forwarding",
+              "status": "introduzido"
+            },
+            {
+              "title": "optional variant visit",
+              "status": "introduzido"
+            },
+            {
+              "title": "alignment allocation placement",
+              "status": "introduzido"
+            },
+            {
+              "title": "sanitizers UB",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-concorrencia-engenharia",
+          "title": "C++: concorrência, build e desempenho",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "thread jthread stop_token",
+              "status": "introduzido"
+            },
+            {
+              "title": "mutex scoped_lock condition_variable",
+              "status": "introduzido"
+            },
+            {
+              "title": "atomics memory ordering",
+              "status": "introduzido"
+            },
+            {
+              "title": "data races deadlocks",
+              "status": "introduzido"
+            },
+            {
+              "title": "future async",
+              "status": "introduzido"
+            },
+            {
+              "title": "build headers CMake modules",
+              "status": "introduzido"
+            },
+            {
+              "title": "profiling benchmarks",
+              "status": "introduzido"
+            },
+            {
+              "title": "cache locality false sharing",
+              "status": "introduzido"
+            },
+            {
+              "title": "coroutines custom awaitables",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    },
+    {
+      "id": "javascript-completo",
+      "title": "JavaScript · fundamentos à especialização",
+      "lessons": [
+        {
+          "id": "js-semantica",
+          "title": "JavaScript: valores, coerção e escopo",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "primitives objects typeof",
+              "status": "introduzido"
+            },
+            {
+              "title": "Number BigInt NaN",
+              "status": "introduzido"
+            },
+            {
+              "title": "Unicode strings",
+              "status": "introduzido"
+            },
+            {
+              "title": "coercion equality Object.is",
+              "status": "introduzido"
+            },
+            {
+              "title": "truthiness nullish",
+              "status": "introduzido"
+            },
+            {
+              "title": "let const var TDZ",
+              "status": "introduzido"
+            },
+            {
+              "title": "destructuring rest spread",
+              "status": "introduzido"
+            },
+            {
+              "title": "closures lexical scope",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-funcoes-this",
+          "title": "JavaScript: funções, this e composição",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "declaration expression arrow",
+              "status": "introduzido"
+            },
+            {
+              "title": "parameters defaults rest",
+              "status": "introduzido"
+            },
+            {
+              "title": "this call apply bind",
+              "status": "introduzido"
+            },
+            {
+              "title": "lexical this",
+              "status": "introduzido"
+            },
+            {
+              "title": "higher-order functions",
+              "status": "introduzido"
+            },
+            {
+              "title": "closures callbacks",
+              "status": "introduzido"
+            },
+            {
+              "title": "pure functions composition",
+              "status": "introduzido"
+            },
+            {
+              "title": "recursion stack tail calls",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-objetos-modelos",
+          "title": "JavaScript: objetos, protótipos e classes",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "property keys descriptors",
+              "status": "introduzido"
+            },
+            {
+              "title": "own versus inherited",
+              "status": "introduzido"
+            },
+            {
+              "title": "prototype chain",
+              "status": "introduzido"
+            },
+            {
+              "title": "classes constructors private fields",
+              "status": "introduzido"
+            },
+            {
+              "title": "getters setters",
+              "status": "introduzido"
+            },
+            {
+              "title": "composition inheritance super",
+              "status": "introduzido"
+            },
+            {
+              "title": "symbols",
+              "status": "introduzido"
+            },
+            {
+              "title": "Proxy Reflect",
+              "status": "introduzido"
+            },
+            {
+              "title": "prototype pollution boundaries",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-colecoes-iteracao",
+          "title": "JavaScript: coleções, iteradores e memória",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "arrays sparse map filter reduce sort",
+              "status": "introduzido"
+            },
+            {
+              "title": "Map Set identity",
+              "status": "introduzido"
+            },
+            {
+              "title": "WeakMap WeakSet GC",
+              "status": "introduzido"
+            },
+            {
+              "title": "iterators generators yield",
+              "status": "introduzido"
+            },
+            {
+              "title": "typed arrays ArrayBuffer DataView",
+              "status": "introduzido"
+            },
+            {
+              "title": "RegExp Unicode",
+              "status": "introduzido"
+            },
+            {
+              "title": "Intl formatting segmentation",
+              "status": "introduzido"
+            },
+            {
+              "title": "resource lifetime dispose",
+              "status": "introduzido"
+            },
+            {
+              "title": "memory leaks",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-assincrono",
+          "title": "JavaScript: promises, concorrência e cancelamento",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "event loop jobs microtasks",
+              "status": "introduzido"
+            },
+            {
+              "title": "Promise states chaining",
+              "status": "introduzido"
+            },
+            {
+              "title": "async await rejection",
+              "status": "introduzido"
+            },
+            {
+              "title": "all allSettled race any",
+              "status": "introduzido"
+            },
+            {
+              "title": "bounded concurrency",
+              "status": "introduzido"
+            },
+            {
+              "title": "AbortController host APIs",
+              "status": "introduzido"
+            },
+            {
+              "title": "timeouts stale responses",
+              "status": "introduzido"
+            },
+            {
+              "title": "idempotency retry backoff",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-modulos-engenharia",
+          "title": "JavaScript: módulos, testes e arquitetura",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "ES modules live bindings",
+              "status": "introduzido"
+            },
+            {
+              "title": "dynamic import top-level await",
+              "status": "introduzido"
+            },
+            {
+              "title": "cycles CommonJS hosts",
+              "status": "introduzido"
+            },
+            {
+              "title": "errors causes boundaries",
+              "status": "introduzido"
+            },
+            {
+              "title": "JSON structured clone",
+              "status": "introduzido"
+            },
+            {
+              "title": "unit integration e2e",
+              "status": "introduzido"
+            },
+            {
+              "title": "dependency injection",
+              "status": "introduzido"
+            },
+            {
+              "title": "performance profiling",
+              "status": "introduzido"
+            },
+            {
+              "title": "security DOM SQL boundaries",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    },
+    {
+      "id": "html-completo",
+      "title": "HTML · do zero à plataforma web",
+      "lessons": [
+        {
+          "id": "html-documentos",
+          "title": "HTML: documento, árvore e semântica",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "doctype html head body",
+              "status": "introduzido"
+            },
+            {
+              "title": "DOM parsing nesting",
+              "status": "introduzido"
+            },
+            {
+              "title": "lang charset viewport",
+              "status": "introduzido"
+            },
+            {
+              "title": "title meta link",
+              "status": "introduzido"
+            },
+            {
+              "title": "main header nav section article aside footer",
+              "status": "introduzido"
+            },
+            {
+              "title": "global attributes id class data",
+              "status": "introduzido"
+            },
+            {
+              "title": "boolean attributes",
+              "status": "introduzido"
+            },
+            {
+              "title": "void elements entities namespaces",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "html-texto-links",
+          "title": "HTML: texto, links, listas e tabelas",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "headings paragraphs emphasis",
+              "status": "introduzido"
+            },
+            {
+              "title": "strong em mark small",
+              "status": "introduzido"
+            },
+            {
+              "title": "blockquote cite q",
+              "status": "introduzido"
+            },
+            {
+              "title": "pre code whitespace",
+              "status": "introduzido"
+            },
+            {
+              "title": "ol ul dl",
+              "status": "introduzido"
+            },
+            {
+              "title": "URLs relative absolute fragments",
+              "status": "introduzido"
+            },
+            {
+              "title": "a download target rel",
+              "status": "introduzido"
+            },
+            {
+              "title": "tables caption th scope",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "html-formularios",
+          "title": "HTML: formulários, validação e dados enviados",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "form action method",
+              "status": "introduzido"
+            },
+            {
+              "title": "label name value",
+              "status": "introduzido"
+            },
+            {
+              "title": "input types textarea select",
+              "status": "introduzido"
+            },
+            {
+              "title": "checkbox radio fieldset legend",
+              "status": "introduzido"
+            },
+            {
+              "title": "required min max step pattern",
+              "status": "introduzido"
+            },
+            {
+              "title": "autocomplete inputmode",
+              "status": "introduzido"
+            },
+            {
+              "title": "constraint validation",
+              "status": "introduzido"
+            },
+            {
+              "title": "FormData successful controls",
+              "status": "introduzido"
+            },
+            {
+              "title": "client server validation",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "html-midia",
+          "title": "HTML: imagens, mídia e conteúdo incorporado",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "img alt width height",
+              "status": "introduzido"
+            },
+            {
+              "title": "srcset sizes picture",
+              "status": "introduzido"
+            },
+            {
+              "title": "figure figcaption",
+              "status": "introduzido"
+            },
+            {
+              "title": "audio video source track",
+              "status": "introduzido"
+            },
+            {
+              "title": "captions transcripts autoplay",
+              "status": "introduzido"
+            },
+            {
+              "title": "SVG canvas alternatives",
+              "status": "introduzido"
+            },
+            {
+              "title": "iframe title sandbox permissions",
+              "status": "introduzido"
+            },
+            {
+              "title": "lazy loading performance",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "html-acessibilidade",
+          "title": "HTML: acessibilidade e interação nativa",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "keyboard focus tabindex",
+              "status": "introduzido"
+            },
+            {
+              "title": "button versus link",
+              "status": "introduzido"
+            },
+            {
+              "title": "accessible names descriptions",
+              "status": "introduzido"
+            },
+            {
+              "title": "details summary",
+              "status": "introduzido"
+            },
+            {
+              "title": "dialog modal focus return",
+              "status": "introduzido"
+            },
+            {
+              "title": "popover support",
+              "status": "introduzido"
+            },
+            {
+              "title": "ARIA states relationships",
+              "status": "introduzido"
+            },
+            {
+              "title": "live regions",
+              "status": "introduzido"
+            },
+            {
+              "title": "progressive enhancement",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "html-plataforma",
+          "title": "HTML: DOM, componentes e integração da plataforma",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "DOM createElement textContent",
+              "status": "introduzido"
+            },
+            {
+              "title": "events propagation delegation",
+              "status": "introduzido"
+            },
+            {
+              "title": "template document fragments",
+              "status": "introduzido"
+            },
+            {
+              "title": "custom elements lifecycle",
+              "status": "introduzido"
+            },
+            {
+              "title": "Shadow DOM slots",
+              "status": "introduzido"
+            },
+            {
+              "title": "storage origin sandbox",
+              "status": "introduzido"
+            },
+            {
+              "title": "fetch workers host APIs",
+              "status": "introduzido"
+            },
+            {
+              "title": "CSP same-origin permissions",
+              "status": "introduzido"
+            },
+            {
+              "title": "SEO progressive enhancement",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    },
+    {
+      "id": "css-completo",
+      "title": "CSS · do zero ao avançado",
+      "lessons": [
+        {
+          "id": "css-cascata",
+          "title": "CSS: seletores, cascata e valores",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "selectors combinators attributes",
+              "status": "introduzido"
+            },
+            {
+              "title": "pseudo classes elements",
+              "status": "introduzido"
+            },
+            {
+              "title": "cascade origin importance layers",
+              "status": "introduzido"
+            },
+            {
+              "title": "specificity source order",
+              "status": "introduzido"
+            },
+            {
+              "title": "inherit initial unset revert",
+              "status": "introduzido"
+            },
+            {
+              "title": "custom properties var fallback",
+              "status": "introduzido"
+            },
+            {
+              "title": "computed used values",
+              "status": "introduzido"
+            },
+            {
+              "title": "relative absolute units",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-caixas",
+          "title": "CSS: caixas, fluxo e posicionamento",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "box model box-sizing",
+              "status": "introduzido"
+            },
+            {
+              "title": "block inline inline-block",
+              "status": "introduzido"
+            },
+            {
+              "title": "normal flow intrinsic sizing",
+              "status": "introduzido"
+            },
+            {
+              "title": "margin collapse",
+              "status": "introduzido"
+            },
+            {
+              "title": "overflow scroll clipping",
+              "status": "introduzido"
+            },
+            {
+              "title": "position relative absolute fixed sticky",
+              "status": "introduzido"
+            },
+            {
+              "title": "containing blocks",
+              "status": "introduzido"
+            },
+            {
+              "title": "stacking context z-index",
+              "status": "introduzido"
+            },
+            {
+              "title": "logical properties writing modes",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-flex-grid",
+          "title": "CSS: Flexbox, Grid e alinhamento",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "flex axes wrap basis grow shrink",
+              "status": "introduzido"
+            },
+            {
+              "title": "alignment gap auto margins",
+              "status": "introduzido"
+            },
+            {
+              "title": "flex min-size",
+              "status": "introduzido"
+            },
+            {
+              "title": "grid tracks fr minmax",
+              "status": "introduzido"
+            },
+            {
+              "title": "auto-fit auto-fill",
+              "status": "introduzido"
+            },
+            {
+              "title": "explicit implicit placement",
+              "status": "introduzido"
+            },
+            {
+              "title": "grid areas subgrid",
+              "status": "introduzido"
+            },
+            {
+              "title": "source order accessibility",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-responsivo",
+          "title": "CSS: responsividade, consultas e dimensões fluidas",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "media queries content breakpoints",
+              "status": "introduzido"
+            },
+            {
+              "title": "container queries inline-size",
+              "status": "introduzido"
+            },
+            {
+              "title": "clamp min max calc",
+              "status": "introduzido"
+            },
+            {
+              "title": "viewport svh lvh dvh",
+              "status": "introduzido"
+            },
+            {
+              "title": "reflow zoom text",
+              "status": "introduzido"
+            },
+            {
+              "title": "responsive images aspect-ratio",
+              "status": "introduzido"
+            },
+            {
+              "title": "prefers-color-scheme reduced-motion",
+              "status": "introduzido"
+            },
+            {
+              "title": "pointer hover capabilities",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-visual-movimento",
+          "title": "CSS: tipografia, cor e movimento",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "font stacks web fonts loading",
+              "status": "introduzido"
+            },
+            {
+              "title": "line-height measure text",
+              "status": "introduzido"
+            },
+            {
+              "title": "color contrast modern color spaces",
+              "status": "introduzido"
+            },
+            {
+              "title": "background gradients borders shadows",
+              "status": "introduzido"
+            },
+            {
+              "title": "transforms transitions",
+              "status": "introduzido"
+            },
+            {
+              "title": "keyframes animation timing",
+              "status": "introduzido"
+            },
+            {
+              "title": "reduced motion",
+              "status": "introduzido"
+            },
+            {
+              "title": "render layout paint composite",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-arquitetura",
+          "title": "CSS: arquitetura, compatibilidade e depuração",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "tokens themes component APIs",
+              "status": "introduzido"
+            },
+            {
+              "title": "layers scope naming",
+              "status": "introduzido"
+            },
+            {
+              "title": "supports progressive enhancement",
+              "status": "introduzido"
+            },
+            {
+              "title": "compatibility fallback",
+              "status": "introduzido"
+            },
+            {
+              "title": "contain content-visibility",
+              "status": "introduzido"
+            },
+            {
+              "title": "logical properties internationalization",
+              "status": "introduzido"
+            },
+            {
+              "title": "DevTools computed layout",
+              "status": "introduzido"
+            },
+            {
+              "title": "visual regression states",
+              "status": "introduzido"
+            },
+            {
+              "title": "dead CSS maintenance",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    },
+    {
+      "id": "csharp-completo",
+      "title": "C# · do zero à engenharia",
+      "lessons": [
+        {
+          "id": "cs-tipos-controle",
+          "title": "C#: tipos, valores e controle de fluxo",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "dotnet project build runtime",
+              "status": "introduzido"
+            },
+            {
+              "title": "value reference types",
+              "status": "introduzido"
+            },
+            {
+              "title": "int long double decimal",
+              "status": "introduzido"
+            },
+            {
+              "title": "checked conversions",
+              "status": "introduzido"
+            },
+            {
+              "title": "string char Unicode",
+              "status": "introduzido"
+            },
+            {
+              "title": "nullable reference value types",
+              "status": "introduzido"
+            },
+            {
+              "title": "if switch pattern matching",
+              "status": "introduzido"
+            },
+            {
+              "title": "loops methods parameters",
+              "status": "introduzido"
+            },
+            {
+              "title": "exceptions contracts",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cs-colecoes-linq",
+          "title": "C#: genéricos, coleções e LINQ",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "List Dictionary HashSet",
+              "status": "introduzido"
+            },
+            {
+              "title": "generic constraints variance",
+              "status": "introduzido"
+            },
+            {
+              "title": "IEnumerable IEnumerator",
+              "status": "introduzido"
+            },
+            {
+              "title": "LINQ Where Select OrderBy GroupBy",
+              "status": "introduzido"
+            },
+            {
+              "title": "deferred execution materialization",
+              "status": "introduzido"
+            },
+            {
+              "title": "First Single Any",
+              "status": "introduzido"
+            },
+            {
+              "title": "IQueryable providers",
+              "status": "introduzido"
+            },
+            {
+              "title": "complexity multiple enumeration",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cs-objetos-contratos",
+          "title": "C#: objetos, interfaces, records e padrões",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "classes structs records",
+              "status": "introduzido"
+            },
+            {
+              "title": "constructors properties init required",
+              "status": "introduzido"
+            },
+            {
+              "title": "interfaces composition inheritance",
+              "status": "introduzido"
+            },
+            {
+              "title": "virtual override abstract sealed",
+              "status": "introduzido"
+            },
+            {
+              "title": "value equality record copying",
+              "status": "introduzido"
+            },
+            {
+              "title": "pattern matching switch",
+              "status": "introduzido"
+            },
+            {
+              "title": "delegates lambdas events",
+              "status": "introduzido"
+            },
+            {
+              "title": "operator overload contracts",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cs-assincrono-recursos",
+          "title": "C#: async, cancelamento e recursos",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "Task async await",
+              "status": "introduzido"
+            },
+            {
+              "title": "Task.WhenAll WhenAny",
+              "status": "introduzido"
+            },
+            {
+              "title": "CancellationToken cooperative",
+              "status": "introduzido"
+            },
+            {
+              "title": "timeouts bounded concurrency",
+              "status": "introduzido"
+            },
+            {
+              "title": "IDisposable using",
+              "status": "introduzido"
+            },
+            {
+              "title": "IAsyncDisposable await using",
+              "status": "introduzido"
+            },
+            {
+              "title": "IAsyncEnumerable await foreach",
+              "status": "introduzido"
+            },
+            {
+              "title": "async void contexts",
+              "status": "introduzido"
+            },
+            {
+              "title": "deadlocks Result Wait",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cs-runtime-avancado",
+          "title": "C#: runtime, memória e recursos avançados",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "GC allocations boxing",
+              "status": "introduzido"
+            },
+            {
+              "title": "struct readonly ref struct",
+              "status": "introduzido"
+            },
+            {
+              "title": "Span ReadOnlySpan Memory",
+              "status": "introduzido"
+            },
+            {
+              "title": "stackalloc lifetime",
+              "status": "introduzido"
+            },
+            {
+              "title": "generics constraints",
+              "status": "introduzido"
+            },
+            {
+              "title": "reflection attributes",
+              "status": "introduzido"
+            },
+            {
+              "title": "source generators trimming AOT",
+              "status": "introduzido"
+            },
+            {
+              "title": "unsafe pointers interop",
+              "status": "introduzido"
+            },
+            {
+              "title": "profiling benchmarking",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cs-engenharia",
+          "title": "C#: testes, pacotes e arquitetura .NET",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "solutions projects references NuGet",
+              "status": "introduzido"
+            },
+            {
+              "title": "unit integration end-to-end tests",
+              "status": "introduzido"
+            },
+            {
+              "title": "dependency injection lifetimes",
+              "status": "introduzido"
+            },
+            {
+              "title": "ASP.NET middleware APIs",
+              "status": "introduzido"
+            },
+            {
+              "title": "EF Core transactions migrations",
+              "status": "introduzido"
+            },
+            {
+              "title": "logging configuration secrets",
+              "status": "introduzido"
+            },
+            {
+              "title": "publish trimming AOT",
+              "status": "introduzido"
+            },
+            {
+              "title": "architecture domain adapters",
+              "status": "introduzido"
+            },
+            {
+              "title": "versioning compatibility",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    },
+    {
+      "id": "sql-completo",
+      "title": "SQL · do zero ao avançado",
+      "lessons": [
+        {
+          "id": "sql-modelagem-completa",
+          "title": "SQL: modelo relacional, tipos e integridade",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "relations rows columns keys",
+              "status": "introduzido"
+            },
+            {
+              "title": "CREATE ALTER DROP schema",
+              "status": "introduzido"
+            },
+            {
+              "title": "primary foreign unique keys",
+              "status": "introduzido"
+            },
+            {
+              "title": "NOT NULL CHECK DEFAULT",
+              "status": "introduzido"
+            },
+            {
+              "title": "NULL three-valued logic",
+              "status": "introduzido"
+            },
+            {
+              "title": "numeric text boolean dates",
+              "status": "introduzido"
+            },
+            {
+              "title": "normalization dependencies",
+              "status": "introduzido"
+            },
+            {
+              "title": "INSERT UPDATE DELETE RETURNING",
+              "status": "introduzido"
+            },
+            {
+              "title": "PostgreSQL dialect",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-consultas-joins",
+          "title": "SQL: consultas, joins e composição",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "SELECT FROM WHERE order logic",
+              "status": "introduzido"
+            },
+            {
+              "title": "INNER LEFT RIGHT FULL CROSS JOIN",
+              "status": "introduzido"
+            },
+            {
+              "title": "join cardinality aliases",
+              "status": "introduzido"
+            },
+            {
+              "title": "EXISTS NOT EXISTS correlated",
+              "status": "introduzido"
+            },
+            {
+              "title": "UNION ALL INTERSECT EXCEPT",
+              "status": "introduzido"
+            },
+            {
+              "title": "CTEs composition",
+              "status": "introduzido"
+            },
+            {
+              "title": "ORDER BY LIMIT keyset pagination",
+              "status": "introduzido"
+            },
+            {
+              "title": "LATERAL",
+              "status": "introduzido"
+            },
+            {
+              "title": "parameterized queries",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-agregacoes-janelas",
+          "title": "SQL: agregações, janelas e análise",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "GROUP BY HAVING",
+              "status": "introduzido"
+            },
+            {
+              "title": "count sum avg NULL",
+              "status": "introduzido"
+            },
+            {
+              "title": "aggregate FILTER distinct",
+              "status": "introduzido"
+            },
+            {
+              "title": "window PARTITION ORDER",
+              "status": "introduzido"
+            },
+            {
+              "title": "row_number rank dense_rank",
+              "status": "introduzido"
+            },
+            {
+              "title": "lag lead",
+              "status": "introduzido"
+            },
+            {
+              "title": "ROWS RANGE frames",
+              "status": "introduzido"
+            },
+            {
+              "title": "running totals",
+              "status": "introduzido"
+            },
+            {
+              "title": "grouping sets rollup",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-transacoes",
+          "title": "SQL: transações, MVCC e concorrência",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "ACID BEGIN COMMIT ROLLBACK",
+              "status": "introduzido"
+            },
+            {
+              "title": "savepoints",
+              "status": "introduzido"
+            },
+            {
+              "title": "MVCC snapshots",
+              "status": "introduzido"
+            },
+            {
+              "title": "read committed repeatable read serializable",
+              "status": "introduzido"
+            },
+            {
+              "title": "lost updates write skew",
+              "status": "introduzido"
+            },
+            {
+              "title": "SELECT FOR UPDATE",
+              "status": "introduzido"
+            },
+            {
+              "title": "deadlocks ordering",
+              "status": "introduzido"
+            },
+            {
+              "title": "retry idempotency",
+              "status": "introduzido"
+            },
+            {
+              "title": "constraints concurrency",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-indices-planos",
+          "title": "SQL: índices, planos e otimização",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "EXPLAIN ANALYZE BUFFERS",
+              "status": "introduzido"
+            },
+            {
+              "title": "statistics ANALYZE estimates",
+              "status": "introduzido"
+            },
+            {
+              "title": "B-tree composite order",
+              "status": "introduzido"
+            },
+            {
+              "title": "partial expression covering indexes",
+              "status": "introduzido"
+            },
+            {
+              "title": "GIN GiST BRIN",
+              "status": "introduzido"
+            },
+            {
+              "title": "sequential index bitmap scans",
+              "status": "introduzido"
+            },
+            {
+              "title": "join strategies",
+              "status": "introduzido"
+            },
+            {
+              "title": "sargability",
+              "status": "introduzido"
+            },
+            {
+              "title": "write costs maintenance",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-esquema-avancado",
+          "title": "SQL: views, recursão, JSON e evolução",
+          "level": "Especialização",
+          "topics": [
+            {
+              "title": "views materialized refresh",
+              "status": "introduzido"
+            },
+            {
+              "title": "recursive CTE termination cycles",
+              "status": "introduzido"
+            },
+            {
+              "title": "JSONB operators indexes",
+              "status": "introduzido"
+            },
+            {
+              "title": "functions procedures triggers",
+              "status": "introduzido"
+            },
+            {
+              "title": "generated identity columns",
+              "status": "introduzido"
+            },
+            {
+              "title": "partitioning pruning",
+              "status": "introduzido"
+            },
+            {
+              "title": "roles grants least privilege",
+              "status": "introduzido"
+            },
+            {
+              "title": "schema migrations compatibility",
+              "status": "introduzido"
+            },
+            {
+              "title": "backup restore verification",
+              "status": "introduzido"
+            }
+          ],
+          "status": "praticaDoModulo"
+        }
+      ]
+    }
+  ]
+}
