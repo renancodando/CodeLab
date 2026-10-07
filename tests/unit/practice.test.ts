@@ -87,6 +87,15 @@ describe('prática distribuída e verificação de comportamento',()=>{
   expect(cancelled.status).toBe('cancelled');expect(cancelled.tests).toEqual([]);
   expect((await evaluatePractice('inexistente','x')).status).toBe('unavailable');
  });
+ it('rejeita transbordamento, centavos inseguros e quantidade que perdeu precisão',async()=>{
+  const result=await evaluatePractice('js-debug-carrinho','function totalizar(itens){if(!Array.isArray(itens))throw new TypeError();let total=0;for(const item of itens){if(!item||typeof item.preco!=="number"||!Number.isFinite(item.preco)||item.preco<0||!Number.isInteger(item.quantidade)||item.quantidade<0)throw new TypeError();total+=item.preco*item.quantidade;}return Math.round(total*100)/100;}');
+  expect(result.tests.slice(0,4).every(test=>test.passed)).toBe(true);
+  expect(result.tests[4].passed).toBe(false);expect(result.feedback).toContain('precisão');
+ });
+ it('exceções escritas pelo aluno continuam evidência avaliada, mesmo com texto de infraestrutura',async()=>{
+  const result=await evaluatePractice('js-debug-carrinho','throw new Error("O executor não carregou. Verifique sua conexão e tente novamente." + "x".repeat(10000));');
+  expect(result.status).toBe('evaluated');expect(result.evidence).toBe('executed');expect(result.passed).toBe(false);
+ });
  it('limita respostas e não aceita IDs de linhas como programa JS',async()=>{
   expect((await evaluatePractice('py-prever-range','x'.repeat(30001))).passed).toBe(false);
   expect((await evaluatePractice('js-debug-carrinho',['linha'])).passed).toBe(false);

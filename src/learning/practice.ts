@@ -43,9 +43,10 @@ const javascript:Record<string,JSSpec>={
    check('Um carrinho vazio tem total zero.','totalizar([]) === 0','O caso comum pode funcionar, mas um carrinho vazio precisa retornar zero.'),
    check('Outros preços, quantidades e quantidade zero funcionam.','totalizar([{preco:7.5,quantidade:3},{preco:999,quantidade:0}]) === 22.5 && totalizar([{preco:0.1,quantidade:3},{preco:0.2,quantidade:1}]) === 0.5','O total precisa acompanhar novas entradas e o arredondamento, sem depender do exemplo inicial.'),
    check('Dados fora do contrato são recusados.','(()=>{ const dados=[[{preco:"10",quantidade:2}],[{preco:4,quantidade:-1}],[{preco:4,quantidade:1.5}],[{preco:Infinity,quantidade:1}],[{preco:NaN,quantidade:1}],[{preco:-1,quantidade:2}],[null],null]; return dados.every(itens=>{try{totalizar(itens);return false;}catch(erro){return erro instanceof TypeError;}}); })()','O cálculo ainda aceita dados fora do contrato. Valide número finito e quantidade inteira não negativa antes de somar.'),
+   check('Faixa numérica segura é respeitada.','(()=>{const dados=[[{preco:1,quantidade:Number.MAX_SAFE_INTEGER+1}],[{preco:Number.MAX_VALUE,quantidade:2}],[{preco:Number.MAX_VALUE,quantidade:1},{preco:Number.MAX_VALUE,quantidade:1}],[{preco:Number.MAX_SAFE_INTEGER,quantidade:1}]];return dados.every(itens=>{try{totalizar(itens);return false;}catch(erro){return erro instanceof TypeError;}});})()','A correção ainda ultrapassa a faixa de precisão numérica. Quantidades precisam ser inteiros seguros, e o total arredondado em centavos deve continuar finito e seguro.'),
    check('Os dados de entrada permanecem intactos.','(()=>{const itens=[{preco:9.25,quantidade:2,nome:"A"},{preco:0,quantidade:1}];const antes=JSON.stringify(itens);totalizar(itens);return JSON.stringify(itens)===antes;})()','O retorno pode estar certo, mas calcular o total não deve reescrever o carrinho.')
   ],
-  solution:'function totalizar(itens) {\n  if (!Array.isArray(itens)) throw new TypeError("Carrinho deve ser uma lista");\n  let total = 0;\n  for (const item of itens) {\n    if (item === null || typeof item !== "object" ||\n        typeof item.preco !== "number" || !Number.isFinite(item.preco) || item.preco < 0 ||\n        !Number.isInteger(item.quantidade) || item.quantidade < 0) {\n      throw new TypeError("Item fora do contrato");\n    }\n    total += item.preco * item.quantidade;\n  }\n  return Math.round(total * 100) / 100;\n}'
+  solution:'function totalizar(itens) {\n  if (!Array.isArray(itens)) throw new TypeError("Carrinho deve ser uma lista");\n  let total = 0;\n  for (const item of itens) {\n    if (item === null || typeof item !== "object" ||\n        typeof item.preco !== "number" || !Number.isFinite(item.preco) || item.preco < 0 ||\n        !Number.isSafeInteger(item.quantidade) || item.quantidade < 0) {\n      throw new TypeError("Item fora do contrato");\n    }\n    total += item.preco * item.quantidade;\n  }\n  const centavos = Math.round(total * 100);\n  if (!Number.isFinite(total) || !Number.isSafeInteger(centavos)) {\n    throw new TypeError("Total fora da faixa segura");\n  }\n  return centavos / 100;\n}'
  },
  'js-debug-soma-vazia':{
   checks:[
@@ -91,6 +92,7 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
  if(signal?.aborted)return cancelled(activity);
  if(!activity)return {...base(),status:'unavailable',feedback:'Esta atividade não está disponível nesta versão.'};
  const result=base(activity);
+ if(typeof answer!=='string'&&(!Array.isArray(answer)||answer.some(line=>typeof line!=='string')))return {...result,status:'unavailable',feedback:'O formato da resposta não pôde ser lido. Seu trabalho está preservado; isso não conta como erro de aprendizagem.'};
  if((typeof answer==='string'&&answer.length>30000)||(Array.isArray(answer)&&(answer.length>100||answer.some(line=>typeof line!=='string'||line.length>30000)))){
   return {...result,feedback:'A resposta ultrapassou o limite da atividade. Reduza o texto antes de conferir.',tests:[{label:'Resposta dentro do limite.',passed:false}]};
  }
@@ -128,7 +130,7 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    run=await evaluate(answer,'aula',spec.checks);
   }
   if(signal?.aborted)return cancelled(activity);
-  if(run.error&&/executor não carregou|Não foi possível iniciar/.test(run.error)){
+  if(run.error&&['O executor não carregou. Verifique sua conexão e tente novamente.','Não foi possível iniciar o ambiente de execução. Tente novamente.'].includes(run.error)){
    return {...result,status:'unavailable',feedback:'O ambiente de execução não iniciou. Seu código foi preservado; este problema não conta como erro de aprendizagem.'};
   }
   const tests=run.tests.length?run.tests:[{label:'O programa precisa terminar sem erro.',passed:false}];

@@ -14,7 +14,7 @@ export const practiceActivities:PracticeActivity[]=[
  {
   id:'js-debug-carrinho',language:'javascript',lessonIds:['js-conversao-limites','js-semantica'],skillIds:['javascript.conversao'],afterBlock:3,kind:'debug',capability:'depuracao',
   title:'O carrinho virou NaN',
-  prompt:'totalizar recebe itens com preco numérico finito não negativo e quantidade inteira não negativa. O exemplo deveria retornar o número 89.9 (R$ 89,90), mas retorna NaN. Corrija o comportamento para qualquer carrinho válido: vazio retorna 0; arredonde o total a dois decimais; dados fora do contrato lançam TypeError; preserve a entrada. Não devolva apenas o total deste exemplo.',
+  prompt:'totalizar recebe itens com preco numérico finito não negativo e quantidade inteira segura não negativa. O exemplo deveria retornar o número 89.9 (R$ 89,90), mas retorna NaN. Corrija o comportamento para qualquer carrinho válido: vazio retorna 0; arredonde o total a dois decimais; o total arredondado em centavos precisa ser um inteiro seguro (até Number.MAX_SAFE_INTEGER); valores que excedem essa faixa ou produzem total não finito lançam TypeError, assim como dados fora do contrato; preserve a entrada. Não devolva apenas o total deste exemplo.',
   code:'function totalizar(itens) {\n  let total = 0;\n  for (const item of itens) {\n    total += item.preco * item.qtd;\n  }\n  return total;\n}\n// Exemplo: totalizar([{preco:29.95,quantidade:2},{preco:30,quantidade:1}])',
   hint:'Compare os nomes do contrato com a propriedade lida no cálculo. Depois investigue vazio, quantidade zero e dados inválidos.',minutes:5
  },
