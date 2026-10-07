@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 async function writeCode(page:Page,code:string){const editor=page.getByRole('textbox',{name:'É aqui que você escreve seu código'});await editor.focus();await page.keyboard.press('Control+a');await page.getByRole('textbox',{name:'É aqui que você escreve seu código'}).evaluate((element,text)=>{const transfer=new DataTransfer();transfer.setData('text/plain',text);element.dispatchEvent(new ClipboardEvent('paste',{clipboardData:transfer,bubbles:true,cancelable:true}));},code);}
 test('primeira missão, pistas, execução e persistência',async({page})=>{
- await page.goto('/');await page.getByRole('link',{name:'Acender a primeira luz'}).click();
+ await page.goto('/#/aprender');await page.locator('a[href="#/missao/primeira-luz"]').click();
  const editor=page.getByRole('textbox',{name:'É aqui que você escreve seu código'});
  await expect(editor).toBeVisible({timeout:20000});await page.getByRole('button',{name:/Preciso de uma pista/}).click();
  await expect(page.getByText('O computador precisa receber uma ação.')).toBeVisible();

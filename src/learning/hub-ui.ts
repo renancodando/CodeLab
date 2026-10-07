@@ -1,0 +1,40 @@
+import {practiceActivities,practicesForLesson} from '../content/practice';
+import {lessons,resolveLesson} from '../content/curriculum';
+import {progress,saveProgress,escapeHtml as esc} from '../state';
+import {adaptiveCatalog,languageLabels} from './hub-catalog';
+import {ensureDailySession,markConceptSeen,skillMastery,dueReviews} from './adaptive';
+import {mountPractice,learningClock} from './practice-ui';
+const catalog=()=>({...adaptiveCatalog,preferredLanguage:progress.learningLanguage});
+export function dailySummary(){const clock=learningClock(),reviews=dueReviews(progress.adaptive,clock),plan=ensureDailySession(progress.adaptive,catalog(),clock);return{reviews:reviews.length,minutes:plan.totalMinutes,total:plan.items.length,done:plan.completed.length};}
+export function skillTreeHTML(){
+ return'<section class="skill-tree"><div class="section-title"><h2>Domínio por habilidade</h2></div><p>Percentuais estimados pelas respostas avaliadas. Leitura e evidências manuais de projeto não comprovam execução. Uma habilidade sem evidência continua sem nota.</p>'+Object.entries(languageLabels).map(([id,label])=>'<details><summary>'+label+'</summary><div class="mastery">'+adaptiveCatalog.skills.filter(s=>s.id.startsWith(id+'.')).map(skill=>{const m=skillMastery(progress.adaptive,skill.id),a=practiceActivities.find(a=>a.skillIds.includes(skill.id))!;return'<div><span>'+esc(skill.path.join(' → '))+'</span><b>'+(m.score===null?'Ainda sem evidência':m.score+'%')+'</b><a href="#/pratica/'+a.id+'">Praticar</a>'+(m.score===null?'':'<progress max="100" value="'+m.score+'" aria-label="'+esc(skill.label)+'"></progress>')+'<small>'+(m.dueDay?'Revisão: '+esc(m.dueDay):'Primeira prática pendente')+'</small></div>';}).join('')+'</div></details>').join('')+'</section>';
+}
+export function practiceLinksHTML(){return'<div class="section-title"><h2>Prática e investigação</h2></div><p>Corrija programas quebrados e pratique decisões de todas as linguagens. Previsão, reconstrução e escolhas funcionam localmente; JavaScript tem verificação de comportamento isolada.</p><p><a class="button primary" href="#/diaria">Continuar aprendendo</a> <a class="button subtle" href="#/praticas">Explorar atividades</a></p>';}
+export function mountPracticeBrowser(container:HTMLElement,id?:string):()=>void{
+ if(id){const a=practiceActivities.find(a=>a.id===id);if(!a){container.textContent='Atividade não encontrada.';return()=>{};}container.innerHTML='<article class="page reading"><a class="back" href="#/praticas">Todas as atividades</a><p class="eyebrow">'+esc(languageLabels[a.language])+' · PRÁTICA</p><h1>'+esc(a.title)+'</h1><div data-mount></div><p><a href="#/aula/'+a.lessonIds[0]+'">Estudar o conceito desta atividade</a></p><p><a href="#/diaria">Voltar à sessão diária</a></p></article>';return mountPractice(container.querySelector<HTMLElement>('[data-mount]')!,id);}
+ container.innerHTML='<section class="page"><p class="eyebrow">INVESTIGUE E RECONSTRUA</p><h1>Uma decisão por vez.</h1>'+practiceLinksHTML()+'<div class="trail-grid">'+practiceActivities.map(a=>'<a class="trail" href="#/pratica/'+a.id+'"><small>'+esc(languageLabels[a.language])+' · '+a.minutes+' min</small><h3>'+esc(a.title)+'</h3><p>'+esc(a.prompt.slice(0,180))+'</p><small>'+(progress.practiceAnswers[a.id]?.passed?'Resposta conferida':'Experimentar')+'</small></a>').join('')+'</div></section>';return()=>{};
+}
+export function mountInlinePractice(container:HTMLElement,lessonId:string):()=>void{
+ const stops:(()=>void)[]=[];for(const target of container.querySelectorAll<HTMLElement>('[data-inline-practice]'))stops.push(mountPractice(target,target.dataset.inlinePractice!));
+ const related=practicesForLesson(lessonId);if(related.length){const el=container.querySelector<HTMLElement>('.lesson-meta');if(el){const span=document.createElement('span');span.textContent=related.length+' pausas práticas corrigíveis';el.append(span);}}
+ return()=>stops.forEach(stop=>stop());
+}
+export function mountDaily(container:HTMLElement):()=>void{
+ let disposed=false,token=0,release=()=>{};
+ async function render(){
+  release();release=()=>{};const current=++token,clock=learningClock(),plan=ensureDailySession(progress.adaptive,catalog(),clock);saveProgress();const pending=plan.items.find(item=>!plan.completed.includes(item.id));
+  container.innerHTML='<article class="page reading daily-session"><a class="back" href="#/home">Voltar para casa</a><p class="eyebrow">SESSÃO DE HOJE · SALVA NESTE NAVEGADOR</p><h1>Continuar aprendendo</h1><label class="field">Linguagem do conceito novo<select data-language>'+Object.entries(languageLabels).map(([id,label])=>'<option value="'+id+'" '+(progress.learningLanguage===id?'selected':'')+'>'+label+'</option>').join('')+'</select></label><p>'+plan.completed.length+' de '+plan.items.length+' etapas · aproximadamente '+plan.totalMinutes+' min</p><ol class="lesson-points">'+plan.items.map(item=>'<li>'+(plan.completed.includes(item.id)?'✓ ':'')+esc(({review:'Revisar',concept:'Novo conceito',practice:'Praticar',challenge:'Desafio final'} as Record<string,string>)[item.kind])+': '+esc(adaptiveCatalog.activities.find(a=>a.id===item.activityId)?.title??item.activityId)+'</li>').join('')+'</ol><div data-current></div><button class="button primary" data-next hidden>Continuar sessão</button></article>';
+  const target=container.querySelector<HTMLElement>('[data-current]')!,next=container.querySelector<HTMLButtonElement>('[data-next]')!;
+  next.addEventListener('click',()=>void render());container.querySelector<HTMLSelectElement>('[data-language]')!.addEventListener('change',event=>{progress.learningLanguage=(event.target as HTMLSelectElement).value;delete progress.adaptive.daily;saveProgress();void render();});
+  if(!pending){target.innerHTML='<h2>Sessão concluída</h2><p>As revisões futuras acompanham seu desempenho. Erros encurtam o intervalo; respostas assistidas continuam registradas como estudo.</p><a class="button primary" href="#/projetos">Fazer seu projeto crescer</a>';return;}
+  const activity=adaptiveCatalog.activities.find(a=>a.id===pending.activityId)!;
+  if(pending.kind==='concept'){
+   const id=activity.lessonId!;let l;
+   try{l=await resolveLesson(id);}catch{if(!disposed&&current===token){target.innerHTML='<p role="status">A aula ainda não está disponível neste navegador. Conecte para preparar o conteúdo offline e tente novamente.</p><button class="button primary" data-retry>Tentar novamente</button>';target.querySelector('[data-retry]')!.addEventListener('click',()=>void render());}return;}
+   if(disposed||current!==token)return;l??=lessons.find(l=>l.id===id)!;
+   target.innerHTML='<section class="lesson-chapter"><h2>'+esc(l.title)+'</h2><p>'+esc(l.body)+'</p>'+l.capitulos.slice(0,2).map(cap=>cap.paragrafos.map(p=>'<p>'+esc(p)+'</p>').join('')+(cap.codigo?'<pre class="example-code"><code>'+esc(cap.codigo)+'</code></pre>':'')).join('')+'<p><a href="#/aula/'+id+'">Ler e experimentar a aula completa</a></p><button class="button primary" data-seen>Concluir leitura e praticar</button><p class="small">A leitura orienta o exercício e não atribui nota de domínio.</p></section>';
+   target.querySelector('[data-seen]')!.addEventListener('click',()=>{markConceptSeen(progress.adaptive,activity.id,learningClock());saveProgress();void render();});
+  }else release=mountPractice(target,activity.id,{mode:pending.kind,onEvaluated:()=>{const updated=ensureDailySession(progress.adaptive,catalog(),learningClock());next.hidden=!updated.completed.includes(pending.id);}});
+ }
+ void render();return()=>{disposed=true;token++;release();};
+}
