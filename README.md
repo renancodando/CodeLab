@@ -153,3 +153,7 @@ Os programas de referência entram no verificador Python do CI. As pausas do alu
 A edição seguinte acrescenta `ts-variancia-contratos`: produtores, consumidores, leitura/escrita, callbacks e a diferença de checagem entre métodos e propriedades. Dois problemas têm testes positivos/negativos de tipos e resultados em execução; três pausas são conceituais offline.
 
 O catálogo definido tem 134 aulas/20 trilhas, 26 aulas próprias/52 problemas e 31 atividades. Python e TypeScript têm dez aulas nos percursos aprofundados; as outras seis linguagens têm nove. Verifique o checkpoint para conhecer o último head integrado e os gates reais, sem confundir um conteúdo em revisão com implantação validada.
+
+### Aprofundamento de iteradores C++
+
+A edição de conteúdo acrescenta `cpp-iteradores-invalidacao`: 17 capítulos, dois problemas independentes e três pausas conceituais offline. O catálogo definido chega a 135 aulas em 20 trilhas e 34 atividades corrigíveis. Os gabaritos usam C++20; a resposta conceitual não comprova compilação do código do estudante. Consulte a matriz e o checkpoint para a cobertura e os gates efetivamente concluídos.

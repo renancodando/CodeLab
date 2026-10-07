@@ -2,9 +2,9 @@
 
 ## Conteúdo publicado nesta expansão
 
-O catálogo desta edição tem **134 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **26 aulas de 17 capítulos**, com **52 problemas independentes**, soluções comentadas e critérios próprios. Python e TypeScript têm dez aulas no percurso; as outras seis trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
+O catálogo desta edição tem **135 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **27 aulas de 17 capítulos**, com **54 problemas independentes**, soluções comentadas e critérios próprios. Python, TypeScript e C++ têm dez aulas no percurso; as outras cinco trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **626 entradas de cobertura**: **144** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **482** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **636 entradas de cobertura**: **149** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **487** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
@@ -40,6 +40,19 @@ Três pausas conceituais nos blocos 1/3/5 verificam resultado covariante, entrad
 Readonly não promete congelamento profundo, e anotações in/out são introduzidas sem problema independente. Este módulo não cobre ainda resolução de pacotes em ambientes reais, modelos de eventos grandes ou performance do compilador.
 
 Referências oficiais: [strictFunctionTypes](https://www.typescriptlang.org/tsconfig/strictFunctionTypes.html), [compatibilidade estrutural](https://www.typescriptlang.org/docs/handbook/type-compatibility.html), [objetos e readonly](https://www.typescriptlang.org/docs/handbook/2/objects.html), [genéricos e variância](https://www.typescriptlang.org/docs/handbook/2/generics.html#variance-annotations), [mudança da checagem em 2.6](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-6.html) e [anotações em 4.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html).
+
+## Aprofundamento: iteradores e invalidação C++
+
+A aula `cpp-iteradores-invalidacao` tem 17 capítulos, seis seções originais, exemplo rastreado, falha para investigar, exercício, dois problemas independentes e projeto manual. Três pausas offline exercitam previsão de intervalo, reconstrução de erase e acesso após reserve. O catálogo passa a 34 atividades; quatro executam JavaScript e 30 são conceituais.
+
+| Prática independente | Contrato exercitado |
+| --- | --- |
+| `consecutivos` | Retorno de erase, zeros consecutivos, vazio, todos e nenhum removido, ordem preservada |
+| `compactacao` | remove_if seguido de erase, prefixo lógico versus size, contagem de predicado e comparação com erase_if C++20 |
+
+Os quatro programas completos e três fixtures das pausas devem compilar em C++20 e conferir saídas e asserts no CI antes de integração. O trecho quebrado contém acesso invalidado e não é executado como se tivesse saída garantida. O exercício recupera um valor por índice somente após reserve, sem inserção, remoção nem reordenação. Views, span e identidade estável permanecem introduzidos e precisam de práticas próprias. Os gabaritos de autoria não equivalem à correção universal do código do estudante.
+
+Referências: [capacidade e reserve](https://eel.is/c++draft/vector.capacity), [modificações de vector](https://eel.is/c++draft/vector.modifiers), [remove](https://eel.is/c++draft/alg.remove) e [erase_if](https://eel.is/c++draft/vector.erasure). O rascunho atual inclui APIs posteriores, mas os programas desta aula usam C++20.
 
 ## Percursos
 
@@ -169,6 +182,14 @@ Referências oficiais: [strictFunctionTypes](https://www.typescriptlang.org/tsco
 - Aula: `#/aula/cpp-stl-algoritmos` e página `/aulas/cpp-stl-algoritmos/`.
 - Conteúdo: vector array deque list; map set unordered_map; iterator categories invalidation; algorithms sort find accumulate; lambdas captures; comparators strict weak ordering; ranges views lifetime; complexity.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
+
+#### C++: iteradores de vector, invalidação e remoção segura
+
+- Nível: Avançado.
+- Aula: `#/aula/cpp-iteradores-invalidacao` e página `/aulas/cpp-iteradores-invalidacao/`.
+- Conteúdo: intervalo [begin,end); iterador versus identidade; size versus capacity; realocação e invalidação; retorno de erase e avanço; remoções consecutivas; erase-remove e tamanho lógico; ordem dos elementos preservados; custo de remoções repetidas; views e tempo de vida.
+- Entrega: 17 capítulos, dois problemas independentes, três pausas conceituais offline e projeto manual.
+- Limites: span, views, identidade estável e exceções de tipos arbitrários ainda precisam de aprofundamento específico.
 
 #### C++: templates, concepts e avaliação constante
 

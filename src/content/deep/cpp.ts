@@ -681,6 +681,156 @@ export default {
       ]
     },
     {
+      "id": "cpp-iteradores-invalidacao",
+      "title": "C++: iteradores de vector, invalidação e remoção segura",
+      "level": "Avançado",
+      "summary": "Percorra vector sem acessar o fim, reconheça quando uma alteração invalida posições e remova elementos consecutivos sem saltar candidatos. Separe capacidade de tamanho, compare erase repetido com compactação e reconstrua acessos após reserve. Os programas usam C++20 e casos de borda verificáveis; views e identidade estável são introduzidas para próximos aprofundamentos.",
+      "topics": [
+        "intervalo [begin,end)",
+        "iterador versus identidade",
+        "size versus capacity",
+        "realocação e invalidação",
+        "retorno de erase e avanço",
+        "remoções consecutivas",
+        "erase-remove e tamanho lógico",
+        "ordem dos elementos preservados",
+        "custo de remoções repetidas",
+        "views e tempo de vida"
+      ],
+      "source": "https://eel.is/c++draft/vector.modifiers",
+      "sections": [
+        {
+          "title": "Uma posição precisa de uma sequência válida",
+          "text": [
+            "Um iterador permite observar e percorrer uma sequência, mas não constitui uma promessa de que sua posição existirá para sempre. Pense numa lista de caixas numeradas: deslocar as caixas muda o significado de uma posição guardada. Antes de ler por *it, identifique qual contêiner criou o iterador, se ainda está vivo e quais operações ocorreram desde sua obtenção. Copiar o iterador não amplia o tempo de vida da sequência nem protege contra sua modificação.",
+            "O intervalo usado aqui é [begin(), end()): o início participa da sequência e o fim marca a fronteira excluída. Em um vector vazio, os dois coincidem. O teste it != dados.end() deve acontecer antes da desreferência; end() não representa um último elemento. Para {4, 6}, avançar begin uma vez leva ao valor 6, mas avançar outra vez leva ao marcador de fim, que pode ser comparado e não lido.",
+            "Rastreie separadamente valor, posição e identidade. Um índice validado pode servir para recuperar um elemento após uma operação que só realoca, pois a ordem permanece. Se houver remoção ou inserção antes dele, o mesmo índice pode designar outro objeto lógico. Para um catálogo editável, um identificador de registro pode ser uma escolha melhor; localizar esse identificador exige outro contrato e não é resolvido apenas pela aritmética de iteradores."
+          ]
+        },
+        {
+          "title": "Tamanho não é espaço reservado",
+          "text": [
+            "size() conta elementos construídos e acessíveis. capacity() descreve espaço disponível para crescimento sem nova realocação. Reservar capacidade não cria valores nas posições restantes. Um vector vazio pode ter capacity() de oito e size() de zero: dados.at(0) continua lançando out_of_range. Trocar at por operator[] não cria um elemento; apenas elimina a checagem de limite e torna o acesso indevido um problema de comportamento indefinido.",
+            "Para estudar invalidação por reserve, solicite uma capacidade estritamente maior que a anterior e obtenha os acessos novamente depois do retorno bem-sucedido. Uma solicitação que já cabe não demonstra realocação. O exemplo confere max_size antes de somar um, evitando ultrapassar o limite anunciado pelo contêiner. Uma biblioteca também deve tratar falhas de alocação conforme seu contrato; os programas desta aula não tentam simular falta real de memória.",
+            "Não memorize um fator de crescimento como garantia da linguagem. A capacidade exata depois de expandir depende da implementação. Os testes verificam limites e elementos, sem exigir que a capacidade dobre. Também não use shrink_to_fit como prova de que houve redução: a solicitação pode não ser atendida. Os links apontam para o rascunho atual do padrão; embora ele inclua APIs posteriores, todos os programas executáveis desta aula usam recursos disponíveis em C++20."
+          ]
+        },
+        {
+          "title": "Remova e receba a próxima posição",
+          "text": [
+            "erase de vector desloca o trecho posterior para preencher o espaço. Por isso, o cursor usado para apagar e os acessos a partir daquele ponto precisam ser abandonados. A operação oferece uma nova posição: o elemento que segue a remoção, ou o fim quando não há sucessor. Atribua esse retorno a it e teste a condição novamente antes de ler. No ramo que mantém o elemento, avance uma vez.",
+            "Considere {0, 0, 1}. Após apagar o primeiro zero, outro zero ocupa a posição inicial. Se o programa avançar também nesse ramo, deixará de examiná-lo. O laço correto mantém um único avanço por decisão: substituir pela posição devolvida ao apagar, incrementar ao conservar. O progresso não depende de que o índice numérico cresça a cada passagem; a redução do tamanho também aproxima a condição de término.",
+            "Evite guardar end() fora deste laço e reutilizá-lo depois das remoções. Recalcular a fronteira na condição mantém o teste ligado ao estado atual do vector. A mesma receita não deve ser transferida mecanicamente a todo contêiner: compare os contratos de sua operação de remoção. Aqui trabalhamos com int, sem operações de atribuição que lancem; tipos com estados e exceções próprias exigem analisar as garantias adicionais."
+          ]
+        },
+        {
+          "title": "Depure contratos antes de procurar uma saída",
+          "text": [
+            "O trecho quebrado continua usando o cursor antigo depois de erase. Não existe uma saída específica que uma implementação conforme precise produzir. Um resultado aparentemente correto numa execução não valida esse acesso, pois comportamento indefinido não é um resultado alternativo contratado. A investigação deve marcar a primeira operação que tornou a posição inválida e substituir o uso por um acesso obtido sob as regras atuais.",
+            "Faça uma tabela de cada passagem: elementos restantes, elemento examinado, decisão e origem do próximo cursor. Para {0, 0, 1, 0, 2, 0}, quatro remoções devem conservar {1, 2}. Acrescente vazio, todos removidos e nenhum removido. Esses casos confrontam término, tratamento do último elemento e ordem dos sobreviventes, cobrindo falhas que uma entrada sem repetição não revela.",
+            "Os asserts dos gabaritos são executados no CI sem NDEBUG e confrontam resultados concretos. Eles não transformam o navegador em um compilador e não corrigem qualquer solução enviada pelo estudante. As pausas desta aula avaliam previsão, reconstrução e escolha de acesso localmente. Para executar sua implementação completa, use ferramentas C++20 nos arquivos exportados ou o executor externo configurado; documente o comando e as entradas utilizadas."
+          ]
+        },
+        {
+          "title": "Compacte antes de reduzir o contêiner",
+          "text": [
+            "remove_if percorre um intervalo e organiza os elementos mantidos em seu prefixo. Seu retorno delimita esse prefixo; o algoritmo não altera o tamanho do vector. Para {0, 1, 0, 2, 0}, remover zero produz um prefixo lógico de dois elementos, embora size continue cinco até erase. A cauda não deve ser tratada como coleção de valores removidos: seus valores não são especificados como esse relatório.",
+            "erase do intervalo [novoFim, dados.end()) conclui a redução. Não use novoFim depois dessa alteração. Os elementos preservados continuam na ordem relativa anterior, o que permite conferir {1, 2} sem ordenar artificialmente o resultado. Em C++20, std::erase_if reúne o padrão para vector e devolve a quantidade removida; nosso problema compara as duas implementações sobre cópias da mesma entrada.",
+            "Apagar individualmente pode mover repetidas vezes o mesmo sufixo. Para muitas remoções numa coleção grande, esse trabalho pode crescer quadraticamente; uma compactação seguida da remoção da cauda percorre o conjunto de forma linear para o predicado constante desta aula. A instrumentação conta uma chamada de predicado por elemento, inclusive com resultado vazio ou nenhuma remoção. Ela não mede tempo de CPU, custo de alocação nem todos os movimentos de um tipo arbitrário."
+          ]
+        },
+        {
+          "title": "Acesso emprestado exige tempo de vida",
+          "text": [
+            "Uma referência, um ponteiro e uma view emprestam acesso a objetos existentes. Eles não tornam o proprietário imortal e não impedem que uma operação mude a organização do armazenamento. Se uma função devolve um span para seu vector local, o uso posterior ficará sem objetos válidos. Se o vector proprietário realoca enquanto uma view existe, os endereços antigos também não se tornam atuais por compartilharem os mesmos valores.",
+            "Desenhe duas fronteiras no projeto: quem possui a coleção e quais operações podem ocorrer enquanto alguém a observa. Uma solução simples para o exercício devolve um int por valor depois da reserva, eliminando o empréstimo no retorno. Para dados maiores, escolher cópia, acesso com prazo explícito ou busca por identificador envolve custo e contrato. Não rotule uma dessas opções como solução universal sem conhecer o comportamento exigido.",
+            "Os problemas desta aula verificam remoção, ordem e contagem, e o exercício limita a recuperação por índice a reserve sem reordenar nem remover. span, regras de views e identificadores estáveis são apenas introduzidos: ainda precisam de aulas e problemas próprios. No projeto manual, registre antes e depois de cada modificação, mantenha os testes de borda e explique por que nenhum acesso atravessa uma operação que o invalida."
+          ]
+        }
+      ],
+      "code": "#include <cassert>\n#include <cstddef>\n#include <iostream>\n#include <stdexcept>\n#include <vector>\nint main() {\n    std::vector<int> dados{1, 2, 3, 4, 5};\n    for (auto it = dados.begin(); it != dados.end();) {\n        if (*it % 2 == 0) it = dados.erase(it);\n        else ++it;\n    }\n    assert((dados == std::vector<int>{1, 3, 5}));\n    std::cout << dados[0] << \" \" << dados[1] << \" \" << dados[2] << \"\\n\";\n    const std::size_t indice = 1;\n    const auto capacidade = dados.capacity();\n    if (capacidade == dados.max_size()) throw std::length_error(\"capacidade máxima\");\n    dados.reserve(capacidade + 1);\n    assert(dados.size() == 3);\n    std::cout << dados.at(indice) << \" \" << dados.size() << \"\\n\";\n}",
+      "expectedOutput": [
+        "1 3 5",
+        "3 3"
+      ],
+      "output": "Saída: 1 3 5, seguida por 3 3. A reserva altera a capacidade e conserva os três elementos; o acesso é obtido depois dela.",
+      "trace": [
+        "Cada par é removido sem incrementar o cursor substituído; os ímpares permanecem na ordem.",
+        "reserve solicita mais que a capacidade anterior; nenhum cursor antigo é reutilizado.",
+        "O índice 1 ainda existe e recupera 3; size permanece 3."
+      ],
+      "exercise": "Implemente consultar_apos_reserva(dados, indice, capacidade), retornando int por valor. Valide indice antes de reservar, execute apenas reserve e recupere dados.at(indice) depois. Não insira, apague nem reordene. Demonstre que um índice inválido preserva a capacidade anterior e que capacidade disponível não implica elemento construído.",
+      "solution": "#include <cassert>\n#include <cstddef>\n#include <iostream>\n#include <stdexcept>\n#include <vector>\nint consultar_apos_reserva(std::vector<int>& dados, std::size_t indice, std::size_t capacidade) {\n    if (indice >= dados.size()) throw std::out_of_range(\"índice sem elemento\");\n    dados.reserve(capacidade);\n    return dados.at(indice);\n}\nint main() {\n    std::vector<int> dados{10, 20, 30};\n    assert(consultar_apos_reserva(dados, 1, 8) == 20);\n    assert(dados.size() == 3 && dados.capacity() >= 8);\n    assert((dados == std::vector<int>{10, 20, 30}));\n    const auto anterior = dados.capacity();\n    bool rejeitou = false;\n    try { consultar_apos_reserva(dados, dados.size(), 16); }\n    catch (const std::out_of_range&) { rejeitou = true; }\n    assert(rejeitou && dados.capacity() == anterior);\n    std::vector<int> vazio;\n    rejeitou = false;\n    try { consultar_apos_reserva(vazio, 0, 8); }\n    catch (const std::out_of_range&) { rejeitou = true; }\n    assert(rejeitou && vazio.empty());\n    vazio.reserve(8);\n    assert(vazio.size() == 0);\n    rejeitou = false;\n    try { (void)vazio.at(0); }\n    catch (const std::out_of_range&) { rejeitou = true; }\n    assert(rejeitou);\n    std::cout << dados.at(1) << \" \" << dados.size() << \"\\nlimites conferidos\\n\";\n}",
+      "solutionOutput": [
+        "20 3",
+        "limites conferidos"
+      ],
+      "bug": "O laço usa e incrementa o iterador invalidado por erase. Há comportamento indefinido; não se exige nenhuma saída do programa quebrado e ele não é executado pelo verificador.",
+      "bugCode": "std::vector<int> dados{0, 0, 1};\nfor (auto it = dados.begin(); it != dados.end(); ++it) {\n    if (*it == 0) dados.erase(it); // it deixa de ser válido\n}",
+      "repair": "Use it = dados.erase(it) no ramo de remoção e ++it somente ao manter o elemento. Teste consecutivos e o último removido; comparar uma saída isolada do código quebrado não estabelece validade.",
+      "checks": [
+        "Rejeitar índice igual a size e vazio antes de alterar a reserva.",
+        "Conservar tamanho, ordem e valores; devolver int após o reserve.",
+        "Conferir remoções consecutivas, todas, nenhuma e sequência vazia."
+      ],
+      "project": "Construa um catálogo C++20 que permita excluir registros por condição e consultar valores após reserva. Guarde identificadores nos registros e trate índices como posições transitórias. Entregue casos de exclusão no começo, meio, fim, todos e nenhum, comparação entre laço e compactação e uma explicação do prazo dos acessos. O projeto tem revisão manual; identidade estável e views precisam de decisões adicionais.",
+      "question": "Como continuar um laço de vector após apagar o elemento apontado sem saltar candidatos?",
+      "answer": "Atribuir o iterador devolvido por erase e só incrementar na etapa que preserva o elemento.",
+      "distractors": [
+        "Incrementar sempre o iterador antigo e ignorar zeros consecutivos.",
+        "Desreferenciar end() para obter o próximo elemento."
+      ],
+      "practices": [
+        {
+          "id": "consecutivos",
+          "title": "Problema 1: zeros consecutivos sem saltar candidatos",
+          "prompt": "Implemente remover_zeros(vector<int>&), devolvendo a quantidade excluída e conservando a ordem dos valores restantes. Use o retorno de erase, sem guardar iteradores antigos nem uma fronteira anterior às modificações. Confronte uma entrada com zeros no início e fim, vazio, todos zeros e nenhum zero.",
+          "topics": [
+            "retorno de erase e avanço",
+            "remoções consecutivas",
+            "ordem dos elementos preservados"
+          ],
+          "solution": "#include <cassert>\n#include <cstddef>\n#include <iostream>\n#include <vector>\nstd::size_t remover_zeros(std::vector<int>& dados) {\n    std::size_t removidos = 0;\n    for (auto it = dados.begin(); it != dados.end();) {\n        if (*it == 0) { it = dados.erase(it); ++removidos; }\n        else ++it;\n    }\n    return removidos;\n}\nint main() {\n    std::vector<int> dados{0, 0, 1, 0, 2, 0};\n    assert(remover_zeros(dados) == 4);\n    assert((dados == std::vector<int>{1, 2}));\n    std::vector<int> vazio, todos{0, 0, 0}, nenhum{3, 4};\n    assert(remover_zeros(vazio) == 0 && vazio.empty());\n    assert(remover_zeros(todos) == 3 && todos.empty());\n    assert(remover_zeros(nenhum) == 0 && (nenhum == std::vector<int>{3, 4}));\n    std::cout << \"4 \" << dados[0] << \" \" << dados[1] << \"\\n\";\n}",
+          "expectedOutput": [
+            "4 1 2"
+          ],
+          "explanation": [
+            "A cada remoção, erase fornece a posição válida para examinar o sucessor. O ramo não incrementa essa posição, permitindo que dois zeros consecutivos sejam avaliados. Ao conservar um valor, o incremento é o único avanço necessário. O resultado mantém a ordem original porque não há troca com o último elemento.",
+            "Os asserts confrontam contagem e conteúdo, inclusive quando o resultado ou a entrada são vazios. A função opera sobre int e não guarda acessos depois do retorno. O laço pode deslocar repetidamente um sufixo longo; a correção deste contrato não comprova eficiência para grandes coleções."
+          ],
+          "checks": [
+            "Remover quatro zeros de {0,0,1,0,2,0}, conservando {1,2}.",
+            "Terminar corretamente com vazio, todos removidos e nenhum removido.",
+            "Usar o retorno de erase e incrementar somente no ramo de preservação."
+          ]
+        },
+        {
+          "id": "compactacao",
+          "title": "Problema 2: prefixo lógico, tamanho e custo",
+          "prompt": "Implemente remover_negativos(vector<int>&, size_t& chamadas) por remove_if seguido de erase. Zere e conte chamadas do predicado, devolva a quantidade excluída e conserve a ordem dos não negativos. Demonstre que remove sozinho não muda size e compare o resultado final com std::erase_if em C++20, sem ler valores da cauda como se fossem especificados.",
+          "topics": [
+            "erase-remove e tamanho lógico",
+            "ordem dos elementos preservados",
+            "custo de remoções repetidas"
+          ],
+          "solution": "#include <algorithm>\n#include <cassert>\n#include <cstddef>\n#include <iostream>\n#include <iterator>\n#include <vector>\nstd::size_t remover_negativos(std::vector<int>& dados, std::size_t& chamadas) {\n    chamadas = 0;\n    const auto anterior = dados.size();\n    const auto fim = std::remove_if(dados.begin(), dados.end(), [&chamadas](int n) {\n        ++chamadas; return n < 0;\n    });\n    dados.erase(fim, dados.end());\n    return anterior - dados.size();\n}\nint main() {\n    std::vector<int> exemplo{0, 1, 0, 2, 0};\n    auto fim = std::remove(exemplo.begin(), exemplo.end(), 0);\n    assert(std::distance(exemplo.begin(), fim) == 2 && exemplo.size() == 5);\n    exemplo.erase(fim, exemplo.end());\n    assert((exemplo == std::vector<int>{1, 2}));\n    std::vector<int> dados{-2, 0, -1, 3}, controle = dados;\n    std::size_t chamadas = 99;\n    assert(remover_negativos(dados, chamadas) == 2);\n    assert(chamadas == 4 && (dados == std::vector<int>{0, 3}));\n    assert(std::erase_if(controle, [](int n) { return n < 0; }) == 2);\n    assert(controle == dados);\n    std::cout << \"2 \" << dados[0] << \" \" << dados[1] << \"\\npredicado: \" << chamadas << \"\\n\";\n    std::vector<int> vazio, todos{-1, -2}, nenhum{0, 8};\n    assert(remover_negativos(vazio, chamadas) == 0 && chamadas == 0);\n    assert(remover_negativos(todos, chamadas) == 2 && chamadas == 2 && todos.empty());\n    assert(remover_negativos(nenhum, chamadas) == 0 && chamadas == 2);\n    assert((nenhum == std::vector<int>{0, 8}));\n}",
+          "expectedOutput": [
+            "2 0 3",
+            "predicado: 4"
+          ],
+          "explanation": [
+            "remove_if delimita um prefixo de sobreviventes, mas não destrói a cauda nem muda o tamanho do vector. O erase posterior recebe esse intervalo e conclui a redução. O teste separado distingue distância até o novo fim e size antes de apagar, sem exigir qualquer valor dos elementos posteriores.",
+            "A contagem de predicado confronta exatamente o tamanho original para int, sem atribuir a medida a movimentos ou tempo real. A comparação com erase_if usa outra coleção, evitando que uma implementação receba a saída da anterior. Vazio, todos negativos e nenhum negativo verificam a reinicialização da contagem e a conservação da ordem."
+          ],
+          "checks": [
+            "Obter {0,3}, duas remoções e quatro chamadas de predicado.",
+            "Conferir prefixo de dois elementos e size cinco antes do erase no exemplo de zeros.",
+            "Comparar com erase_if e testar vazio, todos e nenhum, sem usar iteradores após apagar."
+          ]
+        }
+      ]
+    },
+    {
       "id": "cpp-templates",
       "title": "C++: templates, concepts e avaliação constante",
       "level": "Avançado",

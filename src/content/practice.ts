@@ -358,6 +358,105 @@ export const practiceActivities:PracticeActivity[]=[
   "hint": "Observe onde estão os dois pontos e a seta; assinaturas de método recebem tratamento mais permissivo.",
   "minutes": 2
 }
+,{
+  "id": "cpp-prever-intervalo",
+  "requiresConcept": true,
+  "language": "cpp",
+  "lessonIds": [
+    "cpp-iteradores-invalidacao"
+  ],
+  "skillIds": [
+    "cpp.vector.iteracao"
+  ],
+  "afterBlock": 1,
+  "kind": "predict",
+  "capability": "leitura",
+  "title": "A fronteira fica fora do intervalo",
+  "prompt": "Escreva a saída, incluindo a vírgula. Todos os acessos abaixo são válidos. Esta pausa compara uma previsão; nenhum compilador é executado.",
+  "code": "std::vector<int> dados{4, 6};\nauto it = dados.begin();\n++it;\nstd::cout << *it << \",\" << dados.size();",
+  "hint": "Um avanço chega ao segundo elemento; size conta elementos construídos.",
+  "minutes": 2
+},
+{
+  "id": "cpp-ordenar-erase",
+  "requiresConcept": true,
+  "language": "cpp",
+  "lessonIds": [
+    "cpp-iteradores-invalidacao"
+  ],
+  "skillIds": [
+    "cpp.vector.remocao"
+  ],
+  "afterBlock": 3,
+  "kind": "order",
+  "capability": "alteracao",
+  "title": "O sucessor precisa ser examinado",
+  "prompt": "dados é um vector<int> válido. Ordene o laço que apaga todos os zeros e conserva os demais na ordem. Incremente somente quando conservar o elemento. As linhas indicam o fechamento de cada bloco; esta pausa não compila código.",
+  "lines": [
+    {
+      "id": "avancar",
+      "code": "        ++it;"
+    },
+    {
+      "id": "fimfor",
+      "code": "} // fim do for"
+    },
+    {
+      "id": "apagar",
+      "code": "        it = dados.erase(it);"
+    },
+    {
+      "id": "for",
+      "code": "for (auto it = dados.begin(); it != dados.end();) {"
+    },
+    {
+      "id": "fimif",
+      "code": "    } // fim do if"
+    },
+    {
+      "id": "senao",
+      "code": "    } else {"
+    },
+    {
+      "id": "testar",
+      "code": "    if (*it == 0) {"
+    }
+  ],
+  "hint": "Depois de erase, seu retorno já aponta para o próximo candidato. O outro ramo precisa avançar.",
+  "minutes": 3
+},
+{
+  "id": "cpp-reobter-reserva",
+  "requiresConcept": true,
+  "language": "cpp",
+  "lessonIds": [
+    "cpp-iteradores-invalidacao"
+  ],
+  "skillIds": [
+    "cpp.vector.realocacao"
+  ],
+  "afterBlock": 5,
+  "kind": "choice",
+  "capability": "depuracao",
+  "title": "Recupere o acesso após reservar",
+  "prompt": "dados tem três elementos e indice=1 foi validado. reserve solicita mais que a capacidade anterior e termina normalmente; nenhuma inserção, remoção ou reordenação ocorre. Como ler o mesmo valor depois? Diagnóstico conceitual sem executar C++.",
+  "options": [
+    {
+      "id": "reobter",
+      "text": "Obter o valor novamente com dados.at(indice) depois de reserve."
+    },
+    {
+      "id": "antigo",
+      "text": "Desreferenciar o iterador guardado antes de reserve."
+    },
+    {
+      "id": "fim",
+      "text": "Desreferenciar dados.end(), pois ele aponta para o último valor."
+    }
+  ],
+  "hint": "Os valores foram preservados, mas os endereços anteriores não são um contrato válido depois da realocação.",
+  "minutes": 2
+}
 ];
 export function practicesForLesson(id:string):PracticeActivity[]{
  return practiceActivities.filter(activity=>activity.lessonIds.includes(id));
