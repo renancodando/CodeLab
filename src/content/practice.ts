@@ -4,7 +4,7 @@ export type PracticeLanguage = 'html'|'css'|'javascript'|'typescript'|'python'|'
 export type PracticeKind = 'debug'|'predict'|'order'|'fill'|'choice';
 export type PracticeActivity = {
  id:string; language:PracticeLanguage; lessonIds:string[]; skillIds:string[];
- afterBlock:number; kind:PracticeKind; capability:Capability;
+ afterBlock:number; kind:PracticeKind; capability:Capability; requiresConcept?:boolean;
  title:string; prompt:string; code?:string; options?:{id:string;text:string}[];
  lines?:{id:string;code:string}[]; hint:string; minutes:number;
 };
@@ -176,6 +176,7 @@ export const practiceActivities:PracticeActivity[]=[
 ,
 {
   "id": "py-prever-esgotamento",
+  "requiresConcept": true,
   "language": "python",
   "lessonIds": [
     "py-iteracao-recursos"
@@ -194,6 +195,7 @@ export const practiceActivities:PracticeActivity[]=[
 },
 {
   "id": "py-ordenar-lote",
+  "requiresConcept": true,
   "language": "python",
   "lessonIds": [
     "py-iteracao-recursos"
@@ -229,6 +231,7 @@ export const practiceActivities:PracticeActivity[]=[
 },
 {
   "id": "py-fechar-consumo",
+  "requiresConcept": true,
   "language": "python",
   "lessonIds": [
     "py-iteracao-recursos"
@@ -261,6 +264,7 @@ export const practiceActivities:PracticeActivity[]=[
 ,
 {
   "id": "ts-fonte-covariancia",
+  "requiresConcept": true,
   "language": "typescript",
   "lessonIds": [
     "ts-variancia-contratos"
@@ -292,6 +296,7 @@ export const practiceActivities:PracticeActivity[]=[
 },
 {
   "id": "ts-callback-entrada",
+  "requiresConcept": true,
   "language": "typescript",
   "lessonIds": [
     "ts-variancia-contratos"
@@ -323,6 +328,7 @@ export const practiceActivities:PracticeActivity[]=[
 },
 {
   "id": "ts-propriedade-funcao",
+  "requiresConcept": true,
   "language": "typescript",
   "lessonIds": [
     "ts-variancia-contratos"

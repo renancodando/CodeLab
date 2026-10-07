@@ -5,10 +5,14 @@ import type {AdaptiveCatalog,LearningActivity,SkillDefinition} from './adaptive'
 export const languageLabels:Record<string,string>={html:'HTML',css:'CSS',javascript:'JavaScript',typescript:'TypeScript',python:'Python',csharp:'C#',cpp:'C++',sql:'SQL'};
 const terms:Record<string,string>={variancia:'Variância',resultados:'Resultados',parametros:'Parâmetros',metodos:'Métodos',arrays:'Arrays',reduce:'Acumulação',filter:'Filtragem',limites:'Limites',conversao:'Conversão',formularios:'Formulários',dialogo:'Diálogos',foco:'Foco',grid:'Grid',responsividade:'Responsividade',narrowing:'Refinamento de tipos',ausencia:'Ausência de valores',controle:'Controle',range:'Intervalos',funcoes:'Funções',defaults:'Valores padrão',contratos:'Contratos',tipos:'Tipos',decimal:'Decimal',nullable:'Tipos anuláveis',consumo:'Consumo',lotes:'Lotes',recursos:'Recursos',iteradores:'Iteradores',descarte:'Descarte',raii:'RAII',referencias:'Referências',stl:'STL',null:'NULL',joins:'Junções',cardinalidade:'Cardinalidade',compilacao:'Compilação',cascata:'Cascata',transacoes:'Transações',atomicidade:'Atomicidade'};
 const skills:SkillDefinition[]=[...new Set(practiceActivities.flatMap(a=>a.skillIds))].map(id=>{const parts=id.split('.');return{id,label:terms[parts.at(-1)!]??parts.at(-1)!,path:parts.map((p,i)=>i===0?languageLabels[p]??p:terms[p]??p)};});
-const activities:LearningActivity[]=practiceActivities.map(a=>({id:a.id,title:a.title,kind:a.afterBlock===5?'challenge':'practice',skillIds:a.skillIds,minutes:a.minutes,lessonId:a.lessonIds[0]}));
+function lessonConceptId(id:string):string{
+ const l=lessons.find(l=>l.id===id);if(!l)return '';
+ const rank=({Fundamentos:'0','Intermediário':'1','Avançado':'2','Especialização':'3'} as Record<string,string>)[l.level??'Fundamentos']??'0';
+ return legacyConceptIds[id]??'conceito-'+rank+'-'+id;
+}
+const activities:LearningActivity[]=practiceActivities.map(a=>({id:a.id,title:a.title,kind:a.afterBlock===5?'challenge':'practice',skillIds:a.skillIds,minutes:a.minutes,lessonId:a.lessonIds[0],...(a.requiresConcept?{requiredConcepts:[lessonConceptId(a.lessonIds[0])]}:{})}));
 for(const id of [...new Set(practiceActivities.flatMap(a=>a.lessonIds))]){
  const l=lessons.find(l=>l.id===id);if(!l)continue;const related=practiceActivities.filter(a=>a.lessonIds.includes(id));
- const rank=({Fundamentos:'0','Intermediário':'1','Avançado':'2','Especialização':'3'} as Record<string,string>)[l.level??'Fundamentos']??'0';
- activities.push({id:legacyConceptIds[id]??'conceito-'+rank+'-'+id,title:l.title,kind:'concept',skillIds:[...new Set(related.flatMap(a=>a.skillIds))],minutes:3,lessonId:id});
+ activities.push({id:lessonConceptId(id),title:l.title,kind:'concept',skillIds:[...new Set(related.flatMap(a=>a.skillIds))],minutes:3,lessonId:id});
 }
 export const adaptiveCatalog:AdaptiveCatalog={skills,activities};

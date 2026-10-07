@@ -34,3 +34,7 @@ As habilidades novas são Python → Iteradores → Consumo/Lotes/Recursos. Os i
 ## Pausas de contratos TypeScript
 
 `ts-variancia-contratos` acrescenta `ts-fonte-covariancia`, `ts-callback-entrada` e `ts-propriedade-funcao`. O catálogo passa a 31 atividades; as habilidades novas são TypeScript → Variância → Resultados/Parâmetros/Métodos. A conferência de uma escolha é conceitual: os testes do gabarito em strict e em execução não devem ser apresentados como execução de código do aluno.
+
+As três práticas avançadas de variância exigem seu conceito para entrar num novo plano diário. Elas podem seguir o conceito na mesma sessão ou reaparecer depois de lido. Leitura prepara a sequência e não gera evidência de domínio; pré-requisitos de habilidade continuam sendo exigidos separadamente. As rotas explícitas de prática e revisões já devidas continuam disponíveis, e planos iniciados são preservados.
+
+A mesma preparação é aplicada às três atividades novas de iteradores Python, conservando a primeira sessão em previsão de range, funções e contrato nomeado. Novos desafios de recursos passam a seguir sua introdução conceitual, sem bloquear estudo escolhido diretamente no catálogo.

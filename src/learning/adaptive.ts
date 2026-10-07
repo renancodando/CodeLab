@@ -20,7 +20,7 @@ export type DailyItem = {id:string;kind:'review'|'concept'|'practice'|'challenge
 export type DailySession = {day:string; items:DailyItem[]; completed:string[]; totalMinutes:number};
 export type AdaptiveState = {version:1;skills:Record<string,SkillProgress>;eventIds:string[];seenConcepts:string[];daily?:DailySession};
 export type SkillDefinition = {id:string;label:string;path:string[];prerequisites?:string[]};
-export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[]};
+export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[];requiredConcepts?:string[]};
 export type AdaptiveCatalog = {skills:SkillDefinition[];activities:LearningActivity[];preferredLanguage?:string};
 export type EvidenceResult = {accepted:boolean;credited:boolean;reason:'recorded'|'duplicate'|'stale'|'invalid'};
 export type SkillMastery = {skillId:string;score:number|null;practiced:number;assisted:number;dueDay:string|null;stage:number};
@@ -185,13 +185,16 @@ export function markConceptSeen(state:AdaptiveState,activityId:string,clock:Lear
 function catalogActivities(catalog:AdaptiveCatalog):LearningActivity[] {
  const skills=new Set(catalog.skills.filter(skill=>safeId(skill.id)).map(skill=>skill.id));
  const ids=new Set<string>();
+ const concepts=new Set(catalog.activities.filter(a=>a.kind==='concept'&&safeId(a.id)).map(a=>a.id));
  return catalog.activities.filter(activity=>{
+  if(activity.requiredConcepts!==undefined&&(!uniqueIds(activity.requiredConcepts,16)||activity.requiredConcepts.some(id=>!concepts.has(id))))return false;
   if(activity.prerequisites!==undefined&&!uniqueIds(activity.prerequisites,16)||!safeId(activity.id)||ids.has(activity.id)||!uniqueIds(activity.skillIds,8)||!activity.skillIds.length||activity.skillIds.some(id=>!skills.has(id))||!count(activity.minutes,1,60)||!['concept','practice','challenge'].includes(activity.kind))return false;
   ids.add(activity.id);return true;
  }).sort((a,b)=>compare(a.id,b.id));
 }
 const hasPassed=(state:AdaptiveState,activityId:string)=>Object.values(state.skills).some(skill=>Object.values(skill.evidence).some(record=>record.activityId===activityId&&record.passed&&!record.assisted));
-function prerequisitesMet(state:AdaptiveState,activity:LearningActivity,catalog:AdaptiveCatalog):boolean {
+function prerequisitesMet(state:AdaptiveState,activity:LearningActivity,catalog:AdaptiveCatalog,currentConcept?:string):boolean {
+ if(activity.requiredConcepts?.some(id=>!state.seenConcepts.includes(id)&&id!==currentConcept))return false;
  const required=new Set([...(activity.prerequisites??[]),...activity.skillIds.flatMap(id=>catalog.skills.find(skill=>skill.id===id)?.prerequisites??[])]);
  return [...required].every(id=>{const mastery=skillMastery(state,id);return mastery.practiced>=2&&(mastery.score??0)>=60;});
 }
@@ -211,9 +214,12 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
    .sort((a,b)=>Number(b.kind==='practice')-Number(a.kind==='practice')||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||compare(a.id,b.id))[0];
   if(activity)add('review',activity,skillId);
  }
- const eligible=activities.filter(activity=>(!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage))&&prerequisitesMet(state,activity,catalog));
- const concept=eligible.filter(activity=>activity.kind==='concept'&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id))[0];
+ const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage));
+ const concept=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id))[0];
  if(concept)add('concept',concept);
+ // A prepared concept may precede its practices in this same session. Reading
+ // unlocks the sequence, never adds mastery evidence or bypasses skill prerequisites.
+ const eligible=candidates.filter(activity=>prerequisitesMet(state,activity,catalog,concept?.id));
  const focus=new Set([...(concept?.skillIds??[]),...items.flatMap(item=>item.skillId?[item.skillId]:[])]);
  const relevant=(activity:LearningActivity)=>activity.skillIds.some(id=>focus.has(id));
  const practices=eligible.filter(activity=>activity.kind==='practice'&&!used.has(activity.id))
