@@ -119,7 +119,7 @@ O catálogo tem 132 aulas em 20 trilhas. A expansão acrescenta percursos de HTM
 
 O conteúdo novo carrega por linguagem ao abrir a aula, mantendo um índice leve para navegação e busca. O build também entrega capítulos completos em páginas públicas sem JavaScript. TypeScript e PostgreSQL têm seu ambiente indicado, sem simular execução no laboratório atual.
 
-As aulas de diálogos, Grid, iteradores e isolamento acrescentam testes de foco, dimensões, descarte e três cronogramas PostgreSQL com conexões reais. A suíte prevê 118 exemplos externos, além desses cronogramas; confirme o resultado do head no Actions antes de integrar.
+As aulas de diálogos, Grid, iteradores e isolamento acrescentam testes de foco, dimensões, descarte e três cronogramas PostgreSQL com conexões reais. A versão integrada foi validada com 118 exemplos externos, três cronogramas, 136 testes de unidade e 59 testes de navegador. As evidências e os aprofundamentos pendentes estão em docs/continuidade.md.
 
 Para verificar exemplos externos em um ambiente de CI com Python, g++, .NET 10 e PostgreSQL disponível: `node scripts/verify-content-examples.mjs`. Esse script executa somente exemplos publicados do repositório; código de usuário continua no executor isolado do aplicativo.
 

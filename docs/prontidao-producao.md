@@ -43,6 +43,12 @@ O bot da Vercel registra um preview Ready para a PR #3. A leitura pelo conector 
 
 A auditoria da PR #3 identificou `source-map-js@1.2.1`, dependência transitiva de desenvolvimento usada pelo PostCSS. O [aviso GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q) informa correção na versão `1.2.2`. O lockfile foi atualizado somente nesse pacote com os metadados e a integridade publicados no npm. O CI deve comprovar instalação, auditoria e compatibilidade dos builds antes da integração. A presença no build não comprova exposição do site publicado ao ataque descrito no aviso.
 
-## Conexões e recursos da próxima entrega
+## Conexões e recursos desta entrega
 
 Os novos casos de navegador verificam diálogo por teclado, retorno de foco, validade do formulário e geometria de Grid. Os programas C# verificam execução adiada e descarte antecipado. Os cronogramas PostgreSQL usam conexões diferentes e exigem o SQLSTATE esperado, evitando aceitar uma falha genérica como demonstração de concorrência. Os gates devem concluir no head específico antes da integração.
+
+## Evidência do código integrado
+
+O run [37566327714](https://github.com/renancodando/CodeLab/actions/runs/37566327714) aprovou 136 testes de unidade, 118 exemplos externos, três cronogramas PostgreSQL, 59 testes de navegador e os builds. O código foi integrado em 1ba1ae70ed6953124c419f06c94078bf87481b02 com a mesma árvore testada. A revisão da condição de corrida do stderr foi resolvida aguardando close; consulte a [documentação de ChildProcess](https://nodejs.org/api/child_process.html#event-close). O roteiro manual segue o comportamento de [ON_ERROR_STOP no psql](https://www.postgresql.org/docs/current/app-psql.html): a interação retorna ao prompt e exige encerrar a transação em erro.
+
+Essas evidências validam o código desta entrega. A implantação continua pendente: as ferramentas de leitura pública e o navegador local também falharam ao acessar/iniciar a verificação, além da falta de escopo no conector. Esses erros não comprovam indisponibilidade do site.

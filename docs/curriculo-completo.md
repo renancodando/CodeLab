@@ -1,8 +1,8 @@
 # Currículo do zero à especialização
 
-## Conteúdo proposto nesta expansão
+## Conteúdo publicado nesta expansão
 
-A versão integrada tem **128 aulas em 20 trilhas**. A PR #4 acrescenta quatro aulas próprias e propõe **132 aulas**, após a aprovação dos gates desta versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **24 aulas de 17 capítulos**, com **48 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora nove aulas cada; as 60 aulas originais continuam disponíveis.
+A versão integrada tem **132 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **24 aulas de 17 capítulos**, com **48 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora nove aulas cada; as 60 aulas originais continuam disponíveis.
 
 Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **606 entradas de cobertura**: **134** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **472** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
@@ -527,7 +527,7 @@ Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de exp
 
 ## Terceiro aprofundamento: interação, recursos e sessões
 
-Esta entrega acrescenta quatro aulas próprias, com seis seções de teoria, dois problemas e 17 capítulos cada. Os resultados do novo head precisam ser conferidos antes da integração.
+Esta entrega acrescenta quatro aulas próprias, com seis seções de teoria, dois problemas e 17 capítulos cada. O head 9cd2122 foi aprovado e integrado com árvore idêntica à testada; as evidências estão em docs/continuidade.md.
 
 | Aula | Mecanismos e prática | Verificação |
 | --- | --- | --- |
@@ -567,10 +567,10 @@ Este é o percurso principal publicado; a solicitação de conteúdo completo co
 - Python: biblioteca padrão por domínio, descritores, typing avançado, multiprocessing com falhas, distribuição e interoperabilidade.
 - TypeScript: testes de tipos em bibliotecas reais, resolução de módulos por ambiente, variância e validação de dados aninhados.
 - C++: allocators, corrotinas com scheduler real, memória atômica, interoperabilidade, builds com várias unidades e versões posteriores a C++20.
-- HTML/CSS: mídia com arquivos e legendas reais, widgets completos, compatibilidade por navegador e recursos recentes com fallback.
+- HTML/CSS: mídia com arquivos e legendas reais, widgets além do diálogo modal, container queries, compatibilidade por navegador e recursos recentes com fallback.
 - JavaScript: protocolos completos, internacionalização, workers e cancelamento, módulos em diferentes hosts e gerenciamento explícito de recursos.
 - C#: testes com frameworks, ASP.NET por fluxo, EF Core com provedor real, source generators, AOT e diagnóstico de produção.
-- SQL: cenários concorrentes com duas sessões, isolation/retry, planos com distribuição realista, migrations e restauração verificada.
+- SQL: locks e deadlocks entre sessões, Serializable e regras de negócio concorrentes, repetição com efeitos externos idempotentes, planos com distribuição realista, migrations e restauração verificada. Os casos Read Committed, Repeatable Read e conflito 40001 já têm cronogramas próprios.
 - Algoritmos, estruturas de dados, redes, Git, testes e arquitetura: acrescentar percursos próprios além do contexto presente nos módulos.
 
 A automação existente retoma a expansão a cada quatro horas. Deve conferir o checkpoint e a PR antes de editar e avisar apenas sobre mudanças relevantes.

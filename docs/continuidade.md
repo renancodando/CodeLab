@@ -2,38 +2,48 @@
 
 ## Estado em 7 de outubro de 2026
 
-- PR #1, #2 e #3 integradas. Main conferida em `42abffdaf236b13f66e0dbf50d43240f877a6a05`: 128 aulas e 20 trilhas.
-- PR #3 validada no head `d978b46cba7b6825d93d222b243ed77e79564688`, run [37564135454](https://github.com/renancodando/CodeLab/actions/runs/37564135454): 136 testes de unidade, 112 exemplos externos, 48 E2E, builds e 134 páginas. Auditoria sem vulnerabilidades.
-- Árvore integrada idêntica à testada: `24db0d534c7d3d9be39b21ea16b551966d2f5c80`. Revisão atual concluída sem novos achados e thread anterior dos gabaritos resolvida após os testes passarem.
-- PR #4 na branch `conteudo/dialogos-grid-iteradores-isolamento`: quatro aulas próprias e oito problemas, catálogo proposto de 132 aulas e 20 trilhas.
-- O head inicial `eaac3db2711864cf43341982f61dcf070e8dc29e` passou em unidade, exemplos, três cronogramas entre sessões, builds e auditoria; o navegador ainda estava em execução quando a revisão apontou uma condição de corrida no leitor de stderr.
-- Correção: verificador espera o evento close do processo para validar o SQLSTATE, com streams drenados. A aula diferencia psql interativo (retorna ao prompt e exige ROLLBACK) de entrada não interativa (encerra por ON_ERROR_STOP). Conferir o novo head e não integrar com base no CI anterior.
-- Catálogo proposto: 72 módulos adicionais, 24 aulas com prática independente, 606 entradas de cobertura, 134 vinculadas a atividades e 472 introduzidas. As especializações restantes seguem no mapa.
+- PRs #1, #2, #3 e #4 integradas. O catálogo tem 132 aulas em 20 trilhas; as oito trilhas por linguagem têm nove aulas cada.
+- Há 48 módulos panorâmicos de 13 capítulos e 24 aulas próprias de 17 capítulos, além das 60 aulas originais. As aulas próprias oferecem 48 problemas independentes.
+- Matriz com 606 entradas: 134 vinculadas a atividades específicas e 472 introduzidas. Entradas podem repetir conceitos em contextos diferentes; a contagem não representa esgotamento das especializações.
 
-## Verificação da entrega seguinte
+## Evidências da última entrega
 
-O head novo precisa passar em instalação e auditoria, 136 testes de unidade, 118 programas externos, três cronogramas PostgreSQL com conexões distintas, build frontend/API, 59 testes de navegador e geração de 138 páginas. Nenhum resultado esperado deve ser apresentado como aprovado antes do CI. Conferir revisão e árvore integrada igual à testada.
+- Código validado no head `9cd2122d36b8a6c9d025c7f993812045536220e0`.
+- Run [37566327714](https://github.com/renancodando/CodeLab/actions/runs/37566327714): 136 testes de unidade, 118 programas externos, três cronogramas PostgreSQL com conexões distintas, 59 testes de navegador, builds frontend/API e 138 páginas.
+- Auditoria npm sem vulnerabilidades. A correção de source-map-js 1.2.2 permanece no lockfile.
+- Revisão concluída para esse head sem novos achados; a thread P2 do stderr foi resolvida após a correção e a execução dos cenários.
+- Integração em `1ba1ae70ed6953124c419f06c94078bf87481b02`; árvore `7ffa35ce37a96aeb762c3782c5fdf2e3a7777b1f`, igual à testada.
+- Heap no ciclo medido: 12.860.480 para 15.156.564 bytes, crescimento 2.296.084; zero editores visíveis restantes e 114 geometrias. É evidência deste cenário.
+- A PR #3 também teve CI aprovado após sua integração em main, no run 37565921506.
 
-Os gabaritos SQL que exigem conexões distintas possuem postgresScenario na definição. O verificador comum não os concatena numa conexão; verify-sql-concurrency usa os comandos por sessão, exige os SQLSTATE esperados e encerra os processos antes da limpeza. Os cenários são da autoria do repositório, não código de usuário.
+Este checkpoint altera apenas documentação. As execuções automáticas de main podem estar em andamento; confira seu resultado na próxima retomada e investigue qualquer falha real antes de ampliar código.
 
-## Critério de integração
+## Próxima ação editorial
 
-PR #3 já está integrada. Integre PR #4 somente após CI verde no head atual e a resolução dos achados. Confira main e PRs abertas antes de editar para evitar duplicação. Se main mudar enquanto o CI executa, confira a comparação e a árvore resultante; não ignore uma mudança material no código testado.
+Leia docs/curriculo-completo.md. Priorize aulas próprias sobre biblioteca padrão e protocolos Python; variância e módulos TypeScript; iteradores, invalidação e algoritmos C++; propriedade e protótipos JavaScript. Continue a aprofundar as oito linguagens, projetos maiores, ecossistemas e diagnóstico. Não marque temas apenas listados como prática pronta.
 
-## Conteúdo e próximas entregas
+O diálogo modal, Grid com trilhas automáticas, iteradores C# e snapshots/conflito PostgreSQL já possuem aulas e verificações próprias. Ampliar esses assuntos com novas atividades exige mecanismos adicionais, evitando repetir o que já foi entregue.
 
-Leia docs/curriculo-completo.md e mantenha a matriz honesta. Permanecem aprofundamentos de biblioteca padrão, protocolos, ecossistemas, testes, concorrência, diagnósticos, projetos maiores e especializações por linguagem. A próxima entrega deve transformar esses mecanismos em aulas próprias com casos de transferência; títulos e listas não promovem cobertura para prática independente.
+Depois das prioridades editoriais, prossiga com a migração gradual para passos interativos, mantendo a leitura extensa e o progresso local sem contas.
 
-Prosseguir com passos interativos depois das prioridades editoriais, preservando leitura extensa e progresso local sem conta.
+## Manutenção e critério de integração
 
-## Preservação e ambiente
+As definições em src/content/deep são a fonte de verdade; content:generate deriva índice e matriz. Os gabaritos SQL que exigem conexões distintas usam postgresScenario e verify-sql-concurrency. O verificador espera close para capturar streams completos; em psql interativo a pessoa deve executar ROLLBACK após o erro.
 
-Preservar aparência, mundo, clima, áudio, editor e armazenamento local. Os novos estilos pertencem apenas aos códigos didáticos; CSS do produto não é alterado. TypeScript usa compilação real; SQL desta expansão declara PostgreSQL.
+Antes de editar, confira main, PRs abertas e este checkpoint. Preserve critérios de profundidade, execute os exemplos e o fluxo completo no CI, revise achados e integre somente código verificado. Confira se a árvore integrada corresponde à testada. Revise contagens ao acrescentar aulas.
 
-O conector da Vercel recusou leitura do projeto code-lab no escopo renancodandos-projects com 403. Preview Ready não comprova funcionamento. A ampliação de acesso já foi solicitada ao usuário; aguardar resposta e conferir o endereço real quando estiver disponível.
+## Preservação do produto
 
-O executor local falha na preparação de ACL antes de iniciar processos. Não alterar ACLs do sistema nem sobrescrever clones ou arquivos não rastreados. Publicação pelo GitHub e testes pelo Actions; inspecionar alterações locais antes de sincronizar quando o executor voltar.
+Preservar aparência, mundo, clima, áudio, editor e armazenamento local. Os estilos novos pertencem aos exemplos didáticos. A bancada orienta o dialeto da aula: PostgreSQL na expansão e SQLite nos exemplos originais correspondentes. Não acrescentar login, contas ou progresso remoto.
+
+## Verificação da implantação e execução local
+
+O conector Vercel recusou leitura do projeto code-lab em renancodandos-projects com 403. A ampliação de acesso já foi solicitada ao usuário; ainda não houve resposta. Preview Ready não comprova a implantação.
+
+A consulta pública também não conseguiu acessar o endereço pela ferramenta web. O navegador de teste local falhou ao iniciar com erro de caminho dos assets do kernel. Isso não demonstra que o site esteja fora do ar; a verificação do fluxo publicado permanece pendente.
+
+O executor local continua falhando na preparação de ACL antes de iniciar processos. A cópia local não foi sincronizada. Não alterar ACLs do sistema nem sobrescrever clones ou arquivos não rastreados. Quando a execução local voltar, inspecione mudanças e arquivos não rastreados antes de sincronizar.
 
 ## Retomada
 
-A automação continuar-melhorias-do-codelab deve conferir este checkpoint, main e PRs abertas, retomar o head existente e avisar somente sobre progresso relevante, falha ou ação necessária. Não declarar o pedido inteiro concluído enquanto os aprofundamentos ou a verificação da implantação permanecerem pendentes.
+A automação continuar-melhorias-do-codelab permanece configurada neste chat. Confira gates de main e PRs abertas, retome o estado existente e comunique somente progresso significativo, falha ou ação necessária. Se um limite impedir publicação, registre o head e o último gate conhecido; retome quando houver disponibilidade. O pedido integral ainda está em andamento enquanto os aprofundamentos e a verificação da implantação estiverem pendentes.
