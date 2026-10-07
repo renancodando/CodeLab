@@ -200,7 +200,7 @@ export default {
           ],
           "explanation": [
             "?? implementa a política de ausência escolhida para os dois valores nulos. A validação depois do default mantém números de outra faixa e texto fora do domínio.",
-            "O teste com zero detecta o uso acidental de ||. O consumidor usa ok para saber se há sucesso, sem depender do valor numérico ser truthy."
+            "O teste com zero detecta o uso acidental de ||. O consumidor usa ok para saber se há sucesso, sem depender do valor numérico ser truthy. Troque o operador por || e execute o caso zero para observar qual promessa deixa de ser atendida."
           ],
           "checks": [
             "0 é preservado.",
