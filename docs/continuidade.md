@@ -81,3 +81,9 @@ Testar strict com casos negativos, execução real, diferença método/proprieda
 A revisão TypeScript restringiu a substituição de ler/usar via readonly e acrescentou testes negativos dessa permissão. As novas atividades avançadas têm requiredConcepts no catálogo diário para conservar a primeira sessão nos fundamentos; o conceito pode precedê-las no mesmo plano, sem criar domínio pela leitura. Conferir os novos testes de catálogo e o início da sessão TypeScript no navegador antes de integrar o head final.
 
 A correção de sequência diária também cobre as três atividades de iteradores Python publicadas na PR #6; seu desafio de fechamento não deve substituir o desafio de fundamentos na primeira sessão Python. O teste verifica preparação de conceito e plano novo nas duas linguagens.
+
+## Iteradores C++ em preparação
+
+Branch `curriculo-cpp-iteradores-invalidacao`, a partir da integração TypeScript `7f27f1759c610edbf86d9d61fe1a589b307cc07e`. A PR #7 teve 259 testes de unidade, 135 programas externos e 83 testes de navegador aprovados no run 37680909578; sua árvore integrada é a testada `0547361ce77cf3af0281b1f5379b5cbd886f7c67`.
+
+A expansão C++ define 135 aulas/20 trilhas, 27 aulas próprias/54 problemas, 636 entradas (149 vinculadas, 487 introduzidas) e 34 atividades. Python, TypeScript e C++ têm dez aulas; as outras linguagens têm nove. Validar os quatro programas, três fixtures e fluxo offline com reconstrução, persistência e conclusão antes de integrar. Os contadores descrevem conteúdo definido, sem antecipar aprovação do CI nem concluir o currículo integral.

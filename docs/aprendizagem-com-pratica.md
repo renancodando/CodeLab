@@ -38,3 +38,9 @@ As habilidades novas são Python → Iteradores → Consumo/Lotes/Recursos. Os i
 As três práticas avançadas de variância exigem seu conceito para entrar num novo plano diário. Elas podem seguir o conceito na mesma sessão ou reaparecer depois de lido. Leitura prepara a sequência e não gera evidência de domínio; pré-requisitos de habilidade continuam sendo exigidos separadamente. As rotas explícitas de prática e revisões já devidas continuam disponíveis, e planos iniciados são preservados.
 
 A mesma preparação é aplicada às três atividades novas de iteradores Python, conservando a primeira sessão em previsão de range, funções e contrato nomeado. Novos desafios de recursos passam a seguir sua introdução conceitual, sem bloquear estudo escolhido diretamente no catálogo.
+
+## Pausas C++ e acesso após modificações
+
+`cpp-iteradores-invalidacao` acrescenta `cpp-prever-intervalo`, `cpp-ordenar-erase` e `cpp-reobter-reserva`, levando o total a 34 atividades. As habilidades são C++ → Vector → Iteração/Remoção/Realocação. As pausas exigem o conceito correspondente no plano diário, preservam respostas e funcionam offline após preparação. Leitura não fabrica domínio. A reconstrução usa os fechamentos identificados do if e do for; a previsão nunca desreferencia end nem um iterador inválido.
+
+Os gabaritos das pausas são compilados em C++20 no CI; a resposta do estudante permanece conceitual. Compilação geral e validação automática de projetos abertos continuam fora desse mecanismo.
