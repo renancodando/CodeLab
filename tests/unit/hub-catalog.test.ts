@@ -34,3 +34,36 @@ it('inserir uma aula conserva conceitos lidos e o plano iniciado antes da expans
  expect(next.items.filter(i=>i.kind==='concept').map(i=>i.activityId)).not.toContain(ids[0]);
  expect(adaptiveCatalog.activities.some(a=>a.id==='conceito-2-py-iteracao-recursos')).toBe(true);
 });
+
+it('variância avançada espera seu conceito e leitura não fabrica domínio',()=>{
+ const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'},catalog={...adaptiveCatalog,preferredLanguage:'typescript'};
+ const advanced=['ts-fonte-covariancia','ts-callback-entrada','ts-propriedade-funcao'],concept='conceito-2-ts-variancia-contratos';
+ const first=buildDailySession(state,catalog,clock);
+ expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
+ state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
+ const prepared=buildDailySession(state,catalog,clock);
+ expect(prepared.items[0].activityId).toBe(concept);
+ expect(new Set(prepared.items.slice(1).map(i=>i.activityId))).toEqual(new Set(advanced));
+ state.daily=prepared;markConceptSeen(state,concept,clock);
+ expect(Object.keys(state.skills)).toEqual([]);
+ const later=buildDailySession(state,catalog,{...clock,now:clock.now+86400000});
+ expect(new Set(later.items.map(i=>i.activityId))).toEqual(new Set(advanced));
+});
+it('um pré-requisito de conceito inexistente é rejeitado no catálogo diário',()=>{
+ const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'};
+ const catalog={...adaptiveCatalog,preferredLanguage:'typescript',activities:adaptiveCatalog.activities.map(a=>a.id==='ts-zero-ausencia'?{...a,requiredConcepts:['conceito-inexistente']}:a)};
+ expect(buildDailySession(state,catalog,clock).items.some(i=>i.activityId==='ts-zero-ausencia')).toBe(false);
+});
+
+it('o desafio novo de recursos Python não antecipa o conceito numa primeira sessão',()=>{
+ const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'python'};
+ const advanced=['py-prever-esgotamento','py-ordenar-lote','py-fechar-consumo'],concept='conceito-2-py-iteracao-recursos';
+ const first=buildDailySession(state,catalog,clock);
+ expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
+ state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
+ const prepared=buildDailySession(state,catalog,clock);
+ expect(prepared.items[0].activityId).toBe(concept);
+ expect(new Set(prepared.items.slice(1).map(i=>i.activityId))).toEqual(new Set(advanced));
+});

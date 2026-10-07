@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+"ts-fonte-covariancia":{"accepted":["detalhada"],"failure":"Uma fonte básica não promete pontos. Examine o campo que a posição de destino pode solicitar.","solution":"Fonte<Detalhado> pode atender à posição Fonte<Registro>, que só promete ler id."},
+"ts-callback-entrada":{"accepted":["geral"],"failure":"O chamador pode fornecer apenas id. O callback não pode exigir pontos e uma assertion não acrescenta esse campo.","solution":"Um callback que aceita Registro pode processar qualquer entrada permitida; exigir Detalhado restringe o contrato."},
+"ts-propriedade-funcao":{"accepted":["propriedade"],"failure":"A assinatura de método não recebe a mesma checagem de parâmetros. Procure a propriedade cuja informação de tipo é uma função.","solution":"processar: (item: T) => string"},
 "py-prever-esgotamento":{"accepted":["0\n[1, 2]\n[]"],"failure":"O cursor não reinicia. Acompanhe qual elemento next retirou e quantos restam para cada list.","solution":"0\n[1, 2]\n[]"},
 "py-ordenar-lote":{"accepted":[],"order":["declarar","cursor","consumir","retornar"],"failure":"Crie o cursor antes de passá-lo a islice e devolva apenas a tupla produzida; cada linha deve aparecer uma vez.","solution":"def primeiro_lote(fonte, tamanho):\n    origem = iter(fonte)\n    lote = tuple(islice(origem, tamanho))\n    return lote"},
 "py-fechar-consumo":{"accepted":["closing"],"failure":"O trecho deve definir a liberação inclusive em exceção e evitar ler a fonte inteira. break não chama close genericamente.","solution":"with closing(fonte) as origem:\n    processar(next(origem))"},

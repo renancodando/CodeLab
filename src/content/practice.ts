@@ -4,7 +4,7 @@ export type PracticeLanguage = 'html'|'css'|'javascript'|'typescript'|'python'|'
 export type PracticeKind = 'debug'|'predict'|'order'|'fill'|'choice';
 export type PracticeActivity = {
  id:string; language:PracticeLanguage; lessonIds:string[]; skillIds:string[];
- afterBlock:number; kind:PracticeKind; capability:Capability;
+ afterBlock:number; kind:PracticeKind; capability:Capability; requiresConcept?:boolean;
  title:string; prompt:string; code?:string; options?:{id:string;text:string}[];
  lines?:{id:string;code:string}[]; hint:string; minutes:number;
 };
@@ -176,6 +176,7 @@ export const practiceActivities:PracticeActivity[]=[
 ,
 {
   "id": "py-prever-esgotamento",
+  "requiresConcept": true,
   "language": "python",
   "lessonIds": [
     "py-iteracao-recursos"
@@ -194,6 +195,7 @@ export const practiceActivities:PracticeActivity[]=[
 },
 {
   "id": "py-ordenar-lote",
+  "requiresConcept": true,
   "language": "python",
   "lessonIds": [
     "py-iteracao-recursos"
@@ -229,6 +231,7 @@ export const practiceActivities:PracticeActivity[]=[
 },
 {
   "id": "py-fechar-consumo",
+  "requiresConcept": true,
   "language": "python",
   "lessonIds": [
     "py-iteracao-recursos"
@@ -256,6 +259,103 @@ export const practiceActivities:PracticeActivity[]=[
     }
   ],
   "hint": "Interromper um for não define o fechamento da origem; procure a fronteira que libera o recurso também quando processar falha.",
+  "minutes": 2
+}
+,
+{
+  "id": "ts-fonte-covariancia",
+  "requiresConcept": true,
+  "language": "typescript",
+  "lessonIds": [
+    "ts-variancia-contratos"
+  ],
+  "skillIds": [
+    "typescript.variancia.resultados"
+  ],
+  "afterBlock": 1,
+  "kind": "choice",
+  "capability": "reconhecimento",
+  "title": "O resultado conserva a promessa",
+  "prompt": "Registro tem id; Detalhado tem id e pontos. Fonte<T> oferece apenas ler: () => T. Qual substituição conserva o contrato de leitura? Decisão conceitual, sem compilar código do aluno.",
+  "options": [
+    {
+      "id": "detalhada",
+      "text": "Usar Fonte<Detalhado> como Fonte<Registro>."
+    },
+    {
+      "id": "basica",
+      "text": "Usar Fonte<Registro> como Fonte<Detalhado>."
+    },
+    {
+      "id": "ambas",
+      "text": "As duas direções sempre garantem pontos."
+    }
+  ],
+  "hint": "A pessoa que só pediu id pode receber mais campos; quem pediu pontos precisa que eles existam.",
+  "minutes": 2
+},
+{
+  "id": "ts-callback-entrada",
+  "requiresConcept": true,
+  "language": "typescript",
+  "lessonIds": [
+    "ts-variancia-contratos"
+  ],
+  "skillIds": [
+    "typescript.variancia.parametros"
+  ],
+  "afterBlock": 3,
+  "kind": "choice",
+  "capability": "depuracao",
+  "title": "O callback não pode exigir o que falta",
+  "prompt": "Com strictFunctionTypes habilitado, a posição (item: Registro) => void pode chamar com qualquer Registro de apenas id. Qual callback atende a todas as entradas permitidas? Pausa conceitual, sem executar compilador.",
+  "options": [
+    {
+      "id": "geral",
+      "text": "Um callback que aceita Registro e lê somente id."
+    },
+    {
+      "id": "restrito",
+      "text": "Um callback que exige Detalhado e chama pontos.toFixed()."
+    },
+    {
+      "id": "assertion",
+      "text": "O callback restrito, desde que seja forçado por uma assertion."
+    }
+  ],
+  "hint": "Construa uma entrada válida sem pontos e acompanhe o campo que cada implementação tenta usar.",
+  "minutes": 2
+},
+{
+  "id": "ts-propriedade-funcao",
+  "requiresConcept": true,
+  "language": "typescript",
+  "lessonIds": [
+    "ts-variancia-contratos"
+  ],
+  "skillIds": [
+    "typescript.variancia.metodos"
+  ],
+  "afterBlock": 5,
+  "kind": "choice",
+  "capability": "alteracao",
+  "title": "Escolha a assinatura que confere parâmetros",
+  "prompt": "Uma API precisa da relação de parâmetros exigida por strictFunctionTypes em callbacks. Qual forma descreve uma propriedade de função? Nenhum compilador é executado nesta pausa. A atividade não comprova validação de dados externos.",
+  "options": [
+    {
+      "id": "propriedade",
+      "text": "processar: (item: T) => string"
+    },
+    {
+      "id": "metodo",
+      "text": "processar(item: T): string"
+    },
+    {
+      "id": "any",
+      "text": "processar: any"
+    }
+  ],
+  "hint": "Observe onde estão os dois pontos e a seta; assinaturas de método recebem tratamento mais permissivo.",
   "minutes": 2
 }
 ];

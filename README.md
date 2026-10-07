@@ -146,3 +146,10 @@ Ao editar uma definição em `src/content/deep/`, execute `npm run content:gener
 A edição do catálogo inclui 133 aulas em 20 trilhas: Python tem dez aulas no percurso aprofundado e as outras sete linguagens têm nove. `py-iteracao-recursos` aborda cursors de uso único, geradores, lotes sem leitura extra e fechamento explícito. São dois problemas independentes e três pausas offline, elevando o catálogo de atividades corrigíveis a 28.
 
 Os programas de referência entram no verificador Python do CI. As pausas do aluno são conceituais e os projetos têm revisão manual. O mapa conserva a distinção entre tema introduzido e prática independente; esta expansão não declara esgotamento das linguagens ou implantação validada.
+
+
+### Contratos TypeScript
+
+A edição seguinte acrescenta `ts-variancia-contratos`: produtores, consumidores, leitura/escrita, callbacks e a diferença de checagem entre métodos e propriedades. Dois problemas têm testes positivos/negativos de tipos e resultados em execução; três pausas são conceituais offline.
+
+O catálogo definido tem 134 aulas/20 trilhas, 26 aulas próprias/52 problemas e 31 atividades. Python e TypeScript têm dez aulas nos percursos aprofundados; as outras seis linguagens têm nove. Verifique o checkpoint para conhecer o último head integrado e os gates reais, sem confundir um conteúdo em revisão com implantação validada.

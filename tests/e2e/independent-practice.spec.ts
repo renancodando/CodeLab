@@ -3,7 +3,7 @@ import {resolveLesson} from '../../src/content/curriculum';
 import html from '../../src/content/deep/html';
 import css from '../../src/content/deep/css';
 
-const aulasAprofundadas=['py-iteracao-recursos','py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade','py-funcoes-contratos','ts-genericos-relacoes','cpp-raii-posse-unica','js-promessas-contratos','html-dialogo-foco','css-grid-trilhas','cs-iteradores-descarte','sql-isolamento-sessoes'];
+const aulasAprofundadas=['ts-variancia-contratos','py-iteracao-recursos','py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade','py-funcoes-contratos','ts-genericos-relacoes','cpp-raii-posse-unica','js-promessas-contratos','html-dialogo-foco','css-grid-trilhas','cs-iteradores-descarte','sql-isolamento-sessoes'];
 for(const id of aulasAprofundadas){
  test(`aula ${id}: leitura, mapa, referências e abertura das soluções`,async({page})=>{
   await page.goto('/#/aula/'+id);

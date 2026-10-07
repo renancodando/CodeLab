@@ -1,0 +1,43 @@
+import {test,expect} from '@playwright/test';
+test('TypeScript: pausas de contratos funcionam offline e guardam decisões conceituais',async({page,context})=>{
+ test.setTimeout(90000);const external:string[]=[];
+ page.on('request',request=>{if(/\/api\/(execute|run|submissions)/.test(request.url()))external.push(request.url());});
+ await page.goto('/#/diaria');await page.locator('[data-language]').selectOption('typescript');
+ const initial=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
+ expect(initial.adaptive.daily.items.map((i:{kind:string})=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ expect(initial.adaptive.daily.items.some((i:{activityId:string})=>['ts-fonte-covariancia','ts-callback-entrada','ts-propriedade-funcao'].includes(i.activityId))).toBe(false);
+ await page.goto('/');await expect(page.locator('#offline-status')).toHaveText('Conteúdo preparado para estudar offline.',{timeout:45000});
+ await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+ await context.setOffline(true);
+ try{
+  await page.goto('/#/aula/ts-variancia-contratos');
+  await expect(page.locator('.lesson-chapter')).toHaveCount(17);
+  await expect(page.locator('[data-inline-practice]')).toHaveCount(3);
+  const fonte=page.locator('#aula-contexto [data-practice="ts-fonte-covariancia"]');
+  await fonte.getByLabel('Usar Fonte<Registro> como Fonte<Detalhado>.',{exact:true}).check();
+  await fonte.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+  await expect(fonte.locator('.practice-feedback')).toContainText('não promete pontos');
+  await expect(fonte.locator('[data-help] pre')).toHaveCount(0);
+  await fonte.getByLabel('Usar Fonte<Detalhado> como Fonte<Registro>.',{exact:true}).check();
+  await fonte.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+  await expect(fonte.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+  const callback=page.locator('#aula-teoria-2 [data-practice="ts-callback-entrada"]');
+  await callback.getByLabel('Um callback que aceita Registro e lê somente id.',{exact:true}).check();
+  await callback.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+  await expect(callback.locator('.practice-feedback')).toContainText('não houve execução de typescript');
+  const propriedade=page.locator('#aula-teoria-4 [data-practice="ts-propriedade-funcao"]');
+  await propriedade.getByLabel('processar: (item: T) => string',{exact:true}).check();
+  await propriedade.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+  await expect(propriedade.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
+  expect(saved.adaptive.skills['typescript.variancia.resultados'].evidence['ts-fonte-covariancia'].firstTry).toBe(false);
+  expect(saved.practiceAnswers['ts-propriedade-funcao'].value).toBe('propriedade');
+  await page.reload({waitUntil:'domcontentloaded'});
+  await expect(page.locator('[data-practice="ts-propriedade-funcao"] input[value="propriedade"]')).toBeChecked();
+  await page.getByLabel('Um callback que aceita todo Registro; exigir pontos restringe entradas que a posição pode fornecer.',{exact:true}).check();
+  await page.getByRole('button',{name:'Conferir resposta',exact:true}).click();
+  await expect(page.locator('#lesson-feedback')).toContainText('aula foi concluída');
+  await page.reload({waitUntil:'domcontentloaded'});await expect(page.locator('#lesson-feedback')).toContainText('já concluída');
+  expect(external).toEqual([]);
+ }finally{await context.setOffline(false);}
+});
