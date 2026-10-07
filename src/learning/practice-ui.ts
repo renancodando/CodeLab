@@ -49,8 +49,8 @@ export function mountPractice(container:HTMLElement,id:string,options:Options={}
    if(result.status!=='evaluated'){feedback.textContent=result.feedback;return;}
    if(JSON.stringify(a.value)!==JSON.stringify(submitted)){feedback.textContent='Sua resposta mudou. Confira a versão atual.';return;}
    a.attempts++;a.passed=result.passed;persist();const current=learningClock(),mode=options.mode??(activity.afterBlock===5?'challenge':'practice');
-   recordEvidence(progress.adaptive,{id:id+'-'+current.now+'-'+a.attempts,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:result.passed,assisted:a.assisted,attempts:a.attempts,hints:a.hints,kind:mode},current);saveProgress();
-   feedback.textContent=result.feedback+'\n'+result.tests.map(t=>(t.passed?'✓ ':'↻ ')+t.label).join('\n')+'\n'+(result.evidence==='executed'?'Comportamento avaliado no executor JavaScript isolado.':'Evidência conceitual; sem execução de compilador.');options.onEvaluated?.(result.passed);
+   const evidence=recordEvidence(progress.adaptive,{id:id+'-'+current.now+'-'+a.attempts,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:result.passed,assisted:a.assisted,attempts:a.attempts,hints:a.hints,kind:mode},current);saveProgress();
+   feedback.textContent=result.feedback+'\n'+result.tests.map(t=>(t.passed?'✓ ':'↻ ')+t.label).join('\n')+'\n'+(result.evidence==='executed'?'Comportamento avaliado no executor JavaScript isolado.':'Evidência conceitual; sem execução de compilador.');if(!evidence.accepted)feedback.textContent+='\nA resposta foi conferida, mas não alterou o mapa de domínio. Confira a data do dispositivo e os dados da jornada.';options.onEvaluated?.(result.passed);
   }catch{if(!disposed)feedback.textContent='Não foi possível conferir. Sua resposta está salva; tente novamente.';}
   finally{controller=undefined;if(!disposed)button.disabled=false;}
  });

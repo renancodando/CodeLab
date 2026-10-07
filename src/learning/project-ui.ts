@@ -36,7 +36,7 @@ export function mountProject(container:HTMLElement,id:string,options:Options):()
   container.querySelector<HTMLSelectElement>('[data-file]')!.addEventListener('change',e=>{file=(e.target as HTMLSelectElement).value;render();});
   container.querySelector<HTMLTextAreaElement>('[data-code]')!.addEventListener('input',event=>{
    try{workspace=updateProjectFile(workspace,project!,file,(event.target as HTMLTextAreaElement).value);store();const updated=projectCompletion(workspace,project!);container.querySelector('[data-project-progress]')!.textContent=updated.completedMilestones+' de '+updated.totalMilestones+' marcos com evidências atuais · arquivos na versão '+workspace.fileRevision;save.textContent='Arquivo salvo. Reconfira as evidências dos marcos para esta versão.';container.querySelectorAll('.rubric .small').forEach(p=>{p.textContent='Reconferir na versão atual dos arquivos';});}
-   catch(error){save.textContent=error instanceof Error?error.message:'Não foi possível salvar; copie seu código antes de sair.';}
+   catch(error){save.textContent=(error instanceof Error?error.message:'Não foi possível salvar.')+' O texto atual ainda não foi salvo; copie-o antes de sair.';}
   });
   container.querySelector<HTMLSelectElement>('[data-milestone]')!.addEventListener('change',event=>{workspace=selectProjectMilestone(workspace,project!,(event.target as HTMLSelectElement).value);store();render();});
   container.querySelector('[data-add]')!.addEventListener('click',()=>{

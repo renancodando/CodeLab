@@ -18,6 +18,16 @@
 
 Este checkpoint altera apenas documentação. As execuções automáticas de main podem estar em andamento; confira seu resultado na próxima retomada e investigue qualquer falha real antes de ampliar código.
 
+## Nova prioridade autorizada: aprendizagem com prática e projetos
+
+Branch de trabalho: aprendizagem-debug-habilidades-projetos, iniciada na main e7bca514800b284b84bc926ccfed33ce3d391768, cujos gates de main foram aprovados (37568195439). Esta expansão ainda deve passar em todos os gates antes de integrar.
+
+Implementado na branch: 25 atividades distribuídas nas oito linguagens (quatro programas JS quebrados); pausas corrigíveis nos capítulos ligados a essas atividades; domínio por habilidade com evidência distinta e assistência; revisão 1/3/7/14/30/60 por calendário local; sessão diária limitada; seis percursos com 18 etapas; oito projetos de conclusão com 57 marcos e 171 critérios manuais; vários arquivos, exportação ZIP e backup integrado; cache versionado da aplicação e módulos para estudo offline após preparação; adaptação de 220 a 4000 px.
+
+O catálogo principal permanece com 132 aulas. As 18 etapas dos percursos são novas unidades separadas, não aulas de 17 capítulos. A correção de respostas conceituais não comprova compilação; projetos abertos têm rubrica manual. Os casos reservados ficam fora da tela durante a tentativa e são inspecionáveis no pacote local. Não declarar autocorreção universal.
+
+Os arquivos/códigos modificados ainda precisam dos testes de navegador, exemplos e builds no CI. Verifique o head da PR, os resultados finais e qualquer revisão antes de integrar. A implantação pública e a sincronização local continuam limitadas pelos problemas já descritos.
+
 ## Próxima ação editorial
 
 Leia docs/curriculo-completo.md. Priorize aulas próprias sobre biblioteca padrão e protocolos Python; variância e módulos TypeScript; iteradores, invalidação e algoritmos C++; propriedade e protótipos JavaScript. Continue a aprofundar as oito linguagens, projetos maiores, ecossistemas e diagnóstico. Não marque temas apenas listados como prática pronta.
