@@ -9,7 +9,7 @@
 
 ## Critério de integração
 
-A entrega só pode ser integrada após CI verde no head atual: testes de unidade, compilação strict dos trechos TypeScript, execução de 112 exemplos externos, build frontend e API, 36 E2E e geração de 134 páginas. Conferir revisão da PR, achados e correspondência da árvore integrada à testada. Esses números descrevem os gates previstos até a validação terminar; não são resultados já aprovados.
+A entrega só pode ser integrada após CI verde no head atual: testes de unidade, compilação strict dos trechos TypeScript, execução de 112 exemplos externos, build frontend e API, 48 E2E e geração de 134 páginas. Conferir revisão da PR, achados e correspondência da árvore integrada à testada. Esses números descrevem os gates previstos até a validação terminar; não são resultados já aprovados.
 
 ## Próximas entregas de conteúdo
 
@@ -32,3 +32,11 @@ O executor local tem falha de ACL antes de iniciar processos. Não alterar ACLs 
 ## Retomada
 
 A automação continuar-melhorias-do-codelab está ativa neste chat a cada quatro horas. Ela deve conferir main, este checkpoint e PRs abertas, evitar entregas duplicadas e comunicar somente progresso relevante, falha ou ação necessária. Se o limite interromper a execução, preservar o head da branch e o último gate conhecido.
+
+## Correção dos gates da PR #3
+
+No head `eb6c779ddfdf5b42392e9270990ca3e9315475d6`, o run [37553175653](https://github.com/renancodando/CodeLab/actions/runs/37553175653) aprovou 136 testes de unidade, 112 exemplos externos e os builds. O navegador aprovou 35 de 36 testes; o caso que percorria doze aulas e abria vinte e quatro soluções esgotou o orçamento global de 60 segundos. A verificação foi dividida em um caso por aula e um caso próprio de persistência, mantendo todas as asserções e o prazo por teste. A suíte passa a prever 48 E2E.
+
+A auditoria identificou `source-map-js@1.2.1` na cadeia de build. O lockfile fixa a versão corrigida `1.2.2`, com a integridade consultada no registro npm pelo próprio CI. O gate de auditoria permanece obrigatório. Conferir o CI do novo head antes de integrar; a atualização ainda exige validação.
+
+Um run anterior também esgotou o tempo no teste de isolamento HTML. Acrescentadas condições explícitas do código no editor e do documento enviado ao iframe, com diagnóstico em caso de falha. A asserção de isolamento continua exigindo o resultado `isolado` e a preservação da página principal. Não considerar a causa desse episódio resolvida sem a execução do novo head.

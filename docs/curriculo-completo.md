@@ -1,8 +1,8 @@
 # Currículo do zero à especialização
 
-## Conteúdo publicado nesta expansão
+## Conteúdo proposto nesta expansão
 
-O catálogo tem **128 aulas em 20 trilhas**. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **20 aulas de 17 capítulos**, com **40 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora oito ou nove aulas cada; as 60 aulas originais continuam disponíveis.
+A versão integrada tem **108 aulas em 20 trilhas**. A PR #3 propõe ampliar o catálogo para **128 aulas**, após a aprovação dos gates desta entrega. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **20 aulas de 17 capítulos**, com **40 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora oito ou nove aulas cada; as 60 aulas originais continuam disponíveis.
 
 Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **574 entradas de cobertura**: **106** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **468** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 

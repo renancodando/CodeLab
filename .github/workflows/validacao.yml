@@ -26,9 +26,6 @@ jobs:
         run: npm ci
       - name: Rejeitar vulnerabilidades altas ou críticas
         run: npm audit --json --audit-level=high
-      - name: Consultar metadados da correção identificada
-        if: failure()
-        run: npm view source-map-js@1.2.2 dist --json
 
   validar:
     name: Testes e compilação

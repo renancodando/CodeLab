@@ -16,6 +16,7 @@ O escopo de uma versão precisa estar explícito. Uma entrega editorial pode est
 | Navegação e leitura | Carregamento, falha e repetição, saída durante download, busca e páginas sem scripts | Playwright em build de produção |
 | Progresso | Persistência local, importação validada e compatibilidade com versão anterior | Unidade e E2E existentes |
 | Editor e mundo | Descarte de modelos, cancelamento, heap, workers e geometria estável | Ciclos medidos no navegador |
+| Dependências | Lockfile instalável e ausência de alertas altos ou críticos | npm ci e npm audit obrigatório |
 | Integração | Head atual aprovado e árvore integrada igual à testada | Actions e verificação Git |
 
 ## Dependências de uma implantação real
@@ -37,3 +38,7 @@ A expansão de leitura utiliza os componentes existentes. Os arquivos de aparên
 ## Verificação da hospedagem nesta entrega
 
 O bot da Vercel registra um preview Ready para a PR #3. A leitura pelo conector retornou 403 por falta de acesso ao escopo renancodandos-projects; o executor local também impediu usar o CLI. Esses resultados não comprovam o funcionamento do endereço publicado. Os gates de build e navegador do Actions continuam sendo a evidência verificável do repositório até haver acesso à implantação.
+
+## Dependência corrigida nesta entrega
+
+A auditoria da PR #3 identificou `source-map-js@1.2.1`, dependência transitiva de desenvolvimento usada pelo PostCSS. O [aviso GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q) informa correção na versão `1.2.2`. O lockfile foi atualizado somente nesse pacote com os metadados e a integridade publicados no npm. O CI deve comprovar instalação, auditoria e compatibilidade dos builds antes da integração. A presença no build não comprova exposição do site publicado ao ataque descrito no aviso.

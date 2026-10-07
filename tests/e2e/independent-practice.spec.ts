@@ -3,8 +3,9 @@ import {resolveLesson} from '../../src/content/curriculum';
 import html from '../../src/content/deep/html';
 import css from '../../src/content/deep/css';
 
-test('aulas aprofundadas mantêm leitura, mapa, referências e progresso local',async({page})=>{
- for(const id of ['py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade','py-funcoes-contratos','ts-genericos-relacoes','cpp-raii-posse-unica','js-promessas-contratos']){
+const aulasAprofundadas=['py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade','py-funcoes-contratos','ts-genericos-relacoes','cpp-raii-posse-unica','js-promessas-contratos'];
+for(const id of aulasAprofundadas){
+ test(`aula ${id}: leitura, mapa, referências e abertura das soluções`,async({page})=>{
   await page.goto('/#/aula/'+id);
   await expect(page.locator('.lesson-chapter')).toHaveCount(17);
   await expect(page.locator('.lesson-map a')).toHaveCount(17);
@@ -18,7 +19,10 @@ test('aulas aprofundadas mantêm leitura, mapa, referências e progresso local',
    await expect(resolucoes.nth(i).locator('pre')).toBeVisible();
    await expect(resolucoes.nth(i).locator('details > p').first()).toBeVisible();
   }
- }
+ });
+}
+
+test('aula aprofundada conserva a conclusão após recarregar',async({page})=>{
  await page.goto('/#/aula/js-closures-estado');
  await page.getByLabel('Ela conserva acesso ao binding, que pode ter sido atualizado antes da leitura.',{exact:true}).check();
  await page.getByRole('button',{name:'Conferir resposta'}).click();
