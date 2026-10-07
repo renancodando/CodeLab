@@ -626,6 +626,158 @@ export default {
       ]
     },
     {
+      "id": "cs-iteradores-descarte",
+      "title": "C#: iteradores, execução adiada e descarte de recursos",
+      "level": "Avançado",
+      "summary": "Entenda quando uma sequência executa seu código, como MoveNext suspende e retoma um iterador, por que uma nova enumeração pode repetir efeitos e quando recursos são descartados. Separe a validação imediata da produção adiada, escolha conscientemente entre uma coleção viva e um snapshot, e prove a limpeza mesmo quando o consumidor para antes do fim.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield",
+      "topics": [
+        "chamada de iterador e execução adiada",
+        "MoveNext Current e suspensão",
+        "IEnumerable e nova enumeração",
+        "yield em try finally",
+        "Dispose no encerramento do foreach",
+        "validação no momento da chamada",
+        "LINQ reenumeração e materialização",
+        "captura de coleção mutável"
+      ],
+      "sections": [
+        {
+          "title": "Uma sequência descreve trabalho que pode acontecer depois",
+          "text": [
+            "Um método com yield return produz uma sequência por meio de um iterador. Chamar o método não significa percorrer todos os elementos nem executar imediatamente seu corpo. O consumidor pede um enumerador e avança com MoveNext; nesse momento a produção começa ou retoma de onde estava suspensa. Separe três acontecimentos na sua previsão: construir a sequência, avançar o enumerador e obter o valor atual. Confundir esses momentos transforma uma validação aparentemente correta em uma exceção que chega muito depois.",
+            "No exemplo, Fonte().Where(...) constrói uma consulta. A mensagem criada aparece antes de abrir porque a produção ainda não começou. O primeiro elemento precisa ser produzido para o filtro examiná-lo, mesmo quando ele não será entregue ao consumidor. Uma consulta não é uma lista já preenchida. Ao revisar desempenho e efeitos, conte quantos elementos a origem precisa visitar para satisfazer a pergunta, além de contar quantos valores o consumidor finalmente recebe."
+          ]
+        },
+        {
+          "title": "O enumerador conserva estado entre pedidos",
+          "text": [
+            "MoveNext devolve true quando foi encontrado um próximo elemento e false quando a sequência terminou. Current só deve ser lido depois de um avanço bem-sucedido e antes de a enumeração terminar. Um yield return entrega um valor e suspende o caminho de execução; no pedido seguinte, o iterador continua após esse ponto. Variáveis locais, a posição do laço e blocos de proteção que ainda não terminaram participam desse estado. A suspensão não equivale a executar uma nova chamada desde a primeira linha.",
+            "IEnumerable descreve uma fonte de enumeradores; IEnumerator representa um percurso particular. Um enumerador não deve ser compartilhado como se vários consumidores tivessem posições independentes. Para examinar a mesma fonte novamente, obtenha outro enumerador e entenda se essa origem permite repetição. Uma fonte baseada em estado externo, leitura ou contadores pode produzir resultados diferentes. O tipo da interface não promete que repetir o percurso seja barato, sem efeitos ou equivalente ao anterior."
+          ]
+        },
+        {
+          "title": "Sair cedo também exige liberar o recurso",
+          "text": [
+            "Quando um iterador usa try/finally, o finally deve ser executado ao sair de seu bloco, inclusive quando o enumerador é descartado após uma suspensão. O consumidor pode parar com break antes de pedir todos os elementos. Um foreach que usa um enumerador descartável garante o descarte na saída, seja por término, break ou exceção no corpo. Esse vínculo permite produzir valores enquanto um recurso pertence ao percurso, em vez de abandonar o recurso quando o consumidor perde interesse.",
+            "Abrir um recurso antes de yield return e fechar apenas depois do último elemento é insuficiente quando o fechamento não está protegido. O consumidor talvez nunca solicite esse último elemento. Use using ou try/finally conforme o recurso e não dependa do coletor de lixo para uma liberação determinística. Ao controlar IEnumerator manualmente, assuma também a responsabilidade de Dispose. Nas atividades, um contador observável prova que a liberação aconteceu quando o percurso foi encerrado."
+          ]
+        },
+        {
+          "title": "Validação imediata pede uma fronteira fora do iterador",
+          "text": [
+            "Uma verificação escrita no início de um método iterador ainda pertence ao corpo cuja execução é adiada. Se o contrato exige rejeitar um argumento no momento da chamada, escreva um método comum que valide e devolva um iterador interno. O método comum não contém yield: por isso sua validação acontece antes de ele retornar a sequência. A função local ou auxiliar fica responsável somente pela produção. Esse desenho deixa explícito quando um chamador pode esperar a exceção.",
+            "Decida também qual dado o iterador conservará. Capturar uma referência a um array significa que mudanças realizadas antes do percurso podem aparecer durante a leitura. Criar uma cópia estabelece um snapshot dos valores copiados e consome memória proporcional ao tamanho. Uma cópia rasa de uma coleção de objetos não congela o estado desses objetos. Na solução usamos inteiros para que a promessa de snapshot seja precisa; para objetos de domínio, o contrato deve definir o que é copiado ou pode mudar."
+          ]
+        },
+        {
+          "title": "Materializar muda o momento e a possibilidade de repetição",
+          "text": [
+            "Muitas operações de LINQ sobre IEnumerable, como Where e Select, montam um processamento que será aplicado ao enumerar. Operações como ToArray e ToList percorrem a fonte e guardam os valores em uma coleção. Materializar pode ser útil quando você precisa repetir a leitura de um resultado estável ou evitar repetir efeitos caros, mas troca execução adiada por trabalho e memória imediatos. Não aplique ToList em todo ponto só para fazer uma falha desaparecer: explique a estabilidade e o custo exigidos.",
+            "Uma consulta enumerada duas vezes pode chamar o produtor duas vezes. Considere um produtor que abre arquivo, consulta serviço ou incrementa um contador: contar elementos e depois percorrer novamente pode repetir essas operações. O exemplo usa saída observável para você prever a repetição sem depender de relógio ou rede. Compare guardar a consulta, guardar um único enumerador e guardar um array materializado. As três escolhas conservam coisas diferentes, apesar de todas permitirem ler números."
+          ]
+        },
+        {
+          "title": "Teste os momentos e os caminhos de encerramento",
+          "text": [
+            "Um teste útil confere o estado antes do primeiro avanço, após um valor, após descarte precoce e após uma nova enumeração. Outro teste chama a função com argumento inválido sem enumerar e exige a exceção naquele ponto. Esses casos diferenciam contratos que uma comparação apenas dos valores finais não identifica. Acrescente uma mudança na coleção original entre construção e consumo para verificar se a solução prometeu dados vivos ou um snapshot.",
+            "Os programas da aula são completos e executam em .NET; as saídas e invariantes são conferidas pelo CI. Os contadores são uma ferramenta de observação do exemplo, não uma estratégia de gerência de recursos para uma aplicação inteira. Ao transferir para arquivos e conexões reais, mantenha o descarte determinístico e estabeleça quem possui cada recurso. Para origens assíncronas, estude depois IAsyncEnumerable e cancelamento: não acrescente await a um iterador síncrono esperando obter o mesmo contrato."
+          ]
+        }
+      ],
+      "code": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nstatic IEnumerable<int> Fonte()\n{\n    Console.WriteLine(\"abrir\");\n    try\n    {\n        for (int i = 1; i <= 4; i++)\n        {\n            Console.WriteLine($\"produzir {i}\");\n            yield return i;\n        }\n    }\n    finally { Console.WriteLine(\"fechar\"); }\n}\nvar consulta = Fonte().Where(x => x % 2 == 0);\nConsole.WriteLine(\"criada\");\nforeach (var valor in consulta)\n{\n    Console.WriteLine($\"ler {valor}\");\n    break;\n}\nConsole.WriteLine(\"fim\");",
+      "expectedOutput": [
+        "criada",
+        "abrir",
+        "produzir 1",
+        "produzir 2",
+        "ler 2",
+        "fechar",
+        "fim"
+      ],
+      "output": "A ordem é criada, abrir, produzir 1, produzir 2, ler 2, fechar, fim. O filtro consome 1 e 2 para entregar o primeiro par; break dispara o descarte sem pedir 3 e 4.",
+      "trace": [
+        "Construir consulta não enumera Fonte e não imprime abrir.",
+        "Where precisa examinar o ímpar 1 antes de encontrar o par 2.",
+        "Break encerra foreach; o descarte do enumerador executa finally antes de fim."
+      ],
+      "exercise": "Escreva Positivos(int[] valores) com rejeição de null no momento da chamada. A função precisa devolver uma sequência com os positivos de uma cópia da entrada. Altere o array original antes de enumerar e confira que a sequência preserva os positivos anteriores; percorra o resultado duas vezes.",
+      "checks": [
+        "Null é rejeitado sem precisar enumerar.",
+        "Mudanças no array original não alteram os inteiros do snapshot.",
+        "Duas enumerações devolvem os mesmos positivos em ordem."
+      ],
+      "solution": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nstatic IEnumerable<int> Positivos(int[] valores)\n{\n    ArgumentNullException.ThrowIfNull(valores);\n    var copia = valores.ToArray();\n    return Iterar(copia);\n    static IEnumerable<int> Iterar(int[] entrada)\n    {\n        foreach (var valor in entrada)\n            if (valor > 0) yield return valor;\n    }\n}\nvar entrada = new[] { -1, 2, 0, 4 };\nvar resultado = Positivos(entrada);\nentrada[1] = 99;\nConsole.WriteLine(string.Join(\",\", resultado));\nConsole.WriteLine(string.Join(\",\", resultado));\ntry { _ = Positivos(null!); throw new Exception(\"null aceito\"); }\ncatch (ArgumentNullException) { Console.WriteLine(\"rejeitado-na-chamada\"); }",
+      "solutionOutput": [
+        "2,4",
+        "2,4",
+        "rejeitado-na-chamada"
+      ],
+      "bug": "O produtor valida o limite dentro do corpo de um iterador. Chamar a função com -1 e guardar a sequência não executa essa validação; a exceção só surge quando alguém começa a enumerar.",
+      "bugCode": "using System;\nusing System.Collections.Generic;\nstatic IEnumerable<int> Contar(int limite)\n{\n    if (limite < 0) throw new ArgumentOutOfRangeException(nameof(limite));\n    for (int i = 0; i < limite; i++) yield return i;\n}\nvar consulta = Contar(-1);\nConsole.WriteLine(\"a chamada retornou\");\nforeach (var numero in consulta) Console.WriteLine(numero);",
+      "repair": "Separe um método comum Contar, sem yield, que valida limite e retorna uma função iteradora interna. Teste só a chamada inválida para provar o momento da rejeição; um teste que enumera sempre pode esconder a diferença de contrato.",
+      "project": "Implemente um leitor de registros de um arquivo de estudo que ofereça uma sequência e libere o leitor quando o consumidor termina ou para cedo. Use um recurso descartável instrumentado nos testes para conferir aquisição e liberação. Defina se cada enumeração reabre o arquivo ou se o resultado é um snapshot materializado; teste argumento inválido, arquivo vazio, interrupção no primeiro registro e duas leituras. Não mantenha uma sequência ligada a um leitor que já foi descartado.",
+      "question": "Por que o exemplo imprime fechar mesmo sem pedir os valores 3 e 4?",
+      "answer": "A saída por break faz foreach descartar o enumerador, e esse descarte executa o finally ativo do iterador.",
+      "distractors": [
+        "Yield return executa automaticamente todo o resto do laço antes de entregar o primeiro valor.",
+        "O coletor de lixo sempre fecha o recurso imediatamente quando break é executado."
+      ],
+      "practices": [
+        {
+          "id": "limpeza",
+          "title": "Problema 1: provar o descarte após o primeiro valor",
+          "topics": [
+            "MoveNext Current e suspensão",
+            "yield em try finally",
+            "Dispose no encerramento do foreach",
+            "IEnumerable e nova enumeração"
+          ],
+          "prompt": "Produza os valores 10 e 20 usando um iterador que incrementa ativo ao iniciar e decrementa no finally. Antes do primeiro MoveNext ativo deve ser zero. Leia só 10, descarte o enumerador e exija ativo zero. Repita por foreach com break e confira que nenhum percurso deixou o recurso ativo.",
+          "solution": "using System;\nusing System.Collections.Generic;\nint ativo = 0;\nIEnumerable<int> Valores()\n{\n    ativo++;\n    try { yield return 10; yield return 20; }\n    finally { ativo--; }\n}\nusing (var it = Valores().GetEnumerator())\n{\n    if (ativo != 0) throw new Exception(\"aquisição antecipada\");\n    if (!it.MoveNext() || it.Current != 10 || ativo != 1)\n        throw new Exception(\"primeiro avanço\");\n}\nif (ativo != 0) throw new Exception(\"descarte manual\");\nConsole.WriteLine(\"dispose-ok\");\nforeach (var valor in Valores())\n{\n    if (valor != 10 || ativo != 1) throw new Exception(\"foreach\");\n    break;\n}\nif (ativo != 0) throw new Exception(\"descarte do foreach\");\nConsole.WriteLine(\"foreach-ok\");",
+          "expectedOutput": [
+            "dispose-ok",
+            "foreach-ok"
+          ],
+          "explanation": [
+            "A construção do enumerador não entra no corpo produtor; o primeiro MoveNext inicia o percurso e suspende em 10. O using delimita a responsabilidade de Dispose mesmo sem solicitar 20. A verificação de ativo mostra o caminho de liberação antes de qualquer dependência do coletor de lixo.",
+            "O foreach representa outro percurso e sua saída por break também deve executar o finally ativo. A atividade prova os dois caminhos de encerramento e a repetição. Se o decremento ficar apenas depois do segundo yield, as asserções de ativo revelam o recurso que permaneceu aberto."
+          ],
+          "checks": [
+            "Ativo é zero antes de MoveNext e um enquanto o primeiro valor está suspenso.",
+            "Dispose deixa ativo zero sem produzir 20.",
+            "Foreach com break também encerra a aquisição."
+          ]
+        },
+        {
+          "id": "fronteira",
+          "title": "Problema 2: validar cedo e conservar um snapshot",
+          "topics": [
+            "chamada de iterador e execução adiada",
+            "validação no momento da chamada",
+            "LINQ reenumeração e materialização",
+            "captura de coleção mutável"
+          ],
+          "prompt": "Crie Filtrar(IReadOnlyList<int> valores, int minimo), rejeitando minimo negativo na chamada. Copie os valores nesse momento e devolva por yield somente os inteiros maiores ou iguais ao mínimo. Mude a origem depois da chamada e confira duas enumerações iguais, sem expor a referência original.",
+          "solution": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nstatic IEnumerable<int> Filtrar(IReadOnlyList<int> valores, int minimo)\n{\n    ArgumentNullException.ThrowIfNull(valores);\n    if (minimo < 0) throw new ArgumentOutOfRangeException(nameof(minimo));\n    var copia = valores.ToArray();\n    return Produzir();\n    IEnumerable<int> Produzir()\n    {\n        foreach (var valor in copia)\n            if (valor >= minimo) yield return valor;\n    }\n}\nvar origem = new[] { 1, 3, 5 };\nvar consulta = Filtrar(origem, 3);\norigem[1] = 99;\nConsole.WriteLine(string.Join(\",\", consulta));\nConsole.WriteLine(string.Join(\",\", consulta));\ntry { _ = Filtrar(origem, -1); throw new Exception(\"limite aceito\"); }\ncatch (ArgumentOutOfRangeException) { Console.WriteLine(\"rejeitado-na-chamada\"); }",
+          "expectedOutput": [
+            "3,5",
+            "3,5",
+            "rejeitado-na-chamada"
+          ],
+          "explanation": [
+            "Filtrar é um método comum porque o yield pertence à função interna Produzir. A validação e a cópia acontecem na chamada, estabelecendo o momento da rejeição e quais inteiros compõem o snapshot. A mudança posterior para 99 afeta a origem, mas não a cópia capturada.",
+            "Cada enumeração percorre os mesmos valores copiados e aplica o mínimo validado. A coleção de resultado ainda é produzida de modo adiado; copiar a entrada e materializar toda a saída são decisões diferentes. Com objetos mutáveis no lugar de inteiros, uma cópia rasa exigiria uma promessa de estabilidade mais limitada."
+          ],
+          "checks": [
+            "Minimo negativo lança antes de qualquer enumeração.",
+            "A alteração para 99 não aparece no resultado.",
+            "Os dois percursos retornam 3 e 5 nessa ordem."
+          ]
+        }
+      ]
+    },
+    {
       "id": "cs-runtime-avancado",
       "title": "C#: runtime, memória e recursos avançados",
       "level": "Avançado",

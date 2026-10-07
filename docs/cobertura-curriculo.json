@@ -1,8 +1,8 @@
 {
-  "edition": "2026-10-06",
+  "edition": "2026-10-07-interacoes-isolamento",
   "originalLessons": 60,
-  "expandedLessons": 68,
-  "totalLessons": 128,
+  "expandedLessons": 72,
+  "totalLessons": 132,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
@@ -2360,6 +2360,93 @@
           "status": "praticaDoModulo"
         },
         {
+          "id": "html-dialogo-foco",
+          "title": "HTML: diálogo modal, foco e formas de encerramento",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "dialog e nome acessível",
+              "status": "praticaIndependente",
+              "activities": [
+                "validacao"
+              ]
+            },
+            {
+              "title": "show versus showModal",
+              "status": "praticaIndependente",
+              "activities": [
+                "rascunho"
+              ]
+            },
+            {
+              "title": "modalidade e conteúdo inerte",
+              "status": "praticaIndependente",
+              "activities": [
+                "rascunho"
+              ]
+            },
+            {
+              "title": "foco inicial e acionador",
+              "status": "praticaIndependente",
+              "activities": [
+                "validacao"
+              ]
+            },
+            {
+              "title": "form method dialog e returnValue",
+              "status": "praticaIndependente",
+              "activities": [
+                "validacao"
+              ]
+            },
+            {
+              "title": "cancel e close",
+              "status": "praticaIndependente",
+              "activities": [
+                "rascunho"
+              ]
+            },
+            {
+              "title": "formnovalidate para cancelar",
+              "status": "praticaIndependente",
+              "activities": [
+                "validacao"
+              ]
+            },
+            {
+              "title": "alterações não salvas e saída explícita",
+              "status": "praticaIndependente",
+              "activities": [
+                "rascunho"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "validacao",
+              "title": "Problema 1: abandonar um formulário inválido",
+              "topics": [
+                "formnovalidate para cancelar",
+                "form method dialog e returnValue",
+                "dialog e nome acessível",
+                "foco inicial e acionador"
+              ]
+            },
+            {
+              "id": "rascunho",
+              "title": "Problema 2: proteger o rascunho e conservar uma saída",
+              "topics": [
+                "cancel e close",
+                "alterações não salvas e saída explícita",
+                "show versus showModal",
+                "modalidade e conteúdo inerte"
+              ]
+            }
+          ],
+          "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element",
+          "status": "praticaDoModulo"
+        },
+        {
           "id": "html-plataforma",
           "title": "HTML: DOM, componentes e integração da plataforma",
           "level": "Especialização",
@@ -2685,6 +2772,89 @@
             }
           ],
           "source": "https://www.w3.org/Style/CSS/specs.en.html",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-grid-trilhas",
+          "title": "CSS: trilhas de Grid, tamanho mínimo e ordem de leitura",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "grade bidimensional e linhas",
+              "status": "praticaIndependente",
+              "activities": [
+                "ordem"
+              ]
+            },
+            {
+              "title": "trilhas explícitas e implícitas",
+              "status": "praticaIndependente",
+              "activities": [
+                "ordem"
+              ]
+            },
+            {
+              "title": "fr e espaço disponível",
+              "status": "praticaIndependente",
+              "activities": [
+                "espaco"
+              ]
+            },
+            {
+              "title": "minmax zero e mínimo intrínseco",
+              "status": "introduzido"
+            },
+            {
+              "title": "auto-fill e auto-fit",
+              "status": "praticaIndependente",
+              "activities": [
+                "espaco"
+              ]
+            },
+            {
+              "title": "gap e contagem de trilhas",
+              "status": "praticaIndependente",
+              "activities": [
+                "espaco"
+              ]
+            },
+            {
+              "title": "auto-placement dense",
+              "status": "praticaIndependente",
+              "activities": [
+                "ordem"
+              ]
+            },
+            {
+              "title": "ordem DOM foco e visual",
+              "status": "praticaIndependente",
+              "activities": [
+                "ordem"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "espaco",
+              "title": "Problema 1: calcular a trilha vazia e a sobra",
+              "topics": [
+                "auto-fill e auto-fit",
+                "gap e contagem de trilhas",
+                "fr e espaço disponível"
+              ]
+            },
+            {
+              "id": "ordem",
+              "title": "Problema 2: comparar dense com a sequência de foco",
+              "topics": [
+                "auto-placement dense",
+                "ordem DOM foco e visual",
+                "trilhas explícitas e implícitas",
+                "grade bidimensional e linhas"
+              ]
+            }
+          ],
+          "source": "https://www.w3.org/TR/css-grid-1/",
           "status": "praticaDoModulo"
         },
         {
@@ -3143,6 +3313,93 @@
           "status": "praticaDoModulo"
         },
         {
+          "id": "cs-iteradores-descarte",
+          "title": "C#: iteradores, execução adiada e descarte de recursos",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "chamada de iterador e execução adiada",
+              "status": "praticaIndependente",
+              "activities": [
+                "fronteira"
+              ]
+            },
+            {
+              "title": "MoveNext Current e suspensão",
+              "status": "praticaIndependente",
+              "activities": [
+                "limpeza"
+              ]
+            },
+            {
+              "title": "IEnumerable e nova enumeração",
+              "status": "praticaIndependente",
+              "activities": [
+                "limpeza"
+              ]
+            },
+            {
+              "title": "yield em try finally",
+              "status": "praticaIndependente",
+              "activities": [
+                "limpeza"
+              ]
+            },
+            {
+              "title": "Dispose no encerramento do foreach",
+              "status": "praticaIndependente",
+              "activities": [
+                "limpeza"
+              ]
+            },
+            {
+              "title": "validação no momento da chamada",
+              "status": "praticaIndependente",
+              "activities": [
+                "fronteira"
+              ]
+            },
+            {
+              "title": "LINQ reenumeração e materialização",
+              "status": "praticaIndependente",
+              "activities": [
+                "fronteira"
+              ]
+            },
+            {
+              "title": "captura de coleção mutável",
+              "status": "praticaIndependente",
+              "activities": [
+                "fronteira"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "limpeza",
+              "title": "Problema 1: provar o descarte após o primeiro valor",
+              "topics": [
+                "MoveNext Current e suspensão",
+                "yield em try finally",
+                "Dispose no encerramento do foreach",
+                "IEnumerable e nova enumeração"
+              ]
+            },
+            {
+              "id": "fronteira",
+              "title": "Problema 2: validar cedo e conservar um snapshot",
+              "topics": [
+                "chamada de iterador e execução adiada",
+                "validação no momento da chamada",
+                "LINQ reenumeração e materialização",
+                "captura de coleção mutável"
+              ]
+            }
+          ],
+          "source": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield",
+          "status": "praticaDoModulo"
+        },
+        {
           "id": "cs-runtime-avancado",
           "title": "C#: runtime, memória e recursos avançados",
           "level": "Avançado",
@@ -3578,6 +3835,83 @@
             }
           ],
           "source": "https://www.postgresql.org/docs/current/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-isolamento-sessoes",
+          "title": "PostgreSQL: transações, snapshots e conflitos entre sessões",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "atomicidade BEGIN COMMIT ROLLBACK",
+              "status": "introduzido"
+            },
+            {
+              "title": "Read Committed e snapshot por comando",
+              "status": "introduzido"
+            },
+            {
+              "title": "Repeatable Read e snapshot da transação",
+              "status": "praticaIndependente",
+              "activities": [
+                "snapshot"
+              ]
+            },
+            {
+              "title": "sessões separadas e cronograma observável",
+              "status": "praticaIndependente",
+              "activities": [
+                "snapshot",
+                "conflito"
+              ]
+            },
+            {
+              "title": "atualização concorrente e SQLSTATE 40001",
+              "status": "praticaIndependente",
+              "activities": [
+                "conflito"
+              ]
+            },
+            {
+              "title": "repetição da transação inteira",
+              "status": "praticaIndependente",
+              "activities": [
+                "conflito"
+              ]
+            },
+            {
+              "title": "conexão encerrada e rollback pendente",
+              "status": "praticaIndependente",
+              "activities": [
+                "conflito"
+              ]
+            },
+            {
+              "title": "restrições de dados e isolamento",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "snapshot",
+              "title": "Problema 1: comparar a leitura antiga com uma leitura nova",
+              "topics": [
+                "Repeatable Read e snapshot da transação",
+                "sessões separadas e cronograma observável"
+              ]
+            },
+            {
+              "id": "conflito",
+              "title": "Problema 2: repetir depois de um conflito de atualização",
+              "topics": [
+                "atualização concorrente e SQLSTATE 40001",
+                "repetição da transação inteira",
+                "conexão encerrada e rollback pendente",
+                "sessões separadas e cronograma observável"
+              ]
+            }
+          ],
+          "source": "https://www.postgresql.org/docs/current/transaction-iso.html",
           "status": "praticaDoModulo"
         },
         {

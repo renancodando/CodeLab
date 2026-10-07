@@ -74,6 +74,15 @@ jobs:
           PGPASSWORD: codelab
           PGDATABASE: codelab
 
+      - name: Validar isolamento PostgreSQL em conexões distintas
+        run: node scripts/verify-sql-concurrency.mjs
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: codelab
+          PGPASSWORD: codelab
+          PGDATABASE: codelab
+
       - name: Compilar a aplicação
         run: npm run build
 

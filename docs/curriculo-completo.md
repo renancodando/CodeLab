@@ -2,9 +2,9 @@
 
 ## Conteúdo proposto nesta expansão
 
-A versão integrada tem **108 aulas em 20 trilhas**. A PR #3 propõe ampliar o catálogo para **128 aulas**, após a aprovação dos gates desta entrega. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **20 aulas de 17 capítulos**, com **40 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora oito ou nove aulas cada; as 60 aulas originais continuam disponíveis.
+A versão integrada tem **108 aulas em 20 trilhas**. A PR #3 propõe 128 aulas; a entrega seguinte acrescenta quatro aulas próprias e propõe **132 aulas**, após a aprovação dos gates de cada versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **24 aulas de 17 capítulos**, com **48 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora nove aulas cada; as 60 aulas originais continuam disponíveis.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **574 entradas de cobertura**: **106** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **468** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **606 entradas de cobertura**: **134** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **472** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
@@ -524,6 +524,22 @@ Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de exp
 - Atividades: Problema 1: fallback ou propagação (`recuperacao`); Problema 2: limitar operações ativas (`trabalhadores`).
 - Referência principal: [tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all](https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all).
 
+
+## Terceiro aprofundamento: interação, recursos e sessões
+
+Esta entrega acrescenta quatro aulas próprias, com seis seções de teoria, dois problemas e 17 capítulos cada. Os resultados do novo head precisam ser conferidos antes da integração.
+
+| Aula | Mecanismos e prática | Verificação |
+| --- | --- | --- |
+| `html-dialogo-foco` | Nome acessível, showModal, foco, cancel/close, method dialog, validade e rascunho | Teclado, conteúdo inerte, retorno de foco, saída inválida e literalidade do texto no navegador |
+| `css-grid-trilhas` | Linhas/trilhas, mínimo intrínseco, auto-fill/fit, gap, distribuição e dense | Medidas reais, contexto estreito, texto longo e ordem de foco |
+| `cs-iteradores-descarte` | Execução adiada, MoveNext, finally/Dispose, repetição e snapshot | Quatro programas .NET com saídas e invariantes explícitas |
+| `sql-isolamento-sessoes` | Read Committed, Repeatable Read, conflito 40001 e repetição inteira | Três cronogramas com processos psql distintos, respostas por passo e resultado confirmado |
+
+Referências principais: [HTML Standard](https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element), [CSS Grid](https://www.w3.org/TR/css-grid-1/), [C# yield](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield) e [isolamento PostgreSQL](https://www.postgresql.org/docs/current/transaction-iso.html).
+
+Os gabaritos SQL entre sessões mostram um cronograma para conexões separadas. Eles não são concatenados e executados como se fossem uma consulta numa conexão única. Os mesmos comandos estruturados na definição alimentam o verificador específico; ON_ERROR_STOP e SQLSTATE distinguem o conflito esperado de falhas de sintaxe ou conexão.
+
 ## Ambiente e entrega
 
 - Capítulos novos carregam ao abrir a aula; o índice inicial conserva títulos, resumo e temas para busca.
@@ -538,9 +554,10 @@ Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de exp
 1. Catálogo: ids, relações, sequência, capítulos e profundidade da teoria própria.
 2. JavaScript: exemplos e saídas reais no interpretador isolado; soluções executáveis.
 3. TypeScript: exemplos e soluções passam pela verificação semântica com `strict`.
-4. Python, C++, C#, PostgreSQL e TypeScript: 112 exemplos/soluções compilados ou executados em processos/base temporários no CI. Nas aulas novas, as saídas são comparadas com expectativas explícitas; TypeScript também passa por strict, incluindo problemas e expectativas negativas de tipos.
-5. Navegador: navegação, busca antes de carregar capítulos, progresso local, falha de download, saída durante carregamento e páginas sem JavaScript; os 16 trechos HTML/CSS das aulas independentes verificam árvore, formulários, valores computados, dimensões e rolagem.
-6. Gates anteriores de build, API, acessibilidade e ciclos de memória continuam ativos.
+4. Python, C++, C#, PostgreSQL e TypeScript: 118 exemplos/soluções compilados ou executados em processos/base temporários no CI. Nas aulas novas, as saídas são comparadas com expectativas explícitas; TypeScript também passa por strict, incluindo problemas e expectativas negativas de tipos.
+5. Navegador: navegação, busca antes de carregar capítulos, progresso local, falha de download, saída durante carregamento e páginas sem JavaScript; os trechos HTML/CSS das aulas independentes verificam árvore, formulários, valores computados, dimensões e rolagem.
+6. PostgreSQL concorrente: três cronogramas com conexões distintas, sem pausas arbitrárias para presumir confirmações.
+7. Gates anteriores de build, API, acessibilidade e ciclos de memória continuam ativos.
 
 ## Aprofundamento contínuo
 

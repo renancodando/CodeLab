@@ -3,7 +3,7 @@ import {resolveLesson} from '../../src/content/curriculum';
 import html from '../../src/content/deep/html';
 import css from '../../src/content/deep/css';
 
-const aulasAprofundadas=['py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade','py-funcoes-contratos','ts-genericos-relacoes','cpp-raii-posse-unica','js-promessas-contratos'];
+const aulasAprofundadas=['py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade','py-funcoes-contratos','ts-genericos-relacoes','cpp-raii-posse-unica','js-promessas-contratos','html-dialogo-foco','css-grid-trilhas','cs-iteradores-descarte','sql-isolamento-sessoes'];
 for(const id of aulasAprofundadas){
  test(`aula ${id}: leitura, mapa, referências e abertura das soluções`,async({page})=>{
   await page.goto('/#/aula/'+id);
@@ -32,10 +32,10 @@ test('aula aprofundada conserva a conclusão após recarregar',async({page})=>{
 
 test('páginas aprofundadas entregam também os problemas sem JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false}),page=await context.newPage();
- for(const id of ['py-numeros-texto','ts-validacao-aninhada','html-dados-formulario','sql-joins-cardinalidade']){
+ for(const id of ['py-numeros-texto','ts-validacao-aninhada','html-dados-formulario','sql-joins-cardinalidade','html-dialogo-foco','css-grid-trilhas','cs-iteradores-descarte','sql-isolamento-sessoes']){
   await page.goto('http://127.0.0.1:5080/aulas/'+id+'/');
   await expect(page.locator('main section')).toHaveCount(17);
-  await expect(page.locator('pre')).toHaveCount(5);
+  await expect(page.locator('pre')).toHaveCount(id==='sql-isolamento-sessoes'?6:5);
   await expect(page.getByRole('heading',{name:/^Problema 1:/})).toHaveCount(1);
   const resolucoes=page.locator('[id^="aula-resolucao-"]');
   await expect(resolucoes.first().locator('pre')).not.toBeVisible();

@@ -12,7 +12,7 @@ O escopo de uma versão precisa estar explícito. Uma entrega editorial pode est
 | Prática independente | Atividade identificada, solução explicada, critérios e execução do mecanismo | Matriz ligada à definição, saídas reais e navegador |
 | TypeScript | Verificação semântica strict; expectativas negativas úteis; comportamento após apagamento | Testes de tipos e execução Node.js |
 | Python, C++, C# | Compilação/execução de exemplos e soluções em recursos temporários | verify-content-examples |
-| PostgreSQL | Dados de estudo, verificações do resultado e falhas esperadas | Serviço descartável no CI |
+| PostgreSQL | Dados de estudo, respostas por passo, conflitos e resultado confirmado | Serviço descartável e conexões psql distintas no CI |
 | Navegação e leitura | Carregamento, falha e repetição, saída durante download, busca e páginas sem scripts | Playwright em build de produção |
 | Progresso | Persistência local, importação validada e compatibilidade com versão anterior | Unidade e E2E existentes |
 | Editor e mundo | Descarte de modelos, cancelamento, heap, workers e geometria estável | Ciclos medidos no navegador |
@@ -42,3 +42,7 @@ O bot da Vercel registra um preview Ready para a PR #3. A leitura pelo conector 
 ## Dependência corrigida nesta entrega
 
 A auditoria da PR #3 identificou `source-map-js@1.2.1`, dependência transitiva de desenvolvimento usada pelo PostCSS. O [aviso GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q) informa correção na versão `1.2.2`. O lockfile foi atualizado somente nesse pacote com os metadados e a integridade publicados no npm. O CI deve comprovar instalação, auditoria e compatibilidade dos builds antes da integração. A presença no build não comprova exposição do site publicado ao ataque descrito no aviso.
+
+## Conexões e recursos da próxima entrega
+
+Os novos casos de navegador verificam diálogo por teclado, retorno de foco, validade do formulário e geometria de Grid. Os programas C# verificam execução adiada e descarte antecipado. Os cronogramas PostgreSQL usam conexões diferentes e exigem o SQLSTATE esperado, evitando aceitar uma falha genérica como demonstração de concorrência. Os gates devem concluir no head específico antes da integração.

@@ -637,6 +637,263 @@ export default {
       ]
     },
     {
+      "id": "sql-isolamento-sessoes",
+      "title": "PostgreSQL: transações, snapshots e conflitos entre sessões",
+      "level": "Avançado",
+      "summary": "Observe o mesmo dado por conexões diferentes e explique o que cada transação pode enxergar. Compare Read Committed e Repeatable Read com um cronograma explícito, reproduza SQLSTATE 40001 e reinicie a transação inteira com dados atuais. Separe atomicidade, restrições e isolamento, sem tratar uma sequência executada em uma única conexão como prova de concorrência.",
+      "source": "https://www.postgresql.org/docs/current/transaction-iso.html",
+      "topics": [
+        "atomicidade BEGIN COMMIT ROLLBACK",
+        "Read Committed e snapshot por comando",
+        "Repeatable Read e snapshot da transação",
+        "sessões separadas e cronograma observável",
+        "atualização concorrente e SQLSTATE 40001",
+        "repetição da transação inteira",
+        "conexão encerrada e rollback pendente",
+        "restrições de dados e isolamento"
+      ],
+      "sections": [
+        {
+          "title": "Uma transação delimita um resultado que pode ser confirmado",
+          "text": [
+            "BEGIN inicia uma transação explícita, COMMIT confirma suas alterações e ROLLBACK abandona o que ainda não foi confirmado. Uma transferência entre contas precisa tratar as duas atualizações como parte da mesma unidade de trabalho. Se só a retirada for confirmada, o contrato da operação foi quebrado. Atomicidade estabelece a unidade confirmada ou abandonada; ela não diz por si só quais versões dos dados outras transações podem observar durante essa operação.",
+            "Trabalhe numa base descartável e defina os dados iniciais antes de executar. Um rollback não desfaz uma transação que outra conexão já confirmou. Cada sessão tem seu próprio estado transacional, então o cronograma deve mostrar qual conexão executa cada comando. Nas atividades, o CI cria um esquema exclusivo, abre processos psql separados e remove os objetos ao terminar. Não reutilize os nomes de estudo sobre tabelas reais de produção.",
+            "Para o roteiro manual, abra cada sessão com psql -X -q -A -t -v ON_ERROR_STOP=1 -v VERBOSITY=verbose, conectadas à mesma base descartável. As opções tornam o código de erro visível e encerram a tentativa que falhar."
+          ]
+        },
+        {
+          "title": "Read Committed enxerga uma versão para cada comando",
+          "text": [
+            "No PostgreSQL, Read Committed é o nível padrão de isolamento. Uma consulta comum observa um snapshot dos dados confirmados relevante ao início daquele comando; ela não lê automaticamente as mudanças ainda não confirmadas de outra sessão. Uma segunda consulta na mesma transação pode observar uma confirmação que aconteceu entre os dois comandos. A transação continua aberta, mas a visão de leitura não é congelada para todo seu percurso nesse nível.",
+            "No cronograma de referência, A lê 10. B altera para 20 e confirma. A lê de novo e obtém 20 antes de confirmar sua própria transação. Esse resultado não prova que A viu a escrita enquanto B ainda a realizava: a ordem explicita o COMMIT de B antes da segunda leitura. Para investigar um comportamento concorrente, registre comandos e confirmações. Dois SELECT consecutivos numa só conexão, sem uma escrita externa entre eles, não distinguem os níveis ensinados."
+          ],
+          "code": "-- Abra cada sessão com: psql -X -q -A -t -v ON_ERROR_STOP=1 -v VERBOSITY=verbose\n-- Em uma base de estudo, execute a preparação uma vez.\nCREATE SCHEMA estudo_isolamento;\nCREATE TABLE estudo_isolamento.saldo(id integer PRIMARY KEY, valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO estudo_isolamento.saldo VALUES(1,10);\n\n-- Passo 1: sessão A; saída: 10\nBEGIN ISOLATION LEVEL READ COMMITTED;\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Passo 2: sessão B; saída: sem linhas\nBEGIN;\nUPDATE estudo_isolamento.saldo SET valor=20 WHERE id=1;\nCOMMIT;\n\n-- Passo 3: sessão A; saída: 20\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Passo 4: sessão A; saída: sem linhas\nCOMMIT;\n\n-- Depois de encerrar todas as transações, confira em outra sessão.\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n-- Resultado final: 20\nDROP SCHEMA estudo_isolamento CASCADE;"
+        },
+        {
+          "title": "Repeatable Read conserva um snapshot da transação",
+          "text": [
+            "Repeatable Read conserva uma visão de leitura baseada no snapshot estabelecido para a transação. A pode ler 10, esperar B confirmar 20 e continuar lendo 10 dentro desse mesmo percurso. Após A terminar, uma nova leitura em outra transação pode ver 20. O snapshot não significa que a atualização de B foi perdida nem que o valor físico continua sendo 10. Ele determina qual versão a leitura de A pode observar.",
+            "Essa estabilidade é útil quando várias consultas precisam trabalhar sobre a mesma visão, mas não equivale a serialização completa de qualquer regra de negócio. Uma leitura consistente e a autorização para escrever depois são questões diferentes. Uma transação longa também mantém necessidades de versões antigas e merece análise operacional. Evite deixar sessões esquecidas com BEGIN aberto enquanto interpreta o exercício; termine cada trajetória e confirme o estado final por uma leitura nova."
+          ]
+        },
+        {
+          "title": "Uma visão antiga pode entrar em conflito com uma escrita",
+          "text": [
+            "Na segunda atividade, A e B estabelecem suas visões sobre o valor 10. A incrementa e confirma 20. Quando B tenta atualizar essa mesma linha no seu percurso Repeatable Read, sua tentativa encontra uma mudança concorrente incompatível com aquela visão e recebe SQLSTATE 40001. Trate o código de estado como categoria da falha, em vez de depender do texto da mensagem, que pode variar com versão ou idioma do servidor.",
+            "A falha não autoriza continuar o mesmo roteiro como se o incremento tivesse acontecido. Uma transação em erro precisa ser encerrada; os comandos e decisões que dependeram de suas leituras devem ser refeitos numa nova transação. O exemplo usa ON_ERROR_STOP no psql, então a sessão B termina e suas alterações pendentes não são confirmadas. Aplicações com conexões persistentes precisam executar o rollback apropriado antes de reutilizar a conexão e seguir o contrato de seu driver."
+          ]
+        },
+        {
+          "title": "Repetir a unidade inteira exige preservar a intenção",
+          "text": [
+            "A intenção do exemplo é acrescentar dez, e não fixar sempre o saldo no valor calculado a partir de uma leitura antiga. A nova sessão C lê 20 e repete a unidade de trabalho, confirmando 30. Essa repetição mostra a leitura atual e a atualização relativa; copiar um valor absoluto calculado em B poderia sobrescrever uma contribuição válida. Documente a operação que pode ser repetida e quais decisões precisam ser recalculadas.",
+            "Em um sistema real, limite tentativas e trate esgotamento de repetição como resultado possível. Efeitos externos, como enviar e-mail ou cobrar um serviço, não são desfeitos pelo rollback do banco e não devem ser repetidos sem uma estratégia de idempotência. O exercício contém somente efeitos no banco para isolar o mecanismo. Aumentar o nível para Serializable pode detectar outras anomalias e também exigir repetição; não apresente um nível de isolamento como substituto de um contrato de falhas."
+          ]
+        },
+        {
+          "title": "Restrições e isolamento respondem a perguntas diferentes",
+          "text": [
+            "NOT NULL, CHECK, PRIMARY KEY e outras restrições protegem propriedades dos dados segundo suas regras. O isolamento organiza a interação entre transações. Uma tabela pode impedir saldo negativo e ainda permitir um roteiro de leitura e escrita que não corresponde à intenção do negócio. No exercício de transferência, verificamos a soma e os saldos individuais; nas atividades entre sessões, verificamos as versões observadas, o estado de erro específico e o resultado confirmado.",
+            "Os cronogramas publicados são executados por um verificador com conexões distintas e prazos finitos. A sequência de passos oferece sincronização observável, sem usar uma pausa arbitrária como prova de que outra transação terminou. Os exemplos desta aula não pretendem cobrir todos os padrões de locks, deadlocks ou recuperação operacional. Para avançar, reproduza um lock numa terceira sessão observadora, documente o recurso esperado e acrescente uma política de tempo e de recuperação adequada ao caso."
+          ]
+        }
+      ],
+      "postgresScenario": {
+        "id": "read-committed",
+        "setup": "CREATE TABLE {{schema}}.saldo(id integer PRIMARY KEY, valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO {{schema}}.saldo VALUES(1,10);",
+        "steps": [
+          {
+            "session": "A",
+            "sql": "BEGIN ISOLATION LEVEL READ COMMITTED;\nSELECT valor FROM {{schema}}.saldo WHERE id=1;",
+            "expectedOutput": [
+              "10"
+            ]
+          },
+          {
+            "session": "B",
+            "sql": "BEGIN;\nUPDATE {{schema}}.saldo SET valor=20 WHERE id=1;\nCOMMIT;",
+            "expectedOutput": []
+          },
+          {
+            "session": "A",
+            "sql": "SELECT valor FROM {{schema}}.saldo WHERE id=1;",
+            "expectedOutput": [
+              "20"
+            ]
+          },
+          {
+            "session": "A",
+            "sql": "COMMIT;",
+            "expectedOutput": []
+          }
+        ],
+        "finalSql": "SELECT valor FROM {{schema}}.saldo WHERE id=1;",
+        "finalOutput": [
+          "20"
+        ]
+      },
+      "code": "BEGIN;\nCREATE TEMP TABLE unidade_tx(id integer PRIMARY KEY, valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO unidade_tx VALUES(1,10);\nSAVEPOINT antes;\nUPDATE unidade_tx SET valor=20 WHERE id=1;\nROLLBACK TO SAVEPOINT antes;\nDO $$\nBEGIN\n IF (SELECT valor FROM unidade_tx WHERE id=1) <> 10 THEN RAISE EXCEPTION 'savepoint'; END IF;\nEND $$;\nSELECT valor FROM unidade_tx WHERE id=1;\nROLLBACK;",
+      "expectedOutput": [
+        "10"
+      ],
+      "output": "O programa de uma sessão retorna 10 após desfazer a atualização até o savepoint. O cronograma abaixo é outro experimento, com sessões diferentes: em Read Committed a sessão A observa 10 e depois 20.",
+      "trace": [
+        "Savepoint registra uma posição dentro da transação; rollback até ele desfaz a atualização posterior.",
+        "A tabela temporária permite conferir o exemplo sem alterar dados permanentes.",
+        "O teste de isolamento usa conexões diferentes e só passa à segunda leitura após o COMMIT externo."
+      ],
+      "exercise": "Implemente uma transferência de 20 entre duas contas temporárias, inicialmente com 100 e 50. Exija saldo não negativo, execute débito e crédito na mesma transação e confira saldo final 80 e 70, soma 150. Esse exemplo prova a unidade de trabalho local; não o apresente como uma demonstração de conflitos entre clientes.",
+      "checks": [
+        "As duas alterações pertencem à mesma transação.",
+        "Os saldos finais são 80 e 70 e a soma conserva 150.",
+        "O estudo não deixa objetos permanentes no banco."
+      ],
+      "solution": "BEGIN;\nCREATE TEMP TABLE contas_tx(id integer PRIMARY KEY, saldo integer NOT NULL CHECK(saldo >= 0));\nINSERT INTO contas_tx VALUES(1,100),(2,50);\nUPDATE contas_tx SET saldo=saldo-20 WHERE id=1;\nUPDATE contas_tx SET saldo=saldo+20 WHERE id=2;\nDO $$\nBEGIN\n IF (SELECT saldo FROM contas_tx WHERE id=1) <> 80 OR\n    (SELECT saldo FROM contas_tx WHERE id=2) <> 70 OR\n    (SELECT sum(saldo) FROM contas_tx) <> 150\n THEN RAISE EXCEPTION 'transferência'; END IF;\nEND $$;\nSELECT id,saldo FROM contas_tx ORDER BY id;\nROLLBACK;",
+      "solutionOutput": [
+        "1|80",
+        "2|70"
+      ],
+      "bug": "O código tenta repetir somente a atualização que falhou, dentro da mesma transação em erro. Isso conserva decisões da visão anterior e não reinicia a unidade de trabalho.",
+      "bugCode": "-- Sessão B, após receber SQLSTATE 40001:\n-- A transação está em erro; esta atualização não reinicia suas leituras.\nUPDATE estudo_isolamento.saldo SET valor=valor+10 WHERE id=1;\nCOMMIT;",
+      "repair": "Encerre o percurso falho, abra uma nova transação, releia os dados e repita as decisões e operações da unidade. A atividade usa uma nova sessão C após o término de B pelo ON_ERROR_STOP; um cliente persistente deve tratar rollback e reutilização de conexão conforme seu driver.",
+      "project": "Construa um roteiro de reserva de uma quantidade em estoque com dois clientes. Descreva saldo inicial, ordem dos comandos, nível de isolamento, operação relativa ou pré-condição e categoria de falha. Primeiro reproduza um conflito deterministicamente, depois implemente uma repetição limitada que refaz a leitura. Teste ausência de saldo suficiente e evite efeitos externos no trecho repetível. Registre o resultado confirmado em uma terceira consulta, depois encerre todas as sessões.",
+      "question": "Depois de SQLSTATE 40001, qual é a unidade adequada para repetir o trabalho do exemplo?",
+      "answer": "Uma nova transação que refaz as leituras e decisões da operação inteira, após encerrar a tentativa falha.",
+      "distractors": [
+        "Somente o último UPDATE, mantendo a mesma transação em erro e todos os valores antigos.",
+        "Todo efeito externo já realizado, porque rollback do banco também desfaz e-mails e cobranças."
+      ],
+      "practices": [
+        {
+          "id": "snapshot",
+          "title": "Problema 1: comparar a leitura antiga com uma leitura nova",
+          "topics": [
+            "Repeatable Read e snapshot da transação",
+            "sessões separadas e cronograma observável"
+          ],
+          "prompt": "Use conexões A e B numa base de estudo. A inicia Repeatable Read e lê 10; B confirma 20; A precisa continuar lendo 10 até encerrar. Depois de COMMIT, uma leitura nova de A deve retornar 20. Execute cada bloco apenas na sessão indicada e compare com o cronograma Read Committed da teoria.",
+          "solution": "-- Abra cada sessão com: psql -X -q -A -t -v ON_ERROR_STOP=1 -v VERBOSITY=verbose\n-- Em uma base de estudo, execute a preparação uma vez.\nCREATE SCHEMA estudo_isolamento;\nCREATE TABLE estudo_isolamento.saldo(id integer PRIMARY KEY, valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO estudo_isolamento.saldo VALUES(1,10);\n\n-- Passo 1: sessão A; saída: 10\nBEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Passo 2: sessão B; saída: sem linhas\nBEGIN;\nUPDATE estudo_isolamento.saldo SET valor=20 WHERE id=1;\nCOMMIT;\n\n-- Passo 3: sessão A; saída: 10\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Passo 4: sessão A; saída: sem linhas\nCOMMIT;\n\n-- Passo 5: sessão A; saída: 20\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Depois de encerrar todas as transações, confira em outra sessão.\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n-- Resultado final: 20\nDROP SCHEMA estudo_isolamento CASCADE;",
+          "postgresScenario": {
+            "id": "repeatable-read",
+            "setup": "CREATE TABLE {{schema}}.saldo(id integer PRIMARY KEY, valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO {{schema}}.saldo VALUES(1,10);",
+            "steps": [
+              {
+                "session": "A",
+                "sql": "BEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM {{schema}}.saldo WHERE id=1;",
+                "expectedOutput": [
+                  "10"
+                ]
+              },
+              {
+                "session": "B",
+                "sql": "BEGIN;\nUPDATE {{schema}}.saldo SET valor=20 WHERE id=1;\nCOMMIT;",
+                "expectedOutput": []
+              },
+              {
+                "session": "A",
+                "sql": "SELECT valor FROM {{schema}}.saldo WHERE id=1;",
+                "expectedOutput": [
+                  "10"
+                ]
+              },
+              {
+                "session": "A",
+                "sql": "COMMIT;",
+                "expectedOutput": []
+              },
+              {
+                "session": "A",
+                "sql": "SELECT valor FROM {{schema}}.saldo WHERE id=1;",
+                "expectedOutput": [
+                  "20"
+                ]
+              }
+            ],
+            "finalSql": "SELECT valor FROM {{schema}}.saldo WHERE id=1;",
+            "finalOutput": [
+              "20"
+            ]
+          },
+          "explanation": [
+            "A primeira leitura de A estabelece a visão que a transação Repeatable Read conserva. O COMMIT de B torna 20 disponível para transações apropriadas, mas não troca o snapshot que A já utiliza. Por isso a segunda leitura de A ainda devolve 10.",
+            "Depois do COMMIT de A, a leitura seguinte ocorre em outra transação e observa 20. O verificador mantém processos psql distintos para A e B e compara cada resposta na ordem indicada. Concatenar todos os blocos numa única conexão mudaria o experimento e não provaria o mecanismo solicitado."
+          ],
+          "checks": [
+            "A observa 10 duas vezes dentro do percurso Repeatable Read.",
+            "B confirma a atualização antes da segunda leitura de A.",
+            "Uma leitura nova após o COMMIT de A observa 20."
+          ]
+        },
+        {
+          "id": "conflito",
+          "title": "Problema 2: repetir depois de um conflito de atualização",
+          "topics": [
+            "atualização concorrente e SQLSTATE 40001",
+            "repetição da transação inteira",
+            "conexão encerrada e rollback pendente",
+            "sessões separadas e cronograma observável"
+          ],
+          "prompt": "A e B iniciam Repeatable Read e leem 10. A incrementa dez e confirma. B tenta o mesmo incremento e deve receber SQLSTATE 40001. Encerre a tentativa falha; uma nova sessão C relê 20, repete a operação e confirma 30. Não substitua a verificação do código de erro por qualquer falha genérica.",
+          "solution": "-- Abra cada sessão com: psql -X -q -A -t -v ON_ERROR_STOP=1 -v VERBOSITY=verbose\n-- Em uma base de estudo, execute a preparação uma vez.\nCREATE SCHEMA estudo_isolamento;\nCREATE TABLE estudo_isolamento.saldo(id integer PRIMARY KEY, valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO estudo_isolamento.saldo VALUES(1,10);\n\n-- Passo 1: sessão A; saída: 10\nBEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Passo 2: sessão B; saída: 10\nBEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Passo 3: sessão A; saída: sem linhas\nUPDATE estudo_isolamento.saldo SET valor=valor+10 WHERE id=1;\nCOMMIT;\n\n-- Passo 4: sessão B, erro SQLSTATE 40001\nUPDATE estudo_isolamento.saldo SET valor=valor+10 WHERE id=1;\n\n-- Passo 5: sessão C; saída: 20\nBEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n\n-- Passo 6: sessão C; saída: sem linhas\nUPDATE estudo_isolamento.saldo SET valor=valor+10 WHERE id=1;\nCOMMIT;\n\n-- Depois de encerrar todas as transações, confira em outra sessão.\nSELECT valor FROM estudo_isolamento.saldo WHERE id=1;\n-- Resultado final: 30\nDROP SCHEMA estudo_isolamento CASCADE;",
+          "postgresScenario": {
+            "id": "conflict-retry",
+            "setup": "CREATE TABLE {{schema}}.saldo(id integer PRIMARY KEY, valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO {{schema}}.saldo VALUES(1,10);",
+            "steps": [
+              {
+                "session": "A",
+                "sql": "BEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM {{schema}}.saldo WHERE id=1;",
+                "expectedOutput": [
+                  "10"
+                ]
+              },
+              {
+                "session": "B",
+                "sql": "BEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM {{schema}}.saldo WHERE id=1;",
+                "expectedOutput": [
+                  "10"
+                ]
+              },
+              {
+                "session": "A",
+                "sql": "UPDATE {{schema}}.saldo SET valor=valor+10 WHERE id=1;\nCOMMIT;",
+                "expectedOutput": []
+              },
+              {
+                "session": "B",
+                "sql": "UPDATE {{schema}}.saldo SET valor=valor+10 WHERE id=1;",
+                "expectedError": "40001"
+              },
+              {
+                "session": "C",
+                "sql": "BEGIN ISOLATION LEVEL REPEATABLE READ;\nSELECT valor FROM {{schema}}.saldo WHERE id=1;",
+                "expectedOutput": [
+                  "20"
+                ]
+              },
+              {
+                "session": "C",
+                "sql": "UPDATE {{schema}}.saldo SET valor=valor+10 WHERE id=1;\nCOMMIT;",
+                "expectedOutput": []
+              }
+            ],
+            "finalSql": "SELECT valor FROM {{schema}}.saldo WHERE id=1;",
+            "finalOutput": [
+              "30"
+            ]
+          },
+          "explanation": [
+            "A confirmação de A muda a linha que B tentava atualizar a partir de sua visão anterior. O experimento exige especificamente 40001; uma falha de conexão ou um erro de sintaxe não contam como demonstração de conflito. ON_ERROR_STOP encerra o processo psql de B, e a transação pendente não é confirmada.",
+            "C representa uma nova tentativa, com nova leitura e atualização relativa. Seu valor final 30 conserva os dois incrementos pretendidos. Num cliente persistente, a aplicação precisa encerrar explicitamente a transação em erro e definir limite de repetição; efeitos fora do banco exigem um contrato adicional."
+          ],
+          "checks": [
+            "B termina com o SQLSTATE esperado 40001.",
+            "C começa uma nova transação e observa 20 antes de alterar.",
+            "O resultado confirmado final é 30, com cada tentativa encerrada."
+          ]
+        }
+      ]
+    },
+    {
       "id": "sql-indices-planos",
       "title": "SQL: índices, planos e otimização",
       "level": "Especialização",
