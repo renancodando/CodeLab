@@ -67,3 +67,15 @@ it('o desafio novo de recursos Python não antecipa o conceito numa primeira ses
  expect(prepared.items[0].activityId).toBe(concept);
  expect(new Set(prepared.items.slice(1).map(i=>i.activityId))).toEqual(new Set(advanced));
 });
+
+it('invalidação C++ espera o conceito sem antecipar conteúdo na primeira sessão',()=>{
+ const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'cpp'};
+ const advanced=['cpp-prever-intervalo','cpp-ordenar-erase','cpp-reobter-reserva'],concept='conceito-2-cpp-iteradores-invalidacao';
+ const first=buildDailySession(state,catalog,clock);
+ expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
+ state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
+ const prepared=buildDailySession(state,catalog,clock);
+ expect(prepared.items[0].activityId).toBe(concept);
+ expect(new Set(prepared.items.slice(1).map(i=>i.activityId))).toEqual(new Set(advanced));
+});

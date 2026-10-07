@@ -55,6 +55,7 @@ describe('prática distribuída e verificação de comportamento',()=>{
   expect(result.feedback).toContain('negativos');
  });
  const conceptualAnswers:Record<string,string|string[]>={
+'cpp-prever-intervalo':'6,2','cpp-ordenar-erase':['for','testar','apagar','senao','avancar','fimif','fimfor'],'cpp-reobter-reserva':'reobter',
   'html-label-vinculo':'email-contato','html-dialogo-foco':'cancelar','html-ordenar-formulario':['inicio','rotulo','campo','botao','fim'],
   'css-grid-minimo':'minmax(0,1fr)','css-grade-estreita':'adaptar','css-prever-cascata':'green',
   'ts-fonte-covariancia':'detalhada','ts-callback-entrada':'geral','ts-propriedade-funcao':'propriedade',

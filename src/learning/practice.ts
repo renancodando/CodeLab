@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+"cpp-prever-intervalo":{"accepted":["6,2"],"failure":"Confira o valor da segunda posição e conte elementos, sem confundir end com o último valor.","solution":"6,2"},
+"cpp-ordenar-erase":{"accepted":[],"order":["for","testar","apagar","senao","avancar","fimif","fimfor"],"failure":"Receba o retorno de erase no ramo de remoção e incremente apenas no outro ramo; feche cada bloco correspondente.","solution":"for (auto it = dados.begin(); it != dados.end();) {\n    if (*it == 0) {\n        it = dados.erase(it);\n    } else {\n        ++it;\n    } // fim do if\n} // fim do for"},
+"cpp-reobter-reserva":{"accepted":["reobter"],"failure":"O acesso antigo foi invalidado. Obtenha a posição novamente; end não representa um elemento.","solution":"const int valor = dados.at(indice); // após reserve e sem alterar a ordem"},
 "ts-fonte-covariancia":{"accepted":["detalhada"],"failure":"Uma fonte básica não promete pontos. Examine o campo que a posição de destino pode solicitar.","solution":"Fonte<Detalhado> pode atender à posição Fonte<Registro>, que só promete ler id."},
 "ts-callback-entrada":{"accepted":["geral"],"failure":"O chamador pode fornecer apenas id. O callback não pode exigir pontos e uma assertion não acrescenta esse campo.","solution":"Um callback que aceita Registro pode processar qualquer entrada permitida; exigir Detalhado restringe o contrato."},
 "ts-propriedade-funcao":{"accepted":["propriedade"],"failure":"A assinatura de método não recebe a mesma checagem de parâmetros. Procure a propriedade cuja informação de tipo é uma função.","solution":"processar: (item: T) => string"},
