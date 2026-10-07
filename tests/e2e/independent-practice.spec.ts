@@ -9,7 +9,15 @@ test('aulas aprofundadas mantêm leitura, mapa, referências e progresso local',
   await expect(page.locator('.lesson-chapter')).toHaveCount(17);
   await expect(page.locator('.lesson-map a')).toHaveCount(17);
   await expect(page.getByText('Prática independente',{exact:true})).toHaveCount(2);
-  await expect(page.locator('[id^="aula-resolucao-"] pre')).toHaveCount(2);
+  const resolucoes=page.locator('[id^="aula-resolucao-"]');
+  await expect(resolucoes.locator('pre')).toHaveCount(2);
+  for(let i=0;i<2;i++){
+   await expect(resolucoes.nth(i).locator('pre')).not.toBeVisible();
+   await expect(resolucoes.nth(i).locator('details > p').first()).not.toBeVisible();
+   await resolucoes.nth(i).locator('summary').click();
+   await expect(resolucoes.nth(i).locator('pre')).toBeVisible();
+   await expect(resolucoes.nth(i).locator('details > p').first()).toBeVisible();
+  }
  }
  await page.goto('/#/aula/js-closures-estado');
  await page.getByLabel('Ela conserva acesso ao binding, que pode ter sido atualizado antes da leitura.',{exact:true}).check();
@@ -25,6 +33,10 @@ test('páginas aprofundadas entregam também os problemas sem JavaScript',async(
   await expect(page.locator('main section')).toHaveCount(17);
   await expect(page.locator('pre')).toHaveCount(5);
   await expect(page.getByRole('heading',{name:/^Problema 1:/})).toHaveCount(1);
+  const resolucoes=page.locator('[id^="aula-resolucao-"]');
+  await expect(resolucoes.first().locator('pre')).not.toBeVisible();
+  await resolucoes.first().locator('summary').click();
+  await expect(resolucoes.first().locator('pre')).toBeVisible();
  }
  await context.close();
 });
