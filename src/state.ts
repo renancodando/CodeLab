@@ -80,7 +80,7 @@ export function prepareBackup(value:unknown):Progress {
  return normalizeProgress(value);
 }
 export let progress=readProgress();
-export function saveProgress(){try{localStorage.setItem(key,JSON.stringify(progress));window.dispatchEvent(new Event('progresschange'));}catch{window.dispatchEvent(new CustomEvent('storageerror'));}}
+export function saveProgress():boolean{try{localStorage.setItem(key,JSON.stringify(progress));window.dispatchEvent(new Event('progresschange'));return true;}catch{window.dispatchEvent(new CustomEvent('storageerror'));return false;}}
 export function replaceProgress(value:unknown){progress=normalizeProgress(value);saveProgress();}
 export function snapshot(id:string,code:string){if(!safeKey(id))return;code=code.slice(0,30000);const list=progress.history[id]||=[];if(list.at(-1)?.code!==code)list.push({code:code.slice(0,15000),date:new Date().toISOString()});progress.history[id]=list.slice(-5);progress.drafts[id]=code;saveProgress();}
 export function recordResult(id:string,passed:boolean){progress.attempts[id]=(progress.attempts[id]||0)+1;if(passed&&!progress.completed.includes(id))progress.completed.push(id);progress.review[id]=new Date(Date.now()+(passed?7:1)*86400000).toISOString();const today=new Date().toLocaleDateString('en-CA');if(!progress.activeDays.includes(today))progress.activeDays.push(today);saveProgress();}

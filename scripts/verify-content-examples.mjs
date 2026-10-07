@@ -85,5 +85,30 @@ try{
  const zipResult=run(process.env.PYTHON??'python3',['-c','import sys, zipfile; z=zipfile.ZipFile(sys.argv[1]); assert z.testzip() is None; assert z.namelist()==["src/main.py","README.md"]; assert z.read("src/main.py").decode("utf-8")==\'print("ação")\\n\'; assert z.read("README.md").decode("utf-8")=="Projeto original"; print("ZIP interoperável")',archivePath]);
  console.log(zipResult.trim());
 
+
+ // Git usa um repositório de estudo descartável, sem remotos nem configuração global.
+ const gitFolder=join(root,'estudo-git');await mkdir(gitFolder);
+ const gitRun=(...args)=>run('git',['-C',gitFolder,...args]);
+ gitRun('init','-b','main');gitRun('config','user.name','CodeLab CI');gitRun('config','user.email','ci@example.invalid');gitRun('config','commit.gpgsign','false');
+ const calculation=join(gitFolder,'calculo.txt');await writeFile(calculation,'total=0\n');gitRun('add','calculo.txt');gitRun('commit','-m','Criar cálculo inicial');
+ await writeFile(calculation,'total=10\n');gitRun('add','calculo.txt');await writeFile(calculation,'total=20\n');
+ if(gitRun('show','HEAD:calculo.txt').trim()!=='total=0'||gitRun('show',':calculo.txt').trim()!=='total=10'||(await readFile(calculation,'utf8')).trim()!=='total=20')throw new Error('Git: trabalho, preparação e HEAD foram confundidos.');
+ if(!gitRun('diff','--cached').includes('+total=10')||!gitRun('diff').includes('+total=20'))throw new Error('Git: diferenças de preparação divergentes.');
+ gitRun('commit','-m','Ajustar total para dez');
+ if(gitRun('show','HEAD:calculo.txt').trim()!=='total=10'||(await readFile(calculation,'utf8')).trim()!=='total=20')throw new Error('Git: commit alterou a cópia de trabalho.');
+ const rule=join(gitFolder,'regra.js'),ruleText=condition=>'export const desconto = (total, clienteAtivo) => '+condition+';\n';
+ await writeFile(rule,ruleText('total >= 100'));gitRun('add','regra.js');gitRun('commit','-m','Criar regra base');
+ gitRun('switch','-c','cliente-ativo');await writeFile(rule,ruleText('total >= 100 && clienteAtivo'));gitRun('add','regra.js');gitRun('commit','-m','Exigir cliente ativo');
+ gitRun('switch','main');await writeFile(rule,ruleText('total >= 120'));gitRun('add','regra.js');gitRun('commit','-m','Ajustar fronteira');
+ const conflict=spawnSync('git',['-C',gitFolder,'merge','cliente-ativo'],{encoding:'utf8',timeout:90000});
+ if(conflict.error||conflict.status!==1||!((await readFile(rule,'utf8')).includes('<<<<<<<')))throw new Error('Git: o conflito esperado não aconteceu.');
+ const combined=ruleText('total >= 120 && clienteAtivo');await writeFile(rule,combined);gitRun('add','regra.js');gitRun('commit','-m','Combinar regras por contrato');
+ if(gitRun('rev-list','--parents','-n','1','HEAD').trim().split(/\s+/).length!==3)throw new Error('Git: resolução não preservou os dois pais.');
+ const ruleCheck=join(gitFolder,'conferir.mjs');await writeFile(ruleCheck,combined+'\nconst casos=[[119,true,false],[120,true,true],[119,false,false],[120,false,false]]; for(const [total,ativo,esperado] of casos)if(desconto(total,ativo)!==esperado)throw new Error("Regra divergente");');
+ run(process.execPath,[ruleCheck]);
+ await writeFile(rule,ruleText('total >= 999'));gitRun('add','regra.js');gitRun('commit','-m','Regra de estudo a reverter');const badCommit=gitRun('rev-parse','HEAD').trim();
+ gitRun('revert','--no-edit',badCommit);
+ if((await readFile(rule,'utf8'))!==combined||!gitRun('log','--format=%H').split(/\s+/).includes(badCommit)||gitRun('rev-parse','HEAD').trim()===badCommit)throw new Error('Git: reversão não preservou histórico e regra anterior.');
+ console.log('3 cenários Git conferidos: preparação, conflito por contrato e reversão com histórico.');
  console.log(count+' exemplos e soluções externos compilados/executados.');
 }finally{await rm(root,{recursive:true,force:true});}

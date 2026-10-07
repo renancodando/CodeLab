@@ -2,7 +2,7 @@ import {practiceActivities,practicesForLesson} from '../content/practice';
 import {lessons,resolveLesson} from '../content/curriculum';
 import {progress,saveProgress,escapeHtml as esc} from '../state';
 import {adaptiveCatalog,languageLabels} from './hub-catalog';
-import {ensureDailySession,markConceptSeen,skillMastery,dueReviews} from './adaptive';
+import {ensureDailySession,markConceptSeen,skillMastery,dueReviews,learningDay} from './adaptive';
 import {mountPractice,learningClock} from './practice-ui';
 const catalog=()=>({...adaptiveCatalog,preferredLanguage:progress.learningLanguage});
 export function dailySummary(){const clock=learningClock(),reviews=dueReviews(progress.adaptive,clock),plan=ensureDailySession(progress.adaptive,catalog(),clock);return{reviews:reviews.length,minutes:plan.totalMinutes,total:plan.items.length,done:plan.completed.length};}
@@ -19,13 +19,15 @@ export function mountInlinePractice(container:HTMLElement,lessonId:string):()=>v
  const related=practicesForLesson(lessonId);if(related.length){const el=container.querySelector<HTMLElement>('.lesson-meta');if(el){const span=document.createElement('span');span.textContent=related.length+' pausas práticas corrigíveis';el.append(span);}}
  return()=>stops.forEach(stop=>stop());
 }
+const languageLockMessage='O plano de hoje já começou. A linguagem poderá mudar amanhã; outras atividades continuam disponíveis no catálogo.';
+const sessionStarted=(plan:{day:string;completed:string[];items:{activityId:string}[]})=>plan.completed.length>0||plan.items.some(item=>{const answer=progress.practiceAnswers[item.activityId];return Boolean(answer?.attempts&&answer.updatedAt&&learningDay({...learningClock(),now:Date.parse(answer.updatedAt)})===plan.day);});
 export function mountDaily(container:HTMLElement):()=>void{
  let disposed=false,token=0,release=()=>{};
  async function render(){
-  release();release=()=>{};const current=++token,clock=learningClock(),plan=ensureDailySession(progress.adaptive,catalog(),clock);saveProgress();const pending=plan.items.find(item=>!plan.completed.includes(item.id));
-  container.innerHTML='<article class="page reading daily-session"><a class="back" href="#/home">Voltar para casa</a><p class="eyebrow">SESSÃO DE HOJE · SALVA NESTE NAVEGADOR</p><h1>Continuar aprendendo</h1><label class="field">Linguagem do conceito novo<select data-language>'+Object.entries(languageLabels).map(([id,label])=>'<option value="'+id+'" '+(progress.learningLanguage===id?'selected':'')+'>'+label+'</option>').join('')+'</select></label><p>'+plan.completed.length+' de '+plan.items.length+' etapas · aproximadamente '+plan.totalMinutes+' min</p><ol class="lesson-points">'+plan.items.map(item=>'<li>'+(plan.completed.includes(item.id)?'✓ ':'')+esc(({review:'Revisar',concept:'Novo conceito',practice:'Praticar',challenge:'Desafio final'} as Record<string,string>)[item.kind])+': '+esc(adaptiveCatalog.activities.find(a=>a.id===item.activityId)?.title??item.activityId)+'</li>').join('')+'</ol><div data-current></div><button class="button primary" data-next hidden>Continuar sessão</button></article>';
+  release();release=()=>{};const current=++token,clock=learningClock(),plan=ensureDailySession(progress.adaptive,catalog(),clock),persisted=saveProgress(),started=sessionStarted(plan);const pending=plan.items.find(item=>!plan.completed.includes(item.id));
+  container.innerHTML='<article class="page reading daily-session"><a class="back" href="#/home">Voltar para casa</a><p class="eyebrow">SESSÃO DE HOJE · '+(persisted?'SALVA NESTE NAVEGADOR':'ALTERAÇÕES EM MEMÓRIA')+'</p><h1>Continuar aprendendo</h1>'+(persisted?'':'<p role="alert">O navegador não conseguiu salvar. Exporte a jornada no perfil antes de sair.</p>')+'<label class="field">Linguagem do conceito novo<select data-language '+(started?'disabled':'')+'>'+Object.entries(languageLabels).map(([id,label])=>'<option value="'+id+'" '+(progress.learningLanguage===id?'selected':'')+'>'+label+'</option>').join('')+'</select></label><p class="small" data-language-note>'+(started?languageLockMessage:'')+'</p><p>'+plan.completed.length+' de '+plan.items.length+' etapas · aproximadamente '+plan.totalMinutes+' min</p><ol class="lesson-points">'+plan.items.map(item=>'<li>'+(plan.completed.includes(item.id)?'✓ ':'')+esc(({review:'Revisar',concept:'Novo conceito',practice:'Praticar',challenge:'Desafio final'} as Record<string,string>)[item.kind])+': '+esc(adaptiveCatalog.activities.find(a=>a.id===item.activityId)?.title??item.activityId)+'</li>').join('')+'</ol><div data-current></div><button class="button primary" data-next hidden>Continuar sessão</button></article>';
   const target=container.querySelector<HTMLElement>('[data-current]')!,next=container.querySelector<HTMLButtonElement>('[data-next]')!;
-  next.addEventListener('click',()=>void render());container.querySelector<HTMLSelectElement>('[data-language]')!.addEventListener('change',event=>{progress.learningLanguage=(event.target as HTMLSelectElement).value;delete progress.adaptive.daily;saveProgress();void render();});
+  const selector=container.querySelector<HTMLSelectElement>('[data-language]')!,note=container.querySelector<HTMLElement>('[data-language-note]')!;const lock=()=>{selector.disabled=true;note.textContent=languageLockMessage;};next.addEventListener('click',()=>void render());selector.addEventListener('change',()=>{if(sessionStarted(plan)){selector.value=progress.learningLanguage;lock();return;}progress.learningLanguage=selector.value;delete progress.adaptive.daily;saveProgress();void render();});
   if(!pending){target.innerHTML='<h2>Sessão concluída</h2><p>As revisões futuras acompanham seu desempenho. Erros encurtam o intervalo; respostas assistidas continuam registradas como estudo.</p><a class="button primary" href="#/projetos">Fazer seu projeto crescer</a>';return;}
   const activity=adaptiveCatalog.activities.find(a=>a.id===pending.activityId)!;
   if(pending.kind==='concept'){
@@ -34,7 +36,7 @@ export function mountDaily(container:HTMLElement):()=>void{
    if(disposed||current!==token)return;l??=lessons.find(l=>l.id===id)!;
    target.innerHTML='<section class="lesson-chapter"><h2>'+esc(l.title)+'</h2><p>'+esc(l.body)+'</p>'+l.capitulos.slice(0,2).map(cap=>cap.paragrafos.map(p=>'<p>'+esc(p)+'</p>').join('')+(cap.codigo?'<pre class="example-code"><code>'+esc(cap.codigo)+'</code></pre>':'')).join('')+'<p><a href="#/aula/'+id+'">Ler e experimentar a aula completa</a></p><button class="button primary" data-seen>Concluir leitura e praticar</button><p class="small">A leitura orienta o exercício e não atribui nota de domínio.</p></section>';
    target.querySelector('[data-seen]')!.addEventListener('click',()=>{markConceptSeen(progress.adaptive,activity.id,learningClock());saveProgress();void render();});
-  }else release=mountPractice(target,activity.id,{mode:pending.kind,onEvaluated:()=>{const updated=ensureDailySession(progress.adaptive,catalog(),learningClock());next.hidden=!updated.completed.includes(pending.id);}});
+  }else release=mountPractice(target,activity.id,{mode:pending.kind,onEvaluated:()=>{const updated=ensureDailySession(progress.adaptive,catalog(),learningClock());next.hidden=!updated.completed.includes(pending.id);lock();}});
  }
  void render();return()=>{disposed=true;token++;release();};
 }

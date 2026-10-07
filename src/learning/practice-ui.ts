@@ -8,7 +8,7 @@ type Options={mode?:'practice'|'review'|'challenge';onEvaluated?:(passed:boolean
 const labels:Record<string,string>={debug:'Encontrar e corrigir o bug',predict:'Prever a saída',order:'Reconstruir a sequência',fill:'Completar o código',choice:'Escolher e explicar'};
 export function mountPractice(container:HTMLElement,id:string,options:Options={}):()=>void{
  const activity=practiceActivities.find(a=>a.id===id);if(!activity){container.textContent='Atividade não encontrada.';return()=>{};}
- const a=progress.practiceAnswers[id]??=emptyPracticeAnswer();let disposed=false,controller:AbortController|undefined;
+ const a=progress.practiceAnswers[id]??=emptyPracticeAnswer();let disposed=false,persisted=true,controller:AbortController|undefined;
  const clock=learningClock();
  if(a.updatedAt&&learningDay({...clock,now:Date.parse(a.updatedAt)})!==learningDay(clock)){
   a.attempts=0;a.hints=0;a.assisted=false;a.passed=false;
@@ -21,8 +21,8 @@ export function mountPractice(container:HTMLElement,id:string,options:Options={}
  container.innerHTML='<section class="lesson-check practice-card" data-practice="'+esc(id)+'"><p class="eyebrow">'+esc(labels[activity.kind])+' · '+activity.minutes+' MIN</p><h3>'+esc(activity.title)+'</h3><p>'+esc(activity.prompt)+'</p>'+(activity.code&&activity.kind!=='debug'?'<pre class="example-code"><code>'+esc(activity.code)+'</code></pre>':'')+'<form>'+input+'<div class="practice-actions"><button class="button primary" type="submit">Conferir comportamento</button><button class="button subtle" type="button" data-hint>Uma pista</button><button class="button subtle" type="button" data-solution>Consultar solução</button></div></form><p class="practice-feedback" role="status" aria-live="polite"></p><div data-help></div><p class="small">'+(activity.kind==='debug'?'O comportamento será conferido com entradas variadas, incluindo casos de borda.':'Atividade conceitual local. Uma resposta correta não indica que o programa foi compilado ou executado.')+'</p></section>';
  const feedback=container.querySelector<HTMLElement>('[role=status]')!,help=container.querySelector<HTMLElement>('[data-help]')!,form=container.querySelector<HTMLFormElement>('form')!,button=form.querySelector<HTMLButtonElement>('[type=submit]')!;
  if(a.passed)feedback.textContent='Resposta conferida anteriormente. Explique a decisão sem consultar.';
- const persist=()=>{a.updatedAt=new Date().toISOString();saveProgress();};
- const changed=(value:string|string[])=>{controller?.abort();a.value=value;a.passed=false;feedback.textContent='';persist();renderVisual();};
+ const persist=()=>{a.updatedAt=new Date().toISOString();persisted=saveProgress();};
+ const changed=(value:string|string[])=>{controller?.abort();a.value=value;a.passed=false;feedback.textContent='';persist();if(!persisted)feedback.textContent='O navegador não conseguiu salvar. Sua resposta está em memória; exporte a jornada antes de sair.';renderVisual();};
  const showHelp=()=>{help.replaceChildren();if(a.hints){const p=document.createElement('p');p.textContent=activity.hint;help.append(p);}if(a.assisted){const pre=document.createElement('pre');pre.className='example-code';pre.textContent=getPracticeSolution(id)??'';help.append(pre);}};showHelp();
  function renderVisual(){
   if(!['css-grid-minimo','css-grade-estreita','html-label-vinculo'].includes(id))return;
@@ -41,7 +41,11 @@ export function mountPractice(container:HTMLElement,id:string,options:Options={}
  renderOrder();
  form.querySelectorAll<HTMLInputElement|HTMLTextAreaElement>('[name=answer]').forEach(input=>input.addEventListener(input instanceof HTMLInputElement&&input.type==='radio'?'change':'input',()=>changed(input.value)));
  container.querySelector('[data-hint]')!.addEventListener('click',()=>{a.hints=Math.max(a.hints,1);persist();showHelp();});
- container.querySelector('[data-solution]')!.addEventListener('click',()=>{a.assisted=true;persist();showHelp();feedback.textContent='Esta tentativa será assistida. Reconstrua sem consultar em uma revisão futura.';});
+ container.querySelector('[data-solution]')!.addEventListener('click',()=>{
+  const attempted=a.attempts>0||activity.skillIds.some(skill=>Boolean(progress.adaptive.skills[skill]?.evidence[id]));a.assisted=true;persist();showHelp();
+  if(attempted){const current=learningClock();recordEvidence(progress.adaptive,{id:id+'-solucao-'+current.now,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:a.passed,assisted:true,attempts:Math.max(1,a.attempts),hints:a.hints,kind:options.mode??(activity.afterBlock===5?'challenge':'practice')},current);persisted=saveProgress()&&persisted;}
+  feedback.textContent=attempted?'A consulta foi registrada como assistência. A revisão retorna em um dia; reconstrua sem consultar.':'Esta tentativa será assistida. Reconstrua sem consultar em uma revisão futura.';if(!persisted)feedback.textContent+=' A alteração está em memória; exporte a jornada antes de sair.';
+ });
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(controller||disposed)return;const submitted=Array.isArray(a.value)?[...a.value]:a.value;controller=new AbortController();button.disabled=true;feedback.textContent='Conferindo…';
   try{
@@ -49,9 +53,9 @@ export function mountPractice(container:HTMLElement,id:string,options:Options={}
    if(result.status!=='evaluated'){feedback.textContent=result.feedback;return;}
    if(JSON.stringify(a.value)!==JSON.stringify(submitted)){feedback.textContent='Sua resposta mudou. Confira a versão atual.';return;}
    a.attempts++;a.passed=result.passed;persist();const current=learningClock(),mode=options.mode??(activity.afterBlock===5?'challenge':'practice');
-   const evidence=recordEvidence(progress.adaptive,{id:id+'-'+current.now+'-'+a.attempts,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:result.passed,assisted:a.assisted,attempts:a.attempts,hints:a.hints,kind:mode},current);saveProgress();
-   feedback.textContent=result.feedback+'\n'+result.tests.map(t=>(t.passed?'✓ ':'↻ ')+t.label).join('\n')+'\n'+(result.evidence==='executed'?'Comportamento avaliado no executor JavaScript isolado.':'Evidência conceitual; sem execução de compilador.');if(!evidence.accepted)feedback.textContent+='\nA resposta foi conferida, mas não alterou o mapa de domínio. Confira a data do dispositivo e os dados da jornada.';options.onEvaluated?.(result.passed);
-  }catch{if(!disposed)feedback.textContent='Não foi possível conferir. Sua resposta está salva; tente novamente.';}
+   const evidence=recordEvidence(progress.adaptive,{id:id+'-'+current.now+'-'+a.attempts,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:result.passed,assisted:a.assisted,attempts:a.attempts,hints:a.hints,kind:mode},current);persisted=saveProgress()&&persisted;
+   feedback.textContent=result.feedback+'\n'+result.tests.map(t=>(t.passed?'✓ ':'↻ ')+t.label).join('\n')+'\n'+(result.evidence==='executed'?'Comportamento avaliado no executor JavaScript isolado.':'Evidência conceitual; sem execução de compilador.');if(!evidence.accepted)feedback.textContent+='\nA resposta foi conferida, mas não alterou o mapa de domínio. Confira a data do dispositivo e os dados da jornada.';if(!persisted)feedback.textContent+='\nO navegador não conseguiu salvar. A resposta e as evidências estão em memória; exporte a jornada antes de sair.';options.onEvaluated?.(result.passed);
+  }catch{if(!disposed)feedback.textContent='Não foi possível conferir. Sua resposta continua nesta tela; tente novamente ou exporte a jornada antes de sair.';}
   finally{controller=undefined;if(!disposed)button.disabled=false;}
  });
  return()=>{disposed=true;controller?.abort();};

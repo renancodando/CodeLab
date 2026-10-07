@@ -20,10 +20,10 @@ test('depuração confere bordas, preserva solução oculta e mantém domínio p
 test('leitura não pontua domínio, sessão progride e retoma sem duplicar atividades',async({page})=>{
  await page.goto('/');await page.getByRole('link',{name:'Continuar aprendendo',exact:true}).click();await expect(page.locator('[data-seen]')).toBeVisible();
  const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(Object.keys(before.adaptive.skills)).toHaveLength(0);expect(before.adaptive.daily.items.map((x:{kind:string})=>x.kind)).toEqual(['concept','practice','practice','challenge']);
- await page.locator('[data-seen]').click();
+ await page.locator('[data-seen]').click();await expect(page.locator('[data-language]')).toBeDisabled();
  for(let n=0;n<3;n++){const card=page.locator('[data-current] [data-practice]');await expect(card).toBeVisible();const id=(await card.getAttribute('data-practice'))!;await card.getByLabel('Seu código corrigido').fill(getPracticeSolution(id)!);await card.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(card.locator('.practice-feedback')).toContainText('A correção passou');await page.locator('[data-next]').click();}
  await expect(page.getByRole('heading',{name:'Sessão concluída',exact:true})).toBeVisible();await page.reload();await expect(page.getByRole('heading',{name:'Sessão concluída',exact:true})).toBeVisible();
- const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(after.adaptive.daily.completed).toHaveLength(4);expect(new Set(after.adaptive.daily.items.map((x:{id:string})=>x.id)).size).toBe(4);expect(after.adaptive.seenConcepts).toHaveLength(1);
+ await expect(page.locator('[data-language]')).toBeDisabled();const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(after.adaptive.daily.completed).toHaveLength(4);expect(new Set(after.adaptive.daily.items.map((x:{id:string})=>x.id)).size).toBe(4);expect(after.adaptive.seenConcepts).toHaveLength(1);
 });
 test('Python, C# e C++ continuam offline após preparação, sem submissões externas',async({page,context})=>{
  test.setTimeout(90000);const submissions:string[]=[];page.on('request',request=>{if(/\/api\/(execute|run|submissions)/.test(request.url()))submissions.push(request.url());});
@@ -66,4 +66,28 @@ test('duas revisões antigas vêm primeiro e um erro agenda retorno mais curto',
  const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(before.adaptive.daily.items.map((x:{kind:string})=>x.kind)).toEqual(['review','review','concept','practice','practice','challenge']);
  const first=before.adaptive.daily.items[0];await page.getByLabel('Saída prevista, uma linha por saída').fill('999');await page.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(page.locator('[data-next]')).toBeVisible();
  const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(after.adaptive.daily.completed).toContain(first.id);expect(after.adaptive.skills[first.skillId].review.dueDay).toBe(learningDay({now:Date.now()+86400000,timeZone:'America/Sao_Paulo'}));expect(after.adaptive.skills[first.skillId].review.stage).toBe(0);
+});
+
+test('falha ao instalar recursos offline informa indisponibilidade sem bloquear estudo',async({page,context})=>{
+ await context.route('**/sw.js',route=>route.fulfill({contentType:'text/javascript',body:'self.addEventListener("install",event=>event.waitUntil(Promise.reject(new Error("cache indisponível"))));'}));
+ await page.goto('/');await expect(page.locator('#offline-status')).toHaveText('Preparação offline indisponível neste navegador.');
+ await page.goto('/#/pratica/py-prever-range');await page.getByLabel('Saída prevista, uma linha por saída').fill('0\n2\n4');await page.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(feedback(page)).toContainText('Sua resposta está correta');
+});
+
+test('quota indisponível preserva arquivos em memória e permite recuperar pela exportação',async({page})=>{
+ await page.addInitScript(()=>{const original=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key==='codelab.progress.v2')throw new DOMException('Quota de estudo','QuotaExceededError');return original.call(this,key,value);};});
+ await page.goto('/#/projeto/html-caderno');await expect(page.locator('[data-save]')).toContainText('Alterações em memória');
+ await page.locator('[data-code]').fill('<h1>Trabalho recuperável sem quota</h1>');await expect(page.locator('[data-save]')).toContainText('não conseguiu salvar');expect(await page.evaluate(()=>localStorage.getItem('codelab.progress.v2'))).toBeNull();
+ const exportedEvent=page.waitForEvent('download');await page.locator('[data-export]').click();const exported=await exportedEvent,stream=await exported.createReadStream(),pieces:Buffer[]=[];for await(const piece of stream!)pieces.push(Buffer.from(piece));expect(Buffer.concat(pieces).includes(Buffer.from('Trabalho recuperável sem quota'))).toBe(true);
+ await page.goto('/#/perfil');const backupEvent=page.waitForEvent('download');await page.locator('#export-progress').click();const backup=await backupEvent,backupStream=await backup.createReadStream(),chunks:Buffer[]=[];for await(const chunk of backupStream!)chunks.push(Buffer.from(chunk));expect(JSON.parse(Buffer.concat(chunks).toString()).projectWorkspaces['html-caderno'].files['index.html']).toContain('Trabalho recuperável sem quota');
+});
+
+test('consultar solução após acertar revisão encurta o intervalo imediatamente',async({page})=>{
+ const adaptive=freshAdaptive(),clock={now:Date.now()-86400000,timeZone:'America/Sao_Paulo'};
+ recordEvidence(adaptive,{id:'dia-anterior',assessmentId:'py-prever-range',activityId:'py-prever-range',skillIds:['python.controle.range'],revision:1,passed:true,assisted:false,attempts:1,hints:0,kind:'practice'},clock);
+ await page.addInitScript(data=>localStorage.setItem('codelab.progress.v2',JSON.stringify(data)),{version:2,learningLanguage:'javascript',adaptive});await page.goto('/#/diaria');
+ await page.getByLabel('Saída prevista, uma linha por saída').fill('0\n2\n4');await page.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(feedback(page)).toContainText('Sua resposta está correta');
+ const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(before.adaptive.skills['python.controle.range'].review.stage).toBe(1);await expect(page.locator('[data-language]')).toBeDisabled();
+ await page.locator('[data-solution]').click();await expect(feedback(page)).toContainText('consulta foi registrada');
+ const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!)),skill=after.adaptive.skills['python.controle.range'];expect(skill.review.stage).toBe(0);expect(skill.review.lastOutcome).toBe('assisted');expect(skill.review.dueDay).toBe(learningDay({now:Date.now()+86400000,timeZone:'America/Sao_Paulo'}));expect(skill.evidence['py-prever-range'].assistedDay).toBe(learningDay({now:Date.now(),timeZone:'America/Sao_Paulo'}));expect(after.adaptive.daily.items.map((x:{id:string})=>x.id)).toEqual(before.adaptive.daily.items.map((x:{id:string})=>x.id));
 });

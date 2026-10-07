@@ -6,10 +6,10 @@
 - Metadados de apresentação não incluem soluções ou verificações. Consultar solução é explícito e registrado como assistência. Os verificadores locais são inspecionáveis; não se promete sigilo nem integridade contra edição do armazenamento.
 - Pausas por afterBlock 1, 3 e 5 são inseridas somente nas aulas referenciadas. As demais aulas continuam com leitura completa e suas práticas existentes; a migração geral permanece trabalho futuro.
 - Evidência de domínio usa avaliações distintas por habilidade, tentativas, pistas e assistência. Repetir o mesmo problema não aumenta a quantidade praticada. Percentual é resumo de evidências, não certificação.
-- Revisão por dias locais: 1, 3, 7, 14, 30, 60. Errar reduz dois estágios; assistência agenda um dia. Somente revisão vencida independente amplia o intervalo.
-- A sessão diária contém até 2 revisões antigas, 1 conceito novo, 2 práticas e 1 desafio. A preferência de linguagem afeta conteúdo novo; revisões antigas continuam globais. O plano do dia é retomável e não repete atividades.
+- Revisão por dias locais: 1, 3, 7, 14, 30, 60. Errar reduz dois estágios; assistência agenda um dia. Somente revisão vencida independente amplia o intervalo. Revelar a solução após uma tentativa registra assistência imediatamente, inclusive depois de acertar uma revisão.
+- A sessão diária contém até 2 revisões antigas, 1 conceito novo, 2 práticas e 1 desafio. A preferência de linguagem afeta conteúdo novo; revisões antigas continuam globais. O plano do dia é retomável e não repete atividades. A linguagem fica fixa depois de iniciar o plano; consulte outras atividades pelo catálogo e ajuste a preferência no próximo dia.
 - Seis percursos próprios: algoritmos, estruturas, redes, Git, testes, arquitetura. São 18 etapas com teoria original, exemplo, falha, exercício, solução, três critérios e decisão conceitual.
-- Oito projetos de conclusão: 57 marcos e 171 critérios. Código em vários arquivos, notas de evidência, invalidação após editar, ZIP e backup da jornada. A rubrica é manual e os projetos não são aprovados automaticamente.
+- Oito projetos de conclusão: 57 marcos e 171 critérios. Código em vários arquivos, notas de evidência, invalidação após editar, ZIP e backup da jornada. A rubrica é manual e os projetos não são aprovados automaticamente. Se o navegador recusar a gravação, a interface informa alterações em memória e permite exportar arquivos e jornada antes de sair.
 
 ## Uso offline
 

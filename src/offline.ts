@@ -6,7 +6,8 @@ export async function enableOffline(){
  try{
   const registration=await navigator.serviceWorker.register('/sw.js',{scope:'/'});
   if(registration.waiting)set('update');
-  registration.addEventListener('updatefound',()=>{const worker=registration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)set('update');});});
+  const observe=(worker:ServiceWorker|null)=>{if(!worker)return;const changed=()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)set('update');else if(worker.state==='redundant'&&!registration.active)set('unavailable');};worker.addEventListener('statechange',changed);changed();};
+  observe(registration.installing);registration.addEventListener('updatefound',()=>observe(registration.installing));
   await navigator.serviceWorker.ready;if(offlineStatus!=='update')set('ready');
  }catch{set('unavailable');}
 }
