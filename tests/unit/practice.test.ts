@@ -58,6 +58,7 @@ describe('prática distribuída e verificação de comportamento',()=>{
   'html-label-vinculo':'email-contato','html-dialogo-foco':'cancelar','html-ordenar-formulario':['inicio','rotulo','campo','botao','fim'],
   'css-grid-minimo':'minmax(0,1fr)','css-grade-estreita':'adaptar','css-prever-cascata':'green',
   'ts-unknown-validacao':'validar','ts-zero-ausencia':'??','ts-tipo-apagado':'texto',
+  'py-prever-esgotamento':'0\n[1, 2]\n[]','py-ordenar-lote':['declarar','cursor','consumir','retornar'],'py-fechar-consumo':'closing',
   'py-prever-range':'0\n2\n4','py-ordenar-default':['declarar','testar','alocar','anexar','retornar'],'py-keyword-contrato':'nomeado',
   'cs-prever-decimal':'True','cs-ordenar-using':['abrir','bloco','usar','fechar','fim'],'cs-nullable-guard':'padrao',
   'cpp-prever-referencia':'7,7','cpp-ordenar-raii':['abrir','criar','usar','fechar','fim'],'cpp-iterador-invalidado':'invalidado',

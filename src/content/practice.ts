@@ -173,6 +173,91 @@ export const practiceActivities:PracticeActivity[]=[
   lines:[{id:'credito',code:'UPDATE contas SET saldo = saldo + 10 WHERE id = 2;'},{id:'confirmar',code:'COMMIT;'},{id:'iniciar',code:'BEGIN;'},{id:'debito',code:'UPDATE contas SET saldo = saldo - 10 WHERE id = 1;'}],
   hint:'COMMIT só confirma as alterações realizadas depois do BEGIN correspondente.',minutes:3
  }
+,
+{
+  "id": "py-prever-esgotamento",
+  "language": "python",
+  "lessonIds": [
+    "py-iteracao-recursos"
+  ],
+  "skillIds": [
+    "python.iteradores.consumo"
+  ],
+  "afterBlock": 1,
+  "kind": "predict",
+  "capability": "leitura",
+  "title": "O cursor já avançou",
+  "prompt": "Escreva as três linhas impressas, usando a representação de listas de Python. Esta pausa compara sua previsão e não executa Python.",
+  "code": "origem = iter([0, 1, 2])\nprint(next(origem))\nprint(list(origem))\nprint(list(origem))",
+  "hint": "Cada operação recebe o mesmo cursor. A primeira lista começa na posição atual e a segunda encontra o fim.",
+  "minutes": 2
+},
+{
+  "id": "py-ordenar-lote",
+  "language": "python",
+  "lessonIds": [
+    "py-iteracao-recursos"
+  ],
+  "skillIds": [
+    "python.iteradores.lotes"
+  ],
+  "afterBlock": 3,
+  "kind": "order",
+  "capability": "alteracao",
+  "title": "Um lote e nenhuma leitura extra",
+  "prompt": "islice já foi importado. Ordene as linhas da função que entrega uma única tupla de até tamanho elementos, sem ler o seguinte. Assume-se tamanho int positivo já validado; esta pausa não avalia validação nem fechamento da origem.",
+  "lines": [
+    {
+      "id": "retornar",
+      "code": "    return lote"
+    },
+    {
+      "id": "consumir",
+      "code": "    lote = tuple(islice(origem, tamanho))"
+    },
+    {
+      "id": "declarar",
+      "code": "def primeiro_lote(fonte, tamanho):"
+    },
+    {
+      "id": "cursor",
+      "code": "    origem = iter(fonte)"
+    }
+  ],
+  "hint": "A declaração vem antes do corpo. Obtenha o cursor antes de consumi-lo e devolva a tupla somente depois de construí-la.",
+  "minutes": 3
+},
+{
+  "id": "py-fechar-consumo",
+  "language": "python",
+  "lessonIds": [
+    "py-iteracao-recursos"
+  ],
+  "skillIds": [
+    "python.iteradores.recursos"
+  ],
+  "afterBlock": 5,
+  "kind": "choice",
+  "capability": "depuracao",
+  "title": "Quem fecha a fonte interrompida?",
+  "prompt": "fonte é um iterador de posse do consumidor com close que termina normalmente. O consumidor lê um elemento e pode falhar logo depois. Qual trecho garante close na saída sem percorrer o restante? Diagnóstico conceitual, sem executar Python. closing já foi importado.",
+  "options": [
+    {
+      "id": "closing",
+      "text": "with closing(fonte) as origem: processar(next(origem))"
+    },
+    {
+      "id": "break",
+      "text": "for item in fonte: processar(item); break"
+    },
+    {
+      "id": "lista",
+      "text": "processar(list(fonte)[0])"
+    }
+  ],
+  "hint": "Interromper um for não define o fechamento da origem; procure a fronteira que libera o recurso também quando processar falha.",
+  "minutes": 2
+}
 ];
 export function practicesForLesson(id:string):PracticeActivity[]{
  return practiceActivities.filter(activity=>activity.lessonIds.includes(id));
