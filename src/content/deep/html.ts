@@ -683,6 +683,135 @@ export default {
       ]
     },
     {
+      "id": "html-dialogo-foco",
+      "title": "HTML: diálogo modal, foco e formas de encerramento",
+      "level": "Avançado",
+      "summary": "Construa um diálogo completo com nome acessível, foco inicial e retorno ao acionador. Diferencie show de showModal, submissão com method dialog, fechamento programático e cancelamento por Escape. Trate validação e alterações não salvas sem impedir que a pessoa consiga sair, e verifique as transições por teclado no navegador real.",
+      "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element",
+      "topics": [
+        "dialog e nome acessível",
+        "show versus showModal",
+        "modalidade e conteúdo inerte",
+        "foco inicial e acionador",
+        "form method dialog e returnValue",
+        "cancel e close",
+        "formnovalidate para cancelar",
+        "alterações não salvas e saída explícita"
+      ],
+      "sections": [
+        {
+          "title": "Escolha o comportamento que a tarefa exige",
+          "text": [
+            "Dialog representa uma interação apresentada em um contexto separado do restante do documento. Um diálogo pode ser não modal ou modal. Show abre uma interação sem tornar automaticamente o resto da página indisponível; showModal estabelece uma interação modal e permite ao navegador aplicar seu comportamento correspondente. Colocar apenas o atributo open não substitui esse método. Defina primeiro se a tarefa exige interromper a interação com o restante da página ou se uma seção comum já resolveria a necessidade.",
+            "Uma confirmação de descarte pode justificar um diálogo curto. Uma página inteira de documentação geralmente precisa de navegação e leitura contínua. Não use modalidade como decoração para chamar atenção a qualquer mensagem. No exemplo, a pessoa escolhe uma ação explícita e depois retorna ao mesmo acionador. Esse contrato de entrada, escolha e retorno é o que os testes precisam observar, além de conferir se uma caixa apareceu."
+          ]
+        },
+        {
+          "title": "O conteúdo precisa de um nome e de uma estrutura legível",
+          "text": [
+            "Um título dentro do diálogo pode fornecer seu nome acessível por aria-labelledby, apontando para um id único existente. A pessoa que navega por teclado ou tecnologia assistiva precisa entender qual interação acabou de abrir. Não invente um título genérico como Atenção para todas as tarefas. Nomeie a decisão e escreva instruções que continuem compreensíveis quando lidas sem o contexto visual da página ao fundo.",
+            "Para texto longo, preserve parágrafos, listas e headings que permitam navegar pela estrutura. Não converta um documento extenso numa única descrição concatenada. No formulário da atividade, label associa cada campo ao seu nome e as ações têm rótulos próprios. O elemento nativo oferece comportamento de diálogo, mas o autor ainda responde pelo conteúdo, pelas relações entre ids e pelas alternativas de saída."
+          ]
+        },
+        {
+          "title": "O foco é uma transição observável",
+          "text": [
+            "Ao abrir, escolha qual controle deve receber foco e justifique essa escolha pela tarefa. Autofocus pode identificar um destino inicial apropriado, como Cancelar numa confirmação destrutiva ou um campo que a pessoa precisa preencher. Não faça o primeiro Enter confirmar uma ação arriscada sem que isso corresponda à intenção expressa. Teste também abertura pelo teclado, já que clicar com o mouse e observar o desenho não prova onde a interação começou.",
+            "Num diálogo modal, o restante do documento fica inerte para a interação correspondente. A pessoa deve conseguir operar os controles dentro dele e encerrar a tarefa. Ao fechar, o foco deve retornar a um destino coerente, normalmente o acionador ainda existente. O exemplo conserva esse elemento e reforça o retorno no evento close. Se a interface remover o acionador, estabeleça um destino alternativo que faça sentido; chamar focus num elemento desconectado não resolve o roteiro."
+          ]
+        },
+        {
+          "title": "Encerrar um formulário não é sempre enviar dados ao servidor",
+          "text": [
+            "Um form com method dialog pode encerrar seu diálogo quando submetido, sem uma requisição de formulário convencional. O valor do botão de submissão escolhido fornece returnValue para identificar a ação. Esse valor descreve a escolha, não valida todos os dados de domínio e não representa automaticamente uma operação salva num servidor. O exemplo usa confirmar e cancelar como resultados locais e mostra a decisão com textContent.",
+            "As regras de validade do formulário continuam relevantes. Se um campo required estiver vazio, a ação de salvar pode ser impedida. Um botão para cancelar normalmente precisa de formnovalidate quando a intenção é permitir sair mesmo com um formulário incompleto. Não force a pessoa a preencher dados que ela decidiu abandonar. Confira que o botão local correto fecha o diálogo e que uma ação de salvar válida percorre a validação esperada."
+          ]
+        },
+        {
+          "title": "Cancelamento e fechamento expressam momentos diferentes",
+          "text": [
+            "O evento cancel permite observar uma solicitação de cancelamento, como Escape no comportamento usual. Ele pode ser cancelado com preventDefault quando existe uma regra justificada, por exemplo avisar sobre um rascunho alterado. O evento close observa que o diálogo foi encerrado. Organize cada efeito no momento adequado: limpar um aviso ao abrir, decidir sobre uma solicitação de cancelamento e apresentar o resultado depois de fechar são responsabilidades diferentes.",
+            "ReturnValue pode conservar um resultado anterior se você não estabelecer o estado de uma nova abertura. No exemplo, ele é redefinido antes de showModal, para que Escape numa nova tentativa não pareça confirmar a tentativa anterior. Close pode receber um resultado explícito num fechamento programático. Não suponha que clicar no fundo encerra todo diálogo por padrão em qualquer configuração; ofereça botões claros e teste os mecanismos que seu componente realmente implementa."
+          ]
+        },
+        {
+          "title": "Uma proteção de rascunho precisa conservar uma saída",
+          "text": [
+            "Bloquear Escape por causa de mudanças pode ser útil somente quando o diálogo explica o motivo e permite escolher o que fazer. A atividade oferece uma ação explícita de descarte, que continua encerrando a interação. Não crie um estado em que cancelar é impedido e o único botão exige dados válidos para sair. O contrato deve permitir guardar, continuar editando ou abandonar, conforme o escopo da tarefa.",
+            "Os testes abrem o diálogo, conferem o foco, tentam focar um controle externo, cancelam por teclado e submetem ações distintas. Também verificam o caso inválido e a possibilidade de descarte com rascunho. Isso confere os mecanismos ensinados em Chromium, mas não substitui toda avaliação em navegadores e tecnologias assistivas. Ao usar o padrão num projeto real, registre essas verificações adicionais e evite depender de comportamento novo sem conferir o suporte necessário."
+          ]
+        }
+      ],
+      "code": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Confirmar uma decisão</title></head><body><main>\n<h1>Confirmar uma decisão</h1><button id=\"abrir\" type=\"button\">Abrir confirmação</button>\n<button id=\"fora\" type=\"button\">Outra ação</button>\n<dialog id=\"confirmacao\" aria-labelledby=\"titulo\">\n<h2 id=\"titulo\">Confirmar a escolha</h2><p>Você pode confirmar ou voltar sem aplicar a ação.</p>\n<form method=\"dialog\"><button value=\"cancelar\" autofocus>Cancelar</button><button value=\"confirmar\">Confirmar</button></form>\n</dialog><output id=\"resultado\" aria-live=\"polite\"></output>\n<script>\nconst acionador=document.querySelector('#abrir'),dialogo=document.querySelector('#confirmacao');\nacionador.addEventListener('click',()=>{\n dialogo.returnValue='';\n dialogo.showModal();\n});\ndialogo.addEventListener('close',()=>{\n document.querySelector('#resultado').textContent=dialogo.returnValue||'cancelado';\n if(acionador.isConnected&&!acionador.disabled)acionador.focus();\n});\n</script></main></body></html>",
+      "output": "Abrir coloca foco em Cancelar. Confirmar fecha e mostra confirmar. Numa nova abertura, Escape fecha e mostra cancelado porque o resultado foi redefinido. O foco retorna a Abrir confirmação.",
+      "trace": [
+        "ShowModal abre o diálogo modal e seu controle com autofocus recebe o foco inicial.",
+        "A submissão method dialog fecha e registra o value do botão escolhido.",
+        "Close apresenta o resultado como texto e devolve o foco ao acionador conservado."
+      ],
+      "exercise": "Crie um diálogo para escrever um nome obrigatório, com Guardar e Cancelar. Guardar só pode fechar quando o campo estiver válido; Cancelar precisa permitir sair com o nome vazio. Mostre nome e ação como texto, sem interpretar marcação digitada, e devolva foco ao acionador.",
+      "checks": [
+        "Guardar com nome vazio mantém o diálogo aberto.",
+        "Cancelar pode encerrar com o campo vazio.",
+        "O nome salvo aparece como texto e o foco retorna ao acionador."
+      ],
+      "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Guardar um nome</title></head><body><main>\n<h1>Guardar um nome</h1><button id=\"abrir\" type=\"button\">Editar nome</button>\n<dialog id=\"editor\" aria-labelledby=\"titulo\"><h2 id=\"titulo\">Editar o nome</h2>\n<form id=\"formulario\" method=\"dialog\"><label for=\"nome\">Nome</label><input id=\"nome\" name=\"nome\" required maxlength=\"60\" autofocus>\n<button value=\"cancelar\" formnovalidate>Cancelar</button><button value=\"guardar\">Guardar</button></form></dialog>\n<output id=\"resultado\" aria-live=\"polite\"></output>\n<script>\nconst abrir=document.querySelector('#abrir'),d=document.querySelector('#editor'),nome=document.querySelector('#nome');\nabrir.addEventListener('click',()=>{d.returnValue='';d.showModal();});\nd.addEventListener('close',()=>{\n document.querySelector('#resultado').textContent=d.returnValue==='guardar'?'guardado: '+nome.value:'cancelado';\n abrir.focus();\n});\n</script></main></body></html>",
+      "bug": "O diálogo usa um formulário com campo required vazio, e o botão Cancelar participa da submissão validada sem formnovalidate. A pessoa que escolhe sair recebe a mesma exigência de preencher dados da ação de salvar.",
+      "bugCode": "<dialog open><form method=\"dialog\">\n<label for=\"nome\">Nome</label><input id=\"nome\" required>\n<button value=\"cancelar\">Cancelar</button><button value=\"guardar\">Guardar</button>\n</form></dialog>",
+      "repair": "Quando cancelar significa abandonar a edição, use formnovalidate nesse botão ou um botão type button com fechamento explícito. Mantenha a validação na ação de guardar e confira as duas trajetórias com o campo vazio. Não remova required de todo o formulário para consertar apenas a saída.",
+      "project": "Implemente um editor local de uma preferência de estudo com diálogo, campo validado e rascunho. Defina foco inicial, resultado da submissão, Escape sem mudanças, Escape com mudanças e descarte explícito. Teste abertura e fechamento por teclado, retorno ao acionador e inserção de texto com sinais de marcação. Registre o que ocorre se o acionador for removido antes do fechamento e escolha um destino alternativo.",
+      "question": "Por que o botão Cancelar da solução usa formnovalidate?",
+      "answer": "Ele permite abandonar o formulário mesmo quando os campos required ainda estão inválidos, mantendo a validação na ação de guardar.",
+      "distractors": [
+        "Formnovalidate transforma o botão automaticamente numa requisição para o servidor.",
+        "Esse atributo remove permanentemente required dos campos para todas as próximas ações."
+      ],
+      "practices": [
+        {
+          "id": "validacao",
+          "title": "Problema 1: abandonar um formulário inválido",
+          "topics": [
+            "formnovalidate para cancelar",
+            "form method dialog e returnValue",
+            "dialog e nome acessível",
+            "foco inicial e acionador"
+          ],
+          "prompt": "Monte um diálogo de nome obrigatório. Confira que Guardar vazio não encerra a interação, que Cancelar vazio encerra e que Guardar com o texto <b>Lia</b> mostra esses caracteres literalmente. A cada abertura reinicie o resultado da tentativa anterior.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Saídas de uma edição</title></head><body><main>\n<h1>Saídas de uma edição</h1><button id=\"abrir\" type=\"button\">Começar edição</button>\n<dialog id=\"d\" aria-labelledby=\"t\"><h2 id=\"t\">Escolher nome</h2><form method=\"dialog\">\n<label for=\"n\">Nome</label><input id=\"n\" required autofocus><button value=\"cancelar\" formnovalidate>Cancelar</button><button value=\"guardar\">Guardar</button>\n</form></dialog><output id=\"r\" aria-live=\"polite\"></output>\n<script>\nconst a=document.querySelector('#abrir'),d=document.querySelector('#d'),n=document.querySelector('#n'),r=document.querySelector('#r');\na.addEventListener('click',()=>{d.returnValue='';d.showModal();});\nd.addEventListener('close',()=>{r.textContent=d.returnValue==='guardar'?'guardado: '+n.value:'cancelado';a.focus();});\n</script></main></body></html>",
+          "explanation": [
+            "Required participa da ação Guardar; o navegador impede a submissão inválida e conserva a edição. Cancelar tem formnovalidate porque seu contrato é abandonar a tarefa sem completar o dado. A validade e a possibilidade de sair são verificadas separadamente.",
+            "O resultado é reiniciado por tentativa e apresentado com textContent. Assim <b>Lia</b> não vira um elemento b nem uma decisão anterior reaparece como resultado de Escape. O retorno ao acionador é parte da trajetória de teclado, além da mudança de estado open."
+          ],
+          "checks": [
+            "Guardar vazio mantém d aberto.",
+            "Cancelar vazio fecha e retorna foco a abrir.",
+            "Guardar mostra a marcação digitada literalmente."
+          ]
+        },
+        {
+          "id": "rascunho",
+          "title": "Problema 2: proteger o rascunho e conservar uma saída",
+          "topics": [
+            "cancel e close",
+            "alterações não salvas e saída explícita",
+            "show versus showModal",
+            "modalidade e conteúdo inerte"
+          ],
+          "prompt": "Abra um diálogo modal com um campo de rascunho. Escape sem alterações pode fechar. Depois de digitar, Escape deve manter a interação e explicar que há mudanças. Inclua Descartar como saída explícita, sem depender de clicar no fundo da página.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Rascunho de estudo</title></head><body><main>\n<h1>Rascunho de estudo</h1><button id=\"abrir\" type=\"button\">Escrever rascunho</button><button id=\"externo\" type=\"button\">Ação externa</button>\n<dialog id=\"d\" aria-labelledby=\"t\"><h2 id=\"t\">Rascunho</h2><form id=\"f\" method=\"dialog\">\n<label for=\"texto\">Texto</label><input id=\"texto\" autofocus><p id=\"aviso\" aria-live=\"polite\"></p>\n<button value=\"descartar\">Descartar</button><button value=\"guardar\">Guardar</button></form></dialog>\n<output id=\"r\" aria-live=\"polite\"></output>\n<script>\nconst a=document.querySelector('#abrir'),d=document.querySelector('#d'),f=document.querySelector('#f'),aviso=document.querySelector('#aviso');\nlet alterado=false;\na.addEventListener('click',()=>{f.reset();alterado=false;aviso.textContent='';d.returnValue='';d.showModal();});\ndocument.querySelector('#texto').addEventListener('input',()=>{alterado=true;});\nd.addEventListener('cancel',e=>{if(alterado){e.preventDefault();aviso.textContent='Há mudanças. Escolha Guardar ou Descartar.';}});\nd.addEventListener('close',()=>{document.querySelector('#r').textContent=d.returnValue||'cancelado';a.focus();});\n</script></main></body></html>",
+          "explanation": [
+            "Cancel representa a solicitação por Escape, que pode ser impedida somente no estado alterado definido pelo exemplo. Close representa o encerramento que realmente aconteceu. O aviso explica a regra e as ações do formulário continuam oferecendo guardar ou descartar.",
+            "ShowModal estabelece a interação modal, enquanto show não imporia o mesmo estado ao conteúdo externo. A proteção não transforma o diálogo numa armadilha: Descartar fecha por uma ação explícita e o foco retorna ao acionador. O rascunho é reiniciado na abertura seguinte conforme o contrato desta atividade."
+          ],
+          "checks": [
+            "Escape fecha antes de qualquer alteração.",
+            "Escape após digitar mantém aberto e apresenta o aviso.",
+            "Descartar fecha e devolve foco ao acionador."
+          ]
+        }
+      ]
+    },
+    {
       "id": "html-plataforma",
       "title": "HTML: DOM, componentes e integração da plataforma",
       "level": "Especialização",

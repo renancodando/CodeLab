@@ -1,12 +1,17 @@
 import type {Lesson} from '../curriculum';
 export type Section={title:string;text:string[];code?:string};
+export type PostgresScenario={
+ id:string;setup:string;
+ steps:{session:'A'|'B'|'C';sql:string;expectedOutput?:string[];expectedError?:string}[];
+ finalSql:string;finalOutput:string[];
+};
 export type PracticeProblem={
  id:string;title:string;prompt:string;topics:string[];starter?:string;solution:string;
- explanation:string[];checks:string[];expectedOutput?:string[];
+ explanation:string[];checks:string[];expectedOutput?:string[];postgresScenario?:PostgresScenario;
 };
 export type DeepLesson={
  id:string;title:string;level:'Fundamentos'|'Intermediário'|'Avançado'|'Especialização';
- summary:string;topics:string[];sections:Section[];
+ summary:string;topics:string[];sections:Section[];postgresScenario?:PostgresScenario;
  source?:string;practices?:PracticeProblem[];expectedOutput?:string[];solutionOutput?:string[];
  code:string;output:string;trace:string[];
  exercise:string;solution:string;bug:string;bugCode:string;repair:string;

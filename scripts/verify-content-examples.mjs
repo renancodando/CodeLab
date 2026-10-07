@@ -22,7 +22,7 @@ try{
    const samples=[
     {kind:'exemplo',code:lesson.code,expected:lesson.expectedOutput},
     {kind:'solucao',code:lesson.solution,expected:lesson.solutionOutput},
-    ...(lesson.practices??[]).map(p=>({kind:'problema-'+p.id,code:p.solution,expected:p.expectedOutput}))
+    ...(lesson.practices??[]).filter(p=>!p.postgresScenario).map(p=>({kind:'problema-'+p.id,code:p.solution,expected:p.expectedOutput}))
    ];
    for(const {kind,code,expected} of samples){
     const name=lesson.id+'-'+kind,folder=join(root,name);await mkdir(folder);

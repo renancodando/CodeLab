@@ -82,6 +82,7 @@ export const expandedCourses:Course[]=[
       "html-dados-formulario",
       "html-midia",
       "html-acessibilidade",
+      "html-dialogo-foco",
       "html-plataforma"
     ]
   },
@@ -96,6 +97,7 @@ export const expandedCourses:Course[]=[
       "css-caixas",
       "css-caixas-intrinseco",
       "css-flex-grid",
+      "css-grid-trilhas",
       "css-responsivo",
       "css-visual-movimento",
       "css-arquitetura"
@@ -113,6 +115,7 @@ export const expandedCourses:Course[]=[
       "cs-colecoes-linq",
       "cs-objetos-contratos",
       "cs-assincrono-recursos",
+      "cs-iteradores-descarte",
       "cs-runtime-avancado",
       "cs-engenharia"
     ]
@@ -129,6 +132,7 @@ export const expandedCourses:Course[]=[
       "sql-joins-cardinalidade",
       "sql-agregacoes-janelas",
       "sql-transacoes",
+      "sql-isolamento-sessoes",
       "sql-indices-planos",
       "sql-esquema-avancado"
     ]
@@ -1314,6 +1318,33 @@ export const expandedLessons:Lesson[]=[
     "correct": 0
   },
   {
+    "id": "html-dialogo-foco",
+    "track": "html-completo",
+    "title": "HTML: diálogo modal, foco e formas de encerramento",
+    "body": "Construa um diálogo completo com nome acessível, foco inicial e retorno ao acionador. Diferencie show de showModal, submissão com method dialog, fechamento programático e cancelamento por Escape. Trate validação e alterações não salvas sem impedir que a pessoa consiga sair, e verifique as transições por teclado no navegador real.",
+    "level": "Avançado",
+    "topics": [
+      "dialog e nome acessível",
+      "show versus showModal",
+      "modalidade e conteúdo inerte",
+      "foco inicial e acionador",
+      "form method dialog e returnValue",
+      "cancel e close",
+      "formnovalidate para cancelar",
+      "alterações não salvas e saída explícita"
+    ],
+    "language": "html",
+    "source": "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element",
+    "capitulos": [],
+    "code": "",
+    "exercise": "",
+    "solution": "",
+    "error": "",
+    "question": "",
+    "options": [],
+    "correct": 0
+  },
+  {
     "id": "html-plataforma",
     "track": "html-completo",
     "title": "HTML: DOM, componentes e integração da plataforma",
@@ -1468,6 +1499,33 @@ export const expandedLessons:Lesson[]=[
     ],
     "language": "html",
     "source": "https://www.w3.org/Style/CSS/specs.en.html",
+    "capitulos": [],
+    "code": "",
+    "exercise": "",
+    "solution": "",
+    "error": "",
+    "question": "",
+    "options": [],
+    "correct": 0
+  },
+  {
+    "id": "css-grid-trilhas",
+    "track": "css-completo",
+    "title": "CSS: trilhas de Grid, tamanho mínimo e ordem de leitura",
+    "body": "Modele linhas, colunas e espaços de uma grade, calcule quantas trilhas cabem e diferencie auto-fill de auto-fit. Investigue conteúdo que força overflow, trilhas implícitas e a diferença entre posição visual, ordem do DOM e foco. Verifique o layout por medidas reais e pelo teclado, sem confundir uma disposição que parece correta com um contrato de leitura preservado.",
+    "level": "Intermediário",
+    "topics": [
+      "grade bidimensional e linhas",
+      "trilhas explícitas e implícitas",
+      "fr e espaço disponível",
+      "minmax zero e mínimo intrínseco",
+      "auto-fill e auto-fit",
+      "gap e contagem de trilhas",
+      "auto-placement dense",
+      "ordem DOM foco e visual"
+    ],
+    "language": "html",
+    "source": "https://www.w3.org/TR/css-grid-1/",
     "capitulos": [],
     "code": "",
     "exercise": "",
@@ -1724,6 +1782,33 @@ export const expandedLessons:Lesson[]=[
     "correct": 0
   },
   {
+    "id": "cs-iteradores-descarte",
+    "track": "csharp-completo",
+    "title": "C#: iteradores, execução adiada e descarte de recursos",
+    "body": "Entenda quando uma sequência executa seu código, como MoveNext suspende e retoma um iterador, por que uma nova enumeração pode repetir efeitos e quando recursos são descartados. Separe a validação imediata da produção adiada, escolha conscientemente entre uma coleção viva e um snapshot, e prove a limpeza mesmo quando o consumidor para antes do fim.",
+    "level": "Avançado",
+    "topics": [
+      "chamada de iterador e execução adiada",
+      "MoveNext Current e suspensão",
+      "IEnumerable e nova enumeração",
+      "yield em try finally",
+      "Dispose no encerramento do foreach",
+      "validação no momento da chamada",
+      "LINQ reenumeração e materialização",
+      "captura de coleção mutável"
+    ],
+    "language": "csharp",
+    "source": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield",
+    "capitulos": [],
+    "code": "",
+    "exercise": "",
+    "solution": "",
+    "error": "",
+    "question": "",
+    "options": [],
+    "correct": 0
+  },
+  {
     "id": "cs-runtime-avancado",
     "track": "csharp-completo",
     "title": "C#: runtime, memória e recursos avançados",
@@ -1936,6 +2021,33 @@ export const expandedLessons:Lesson[]=[
     ],
     "language": "sql",
     "source": "https://www.postgresql.org/docs/current/",
+    "capitulos": [],
+    "code": "",
+    "exercise": "",
+    "solution": "",
+    "error": "",
+    "question": "",
+    "options": [],
+    "correct": 0
+  },
+  {
+    "id": "sql-isolamento-sessoes",
+    "track": "sql-completo",
+    "title": "PostgreSQL: transações, snapshots e conflitos entre sessões",
+    "body": "Observe o mesmo dado por conexões diferentes e explique o que cada transação pode enxergar. Compare Read Committed e Repeatable Read com um cronograma explícito, reproduza SQLSTATE 40001 e reinicie a transação inteira com dados atuais. Separe atomicidade, restrições e isolamento, sem tratar uma sequência executada em uma única conexão como prova de concorrência.",
+    "level": "Avançado",
+    "topics": [
+      "atomicidade BEGIN COMMIT ROLLBACK",
+      "Read Committed e snapshot por comando",
+      "Repeatable Read e snapshot da transação",
+      "sessões separadas e cronograma observável",
+      "atualização concorrente e SQLSTATE 40001",
+      "repetição da transação inteira",
+      "conexão encerrada e rollback pendente",
+      "restrições de dados e isolamento"
+    ],
+    "language": "sql",
+    "source": "https://www.postgresql.org/docs/current/transaction-iso.html",
     "capitulos": [],
     "code": "",
     "exercise": "",

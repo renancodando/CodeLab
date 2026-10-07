@@ -513,6 +513,134 @@ export default {
       ]
     },
     {
+      "id": "css-grid-trilhas",
+      "title": "CSS: trilhas de Grid, tamanho mínimo e ordem de leitura",
+      "level": "Intermediário",
+      "summary": "Modele linhas, colunas e espaços de uma grade, calcule quantas trilhas cabem e diferencie auto-fill de auto-fit. Investigue conteúdo que força overflow, trilhas implícitas e a diferença entre posição visual, ordem do DOM e foco. Verifique o layout por medidas reais e pelo teclado, sem confundir uma disposição que parece correta com um contrato de leitura preservado.",
+      "source": "https://www.w3.org/TR/css-grid-1/",
+      "topics": [
+        "grade bidimensional e linhas",
+        "trilhas explícitas e implícitas",
+        "fr e espaço disponível",
+        "minmax zero e mínimo intrínseco",
+        "auto-fill e auto-fit",
+        "gap e contagem de trilhas",
+        "auto-placement dense",
+        "ordem DOM foco e visual"
+      ],
+      "sections": [
+        {
+          "title": "Uma grade tem trilhas e linhas, não apenas caixas lado a lado",
+          "text": [
+            "Display grid estabelece um contexto que organiza itens em duas dimensões. Colunas e linhas de conteúdo são trilhas; os limites entre elas são linhas da grade. Três colunas têm quatro linhas verticais, então um item que ocupa de 1 a 3 atravessa duas colunas. Desenhe os limites e os espaços antes de escolher grid-column: a numeração fica mais fácil de explicar quando você separa quantidade de trilhas de quantidade de linhas.",
+            "A grade explícita nasce das definições de template. Itens posicionados além dela, ou elementos que precisam de novas linhas durante a distribuição automática, podem criar trilhas implícitas. Grid-auto-rows e grid-auto-columns controlam o tamanho dessas trilhas adicionais. Não espere que definir duas linhas impeça a existência de uma terceira. No exemplo, a largura das colunas é explícita e novas linhas aparecem conforme a quantidade de cartões."
+          ]
+        },
+        {
+          "title": "Fr distribui espaço, mas o conteúdo participa do cálculo",
+          "text": [
+            "A unidade fr expressa uma participação no espaço flexível considerado pelo algoritmo da grade. Com duas trilhas minmax(0,1fr) e minmax(0,2fr), num contêiner de 600 pixels e gap de 12, restam 588 pixels para dividir em 196 e 392. Gap faz parte da geometria e precisa ser descontado antes dessa divisão. Não multiplique simplesmente a largura externa pela razão de fr quando há espaços, bordas ou outras trilhas com tamanho fixo.",
+            "Uma trilha escrita como 1fr tem um mínimo automático, que pode considerar contribuições intrínsecas dos itens. Um texto longo sem oportunidades de quebra pode fazer esse mínimo superar a largura que você imaginava distribuir. Minmax(0,1fr) permite um mínimo de zero na trilha, mas o conteúdo ainda precisa de uma política de quebra ou overflow. Combinar mínimo apropriado com overflow-wrap anywhere resolve outro aspecto do problema: como o texto deve continuar legível dentro da área recebida."
+          ]
+        },
+        {
+          "title": "Uma repetição automática considera o espaço entre trilhas",
+          "text": [
+            "Repeat com auto-fill ou auto-fit cria uma quantidade de trilhas que caiba no espaço disponível segundo os tamanhos informados. Para mínimo de 180 e gap 12 numa largura de 600, três trilhas precisam de 3 vezes 180 mais 2 vezes 12, totalizando 564. Quatro exigiriam 756 e não cabem. Esse cálculo de quantidade não é o tamanho final de cada trilha: o máximo 1fr ainda pode distribuir a sobra entre as trilhas consideradas.",
+            "No grupo auto-fill do exemplo, três trilhas dividem 576 pixels após os dois gaps, resultando em 192 por trilha. Existem só dois cartões, mas a terceira trilha vazia conserva sua participação. Na versão auto-fit, as trilhas repetidas vazias são colapsadas e os dois cartões ocupam 294 pixels cada, separados por um gap. Compare as medidas dos cartões e não apenas o número de elementos. Os dois grupos têm o mesmo DOM e uma regra diferente de aproveitamento do espaço vazio."
+          ]
+        },
+        {
+          "title": "Defina um mínimo que ainda caiba no menor contexto",
+          "text": [
+            "Minmax(180px,1fr) é adequado somente se o contêiner puder reservar ao menos 180 para uma trilha. Num painel ainda menor, esse mínimo pode causar overflow em vez de ser reduzido automaticamente. Uma opção para grades de cartões é minmax(min(100%,180px),1fr), quando esse tamanho expressa a intenção do projeto. Outra opção é mudar a definição num breakpoint correspondente ao conteúdo. O objetivo é garantir que uma única trilha também funcione no menor espaço em que o componente será usado.",
+            "Uma media query baseada na viewport não mede diretamente a largura de todo componente interno. Um painel lateral pode ser estreito mesmo numa janela grande. Para esta aula, os exemplos usam limites explícitos de largura para tornar os cálculos verificáveis. Ao transferir para componentes reutilizáveis, escolha entre uma regra intrínseca, uma container query ou um contrato de tamanho mínimo do contêiner. Não declare responsividade apenas porque testou dois tamanhos de janela."
+          ]
+        },
+        {
+          "title": "Preencher buracos pode mudar a ordem que os olhos seguem",
+          "text": [
+            "O auto-placement usual conserva a progressão pelo percurso da grade. Dense pode procurar espaços vazios anteriores para encaixar itens menores que surgem depois. Isso melhora o preenchimento de certas grades, mas pode colocar visualmente um elemento posterior antes de um elemento anterior. O navegador não reescreve por isso a ordem dos nós no DOM. O caminho de foco e a leitura em outras representações continuam exigindo atenção à ordem do documento.",
+            "Na atividade, A e B atravessam duas colunas cada; C ocupa apenas uma. Em três colunas, B não cabe ao lado de A. Com dense, C pode preencher o espaço restante da primeira linha e aparecer acima de B, apesar de vir depois dele na fonte. Percorra os links por Tab e compare essa sequência com as posições medidas. Um conjunto de passos obrigatórios não deve depender de uma ordem visual que contradiz o roteiro. Escolha o preenchimento conforme o significado dos itens."
+          ]
+        },
+        {
+          "title": "Geometria, conteúdo e foco têm verificações diferentes",
+          "text": [
+            "Para testar uma grade, meça a largura do contêiner, o gap computado e as caixas dos itens. Confira uma quantidade com trilha vazia e outra em que todas as trilhas estejam ocupadas. Inclua texto longo e um contêiner menor que o mínimo originalmente desejado. Esses casos distinguem uma divisão flexível de uma soma de tamanhos mínimos que excede o espaço disponível. Use uma tolerância pequena para arredondamentos de subpixel em vez de exigir inteiros para qualquer tamanho.",
+            "Teste também a sequência de foco e a ordem dos nós quando posicionamento manual ou dense puderem mudar a disposição. Uma captura de tela não prova esse comportamento. Os exemplos desta aula usam apenas CSS de estudo e HTML local, preservando a aparência do produto. O projeto final deve documentar o que acontece ao acrescentar cartões, ampliar um título e reduzir o espaço; uma grade previsível precisa acomodar essas mudanças sem esconder informação necessária."
+          ]
+        }
+      ],
+      "code": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Trilhas vazias de Grid</title>\n<style>\n.grade { display:grid; width:min(100%,600px); gap:12px; margin-block:12px; }\n#preencher { grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr)); }\n#ajustar { grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); }\narticle { min-inline-size:0; overflow-wrap:anywhere; background:#ddd; }\n</style></head><body><main><h1>Trilhas vazias</h1>\n<h2>Auto-fill</h2><section id=\"preencher\" class=\"grade\"><article>A</article><article>B</article></section>\n<h2>Auto-fit</h2><section id=\"ajustar\" class=\"grade\"><article>A</article><article>B</article></section>\n</main></body></html>",
+      "output": "Com 600 pixels disponíveis, auto-fill mantém três trilhas de 192, embora haja dois itens; auto-fit colapsa a trilha vazia e produz dois itens de 294. Com apenas 360 pixels, cabe uma trilha, e os dois cartões aparecem em linhas diferentes.",
+      "trace": [
+        "Três mínimos de 180 e dois gaps de 12 cabem em 600; quatro mínimos não cabem.",
+        "Auto-fill mantém a participação da trilha vazia na divisão da sobra.",
+        "Auto-fit colapsa a trilha repetida vazia e os gaps adjacentes correspondentes."
+      ],
+      "exercise": "Crie uma grade de conteúdo e painel com razão 1 para 2, largura máxima 600 e gap 12. Abaixo de 500 pixels de viewport use uma coluna. Inclua uma palavra de 80 letras e mantenha o texto completo sem overflow horizontal. Preveja larguras de 196 e 392 quando houver 600 pixels para a grade.",
+      "checks": [
+        "As duas trilhas dividem o espaço após descontar o gap na razão 1 para 2.",
+        "Texto longo permanece visível e não expande horizontalmente a grade.",
+        "A regra estreita usa uma trilha e conserva a ordem da fonte."
+      ],
+      "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Razão entre colunas</title>\n<style>\n#grade { display:grid; width:min(100%,600px); gap:12px; grid-template-columns:minmax(0,1fr) minmax(0,2fr); }\narticle { min-inline-size:0; overflow-wrap:anywhere; background:#ddd; }\n@media(max-width:500px) { #grade { grid-template-columns:minmax(0,1fr); } }\n</style></head><body><main><h1>Razão entre colunas</h1>\n<section id=\"grade\"><article id=\"texto\">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</article><article id=\"painel\">Painel</article></section>\n</main></body></html>",
+      "bug": "Uma grade exige uma trilha mínima de 400 pixels mesmo quando seu contêiner tem somente 280. O máximo 1fr distribui a sobra, mas não transforma um mínimo fixo de 400 em 280.",
+      "bugCode": "<style>#g { display:grid; width:280px; grid-template-columns:repeat(auto-fit,minmax(400px,1fr)); }</style>\n<div id=\"g\"><p>Uma trilha maior que a grade.</p></div>",
+      "repair": "Escolha um mínimo que possa caber, como min(100%,400px), ou uma regra específica para esse contexto estreito. Confira a caixa da trilha e o scrollWidth; não esconda o conteúdo com overflow hidden para encobrir uma soma impossível.",
+      "project": "Implemente um catálogo de seis cartões com textos curtos e longos. Documente a largura mínima, a quantidade de colunas, a regra para espaço vazio e a ordem de leitura. Teste 220, 360 e 800 pixels de espaço do componente, acrescente um sétimo cartão e percorra links com Tab. Compare auto-fill e auto-fit antes de escolher, e evite dense quando a coleção expressar uma sequência obrigatória.",
+      "question": "Numa grade auto-fit com trilhas repetidas suficientes para três itens, por que dois cartões podem ocupar mais espaço que em auto-fill?",
+      "answer": "As trilhas repetidas vazias de auto-fit são colapsadas, deixando mais espaço para as trilhas ocupadas.",
+      "distractors": [
+        "Auto-fit cria automaticamente um terceiro cartão invisível no DOM.",
+        "Auto-fill ignora gap, enquanto auto-fit sempre soma gap ao tamanho de cada cartão."
+      ],
+      "practices": [
+        {
+          "id": "espaco",
+          "title": "Problema 1: calcular a trilha vazia e a sobra",
+          "topics": [
+            "auto-fill e auto-fit",
+            "gap e contagem de trilhas",
+            "fr e espaço disponível"
+          ],
+          "prompt": "Produza dois grupos com largura 600, gap 12 e dois itens: um usa auto-fill, outro auto-fit, ambos com mínimo 180 e máximo 1fr. Preveja as larguras dos itens e confira no navegador; depois reduza a largura de ambos para 360 sem alterar a quantidade de itens.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Medir o espaço vazio</title>\n<style>\n.grupo { display:grid; width:600px; gap:12px; margin-block:12px; }\n#fill { grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); }\n#fit { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }\n.grupo > div { background:#ddd; min-height:24px; }\n</style></head><body><main><h1>Medir o espaço vazio</h1>\n<div id=\"fill\" class=\"grupo\"><div>A</div><div>B</div></div>\n<div id=\"fit\" class=\"grupo\"><div>A</div><div>B</div></div>\n</main></body></html>",
+          "explanation": [
+            "Em 600, cabem três trilhas mínimas. Auto-fill conserva três participações e dois espaços, então (600 - 24) / 3 resulta em 192. Auto-fit colapsa a trilha vazia e divide (600 - 12) / 2, resultando em 294 para cada item ocupado.",
+            "Em 360, duas trilhas de 180 exigiriam ainda um gap de 12, ultrapassando a largura. Uma única trilha ocupa 360 e os dois itens ficam em linhas distintas. O teste de fronteira mostra por que contar elementos não basta para prever colunas nem o espaço final de cada caixa."
+          ],
+          "checks": [
+            "Em 600 os itens de fill medem 192 e os de fit medem 294.",
+            "Em 360 ambos os grupos têm uma coluna de 360.",
+            "O segundo item está na linha seguinte quando a largura é 360."
+          ]
+        },
+        {
+          "id": "ordem",
+          "title": "Problema 2: comparar dense com a sequência de foco",
+          "topics": [
+            "auto-placement dense",
+            "ordem DOM foco e visual",
+            "trilhas explícitas e implícitas",
+            "grade bidimensional e linhas"
+          ],
+          "prompt": "Crie três links A, B e C nessa ordem no DOM. Numa grade de três colunas, faça A e B atravessarem duas colunas cada e habilite dense. Confira que C preenche o espaço da primeira linha, mas Tab continua percorrendo A, B e C. Explique se essa configuração serve para um roteiro de passos.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Ordem de uma grade</title>\n<style>\n#g { display:grid; width:600px; gap:10px; grid-template-columns:repeat(3,minmax(0,1fr)); grid-auto-flow:row dense; }\n#g a { display:block; min-height:30px; background:#ddd; }\n#a,#b { grid-column:span 2; }\n</style></head><body><main><h1>Ordem de uma grade</h1>\n<nav id=\"g\" aria-label=\"Itens\"><a id=\"a\" href=\"#destino\">A</a><a id=\"b\" href=\"#destino\">B</a><a id=\"c\" href=\"#destino\">C</a></nav>\n<p id=\"destino\">Destino de estudo</p>\n</main></body></html>",
+          "explanation": [
+            "B não cabe no espaço que sobra após A e passa para a próxima linha. Dense pode colocar C no espaço anterior que aceita uma única coluna, então C aparece acima de B. As caixas foram distribuídas por outra regra; os nós continuam na ordem A, B e C.",
+            "O teste de teclado evidencia a diferença entre posição e sequência de foco. Para um roteiro obrigatório, conservar uma ordem visual compatível costuma exigir remover dense ou redefinir a disposição. Não tente corrigir a divergência fabricando tabindex positivos; isso introduz outro percurso de manutenção."
+          ],
+          "checks": [
+            "C aparece na primeira linha e B na segunda.",
+            "A ordem dos links no DOM continua A, B, C.",
+            "A sequência por Tab coincide com a ordem do DOM."
+          ]
+        }
+      ]
+    },
+    {
       "id": "css-responsivo",
       "title": "CSS: responsividade, consultas e dimensões fluidas",
       "level": "Avançado",
