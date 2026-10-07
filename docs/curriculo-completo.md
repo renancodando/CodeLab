@@ -1,10 +1,10 @@
 # Currículo do zero à especialização
 
-## Conteúdo publicado nesta expansão
+## Conteúdo proposto nesta expansão
 
-O catálogo passa de **60 para 108 aulas**, distribuídas em **20 trilhas**. São oito novos percursos com seis módulos e treze capítulos por módulo: **48 aulas novas e 624 capítulos adicionais**. O conteúdo original permanece disponível.
+A versão integrada tem **108 aulas em 20 trilhas**. A PR #3 propõe ampliar o catálogo para **128 aulas**, após a aprovação dos gates desta entrega. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **20 aulas de 17 capítulos**, com **40 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora oito ou nove aulas cada; as 60 aulas originais continuam disponíveis.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. As **414 entradas de cobertura** abaixo identificam assuntos introduzidos e explicados nos módulos. Elas não são 414 aulas independentes nem uma declaração de que todas as bibliotecas e especializações possíveis foram esgotadas.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **574 entradas de cobertura**: **106** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **468** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
@@ -362,6 +362,168 @@ A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-
 - Conteúdo: views materialized refresh; recursive CTE termination cycles; JSONB operators indexes; functions procedures triggers; generated identity columns; partitioning pruning; roles grants least privilege; schema migrations compatibility; backup restore verification.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
 
+## Aulas independentes de aprofundamento
+
+Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de explicação própria, exemplo, exercício principal, depuração, projeto e dois problemas com soluções explicadas. As verificações executam o comportamento ensinado; não se limitam à existência dos capítulos.
+
+### python
+
+#### Python: números exatos, texto e conversão de entrada
+
+- Aula: `#/aula/py-numeros-texto`; nível Fundamentos; 17 capítulos.
+- Mecanismos: int e limites de representação; divisão real e divisão pelo piso; resto e distribuição de unidades; float e erro de representação; Decimal construído de texto; str e pontos de código Unicode; normalização NFC; conversão integral estrita.
+- Atividades: Problema 1: quantidade recebida como texto (`quantidade`); Problema 2: comparar nomes canonicamente equivalentes (`unicode`).
+- Referência principal: [docs.python.org/3/library/stdtypes.html](https://docs.python.org/3/library/stdtypes.html).
+
+#### Python: decisões, laços e prova de término
+
+- Aula: `#/aula/py-controle-invariantes`; nível Fundamentos; 17 capítulos.
+- Mecanismos: if elif e ordem das condições; intervalos semiabertos; range com passo; acumulador e invariante; while e variante de término; break continue e else de laço; busca sem resultado; lista vazia e casos de fronteira.
+- Atividades: Problema 1: primeira posição que atende ao limite (`busca`); Problema 2: término de uma contagem de parcelas (`parcelas`).
+- Referência principal: [docs.python.org/3/tutorial/controlflow.html](https://docs.python.org/3/tutorial/controlflow.html).
+
+### typescript
+
+#### TypeScript: inferência, ausência e contratos sem coerção
+
+- Aula: `#/aula/ts-inferencia-ausencia`; nível Fundamentos; 17 capítulos.
+- Mecanismos: inferência e widening; union com undefined; strictNullChecks; narrowing por typeof; operador nullish; assertion sem validação; readonly e mutação; contrato de retorno discriminado.
+- Atividades: Problema 1: busca que pode não encontrar (`catalogo`); Problema 2: padrão sem apagar zero (`limite`).
+- Referência principal: [www.typescriptlang.org/docs/handbook/2/narrowing.html](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+
+#### TypeScript: validar JSON aninhado e produzir dados de domínio
+
+- Aula: `#/aula/ts-validacao-aninhada`; nível Intermediário; 17 capítulos.
+- Mecanismos: JSON.parse como fronteira unknown; objeto não nulo e não array; validação de campos aninhados; validação de todos os itens; mensagem com caminho de erro; cópia dos campos aceitos; campo opcional versus inválido; testes com ts-expect-error.
+- Atividades: Problema 1: apelido ausente ou inválido (`opcional`); Problema 2: provar o contrato para consumidores (`tipos`).
+- Referência principal: [www.typescriptlang.org/docs/handbook/2/objects.html](https://www.typescriptlang.org/docs/handbook/2/objects.html).
+
+### cpp
+
+#### C++: entrada textual, conversão completa e estados de erro
+
+- Aula: `#/aula/cpp-texto-conversao`; nível Fundamentos; 17 capítulos.
+- Mecanismos: string como sequência de unidades char; getline e leitura de linha; extração formatada e texto residual; from_chars e errc; consumo completo da entrada; limites de int; optional para conversão; gramática ASCII e faixa de domínio.
+- Atividades: Problema 1: nome completo e linha vazia (`linhas`); Problema 2: conversão completa com estouro detectado (`inteiro`).
+- Referência principal: [eel.is/c++draft/charconv.from.chars](https://eel.is/c++draft/charconv.from.chars).
+
+#### C++: funções, cópia, referência e tempo de vida
+
+- Aula: `#/aula/cpp-funcoes-referencias`; nível Fundamentos; 17 capítulos.
+- Mecanismos: parâmetro por valor; referência mutável; referência const; pré-condição e pós-condição; retorno por valor; referência para objeto local; const não significa posse; cópia de vector e dados originais.
+- Atividades: Problema 1: criar uma coleção independente (`copia`); Problema 2: observar o tamanho sem modificar (`observacao`).
+- Referência principal: [eel.is/c++draft/dcl.ref](https://eel.is/c++draft/dcl.ref).
+
+### csharp
+
+#### C#: valores decimais, arredondamento e overflow
+
+- Aula: `#/aula/cs-decimal-limites`; nível Fundamentos; 17 capítulos.
+- Mecanismos: literal decimal com sufixo m; decimal e double; arredondamento com MidpointRounding; cultura na apresentação; checked no ponto da operação; TryParse e contrato de formato; nullable e ausência; limite numérico antes de converter.
+- Atividades: Problema 1: preço com formato de intercâmbio (`formato`); Problema 2: produto inteiro com faixa final (`inteiro`).
+- Referência principal: [learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types).
+
+#### C#: métodos, parâmetros e estado compartilhado
+
+- Aula: `#/aula/cs-metodos-parametros`; nível Fundamentos; 17 capítulos.
+- Mecanismos: passagem por valor; cópia de referência de classe; ref para trocar a variável; out e padrão Try; validação antes da mutação; array copiado versus compartilhado; retorno e efeito observável; exceção como parte do contrato.
+- Atividades: Problema 1: normalizar sem alterar a entrada (`copia`); Problema 2: substituir a referência do chamador (`troca`).
+- Referência principal: [learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters).
+
+### javascript
+
+#### JavaScript: conversão explícita e números nos limites
+
+- Aula: `#/aula/js-conversao-limites`; nível Fundamentos; 17 capítulos.
+- Mecanismos: coerção do operador mais; Number e conversão explícita; parseInt e prefixo válido; NaN e Number.isNaN; inteiros seguros; zero e operador nullish; BigInt e Number separados; validação antes do cálculo.
+- Atividades: Problema 1: configurar limite sem apagar zero (`default`); Problema 2: preservar um identificador grande (`identificador`).
+- Referência principal: [tc39.es/ecma262/multipage/abstract-operations.html#sec-tonumber](https://tc39.es/ecma262/multipage/abstract-operations.html#sec-tonumber).
+
+#### JavaScript: closures, identidade e estado de uma instância
+
+- Aula: `#/aula/js-closures-estado`; nível Fundamentos; 17 capítulos.
+- Mecanismos: escopo léxico; closure e binding capturado; fábrica e estado por instância; const e objeto mutável; identidade versus cópia; let em laço; var e ambiente compartilhado; snapshot sem referência interna.
+- Atividades: Problema 1: uma função por índice (`callbacks`); Problema 2: snapshot de lista sem alias (`snapshot`).
+- Referência principal: [tc39.es/ecma262/multipage/ecmascript-language-functions-and-classes.html#sec-function-definitions](https://tc39.es/ecma262/multipage/ecmascript-language-functions-and-classes.html#sec-function-definitions).
+
+### html
+
+#### HTML: parser, árvore do documento e estrutura semântica
+
+- Aula: `#/aula/html-arvore-semantica`; nível Fundamentos; 17 capítulos.
+- Mecanismos: fonte HTML e árvore DOM; fechamento implícito de p; elementos void; doctype e modo de renderização; lang charset e title; regiões main nav article; hierarquia de headings; caption th e scope.
+- Atividades: Problema 1: corrigir o agrupamento de blocos (`reparar`); Problema 2: tabela com cabeçalhos de linha e coluna (`tabela`).
+- Referência principal: [html.spec.whatwg.org/multipage/parsing.html](https://html.spec.whatwg.org/multipage/parsing.html).
+
+#### HTML: controles enviados, validação e botão de submissão
+
+- Aula: `#/aula/html-dados-formulario`; nível Intermediário; 17 capítulos.
+- Mecanismos: name e id em papéis diferentes; label e nome acessível; disabled e readonly; checkbox e ausência quando desmarcado; nomes repetidos e getAll; FormData e submitter; validação nativa antes de submit; botão type button versus submit.
+- Atividades: Problema 1: preservar a ação do botão (`acoes`); Problema 2: presença de controles nos dados (`presenca`).
+- Referência principal: [html.spec.whatwg.org/multipage/form-control-infrastructure.html#constructing-the-entry-list](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#constructing-the-entry-list).
+
+### css
+
+#### CSS: cascata por camadas e valores de custom properties
+
+- Aula: `#/aula/css-cascata-camadas`; nível Fundamentos; 17 capítulos.
+- Mecanismos: declaração aplicável e valor vencedor; ordem de camadas normais; regra normal sem camada; ordem invertida de important; especificidade dentro da etapa; herança de color; fallback de var; inválido no valor computado.
+- Atividades: Problema 1: ordem invertida nas camadas (`important`); Problema 2: token ausente e valor inválido (`token`).
+- Referência principal: [www.w3.org/TR/css-cascade-5/](https://www.w3.org/TR/css-cascade-5/).
+
+#### CSS: dimensões de caixa, conteúdo intrínseco e overflow
+
+- Aula: `#/aula/css-caixas-intrinseco`; nível Fundamentos; 17 capítulos.
+- Mecanismos: content-box e dimensão externa; border-box e espaço de conteúdo; padding e border no cálculo; tamanho mínimo automático de flex item; min-inline-size zero; overflow-wrap anywhere; overflow e contêiner de rolagem; sticky e referência de rolagem.
+- Atividades: Problema 1: conteúdo intrínseco em item flexível (`minimo`); Problema 2: cabeçalho dentro de uma rolagem local (`sticky`).
+- Referência principal: [www.w3.org/TR/css-sizing-3/](https://www.w3.org/TR/css-sizing-3/).
+
+### sql
+
+#### SQL: NULL, lógica de três valores e dados ausentes
+
+- Aula: `#/aula/sql-null-logica`; nível Fundamentos; 17 capítulos.
+- Mecanismos: NULL como ausência de valor; comparação com resultado unknown; WHERE aceita apenas true; IS NULL e IS NOT NULL; IS DISTINCT FROM; CHECK e NOT NULL; count estrela versus count coluna; NOT IN com NULL e NOT EXISTS.
+- Atividades: Problema 1: exclusão com uma chave ausente (`exclusao`); Problema 2: campo obrigatório e faixa válida (`obrigatorio`).
+- Referência principal: [www.postgresql.org/docs/current/functions-comparison.html](https://www.postgresql.org/docs/current/functions-comparison.html).
+
+#### SQL: cardinalidade de joins e agregação sem duplicar totais
+
+- Aula: `#/aula/sql-joins-cardinalidade`; nível Intermediário; 17 capítulos.
+- Mecanismos: granularidade antes da consulta; cardinalidade um para muitos; LEFT JOIN e linha estendida; filtro em ON versus WHERE; count da chave relacionada; agregação antes do join; fanout entre duas coleções; EXISTS para testar presença.
+- Atividades: Problema 1: preservar clientes sem pedido pago (`filtro`); Problema 2: somar coleções antes de combinar (`fanout`).
+- Referência principal: [www.postgresql.org/docs/current/queries-table-expressions.html](https://www.postgresql.org/docs/current/queries-table-expressions.html).
+
+## Segundo aprofundamento desta entrega
+
+### Python: parâmetros, escopo e funções com contratos
+
+- Aula: `#/aula/py-funcoes-contratos`; nível Intermediário; 17 capítulos.
+- Mecanismos: contrato de entrada e retorno; parâmetros nomeados e keyword-only; default avaliado na definição; sentinela None para default mutável; escopo LEGB; nonlocal e binding externo; closure por chamada; retorno novo sem modificar entrada.
+- Atividades: Problema 1: opção exigida por nome (`assinatura`); Problema 2: coletor com estado por instância (`isolamento`).
+- Referência principal: [docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions](https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions).
+
+### TypeScript: genéricos que preservam relações entre dados
+
+- Aula: `#/aula/ts-genericos-relacoes`; nível Avançado; 17 capítulos.
+- Mecanismos: parâmetro de tipo como relação; inferência do tipo de retorno; constraint extends; keyof e chave válida; indexed access T K; readonly na entrada genérica; tipo específico não inventado; teste negativo de propriedade.
+- Atividades: Problema 1: seleção de propriedade opcional (`opcional`); Problema 2: construir T por uma fábrica (`fabrica`).
+- Referência principal: [www.typescriptlang.org/docs/handbook/2/generics.html](https://www.typescriptlang.org/docs/handbook/2/generics.html).
+
+### C++: RAII, posse exclusiva e transferência de recursos
+
+- Aula: `#/aula/cpp-raii-posse-unica`; nível Intermediário; 17 capítulos.
+- Mecanismos: RAII e duração do recurso; destrutor na saída de escopo; desenrolamento por exceção; unique_ptr não copiável; move transfere a posse; ponteiro movido e estado vazio; rule of zero na composição; observador sem propriedade.
+- Atividades: Problema 1: recurso como membro de uma classe (`composicao`); Problema 2: observar enquanto o dono permanece vivo (`observador`).
+- Referência principal: [eel.is/c++draft/unique.ptr](https://eel.is/c++draft/unique.ptr).
+
+### JavaScript: promises, propagação de falhas e concorrência limitada
+
+- Aula: `#/aula/js-promessas-contratos`; nível Avançado; 17 capítulos.
+- Mecanismos: promise pendente fulfilled rejected; then retorna outra promise; throw vira rejeição no callback; await e propagação de erro; all não cancela tarefas; allSettled conserva resultados; concorrência limitada por trabalhadores; ordem de saída versus ordem de término.
+- Atividades: Problema 1: fallback ou propagação (`recuperacao`); Problema 2: limitar operações ativas (`trabalhadores`).
+- Referência principal: [tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all](https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all).
+
 ## Ambiente e entrega
 
 - Capítulos novos carregam ao abrir a aula; o índice inicial conserva títulos, resumo e temas para busca.
@@ -376,8 +538,8 @@ A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-
 1. Catálogo: ids, relações, sequência, capítulos e profundidade da teoria própria.
 2. JavaScript: exemplos e saídas reais no interpretador isolado; soluções executáveis.
 3. TypeScript: exemplos e soluções passam pela verificação semântica com `strict`.
-4. Python, C++, C# e PostgreSQL: 48 exemplos/soluções compilados ou executados em processos/base temporários no CI.
-5. Navegador: navegação, busca antes de carregar capítulos, progresso local, falha de download, saída durante carregamento e páginas sem JavaScript.
+4. Python, C++, C#, PostgreSQL e TypeScript: 112 exemplos/soluções compilados ou executados em processos/base temporários no CI. Nas aulas novas, as saídas são comparadas com expectativas explícitas; TypeScript também passa por strict, incluindo problemas e expectativas negativas de tipos.
+5. Navegador: navegação, busca antes de carregar capítulos, progresso local, falha de download, saída durante carregamento e páginas sem JavaScript; os 16 trechos HTML/CSS das aulas independentes verificam árvore, formulários, valores computados, dimensões e rolagem.
 6. Gates anteriores de build, API, acessibilidade e ciclos de memória continuam ativos.
 
 ## Aprofundamento contínuo
@@ -398,4 +560,4 @@ A automação existente retoma a expansão a cada quatro horas. Deve conferir o 
 
 ## Manutenção do catálogo
 
-As definições por linguagem são a fonte de verdade. `npm run content:generate` recria o índice de navegação e a matriz JSON; `npm run build` confere que os dois estão sincronizados. Uma aula nova exige revisar também o mapa editorial, os limites de cobertura da edição e as contagens dos testes. Não reduza os critérios de profundidade para acomodar conteúdo incompleto.
+As definições por linguagem são a fonte de verdade. `npm run content:generate` recria o índice de navegação e a matriz JSON; `npm run build` confere que os dois estão sincronizados. Uma aula nova exige revisar também o mapa editorial, os limites de cobertura da edição e as contagens dos testes. Vincule cada tópico de prática independente aos ids de atividades que o exercitam; um título novo ou exemplo geral não promove sozinho o status de todos os tópicos. Não reduza os critérios de profundidade para acomodar conteúdo incompleto.

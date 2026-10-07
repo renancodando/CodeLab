@@ -24,7 +24,20 @@ test('busca encontra erro e abre conteúdo',async({page})=>{
 test('laboratório HTML renderiza sem acesso ao documento pai',async({page})=>{
  await page.goto('/#/laboratorio');await expect(page.frameLocator('#preview').getByRole('heading',{name:'Uma ideia começa aqui.'})).toBeVisible();
  await page.frameLocator('#preview').getByRole('button',{name:'Experimente'}).click();await expect(page.frameLocator('#preview').getByRole('button',{name:'Você fez acontecer!'})).toBeVisible();
- const editor=page.getByRole('textbox',{name:'É aqui que você escreve seu código'});await writeCode(page,'<script>try {parent.document.body.innerHTML="invadido"}catch(e){document.body.textContent="isolado"}</script>');await page.getByRole('button',{name:'Executar',exact:true}).click();await expect(page.frameLocator('#preview').locator('body')).toHaveText('isolado');await expect(page.getByRole('heading',{name:'Seu laboratório.'})).toBeVisible();
+ const erros:string[]=[];
+ page.on('pageerror',error=>erros.push(error.message));
+ page.on('console',message=>{if(message.type()==='error')erros.push(message.text());});
+ await writeCode(page,'<script>try {parent.document.body.innerHTML="invadido"}catch(e){document.body.textContent="isolado"}</script>');
+ await expect(page.locator('.monaco-editor .view-lines')).toContainText('parent.document.body.innerHTML');
+ await page.getByRole('button',{name:'Executar',exact:true}).click();
+ try{
+  await expect(page.locator('#preview')).toHaveAttribute('srcdoc',/parent\.document\.body\.innerHTML/);
+  await expect(page.frameLocator('#preview').locator('body')).toHaveText('isolado');
+ }catch(error){
+  console.log('HTML_PREVIEW_DIAGNOSTICO',JSON.stringify({srcdoc:await page.locator('#preview').getAttribute('srcdoc'),erros}));
+  throw error;
+ }
+ await expect(page.getByRole('heading',{name:'Seu laboratório.'})).toBeVisible();
 });
 test('clima: dados normalizados, falha e geolocalização negada',async({page})=>{
  await page.route('https://api.open-meteo.com/**',route=>route.fulfill({json:{current:{temperature_2m:19,relative_humidity_2m:80,precipitation:2,weather_code:61,cloud_cover:90,wind_speed_10m:24,wind_direction_10m:210,wind_gusts_10m:39}}}));

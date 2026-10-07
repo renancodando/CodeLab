@@ -92,6 +92,132 @@ export default {
       ]
     },
     {
+      "id": "html-arvore-semantica",
+      "title": "HTML: parser, árvore do documento e estrutura semântica",
+      "level": "Fundamentos",
+      "summary": "Leia HTML como uma descrição que o navegador transforma numa árvore, e não como uma sequência de caixas desenhadas. Esta aula investiga aninhamento, correções do parser, títulos, regiões e links internos. Os problemas pedem documentos completos e tabelas com relações claras, conferidos pela estrutura criada pelo navegador e pela navegação de teclado.",
+      "source": "https://html.spec.whatwg.org/multipage/parsing.html",
+      "topics": [
+        "fonte HTML e árvore DOM",
+        "fechamento implícito de p",
+        "elementos void",
+        "doctype e modo de renderização",
+        "lang charset e title",
+        "regiões main nav article",
+        "hierarquia de headings",
+        "caption th e scope"
+      ],
+      "sections": [
+        {
+          "title": "O navegador constrói uma árvore a partir do texto",
+          "text": [
+            "O código-fonte HTML é entrada para um parser que produz nós e relações de pai e filho. O DOM observado nas ferramentas do navegador pode conter elementos que não aparecem literalmente na fonte, ou relações diferentes das que o autor imaginou. Um documento com erros de aninhamento não precisa gerar uma página em branco: o parser tem regras de recuperação. Uma aparência plausível não prova que a estrutura está correta.",
+            "Ao investigar HTML, compare a fonte e o painel de elementos. Pergunte quais nós ficaram dentro de main, onde um parágrafo terminou e qual heading descreve uma seção. Essa árvore participa de consultas DOM, seletores CSS e da informação disponível a tecnologias assistivas. Consertar a semântica pelo código permite uma estrutura previsível antes de qualquer ajuste de estilo."
+          ]
+        },
+        {
+          "title": "Nem todo elemento aceita qualquer filho",
+          "text": [
+            "Um p representa um parágrafo de conteúdo apropriado à sua categoria. Colocar um div dentro dele pode causar fechamento implícito do p pelo parser, deixando o div fora do parágrafo. A indentação da fonte não força a relação no DOM. O mesmo princípio aparece em listas e tabelas, cujos modelos de conteúdo determinam filhos permitidos. Use um contêiner adequado para agrupar blocos em vez de estender um parágrafo além do que ele representa.",
+            "Elementos void, como img e input, não têm tag de fechamento em HTML. Escrever uma barra no fim de uma tag não transforma qualquer elemento em autocontido segundo a sintaxe XML. Um script ou div continua precisando do fechamento apropriado. Aprender quais elementos não têm conteúdo e quais exigem fechamento evita estruturas que só parecem corretas porque o navegador recuperou um erro."
+          ]
+        },
+        {
+          "title": "Metadados descrevem o documento inteiro",
+          "text": [
+            "O doctype moderno solicita o modo de renderização esperado para documentos HTML. Lang informa o idioma do conteúdo, charset declara a codificação e title nomeia o documento em contextos como a aba do navegador. Esses elementos não são meras mensagens decorativas. Uma página intitulada apenas Documento dificulta distinguir abas e resultados de navegação, mesmo que seu h1 seja bem escrito.",
+            "A meta viewport participa da configuração da viewport em dispositivos móveis; ela não torna um layout responsivo sozinha. O CSS ainda precisa permitir reflow e tamanhos adequados. Use lang='pt-BR' para o idioma predominante e marque trechos em outro idioma quando isso tiver significado. Não escolha uma codificação diferente apenas para fazer acentos aparecerem: confira como o arquivo foi salvo e como o servidor o entrega."
+          ]
+        },
+        {
+          "title": "Regiões dão nomes às responsabilidades",
+          "text": [
+            "main contém o conteúdo principal da página. nav agrupa blocos de navegação relevantes, e article descreve uma composição independente quando essa independência faz sentido. section organiza uma seção temática, normalmente identificada por um heading. Uma div continua útil para um agrupamento sem significado semântico específico; não é necessário converter toda caixa visual numa section.",
+            "Use header e footer conforme o contexto que introduzem ou encerram. Eles podem aparecer em uma composição interna, e não apenas uma vez como topo e rodapé do site. Um link interno para main oferece um caminho curto ao conteúdo para quem navega por teclado, mas seu destino precisa existir e ser alcançável. A semântica ajuda a explicar o documento; o comportamento do foco merece verificação no navegador."
+          ]
+        },
+        {
+          "title": "Headings e tabelas expressam relações",
+          "text": [
+            "h1 até h6 representam níveis de títulos. Escolha o nível pela relação entre seções, não pelo tamanho visual padrão. Um documento de curso pode ter h1 para o curso, h2 para módulos e h3 para aulas de cada módulo. Um salto de nível sem motivo dificulta entender a hierarquia. O HTML não exige que você use um elemento semântico para cada estilo de fonte, e o CSS pode alterar a apresentação sem alterar o nível do título.",
+            "Em tabelas de dados, caption fornece um título e th identifica células de cabeçalho. scope='col' e scope='row' descrevem relações simples com colunas e linhas. Tabelas complexas podem exigir associações mais explícitas. Não use table só para posicionar conteúdo sem relação tabular: você introduziria relações de dados que a interface não possui. Antes de escrever as células, identifique quais dados uma linha e uma coluna representam."
+          ]
+        },
+        {
+          "title": "Conferir a estrutura é parte da autoria",
+          "text": [
+            "Para verificar um documento, conte regiões principais, confira ids únicos, siga os links de fragmento e leia os headings em ordem. Inspecione a árvore de um trecho com aninhamento inválido e compare-a com uma versão corrigida. Esses passos revelam problemas que uma captura visual pode deixar passar. Um título e um link devem continuar fazendo sentido mesmo quando o leitor não vê o layout inteiro.",
+            "As soluções da aula são documentos completos e legíveis sem JavaScript. Os testes de navegador verificam nós e relações concretas, além de headings e destinos. Isso não equivale a uma avaliação completa com todas as tecnologias assistivas, mas confere os mecanismos ensinados. Transfira a estrutura para uma página de documentação: preserve o significado das regiões e use CSS para apresentação quando houver necessidade."
+          ]
+        }
+      ],
+      "code": "<!doctype html>\n<html lang=\"pt-BR\">\n<head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Guia de estudos — CodeLab</title></head>\n<body>\n<a href=\"#conteudo\">Ir ao conteúdo</a>\n<header><h1>Guia de estudos</h1><nav aria-label=\"Seções\"><a href=\"#modulo\">Módulo inicial</a></nav></header>\n<main id=\"conteudo\" tabindex=\"-1\">\n<section id=\"modulo\"><h2>Módulo inicial</h2>\n<article><h3>Primeiro documento</h3><p>Uma página começa por conteúdo com relações claras.</p></article>\n</section>\n</main>\n<footer><p>Material de estudo.</p></footer>\n</body></html>",
+      "output": "A árvore tem um main com a seção Módulo inicial e um article. A hierarquia é h1, h2, h3, e os dois links internos têm destinos existentes.",
+      "trace": [
+        "O head descreve idioma, codificação, viewport e título da aba.",
+        "main contém a seção; article descreve uma aula independente dentro dela.",
+        "Os links de fragmento apontam para ids únicos e o destino principal aceita foco."
+      ],
+      "exercise": "Escreva uma página completa de um módulo com título da aba, idioma, um main, duas seções com h2 e um link interno para a segunda. Evite colocar blocos dentro de p. O conteúdo precisa continuar disponível sem JavaScript.",
+      "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Módulo de HTML</title></head>\n<body><header><h1>Módulo de HTML</h1><nav aria-label=\"Conteúdo\"><a href=\"#pratica\">Ir à prática</a></nav></header>\n<main><section><h2>Conceitos</h2><p>O parser produz uma árvore de elementos.</p></section>\n<section id=\"pratica\"><h2>Prática</h2><p>Confira fonte, árvore e destinos dos links.</p></section></main>\n</body></html>",
+      "bug": "O autor colocou um div dentro de p e espera que o div seja seu filho. O parser encerra o parágrafo antes do bloco e a árvore não corresponde à indentação.",
+      "bugCode": "<p id=\"introducao\">Antes<div id=\"bloco\">Conteúdo em bloco</div>Depois</p>",
+      "repair": "Separe o parágrafo e o div em elementos irmãos dentro de um contêiner apropriado. Inspecione parentElement no navegador para conferir o que foi construído; não conclua a partir do recuo da fonte.",
+      "checks": [
+        "Um main descreve o conteúdo principal e os ids são únicos.",
+        "Os headings expressam a hierarquia, sem escolher nível pela aparência.",
+        "Os links internos encontram os destinos e o conteúdo funciona sem scripts."
+      ],
+      "project": "Crie uma página de documentação de três aulas com sumário por fragmento. Escreva títulos que façam sentido fora do contexto visual e confira a árvore no navegador. Acrescente uma tabela de prazos somente se linhas e colunas representarem dados reais.",
+      "question": "Por que um div escrito dentro de p pode aparecer fora dele no DOM?",
+      "answer": "O parser aplica regras de conteúdo e pode fechar p implicitamente antes do bloco.",
+      "distractors": [
+        "A indentação sempre força a relação e o painel DOM está errado.",
+        "Todo elemento HTML aceita qualquer filho; somente CSS muda o pai dos nós."
+      ],
+      "practices": [
+        {
+          "id": "reparar",
+          "title": "Problema 1: corrigir o agrupamento de blocos",
+          "topics": [
+            "fonte HTML e árvore DOM",
+            "fechamento implícito de p",
+            "hierarquia de headings"
+          ],
+          "prompt": "Produza um documento em que um article tenha h1, um parágrafo introdutório e uma section com h2 e outro parágrafo. Os dois parágrafos precisam pertencer aos contêineres pretendidos, sem usar p para envolver a section.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Estrutura de uma aula</title></head>\n<body><main><article id=\"aula\"><h1>Estrutura de uma aula</h1>\n<p id=\"intro\">Este parágrafo apresenta a aula.</p>\n<section id=\"atividade\"><h2>Atividade</h2><p id=\"instrucoes\">Confira os pais no DOM.</p></section>\n</article></main></body></html>",
+          "explanation": [
+            "article e section são contêineres de blocos adequados ao significado proposto. O parágrafo intro é filho direto do article; instrucoes fica dentro da section.",
+            "A correção não depende de uma mudança visual. A evidência é a árvore: os parágrafos têm os pais esperados e a seção contém um heading do nível seguinte."
+          ],
+          "checks": [
+            "intro pertence diretamente a aula.",
+            "instrucoes pertence a atividade.",
+            "Nenhum bloco foi colocado dentro de p."
+          ]
+        },
+        {
+          "id": "tabela",
+          "title": "Problema 2: tabela com cabeçalhos de linha e coluna",
+          "topics": [
+            "caption th e scope",
+            "lang charset e title"
+          ],
+          "prompt": "Descreva horas de estudo de duas pessoas em duas colunas de dados: pessoa e horas. Inclua caption e cabeçalhos de coluna; os nomes nas linhas devem ser cabeçalhos de linha. O título da aba precisa identificar o relatório.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Horas de estudo</title></head><body><main>\n<h1>Horas de estudo</h1><table id=\"horas\"><caption>Horas por pessoa nesta semana</caption>\n<thead><tr><th scope=\"col\">Pessoa</th><th scope=\"col\">Horas</th></tr></thead>\n<tbody><tr><th scope=\"row\">Lia</th><td>4</td></tr><tr><th scope=\"row\">Caio</th><td>6</td></tr></tbody>\n</table></main></body></html>",
+          "explanation": [
+            "Caption descreve o conjunto de dados, th com scope col descreve cada coluna e th com scope row identifica a pessoa à qual o valor pertence.",
+            "A tabela usa relações reais de dados e não posicionamento de caixas. Para adicionar uma coluna de período, revise os cabeçalhos e a correspondência de células, mantendo a estrutura explícita."
+          ],
+          "checks": [
+            "Há um caption e dois cabeçalhos de coluna.",
+            "Lia e Caio são cabeçalhos de linha.",
+            "O relatório identifica seu assunto em title e h1."
+          ]
+        }
+      ]
+    },
+    {
       "id": "html-texto-links",
       "title": "HTML: texto, links, listas e tabelas",
       "level": "Fundamentos",
@@ -258,6 +384,133 @@ export default {
       "distractors": [
         "Sim; id e name são sempre equivalentes.",
         "Sim; todo elemento visual vira um campo enviado."
+      ]
+    },
+    {
+      "id": "html-dados-formulario",
+      "title": "HTML: controles enviados, validação e botão de submissão",
+      "level": "Intermediário",
+      "summary": "Diferencie o que aparece no formulário do que realmente entra no conjunto de dados enviado. Esta aula compara name e id, disabled e readonly, caixas marcadas e desmarcadas e o botão que disparou a submissão. Os exemplos funcionam sem servidor e mostram FormData no próprio documento, preservando validação nativa e mensagens como texto.",
+      "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#constructing-the-entry-list",
+      "topics": [
+        "name e id em papéis diferentes",
+        "label e nome acessível",
+        "disabled e readonly",
+        "checkbox e ausência quando desmarcado",
+        "nomes repetidos e getAll",
+        "FormData e submitter",
+        "validação nativa antes de submit",
+        "botão type button versus submit"
+      ],
+      "sections": [
+        {
+          "title": "Ver um controle não garante que ele seja enviado",
+          "text": [
+            "Um formulário reúne controles, mas o conjunto de entradas enviado depende das regras de cada controle. id identifica um elemento no documento e ajuda label a apontar para ele; name identifica uma entrada nos dados. Um campo pode aparecer, aceitar digitação e ter label correto, mas ficar fora de FormData porque não tem name. A aparência do formulário não estabelece seu contrato de intercâmbio.",
+            "Escreva uma tabela com controle, name, valor, estado e presença nos dados. Essa tabela precisa cobrir campos desativados, controles desmarcados e múltiplos valores com o mesmo nome. O contrato de quem recebe os dados deve dizer quais entradas podem estar ausentes e quais são obrigatórias. Não pressuponha que uma chave ausente equivale sempre a string vazia ou false."
+          ]
+        },
+        {
+          "title": "Label e name resolvem problemas distintos",
+          "text": [
+            "Um label associado pelo atributo for ao id do controle fornece um nome e permite ativá-lo ao clicar no texto. Esse vínculo também beneficia tecnologias assistivas, mas não substitui o atributo name. O formulário de estudo precisa ter os dois quando ambos os papéis são necessários. Placeholder não é uma substituição adequada de label, pois desaparece durante a digitação e não descreve todos os estados do campo.",
+            "Use ids únicos e textos de label que façam sentido sem depender de uma posição visual. Quando um conjunto de escolhas tem uma pergunta comum, fieldset e legend podem descrevê-lo. O name repetido em radios estabelece um grupo de escolha; ids diferentes continuam necessários para labels individuais. Em checkboxes, nomes repetidos podem representar múltiplas seleções, que devem ser lidas como uma coleção."
+          ]
+        },
+        {
+          "title": "Disabled e readonly produzem estados diferentes",
+          "text": [
+            "Um controle disabled não participa normalmente da construção dos dados enviados e não é validado como um controle habilitado. Readonly, nos tipos aos quais se aplica, impede edição pelo usuário, mas o valor pode continuar no conjunto enviado. Não use os dois atributos como estilos intercambiáveis de campo cinza. Escolha o estado pela interação e pelo contrato dos dados.",
+            "Esses atributos são booleanos em HTML: a presença ativa a condição, mesmo em disabled='false'. Para habilitar o controle, remova o atributo ou ajuste a propriedade DOM para false. Nenhum desses estados torna o valor confiável para um servidor. Uma pessoa pode alterar o documento e os dados recebidos ainda exigem validação na fronteira que efetivamente aplica regras do sistema."
+          ]
+        },
+        {
+          "title": "Ausência e multiplicidade fazem parte da estrutura",
+          "text": [
+            "Uma checkbox desmarcada normalmente não cria a entrada correspondente. Quando marcada, usa seu value ou o padrão definido pela plataforma. Um consumidor que precisa de um booleano pode traduzir presença e ausência para esse domínio, mas deve saber que se trata de uma regra do adaptador. Se um nome aparece em várias escolhas marcadas, FormData.get devolve uma entrada, enquanto getAll preserva a multiplicidade.",
+            "Object.fromEntries transforma pares em um objeto, mas nomes repetidos podem sobrescrever valores e perder seleções. Para mostrar o conjunto completo sem esconder dados, o exemplo usa Array.from(formData.entries()). Essa representação também permite visualizar ordem e repetição. Antes de serializar para JSON, defina quais campos são escalares e quais são listas em vez de escolher um formato apenas por conveniência."
+          ]
+        },
+        {
+          "title": "O botão escolhido pode compor os dados",
+          "text": [
+            "Um botão submit com name e value pode indicar a ação solicitada, como salvar ou revisar. FormData(form, submitter) inclui o botão de submissão válido fornecido ao construtor. FormData(form) sozinho não identifica automaticamente qual botão foi clicado. O evento submit oferece submitter para que o exemplo preserve essa informação. Se não houver submitter, o código precisa escolher um comportamento explícito.",
+            "Um button sem type dentro de form pode funcionar como botão de submissão. Para uma ação local que não deve enviar, como limpar uma prévia personalizada, use type='button'. A validação nativa é considerada antes de um envio iniciado pelo usuário ou requestSubmit; uma chamada direta a form.submit tem comportamento diferente e não equivale a clicar no botão. Não use essa diferença para contornar campos inválidos inadvertidamente."
+          ]
+        },
+        {
+          "title": "Validação nativa ajuda a pessoa, e dados continuam dados",
+          "text": [
+            "required, min, max, step e pattern expressam regras no navegador. Confira a validade no exemplo e trate estados inválidos com os recursos nativos ou mensagens associadas. Um formulário sem servidor pode interceptar submit e apresentar a prévia, mantendo o comportamento dos controles. Quando o exemplo passa a enviar para uma API, a API precisa reaplicar os contratos de entrada porque o navegador não é uma fronteira de confiança.",
+            "O resultado é inserido com textContent, então um texto digitado com marcação aparece como texto e não como HTML executável. Teste uma entrada que contém sinais de menor e maior para conferir essa propriedade. Transfira o exemplo para uma inscrição de estudo: documente os nomes, os valores repetidos, as ausências e as ações antes de definir o esquema JSON que a aplicação consumirá."
+          ]
+        }
+      ],
+      "code": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Dados de uma inscrição</title></head><body>\n<main><h1>Dados de uma inscrição</h1>\n<form id=\"inscricao\">\n<label for=\"nome\">Nome</label><input id=\"nome\" name=\"nome\" required maxlength=\"60\">\n<label for=\"codigo\">Código</label><input id=\"codigo\" name=\"codigo\" value=\"A1\" readonly>\n<label for=\"interno\">Campo desativado</label><input id=\"interno\" name=\"interno\" value=\"não enviar\" disabled>\n<fieldset><legend>Assuntos</legend>\n<label><input type=\"checkbox\" name=\"assunto\" value=\"html\" checked>HTML</label>\n<label><input type=\"checkbox\" name=\"assunto\" value=\"css\">CSS</label></fieldset>\n<button type=\"submit\" name=\"acao\" value=\"salvar\">Mostrar dados</button>\n<button type=\"button\" id=\"limpar\">Limpar prévia</button>\n</form><pre id=\"resultado\" aria-live=\"polite\"></pre></main>\n<script>\nconst form=document.querySelector('#inscricao'),saida=document.querySelector('#resultado');\nform.addEventListener('submit',event=>{\n event.preventDefault();\n const dados=event.submitter?new FormData(form,event.submitter):new FormData(form);\n saida.textContent=JSON.stringify(Array.from(dados.entries()));\n});\ndocument.querySelector('#limpar').addEventListener('click',()=>{saida.textContent='';});\n</script></body></html>",
+      "output": "Ao preencher Nome com Lia e enviar, aparecem nome=Lia, codigo=A1, assunto=html e acao=salvar. interno e assunto=css estão ausentes. A prévia mantém pares para não perder nomes repetidos.",
+      "trace": [
+        "required impede um envio vazio iniciado pelo botão.",
+        "Readonly participa dos dados; disabled e a checkbox desmarcada não participam.",
+        "event.submitter permite incluir a ação escolhida, e textContent mantém a prévia como texto."
+      ],
+      "exercise": "Monte um formulário com duas checkboxes de nome linguagem. Ao enviar, mostre getAll('linguagem') como JSON. Aceite nenhuma seleção como lista vazia e não perca a segunda escolha quando ambas estiverem marcadas.",
+      "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Seleções múltiplas</title></head><body><main>\n<h1>Seleções múltiplas</h1><form id=\"escolhas\"><fieldset><legend>Linguagens</legend>\n<label><input type=\"checkbox\" name=\"linguagem\" value=\"html\">HTML</label>\n<label><input type=\"checkbox\" name=\"linguagem\" value=\"css\">CSS</label></fieldset>\n<button type=\"submit\">Conferir seleções</button></form><pre id=\"selecionadas\" aria-live=\"polite\"></pre></main>\n<script>document.querySelector('#escolhas').addEventListener('submit',event=>{\nevent.preventDefault();document.querySelector('#selecionadas').textContent=JSON.stringify(new FormData(event.currentTarget).getAll('linguagem'));\n});</script></body></html>",
+      "bug": "O campo tem id e label, mas não name. A pessoa vê e preenche o controle, porém o campo não aparece em FormData. Adicionar placeholder não muda a regra de envio.",
+      "bugCode": "<form id=\"f\"><label for=\"email\">E-mail</label><input id=\"email\" type=\"email\"></form>\n<script>console.log(new FormData(document.querySelector('#f')).get('email')); // null</script>",
+      "repair": "Adicione name='email' e confira o contrato enviado. Id continua responsável pela relação com label; os dois atributos têm funções diferentes e podem até usar nomes distintos.",
+      "checks": [
+        "Campos enviados têm name e estados adequados.",
+        "Nomes repetidos são tratados como coleção.",
+        "Botão local não dispara submit e prévia usa textContent."
+      ],
+      "project": "Crie uma inscrição sem backend que exiba os pares enviados e uma tradução para um objeto de domínio. Documente quais campos são escalares e listas, como ausência de checkbox vira booleano e o que deve ser revalidado se houver uma API no futuro.",
+      "question": "Qual diferença de envio existe entre disabled e readonly num input textual?",
+      "answer": "Disabled fica fora dos dados; readonly pode continuar enviado, embora não editável pela interação normal.",
+      "distractors": [
+        "Os dois sempre são enviados e apenas mudam o estilo visual.",
+        "Readonly remove o name automaticamente; disabled protege o valor no servidor."
+      ],
+      "practices": [
+        {
+          "id": "acoes",
+          "title": "Problema 1: preservar a ação do botão",
+          "topics": [
+            "FormData e submitter",
+            "botão type button versus submit"
+          ],
+          "prompt": "Crie um formulário com botões Enviar rascunho e Enviar final, ambos submit com name='acao'. Mostre a ação do botão clicado e inclua um botão local que altere uma mensagem sem submeter.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Ações de envio</title></head><body><main>\n<h1>Ações de envio</h1><form id=\"acoes\">\n<button type=\"submit\" name=\"acao\" value=\"rascunho\">Enviar rascunho</button>\n<button type=\"submit\" name=\"acao\" value=\"final\">Enviar final</button>\n<button type=\"button\" id=\"local\">Ação local</button></form><output id=\"acao\" aria-live=\"polite\"></output>\n<script>\nconst f=document.querySelector('#acoes'),o=document.querySelector('#acao');\nf.addEventListener('submit',e=>{e.preventDefault();o.textContent=new FormData(f,e.submitter).get('acao')??'sem botão';});\ndocument.querySelector('#local').addEventListener('click',()=>{o.textContent='local';});\n</script></main></body></html>",
+          "explanation": [
+            "O evento informa o submitter e o construtor inclui seu name/value. Sem esse argumento, a criação de FormData não escolhe um botão automaticamente.",
+            "Ação local tem type button, portanto seu listener não se confunde com o envio. Se o formulário for enviado por código sem um submitter, revise o ramo de fallback conforme o contrato da aplicação."
+          ],
+          "checks": [
+            "Cada submit produz sua ação específica.",
+            "A ação local mostra local sem submeter.",
+            "O evento é cancelado para a prévia não navegar."
+          ]
+        },
+        {
+          "id": "presenca",
+          "title": "Problema 2: presença de controles nos dados",
+          "topics": [
+            "name e id em papéis diferentes",
+            "disabled e readonly",
+            "checkbox e ausência quando desmarcado",
+            "nomes repetidos e getAll"
+          ],
+          "prompt": "Monte um formulário que permita observar readonly enviado, disabled omitido, campo sem name omitido e checkbox desmarcada omitida. Depois marque a checkbox e mostre que ela passa a aparecer, preservando as demais regras.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Presença nos dados</title></head><body><main>\n<h1>Presença nos dados</h1><form id=\"presenca\">\n<label for=\"fixo\">Fixo</label><input id=\"fixo\" name=\"fixo\" value=\"A\" readonly>\n<label for=\"off\">Desativado</label><input id=\"off\" name=\"off\" value=\"B\" disabled>\n<label for=\"visual\">Sem name</label><input id=\"visual\" value=\"C\">\n<label><input type=\"checkbox\" name=\"aceite\" value=\"sim\">Aceite</label>\n<button type=\"submit\">Conferir presença</button></form><pre id=\"dados\" aria-live=\"polite\"></pre>\n<script>document.querySelector('#presenca').addEventListener('submit',e=>{\ne.preventDefault();document.querySelector('#dados').textContent=JSON.stringify(Array.from(new FormData(e.currentTarget).entries()));\n});</script></main></body></html>",
+          "explanation": [
+            "Readonly mantém a entrada fixo; disabled e a falta de name eliminam outras entradas mesmo que os valores sejam visíveis.",
+            "A checkbox muda o conjunto de pares pela sua marcação. O contrato de intercâmbio precisa considerar essa ausência, em vez de esperar que um valor false seja enviado automaticamente."
+          ],
+          "checks": [
+            "Primeiro envio contém apenas fixo=A.",
+            "Após marcar, aparece também aceite=sim.",
+            "off e o campo visual permanecem ausentes."
+          ]
+        }
       ]
     },
     {

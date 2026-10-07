@@ -1,6 +1,6 @@
 # CODELAB
 
-Plataforma de estudo de programação com **20 trilhas, 108 aulas e oito missões de código**. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
+Plataforma de estudo de programação com **20 trilhas, 128 aulas e oito missões de código**. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
 
 ## Executar
 
@@ -22,7 +22,7 @@ O servidor atende em `http://127.0.0.1:5080/` e também serve o conteúdo de `di
 
 ## Aprender e criar
 
-As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. As oito trilhas novas têm seis módulos e **13 capítulos internos por aula**. A leitura original segue esta sequência: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
+As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. As oito trilhas por linguagem têm oito ou nove aulas: os módulos panorâmicos têm **13 capítulos**, e as 20 aulas de aprofundamento têm **17 capítulos**, incluindo dois problemas independentes e resoluções comentadas. A leitura original segue esta sequência: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
 
 | Trilha | Conteúdo |
 | --- | --- |
@@ -39,9 +39,9 @@ As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. 
 | Full stack | Arquitetura, integração, testes de jornada, publicação e desempenho |
 | Projetos reais | Diário, tarefas, painel de clima, catálogo e entrega documentada |
 
-As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As aulas originais possuem roteiros por tema e a expansão acrescenta seis seções de teoria própria por módulo. Todas as **108 aulas têm conteúdo, prática e aplicação específicos**. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram compreensão; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
+As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As aulas originais possuem roteiros por tema e a expansão acrescenta seis seções de teoria própria por módulo. Todas as **128 aulas têm conteúdo, prática e aplicação específicos**. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram compreensão; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
 
-O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **114 páginas educacionais estáticas**, incluindo as 108 aulas, legíveis sem JavaScript.
+O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **134 páginas educacionais estáticas**, incluindo as 128 aulas, legíveis sem JavaScript.
 
 ## Ambiente vivo
 
@@ -115,7 +115,7 @@ Referências técnicas: [MDN](https://developer.mozilla.org/pt-BR/docs/), [Micro
 
 ## Currículo aprofundado por linguagem
 
-O catálogo tem 108 aulas em 20 trilhas. A expansão acrescenta percursos de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL, com 48 módulos de treze capítulos. Consulte [a matriz de cobertura](docs/curriculo-completo.md) para temas, ambientes, gates e os aprofundamentos editoriais ainda previstos.
+O catálogo tem 128 aulas em 20 trilhas. A expansão acrescenta percursos de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL, com 48 módulos panorâmicos de treze capítulos e 20 aulas aprofundadas de dezessete capítulos. A matriz identifica 106 entradas com prática específica, além dos temas introduzidos; isso não representa esgotamento de todas as especializações. Consulte [a matriz de cobertura](docs/curriculo-completo.md) para temas, ambientes, gates e os aprofundamentos editoriais ainda previstos.
 
 O conteúdo novo carrega por linguagem ao abrir a aula, mantendo um índice leve para navegação e busca. O build também entrega capítulos completos em páginas públicas sem JavaScript. TypeScript e PostgreSQL têm seu ambiente indicado, sem simular execução no laboratório atual.
 

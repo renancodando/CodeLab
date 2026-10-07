@@ -93,6 +93,286 @@ export default {
       ]
     },
     {
+      "id": "cs-decimal-limites",
+      "title": "C#: valores decimais, arredondamento e overflow",
+      "level": "Fundamentos",
+      "summary": "Calcule preços com uma política explícita de unidade, precisão e arredondamento. Esta aula compara decimal e double, mostra por que checked deve envolver a operação que pode estourar e usa uma cultura fixa nos exemplos. Os exercícios tratam desconto, limites de inteiros e ausência sem substituir erro por zero ou depender da configuração regional do computador.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types",
+      "topics": [
+        "literal decimal com sufixo m",
+        "decimal e double",
+        "arredondamento com MidpointRounding",
+        "cultura na apresentação",
+        "checked no ponto da operação",
+        "TryParse e contrato de formato",
+        "nullable e ausência",
+        "limite numérico antes de converter"
+      ],
+      "sections": [
+        {
+          "title": "Unidade e representação vêm antes da fórmula",
+          "text": [
+            "Um preço pode ser representado em centavos inteiros ou em decimal com uma regra de casas decimais. Uma medida científica costuma usar double. O sufixo m produz um literal decimal, enquanto um literal como 0.1 sem sufixo é double. Decimal representa muitas frações decimais de forma exata, mas continua tendo faixa e precisão finitas; uma divisão como um terço exige aproximação.",
+            "Escreva no contrato se preço inclui impostos, qual moeda usa e em que etapa arredonda. Um total em reais somado a um frete em centavos mistura unidades mesmo quando os dois são decimal. Um bom nome de variável reduz essa ambiguidade, mas não valida o domínio. A solução deve também rejeitar valores fora da regra, como preço negativo ou percentual acima de cem."
+          ]
+        },
+        {
+          "title": "Arredondar é aplicar uma política",
+          "text": [
+            "Math.Round permite escolher quantidade de casas e MidpointRounding. ToEven seleciona o vizinho com último dígito par nos empates; AwayFromZero afasta o empate de zero. Para 2.345m com duas casas, os resultados são 2.34m e 2.35m respectivamente. A escolha afeta dados financeiros e não deve ser substituída por um ajuste informal, como somar um pequeno epsilon antes da conversão.",
+            "Arredondar cada item e arredondar apenas o total pode produzir valores diferentes. Defina a etapa no contrato e teste uma cesta que exponha essa diferença. Formatar com F2 mostra duas casas sem mudar o valor armazenado. Se o restante do cálculo deve usar o valor arredondado, atribua explicitamente o resultado de Math.Round em vez de presumir que Console.WriteLine atualizou o número."
+          ]
+        },
+        {
+          "title": "Cultura pertence à fronteira textual",
+          "text": [
+            "A cultura controla símbolos de separador decimal e algumas regras de formatação e parsing. Um exemplo executado num CI não deve depender de a máquina usar vírgula ou ponto. CultureInfo.InvariantCulture torna a apresentação reproduzível. Uma interface para pessoas pode usar a cultura escolhida pelo produto, mas um arquivo de intercâmbio precisa ter um formato acordado com quem o lê.",
+            "Decimal.TryParse retorna sucesso ou falha em vez de lançar FormatException para texto inválido. NumberStyles define formas textuais aceitas, porém a gramática de negócio ainda pode ser mais restrita. Se o campo exige apenas dígitos ASCII e ponto com duas casas, teste essa estrutura explicitamente. Não aceite separadores de milhar ou sinais por acaso quando o contrato declara uma quantia não negativa."
+          ]
+        },
+        {
+          "title": "Overflow deve ser conferido onde acontece",
+          "text": [
+            "Operações inteiras em contexto checked lançam OverflowException quando o resultado não cabe no tipo, em vez de produzir um valor que se enrola na faixa. O contexto envolve a expressão ou bloco indicado; uma chamada feita dentro de checked não transfere automaticamente o contexto para todo o corpo de outra função. Coloque a verificação junto da soma ou multiplicação que pode exceder a capacidade.",
+            "Converter para long antes de multiplicar dois int pode ampliar a faixa da operação. Converter o resultado depois da multiplicação não recupera um overflow que já aconteceu. Para um cálculo final que precisa caber em int, valide ou use checked na conversão final também. Decimal tem comportamento de overflow próprio e não deve ser explicado como se tivesse o mesmo enrolamento de um inteiro unchecked."
+          ]
+        },
+        {
+          "title": "Ausência, zero e falha são estados distintos",
+          "text": [
+            "Um decimal? pode conter uma quantia ou null. Use HasValue ou um pattern para distinguir ausência; zero é um valor presente. O operador ?? oferece um padrão para null, mas só faz sentido quando o domínio aceita essa substituição. Se null significa dado ainda não coletado, transformá-lo em zero altera o significado do relatório e pode esconder um problema de integração.",
+            "Um TryParse que falhou não produziu um preço válido apenas porque a variável de saída contém zero. Consuma o valor somente no ramo de sucesso. Essa regra também vale para um resultado de desconto ou conversão de faixa. Uma API mais rica pode informar o motivo da falha com enum ou objeto de resultado; o importante é não permitir que o número padrão seja confundido com um dado validado."
+          ]
+        },
+        {
+          "title": "Casos de fronteira conferem a política escolhida",
+          "text": [
+            "Monte testes com zero, valor negativo, percentual zero, percentual cem, empate de arredondamento, entrada inválida e limite do tipo. Explique a expectativa de cada teste antes da execução. Um conjunto que só calcula 10 menos dez por cento pode passar com várias políticas erradas porque esse caso não exige arredondamento nem confronta ausência ou overflow.",
+            "Nos exemplos, condições que lançam Exception servem como verificações de estudo e não são um framework completo de testes. A validação normal da função continua executando em Release. Transfira o contrato para uma proposta de compra: preserve o valor original, calcule o valor final segundo a política e apresente a moeda separadamente do número usado no domínio. Documente como a regra mudaria ao trabalhar com mais casas decimais."
+          ]
+        }
+      ],
+      "code": "using System;\nusing System.Globalization;\ndecimal a = 0.1m + 0.2m;\ndecimal par = Math.Round(2.345m,2,MidpointRounding.ToEven);\ndecimal fora = Math.Round(2.345m,2,MidpointRounding.AwayFromZero);\nif (a != 0.3m || par != 2.34m || fora != 2.35m) throw new Exception(\"política decimal\");\nConsole.WriteLine(a.ToString(\"F2\",CultureInfo.InvariantCulture));\nConsole.WriteLine(par.ToString(\"F2\",CultureInfo.InvariantCulture));\nConsole.WriteLine(fora.ToString(\"F2\",CultureInfo.InvariantCulture));\ntry {\n    int limite = int.MaxValue;\n    _ = checked(limite + 1);\n    throw new Exception(\"overflow esperado\");\n} catch (OverflowException) {\n    Console.WriteLine(\"overflow detectado\");\n}",
+      "expectedOutput": [
+        "0.30",
+        "2.34",
+        "2.35",
+        "overflow detectado"
+      ],
+      "output": "Saída: 0.30, 2.34, 2.35 e overflow detectado. Os dois arredondamentos têm políticas diferentes para o mesmo empate.",
+      "trace": [
+        "Os literais com m mantêm o cálculo em decimal.",
+        "Math.Round recebe uma política de empate explícita e a apresentação usa cultura invariável.",
+        "checked envolve a soma que excede int.MaxValue, e a exceção é detectada."
+      ],
+      "exercise": "Calcule um desconto percentual sobre preço decimal não negativo, aceitando percentual de zero a cem. Arredonde o resultado final para duas casas com AwayFromZero. Rejeite faixas inválidas e teste preço zero, desconto total e um empate.",
+      "solution": "using System;\nusing System.Globalization;\nstatic decimal Descontar(decimal preco, decimal percentual) {\n    if (preco < 0 || percentual < 0 || percentual > 100) throw new ArgumentOutOfRangeException();\n    return Math.Round(preco * (1m - percentual / 100m),2,MidpointRounding.AwayFromZero);\n}\nif (Descontar(0m,10m)!=0m || Descontar(10m,100m)!=0m || Descontar(2.345m,0m)!=2.35m)\n    throw new Exception(\"desconto\");\nbool rejeitou=false;\ntry {Descontar(10m,101m);} catch (ArgumentOutOfRangeException) {rejeitou=true;}\nif (!rejeitou) throw new Exception(\"faixa\");\nConsole.WriteLine(Descontar(2.345m,0m).ToString(\"F2\",CultureInfo.InvariantCulture));",
+      "solutionOutput": [
+        "2.35"
+      ],
+      "bug": "O programa converte para long depois de multiplicar dois int. A operação original ainda acontece na largura de int; o cast posterior não evita overflow.",
+      "bugCode": "int precoCentavos = 100000;\nint quantidade = 100000;\nlong total = (long)(precoCentavos * quantidade); // cast tarde demais",
+      "repair": "Converta um operando antes: checked((long)precoCentavos * quantidade). Se o resultado precisar caber em int, confira essa faixa na conversão final. A posição do cast e do checked faz parte da correção.",
+      "checks": [
+        "As duas políticas de empate produzem resultados previstos.",
+        "A soma fora de int é detectada na operação.",
+        "Zero válido não é confundido com falha de parsing ou ausência."
+      ],
+      "project": "Crie um calculador de orçamento com preço decimal, quantidade inteira e desconto. Separe parsing, domínio, arredondamento e apresentação, documente o formato do arquivo e registre o motivo de rejeição sem produzir total zero para entradas inválidas.",
+      "question": "Por que (long)(a * b) pode falhar para dois int grandes?",
+      "answer": "A multiplicação ocorre como int antes da conversão do resultado para long.",
+      "distractors": [
+        "Long sempre tem a mesma faixa de int em C#.",
+        "O cast converte ambos os operandos antes de calcular, então não há risco nessa expressão."
+      ],
+      "practices": [
+        {
+          "id": "formato",
+          "title": "Problema 1: preço com formato de intercâmbio",
+          "topics": [
+            "TryParse e contrato de formato",
+            "cultura na apresentação",
+            "literal decimal com sufixo m"
+          ],
+          "prompt": "Aceite texto de preço com um a seis dígitos ASCII antes do ponto e exatamente duas casas depois dele. Rejeite sinais, vírgula, espaços e casas ausentes. Use TryParse com cultura invariável depois de conferir a gramática.",
+          "solution": "using System;\nusing System.Globalization;\nusing System.Text.RegularExpressions;\nstatic bool Preco(string texto,out decimal valor) {\n    valor=0m;\n    return Regex.IsMatch(texto,@\"\\A[0-9]{1,6}\\.[0-9]{2}\\z\") &&\n        decimal.TryParse(texto,NumberStyles.AllowDecimalPoint,CultureInfo.InvariantCulture,out valor);\n}\nif (!Preco(\"0.00\",out var zero) || zero!=0m || !Preco(\"12.50\",out var bom) || bom!=12.50m)\n    throw new Exception(\"preço\");\nforeach (var texto in new[]{\"12,50\",\"-1.00\",\" 1.00\",\"1.0\",\"1.00\\n\"})\n    if (Preco(texto,out _)) throw new Exception(\"formato aceito: \"+texto);\nConsole.WriteLine(bom.ToString(\"F2\",CultureInfo.InvariantCulture));",
+          "expectedOutput": [
+            "12.50"
+          ],
+          "explanation": [
+            "A expressão usa âncoras de início e fim absolutos para não aceitar uma quebra de linha residual. A gramática define o formato de intercâmbio; TryParse confere a conversão numérica.",
+            "O valor de out só é consumido quando o bool indica sucesso. Os limites textuais mantêm o número dentro de uma faixa pequena e documentada, sem depender da cultura do processo."
+          ],
+          "checks": [
+            "0.00 e 12.50 são aceitos.",
+            "Cinco formatos inválidos são rejeitados.",
+            "Falha não é consumida como preço zero."
+          ]
+        },
+        {
+          "id": "inteiro",
+          "title": "Problema 2: produto inteiro com faixa final",
+          "topics": [
+            "checked no ponto da operação",
+            "limite numérico antes de converter"
+          ],
+          "prompt": "Implemente Produto(int a, int b) retornando int com verificação de overflow. Confira 100 * 20 e detecte int.MaxValue * 2. A verificação precisa ocorrer dentro da função.",
+          "solution": "using System;\nstatic int Produto(int a,int b) {\n    return checked(a*b);\n}\nif (Produto(100,20)!=2000) throw new Exception(\"produto\");\nbool detectado=false;\ntry {_=Produto(int.MaxValue,2);} catch (OverflowException) {detectado=true;}\nif (!detectado) throw new Exception(\"overflow não detectado\");\nConsole.WriteLine(Produto(100,20));\nConsole.WriteLine(\"limite verificado\");",
+          "expectedOutput": [
+            "2000",
+            "limite verificado"
+          ],
+          "explanation": [
+            "checked fica no corpo que contém a multiplicação. Ele não depende da escolha de contexto do chamador e transforma o resultado fora da faixa em uma falha observável.",
+            "A verificação do teste diferencia uma OverflowException esperada de qualquer outra falha. Se a função passar a retornar long, amplie um operando antes da multiplicação e revise o contrato de retorno."
+          ],
+          "checks": [
+            "O caso comum retorna 2000.",
+            "O caso extremo lança OverflowException.",
+            "Explique por que envolver só a chamada com checked não define o corpo da função."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cs-metodos-parametros",
+      "title": "C#: métodos, parâmetros e estado compartilhado",
+      "level": "Fundamentos",
+      "summary": "Leia uma assinatura de método como um contrato sobre valores, referências e falhas. Você vai comparar alteração de objeto com troca da referência local, usar out no padrão Try e escrever uma função que valida antes de modificar estado. Os problemas praticam resultado independente e classificação de entrada sem assumir que toda passagem por valor isola um objeto mutável.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters",
+      "topics": [
+        "passagem por valor",
+        "cópia de referência de classe",
+        "ref para trocar a variável",
+        "out e padrão Try",
+        "validação antes da mutação",
+        "array copiado versus compartilhado",
+        "retorno e efeito observável",
+        "exceção como parte do contrato"
+      ],
+      "sections": [
+        {
+          "title": "Um método pode devolver valor ou produzir efeito",
+          "text": [
+            "Um método de cálculo recebe dados e retorna um resultado; um método de comando pode alterar estado. Nome, parâmetros e retorno devem deixar essa escolha clara. Se Total devolve uma soma, quem chama deve poder esperar que os valores recebidos permaneçam iguais. Se Debitar altera uma conta, o contrato deve dizer o que acontece na rejeição e se é possível observar uma alteração parcial.",
+            "Escreva pré-condições, pós-condições e falhas antes do corpo. Por exemplo: valor não negativo; no sucesso saldo diminui exatamente valor; na falha saldo permanece igual. Isso permite comparar implementações diferentes e construir testes que não dependem de detalhes internos. Uma assinatura bool TryDebitar comunica uma rejeição esperada, enquanto uma exceção pode representar um argumento fora do contrato."
+          ]
+        },
+        {
+          "title": "Passar por valor copia o valor do parâmetro",
+          "text": [
+            "Para um int, a passagem padrão por valor copia o inteiro. Modificar o parâmetro não modifica a variável do chamador. Para uma classe, o valor copiado é uma referência ao objeto: os dois caminhos apontam para o mesmo objeto. Alterar uma propriedade desse objeto pode ser visto pelo chamador, mesmo que o parâmetro não tenha ref. Esse é um dos motivos para não resumir passagem por valor como sempre cria uma cópia completa.",
+            "Reatribuir o parâmetro de classe para new Conta muda apenas a referência local recebida. O chamador continua apontando para o objeto anterior. Para substituir a própria variável do chamador, a assinatura pode usar ref. Não escolha ref só porque quer mudar uma propriedade: o compartilhamento do objeto já permite esse efeito. Escolha a forma que descreve exatamente qual entidade pode ser alterada."
+          ]
+        },
+        {
+          "title": "ref e out mudam a relação com a variável",
+          "text": [
+            "Um parâmetro ref permite ler e escrever a variável fornecida pelo chamador, que deve estar inicializada. out permite entregar um valor por essa variável e exige que o método a atribua em todos os caminhos normais de retorno. A chamada indica ref ou out explicitamente, tornando o efeito na variável visível no local de uso. Essas regras são diferentes da mera mutação de propriedades de um objeto compartilhado.",
+            "O padrão Try combina bool com out. No sucesso, o valor de saída tem significado; na falha, o chamador não deve usá-lo como um resultado validado. Uma variável out atribuída a zero por exigência do compilador não torna zero um resultado correto da operação falha. Esse protocolo merece um teste que verifica sucesso com zero, pois ele mostra que o bool e o valor desempenham papéis distintos."
+          ]
+        },
+        {
+          "title": "Validação deve preceder a alteração",
+          "text": [
+            "Se um método altera saldo e só depois descobre uma entrada inválida, o chamador pode receber uma conta parcialmente modificada. Em operações simples, confira todas as pré-condições antes da primeira escrita. Um TryDebitar rejeita valor negativo ou insuficiência sem alterar saldo; somente depois subtrai. Isso estabelece uma propriedade útil de preservação na falha e reduz a necessidade de compensações.",
+            "Nem toda operação real pode ser organizada num único passo sem efeitos externos. Arquivos, transações e chamadas de rede podem exigir outras garantias e mecanismos de rollback. Nesta aula o estado é um objeto em memória, com acesso síncrono e sem concorrência. O recorte permite compreender o contrato de mutação; não o apresente como uma solução automática para conta financeira em múltiplas threads ou serviços."
+          ]
+        },
+        {
+          "title": "Arrays exigem uma decisão de compartilhamento",
+          "text": [
+            "Um array é um tipo de referência. Receber int[] por valor copia a referência, portanto alterar um elemento altera o array do chamador. Se a função promete uma nova sequência, copie os elementos para outro array ou construa o resultado sem escrever na entrada. Para um array de inteiros, a cópia separa também os valores de elementos; para um array de objetos, as referências internas continuam compartilhadas.",
+            "Retornar uma coleção nova torna a propriedade de independência observável. Depois da chamada, modifique um elemento da saída e confira que a entrada permanece igual. Esse teste distingue cópia de alias. Use uma interface somente leitura quando quer restringir operações disponíveis, mas lembre que ela não congela todas as referências ao objeto. O contrato de compartilhamento vai além dos nomes dos tipos na assinatura."
+          ]
+        },
+        {
+          "title": "Testes precisam comparar o antes e o depois",
+          "text": [
+            "Uma verificação de mutação deve guardar o estado inicial e comparar cada ramo. Teste sucesso, rejeição e um caso limite como débito zero. Para uma substituição com ref, confira que a variável aponta para a nova instância; para uma reatribuição local, confira que ainda aponta para a original. Esses testes mostram a diferença entre mudar o objeto e mudar a referência que uma variável armazena.",
+            "Depure com uma tabela de variáveis e objetos: duas variáveis podem conter a mesma referência sem serem a mesma variável. Desenhar essa relação ajuda mais que procurar uma regra genérica de cópia. Transfira o método para um editor de configuração: escolha se a função altera a configuração atual ou devolve uma proposta independente e defina o que a interface deve fazer quando a validação falha."
+          ]
+        }
+      ],
+      "code": "using System;\nvar conta=new Conta {Saldo=100};\nstatic bool TryDebitar(Conta conta,int valor) {\n    if (valor<0 || valor>conta.Saldo) return false;\n    conta.Saldo-=valor;\n    return true;\n}\nstatic void TrocarLocal(Conta conta) {\n    conta=new Conta {Saldo=999};\n}\nif (!TryDebitar(conta,30) || conta.Saldo!=70 || TryDebitar(conta,80) || conta.Saldo!=70)\n    throw new Exception(\"débito\");\nTrocarLocal(conta);\nif (conta.Saldo!=70) throw new Exception(\"referência local\");\nConsole.WriteLine(conta.Saldo);\nclass Conta {public int Saldo {get;set;}}",
+      "expectedOutput": [
+        "70"
+      ],
+      "output": "Saída: 70. Alterar Saldo alcança o objeto compartilhado; atribuir uma nova Conta ao parâmetro local não troca a variável do chamador.",
+      "trace": [
+        "O parâmetro contém uma cópia da referência para a mesma instância.",
+        "TryDebitar valida antes de modificar a propriedade.",
+        "TrocarLocal substitui apenas sua referência local; a conta do chamador conserva 70."
+      ],
+      "exercise": "Implemente TryMetade(int valor, out int metade). Tenha sucesso apenas para inteiros pares não negativos, inclusive zero. Na falha atribua zero ao out, retorne false e demonstre que o consumidor usa somente o bool para saber se o resultado é válido.",
+      "solution": "using System;\nstatic bool TryMetade(int valor,out int metade) {\n    metade=0;\n    if (valor<0 || valor%2!=0) return false;\n    metade=valor/2;\n    return true;\n}\nif (!TryMetade(0,out var zero) || zero!=0 || !TryMetade(8,out var quatro) || quatro!=4 ||\n    TryMetade(3,out _) || TryMetade(-2,out _)) throw new Exception(\"metade\");\nConsole.WriteLine(zero+\" \"+quatro);",
+      "solutionOutput": [
+        "0 4"
+      ],
+      "bug": "Uma função recebe int[] e modifica o primeiro elemento, embora prometa devolver uma versão independente. A passagem padrão por valor copia a referência e não o array.",
+      "bugCode": "static int[] Preparar(int[] dados) {\n    dados[0]=0;\n    return dados; // entrada e saída compartilham o array\n}",
+      "repair": "Construa um array novo, copie os valores e modifique a cópia. Confira também a entrada vazia antes de acessar o índice zero. O teste precisa alterar a saída depois e verificar que a entrada não mudou.",
+      "checks": [
+        "A falha de débito conserva o saldo.",
+        "Sucesso com zero é distinguido de falha com out zero.",
+        "Explique a diferença entre alterar uma propriedade e reatribuir o parâmetro."
+      ],
+      "project": "Crie um preparador de configuração com método de validação e função que devolve uma cópia de valores normalizados. Apresente a proposta antes de substituir a configuração atual e escreva verificações de que falhas conservam o estado original.",
+      "question": "O que é copiado ao passar uma instância de classe pelo parâmetro padrão?",
+      "answer": "O valor da referência; o objeto continua compartilhado.",
+      "distractors": [
+        "Uma cópia profunda automática de todo o objeto e de seus campos.",
+        "A variável do chamador inteira, permitindo que uma reatribuição local a substitua."
+      ],
+      "practices": [
+        {
+          "id": "copia",
+          "title": "Problema 1: normalizar sem alterar a entrada",
+          "topics": [
+            "array copiado versus compartilhado",
+            "retorno e efeito observável"
+          ],
+          "prompt": "Produza um array novo em que números negativos viram zero. Preserve a entrada, aceite array vazio e demonstre independência alterando a saída depois.",
+          "solution": "using System;\nstatic int[] Normalizar(int[] dados) {\n    var resultado=new int[dados.Length];\n    for (int i=0;i<dados.Length;i++) resultado[i]=Math.Max(0,dados[i]);\n    return resultado;\n}\nvar entrada=new[]{-2,3};\nvar saida=Normalizar(entrada);\nsaida[1]=9;\nif (entrada[0]!=-2 || entrada[1]!=3 || saida[0]!=0 || saida[1]!=9 || Normalizar(Array.Empty<int>()).Length!=0)\n    throw new Exception(\"independência\");\nConsole.WriteLine(entrada[0]+\" \"+saida[0]+\" \"+saida[1]);",
+          "expectedOutput": [
+            "-2 0 9"
+          ],
+          "explanation": [
+            "O resultado tem um armazenamento próprio e o laço não escreve em dados. Como os elementos são int, a cópia separa os valores necessários para esse contrato.",
+            "A alteração posterior de saida[1] é o teste que revela uma implementação que apenas retornou o array original. O caso vazio também evita acesso ao primeiro elemento sem verificação."
+          ],
+          "checks": [
+            "A entrada conserva -2 e 3.",
+            "A saída pode ser alterada independentemente.",
+            "A entrada vazia produz saída vazia."
+          ]
+        },
+        {
+          "id": "troca",
+          "title": "Problema 2: substituir a referência do chamador",
+          "topics": [
+            "ref para trocar a variável",
+            "cópia de referência de classe",
+            "passagem por valor"
+          ],
+          "prompt": "Compare dois métodos que criam uma nova Caixa com Valor 9: um recebe Caixa por valor e outro ref Caixa. Depois da primeira chamada o chamador deve conservar a instância original; depois da segunda deve apontar para uma nova.",
+          "solution": "using System;\nstatic void Local(Caixa caixa) {caixa=new Caixa {Valor=9};}\nstatic void Substituir(ref Caixa caixa) {caixa=new Caixa {Valor=9};}\nvar caixa=new Caixa {Valor=1};\nvar original=caixa;\nLocal(caixa);\nif (!ReferenceEquals(caixa,original) || caixa.Valor!=1) throw new Exception(\"local\");\nSubstituir(ref caixa);\nif (ReferenceEquals(caixa,original) || caixa.Valor!=9 || original.Valor!=1) throw new Exception(\"ref\");\nConsole.WriteLine(original.Valor+\" \"+caixa.Valor);\nclass Caixa {public int Valor {get;set;}}",
+          "expectedOutput": [
+            "1 9"
+          ],
+          "explanation": [
+            "Local recebe uma cópia do valor da referência e altera somente essa cópia. Substituir recebe acesso à variável e pode escrever nela uma referência diferente.",
+            "A instância original continua existindo porque original ainda a referencia. Trocar a variável caixa não altera a propriedade Valor do objeto antigo; o teste compara identidade e valor separadamente."
+          ],
+          "checks": [
+            "A chamada por valor preserva a variável do chamador.",
+            "A chamada ref substitui sua referência.",
+            "O objeto original mantém Valor 1."
+          ]
+        }
+      ]
+    },
+    {
       "id": "cs-colecoes-linq",
       "title": "C#: genéricos, coleções e LINQ",
       "level": "Intermediário",

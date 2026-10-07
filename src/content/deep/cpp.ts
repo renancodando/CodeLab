@@ -93,6 +93,285 @@ export default {
       ]
     },
     {
+      "id": "cpp-texto-conversao",
+      "title": "C++: entrada textual, conversão completa e estados de erro",
+      "level": "Fundamentos",
+      "summary": "Leia texto sem perder partes da entrada e transforme uma quantidade somente quando o campo inteiro atende ao contrato. Você vai distinguir falha de conversão, texto residual e valor fora da faixa. A aula usa C++20, std::string, getline e from_chars, com programas pequenos que tornam visíveis os estados de erro sem acessar memória inválida.",
+      "source": "https://eel.is/c++draft/charconv.from.chars",
+      "topics": [
+        "string como sequência de unidades char",
+        "getline e leitura de linha",
+        "extração formatada e texto residual",
+        "from_chars e errc",
+        "consumo completo da entrada",
+        "limites de int",
+        "optional para conversão",
+        "gramática ASCII e faixa de domínio"
+      ],
+      "sections": [
+        {
+          "title": "Um texto precisa ser recebido inteiro",
+          "text": [
+            "A leitura por operator>> costuma separar tokens pelo espaço; getline recebe o conteúdo até o delimitador de linha. Se um nome pode ter espaço, ler apenas um token perde parte do dado antes da validação. Ao misturar extração formatada e getline no mesmo stream, o delimitador remanescente pode produzir uma linha vazia inesperada. Defina primeiro se o campo é uma linha, um token ou um registro com separadores.",
+            "Os exemplos usam istringstream com dados fixos para que o resultado seja reproduzível no CI e no computador do aluno. O mesmo estado de stream existe ao ler cin ou um arquivo. Uma operação pode falhar e marcar failbit; continuar lendo sem entender esse estado não conserta a entrada. Em uma interface interativa, decida se vai rejeitar o registro, limpar o estado e descartar a linha, ou encerrar. Não repita indefinidamente a mesma leitura falha."
+          ]
+        },
+        {
+          "title": "char não equivale a letra percebida",
+          "text": [
+            "std::string é uma sequência contígua de unidades char e mantém seu próprio armazenamento. A biblioteca de strings não escolhe automaticamente uma codificação Unicode. Em um texto UTF-8, uma letra acentuada pode ocupar vários bytes; size informa quantidade de unidades char. Cortar em um índice arbitrário pode dividir uma sequência codificada. Nesta aula os campos numéricos usam ASCII, o que permite uma gramática simples e explícita.",
+            "Um índice válido para obter um elemento está entre zero e size() - 1. A função at verifica a faixa e pode lançar out_of_range; operator[] não oferece a mesma verificação de fronteira para índices de elementos. Antes de analisar o primeiro caractere, confira se a string está vazia. Não use o elemento de terminação como se fosse mais um caractere do campo e não suponha que toda leitura produz pelo menos um símbolo."
+          ]
+        },
+        {
+          "title": "Conversão parcial não é validação completa",
+          "text": [
+            "from_chars recebe um intervalo de caracteres e um destino numérico. O resultado contém um ponteiro para o primeiro caractere não consumido e um código de erro. Para aceitar um inteiro que ocupa o campo inteiro, exija código de sucesso e ponteiro igual ao fim do intervalo. Uma conversão que encontra 12 no início de '12kg' não prova que '12kg' seja uma quantidade válida pelo contrato do formulário.",
+            "A conversão inteira de from_chars não ignora automaticamente espaços iniciais como certas outras funções e não aceita um sinal de mais inicial nessa interface. Não transforme essas características em uma gramática acidental. Se o domínio exige somente dígitos ASCII, confira essa regra antes e depois confira a faixa do número. Assim a mensagem pode distinguir formato inválido de quantidade proibida."
+          ]
+        },
+        {
+          "title": "Largura do tipo e faixa do domínio são limites diferentes",
+          "text": [
+            "int tem uma faixa de representação dependente da implementação, consultável em numeric_limits<int>. A quantidade permitida pelo produto pode ser muito menor, por exemplo até 500 ingressos. Um valor pode caber em int e ainda ser rejeitado semanticamente. from_chars informa result_out_of_range quando não consegue representar o número no destino; não ignore esse estado nem reutilize o valor do destino como se a conversão tivesse concluído.",
+            "A política de erro da função deve ser previsível. std::optional<int> pode representar quantidade válida ou ausência de resultado da conversão, mantendo zero como sucesso. Se precisa diferenciar causas, use um tipo de resultado com um código de erro, em vez de sobrecarregar -1 e zero. Um cast não verifica a faixa e não serve para transformar um texto numérico em um valor validado."
+          ]
+        },
+        {
+          "title": "O intervalo de análise depende da vida do texto",
+          "text": [
+            "Os ponteiros passados a from_chars apontam para o armazenamento de uma string existente. Durante a chamada o texto precisa continuar vivo e seu armazenamento não deve ser invalidado por uma mutação. Faça a conversão dentro do escopo em que a string é válida e retorne o número, não um ponteiro para o texto local. Esse cuidado introduz o conceito de tempo de vida que será aprofundado nas aulas de referências e posse.",
+            "Um string_view pode observar um texto sem copiar, mas não mantém o dono vivo. Não o use para devolver uma vista de uma string criada dentro da função. Nesta etapa, uma assinatura const std::string& documenta leitura sem alteração e evita a cópia do campo. Ela não muda a obrigação de o argumento existir durante a chamada. A posse fica com quem chamou, enquanto o resultado é um valor independente."
+          ]
+        },
+        {
+          "title": "Rejeições também são resultados de estudo",
+          "text": [
+            "Para conferir o conversor, use vazio, espaço inicial, espaço final, sinal, sufixo, fração, um valor gigante e o limite exato. Inclua zero e uma sequência com zeros iniciais quando essa forma for aceita. Apenas um teste com '42' não distingue conversão completa de parcial. A matriz de casos mostra qual camada rejeita o dado: gramática, capacidade do tipo ou faixa de negócio.",
+            "Compile com avisos e execute as verificações do exemplo. Os asserts servem para conferir o código de estudo e podem ser removidos em builds com NDEBUG; a validação de dados externos precisa estar em condições normais do programa. Transfira o conversor para um importador de estoque e mantenha a separação entre texto bruto, quantidade válida e mensagem de rejeição. Não descarte um erro apenas para produzir um número conveniente."
+          ]
+        }
+      ],
+      "code": "#include <charconv>\n#include <optional>\n#include <string>\n#include <iostream>\n#include <cassert>\n\nstd::optional<int> quantidade(const std::string& texto) {\n    if (texto.empty() || texto.size() > 3) return std::nullopt;\n    for (char c : texto) if (c < '0' || c > '9') return std::nullopt;\n    int valor = 0;\n    const auto fim = texto.data() + texto.size();\n    const auto resultado = std::from_chars(texto.data(), fim, valor);\n    if (resultado.ec != std::errc{} || resultado.ptr != fim || valor > 500)\n        return std::nullopt;\n    return valor;\n}\nint main() {\n    const auto zero = quantidade(\"0\"), dez = quantidade(\"010\");\n    assert(zero && *zero == 0 && dez && *dez == 10);\n    assert(!quantidade(\"12kg\") && !quantidade(\"501\") && !quantidade(\"\"));\n    std::cout << *zero << ' ' << *dez << '\\n';\n}",
+      "expectedOutput": [
+        "0 10"
+      ],
+      "output": "Saída: 0 10. Texto com sufixo, campo vazio e quantidade maior que 500 são rejeitados; zero continua válido.",
+      "trace": [
+        "A gramática limita o comprimento e os símbolos antes da conversão.",
+        "from_chars precisa indicar sucesso e ter consumido todo o intervalo.",
+        "optional com valor zero é presente; !optional testa ausência, sem testar o inteiro."
+      ],
+      "exercise": "Crie uma função para converter um código ASCII de exatamente quatro dígitos em int, aceitando zeros iniciais. Rejeite qualquer outra forma e retorne optional. Confira 0000, 0042, 123, +123 e 12x4.",
+      "solution": "#include <charconv>\n#include <optional>\n#include <string>\n#include <cassert>\n#include <iostream>\nstd::optional<int> codigo(const std::string& texto) {\n    if (texto.size() != 4) return std::nullopt;\n    for (char c : texto) if (c < '0' || c > '9') return std::nullopt;\n    int valor = 0;\n    const auto fim = texto.data() + texto.size();\n    const auto r = std::from_chars(texto.data(), fim, valor);\n    if (r.ec != std::errc{} || r.ptr != fim) return std::nullopt;\n    return valor;\n}\nint main() {\n    assert(codigo(\"0000\") == 0 && codigo(\"0042\") == 42);\n    assert(!codigo(\"123\") && !codigo(\"+123\") && !codigo(\"12x4\"));\n    std::cout << *codigo(\"0042\") << '\\n';\n}",
+      "solutionOutput": [
+        "42"
+      ],
+      "bug": "A extração formatada aceita o prefixo 12 de 12kg e o programa apresenta a entrada inteira como válida. A ausência de crash não comprova que todos os caracteres foram consumidos.",
+      "bugCode": "#include <sstream>\n#include <iostream>\nint main() {\n    std::istringstream entrada(\"12kg\");\n    int quantidade = 0;\n    if (entrada >> quantidade) std::cout << quantidade << '\\n'; // sufixo não conferido\n}",
+      "repair": "Quando o campo precisa ser integralmente numérico, confira sua gramática e o ponteiro final de from_chars. Se escolher um stream, confira também o texto residual e defina uma política de espaços.",
+      "checks": [
+        "0 e 010 produzem valores presentes.",
+        "Campo vazio, sufixo e 501 são rejeitados.",
+        "Explique a diferença entre código de sucesso e consumo completo."
+      ],
+      "project": "Monte um importador de estoque com um campo por linha. Preserve o texto bruto no relatório de rejeição, valide quantidade e limite, e calcule totais apenas com registros aceitos. Documente a gramática ASCII e o que mudaria para campos localizados com separador decimal.",
+      "question": "O que precisa ser conferido além de ec == std::errc{} para aceitar o campo inteiro com from_chars?",
+      "answer": "Que ptr chegou ao fim do intervalo de caracteres.",
+      "distractors": [
+        "Que o valor convertido é diferente de zero, porque zero indica erro.",
+        "Que a string foi convertida para string_view, pois isso garante sua validade."
+      ],
+      "practices": [
+        {
+          "id": "linhas",
+          "title": "Problema 1: nome completo e linha vazia",
+          "topics": [
+            "getline e leitura de linha",
+            "string como sequência de unidades char"
+          ],
+          "prompt": "Leia duas linhas de um istringstream: 'Ana Maria' e uma linha vazia. Preserve o espaço interno, aceite a linha vazia como leitura realizada e detecte o fim do stream na terceira tentativa.",
+          "solution": "#include <sstream>\n#include <string>\n#include <cassert>\n#include <iostream>\nint main() {\n    std::istringstream entrada(\"Ana Maria\\n\\n\");\n    std::string nome, vazia, extra;\n    const bool primeira = static_cast<bool>(std::getline(entrada, nome));\n    const bool segunda = static_cast<bool>(std::getline(entrada, vazia));\n    const bool terceira = static_cast<bool>(std::getline(entrada, extra));\n    assert(primeira && nome == \"Ana Maria\" && segunda && vazia.empty() && !terceira);\n    std::cout << nome << '\\n' << vazia.size() << '\\n';\n}",
+          "expectedOutput": [
+            "Ana Maria",
+            "0"
+          ],
+          "explanation": [
+            "getline mantém o espaço interno e remove o delimitador de linha. Uma linha vazia antes de um delimitador é diferente de não conseguir ler nenhum dado no fim do stream.",
+            "O estado de sucesso da operação é conferido separadamente do tamanho do texto. Essa distinção também aparece ao validar um CSV: um campo vazio pode existir mesmo que seu contrato depois o rejeite."
+          ],
+          "checks": [
+            "O nome contém o espaço interno.",
+            "A segunda leitura tem sucesso com string vazia.",
+            "A terceira leitura detecta fim, sem repetir indefinidamente."
+          ]
+        },
+        {
+          "id": "inteiro",
+          "title": "Problema 2: conversão completa com estouro detectado",
+          "topics": [
+            "from_chars e errc",
+            "consumo completo da entrada",
+            "limites de int",
+            "optional para conversão"
+          ],
+          "prompt": "Converta um inteiro com sinal opcional de menos, sem espaços nem sinal de mais. Aceite -12 e 0, rejeite 12x e um número de 40 dígitos. Use os estados de from_chars; não calcule manualmente um int que possa estourar.",
+          "solution": "#include <charconv>\n#include <string>\n#include <optional>\n#include <cassert>\n#include <iostream>\nstd::optional<int> inteiro(const std::string& texto) {\n    if (texto.empty()) return std::nullopt;\n    int valor = 0;\n    const auto fim = texto.data() + texto.size();\n    const auto r = std::from_chars(texto.data(), fim, valor);\n    if (r.ec != std::errc{} || r.ptr != fim) return std::nullopt;\n    return valor;\n}\nint main() {\n    assert(inteiro(\"-12\") == -12 && inteiro(\"0\") == 0);\n    assert(!inteiro(\"12x\") && !inteiro(\"+12\") && !inteiro(\" 12\"));\n    assert(!inteiro(std::string(40, '9')));\n    std::cout << *inteiro(\"-12\") << '\\n';\n}",
+          "expectedOutput": [
+            "-12"
+          ],
+          "explanation": [
+            "O conversor informa falha quando o valor não cabe em int, sem exigir uma multiplicação potencialmente inválida no parser escrito pelo aluno.",
+            "O ponteiro final distingue prefixo válido de campo válido. A gramática escolhida admite o sinal de menos suportado pela conversão inteira, mas não adiciona espaços ou sinal de mais implicitamente."
+          ],
+          "checks": [
+            "Aceite -12 e zero.",
+            "Rejeite sufixo, espaço e sinal de mais.",
+            "O número gigante falha sem overflow aritmético no programa."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cpp-funcoes-referencias",
+      "title": "C++: funções, cópia, referência e tempo de vida",
+      "level": "Fundamentos",
+      "summary": "Escolha uma assinatura de função que explique quem pode alterar um objeto e por quanto tempo uma referência é válida. Você vai comparar passagem por valor, referência mutável e referência const, proteger um saldo com pré-condições e retornar objetos por valor. Os exercícios mostram cópia de coleções e empréstimo de dados sem devolver referências a variáveis destruídas.",
+      "source": "https://eel.is/c++draft/dcl.ref",
+      "topics": [
+        "parâmetro por valor",
+        "referência mutável",
+        "referência const",
+        "pré-condição e pós-condição",
+        "retorno por valor",
+        "referência para objeto local",
+        "const não significa posse",
+        "cópia de vector e dados originais"
+      ],
+      "sections": [
+        {
+          "title": "Uma chamada estabelece um contrato observável",
+          "text": [
+            "Uma função deve dizer o que recebe, o que pode modificar e como representa a falha. A assinatura não precisa listar todas as regras do domínio, mas é o primeiro lugar para indicar valores, observação e mutação. Se a operação promete debitar um saldo, a pós-condição pode ser saldo_final == saldo_inicial - valor no sucesso e saldo inalterado na falha. Essa regra permite conferir o comportamento sem olhar a implementação.",
+            "Em C++, tipos fundamentais passados por valor tornam-se valores locais independentes do chamador. Alterar o parâmetro não altera a variável original. Esse isolamento é conveniente para pequenos dados e funções de cálculo. Retornar o resultado por valor torna a transformação explícita. Uma função void que altera uma cópia local e não retorna nada provavelmente não entrega o efeito que seu nome sugere."
+          ]
+        },
+        {
+          "title": "Referência mutável permite alterar o argumento",
+          "text": [
+            "Um parâmetro int& se refere ao objeto do chamador. Uma atribuição ao parâmetro modifica esse objeto; não existe uma cópia independente do inteiro para a escrita. Use essa forma quando o efeito faz parte do contrato e fique atento à possibilidade de dois parâmetros se referirem ao mesmo objeto. Um algoritmo que pressupõe objetos diferentes precisa declarar ou evitar essa hipótese.",
+            "Validar antes da primeira alteração simplifica a promessa de deixar o estado intacto na falha. Para debitar, confira valor não negativo e saldo suficiente, depois subtraia. Se a validação vier depois da subtração, você pode precisar desfazer o efeito e ainda lidar com aritmética inválida. Organizar a operação em conferir e então modificar reduz os estados intermediários que o chamador pode observar."
+          ]
+        },
+        {
+          "title": "Referência const observa sem adquirir posse",
+          "text": [
+            "const std::vector<int>& permite observar uma coleção sem copiar o vector e impede certas alterações por essa referência. Ela não mantém o objeto vivo por conta própria e não garante que não exista outra referência mutável. O chamador continua sendo o dono. Durante uma chamada normal e síncrona, ele precisa fornecer um objeto que permanece válido enquanto a função usa o argumento.",
+            "Const descreve uma restrição de acesso e deve ser lido junto do tempo de vida. Não é uma garantia geral de imutabilidade profunda, thread safety ou ausência de efeitos. Uma classe pode conter membros mutáveis ou referências a outros objetos. Nesta aula a coleção contém inteiros, o que torna a regra de leitura simples; os módulos de posse e concorrência aprofundam os casos em que observação e validade interagem."
+          ]
+        },
+        {
+          "title": "Retornar por valor evita empréstimos de locais mortos",
+          "text": [
+            "Uma variável local automática é destruída ao terminar seu escopo. Retornar uma referência a essa variável deixa o chamador com uma referência sem um objeto válido para usar. O programa pode compilar com aviso e a falha pode parecer desaparecer em uma execução, mas esse comportamento não estabelece um contrato seguro. O mesmo problema ocorre ao devolver uma vista ou ponteiro para armazenamento pertencente a um objeto local.",
+            "Retorne std::vector<int> por valor quando a função produz uma nova coleção. A linguagem e a biblioteca oferecem elisão de cópia e movimentos para evitar cópias desnecessárias em muitos casos. Não introduza uma referência inválida como otimização antecipada. O chamador recebe um objeto com sua própria vida; a função fica livre para encerrar e destruir os dados temporários que não fazem parte do resultado."
+          ]
+        },
+        {
+          "title": "Cópia de coleção conserva uma relação de independência",
+          "text": [
+            "Copiar um vector de inteiros cria uma nova coleção de valores. Alterar um elemento do vector copiado não altera o correspondente no original. Essa propriedade permite funções que recebem uma coleção por valor e a transformam localmente, devolvendo a nova versão. O custo da cópia depende do tamanho, portanto a decisão deve considerar a necessidade de independência e a frequência da operação.",
+            "A mesma conclusão não vale automaticamente para um vector de ponteiros ou objetos que compartilham recursos: a coleção pode ser copiada, mas os objetos apontados continuam compartilhados. Especifique o nível de independência que o domínio exige. Nos exemplos com int, os valores não carregam referências internas, de modo que testar o original depois de alterar a cópia confere diretamente a propriedade estudada."
+          ]
+        },
+        {
+          "title": "Teste efeitos e vida, além do resultado",
+          "text": [
+            "Para uma função que modifica estado, confira sucesso, falha e preservação do argumento no ramo de falha. Para uma função que devolve cópia, altere o resultado e confira o original. Esses testes verificam a relação entre objetos; um teste que compara somente a saída inicial pode deixar passar uma assinatura que devolve um empréstimo quando deveria produzir um novo valor.",
+            "Ative avisos do compilador e use sanitizers quando estiver estudando acessos e tempo de vida. Uma execução sem diagnóstico não prova que todos os usos possíveis sejam válidos, então a explicação do dono e do escopo continua necessária. Transfira o contrato para um carrinho ou orçamento: escolha se a operação retorna uma proposta nova ou modifica o estado atual, e documente a política de falha antes de escrever a subtração."
+          ]
+        }
+      ],
+      "code": "#include <cassert>\n#include <iostream>\nbool debitar(int& saldo, int valor) {\n    if (valor < 0 || valor > saldo) return false;\n    saldo -= valor;\n    return true;\n}\nint dobro(int valor) {\n    valor *= 2;\n    return valor;\n}\nint main() {\n    int saldo = 100;\n    assert(debitar(saldo, 30) && saldo == 70);\n    assert(!debitar(saldo, 80) && saldo == 70);\n    int base = 4;\n    const int resultado = dobro(base);\n    assert(base == 4 && resultado == 8);\n    std::cout << saldo << ' ' << base << ' ' << resultado << '\\n';\n}",
+      "expectedOutput": [
+        "70 4 8"
+      ],
+      "output": "Saída: 70 4 8. O débito válido modifica saldo, a tentativa inválida conserva 70 e dobro não altera base.",
+      "trace": [
+        "int& entrega acesso ao saldo do chamador; a validação vem antes da alteração.",
+        "A tentativa de debitar 80 retorna false sem subtrair.",
+        "dobro trabalha com uma cópia de base e devolve um valor independente."
+      ],
+      "exercise": "Escreva creditar(int& saldo, int valor) com saldo e valor não negativos. Rejeite uma soma que exceda numeric_limits<int>::max() sem calcular primeiro a soma perigosa; conserve o saldo na falha.",
+      "solution": "#include <limits>\n#include <cassert>\n#include <iostream>\nbool creditar(int& saldo, int valor) {\n    if (saldo < 0 || valor < 0 || valor > std::numeric_limits<int>::max() - saldo)\n        return false;\n    saldo += valor;\n    return true;\n}\nint main() {\n    int saldo = 10;\n    assert(creditar(saldo, 5) && saldo == 15);\n    assert(!creditar(saldo, -1) && saldo == 15);\n    saldo = std::numeric_limits<int>::max();\n    assert(!creditar(saldo, 1) && saldo == std::numeric_limits<int>::max());\n    std::cout << \"crédito verificado\\n\";\n}",
+      "solutionOutput": [
+        "crédito verificado"
+      ],
+      "bug": "Uma função devolve const int& apontando para uma variável local. A referência não prolonga a vida dessa variável. Não execute o trecho para tentar descobrir se funciona: explique o escopo do objeto e corrija o tipo de retorno.",
+      "bugCode": "const int& resultado() {\n    int local = 42;\n    return local; // referência inválida depois do retorno\n}",
+      "repair": "Retorne int por valor. Se a função precisa devolver referência a um objeto do chamador, o contrato deve dizer quem o mantém vivo e por quanto tempo; isso não se aplica ao local criado no trecho.",
+      "checks": [
+        "O débito inválido preserva o saldo.",
+        "A soma que excederia int é rejeitada antes da aritmética.",
+        "Explique quem é dono dos objetos recebidos por referência."
+      ],
+      "project": "Construa um orçamento em memória com funções de crédito e débito. Cada operação precisa documentar suas pré-condições e conservar o saldo na rejeição. Acrescente uma função que cria um relatório por valor e demonstre que ele continua válido depois do retorno.",
+      "question": "Por que const T& para um parâmetro não significa que a função passou a ser dona do objeto?",
+      "answer": "A referência restringe acesso por ela, mas o dono continua responsável pelo tempo de vida.",
+      "distractors": [
+        "Toda referência const copia automaticamente o objeto para dentro da função.",
+        "Const impede a destruição do objeto até todas as referências serem removidas."
+      ],
+      "practices": [
+        {
+          "id": "copia",
+          "title": "Problema 1: criar uma coleção independente",
+          "topics": [
+            "parâmetro por valor",
+            "retorno por valor",
+            "cópia de vector e dados originais"
+          ],
+          "prompt": "Receba um vector<int> por valor, substitua os números negativos por zero e devolva a nova coleção. Demonstre que o vector original conserva um valor negativo e que alterar o resultado depois não o modifica.",
+          "solution": "#include <vector>\n#include <cassert>\n#include <iostream>\nstd::vector<int> normalizar(std::vector<int> valores) {\n    for (int& valor : valores) if (valor < 0) valor = 0;\n    return valores;\n}\nint main() {\n    const std::vector<int> original{-2, 3};\n    auto copia = normalizar(original);\n    assert((copia == std::vector<int>{0, 3}));\n    copia[1] = 9;\n    assert(original[0] == -2 && original[1] == 3);\n    assert(normalizar({}).empty());\n    std::cout << original[0] << ' ' << copia[0] << ' ' << copia[1] << '\\n';\n}",
+          "expectedOutput": [
+            "-2 0 9"
+          ],
+          "explanation": [
+            "A passagem por valor cria uma coleção local para a transformação; o retorno entrega o novo valor ao chamador. O caso vazio não faz nenhum acesso a elemento.",
+            "A atividade usa vector<int>, portanto a independência inclui os elementos. Se os elementos fossem ponteiros para objetos compartilhados, copiar o vector não copiaria automaticamente os objetos."
+          ],
+          "checks": [
+            "O negativo torna-se zero somente na cópia.",
+            "Alterar a cópia não altera o original.",
+            "A coleção vazia permanece válida."
+          ]
+        },
+        {
+          "id": "observacao",
+          "title": "Problema 2: observar o tamanho sem modificar",
+          "topics": [
+            "referência const",
+            "const não significa posse",
+            "pré-condição e pós-condição"
+          ],
+          "prompt": "Receba uma coleção por referência const e conte os valores negativos. Verifique zero ocorrências, duas ocorrências e vazio, garantindo que os elementos não mudam. Explique por que o resultado deve ser um valor, sem referência a um contador local.",
+          "solution": "#include <vector>\n#include <cstddef>\n#include <cassert>\n#include <iostream>\nstd::size_t negativos(const std::vector<int>& valores) {\n    std::size_t total = 0;\n    for (int valor : valores) if (valor < 0) ++total;\n    return total;\n}\nint main() {\n    const std::vector<int> valores{-2, 0, -1, 4};\n    assert(negativos(valores) == 2 && negativos({1, 0}) == 0 && negativos({}) == 0);\n    assert((valores == std::vector<int>{-2, 0, -1, 4}));\n    std::cout << negativos(valores) << '\\n';\n}",
+          "expectedOutput": [
+            "2"
+          ],
+          "explanation": [
+            "A referência const evita copiar a coleção para uma operação de leitura. O contador usa size_t, um tipo capaz de representar contagens de elementos da coleção.",
+            "O retorno por valor não depende da vida do contador local. A função não guarda a referência para uso posterior, e o contrato de observação mantém a coleção recebida intacta."
+          ],
+          "checks": [
+            "Duas ocorrências são contadas.",
+            "Zero e coleção vazia retornam zero.",
+            "Explique por que retornar const size_t& seria incorreto para esse contador."
+          ]
+        }
+      ]
+    },
+    {
       "id": "cpp-classes-raii",
       "title": "C++: classes, RAII e semântica de valor",
       "level": "Intermediário",
@@ -175,6 +454,146 @@ export default {
       "distractors": [
         "Sim; sempre apaga o conteúdo original imediatamente.",
         "Sim; ele chama automaticamente delete no objeto."
+      ]
+    },
+    {
+      "id": "cpp-raii-posse-unica",
+      "title": "C++: RAII, posse exclusiva e transferência de recursos",
+      "level": "Intermediário",
+      "summary": "Associe a duração de um recurso a um objeto e acompanhe o que acontece na saída normal ou por exceção. Esta aula usa RAII e unique_ptr para mostrar aquisição, destruição e transferência de posse, distinguindo mover o ponteiro de copiar o objeto. Os problemas verificam a quantidade de objetos vivos e a preservação de invariantes durante falhas.",
+      "source": "https://eel.is/c++draft/unique.ptr",
+      "topics": [
+        "RAII e duração do recurso",
+        "destrutor na saída de escopo",
+        "desenrolamento por exceção",
+        "unique_ptr não copiável",
+        "move transfere a posse",
+        "ponteiro movido e estado vazio",
+        "rule of zero na composição",
+        "observador sem propriedade"
+      ],
+      "sections": [
+        {
+          "title": "Um recurso precisa de um dono claro",
+          "text": [
+            "Memória dinâmica, arquivos e locks têm uma duração que precisa ser controlada. Adquirir um recurso e confiar que cada caminho lembrará de liberá-lo cria uma relação frágil entre trechos distantes. RAII associa o recurso a um objeto: a aquisição estabelece uma instância válida e a destruição libera o recurso quando sua vida termina. O nome histórico menciona inicialização, mas o benefício central é a relação entre vida do objeto e liberação.",
+            "Um dono deve ser distinguido de um observador. Um ponteiro bruto pode apontar para um objeto sem assumir sua liberação; isso precisa estar claro no contrato. Se dois trechos acham que são os donos exclusivos, podem tentar liberar duas vezes. Se nenhum é dono, o recurso pode ficar sem liberação. O desenho da API deve tornar a responsabilidade visível antes de qualquer otimização."
+          ]
+        },
+        {
+          "title": "O escopo oferece um ponto de destruição previsível",
+          "text": [
+            "Objetos automáticos já construídos são destruídos na saída do escopo, em ordem inversa à construção conforme as regras da linguagem. Isso acontece também em caminhos de retorno antecipado e no desenrolamento de pilha por exceções. Um gerenciador RAII usa essa relação para manter a liberação próxima da definição de posse, sem repetir limpeza em cada ramo.",
+            "Há limites: terminar o processo de certas formas não equivale a um desenrolamento normal, e um construtor que falha não executa o destrutor do objeto completo que nunca terminou de ser construído. Subobjetos já construídos têm suas próprias regras de destruição. Prefira membros que já gerenciam recursos para que uma falha durante a construção não exija uma coleção de ponteiros crus e limpezas manuais."
+          ]
+        },
+        {
+          "title": "unique_ptr representa posse exclusiva",
+          "text": [
+            "std::unique_ptr<T> é um objeto que gerencia um recurso e não pode ser copiado como uma segunda posse exclusiva do mesmo objeto. std::make_unique<T> constrói o objeto gerenciado e entrega o dono. Quando o dono válido é destruído, o deleter correspondente libera o recurso. Não execute delete manual no endereço observado por get, porque a responsabilidade continua com o gerenciador.",
+            "Um unique_ptr vazio não possui objeto e pode ser testado antes do acesso. operator* e operator-> exigem que exista um objeto adequado para o uso. O tipo do ponteiro não remove a obrigação de conferir estado vazio após uma operação que pode esvaziá-lo. A regra de posse evita várias falhas de liberação, mas não torna automaticamente qualquer desreferência válida."
+          ]
+        },
+        {
+          "title": "Mover transfere o gerenciador, sem copiar o objeto",
+          "text": [
+            "Mover um unique_ptr para outro transfere sua responsabilidade e deixa o ponteiro de origem vazio, conforme o contrato desse tipo. O objeto gerenciado não precisa ser copiado e pode permanecer no mesmo endereço. std::move é uma conversão de categoria que permite selecionar uma operação de movimento; não é uma função que por si só desloca bytes ou destrói um recurso.",
+            "Não generalize o estado vazio para todo objeto movido. Muitos tipos ficam válidos, mas com estado não especificado, e precisam ser usados conforme seus contratos. Nesta aula verificamos o estado definido de unique_ptr depois da transferência. O contador de objetos vivos demonstra que mover o gerenciador não cria uma segunda instância de T nem destrói a instância transferida."
+          ]
+        },
+        {
+          "title": "Composição permite seguir a regra de zero",
+          "text": [
+            "Se uma classe contém string, vector e unique_ptr, seus membros podem gerenciar a própria vida. A classe frequentemente não precisa escrever manualmente destrutor, copy e move para liberar esses recursos. Essa preferência é conhecida como rule of zero. A possibilidade de cópia ou movimento da classe resultante depende dos membros; conter unique_ptr torna a cópia padrão incompatível com posse exclusiva.",
+            "Um objeto de domínio pode precisar de uma operação de clone explícita quando copiar significa produzir outro recurso independente. Não transforme uma cópia em compartilhamento silencioso só para compilar. Também não implemente um destrutor sem revisar o efeito sobre operações especiais e invariantes. A aula usa tipos pequenos com posse clara para preparar esse raciocínio antes de cenários de herança e recursos personalizados."
+          ]
+        },
+        {
+          "title": "Verifique vida do recurso em caminhos de falha",
+          "text": [
+            "Um teste de RAII deve observar saída normal, transferência e exceção depois da aquisição. Um contador de instâncias vivas torna essas transições visíveis em um exemplo de estudo. Confira que o contador retorna a zero depois do escopo e que uma transferência conserva uma instância viva, em vez de criar duas. Um teste que só acessa um valor do objeto não demonstra que a limpeza ocorreu.",
+            "Observe também a duração de ponteiros não proprietários. Um endereço obtido por get continua válido somente enquanto o objeto gerenciado vive e não foi substituído ou liberado. Guardar esse endereço depois de destruir o dono cria uma referência pendente. Transfira o modelo para arquivos e locks usando gerenciadores da biblioteca e documente a relação entre dono, observador e escopo no desenho da API."
+          ]
+        }
+      ],
+      "code": "#include <memory>\n#include <utility>\n#include <cassert>\n#include <iostream>\nstruct Recurso {\n    inline static int vivos = 0;\n    Recurso() {++vivos;}\n    ~Recurso() {--vivos;}\n    Recurso(const Recurso&) = delete;\n    Recurso& operator=(const Recurso&) = delete;\n};\nint main() {\n    {\n        auto origem = std::make_unique<Recurso>();\n        auto* endereco = origem.get();\n        auto destino = std::move(origem);\n        assert(!origem && destino.get() == endereco && Recurso::vivos == 1);\n        std::cout << Recurso::vivos << '\\n';\n    }\n    assert(Recurso::vivos == 0);\n    std::cout << Recurso::vivos << '\\n';\n}",
+      "expectedOutput": [
+        "1",
+        "0"
+      ],
+      "output": "Saída: 1 e 0. A transferência conserva o objeto e o escopo do novo dono determina sua liberação.",
+      "trace": [
+        "make_unique cria uma instância gerenciada e um dono.",
+        "Mover transfere o dono para destino e deixa origem vazia.",
+        "Ao sair do escopo, destino libera o objeto e o contador volta a zero."
+      ],
+      "exercise": "Crie um recurso RAII com contador de instâncias. Adquira-o com make_unique, lance runtime_error depois da aquisição e confira, no catch externo, que não ficou instância viva.",
+      "solution": "#include <memory>\n#include <stdexcept>\n#include <cassert>\n#include <iostream>\nstruct Recurso {\n    inline static int vivos = 0;\n    Recurso() {++vivos;}\n    ~Recurso() {--vivos;}\n};\nint main() {\n    bool capturou = false;\n    try {\n        auto recurso = std::make_unique<Recurso>();\n        assert(Recurso::vivos == 1);\n        throw std::runtime_error(\"falha depois da aquisição\");\n    } catch (const std::runtime_error&) {\n        capturou = true;\n        assert(Recurso::vivos == 0);\n    }\n    assert(capturou);\n    std::cout << \"recurso liberado\\n\";\n}",
+      "solutionOutput": [
+        "recurso liberado"
+      ],
+      "bug": "O programa obtém um endereço por get e executa delete nele, embora o unique_ptr continue dono. Ao terminar o escopo haverá uma segunda tentativa de liberação. O trecho deve ser analisado e corrigido, sem executar a falha como demonstração.",
+      "bugCode": "auto dono = std::make_unique<int>(42);\nint* observador = dono.get();\ndelete observador; // não transferiu a responsabilidade do dono",
+      "repair": "Não libere o observador. Deixe o unique_ptr gerenciar a destruição ou use uma operação de transferência explícita prevista pela API quando realmente necessária. Um endereço observado não equivale a posse adquirida.",
+      "checks": [
+        "Mover o gerenciador conserva uma única instância.",
+        "Saída normal e exceção liberam o recurso.",
+        "Um observador não assume responsabilidade de delete."
+      ],
+      "project": "Crie uma classe que reúne um recurso gerenciado e um relatório em vector. Prefira membros RAII e explique as operações de cópia e movimento permitidas. Simule falha após aquisição e registre o número de recursos vivos antes e depois.",
+      "question": "O que ocorre com o objeto gerenciado ao mover um unique_ptr para outro?",
+      "answer": "A posse é transferida; não é necessário copiar o objeto e a origem fica vazia.",
+      "distractors": [
+        "O objeto é copiado e ambos os ponteiros passam a ser donos exclusivos da mesma instância.",
+        "Std::move libera imediatamente o objeto, deixando o destino com um endereço inválido."
+      ],
+      "practices": [
+        {
+          "id": "composicao",
+          "title": "Problema 1: recurso como membro de uma classe",
+          "topics": [
+            "rule of zero na composição",
+            "destrutor na saída de escopo",
+            "RAII e duração do recurso"
+          ],
+          "prompt": "Crie uma classe Caixa que contém unique_ptr<int>, sem destrutor manual. Verifique que não é copiável e é movível, transfira uma instância e preserve o valor 42. Não escreva delete.",
+          "solution": "#include <memory>\n#include <utility>\n#include <type_traits>\n#include <cassert>\n#include <iostream>\nstruct Caixa {std::unique_ptr<int> valor = std::make_unique<int>(42);};\nstatic_assert(!std::is_copy_constructible_v<Caixa>);\nstatic_assert(std::is_move_constructible_v<Caixa>);\nint main() {\n    Caixa a;\n    Caixa b = std::move(a);\n    assert(!a.valor && b.valor && *b.valor == 42);\n    std::cout << *b.valor << '\\n';\n}",
+          "expectedOutput": [
+            "42"
+          ],
+          "explanation": [
+            "O membro unique_ptr gerencia sua própria destruição. A classe não precisa repetir uma limpeza manual; suas operações especiais resultam da composição dos membros.",
+            "Os static_assert conferem o contrato de cópia e movimento do tipo, enquanto o assert de execução confere o estado após a transferência. A posse exclusiva é preservada e o valor continua disponível no novo dono."
+          ],
+          "checks": [
+            "A classe não é copiável.",
+            "A classe pode ser movida.",
+            "O novo dono conserva o valor e nenhum delete manual aparece."
+          ]
+        },
+        {
+          "id": "observador",
+          "title": "Problema 2: observar enquanto o dono permanece vivo",
+          "topics": [
+            "observador sem propriedade",
+            "unique_ptr não copiável",
+            "ponteiro movido e estado vazio"
+          ],
+          "prompt": "Obtenha um ponteiro observador de um unique_ptr, mova a posse para outro unique_ptr e confira que o observador ainda aponta para o objeto enquanto o novo dono está vivo. Encerre o uso do observador antes de liberar o dono.",
+          "solution": "#include <memory>\n#include <utility>\n#include <cassert>\n#include <iostream>\nint main() {\n    auto primeiro = std::make_unique<int>(8);\n    int* observador = primeiro.get();\n    auto segundo = std::move(primeiro);\n    assert(!primeiro && segundo.get() == observador && *observador == 8);\n    *observador = 9;\n    assert(*segundo == 9);\n    std::cout << *segundo << '\\n';\n    observador = nullptr;\n    segundo.reset();\n    assert(!segundo && observador == nullptr);\n}",
+          "expectedOutput": [
+            "9"
+          ],
+          "explanation": [
+            "Mover o gerenciador não muda o endereço da instância gerenciada neste contrato. O observador continua válido durante a vida do objeto, mas não controla sua liberação.",
+            "Antes de reset, o exemplo termina o uso e elimina sua referência observadora. Isso não é um mecanismo geral que limpa todos os aliases automaticamente: outros observadores também precisariam respeitar a mesma duração."
+          ],
+          "checks": [
+            "A origem fica vazia após o movimento.",
+            "O observador acessa o mesmo objeto enquanto ele vive.",
+            "Nenhum uso acontece depois de reset."
+          ]
+        }
       ]
     },
     {

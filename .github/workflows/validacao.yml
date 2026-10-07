@@ -10,6 +10,23 @@ permissions:
   contents: read
 
 jobs:
+  auditar:
+    name: Auditoria de dependências
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Rejeitar vulnerabilidades altas ou críticas
+        run: npm audit --json --audit-level=high
+
   validar:
     name: Testes e compilação
     runs-on: ubuntu-latest
@@ -48,7 +65,7 @@ jobs:
       - name: Validar as aulas e a lógica
         run: npm test
 
-      - name: Validar exemplos de Python, C++, C# e PostgreSQL
+      - name: Validar exemplos de Python, C++, C#, PostgreSQL e TypeScript
         run: node scripts/verify-content-examples.mjs
         env:
           PGHOST: 127.0.0.1

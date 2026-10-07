@@ -1,12 +1,13 @@
 {
   "edition": "2026-10-06",
   "originalLessons": 60,
-  "expandedLessons": 48,
-  "totalLessons": 108,
+  "expandedLessons": 68,
+  "totalLessons": 128,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
-    "praticaDoModulo": "Exemplo, depuração, exercício e projeto publicados para o módulo."
+    "praticaDoModulo": "Exemplo, depuração, exercício e projeto publicados para o módulo.",
+    "praticaIndependente": "Há problema específico com solução, critérios e verificação no CI; as atividades são identificadas no tópico. Não significa domínio avaliado automaticamente para cada aluno nem especialização esgotada."
   },
   "courses": [
     {
@@ -55,6 +56,145 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://docs.python.org/3/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-numeros-texto",
+          "title": "Python: números exatos, texto e conversão de entrada",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "int e limites de representação",
+              "status": "introduzido"
+            },
+            {
+              "title": "divisão real e divisão pelo piso",
+              "status": "introduzido"
+            },
+            {
+              "title": "resto e distribuição de unidades",
+              "status": "introduzido"
+            },
+            {
+              "title": "float e erro de representação",
+              "status": "introduzido"
+            },
+            {
+              "title": "Decimal construído de texto",
+              "status": "introduzido"
+            },
+            {
+              "title": "str e pontos de código Unicode",
+              "status": "praticaIndependente",
+              "activities": [
+                "unicode"
+              ]
+            },
+            {
+              "title": "normalização NFC",
+              "status": "praticaIndependente",
+              "activities": [
+                "unicode"
+              ]
+            },
+            {
+              "title": "conversão integral estrita",
+              "status": "praticaIndependente",
+              "activities": [
+                "quantidade"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "quantidade",
+              "title": "Problema 1: quantidade recebida como texto",
+              "topics": [
+                "conversão integral estrita"
+              ]
+            },
+            {
+              "id": "unicode",
+              "title": "Problema 2: comparar nomes canonicamente equivalentes",
+              "topics": [
+                "str e pontos de código Unicode",
+                "normalização NFC"
+              ]
+            }
+          ],
+          "source": "https://docs.python.org/3/library/stdtypes.html",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-controle-invariantes",
+          "title": "Python: decisões, laços e prova de término",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "if elif e ordem das condições",
+              "status": "introduzido"
+            },
+            {
+              "title": "intervalos semiabertos",
+              "status": "introduzido"
+            },
+            {
+              "title": "range com passo",
+              "status": "introduzido"
+            },
+            {
+              "title": "acumulador e invariante",
+              "status": "praticaIndependente",
+              "activities": [
+                "parcelas"
+              ]
+            },
+            {
+              "title": "while e variante de término",
+              "status": "praticaIndependente",
+              "activities": [
+                "parcelas"
+              ]
+            },
+            {
+              "title": "break continue e else de laço",
+              "status": "introduzido"
+            },
+            {
+              "title": "busca sem resultado",
+              "status": "praticaIndependente",
+              "activities": [
+                "busca"
+              ]
+            },
+            {
+              "title": "lista vazia e casos de fronteira",
+              "status": "praticaIndependente",
+              "activities": [
+                "busca"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "busca",
+              "title": "Problema 1: primeira posição que atende ao limite",
+              "topics": [
+                "busca sem resultado",
+                "lista vazia e casos de fronteira"
+              ]
+            },
+            {
+              "id": "parcelas",
+              "title": "Problema 2: término de uma contagem de parcelas",
+              "topics": [
+                "while e variante de término",
+                "acumulador e invariante"
+              ]
+            }
+          ],
+          "source": "https://docs.python.org/3/tutorial/controlflow.html",
           "status": "praticaDoModulo"
         },
         {
@@ -99,6 +239,82 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://docs.python.org/3/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-funcoes-contratos",
+          "title": "Python: parâmetros, escopo e funções com contratos",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "contrato de entrada e retorno",
+              "status": "praticaIndependente",
+              "activities": [
+                "assinatura"
+              ]
+            },
+            {
+              "title": "parâmetros nomeados e keyword-only",
+              "status": "praticaIndependente",
+              "activities": [
+                "assinatura"
+              ]
+            },
+            {
+              "title": "default avaliado na definição",
+              "status": "introduzido"
+            },
+            {
+              "title": "sentinela None para default mutável",
+              "status": "praticaIndependente",
+              "activities": [
+                "isolamento"
+              ]
+            },
+            {
+              "title": "escopo LEGB",
+              "status": "introduzido"
+            },
+            {
+              "title": "nonlocal e binding externo",
+              "status": "introduzido"
+            },
+            {
+              "title": "closure por chamada",
+              "status": "praticaIndependente",
+              "activities": [
+                "isolamento"
+              ]
+            },
+            {
+              "title": "retorno novo sem modificar entrada",
+              "status": "praticaIndependente",
+              "activities": [
+                "isolamento"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "assinatura",
+              "title": "Problema 1: opção exigida por nome",
+              "topics": [
+                "parâmetros nomeados e keyword-only",
+                "contrato de entrada e retorno"
+              ]
+            },
+            {
+              "id": "isolamento",
+              "title": "Problema 2: coletor com estado por instância",
+              "topics": [
+                "closure por chamada",
+                "retorno novo sem modificar entrada",
+                "sentinela None para default mutável"
+              ]
+            }
+          ],
+          "source": "https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions",
           "status": "praticaDoModulo"
         },
         {
@@ -143,6 +359,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://docs.python.org/3/",
           "status": "praticaDoModulo"
         },
         {
@@ -187,6 +404,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://docs.python.org/3/",
           "status": "praticaDoModulo"
         },
         {
@@ -231,6 +449,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://docs.python.org/3/",
           "status": "praticaDoModulo"
         },
         {
@@ -275,6 +494,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://docs.python.org/3/",
           "status": "praticaDoModulo"
         }
       ]
@@ -321,6 +541,80 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.typescriptlang.org/docs/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-inferencia-ausencia",
+          "title": "TypeScript: inferência, ausência e contratos sem coerção",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "inferência e widening",
+              "status": "introduzido"
+            },
+            {
+              "title": "union com undefined",
+              "status": "praticaIndependente",
+              "activities": [
+                "catalogo",
+                "limite"
+              ]
+            },
+            {
+              "title": "strictNullChecks",
+              "status": "praticaIndependente",
+              "activities": [
+                "catalogo"
+              ]
+            },
+            {
+              "title": "narrowing por typeof",
+              "status": "praticaIndependente",
+              "activities": [
+                "limite"
+              ]
+            },
+            {
+              "title": "operador nullish",
+              "status": "introduzido"
+            },
+            {
+              "title": "assertion sem validação",
+              "status": "introduzido"
+            },
+            {
+              "title": "readonly e mutação",
+              "status": "praticaIndependente",
+              "activities": [
+                "catalogo"
+              ]
+            },
+            {
+              "title": "contrato de retorno discriminado",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "catalogo",
+              "title": "Problema 1: busca que pode não encontrar",
+              "topics": [
+                "union com undefined",
+                "strictNullChecks",
+                "readonly e mutação"
+              ]
+            },
+            {
+              "id": "limite",
+              "title": "Problema 2: padrão sem apagar zero",
+              "topics": [
+                "union com undefined",
+                "narrowing por typeof"
+              ]
+            }
+          ],
+          "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
           "status": "praticaDoModulo"
         },
         {
@@ -361,6 +655,78 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.typescriptlang.org/docs/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-validacao-aninhada",
+          "title": "TypeScript: validar JSON aninhado e produzir dados de domínio",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "JSON.parse como fronteira unknown",
+              "status": "praticaIndependente",
+              "activities": [
+                "tipos"
+              ]
+            },
+            {
+              "title": "objeto não nulo e não array",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "validação de campos aninhados",
+              "status": "introduzido"
+            },
+            {
+              "title": "validação de todos os itens",
+              "status": "introduzido"
+            },
+            {
+              "title": "mensagem com caminho de erro",
+              "status": "introduzido"
+            },
+            {
+              "title": "cópia dos campos aceitos",
+              "status": "introduzido"
+            },
+            {
+              "title": "campo opcional versus inválido",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "testes com ts-expect-error",
+              "status": "praticaIndependente",
+              "activities": [
+                "tipos"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "opcional",
+              "title": "Problema 1: apelido ausente ou inválido",
+              "topics": [
+                "campo opcional versus inválido",
+                "objeto não nulo e não array"
+              ]
+            },
+            {
+              "id": "tipos",
+              "title": "Problema 2: provar o contrato para consumidores",
+              "topics": [
+                "testes com ts-expect-error",
+                "JSON.parse como fronteira unknown"
+              ]
+            }
+          ],
+          "source": "https://www.typescriptlang.org/docs/handbook/2/objects.html",
           "status": "praticaDoModulo"
         },
         {
@@ -401,6 +767,90 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.typescriptlang.org/docs/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-genericos-relacoes",
+          "title": "TypeScript: genéricos que preservam relações entre dados",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "parâmetro de tipo como relação",
+              "status": "praticaIndependente",
+              "activities": [
+                "fabrica"
+              ]
+            },
+            {
+              "title": "inferência do tipo de retorno",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "constraint extends",
+              "status": "praticaIndependente",
+              "activities": [
+                "fabrica"
+              ]
+            },
+            {
+              "title": "keyof e chave válida",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "indexed access T K",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "readonly na entrada genérica",
+              "status": "introduzido"
+            },
+            {
+              "title": "tipo específico não inventado",
+              "status": "praticaIndependente",
+              "activities": [
+                "fabrica"
+              ]
+            },
+            {
+              "title": "teste negativo de propriedade",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "opcional",
+              "title": "Problema 1: seleção de propriedade opcional",
+              "topics": [
+                "indexed access T K",
+                "keyof e chave válida",
+                "inferência do tipo de retorno",
+                "teste negativo de propriedade"
+              ]
+            },
+            {
+              "id": "fabrica",
+              "title": "Problema 2: construir T por uma fábrica",
+              "topics": [
+                "constraint extends",
+                "tipo específico não inventado",
+                "parâmetro de tipo como relação"
+              ]
+            }
+          ],
+          "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
           "status": "praticaDoModulo"
         },
         {
@@ -441,6 +891,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.typescriptlang.org/docs/",
           "status": "praticaDoModulo"
         },
         {
@@ -485,6 +936,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.typescriptlang.org/docs/",
           "status": "praticaDoModulo"
         },
         {
@@ -529,6 +981,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.typescriptlang.org/docs/",
           "status": "praticaDoModulo"
         }
       ]
@@ -579,6 +1032,165 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://eel.is/c++draft/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-texto-conversao",
+          "title": "C++: entrada textual, conversão completa e estados de erro",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "string como sequência de unidades char",
+              "status": "praticaIndependente",
+              "activities": [
+                "linhas"
+              ]
+            },
+            {
+              "title": "getline e leitura de linha",
+              "status": "praticaIndependente",
+              "activities": [
+                "linhas"
+              ]
+            },
+            {
+              "title": "extração formatada e texto residual",
+              "status": "introduzido"
+            },
+            {
+              "title": "from_chars e errc",
+              "status": "praticaIndependente",
+              "activities": [
+                "inteiro"
+              ]
+            },
+            {
+              "title": "consumo completo da entrada",
+              "status": "praticaIndependente",
+              "activities": [
+                "inteiro"
+              ]
+            },
+            {
+              "title": "limites de int",
+              "status": "praticaIndependente",
+              "activities": [
+                "inteiro"
+              ]
+            },
+            {
+              "title": "optional para conversão",
+              "status": "praticaIndependente",
+              "activities": [
+                "inteiro"
+              ]
+            },
+            {
+              "title": "gramática ASCII e faixa de domínio",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "linhas",
+              "title": "Problema 1: nome completo e linha vazia",
+              "topics": [
+                "getline e leitura de linha",
+                "string como sequência de unidades char"
+              ]
+            },
+            {
+              "id": "inteiro",
+              "title": "Problema 2: conversão completa com estouro detectado",
+              "topics": [
+                "from_chars e errc",
+                "consumo completo da entrada",
+                "limites de int",
+                "optional para conversão"
+              ]
+            }
+          ],
+          "source": "https://eel.is/c++draft/charconv.from.chars",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-funcoes-referencias",
+          "title": "C++: funções, cópia, referência e tempo de vida",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "parâmetro por valor",
+              "status": "praticaIndependente",
+              "activities": [
+                "copia"
+              ]
+            },
+            {
+              "title": "referência mutável",
+              "status": "introduzido"
+            },
+            {
+              "title": "referência const",
+              "status": "praticaIndependente",
+              "activities": [
+                "observacao"
+              ]
+            },
+            {
+              "title": "pré-condição e pós-condição",
+              "status": "praticaIndependente",
+              "activities": [
+                "observacao"
+              ]
+            },
+            {
+              "title": "retorno por valor",
+              "status": "praticaIndependente",
+              "activities": [
+                "copia"
+              ]
+            },
+            {
+              "title": "referência para objeto local",
+              "status": "introduzido"
+            },
+            {
+              "title": "const não significa posse",
+              "status": "praticaIndependente",
+              "activities": [
+                "observacao"
+              ]
+            },
+            {
+              "title": "cópia de vector e dados originais",
+              "status": "praticaIndependente",
+              "activities": [
+                "copia"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "copia",
+              "title": "Problema 1: criar uma coleção independente",
+              "topics": [
+                "parâmetro por valor",
+                "retorno por valor",
+                "cópia de vector e dados originais"
+              ]
+            },
+            {
+              "id": "observacao",
+              "title": "Problema 2: observar o tamanho sem modificar",
+              "topics": [
+                "referência const",
+                "const não significa posse",
+                "pré-condição e pós-condição"
+              ]
+            }
+          ],
+          "source": "https://eel.is/c++draft/dcl.ref",
           "status": "praticaDoModulo"
         },
         {
@@ -623,6 +1235,86 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://eel.is/c++draft/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-raii-posse-unica",
+          "title": "C++: RAII, posse exclusiva e transferência de recursos",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "RAII e duração do recurso",
+              "status": "praticaIndependente",
+              "activities": [
+                "composicao"
+              ]
+            },
+            {
+              "title": "destrutor na saída de escopo",
+              "status": "praticaIndependente",
+              "activities": [
+                "composicao"
+              ]
+            },
+            {
+              "title": "desenrolamento por exceção",
+              "status": "introduzido"
+            },
+            {
+              "title": "unique_ptr não copiável",
+              "status": "praticaIndependente",
+              "activities": [
+                "observador"
+              ]
+            },
+            {
+              "title": "move transfere a posse",
+              "status": "introduzido"
+            },
+            {
+              "title": "ponteiro movido e estado vazio",
+              "status": "praticaIndependente",
+              "activities": [
+                "observador"
+              ]
+            },
+            {
+              "title": "rule of zero na composição",
+              "status": "praticaIndependente",
+              "activities": [
+                "composicao"
+              ]
+            },
+            {
+              "title": "observador sem propriedade",
+              "status": "praticaIndependente",
+              "activities": [
+                "observador"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "composicao",
+              "title": "Problema 1: recurso como membro de uma classe",
+              "topics": [
+                "rule of zero na composição",
+                "destrutor na saída de escopo",
+                "RAII e duração do recurso"
+              ]
+            },
+            {
+              "id": "observador",
+              "title": "Problema 2: observar enquanto o dono permanece vivo",
+              "topics": [
+                "observador sem propriedade",
+                "unique_ptr não copiável",
+                "ponteiro movido e estado vazio"
+              ]
+            }
+          ],
+          "source": "https://eel.is/c++draft/unique.ptr",
           "status": "praticaDoModulo"
         },
         {
@@ -663,6 +1355,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://eel.is/c++draft/",
           "status": "praticaDoModulo"
         },
         {
@@ -703,6 +1396,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://eel.is/c++draft/",
           "status": "praticaDoModulo"
         },
         {
@@ -747,6 +1441,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://eel.is/c++draft/",
           "status": "praticaDoModulo"
         },
         {
@@ -791,6 +1486,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://eel.is/c++draft/",
           "status": "praticaDoModulo"
         }
       ]
@@ -837,6 +1533,82 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-conversao-limites",
+          "title": "JavaScript: conversão explícita e números nos limites",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "coerção do operador mais",
+              "status": "introduzido"
+            },
+            {
+              "title": "Number e conversão explícita",
+              "status": "praticaIndependente",
+              "activities": [
+                "identificador"
+              ]
+            },
+            {
+              "title": "parseInt e prefixo válido",
+              "status": "introduzido"
+            },
+            {
+              "title": "NaN e Number.isNaN",
+              "status": "introduzido"
+            },
+            {
+              "title": "inteiros seguros",
+              "status": "praticaIndependente",
+              "activities": [
+                "identificador"
+              ]
+            },
+            {
+              "title": "zero e operador nullish",
+              "status": "praticaIndependente",
+              "activities": [
+                "default"
+              ]
+            },
+            {
+              "title": "BigInt e Number separados",
+              "status": "praticaIndependente",
+              "activities": [
+                "identificador"
+              ]
+            },
+            {
+              "title": "validação antes do cálculo",
+              "status": "praticaIndependente",
+              "activities": [
+                "default"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "default",
+              "title": "Problema 1: configurar limite sem apagar zero",
+              "topics": [
+                "zero e operador nullish",
+                "validação antes do cálculo"
+              ]
+            },
+            {
+              "id": "identificador",
+              "title": "Problema 2: preservar um identificador grande",
+              "topics": [
+                "BigInt e Number separados",
+                "inteiros seguros",
+                "Number e conversão explícita"
+              ]
+            }
+          ],
+          "source": "https://tc39.es/ecma262/multipage/abstract-operations.html#sec-tonumber",
           "status": "praticaDoModulo"
         },
         {
@@ -877,6 +1649,86 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-closures-estado",
+          "title": "JavaScript: closures, identidade e estado de uma instância",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "escopo léxico",
+              "status": "introduzido"
+            },
+            {
+              "title": "closure e binding capturado",
+              "status": "praticaIndependente",
+              "activities": [
+                "callbacks"
+              ]
+            },
+            {
+              "title": "fábrica e estado por instância",
+              "status": "praticaIndependente",
+              "activities": [
+                "snapshot"
+              ]
+            },
+            {
+              "title": "const e objeto mutável",
+              "status": "introduzido"
+            },
+            {
+              "title": "identidade versus cópia",
+              "status": "praticaIndependente",
+              "activities": [
+                "snapshot"
+              ]
+            },
+            {
+              "title": "let em laço",
+              "status": "praticaIndependente",
+              "activities": [
+                "callbacks"
+              ]
+            },
+            {
+              "title": "var e ambiente compartilhado",
+              "status": "praticaIndependente",
+              "activities": [
+                "callbacks"
+              ]
+            },
+            {
+              "title": "snapshot sem referência interna",
+              "status": "praticaIndependente",
+              "activities": [
+                "snapshot"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "callbacks",
+              "title": "Problema 1: uma função por índice",
+              "topics": [
+                "let em laço",
+                "var e ambiente compartilhado",
+                "closure e binding capturado"
+              ]
+            },
+            {
+              "id": "snapshot",
+              "title": "Problema 2: snapshot de lista sem alias",
+              "topics": [
+                "snapshot sem referência interna",
+                "identidade versus cópia",
+                "fábrica e estado por instância"
+              ]
+            }
+          ],
+          "source": "https://tc39.es/ecma262/multipage/ecmascript-language-functions-and-classes.html#sec-function-definitions",
           "status": "praticaDoModulo"
         },
         {
@@ -921,6 +1773,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
           "status": "praticaDoModulo"
         },
         {
@@ -965,6 +1818,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
           "status": "praticaDoModulo"
         },
         {
@@ -1005,6 +1859,86 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-promessas-contratos",
+          "title": "JavaScript: promises, propagação de falhas e concorrência limitada",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "promise pendente fulfilled rejected",
+              "status": "introduzido"
+            },
+            {
+              "title": "then retorna outra promise",
+              "status": "praticaIndependente",
+              "activities": [
+                "recuperacao"
+              ]
+            },
+            {
+              "title": "throw vira rejeição no callback",
+              "status": "praticaIndependente",
+              "activities": [
+                "recuperacao"
+              ]
+            },
+            {
+              "title": "await e propagação de erro",
+              "status": "praticaIndependente",
+              "activities": [
+                "recuperacao"
+              ]
+            },
+            {
+              "title": "all não cancela tarefas",
+              "status": "praticaIndependente",
+              "activities": [
+                "trabalhadores"
+              ]
+            },
+            {
+              "title": "allSettled conserva resultados",
+              "status": "introduzido"
+            },
+            {
+              "title": "concorrência limitada por trabalhadores",
+              "status": "praticaIndependente",
+              "activities": [
+                "trabalhadores"
+              ]
+            },
+            {
+              "title": "ordem de saída versus ordem de término",
+              "status": "praticaIndependente",
+              "activities": [
+                "trabalhadores"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "recuperacao",
+              "title": "Problema 1: fallback ou propagação",
+              "topics": [
+                "then retorna outra promise",
+                "throw vira rejeição no callback",
+                "await e propagação de erro"
+              ]
+            },
+            {
+              "id": "trabalhadores",
+              "title": "Problema 2: limitar operações ativas",
+              "topics": [
+                "concorrência limitada por trabalhadores",
+                "ordem de saída versus ordem de término",
+                "all não cancela tarefas"
+              ]
+            }
+          ],
+          "source": "https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all",
           "status": "praticaDoModulo"
         },
         {
@@ -1049,6 +1983,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
           "status": "praticaDoModulo"
         }
       ]
@@ -1095,6 +2030,82 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://html.spec.whatwg.org/multipage/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "html-arvore-semantica",
+          "title": "HTML: parser, árvore do documento e estrutura semântica",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "fonte HTML e árvore DOM",
+              "status": "praticaIndependente",
+              "activities": [
+                "reparar"
+              ]
+            },
+            {
+              "title": "fechamento implícito de p",
+              "status": "praticaIndependente",
+              "activities": [
+                "reparar"
+              ]
+            },
+            {
+              "title": "elementos void",
+              "status": "introduzido"
+            },
+            {
+              "title": "doctype e modo de renderização",
+              "status": "introduzido"
+            },
+            {
+              "title": "lang charset e title",
+              "status": "praticaIndependente",
+              "activities": [
+                "tabela"
+              ]
+            },
+            {
+              "title": "regiões main nav article",
+              "status": "introduzido"
+            },
+            {
+              "title": "hierarquia de headings",
+              "status": "praticaIndependente",
+              "activities": [
+                "reparar"
+              ]
+            },
+            {
+              "title": "caption th e scope",
+              "status": "praticaIndependente",
+              "activities": [
+                "tabela"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "reparar",
+              "title": "Problema 1: corrigir o agrupamento de blocos",
+              "topics": [
+                "fonte HTML e árvore DOM",
+                "fechamento implícito de p",
+                "hierarquia de headings"
+              ]
+            },
+            {
+              "id": "tabela",
+              "title": "Problema 2: tabela com cabeçalhos de linha e coluna",
+              "topics": [
+                "caption th e scope",
+                "lang charset e title"
+              ]
+            }
+          ],
+          "source": "https://html.spec.whatwg.org/multipage/parsing.html",
           "status": "praticaDoModulo"
         },
         {
@@ -1135,6 +2146,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://html.spec.whatwg.org/multipage/",
           "status": "praticaDoModulo"
         },
         {
@@ -1179,6 +2191,86 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://html.spec.whatwg.org/multipage/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "html-dados-formulario",
+          "title": "HTML: controles enviados, validação e botão de submissão",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "name e id em papéis diferentes",
+              "status": "praticaIndependente",
+              "activities": [
+                "presenca"
+              ]
+            },
+            {
+              "title": "label e nome acessível",
+              "status": "introduzido"
+            },
+            {
+              "title": "disabled e readonly",
+              "status": "praticaIndependente",
+              "activities": [
+                "presenca"
+              ]
+            },
+            {
+              "title": "checkbox e ausência quando desmarcado",
+              "status": "praticaIndependente",
+              "activities": [
+                "presenca"
+              ]
+            },
+            {
+              "title": "nomes repetidos e getAll",
+              "status": "praticaIndependente",
+              "activities": [
+                "presenca"
+              ]
+            },
+            {
+              "title": "FormData e submitter",
+              "status": "praticaIndependente",
+              "activities": [
+                "acoes"
+              ]
+            },
+            {
+              "title": "validação nativa antes de submit",
+              "status": "introduzido"
+            },
+            {
+              "title": "botão type button versus submit",
+              "status": "praticaIndependente",
+              "activities": [
+                "acoes"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "acoes",
+              "title": "Problema 1: preservar a ação do botão",
+              "topics": [
+                "FormData e submitter",
+                "botão type button versus submit"
+              ]
+            },
+            {
+              "id": "presenca",
+              "title": "Problema 2: presença de controles nos dados",
+              "topics": [
+                "name e id em papéis diferentes",
+                "disabled e readonly",
+                "checkbox e ausência quando desmarcado",
+                "nomes repetidos e getAll"
+              ]
+            }
+          ],
+          "source": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#constructing-the-entry-list",
           "status": "praticaDoModulo"
         },
         {
@@ -1219,6 +2311,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://html.spec.whatwg.org/multipage/",
           "status": "praticaDoModulo"
         },
         {
@@ -1263,6 +2356,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://html.spec.whatwg.org/multipage/",
           "status": "praticaDoModulo"
         },
         {
@@ -1307,6 +2401,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://html.spec.whatwg.org/multipage/",
           "status": "praticaDoModulo"
         }
       ]
@@ -1353,6 +2448,82 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.w3.org/Style/CSS/specs.en.html",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-cascata-camadas",
+          "title": "CSS: cascata por camadas e valores de custom properties",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "declaração aplicável e valor vencedor",
+              "status": "introduzido"
+            },
+            {
+              "title": "ordem de camadas normais",
+              "status": "introduzido"
+            },
+            {
+              "title": "regra normal sem camada",
+              "status": "introduzido"
+            },
+            {
+              "title": "ordem invertida de important",
+              "status": "praticaIndependente",
+              "activities": [
+                "important"
+              ]
+            },
+            {
+              "title": "especificidade dentro da etapa",
+              "status": "praticaIndependente",
+              "activities": [
+                "important"
+              ]
+            },
+            {
+              "title": "herança de color",
+              "status": "praticaIndependente",
+              "activities": [
+                "token"
+              ]
+            },
+            {
+              "title": "fallback de var",
+              "status": "praticaIndependente",
+              "activities": [
+                "token"
+              ]
+            },
+            {
+              "title": "inválido no valor computado",
+              "status": "praticaIndependente",
+              "activities": [
+                "token"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "important",
+              "title": "Problema 1: ordem invertida nas camadas",
+              "topics": [
+                "ordem invertida de important",
+                "especificidade dentro da etapa"
+              ]
+            },
+            {
+              "id": "token",
+              "title": "Problema 2: token ausente e valor inválido",
+              "topics": [
+                "fallback de var",
+                "inválido no valor computado",
+                "herança de color"
+              ]
+            }
+          ],
+          "source": "https://www.w3.org/TR/css-cascade-5/",
           "status": "praticaDoModulo"
         },
         {
@@ -1397,6 +2568,82 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.w3.org/Style/CSS/specs.en.html",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "css-caixas-intrinseco",
+          "title": "CSS: dimensões de caixa, conteúdo intrínseco e overflow",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "content-box e dimensão externa",
+              "status": "introduzido"
+            },
+            {
+              "title": "border-box e espaço de conteúdo",
+              "status": "introduzido"
+            },
+            {
+              "title": "padding e border no cálculo",
+              "status": "introduzido"
+            },
+            {
+              "title": "tamanho mínimo automático de flex item",
+              "status": "praticaIndependente",
+              "activities": [
+                "minimo"
+              ]
+            },
+            {
+              "title": "min-inline-size zero",
+              "status": "praticaIndependente",
+              "activities": [
+                "minimo"
+              ]
+            },
+            {
+              "title": "overflow-wrap anywhere",
+              "status": "praticaIndependente",
+              "activities": [
+                "minimo"
+              ]
+            },
+            {
+              "title": "overflow e contêiner de rolagem",
+              "status": "praticaIndependente",
+              "activities": [
+                "sticky"
+              ]
+            },
+            {
+              "title": "sticky e referência de rolagem",
+              "status": "praticaIndependente",
+              "activities": [
+                "sticky"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "minimo",
+              "title": "Problema 1: conteúdo intrínseco em item flexível",
+              "topics": [
+                "tamanho mínimo automático de flex item",
+                "min-inline-size zero",
+                "overflow-wrap anywhere"
+              ]
+            },
+            {
+              "id": "sticky",
+              "title": "Problema 2: cabeçalho dentro de uma rolagem local",
+              "topics": [
+                "overflow e contêiner de rolagem",
+                "sticky e referência de rolagem"
+              ]
+            }
+          ],
+          "source": "https://www.w3.org/TR/css-sizing-3/",
           "status": "praticaDoModulo"
         },
         {
@@ -1437,6 +2684,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.w3.org/Style/CSS/specs.en.html",
           "status": "praticaDoModulo"
         },
         {
@@ -1477,6 +2725,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.w3.org/Style/CSS/specs.en.html",
           "status": "praticaDoModulo"
         },
         {
@@ -1517,6 +2766,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.w3.org/Style/CSS/specs.en.html",
           "status": "praticaDoModulo"
         },
         {
@@ -1561,6 +2811,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.w3.org/Style/CSS/specs.en.html",
           "status": "praticaDoModulo"
         }
       ]
@@ -1611,6 +2862,157 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cs-decimal-limites",
+          "title": "C#: valores decimais, arredondamento e overflow",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "literal decimal com sufixo m",
+              "status": "praticaIndependente",
+              "activities": [
+                "formato"
+              ]
+            },
+            {
+              "title": "decimal e double",
+              "status": "introduzido"
+            },
+            {
+              "title": "arredondamento com MidpointRounding",
+              "status": "introduzido"
+            },
+            {
+              "title": "cultura na apresentação",
+              "status": "praticaIndependente",
+              "activities": [
+                "formato"
+              ]
+            },
+            {
+              "title": "checked no ponto da operação",
+              "status": "praticaIndependente",
+              "activities": [
+                "inteiro"
+              ]
+            },
+            {
+              "title": "TryParse e contrato de formato",
+              "status": "praticaIndependente",
+              "activities": [
+                "formato"
+              ]
+            },
+            {
+              "title": "nullable e ausência",
+              "status": "introduzido"
+            },
+            {
+              "title": "limite numérico antes de converter",
+              "status": "praticaIndependente",
+              "activities": [
+                "inteiro"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "formato",
+              "title": "Problema 1: preço com formato de intercâmbio",
+              "topics": [
+                "TryParse e contrato de formato",
+                "cultura na apresentação",
+                "literal decimal com sufixo m"
+              ]
+            },
+            {
+              "id": "inteiro",
+              "title": "Problema 2: produto inteiro com faixa final",
+              "topics": [
+                "checked no ponto da operação",
+                "limite numérico antes de converter"
+              ]
+            }
+          ],
+          "source": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cs-metodos-parametros",
+          "title": "C#: métodos, parâmetros e estado compartilhado",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "passagem por valor",
+              "status": "praticaIndependente",
+              "activities": [
+                "troca"
+              ]
+            },
+            {
+              "title": "cópia de referência de classe",
+              "status": "praticaIndependente",
+              "activities": [
+                "troca"
+              ]
+            },
+            {
+              "title": "ref para trocar a variável",
+              "status": "praticaIndependente",
+              "activities": [
+                "troca"
+              ]
+            },
+            {
+              "title": "out e padrão Try",
+              "status": "introduzido"
+            },
+            {
+              "title": "validação antes da mutação",
+              "status": "introduzido"
+            },
+            {
+              "title": "array copiado versus compartilhado",
+              "status": "praticaIndependente",
+              "activities": [
+                "copia"
+              ]
+            },
+            {
+              "title": "retorno e efeito observável",
+              "status": "praticaIndependente",
+              "activities": [
+                "copia"
+              ]
+            },
+            {
+              "title": "exceção como parte do contrato",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "copia",
+              "title": "Problema 1: normalizar sem alterar a entrada",
+              "topics": [
+                "array copiado versus compartilhado",
+                "retorno e efeito observável"
+              ]
+            },
+            {
+              "id": "troca",
+              "title": "Problema 2: substituir a referência do chamador",
+              "topics": [
+                "ref para trocar a variável",
+                "cópia de referência de classe",
+                "passagem por valor"
+              ]
+            }
+          ],
+          "source": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters",
           "status": "praticaDoModulo"
         },
         {
@@ -1651,6 +3053,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
           "status": "praticaDoModulo"
         },
         {
@@ -1691,6 +3094,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
           "status": "praticaDoModulo"
         },
         {
@@ -1735,6 +3139,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
           "status": "praticaDoModulo"
         },
         {
@@ -1779,6 +3184,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
           "status": "praticaDoModulo"
         },
         {
@@ -1823,6 +3229,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
           "status": "praticaDoModulo"
         }
       ]
@@ -1873,6 +3280,86 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.postgresql.org/docs/current/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-null-logica",
+          "title": "SQL: NULL, lógica de três valores e dados ausentes",
+          "level": "Fundamentos",
+          "topics": [
+            {
+              "title": "NULL como ausência de valor",
+              "status": "praticaIndependente",
+              "activities": [
+                "obrigatorio"
+              ]
+            },
+            {
+              "title": "comparação com resultado unknown",
+              "status": "praticaIndependente",
+              "activities": [
+                "exclusao"
+              ]
+            },
+            {
+              "title": "WHERE aceita apenas true",
+              "status": "praticaIndependente",
+              "activities": [
+                "exclusao"
+              ]
+            },
+            {
+              "title": "IS NULL e IS NOT NULL",
+              "status": "praticaIndependente",
+              "activities": [
+                "obrigatorio"
+              ]
+            },
+            {
+              "title": "IS DISTINCT FROM",
+              "status": "introduzido"
+            },
+            {
+              "title": "CHECK e NOT NULL",
+              "status": "praticaIndependente",
+              "activities": [
+                "obrigatorio"
+              ]
+            },
+            {
+              "title": "count estrela versus count coluna",
+              "status": "introduzido"
+            },
+            {
+              "title": "NOT IN com NULL e NOT EXISTS",
+              "status": "praticaIndependente",
+              "activities": [
+                "exclusao"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "exclusao",
+              "title": "Problema 1: exclusão com uma chave ausente",
+              "topics": [
+                "NOT IN com NULL e NOT EXISTS",
+                "WHERE aceita apenas true",
+                "comparação com resultado unknown"
+              ]
+            },
+            {
+              "id": "obrigatorio",
+              "title": "Problema 2: campo obrigatório e faixa válida",
+              "topics": [
+                "CHECK e NOT NULL",
+                "NULL como ausência de valor",
+                "IS NULL e IS NOT NULL"
+              ]
+            }
+          ],
+          "source": "https://www.postgresql.org/docs/current/functions-comparison.html",
           "status": "praticaDoModulo"
         },
         {
@@ -1917,6 +3404,90 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.postgresql.org/docs/current/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "sql-joins-cardinalidade",
+          "title": "SQL: cardinalidade de joins e agregação sem duplicar totais",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "granularidade antes da consulta",
+              "status": "praticaIndependente",
+              "activities": [
+                "fanout"
+              ]
+            },
+            {
+              "title": "cardinalidade um para muitos",
+              "status": "praticaIndependente",
+              "activities": [
+                "fanout"
+              ]
+            },
+            {
+              "title": "LEFT JOIN e linha estendida",
+              "status": "praticaIndependente",
+              "activities": [
+                "filtro"
+              ]
+            },
+            {
+              "title": "filtro em ON versus WHERE",
+              "status": "praticaIndependente",
+              "activities": [
+                "filtro"
+              ]
+            },
+            {
+              "title": "count da chave relacionada",
+              "status": "praticaIndependente",
+              "activities": [
+                "filtro"
+              ]
+            },
+            {
+              "title": "agregação antes do join",
+              "status": "praticaIndependente",
+              "activities": [
+                "fanout"
+              ]
+            },
+            {
+              "title": "fanout entre duas coleções",
+              "status": "praticaIndependente",
+              "activities": [
+                "fanout"
+              ]
+            },
+            {
+              "title": "EXISTS para testar presença",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "filtro",
+              "title": "Problema 1: preservar clientes sem pedido pago",
+              "topics": [
+                "filtro em ON versus WHERE",
+                "LEFT JOIN e linha estendida",
+                "count da chave relacionada"
+              ]
+            },
+            {
+              "id": "fanout",
+              "title": "Problema 2: somar coleções antes de combinar",
+              "topics": [
+                "agregação antes do join",
+                "fanout entre duas coleções",
+                "granularidade antes da consulta",
+                "cardinalidade um para muitos"
+              ]
+            }
+          ],
+          "source": "https://www.postgresql.org/docs/current/queries-table-expressions.html",
           "status": "praticaDoModulo"
         },
         {
@@ -1961,6 +3532,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.postgresql.org/docs/current/",
           "status": "praticaDoModulo"
         },
         {
@@ -2005,6 +3577,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.postgresql.org/docs/current/",
           "status": "praticaDoModulo"
         },
         {
@@ -2049,6 +3622,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.postgresql.org/docs/current/",
           "status": "praticaDoModulo"
         },
         {
@@ -2093,6 +3667,7 @@
               "status": "introduzido"
             }
           ],
+          "source": "https://www.postgresql.org/docs/current/",
           "status": "praticaDoModulo"
         }
       ]

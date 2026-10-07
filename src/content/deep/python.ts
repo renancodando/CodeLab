@@ -93,6 +93,282 @@ export default {
       ]
     },
     {
+      "id": "py-numeros-texto",
+      "title": "Python: números exatos, texto e conversão de entrada",
+      "level": "Fundamentos",
+      "summary": "Aprenda a escolher uma representação para quantidades, preços e texto antes de escrever cálculos. Esta aula separa o dado recebido, a validação do contrato e o resultado formatado. Você vai investigar divisão, restos, aproximação binária, Unicode e entradas inválidas, com programas completos que não dependem de interação no terminal.",
+      "source": "https://docs.python.org/3/library/stdtypes.html",
+      "topics": [
+        "int e limites de representação",
+        "divisão real e divisão pelo piso",
+        "resto e distribuição de unidades",
+        "float e erro de representação",
+        "Decimal construído de texto",
+        "str e pontos de código Unicode",
+        "normalização NFC",
+        "conversão integral estrita"
+      ],
+      "sections": [
+        {
+          "title": "Representação é uma decisão do problema",
+          "text": [
+            "Uma quantidade de ingressos pertence aos inteiros: não existe meia unidade nesse contrato. Em Python, int cresce conforme a magnitude do número, limitado pela memória disponível, sem o estouro de largura fixa de um int de 32 bits. Isso não torna qualquer cálculo barato: multiplicar números enormes exige mais trabalho e espaço. A escolha de int resolve a exatidão de unidades discretas, mas não a complexidade do algoritmo.",
+            "Já uma medida física pode aceitar aproximação e um preço pode exigir regras decimais. Escreva primeiro a unidade do valor: centavos, reais, segundos ou metros. Somar 150 centavos a 2 reais sem conversão mistura representações. Manter a unidade no nome, como total_centavos, ajuda a revisar o cálculo. Só depois de concluir a operação transforme a representação interna em texto para apresentação."
+          ]
+        },
+        {
+          "title": "Divisão, piso e resto têm contratos diferentes",
+          "text": [
+            "O operador / produz divisão real; mesmo 6 / 3 resulta em float. O operador // calcula o piso do quociente, arredondando para menos infinito, e % fornece um resto consistente com a identidade a == (a // b) * b + a % b. Para divisor positivo, o resto é não negativo. Assim, -7 // 3 é -3 e -7 % 3 é 2. Essa regra difere de truncar em direção a zero e importa ao portar algoritmos de outras linguagens.",
+            "Use divmod(total, pessoas) para obter simultaneamente a cota inteira e as unidades restantes. Se repartir 10 unidades entre 3 pessoas, cada uma recebe inicialmente 3 e sobra 1; a primeira recebe uma unidade adicional. Exija total não negativo e quantidade de pessoas positiva antes da divisão. Um divisor zero é uma entrada inválida do domínio, e não uma situação para esconder devolvendo zero."
+          ]
+        },
+        {
+          "title": "Aproximação não desaparece na formatação",
+          "text": [
+            "O float representa números em base binária com precisão finita. Algumas frações decimais, como 0.1, precisam de expansão infinita nessa base. Por isso 0.1 + 0.2 pode não ser exatamente 0.3. Imprimir com duas casas altera a apresentação, sem substituir o valor armazenado por uma representação decimal exata. Evite explicar esse comportamento como um defeito da soma ou recomendar uma tolerância arbitrária para qualquer contexto.",
+            "Para medidas aproximadas, math.isclose permite definir tolerância relativa e absoluta conforme o problema. Perto de zero, uma tolerância absoluta pode ser necessária. Para valores decimais de entrada, Decimal('0.10') começa com o decimal pretendido; Decimal(0.1) começa com a aproximação do float. Decimal também tem contexto de precisão e operações que arredondam. Valores monetários exigem ainda uma política explícita para o ponto e o modo de arredondamento."
+          ]
+        },
+        {
+          "title": "Texto tem codificação, conteúdo e forma visual",
+          "text": [
+            "Uma str é uma sequência de pontos de código Unicode, imutável. len não mede bytes nem, em geral, caracteres percebidos pela pessoa. Um e seguido de acento combinante ocupa dois pontos de código, enquanto é pré-composto ocupa um. encode('utf-8') produz bytes para um arquivo ou rede; decode faz a operação inversa. Não corte bytes de uma sequência UTF-8 no meio de uma unidade de codificação.",
+            "unicodedata.normalize('NFC', texto) pode colocar formas canonicamente equivalentes numa representação comum. Isso é útil ao comparar nomes recebidos de origens diferentes. Não remova acentos, espaços internos ou diferenças de caixa automaticamente sem uma regra do produto: códigos, senhas e nomes podem tratar essas diferenças como significativas. Nesta aula, os identificadores da atividade aceitam apenas dígitos ASCII, embora a linguagem tenha suporte muito maior a Unicode."
+          ]
+        },
+        {
+          "title": "Converter também é validar uma fronteira",
+          "text": [
+            "Uma entrada de arquivo ou formulário chega como texto. int('12') converte o conteúdo para um inteiro, mas int('12.5') lança ValueError. O conversor admite formas que seu domínio talvez não queira aceitar, como espaços e certos dígitos Unicode. Para um campo de quantidade decimal sem sinal, verifique explicitamente que ele contém pelo menos um caractere e que todos estão entre '0' e '9', depois converta. Não use uma comparação de string para decidir se a quantidade excede dez.",
+            "Separar validação sintática e semântica facilita mensagens de erro. Primeiro verifique a gramática do campo; depois a faixa permitida, como 0 até 500. Um texto pode ser um inteiro válido e ainda ser uma quantidade proibida. Também limite o tamanho do campo quando os dados vierem de fora: a capacidade de int representar magnitudes grandes não exige aceitar um número com milhões de dígitos."
+          ]
+        },
+        {
+          "title": "Depure a unidade antes do operador",
+          "text": [
+            "Para investigar um resultado inesperado, registre repr da entrada, type do valor convertido e a unidade usada em cada operação. Uma string vazia, uma string com espaço e uma string com zero parecem semelhantes numa interface, mas têm contratos diferentes. Monte uma tabela com entrada, classificação, valor interno e saída esperada. A tabela permite localizar se a falha está no recebimento, na conversão, no cálculo ou na apresentação.",
+            "Nesta aula, todos os programas usam dados fixos e assert para serem reproduzíveis. Esses asserts verificam a solução de estudo; um programa de produção não deve depender de assert para validar entrada externa, pois a execução otimizada pode removê-los. Transfira a regra para um formulário de orçamento ou importador CSV, preservando a distinção entre dado ausente, texto inválido e quantidade zero."
+          ]
+        }
+      ],
+      "code": "from decimal import Decimal\nfrom unicodedata import normalize\n\ntotal_centavos = 1000\npessoas = 3\ncota, resto = divmod(total_centavos, pessoas)\nparcelas = [cota + (1 if i < resto else 0) for i in range(pessoas)]\nassert parcelas == [334, 333, 333]\nassert sum(parcelas) == total_centavos\nprint(parcelas)\npreco = Decimal(\"0.10\") + Decimal(\"0.20\")\nassert preco == Decimal(\"0.30\")\nprint(f\"{preco:.2f}\")\nnome = normalize(\"NFC\", \"Cafe\\u0301\")\nassert nome == \"Café\"\nprint(nome)",
+      "output": "Saída: [334, 333, 333], depois 0.30 e Café, em linhas separadas. A soma das parcelas conserva os 1000 centavos.",
+      "expectedOutput": [
+        "[334, 333, 333]",
+        "0.30",
+        "Café"
+      ],
+      "trace": [
+        "divmod separa 1000 em três cotas de 333 e uma unidade restante.",
+        "A primeira parcela recebe a sobra; nenhuma conversão para float participa da distribuição.",
+        "Decimal recebe strings; a normalização transforma a sequência e + acento em é."
+      ],
+      "exercise": "Distribua 17 unidades entre 5 pessoas em uma lista. A diferença entre duas parcelas não pode ultrapassar uma unidade; conserve a soma e coloque as parcelas maiores primeiro. Repita para total zero.",
+      "solution": "def distribuir(total, pessoas):\n    if total < 0 or pessoas <= 0:\n        raise ValueError(\"total não negativo e pessoas positivas\")\n    cota, resto = divmod(total, pessoas)\n    resultado = []\n    for indice in range(pessoas):\n        resultado.append(cota + (1 if indice < resto else 0))\n    return resultado\n\nassert distribuir(17, 5) == [4, 4, 3, 3, 3]\nassert distribuir(0, 3) == [0, 0, 0]\nassert sum(distribuir(17, 5)) == 17\nprint(distribuir(17, 5))",
+      "solutionOutput": [
+        "[4, 4, 3, 3, 3]"
+      ],
+      "bug": "Um programa divide 1000 centavos por três e arredonda cada parcela de forma independente. O total recebido deixa de ser garantido. Explique por que a representação e a distribuição da sobra pertencem ao contrato, antes de ajustar a formatação.",
+      "bugCode": "total = 1000\nparcelas = [round(total / 3) for _ in range(3)]\nprint(parcelas, sum(parcelas))  # 999, não 1000",
+      "repair": "Calcule cota e resto inteiros e distribua uma unidade adicional exatamente resto vezes. Verifique a soma e a diferença máxima entre parcelas; escrever .2f não recupera uma unidade perdida.",
+      "checks": [
+        "17 / 5 produz [4, 4, 3, 3, 3] e conserva a soma.",
+        "Zero total produz cinco parcelas zero; quantidade de pessoas zero gera erro explícito.",
+        "Explique por que // com negativos não significa truncar em direção a zero."
+      ],
+      "project": "Crie um repartidor de despesas em centavos. Receba uma quantidade ASCII e um número de participantes, preserve a soma, explique quem recebe a sobra e apresente o resultado em reais. Documente como tratar centavos negativos e por que a regra atual os rejeita.",
+      "question": "Por que Decimal('0.1') é preferível a Decimal(0.1) quando a entrada pretendida é um decimal exato?",
+      "answer": "A string preserva o decimal pretendido; o float já contém uma aproximação binária.",
+      "distractors": [
+        "Decimal construído de float sempre arredonda automaticamente para duas casas.",
+        "Strings só mudam a apresentação; ambas as construções armazenam exatamente o mesmo valor."
+      ],
+      "practices": [
+        {
+          "id": "quantidade",
+          "title": "Problema 1: quantidade recebida como texto",
+          "topics": [
+            "conversão integral estrita"
+          ],
+          "prompt": "Implemente quantidade(texto) para aceitar somente de 1 a 3 dígitos ASCII, inclusive zero, com valor máximo 500. Rejeite vazio, espaço, sinal, decimal, dígitos de outro alfabeto e 501. Use ValueError para falhas; não converta texto inválido em zero.",
+          "solution": "def quantidade(texto):\n    if not 1 <= len(texto) <= 3 or any(c < \"0\" or c > \"9\" for c in texto):\n        raise ValueError(\"use de 1 a 3 dígitos ASCII\")\n    valor = int(texto)\n    if valor > 500:\n        raise ValueError(\"máximo 500\")\n    return valor\n\nassert quantidade(\"0\") == 0\nassert quantidade(\"050\") == 50\nassert quantidade(\"500\") == 500\nfor invalido in [\"\", \" 1\", \"-1\", \"1.0\", \"１２\", \"501\", \"0000\"]:\n    try:\n        quantidade(invalido)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(invalido)\nprint(\"quantidades verificadas\")",
+          "expectedOutput": [
+            "quantidades verificadas"
+          ],
+          "explanation": [
+            "A gramática é conferida antes de int: esse conversor sozinho aceita entradas que o contrato não permite. O limite de comprimento controla também o custo da conversão.",
+            "Zero é um valor válido. O laço usa o ramo else do try para detectar uma entrada inválida que tenha sido aceita sem exceção. A validação de faixa continua separada da validação dos caracteres."
+          ],
+          "checks": [
+            "Aceite 0, 050 e 500.",
+            "Rejeite todas as sete entradas inválidas com ValueError.",
+            "Mude o limite para 999 e identifique qual teste deve mudar."
+          ]
+        },
+        {
+          "id": "unicode",
+          "title": "Problema 2: comparar nomes canonicamente equivalentes",
+          "topics": [
+            "str e pontos de código Unicode",
+            "normalização NFC"
+          ],
+          "prompt": "Compare Café e Cafe seguido de U+0301 após normalização NFC, mantendo maiúsculas e minúsculas distintas. Demonstre comprimentos antes e depois e mostre que codificar em UTF-8 mede bytes, sem confundir essa contagem com len da string.",
+          "solution": "from unicodedata import normalize\n\na = \"Café\"\nb = \"Cafe\\u0301\"\nassert a != b and len(a) == 4 and len(b) == 5\nnormalizado = normalize(\"NFC\", b)\nassert normalizado == a and len(normalizado) == 4\nassert normalize(\"NFC\", \"café\") != a\nassert len(a.encode(\"utf-8\")) == 5\nprint(len(a), len(b), len(normalizado), len(a.encode(\"utf-8\")))",
+          "expectedOutput": [
+            "4 5 4 5"
+          ],
+          "explanation": [
+            "A aparência semelhante não garante sequências de pontos de código iguais. NFC trata equivalência canônica; não é uma regra de remoção de acentos ou comparação sem distinguir caixa.",
+            "O exemplo torna visíveis três medidas: pontos de código originais, pontos após normalização e bytes UTF-8. Para limitar caracteres percebidos em uma interface seria necessário segmentar grafemas, assunto além deste contrato."
+          ],
+          "checks": [
+            "A comparação bruta é falsa e a comparação normalizada é verdadeira.",
+            "Café e café continuam diferentes.",
+            "Explique por que cinco bytes não significam cinco letras."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "py-controle-invariantes",
+      "title": "Python: decisões, laços e prova de término",
+      "level": "Fundamentos",
+      "summary": "Construa decisões e repetições que você consiga explicar antes de executá-las. Esta aula usa intervalos, acumuladores, busca e sentinelas para mostrar como um laço preserva uma regra e como seu estado avança até terminar. As atividades incluem entrada vazia, ausência de resultado e um limite exato, sem depender de um while infinito para ensinar repetição.",
+      "source": "https://docs.python.org/3/tutorial/controlflow.html",
+      "topics": [
+        "if elif e ordem das condições",
+        "intervalos semiabertos",
+        "range com passo",
+        "acumulador e invariante",
+        "while e variante de término",
+        "break continue e else de laço",
+        "busca sem resultado",
+        "lista vazia e casos de fronteira"
+      ],
+      "sections": [
+        {
+          "title": "Decisões expressam partições do domínio",
+          "text": [
+            "Uma cadeia if, elif, else executa somente o primeiro ramo cuja condição seja verdadeira. Por isso a ordem das condições participa da regra. Ao classificar nota como excelente a partir de 90 e aprovada a partir de 60, testar >= 60 primeiro captura também a nota 95. Escreva intervalos disjuntos em papel e escolha se vai começar pelo maior ou pelo menor limite. Cada valor válido deve cair em exatamente uma categoria.",
+            "Valide o domínio antes de classificar. Uma nota -1 ou 101 não deve receber uma categoria normal. Não confunda duas instruções if independentes com uma cadeia: na primeira forma os dois blocos podem executar. Quando condições têm efeitos, como consumir uma entrada, repeti-las altera ainda o estado observado. Prefira condições claras e dados já recebidos para que a classificação seja uma função previsível da entrada."
+          ]
+        },
+        {
+          "title": "Limites ficam mais simples quando o fim é excluído",
+          "text": [
+            "range(inicio, fim, passo) produz valores até antes de fim. range(2, 8, 2) visita 2, 4 e 6. O fim excluído combina com índices: para uma sequência de tamanho n, os índices válidos são de zero até n - 1. Um intervalo semiaberto [a, b) contém b - a inteiros quando o passo é um e b é maior ou igual a a. Essa relação facilita conferir quantidade sem listar cada valor.",
+            "Um passo negativo exige um início maior que o fim para produzir valores na direção pretendida. range(3, -1, -1) inclui zero, mas range(3, 0, -1) termina em um. Um passo zero é inválido. Antes de executar uma repetição numérica, anote o primeiro valor, o último possível e a quantidade esperada. Essa previsão encontra muitos erros de um elemento a mais ou a menos sem precisar de um depurador."
+          ]
+        },
+        {
+          "title": "Um acumulador precisa de estado inicial correto",
+          "text": [
+            "Para somar valores, comece com total = 0. Antes de processar o elemento de índice i, a invariante pode ser: total é a soma dos elementos anteriores a i. O passo total += valor estende a propriedade para o próximo elemento. Quando o laço acaba, todos os elementos foram processados e a invariante implica o resultado desejado. Isso é uma explicação da correção, não apenas uma descrição de cada linha.",
+            "O valor inicial também define o caso vazio. A soma vazia é zero nesse contrato; a média vazia não existe sem uma regra adicional. Para encontrar o maior valor, começar em zero falha se todos os valores forem negativos. Você pode inicializar pelo primeiro item depois de conferir se há dados, ou manter um estado de ausência. Escolha o comportamento do vazio explicitamente em vez de deixar uma exceção acidental estabelecer a interface."
+          ]
+        },
+        {
+          "title": "Término exige um estado que avance",
+          "text": [
+            "Um while reavalia a condição antes de cada passagem. Para provar que termina, identifique uma quantidade inteira não negativa que diminui em todo passo relevante. Se restante começa em cinco e cada iteração subtrai um, ele alcança zero. Se um continue pula a atualização, essa prova deixa de valer. A palavra continue não avança automaticamente o contador de um while escrito manualmente.",
+            "Não existe prova de término baseada apenas em a condição parece correta. Pergunte quais ramos atualizam o estado, quais podem voltar sem alteração e o que acontece se a entrada nunca chegar. Em processos com espera externa, término pode depender de cancelamento ou limite de tentativas. Nos programas desta aula todos os dados são finitos; esse recorte permite estudar correção sem misturar espera de rede ou terminal."
+          ]
+        },
+        {
+          "title": "Busca distingue encontrado, ausente e interrompido",
+          "text": [
+            "break encerra o laço mais interno. Um else associado ao for ou while executa se o laço chega ao fim sem break, incluindo um for sobre uma sequência vazia. Ele pode expressar que uma busca esgotou os candidatos. Esse else não pertence ao if anterior e não significa a condição do if foi falsa uma vez. A indentação deixa claro a qual estrutura ele está ligado.",
+            "Evite usar zero como sinal de ausência quando o resultado pode ser zero. None permite distinguir não encontrado de índice zero. Se você retorna cedo de uma função, o resultado encontrado pode sair diretamente e um return None depois do laço cobre a ausência. Em uma busca com filtro, continue ignora apenas o candidato atual; a busca ainda precisa visitar os seguintes e manter seu contrato de retorno."
+          ]
+        },
+        {
+          "title": "Casos pequenos permitem revisar a regra inteira",
+          "text": [
+            "Para testar um laço, comece com nenhum elemento, um elemento, limite exato, todos aceitos e todos rejeitados. Depois use uma mistura em que o primeiro e o último têm papéis diferentes. Um teste com dez valores parecidos pode passar sem revelar que o último nunca foi visitado. Uma lista contendo só um elemento no limite força o programa a decidir exatamente a fronteira que você quer investigar.",
+            "Ao depurar, monte colunas para posição, valor, estado antes e estado depois. Compare cada mudança com a invariante. Uma soma incorreta pode nascer de reinicializar o acumulador dentro do laço, de somar antes de filtrar ou de interromper cedo. Transfira esse método para processamento de registros e paginação: a regra preservada deve incluir tanto o resultado parcial quanto quais entradas já foram consumidas."
+          ]
+        }
+      ],
+      "code": "valores = [4, -2, 7, 0, 3]\ntotal = 0\naceitos = 0\nfor valor in valores:\n    if valor < 0:\n        continue\n    total += valor\n    aceitos += 1\nassert total == 14 and aceitos == 4\nprint(total, aceitos)\nfor indice, valor in enumerate(valores):\n    if valor >= 7:\n        print(\"primeiro\", indice)\n        break\nelse:\n    print(\"ausente\")",
+      "expectedOutput": [
+        "14 4",
+        "primeiro 2"
+      ],
+      "output": "Saída: 14 4 e primeiro 2. Zero conta como aceito; -2 é ignorado; a busca encerra na primeira ocorrência que satisfaz >= 7.",
+      "trace": [
+        "O acumulador começa no elemento neutro zero e só muda para valores não negativos.",
+        "O continue ignora -2, mas não exclui zero da contagem.",
+        "A busca visita índices 0, 1 e 2; break evita o ramo else."
+      ],
+      "exercise": "Some todos os inteiros de um intervalo semiaberto [inicio, fim) usando range e um acumulador. Retorne zero para intervalo vazio e rejeite fim menor que inicio. Demonstre os casos [2, 5), [0, 0) e [-2, 2).",
+      "solution": "def soma_intervalo(inicio, fim):\n    if fim < inicio:\n        raise ValueError(\"fim anterior ao início\")\n    total = 0\n    for numero in range(inicio, fim):\n        total += numero\n    return total\n\nassert soma_intervalo(2, 5) == 9\nassert soma_intervalo(0, 0) == 0\nassert soma_intervalo(-2, 2) == -2\nprint(soma_intervalo(2, 5), soma_intervalo(0, 0), soma_intervalo(-2, 2))",
+      "solutionOutput": [
+        "9 0 -2"
+      ],
+      "bug": "A classificação testa aprovação antes de excelência. A nota 95 nunca alcança o ramo excelente, embora o programa execute sem erro. Localize o problema na partição do domínio e proponha uma ordem que atenda também às notas 59, 60, 89 e 90.",
+      "bugCode": "nota = 95\nif nota >= 60:\n    categoria = \"aprovada\"\nelif nota >= 90:\n    categoria = \"excelente\"\nelse:\n    categoria = \"rever\"\nprint(categoria)",
+      "repair": "Valide 0 <= nota <= 100 e teste >= 90 antes de >= 60. Outra opção é testar < 60, depois < 90, depois else. As duas ordens funcionam porque cada ramo passa a cobrir uma faixa bem definida.",
+      "checks": [
+        "O fim de range fica excluído e a lista vazia conserva o acumulador.",
+        "Explique a invariante e mostre como cada iteração a preserva.",
+        "Encontre a diferença entre resultado zero e ausência de resultado."
+      ],
+      "project": "Implemente um relatório de leituras de temperatura: conte leituras válidas, some valores e localize a primeira que ultrapassa um limite. Defina comportamento para lista vazia e use uma tabela de rastreamento para justificar a saída de uma sequência com negativos, zero e limites exatos.",
+      "question": "Quando o else de um for é executado?",
+      "answer": "Quando o laço termina sem executar break, inclusive quando não há elementos.",
+      "distractors": [
+        "Sempre depois de executar break no primeiro elemento.",
+        "Quando o último if dentro do laço avalia como falso, independentemente de break."
+      ],
+      "practices": [
+        {
+          "id": "busca",
+          "title": "Problema 1: primeira posição que atende ao limite",
+          "topics": [
+            "busca sem resultado",
+            "lista vazia e casos de fronteira"
+          ],
+          "prompt": "Escreva primeira_posicao(valores, limite), retornando o primeiro índice com valor >= limite ou None quando não houver. Mostre que encontrar no índice zero não é ausência e que a lista vazia é tratada sem acesso fora da faixa.",
+          "solution": "def primeira_posicao(valores, limite):\n    for indice, valor in enumerate(valores):\n        if valor >= limite:\n            return indice\n    return None\n\nassert primeira_posicao([8, 9], 8) == 0\nassert primeira_posicao([1, 3, 7], 7) == 2\nassert primeira_posicao([1, 3], 7) is None\nassert primeira_posicao([], 7) is None\nprint(primeira_posicao([8, 9], 8), primeira_posicao([], 7))",
+          "expectedOutput": [
+            "0 None"
+          ],
+          "explanation": [
+            "enumerate entrega o índice junto do valor. Retornar imediatamente preserva a regra de primeira ocorrência; continuar procurando poderia trocar o resultado pelo último índice.",
+            "O return depois do laço cobre tanto a lista vazia quanto o esgotamento sem correspondência. None permite um teste is None explícito, sem confundir o índice zero com ausência. O programa não usa break; compare sua estrutura com for/else do exemplo."
+          ],
+          "checks": [
+            "Índice zero é encontrado corretamente.",
+            "Limite exato é aceito e ausência retorna None.",
+            "Reescreva com for/else mantendo os quatro resultados."
+          ]
+        },
+        {
+          "id": "parcelas",
+          "title": "Problema 2: término de uma contagem de parcelas",
+          "topics": [
+            "while e variante de término",
+            "acumulador e invariante"
+          ],
+          "prompt": "Conte quantas parcelas de no máximo 4 unidades são necessárias para consumir um total inteiro não negativo. Use while, diminua restante em todo passo e devolva zero para total zero. Documente a variante de término e rejeite total negativo.",
+          "solution": "def numero_parcelas(total):\n    if total < 0:\n        raise ValueError(\"total não negativo\")\n    restante = total\n    parcelas = 0\n    while restante > 0:\n        consumido = min(4, restante)\n        restante -= consumido\n        parcelas += 1\n    return parcelas\n\nassert numero_parcelas(0) == 0\nassert numero_parcelas(4) == 1\nassert numero_parcelas(9) == 3\nprint(numero_parcelas(0), numero_parcelas(4), numero_parcelas(9))",
+          "expectedOutput": [
+            "0 1 3"
+          ],
+          "explanation": [
+            "restante é a variante: inteira, não negativa e estritamente menor depois de cada iteração, pois consumido é positivo enquanto restante > 0. Assim o laço termina.",
+            "A invariante relaciona restante às unidades ainda não consumidas e parcelas ao número de retiradas feitas. min evita tornar restante negativo. Se trocar 4 por uma parcela configurável, valide que ela é positiva antes de iniciar o while."
+          ],
+          "checks": [
+            "0, 4 e 9 exigem respectivamente 0, 1 e 3 parcelas.",
+            "O estado avança em todas as iterações.",
+            "Explique por que uma parcela configurada como zero impede término."
+          ]
+        }
+      ]
+    },
+    {
       "id": "py-colecoes-funcoes",
       "title": "Python: coleções, funções e iteração",
       "level": "Intermediário",
@@ -175,6 +451,145 @@ export default {
       "distractors": [
         "É feita uma cópia profunda.",
         "b recebe uma lista imutável."
+      ]
+    },
+    {
+      "id": "py-funcoes-contratos",
+      "title": "Python: parâmetros, escopo e funções com contratos",
+      "level": "Intermediário",
+      "summary": "Leia uma função como um acordo entre entrada, resultado e efeitos. Você vai escolher parâmetros posicionais ou nomeados, evitar defaults mutáveis compartilhados, compreender LEGB e produzir uma closure com estado próprio. Os problemas verificam independência entre chamadas e preservação dos dados de entrada, incluindo testes que expõem erros que uma única execução esconderia.",
+      "source": "https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions",
+      "topics": [
+        "contrato de entrada e retorno",
+        "parâmetros nomeados e keyword-only",
+        "default avaliado na definição",
+        "sentinela None para default mutável",
+        "escopo LEGB",
+        "nonlocal e binding externo",
+        "closure por chamada",
+        "retorno novo sem modificar entrada"
+      ],
+      "sections": [
+        {
+          "title": "Uma função organiza um contrato verificável",
+          "text": [
+            "Uma função não é apenas um bloco que evita repetição. Ela estabelece o que recebe, o que devolve e quais efeitos pode produzir. Se calcular_total recebe preços, seu contrato precisa dizer a unidade, se aceita uma sequência vazia e se pode modificar a coleção. Escrever essas regras antes do corpo permite avaliar duas implementações diferentes pela mesma expectativa, sem depender dos nomes de variáveis internos.",
+            "Uma docstring pode registrar o contrato perto da implementação, mas texto não aplica regras por si só. Valide o que vem de uma fronteira externa e teste os casos que definem o domínio. Nesta aula algumas funções assumem inteiros fornecidos por quem chama, enquanto outras conferem explicitamente a representação. Distinguir pré-condição de validação executada evita afirmar uma garantia que o código não oferece."
+          ]
+        },
+        {
+          "title": "A assinatura orienta como chamar a operação",
+          "text": [
+            "Parâmetros podem receber argumentos por posição ou por nome conforme a assinatura. Um asterisco antes de certo parâmetro pode torná-lo keyword-only, exigindo que a chamada explicite seu nome. Isso é útil para opções cujo significado não é claro numa lista de valores, como desconto ou incluir_cancelados. Um contrato bem escolhido reduz a chance de trocar dois argumentos que têm o mesmo tipo.",
+            "Use valores padrão para regras estáveis e documentadas, não para esconder dados obrigatórios ausentes. Um parâmetro opcional precisa ter um comportamento definido. Args e kwargs ampliam a flexibilidade, mas podem deixar a interface menos visível quando usados sem necessidade. Prefira uma assinatura explícita para o problema atual e acrescente flexibilidade quando houver uma relação concreta entre as chamadas que precisa suportar."
+          ]
+        },
+        {
+          "title": "Defaults são avaliados quando a função é definida",
+          "text": [
+            "Um objeto usado como valor padrão é criado na avaliação da definição, não novamente a cada chamada. Assim def adicionar(item, lista=[]) pode compartilhar a mesma lista entre chamadas que omitem o argumento. A primeira execução parece correta; a segunda revela dados de uma chamada anterior. Isso não significa que toda lista seja global: significa que o default é um objeto alcançado pela função.",
+            "Use None como sentinela e crie uma lista dentro do corpo quando o argumento não foi fornecido. Se None também for um valor legítimo do domínio e precisar ser distinguido de ausência, use uma sentinela própria. Outra decisão é exigir a coleção explicitamente. A escolha depende do contrato de efeitos: receber uma lista pode autorizar modificá-la ou pode exigir produzir um resultado novo."
+          ]
+        },
+        {
+          "title": "Escopo procura nomes e não copia valores",
+          "text": [
+            "A resolução usual de nomes envolve ambiente local, ambientes de funções externas, módulo global e builtins, frequentemente resumida como LEGB. Uma atribuição a um nome dentro do corpo normalmente o torna local naquele escopo, o que pode impedir uma leitura anterior do nome externo e gerar UnboundLocalError. Não é necessário usar global para qualquer função que consulta um dado do módulo; leitura e atribuição são operações distintas.",
+            "nonlocal permite reatribuir um binding existente no escopo de uma função externa. Ele não cria uma variável de módulo e não mantém uma cópia do valor inicial. Uma closure que lê o binding observa suas alterações conforme o fluxo. No exemplo de acumulador, nonlocal deixa os métodos de uma mesma instância atualizarem total, enquanto chamadas diferentes da fábrica têm seus próprios bindings."
+          ]
+        },
+        {
+          "title": "Estado independente depende dos objetos compartilhados",
+          "text": [
+            "Cada chamada da fábrica pode criar um ambiente novo, mas um objeto recebido de fora pode continuar compartilhado. Se duas instâncias guardam a mesma lista, alterações nessa lista atravessam a separação dos bindings. Copiar a coleção separa o contêiner, mas pode continuar compartilhando elementos mutáveis internos. Documente o nível de independência necessário e teste uma alteração que o exponha.",
+            "Uma função que promete não modificar entrada deve construir outro resultado ou operar apenas com leitura. Para uma lista de inteiros, uma cópia rasa atende à separação de elementos necessária porque os inteiros são imutáveis. Para uma árvore de objetos mutáveis, a estratégia precisa ser revista. Não faça deepcopy automaticamente para qualquer situação: cópias podem ter custo e significados que o domínio não deseja."
+          ]
+        },
+        {
+          "title": "Repetir chamadas é um caso de teste essencial",
+          "text": [
+            "Teste uma função com default mutável pelo menos duas vezes sem fornecer o argumento. Teste também uma lista fornecida explicitamente e confira a política de preservação ou mutação. Para uma fábrica, crie duas instâncias e intercale chamadas. Esses casos verificam relações entre chamadas e ambientes, enquanto um teste isolado só confere um resultado inicial.",
+            "Os exercícios incluem asserts que tornam as expectativas reproduzíveis. Ao transferir o padrão para processamento de arquivos ou uma API, mantenha as entradas explícitas e evite estado de módulo desnecessário. Uma função pura é mais fácil de comparar, mas efeitos podem ser legítimos quando são parte de uma interface clara. O objetivo é saber onde o estado mora, quem pode alterá-lo e o que a função promete conservar."
+          ]
+        }
+      ],
+      "code": "def criar_acumulador(inicial=0):\n    total = inicial\n    def somar(valor):\n        nonlocal total\n        if valor <= 0:\n            return total\n        total += valor\n        return total\n    return somar\n\na = criar_acumulador(1)\nb = criar_acumulador(10)\nassert a(2) == 3 and a(4) == 7 and b(1) == 11\nprint(a(0), b(0))\n\ndef rotulo(nome, *, prefixo=\"Aula\"):\n    return f\"{prefixo}: {nome}\"\n\nprint(rotulo(\"Funções\", prefixo=\"Módulo\"))",
+      "expectedOutput": [
+        "7 11",
+        "Módulo: Funções"
+      ],
+      "output": "Saída: 7 11 e Módulo: Funções. As chamadas da fábrica têm totais separados; prefixo só pode ser fornecido por nome.",
+      "trace": [
+        "Cada fábrica cria seu binding total e devolve a função que o alcança.",
+        "nonlocal permite a atualização do binding externo dessa chamada.",
+        "O asterisco na assinatura torna prefixo keyword-only."
+      ],
+      "exercise": "Crie anexar(valor, valores=None) que sempre devolve uma lista nova com o valor no final e não modifica uma lista fornecida. Duas chamadas sem lista devem produzir resultados independentes.",
+      "solution": "def anexar(valor, valores=None):\n    resultado = [] if valores is None else list(valores)\n    resultado.append(valor)\n    return resultado\n\na = anexar(1)\nb = anexar(2)\noriginal = [3]\nc = anexar(4, original)\nassert a == [1] and b == [2] and c == [3, 4] and original == [3]\nassert a is not b and c is not original\nprint(a, b, c, original)",
+      "solutionOutput": [
+        "[1] [2] [3, 4] [3]"
+      ],
+      "bug": "A lista padrão é compartilhada entre chamadas que omitem o argumento. Executar apenas uma vez não revela a falha de independência prometida pela função.",
+      "bugCode": "def adicionar(valor, valores=[]):\n    valores.append(valor)\n    return valores\nprint(adicionar(1))\nprint(adicionar(2))  # contém também o 1 anterior",
+      "repair": "Use uma sentinela None e construa a lista dentro de cada chamada. Se a função promete preservar uma lista fornecida, copie-a também antes de anexar; apenas mudar o default não resolve esse segundo contrato.",
+      "checks": [
+        "Duas chamadas sem coleção não compartilham dados.",
+        "A coleção recebida permanece inalterada.",
+        "Explique qual binding nonlocal altera e qual assinatura exige argumento nomeado."
+      ],
+      "project": "Crie um processador de registros com função de transformação sem mutação e uma fábrica que acumula estatísticas. Intercale duas instâncias e guarde o resultado de chamadas anteriores para conferir que ele não muda depois de uma chamada nova.",
+      "question": "Quando a lista em um parâmetro padrão como valores=[] é criada?",
+      "answer": "Na avaliação da definição da função, podendo ser reutilizada entre chamadas.",
+      "distractors": [
+        "Sempre no começo de cada chamada, portanto nunca pode compartilhar estado.",
+        "Só quando append é chamado; o compilador cria uma lista por elemento."
+      ],
+      "practices": [
+        {
+          "id": "assinatura",
+          "title": "Problema 1: opção exigida por nome",
+          "topics": [
+            "parâmetros nomeados e keyword-only",
+            "contrato de entrada e retorno"
+          ],
+          "prompt": "Implemente etiqueta(nome, *, prefixo='Estudo') e teste chamada com prefixo nomeado e rejeição de um segundo argumento posicional. Preserve o nome recebido e não use args para aceitar silenciosamente a forma errada.",
+          "solution": "def etiqueta(nome, *, prefixo=\"Estudo\"):\n    return f\"{prefixo}: {nome}\"\n\nassert etiqueta(\"HTML\") == \"Estudo: HTML\"\nassert etiqueta(\"HTML\", prefixo=\"Aula\") == \"Aula: HTML\"\ntry:\n    etiqueta(\"HTML\", \"Aula\")\nexcept TypeError:\n    pass\nelse:\n    raise AssertionError(\"argumento posicional aceito\")\nprint(etiqueta(\"HTML\", prefixo=\"Aula\"))",
+          "expectedOutput": [
+            "Aula: HTML"
+          ],
+          "explanation": [
+            "O asterisco separa a parte que pode ser chamada por posição das opções exigidas por nome. A chamada errada falha antes de executar o corpo, porque não atende à assinatura.",
+            "Esse teste verifica a forma de uso da função, além do resultado formatado. Se o produto passar a permitir o segundo argumento por posição, mude a assinatura e revise a expectativa de rejeição."
+          ],
+          "checks": [
+            "O padrão produz Estudo: HTML.",
+            "O argumento nomeado produz Aula: HTML.",
+            "A chamada posicional indevida gera TypeError."
+          ]
+        },
+        {
+          "id": "isolamento",
+          "title": "Problema 2: coletor com estado por instância",
+          "topics": [
+            "closure por chamada",
+            "retorno novo sem modificar entrada",
+            "sentinela None para default mutável"
+          ],
+          "prompt": "Crie uma fábrica de coletor que recebe uma lista inicial opcional, copia os dados e devolve adicionar e snapshot. A alteração de um snapshot ou da lista inicial após a criação não pode alterar o coletor. Use inteiros como elementos.",
+          "solution": "def coletor(iniciais=None):\n    valores = [] if iniciais is None else list(iniciais)\n    def adicionar(valor):\n        valores.append(valor)\n    def snapshot():\n        return list(valores)\n    return adicionar, snapshot\n\noriginal = [1]\nadicionar, snapshot = coletor(original)\noutro_add, outro_snapshot = coletor()\noriginal.append(9)\nadicionar(2)\ncopia = snapshot()\ncopia.append(8)\nassert snapshot() == [1, 2] and outro_snapshot() == []\nassert original == [1, 9]\noutro_add(3)\nassert outro_snapshot() == [3] and snapshot() == [1, 2]\nprint(snapshot(), outro_snapshot())",
+          "expectedOutput": [
+            "[1, 2] [3]"
+          ],
+          "explanation": [
+            "A fábrica copia a coleção inicial e cada snapshot copia novamente o contêiner interno. Os elementos são inteiros, portanto esse nível de cópia atende ao contrato definido pela atividade.",
+            "Adicionar muda a lista interna sem reatribuir o binding valores, então nonlocal não é necessário para append. Duas chamadas da fábrica mantêm listas independentes, o que a sequência intercalada de testes demonstra."
+          ],
+          "checks": [
+            "A lista inicial pode mudar sem alterar o coletor.",
+            "Um snapshot pode mudar sem alterar o coletor.",
+            "As duas instâncias têm dados independentes."
+          ]
+        }
       ]
     },
     {

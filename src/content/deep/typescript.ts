@@ -92,6 +92,146 @@ export default {
       ]
     },
     {
+      "id": "ts-inferencia-ausencia",
+      "title": "TypeScript: inferência, ausência e contratos sem coerção",
+      "level": "Fundamentos",
+      "summary": "Entenda o que o compilador consegue provar sobre uma variável e o que continua dependendo dos dados recebidos. Você vai modelar quantidade opcional, preservar zero, usar narrowing em vez de assertions e distinguir ausência de erro. Os problemas incluem catálogo por identificador e limite configurável, com testes positivos, negativos e resultados reais depois do apagamento dos tipos.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+      "topics": [
+        "inferência e widening",
+        "union com undefined",
+        "strictNullChecks",
+        "narrowing por typeof",
+        "operador nullish",
+        "assertion sem validação",
+        "readonly e mutação",
+        "contrato de retorno discriminado"
+      ],
+      "sections": [
+        {
+          "title": "O tipo acompanha operações possíveis",
+          "text": [
+            "TypeScript verifica o programa antes de executá-lo. Uma variável inicializada com um número costuma ser inferida como number, permitindo outros números em atribuições posteriores; um const com literal pode conservar um tipo literal mais específico. O tipo descreve operações que o compilador permite no ponto atual. Ele não acrescenta uma etiqueta secreta ao valor JavaScript e não transforma automaticamente texto recebido em um número.",
+            "O alargamento de literais, chamado widening, faz diferença em objetos mutáveis. Um campo status inicializado com 'aberto' pode ser inferido como string se o objeto permitir alterações. Uma anotação de union ou as const pode preservar o conjunto de valores pretendido. as const também cria uma visão readonly para a expressão, mas não congela objetos em runtime. Escolha a representação pelo contrato de mutação, não apenas para silenciar uma mensagem."
+          ]
+        },
+        {
+          "title": "Ausência pertence ao modelo de dados",
+          "text": [
+            "Com strictNullChecks, number e undefined são possibilidades distintas. Se um parâmetro é opcional, seu corpo precisa tratar a ausência antes de usá-lo como número. Isso permite tornar visível uma regra que JavaScript deixaria implícita. Uma quantidade zero não está ausente; um total negativo pode estar presente e ser inválido. Modelar essas três situações evita que um valor falso em condição se transforme em configuração padrão.",
+            "O operador ?? seleciona o valor da direita apenas para null ou undefined. O operador || seleciona para qualquer valor falsy, incluindo zero, string vazia e false. Use a operação que corresponde ao domínio. Nesta aula, limite zero significa não aceitar itens, portanto limite ?? 10 preserva uma escolha válida. O compilador não decide sozinho qual operador expressa a regra do produto: os dois podem ser programas bem tipados."
+          ]
+        },
+        {
+          "title": "Narrowing usa evidência observável",
+          "text": [
+            "Quando uma variável é string | number, uma condição typeof valor === 'number' permite usar operações numéricas no ramo. O compilador refina o conjunto de possibilidades ao acompanhar o fluxo de controle. Se o outro ramo encerra com return ou throw, os trechos seguintes também podem herdar esse refinamento. Essa redução de possibilidades é chamada narrowing e deve se apoiar em verificações que realmente acontecem na execução.",
+            "A verificação typeof valor === 'object' ainda inclui null em JavaScript; arrays também são objetos. Um predicado para um objeto precisa combinar null, tipo e, quando apropriado, Array.isArray. Um type predicate escrito por você é uma promessa ao compilador: ele pode estar errado. Prefira começar com verificações simples cujo efeito você consegue explicar e teste os dados que deveriam ser rejeitados, além do caminho feliz."
+          ]
+        },
+        {
+          "title": "Assertions mudam a visão, sem conferir o dado",
+          "text": [
+            "A expressão valor as number instrui o compilador a tratar o valor com aquele tipo quando a conversão de visão é permitida. Ela não chama Number e não lança erro se o dado de execução for uma string. O operador ! de não nulidade também não procura um registro perdido. Essas formas podem ser úteis quando existe uma garantia externa conhecida, mas não substituem a validação da fronteira de um formulário, JSON ou consulta.",
+            "unknown representa um valor cuja forma você ainda não sabe. Diferentemente de any, ele exige prova antes de acessar propriedades e chamar operações. Ao converter uma resposta para unknown, você mantém a responsabilidade de validar no adaptador. Após produzir um objeto do domínio, o restante do programa pode receber um contrato estreito. Se usar uma assertion para atravessar essa fronteira, você remove exatamente a prova que o tipo deveria exigir."
+          ]
+        },
+        {
+          "title": "Retorno discriminado evita sentinelas ambíguas",
+          "text": [
+            "Uma função que calcula um valor pode devolver { ok: true, valor: number } ou { ok: false, erro: string }. O campo ok distingue os formatos e permite narrowing. No ramo de sucesso o valor existe; no de falha o erro existe. Isso deixa o contrato mais claro que retornar -1 para falha quando números negativos podem ser resultados válidos. Também força quem chama a decidir como comunicar a falha.",
+            "ReadonlyArray ou readonly T[] impede certas mutações por essa referência, enquanto outras referências podem continuar a modificar o mesmo objeto. Um parâmetro somente leitura deixa explícito que a função não deve alterar a coleção recebida. Não confunda esse contrato estático com cópia, imutabilidade profunda ou proteção de concorrência. Teste que a operação preserva os dados originais quando essa propriedade pertence ao comportamento prometido."
+          ]
+        },
+        {
+          "title": "Confira tipos e comportamento separadamente",
+          "text": [
+            "Um teste de tipos pode usar @ts-expect-error para exigir que uma operação inválida seja rejeitada. Se ela passar a compilar, o comentário gera um diagnóstico de diretiva não utilizada. Escreva a diretiva sobre uma chamada com um erro específico, e não sobre um bloco que contém vários problemas. Dessa forma o teste detecta que o contrato está estreito o suficiente sem esconder erros não relacionados.",
+            "Ainda é necessário executar o JavaScript produzido. Uma função pode ter tipo correto e somar os valores errados, ignorar zero ou modificar o array recebido. Os exemplos desta aula incluem expectativas de saída e verificações que lançam Error em caso de divergência. Use o modo strict para a análise estática e dados de fronteira para a execução. A combinação confere duas propriedades diferentes do mesmo contrato."
+          ]
+        }
+      ],
+      "code": "type Resultado = {ok:true; valor:number} | {ok:false; erro:string};\nfunction quantidade(entrada:unknown, limite?:number):Resultado {\n  const maximo = limite ?? 10;\n  if (!Number.isSafeInteger(maximo) || maximo < 0) return {ok:false,erro:\"limite inválido\"};\n  if (typeof entrada !== \"number\" || !Number.isSafeInteger(entrada) || entrada < 0)\n    return {ok:false,erro:\"quantidade inválida\"};\n  return entrada <= maximo ? {ok:true,valor:entrada} : {ok:false,erro:\"acima do limite\"};\n}\nconst a = quantidade(0,0), b = quantidade(\"2\");\nif (!a.ok || a.valor !== 0 || b.ok) throw new Error(\"contrato quebrado\");\nconsole.log(JSON.stringify(a));\nconsole.log(JSON.stringify(b));",
+      "expectedOutput": [
+        "{\"ok\":true,\"valor\":0}",
+        "{\"ok\":false,\"erro\":\"quantidade inválida\"}"
+      ],
+      "output": "Saída: um sucesso com valor 0 e uma falha quantidade inválida. A string \"2\" não sofre coerção implícita.",
+      "trace": [
+        "typeof produz a evidência para o ramo numérico, sem transformar uma string.",
+        "?? preserva limite zero; Number.isSafeInteger rejeita NaN, infinitos e frações.",
+        "O campo ok decide qual propriedade pode ser acessada após o narrowing."
+      ],
+      "exercise": "Escreva dobro(entrada: unknown) devolvendo um resultado discriminado. Aceite somente números finitos, inclusive zero e negativos; rejeite strings, null e Infinity. Não use as number, any ou ! para tratar entrada.",
+      "solution": "type Dobro = {ok:true; valor:number} | {ok:false; erro:string};\nfunction dobro(entrada:unknown):Dobro {\n  if (typeof entrada !== \"number\" || !Number.isFinite(entrada))\n    return {ok:false,erro:\"número finito esperado\"};\n  const valor = entrada * 2;\n  return Number.isFinite(valor) ? {ok:true,valor} : {ok:false,erro:\"resultado não finito\"};\n}\nconst a = dobro(0), b = dobro(-3);\nif (!a.ok || a.valor !== 0 || !b.ok || b.valor !== -6 || dobro(\"3\").ok || dobro(null).ok || dobro(Infinity).ok)\n  throw new Error(\"casos de fronteira\");\nconsole.log(JSON.stringify(b));",
+      "solutionOutput": [
+        "{\"ok\":true,\"valor\":-6}"
+      ],
+      "bug": "O limite padrão usa || e substitui zero por dez. O código pode passar por strict e ainda contrariar o domínio. Separe a garantia de tipo da regra de negócio e escreva o menor teste que expõe o erro.",
+      "bugCode": "function maximo(limite?:number):number {\n  return limite || 10;\n}\nconsole.log(maximo(0)); // 10, embora zero tenha sido fornecido",
+      "repair": "Use limite ?? 10 e valide a faixa depois. Adicione um teste com limite zero; um diagnóstico do compilador não detectará sozinho que || era o operador errado para esse contrato.",
+      "checks": [
+        "Zero é preservado como dado e como limite.",
+        "unknown só é usado após uma verificação executada.",
+        "Erros são representados por um ramo que não contém valor de sucesso."
+      ],
+      "project": "Implemente a configuração de limite de uma lista de tarefas. O adaptador recebe unknown, valida quantidade e limite, e entrega um resultado discriminado. Inclua exemplos para zero, ausência, NaN e texto numérico; explique quais regras são estáticas e quais dependem de execução.",
+      "question": "O que entrada as number faz quando entrada contém a string '12' em runtime?",
+      "answer": "Muda a visão estática do compilador; não converte a string nem valida seu conteúdo.",
+      "distractors": [
+        "Converte automaticamente a string para o número 12.",
+        "Lança uma exceção antes de o JavaScript começar a executar."
+      ],
+      "practices": [
+        {
+          "id": "catalogo",
+          "title": "Problema 1: busca que pode não encontrar",
+          "topics": [
+            "union com undefined",
+            "strictNullChecks",
+            "readonly e mutação"
+          ],
+          "prompt": "Receba um catálogo readonly de {id, nome}. A busca por id deve retornar o nome ou undefined, sem assertion de não nulidade e sem modificar o catálogo. Verifique id existente, inexistente e catálogo vazio.",
+          "solution": "type Item = {id:number; nome:string};\nfunction buscarNome(itens:readonly Item[], id:number):string|undefined {\n  return itens.find(item=>item.id===id)?.nome;\n}\nconst itens:readonly Item[] = [{id:0,nome:\"Lia\"}];\nif (buscarNome(itens,0)!==\"Lia\" || buscarNome(itens,1)!==undefined || buscarNome([],0)!==undefined || itens.length!==1)\n  throw new Error(\"busca inválida\");\nconsole.log(buscarNome(itens,0));\nconsole.log(String(buscarNome(itens,1)));",
+          "expectedOutput": [
+            "Lia",
+            "undefined"
+          ],
+          "explanation": [
+            "find retorna um item ou undefined. O encadeamento opcional permite obter nome só quando o item existe e preserva ausência no resultado.",
+            "O tipo readonly documenta a restrição de escrita pela referência recebida. Ele não faz uma cópia. As verificações de execução mostram tanto o caso encontrado quanto o caso ausente e a preservação da coleção."
+          ],
+          "checks": [
+            "Id zero encontra Lia.",
+            "Catálogo vazio e id desconhecido retornam undefined.",
+            "Explique por que adicionar ! esconderia um caso válido do retorno."
+          ]
+        },
+        {
+          "id": "limite",
+          "title": "Problema 2: padrão sem apagar zero",
+          "topics": [
+            "union com undefined",
+            "narrowing por typeof"
+          ],
+          "prompt": "Crie limiteValido(valor: unknown): number | undefined. undefined recebe o padrão 10; um inteiro seguro não negativo é preservado. Outros valores, inclusive null, retornam undefined indicando erro. Verifique 0, 3, ausência, null e string.",
+          "solution": "function limiteValido(valor:unknown):number|undefined {\n  if (valor === undefined) return 10;\n  if (typeof valor !== \"number\" || !Number.isSafeInteger(valor) || valor < 0) return undefined;\n  return valor;\n}\nif (limiteValido(0)!==0 || limiteValido(3)!==3 || limiteValido(undefined)!==10 ||\n    limiteValido(null)!==undefined || limiteValido(\"3\")!==undefined) throw new Error(\"limite inválido\");\nconsole.log(limiteValido(0),limiteValido(undefined));",
+          "expectedOutput": [
+            "0 10"
+          ],
+          "explanation": [
+            "A ausência aceita pelo contrato é somente undefined. Por isso o teste explícito vem antes do narrowing numérico e null é uma falha, diferente do comportamento de ?? sozinho.",
+            "O retorno numérico inclui zero. No consumidor, teste resultado === undefined, sem usar if (!resultado). Para transportar mensagens de falha, substitua a sentinela pelo Resultado discriminado apresentado no exemplo principal."
+          ],
+          "checks": [
+            "0 é preservado e undefined recebe 10.",
+            "null e texto numérico são rejeitados.",
+            "Explique por que ?? sozinho não implementa a regra de null desta atividade."
+          ]
+        }
+      ]
+    },
+    {
       "id": "ts-contratos",
       "title": "TypeScript: objetos, narrowing e uniões discriminadas",
       "level": "Intermediário",
@@ -176,6 +316,145 @@ export default {
       ]
     },
     {
+      "id": "ts-validacao-aninhada",
+      "title": "TypeScript: validar JSON aninhado e produzir dados de domínio",
+      "level": "Intermediário",
+      "summary": "Atravesse uma fronteira de JSON sem fingir que uma anotação de tipo valida a resposta. Esta aula constrói um adaptador de unknown para um pedido com itens, confere cada nível, copia os campos aceitos e relata uma falha com caminho. Os exercícios aprofundam campos opcionais e testes de tipos, preservando a diferença entre o formato externo e o modelo usado no cálculo.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/objects.html",
+      "topics": [
+        "JSON.parse como fronteira unknown",
+        "objeto não nulo e não array",
+        "validação de campos aninhados",
+        "validação de todos os itens",
+        "mensagem com caminho de erro",
+        "cópia dos campos aceitos",
+        "campo opcional versus inválido",
+        "testes com ts-expect-error"
+      ],
+      "sections": [
+        {
+          "title": "JSON descreve dados e não um contrato TypeScript",
+          "text": [
+            "JSON.parse pode retornar um número, null, um array ou um objeto, além de lançar SyntaxError quando o texto não é JSON válido. Anotar o resultado como Pedido não faz o parser verificar os campos. Trate o resultado como unknown na fronteira, confira a estrutura e só então produza Pedido. Essa sequência torna explícito de onde vem a confiança necessária para o restante da aplicação.",
+            "Um DTO externo e um modelo de domínio podem ter nomes e regras diferentes. A API pode fornecer quantidade como texto, mas o cálculo pode exigir um inteiro. Essa conversão deve ter um contrato próprio e não ocorrer incidentalmente em uma multiplicação. Nesta aula a fronteira exige quantidades numéricas; se a API mudar, o adaptador precisa ser revisado e seus casos de teste documentam essa decisão."
+          ]
+        },
+        {
+          "title": "Cada nível exige uma verificação",
+          "text": [
+            "Para acessar uma propriedade de unknown, primeiro confirme typeof valor === 'object', valor !== null e !Array.isArray(valor). Esse conjunto identifica um objeto adequado para um registro de campos, sem afirmar que todos os seus campos estão corretos. Um helper pode expor Record<string, unknown>; cada valor lido continua desconhecido e exige a sua própria prova.",
+            "Um objeto com itens não garante que itens seja array. Um array de itens não garante que cada elemento seja objeto. Um objeto de item não garante que quantidade seja inteiro positivo. Organize a validação do exterior para o interior e encerre na primeira falha com um caminho como itens[1].quantidade. Esse caminho é uma informação útil para corrigir dados e evita a mensagem genérica pedido inválido."
+          ]
+        },
+        {
+          "title": "Confira a coleção inteira antes do cálculo",
+          "text": [
+            "Validar só o primeiro item deixa os demais atravessarem a fronteira sem garantia. Um for com índice permite conferir cada elemento e informar exatamente qual falhou. Construa um novo array de objetos aceitos em vez de declarar que o array original tem um tipo mais estreito. Só retorne sucesso depois de todos os itens passarem. Dessa forma uma falha tardia não publica um pedido parcialmente validado.",
+            "Escolha também uma regra para array vazio e limites de tamanho. Aqui pedidos precisam de pelo menos um item e quantidades são inteiros seguros positivos. Em um adaptador exposto a dados de rede, limite o número de itens e o tamanho do texto antes do processamento. Esses limites controlam consumo de recursos e pertencem à validação semântica, mesmo quando cada item isolado parece correto."
+          ]
+        },
+        {
+          "title": "Selecionar campos reduz dependência do formato externo",
+          "text": [
+            "Retornar {...entrada} após validar alguns campos também copia os campos que você nunca conferiu. O tipo declarado pode ocultar a presença desses dados extras, enquanto serialização e outras operações em runtime ainda os encontram. Ao retornar { id, itens }, você escolhe a forma produzida pelo adaptador. O contrato desta aula ignora campos extras no JSON, mas não os inclui no objeto de domínio.",
+            "Uma cópia rasa só duplica o objeto do nível atual. Se você reutilizar o array de entrada, alterações posteriores no array ainda atingem o resultado. Construa também cada item aceito quando precisa isolar o modelo validado. Isso não estabelece imutabilidade profunda para todo tipo possível; estabelece uma separação suficiente para esta árvore composta apenas por strings, números, objetos de item e um array."
+          ]
+        },
+        {
+          "title": "Opcional não significa qualquer coisa",
+          "text": [
+            "Um campo opcional pode estar ausente, mas quando presente precisa cumprir sua regra. Se apelido é opcional, um número no campo não deve ser tratado como ausência silenciosa. Distinga entrada.apelido === undefined do caso em que existe um valor inválido. A diferença permite detectar erro de integração que seria escondido por uma regra de valor padrão aplicada indiscriminadamente.",
+            "Para transportar falhas, uma união com ok discrimina sucesso e erro. Uma função consumidora deve verificar ok antes de acessar valor. Testes com @ts-expect-error podem conferir que propriedades de sucesso não vazam para o ramo de falha. Eles também mostram por que unknown é útil: tentar passar dados externos diretamente para uma função do domínio deve ser rejeitado até ocorrer validação."
+          ]
+        },
+        {
+          "title": "Validação precisa de dados hostis e casos incompletos",
+          "text": [
+            "Monte uma tabela com null, array no lugar de objeto, itens ausentes, item null, quantidade fracionária, quantidade zero e um item inválido depois de um válido. Inclua dados bons com campos extras para conferir a política de seleção. Uma atividade que só usa o JSON ideal testa o parser feliz, mas não a fronteira que o modelo afirma proteger.",
+            "Depois do sucesso, modifique a entrada original e confira se o resultado conserva os valores aceitos. Esse teste investiga compartilhamento de referências e complementa os testes de forma. Em produção, não execute getters ou classes arbitrárias como se fossem JSON puro sem definir essa fronteira; o exemplo considera dados originados de JSON.parse, que são uma árvore de dados simples."
+          ]
+        }
+      ],
+      "code": "type Pedido = {id:string; itens:{sku:string; quantidade:number}[]};\ntype Validacao<T> = {ok:true; valor:T} | {ok:false; erro:string};\nfunction registro(x:unknown):x is Record<string,unknown> {\n  return typeof x===\"object\" && x!==null && !Array.isArray(x);\n}\nfunction pedido(x:unknown):Validacao<Pedido> {\n  if (!registro(x) || typeof x.id!==\"string\" || x.id.trim()===\"\")\n    return {ok:false,erro:\"id\"};\n  if (!Array.isArray(x.itens) || x.itens.length<1 || x.itens.length>100)\n    return {ok:false,erro:\"itens\"};\n  const itens:Pedido[\"itens\"]=[];\n  for (let i=0;i<x.itens.length;i++) {\n    const item:unknown=x.itens[i];\n    if (!registro(item) || typeof item.sku!==\"string\" || item.sku.trim()===\"\")\n      return {ok:false,erro:`itens[${i}].sku`};\n    const q=item.quantidade;\n    if (typeof q!==\"number\" || !Number.isSafeInteger(q) || q<=0)\n      return {ok:false,erro:`itens[${i}].quantidade`};\n    itens.push({sku:item.sku,quantidade:q});\n  }\n  return {ok:true,valor:{id:x.id,itens}};\n}\nconst entrada:unknown=JSON.parse('{\"id\":\"p1\",\"itens\":[{\"sku\":\"A\",\"quantidade\":2}],\"extra\":true}');\nconst bom=pedido(entrada),ruim=pedido({id:\"p2\",itens:[{sku:\"A\",quantidade:0}]});\nif (!bom.ok || bom.valor.itens[0].quantidade!==2 || ruim.ok) throw new Error(\"validação\");\nconsole.log(JSON.stringify(bom));\nconsole.log(JSON.stringify(ruim));",
+      "expectedOutput": [
+        "{\"ok\":true,\"valor\":{\"id\":\"p1\",\"itens\":[{\"sku\":\"A\",\"quantidade\":2}]}}",
+        "{\"ok\":false,\"erro\":\"itens[0].quantidade\"}"
+      ],
+      "output": "O resultado válido contém somente id e itens. A quantidade zero falha com o caminho itens[0].quantidade, sem produzir um Pedido.",
+      "trace": [
+        "A fronteira começa em unknown e registro prova apenas a forma externa.",
+        "O laço confere todo item e constrói objetos novos com campos aceitos.",
+        "Somente ao completar a coleção a função retorna o ramo ok com Pedido."
+      ],
+      "exercise": "Valide um endereço {cidade:string, cep:string} recebido como unknown. Exija cidade não vazia após trim e CEP com exatamente oito dígitos ASCII. Ignore campos extras no resultado e rejeite null, array e CEP numérico.",
+      "solution": "type Endereco={cidade:string; cep:string};\nfunction endereco(x:unknown):Endereco|undefined {\n  if (typeof x!==\"object\" || x===null || Array.isArray(x)) return undefined;\n  if (!(\"cidade\" in x) || !(\"cep\" in x) || typeof x.cidade!==\"string\" ||\n      x.cidade.trim()===\"\" || typeof x.cep!==\"string\" || !/^[0-9]{8}$/.test(x.cep)) return undefined;\n  return {cidade:x.cidade.trim(),cep:x.cep};\n}\nconst bom=endereco({cidade:\" Recife \",cep:\"01234567\",extra:1});\nif (!bom || bom.cidade!==\"Recife\" || \"extra\" in bom || endereco(null)!==undefined ||\n    endereco([])!==undefined || endereco({cidade:\"R\",cep:12345678})!==undefined) throw new Error(\"endereço\");\nconsole.log(JSON.stringify(bom));",
+      "solutionOutput": [
+        "{\"cidade\":\"Recife\",\"cep\":\"01234567\"}"
+      ],
+      "bug": "A função promete Pedido depois de uma assertion do retorno de JSON.parse. Um item com quantidade string passa pela fronteira e pode concatenar texto num cálculo. O tipo declarado esconde a falta de prova em execução.",
+      "bugCode": "type Pedido={itens:{quantidade:number}[]};\nconst pedido=JSON.parse('{\"itens\":[{\"quantidade\":\"2\"}]}') as Pedido;\nconsole.log(pedido.itens[0].quantidade + 1); // \"21\"",
+      "repair": "Receba unknown, confira cada nível e cada quantidade, devolva um resultado discriminado e calcule apenas no ramo válido. Acrescente um item inválido na segunda posição para evitar uma validação limitada ao primeiro item.",
+      "checks": [
+        "Todos os itens são conferidos e a falha informa o caminho.",
+        "Campos extras não são copiados para o resultado.",
+        "A fronteira não usa any ou assertions para inventar a validade do JSON."
+      ],
+      "project": "Crie um importador de pedidos de um arquivo JSON. Separe erro de sintaxe, erro de estrutura e cálculo do total. Escreva um relatório dos registros rejeitados com caminho, sem retornar pedidos parcialmente validados, e documente os limites de tamanho.",
+      "question": "Por que conferir Array.isArray(entrada.itens) não basta para produzir um Pedido?",
+      "answer": "Cada elemento ainda pode ter campos ausentes ou inválidos e precisa ser validado.",
+      "distractors": [
+        "Array.isArray converte automaticamente os elementos para o tipo esperado.",
+        "Depois de identificar um array, strict verifica os dados de rede durante a execução."
+      ],
+      "practices": [
+        {
+          "id": "opcional",
+          "title": "Problema 1: apelido ausente ou inválido",
+          "topics": [
+            "campo opcional versus inválido",
+            "objeto não nulo e não array"
+          ],
+          "prompt": "Valide um perfil com nome obrigatório não vazio e apelido opcional não vazio quando fornecido. Ausência ou undefined omitem apelido no resultado; null, número e espaços no apelido invalidam o perfil. Produza um novo objeto com strings aparadas.",
+          "solution": "type Perfil={nome:string; apelido?:string};\nfunction perfil(x:unknown):Perfil|undefined {\n  if (typeof x!==\"object\" || x===null || Array.isArray(x) ||\n      !(\"nome\" in x) || typeof x.nome!==\"string\" || x.nome.trim()===\"\") return undefined;\n  if (!(\"apelido\" in x) || x.apelido===undefined) return {nome:x.nome.trim()};\n  if (typeof x.apelido!==\"string\" || x.apelido.trim()===\"\") return undefined;\n  return {nome:x.nome.trim(),apelido:x.apelido.trim()};\n}\nif (perfil({nome:\"Lia\",apelido:null})!==undefined || perfil({nome:\"Lia\",apelido:\"  \"})!==undefined ||\n    perfil({nome:\"Lia\",apelido:3})!==undefined) throw new Error(\"opcional inválido\");\nconsole.log(JSON.stringify(perfil({nome:\" Lia \"})));\nconsole.log(JSON.stringify(perfil({nome:\"Lia\",apelido:\" Li \"})));",
+          "expectedOutput": [
+            "{\"nome\":\"Lia\"}",
+            "{\"nome\":\"Lia\",\"apelido\":\"Li\"}"
+          ],
+          "explanation": [
+            "Ausência é testada antes do conteúdo. Um campo opcional presente continua tendo um contrato, portanto null e espaços não são tratados como se a pessoa tivesse omitido o valor.",
+            "A construção explícita omite a propriedade na ausência e copia só strings válidas. Trocar essa regra por uma normalização silenciosa esconderia diferenças entre ausência e erro de integração."
+          ],
+          "checks": [
+            "Ausência omite a propriedade apelido.",
+            "Apelido presente é string aparada não vazia.",
+            "Três formas inválidas são rejeitadas, sem coerção."
+          ]
+        },
+        {
+          "id": "tipos",
+          "title": "Problema 2: provar o contrato para consumidores",
+          "topics": [
+            "testes com ts-expect-error",
+            "JSON.parse como fronteira unknown"
+          ],
+          "prompt": "Modele uma união Validacao<T> e uma função consumir que exige {id:string}. Demonstre uma chamada válida, um id numérico rejeitado e o acesso ao valor de sucesso somente depois de ok. Os casos negativos devem passar pelo compilador como expectativas de erro.",
+          "solution": "type Validacao<T>={ok:true; valor:T}|{ok:false; erro:string};\nfunction consumir(x:{id:string}):string {return x.id;}\nfunction mostrar(r:Validacao<{id:string}>):string {\n  if (r.ok) return consumir(r.valor);\n  // @ts-expect-error o ramo de falha não contém valor\n  const impossivel:unknown=r.valor;\n  void impossivel;\n  return r.erro;\n}\nfunction contratosNegativos():void {\n  // @ts-expect-error id numérico não atende ao contrato\n  consumir({id:42});\n  const externo:unknown={id:\"p1\"};\n  // @ts-expect-error unknown exige validação antes do consumo\n  consumir(externo);\n}\nvoid contratosNegativos;\nif (mostrar({ok:true,valor:{id:\"p1\"}})!==\"p1\" || mostrar({ok:false,erro:\"id\"})!==\"id\")\n  throw new Error(\"consumidor\");\nconsole.log(mostrar({ok:true,valor:{id:\"p1\"}}));",
+          "expectedOutput": [
+            "p1"
+          ],
+          "explanation": [
+            "As chamadas negativas ficam numa função que não é executada; elas existem para exigir rejeição estática. O teste de execução usa somente caminhos permitidos pelo contrato.",
+            "@ts-expect-error é sensível ao diagnóstico da linha seguinte. Remova a diretiva para observar o erro ou torne a operação válida e veja a diretiva não utilizada ser rejeitada. O narrowing de ok protege o acesso de sucesso."
+          ],
+          "checks": [
+            "Os dois consumidores válidos produzem o resultado esperado.",
+            "O compilador exige três diagnósticos nas linhas marcadas.",
+            "Explique por que testar um tipo não valida um JSON recebido."
+          ]
+        }
+      ]
+    },
+    {
       "id": "ts-genericos",
       "title": "TypeScript: genéricos, coleções e variância",
       "level": "Avançado",
@@ -257,6 +536,146 @@ export default {
       "distractors": [
         "T tem exatamente um campo e nenhum outro.",
         "Qualquer objeto com id pode ser devolvido como qualquer T."
+      ]
+    },
+    {
+      "id": "ts-genericos-relacoes",
+      "title": "TypeScript: genéricos que preservam relações entre dados",
+      "level": "Avançado",
+      "summary": "Use parâmetros de tipo para manter uma relação que se perderia com any ou unions desconectadas. Esta aula constrói seleção de propriedade e transformação de coleções, compara constraints com assertions e mostra por que uma função genérica não pode inventar qualquer T. Os problemas incluem keyof, indexed access, inferência e casos negativos conferidos pelo compilador.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "topics": [
+        "parâmetro de tipo como relação",
+        "inferência do tipo de retorno",
+        "constraint extends",
+        "keyof e chave válida",
+        "indexed access T K",
+        "readonly na entrada genérica",
+        "tipo específico não inventado",
+        "teste negativo de propriedade"
+      ],
+      "sections": [
+        {
+          "title": "Um genérico preserva informação da chamada",
+          "text": [
+            "Uma função identidade que recebe any e retorna any permite a chamada, mas perde a relação estática entre entrada e saída. Uma função identidade<T>(valor: T): T conserva essa relação: se a chamada recebe um objeto com nome, o retorno ainda descreve aquele objeto. O parâmetro T não é um objeto de execução e não cria uma verificação do dado. Ele liga posições do contrato analisado pelo compilador.",
+            "Use um parâmetro de tipo quando a operação realmente relaciona dados, como elemento de uma coleção e resultado encontrado. Acrescentar letras genéricas sem uma relação pode tornar a assinatura mais difícil sem aumentar a garantia. Uma função que sempre devolve string provavelmente pode declarar string diretamente. Uma função que transforma T em U precisa dizer de onde vem a transformação, normalmente por um callback ou outro argumento que estabelece U."
+          ]
+        },
+        {
+          "title": "Inferência aproveita os argumentos disponíveis",
+          "text": [
+            "O compilador pode inferir T a partir da entrada e U a partir do callback de transformação. Isso reduz a necessidade de escrever parâmetros de tipo na chamada e mantém informação específica. Se uma função recebe readonly T[] e um callback (valor: T) => U, pode devolver U[] sem usar assertions. A implementação cria uma coleção nova e aplica o callback a cada valor, preservando o contrato de elemento.",
+            "A inferência depende do contexto e das relações oferecidas pela assinatura. Se você anota um argumento como um tipo amplo antes de chamar, parte da informação já pode ter sido perdida. Um parâmetro explícito pode ser útil, mas não deve servir para afirmar um tipo incompatível com o dado. Confira qual tipo entrou na chamada e qual saiu, em vez de assumir que o genérico sempre reconstrói a forma original mais estreita."
+          ]
+        },
+        {
+          "title": "Constraints limitam operações permitidas",
+          "text": [
+            "T extends { id: string } informa que todo T aceito oferece ao menos id string, então a função pode ler essa propriedade. A constraint não significa que T é exatamente aquele objeto mínimo. Uma chamada pode escolher um T com campos adicionais obrigatórios. Por isso uma implementação que promete devolver T não pode simplesmente construir { id: 'x' } e presumir que satisfez todos os requisitos do tipo concreto.",
+            "A mensagem de que algo atende à constraint mas T poderia ser outro subtipo aponta essa diferença. Retorne o dado recebido, um tipo mínimo declarado ou use uma fábrica fornecida pelo chamador para construir o tipo concreto. Uma assertion as T pode apagar o diagnóstico sem produzir os campos ausentes. O contrato genérico precisa ser realizável para todas as instâncias de tipo que a assinatura aceita."
+          ]
+        },
+        {
+          "title": "Uma chave depende da forma do objeto",
+          "text": [
+            "keyof T descreve as chaves conhecidas de T. Um segundo parâmetro K extends keyof T conecta a chave ao objeto, e o retorno T[K] representa o tipo da propriedade selecionada. Se o objeto tem id number e nome string, escolher id devolve number, enquanto escolher nome devolve string. Uma chave inexistente deve ser rejeitada na chamada, sem precisar esperar por undefined em runtime.",
+            "Essa relação não valida automaticamente um texto recebido de uma URL como chave segura. Uma variável string ampla pode não pertencer a keyof do objeto e precisa de uma verificação na fronteira. Também existem objetos com index signatures que aceitam conjuntos mais amplos de chaves. Estude a assinatura real do modelo antes de tratar keyof como uma lista fechada em qualquer contexto."
+          ]
+        },
+        {
+          "title": "Somente leitura e ausência continuam fazendo parte do tipo",
+          "text": [
+            "Um parâmetro readonly T[] permite receber coleções de leitura e evita mutação por essa referência na implementação. Uma função que transforma a coleção produz outra, preservando a entrada. Readonly não faz uma cópia e não estabelece imutabilidade profunda para o elemento T. Se T contém objetos mutáveis, o callback ainda pode produzir efeitos ou compartilhar dados, dependendo de seu contrato.",
+            "Se uma propriedade é opcional, o indexed access correspondente inclui a possibilidade de undefined sob strictNullChecks. O genérico deve preservar essa informação e o consumidor precisa tratá-la. Uma assinatura que apaga ausência por assertion devolve uma visão mais conveniente, mas não uma garantia maior. Teste um objeto sem a propriedade opcional para conferir o comportamento que o tipo promete."
+          ]
+        },
+        {
+          "title": "Tipos específicos precisam de testes específicos",
+          "text": [
+            "Use verificações de atribuição para exigir que uma seleção de id seja number e uma seleção de nome seja string. Acrescente @ts-expect-error nas chamadas com chave inexistente e em atribuições de retorno incompatível. Cada expectativa negativa deve mirar um erro concreto. Se a função passar a retornar any, esses testes podem revelar a perda do contrato porque as operações inválidas deixam de ser rejeitadas.",
+            "Execute também os exemplos após o apagamento dos tipos. A implementação pode selecionar a chave errada ou modificar o array recebido mesmo que sua assinatura pareça adequada. Nesta aula a análise strict e a comparação de saídas conferem as duas dimensões. Transfira a relação genérica para um seletor de catálogo ou uma biblioteca de coleções, mantendo dados externos unknown até a validação."
+          ]
+        }
+      ],
+      "code": "function ler<T,K extends keyof T>(objeto:T,chave:K):T[K] {\n  return objeto[chave];\n}\nconst pessoa={id:7,nome:\"Lia\"};\nconst id:number=ler(pessoa,\"id\");\nconst nome:string=ler(pessoa,\"nome\");\nfunction contratosNegativos():void {\n  // @ts-expect-error a chave não existe em pessoa\n  ler(pessoa,\"idade\");\n  // @ts-expect-error a seleção de id retorna number\n  const errado:string=ler(pessoa,\"id\");\n  void errado;\n}\nvoid contratosNegativos;\nif (id!==7 || nome!==\"Lia\") throw new Error(\"seleção\");\nconsole.log(id,nome);",
+      "expectedOutput": [
+        "7 Lia"
+      ],
+      "output": "Saída: 7 Lia. O compilador conserva o tipo de cada propriedade e exige os diagnósticos das duas operações negativas.",
+      "trace": [
+        "T é inferido da forma do objeto e K do literal da chave.",
+        "A constraint impede escolher uma chave que não pertence ao objeto.",
+        "T[K] mantém a relação de retorno, em vez de produzir any ou uma union desnecessariamente ampla."
+      ],
+      "exercise": "Implemente transformar<T,U> que recebe readonly T[] e um callback, retornando uma nova U[]. Transforme números em textos com prefixo, aceite vazio e confira que o array original não muda.",
+      "solution": "function transformar<T,U>(valores:readonly T[],mapear:(valor:T)=>U):U[] {\n  const resultado:U[]=[];\n  for (const valor of valores) resultado.push(mapear(valor));\n  return resultado;\n}\nconst original:readonly number[]=[1,2];\nconst textos:string[]=transformar(original,n=>\"n=\"+n);\nif (JSON.stringify(textos)!=='[\"n=1\",\"n=2\"]' || original[0]!==1 || transformar([],x=>x).length!==0)\n  throw new Error(\"transformação\");\nconsole.log(JSON.stringify(textos));",
+      "solutionOutput": [
+        "[\"n=1\",\"n=2\"]"
+      ],
+      "bug": "A função promete qualquer T que possua id, mas cria somente o objeto mínimo. Um T concreto também pode exigir nome; uma assertion não cria esse campo em runtime.",
+      "bugCode": "function criar<T extends {id:string}>():T {\n  return {id:\"x\"} as T; // promessa sem os campos de um T concreto\n}\nconst pessoa=criar<{id:string;nome:string}>();\nconsole.log(pessoa.nome); // undefined",
+      "repair": "Retorne {id:string} se esse é o valor que a função constrói, ou receba uma fábrica () => T do chamador. Não use as T para prometer campos que a implementação não sabe construir.",
+      "checks": [
+        "A seleção mantém number ou string conforme a chave.",
+        "Chaves inexistentes são rejeitadas pelo compilador.",
+        "Uma transformação produz outra coleção sem apagar o tipo dos elementos."
+      ],
+      "project": "Crie uma biblioteca pequena com ler, transformar e buscar por id. Documente ausência na busca e mutação no callback. Inclua testes de tipo que falham se a API for alargada para any, além de testes de resultado e preservação da entrada.",
+      "question": "Por que T extends {id:string} não permite construir qualquer T só com {id:'x'}?",
+      "answer": "Um T aceito pode exigir outros campos além dos garantidos pela constraint.",
+      "distractors": [
+        "Extends exige que T seja exatamente o objeto mínimo, sem campos adicionais.",
+        "O compilador cria automaticamente os campos restantes quando encontra as T."
+      ],
+      "practices": [
+        {
+          "id": "opcional",
+          "title": "Problema 1: seleção de propriedade opcional",
+          "topics": [
+            "indexed access T K",
+            "keyof e chave válida",
+            "inferência do tipo de retorno",
+            "teste negativo de propriedade"
+          ],
+          "prompt": "Implemente ler e use um tipo com id obrigatório e apelido opcional. A seleção de apelido precisa ser string | undefined, e uma atribuição direta a string deve ser um erro esperado. Execute com o campo ausente.",
+          "solution": "function ler<T,K extends keyof T>(objeto:T,chave:K):T[K] {return objeto[chave];}\ntype Perfil={id:number;apelido?:string};\nconst perfil:Perfil={id:1};\nconst nome:string|undefined=ler(perfil,\"apelido\");\nfunction negativo():void {\n  // @ts-expect-error apelido pode estar ausente\n  const obrigatorio:string=ler(perfil,\"apelido\");\n  void obrigatorio;\n}\nvoid negativo;\nif (nome!==undefined || ler(perfil,\"id\")!==1) throw new Error(\"ausência\");\nconsole.log(String(nome));",
+          "expectedOutput": [
+            "undefined"
+          ],
+          "explanation": [
+            "A relação T[K] preserva a opcionalidade do campo. A declaração do modelo, e não um valor padrão inventado na seleção, determina a possibilidade de undefined.",
+            "O caso negativo garante que strictNullChecks continue exigindo tratamento da ausência. A execução mostra que o objeto realmente não tem apelido; a análise estática não substitui esse teste de comportamento."
+          ],
+          "checks": [
+            "O retorno inclui undefined.",
+            "A atribuição que apaga ausência exige um diagnóstico.",
+            "O id obrigatório continua retornando number."
+          ]
+        },
+        {
+          "id": "fabrica",
+          "title": "Problema 2: construir T por uma fábrica",
+          "topics": [
+            "constraint extends",
+            "tipo específico não inventado",
+            "parâmetro de tipo como relação"
+          ],
+          "prompt": "Receba uma fábrica () => T para produzir um objeto com id e campos específicos. Preserve o T inferido, exija id string e teste a rejeição de uma fábrica com id numérico. Não use assertions.",
+          "solution": "function produzir<T extends {id:string}>(fabrica:()=>T):T {\n  return fabrica();\n}\nconst pessoa=produzir(()=>({id:\"p1\",nome:\"Lia\"}));\nconst nome:string=pessoa.nome;\nfunction negativo():void {\n  // @ts-expect-error id numérico não atende à constraint\n  produzir(()=>({id:1}));\n}\nvoid negativo;\nif (pessoa.id!==\"p1\" || nome!==\"Lia\") throw new Error(\"fábrica\");\nconsole.log(pessoa.id,nome);",
+          "expectedOutput": [
+            "p1 Lia"
+          ],
+          "explanation": [
+            "Quem chama fornece a construção do tipo concreto e a função genérica preserva o resultado dessa fábrica. A implementação não tenta fabricar campos que desconhece.",
+            "A constraint limita o conjunto de fábricas aceitas sem reduzir T ao objeto mínimo. O teste negativo protege a regra de id, e o teste positivo confirma que nome permanece disponível com tipo string."
+          ],
+          "checks": [
+            "O campo específico nome é preservado.",
+            "Id numérico é rejeitado no teste de tipos.",
+            "A implementação retorna o valor produzido sem assertions."
+          ]
+        }
       ]
     },
     {
