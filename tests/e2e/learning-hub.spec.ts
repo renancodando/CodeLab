@@ -1,6 +1,7 @@
 import {test,expect,type Page} from '@playwright/test';
 import {getPracticeSolution} from '../../src/learning/practice';
 import {capstoneProjects,learningPaths} from '../../src/content/project-paths';
+import {freshAdaptive,recordEvidence,learningDay} from '../../src/learning/adaptive';
 test.use({timezoneId:'America/Sao_Paulo'});
 const feedback=(page:Page)=>page.locator('.practice-feedback');
 async function checkCode(page:Page,id:string,code:string){
@@ -54,4 +55,15 @@ test('projeto retoma vários arquivos, exporta ZIP e invalida evidência após e
 test('seis percursos têm prática conceitual corrigida sem aprovar a implementação aberta',async({page})=>{
  await page.goto('/#/aprender');await expect(page.locator('#engineering-paths .trail')).toHaveCount(6);
  const path=learningPaths.find(p=>p.id==='algoritmos')!;await page.goto('/#/percurso/'+path.id);await expect(page.locator('[data-stage]')).toHaveCount(3);const stage=path.stages[0],section=page.locator('[data-stage="'+stage.id+'"]');await section.locator('input[value="'+stage.assessment.correct+'"]').check();await section.getByRole('button',{name:'Conferir decisão',exact:true}).click();await expect(section.locator('[role=status]')).toContainText('Decisão conceitual conferida');await expect(section).toContainText('implementação aberta');
+});
+
+test('duas revisões antigas vêm primeiro e um erro agenda retorno mais curto',async({page})=>{
+ const clock={now:Date.now()-86400000,timeZone:'America/Sao_Paulo'},adaptive=freshAdaptive();
+ for(const [id,skill] of [['py-prever-range','python.controle.range'],['cs-prever-decimal','csharp.tipos.decimal']]){
+  recordEvidence(adaptive,{id:'anterior-'+id,assessmentId:id,activityId:id,skillIds:[skill],revision:1,passed:true,assisted:false,attempts:1,hints:0,kind:'practice'},clock);
+ }
+ await page.addInitScript(data=>localStorage.setItem('codelab.progress.v2',JSON.stringify(data)),{version:2,learningLanguage:'javascript',adaptive});await page.goto('/#/diaria');
+ const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(before.adaptive.daily.items.map((x:{kind:string})=>x.kind)).toEqual(['review','review','concept','practice','practice','challenge']);
+ const first=before.adaptive.daily.items[0];await page.getByLabel('Saída prevista, uma linha por saída').fill('999');await page.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(page.locator('[data-next]')).toBeVisible();
+ const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(after.adaptive.daily.completed).toContain(first.id);expect(after.adaptive.skills[first.skillId].review.dueDay).toBe(learningDay({now:Date.now()+86400000,timeZone:'America/Sao_Paulo'}));expect(after.adaptive.skills[first.skillId].review.stage).toBe(0);
 });
