@@ -139,3 +139,10 @@ Para verificar exemplos externos em um ambiente de CI com Python, g++, .NET 10 e
 Para conferir os cronogramas entre conexões, use o mesmo ambiente de estudo com PostgreSQL e execute `node scripts/verify-sql-concurrency.mjs`. O verificador cria esquemas exclusivos e encerra sessões antes de removê-los. Não o aponte para uma base de produção.
 
 Ao editar uma definição em `src/content/deep/`, execute `npm run content:generate` para atualizar o índice leve e a matriz JSON. O build rejeita artefatos desatualizados. Revise também o mapa editorial e as contagens esperadas nos testes ao publicar novas aulas; conserve os critérios de profundidade e execução.
+
+
+### Iteração Python e pausas conceituais
+
+A edição do catálogo inclui 133 aulas em 20 trilhas: Python tem dez aulas no percurso aprofundado e as outras sete linguagens têm nove. `py-iteracao-recursos` aborda cursors de uso único, geradores, lotes sem leitura extra e fechamento explícito. São dois problemas independentes e três pausas offline, elevando o catálogo de atividades corrigíveis a 28.
+
+Os programas de referência entram no verificador Python do CI. As pausas do aluno são conceituais e os projetos têm revisão manual. O mapa conserva a distinção entre tema introduzido e prática independente; esta expansão não declara esgotamento das linguagens ou implantação validada.

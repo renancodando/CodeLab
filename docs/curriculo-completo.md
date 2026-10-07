@@ -2,9 +2,9 @@
 
 ## Conteúdo publicado nesta expansão
 
-A versão integrada tem **132 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **24 aulas de 17 capítulos**, com **48 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora nove aulas cada; as 60 aulas originais continuam disponíveis.
+O catálogo desta edição tem **133 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **25 aulas de 17 capítulos**, com **50 problemas independentes**, soluções comentadas e critérios próprios. Python tem dez aulas no percurso; as outras sete trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **606 entradas de cobertura**: **134** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **472** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **616 entradas de cobertura**: **139** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **477** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
@@ -13,6 +13,22 @@ A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-
 A PR #5 integrada acrescenta 25 atividades corrigíveis, seis percursos próprios com 18 etapas e oito projetos progressivos com 57 marcos. Esses percursos cobrem algoritmos, estruturas de dados, redes, Git, testes e arquitetura. Os projetos têm escopo, restrições, entregáveis, diagnóstico, critérios de revisão e exportação de arquivos. Não são projetos completos entregues pela plataforma: a pessoa deve implementar e validar seu próprio trabalho.
 
 As pausas interativas se ligam explicitamente a capítulos e habilidades. Sua correção é específica: quatro desafios JavaScript usam casos de comportamento no sandbox; as demais atividades avaliam decisões conceituais locais. Ainda resta converter práticas abertas e ampliar a densidade de interação nas aulas que não possuem atividade vinculada. A expansão foi integrada após aprovação do head 35c2163b507c6f15c465aac940faac102c092b55 no CI, com 248 testes de unidade, 79 testes de navegador e 124 exemplos externos.
+
+
+## Aprofundamento: iteração e recursos em Python
+
+A aula `py-iteracao-recursos` acrescenta 17 capítulos, seis seções de teoria, exemplo e rastreamento, depuração de cursor esgotado, exercício de iterável reutilizável e dois problemas independentes. Três pausas nos blocos 1, 3 e 5 corrigem previsão de saída, reconstrução de lote e decisão de fechamento sem Judge0. O catálogo passa a ter 28 atividades corrigíveis; quatro executam JavaScript no sandbox e as demais são conceituais.
+
+| Prática independente | Contrato exercitado |
+| --- | --- |
+| `lotes` | Validação imediata, tuplas com islice, ausência de leitura antecipada, lote parcial, fonte infinita e propagação de erro |
+| `fechamento` | Posse transferida por fábrica, fechamento explícito em consumo parcial, zero, vazio e erro; ausência de abertura para limite inválido |
+
+Os quatro programas da aula e as três pausas têm saídas esperadas no verificador Python do CI. Executar o gabarito de autoria do projeto no CI não comprova execução ou correção universal do código do aluno. O projeto tem revisão manual. send, throw, yield from e tee são introduzidos aqui e ainda precisam de problemas próprios.
+
+Referências oficiais: [protocolo de iteração](https://docs.python.org/3/reference/datamodel.html#object.__iter__), [itertools](https://docs.python.org/3/library/itertools.html), [iter e next](https://docs.python.org/3/library/functions.html#iter), [métodos dos geradores](https://docs.python.org/3/reference/expressions.html#generator-iterator-methods) e [contextlib.closing](https://docs.python.org/3/library/contextlib.html#contextlib.closing).
+
+Os identificadores dos conceitos disponíveis desde a PR #5 foram preservados. Novos conceitos usam a identidade da aula, conservando planos iniciados e conceitos lidos quando o catálogo ganha conteúdo.
 
 ## Percursos
 
@@ -38,6 +54,14 @@ As pausas interativas se ligam explicitamente a capítulos e habilidades. Sua co
 - Aula: `#/aula/py-objetos-protocolos` e página `/aulas/py-objetos-protocolos/`.
 - Conteúdo: classes instâncias self; dataclasses; herança composição MRO super; property descritores; dunder repr eq hash; duck typing protocolos; decoradores functools.wraps; context managers; slots metaclasses.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
+
+#### Python: iteradores, geradores e consumo com recursos
+
+- Nível: Avançado.
+- Aula: `#/aula/py-iteracao-recursos` e página `/aulas/py-iteracao-recursos/`.
+- Conteúdo: iterável versus cursor; __iter__/__next__; StopIteration; yield/yield from; momento da validação; lotes com islice; consumo limitado; posse; fechamento e finally.
+- Entrega: teoria, exemplo, rastreamento, falha, exercício, solução, dois problemas independentes, três pausas conceituais e projeto manual.
+- Limites: fontes reais de rede, send/throw, tee com consumidores em ritmos diferentes e medição de memória ficam para novos aprofundamentos.
 
 #### Python: arquivos, exceções e biblioteca padrão
 
