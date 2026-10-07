@@ -679,6 +679,148 @@ export default {
       ]
     },
     {
+      "id": "ts-variancia-contratos",
+      "title": "TypeScript: variância, callbacks e contratos de leitura e escrita",
+      "level": "Avançado",
+      "summary": "Raciocine sobre substituição a partir das operações que uma API oferece. Compare produtores, consumidores e células de leitura e escrita; examine por que um callback que exige mais dados não pode atender a todos os valores de um contrato amplo. Os exemplos distinguem aceitação pelo compilador, comportamento real e limite das assinaturas de método. Há testes positivos e negativos em strict, exercícios de borda e duas práticas independentes.",
+      "source": "https://www.typescriptlang.org/tsconfig/strictFunctionTypes.html",
+      "topics": [
+        "compatibilidade estrutural",
+        "covariância de resultados",
+        "contravariância de parâmetros",
+        "invariância de leitura e escrita",
+        "strictFunctionTypes",
+        "método versus propriedade de função",
+        "readonly e mutação por alias",
+        "contrato de callback",
+        "testes negativos com ts-expect-error",
+        "limites de anotações in e out"
+      ],
+      "sections": [
+        {
+          "title": "Substituir significa cumprir as operações prometidas",
+          "text": [
+            "Um tipo estrutural descreve as operações disponíveis em um valor. Considere Registro com id e RegistroDetalhado com id e pontos. Um registro detalhado pode atender a quem apenas lê o id; a presença de pontos não atrapalha essa leitura. A direção pode mudar quando o valor é um componente que recebe registros. Antes de comparar duas APIs genéricas, escreva o que cada operação recebe e devolve, depois pergunte quais chamadas o consumidor do contrato pode fazer.",
+            "Nomes como Base e Especial não resolvem a substituição sozinhos. Uma API que lê dados, uma que recebe dados e uma que faz as duas coisas têm responsabilidades diferentes. Nesta aula as relações são verificadas com objetos pequenos e funções síncronas. O exemplo mantém uma lista de efeitos observáveis para separar duas perguntas: o compilador aceita a atribuição e a execução atende às entradas que o contrato permite? Nenhuma delas deve ser presumida a partir de uma anotação de tipo."
+          ]
+        },
+        {
+          "title": "Uma fonte pode devolver um valor mais específico",
+          "text": [
+            "Se Fonte<T> oferece apenas uma função ler que devolve T, uma fonte de registros detalhados pode ser vista como fonte de registros básicos. Todo resultado obtido continua oferecendo id. Essa relação acompanha a direção da compatibilidade entre os valores e é chamada covariância. O caminho inverso é inadequado: uma fonte que promete só id não garante pontos. Um consumidor que tentasse somar pontos poderia receber undefined.",
+            "Esse raciocínio funciona porque a operação observada só produz T. Adicionar outra operação que receba T pode alterar o contrato. Não escolha uma direção de variância pelo nome do parâmetro genérico ou pela quantidade de campos. Desenhe uma chamada permitida e tente executá-la mentalmente. Para a direção rejeitada, use um registro sem pontos como contraexemplo; para a direção aceita, mostre por que todas as leituras ainda encontram o campo prometido."
+          ]
+        },
+        {
+          "title": "Um consumidor precisa aceitar todas as entradas do contrato",
+          "text": [
+            "Se Destino<T> contém usar: (item: T) => void, um destino que atende a todo Registro pode processar também RegistroDetalhado. Assim ele pode ocupar uma posição que receberá apenas registros detalhados. A direção é inversa à dos resultados, recebendo o nome contravariância. Um destino que depende de pontos não pode ocupar uma posição que promete aceitar qualquer Registro, porque id sozinho é uma entrada válida nessa posição.",
+            "strictFunctionTypes verifica essa relação para parâmetros em assinaturas de função. O modo strict habilita essa opção, salvo uma configuração explícita em contrário. Um callback amplo pode ignorar campos extras; um callback restrito não pode inventar o que falta. Escreva o tipo da posição que vai chamar o callback, não apenas o tipo de uma entrada usada no primeiro teste. Os exercícios fornecem também uma coleção vazia, para verificar que nenhuma chamada indevida é feita quando não há elementos."
+          ]
+        },
+        {
+          "title": "Receber e devolver o mesmo T combina duas exigências",
+          "text": [
+            "Uma célula que oferece ler: () => T e gravar: (valor: T) => void produz e consome o mesmo tipo. Tratar uma célula detalhada como básica permitiria gravar um registro sem pontos e depois lê-lo pela referência detalhada original. Tratar uma célula básica como detalhada permitiria ler pontos que nunca foram prometidos. Com essas propriedades de função em strict, a célula precisa conservar o mesmo contrato nas duas operações: a relação é invariante.",
+            "Separe interfaces quando diferentes clientes só precisam de leitura ou só de escrita. Um leitor pode receber a vista da operação ler sem ganhar a possibilidade de gravar um valor inadequado. Essa separação explicita permissões, mas não cria uma cópia dos dados. Se duas referências alcançam o mesmo objeto, mudanças feitas por uma podem aparecer na outra. O exercício usa uma célula com estado e registra esse compartilhamento; não promete snapshot independente ou congelamento profundo."
+          ]
+        },
+        {
+          "title": "Métodos e readonly têm limites que precisam aparecer nos testes",
+          "text": [
+            "A assinatura processar(item: T): string descreve um método; processar: (item: T) => string descreve uma propriedade de função. O tratamento de parâmetros de métodos permite compatibilidades mais permissivas que as propriedades sob strictFunctionTypes. Portanto reescrever uma propriedade como método pode mudar quais atribuições passam, mesmo que a implementação JavaScript faça a mesma operação. O segundo problema mostra uma atribuição aceita que ainda falha ao receber uma entrada válida do contrato amplo.",
+            "readonly restringe certas alterações pela referência tipada. Um readonly Registro[] evita push nessa referência, mas não impede outra referência mutável de alterar a mesma coleção, nem torna campos internos imutáveis. Para um algoritmo que só lê, aceitar readonly reduz permissões necessárias e permite receber fontes congeladas. Uma garantia de imutabilidade em execução exige uma decisão adicional sobre cópias, congelamento e objetos internos, acompanhada por casos que exponham os aliases relevantes."
+          ]
+        },
+        {
+          "title": "Teste aceitação, rejeição e execução como evidências distintas",
+          "text": [
+            "Um teste negativo pode colocar uma atribuição proibida atrás de if (false) e usar @ts-expect-error na linha correspondente. O compilador ainda verifica essa linha; se o erro esperado desaparecer, a diretiva sem erro gera um diagnóstico. O ramo evita executar a operação inválida no programa de referência. Esse mecanismo não comprova qual código específico de diagnóstico apareceu, por isso mantenha a linha simples e use também exemplos positivos com o contrato correto.",
+            "in e out são anotações avançadas de variância em parâmetros de certos tipos genéricos; elas não validam JSON ou alteram JavaScript emitido. Seu efeito é limitado a certas comparações de instanciações, e não substitui a definição estrutural das operações. As práticas desta aula usam a estrutura das funções sem depender dessas anotações. Ao desenhar uma biblioteca, comece pelos casos de substituição e pela configuração real de compilação; investigue as anotações quando existir uma necessidade específica de diagnóstico ou desempenho."
+          ]
+        }
+      ],
+      "code": "type Registro = {id: string};\ntype Detalhado = Registro & {pontos: number};\ntype Fonte<T> = {ler: () => T};\ntype Destino<T> = {usar: (item: T) => void};\n\nconst observados: string[] = [];\nconst detalhada: Fonte<Detalhado> = {ler: () => ({id: \"A1\", pontos: 7})};\nconst basica: Fonte<Registro> = detalhada;\nconst geral: Destino<Registro> = {usar: item => {observados.push(item.id);}};\nconst especifico: Destino<Detalhado> = geral;\nespecifico.usar(detalhada.ler());\nif (basica.ler().id !== \"A1\") throw new Error(\"leitura divergente\");\n\nif (false) {\n    // @ts-expect-error uma fonte básica não promete pontos\n    const fonteErrada: Fonte<Detalhado> = basica;\n    // @ts-expect-error um destino restrito não aceita todo Registro\n    const destinoErrado: Destino<Registro> = especifico;\n    void fonteErrada;\n    void destinoErrado;\n}\nconsole.log(JSON.stringify(observados));",
+      "expectedOutput": [
+        "[\"A1\"]"
+      ],
+      "output": "Saída: [\"A1\"]. A fonte detalhada atende à leitura básica; o consumidor básico atende ao envio detalhado. As duas direções contrárias têm rejeição esperada em strict, sem executar os ramos inválidos.",
+      "trace": [
+        "Fonte<Detalhado> devolve um valor que conserva o id prometido por Fonte<Registro>.",
+        "Destino<Registro> aceita o registro com pontos recebido pela vista Destino<Detalhado>.",
+        "As atribuições contrárias são verificadas pelo compilador dentro de um ramo não executado."
+      ],
+      "exercise": "Implemente criarCelula<T>(inicial) com ler: () => T e gravar: (novo: T) => void. O estado deve ser separado por chamada da fábrica. Para Registro e Detalhado, escreva dois testes de atribuição rejeitada em strict e obtenha uma vista somente de leitura de uma célula detalhada como fonte básica. Não use any, assertions ou assinatura de método para esconder as rejeições.",
+      "solution": "type Registro = {id: string};\ntype Detalhado = Registro & {pontos: number};\ntype Celula<T> = {ler: () => T; gravar: (novo: T) => void};\ntype Leitura<T> = {ler: () => T};\nfunction criarCelula<T>(inicial: T): Celula<T> {\n    let atual = inicial;\n    return {ler: () => atual, gravar: novo => {atual = novo;}};\n}\nconst detalhada = criarCelula<Detalhado>({id: \"A\", pontos: 2});\nconst basica = criarCelula<Registro>({id: \"B\"});\nconst leitura: Leitura<Registro> = detalhada;\ndetalhada.gravar({id: \"C\", pontos: 5});\nif (leitura.ler().id !== \"C\" || basica.ler().id !== \"B\")\n    throw new Error(\"estado compartilhado entre fábricas\");\nif (false) {\n    // @ts-expect-error a escrita ampla quebraria a célula detalhada\n    const escritaAmpla: Celula<Registro> = detalhada;\n    // @ts-expect-error a leitura básica não garante pontos\n    const leituraRestrita: Celula<Detalhado> = basica;\n    void escritaAmpla;\n    void leituraRestrita;\n}\nconsole.log(detalhada.ler().id, detalhada.ler().pontos, basica.ler().id);",
+      "solutionOutput": [
+        "C 5 B"
+      ],
+      "bug": "O método aceita uma atribuição mais permissiva e o código passa em strict, mas o contrato amplo pode chamar processar com um objeto sem pontos. toFixed então falha na execução. Aceitação pelo compilador não comprova segurança de toda chamada em estruturas com essa exceção de compatibilidade.",
+      "bugCode": "type Registro = {id: string};\ntype Detalhado = Registro & {pontos: number};\ntype Metodo<T> = {processar(item: T): string};\nconst restrito: Metodo<Detalhado> = {\n    processar(item) {return item.pontos.toFixed(0);}\n};\nconst amplo: Metodo<Registro> = restrito;\nconsole.log(amplo.processar({id: \"sem pontos\"}));",
+      "repair": "Declare processar como propriedade de função quando o contrato deve exigir a checagem de parâmetros em strict. O consumidor da API precisa atender a qualquer entrada válida da posição em que será chamado. Corrigir o formato da assinatura torna a atribuição inadequada visível; ainda é preciso implementar o callback amplo ou restringir o contrato de quem o chama.",
+      "checks": [
+        "Justifique as direções de substituição com uma chamada concreta, incluindo a entrada que falha.",
+        "Compile casos aceitos e rejeitados com strict e mantenha o erro de tipo distinto do resultado em execução.",
+        "Conserve fronteiras de leitura e escrita e explicite o compartilhamento por alias, sem prometer congelamento inexistente."
+      ],
+      "project": "Crie uma biblioteca pequena de leitura e processamento de registros. Separe Fonte, Destino e Celula por operações; inclua consumidores básicos e detalhados e uma rotina que só lê readonly arrays. Entregue testes positivos de tipos, testes negativos simples, casos de vazio e erro do callback e resultados reais. Uma integração com JSON exige validação separada antes dessa biblioteca. O projeto é revisado manualmente e a compilação da referência no CI não avalia automaticamente sua implementação.",
+      "question": "Uma posição promete chamar um callback com qualquer Registro, que oferece apenas id. Qual callback atende ao contrato?",
+      "answer": "Um callback que aceita todo Registro; exigir pontos restringe entradas que a posição pode fornecer.",
+      "distractors": [
+        "Qualquer callback de RegistroDetalhado, pois campos adicionais sempre tornam parâmetros mais seguros.",
+        "Somente um callback com any, porque strict impede funções de receber objetos estruturais."
+      ],
+      "practices": [
+        {
+          "id": "callbacks",
+          "title": "Problema 1: aplicar um consumidor sem restringir a origem",
+          "topics": [
+            "contravariância de parâmetros",
+            "contrato de callback",
+            "testes negativos com ts-expect-error"
+          ],
+          "prompt": "Implemente aplicarTodos<T>(itens: readonly T[], usar: (item: T) => void). Percorra em ordem sem alterar a coleção. Vazio não chama usar; uma exceção do callback deve interromper o processamento e continuar visível. Um consumidor básico deve aceitar itens detalhados; o caminho inverso deve falhar em strict. O callback é síncrono e pode produzir efeitos próprios.",
+          "solution": "type Registro = {id: string};\ntype Detalhado = Registro & {pontos: number};\nfunction aplicarTodos<T>(itens: readonly T[], usar: (item: T) => void): void {\n    for (const item of itens) usar(item);\n}\nconst vistos: string[] = [];\nconst consumirBasico = (item: Registro): void => {vistos.push(item.id);};\nconst detalhes: readonly Detalhado[] = Object.freeze([\n    {id: \"A\", pontos: 1}, {id: \"B\", pontos: 2}\n]);\naplicarTodos<Detalhado>(detalhes, consumirBasico);\naplicarTodos<Registro>([], consumirBasico);\nif (JSON.stringify(vistos) !== '[\"A\",\"B\"]' || detalhes.length !== 2)\n    throw new Error(\"ordem, vazio ou origem divergente\");\nconst antesErro: number[] = [];\nconst esperado = new Error(\"callback falhou\");\nlet propagou = false;\ntry {\n    aplicarTodos([1, 2, 3], numero => {\n        antesErro.push(numero);\n        if (numero === 2) throw esperado;\n    });\n} catch (erro) {\n    if (erro !== esperado) throw erro;\n    propagou = true;\n}\nif (!propagou) throw new Error(\"erro foi suprimido\");\nif (JSON.stringify(antesErro) !== \"[1,2]\") throw new Error(\"não interrompeu\");\nif (false) {\n    const bases: readonly Registro[] = [{id: \"sem pontos\"}];\n    const soDetalhe = (item: Detalhado): void => {void item.pontos;};\n    // @ts-expect-error o callback não atende a todos os itens da origem básica\n    aplicarTodos<Registro>(bases, soDetalhe);\n}\nconsole.log(JSON.stringify(vistos), JSON.stringify(antesErro));",
+          "expectedOutput": [
+            "[\"A\",\"B\"] [1,2]"
+          ],
+          "explanation": [
+            "O parâmetro readonly impede que a rotina precise de operações de escrita na coleção e permite receber uma coleção congelada. A função só percorre e chama o colaborador recebido. Um callback que aceita o registro básico atende a todos os detalhados dessa origem. O teste inverso explicita o argumento genérico para que a rejeição esteja ligada exatamente ao contrato básico.",
+            "A coleção vazia não acrescenta observações. Quando o callback falha no segundo elemento, a rotina não captura a exceção e não processa o terceiro. O teste compara a identidade do erro e a sequência de efeitos; ele não promete desfazer os efeitos já realizados pelo callback. readonly também não impede que um colaborador com outra referência modifique campos internos."
+          ],
+          "checks": [
+            "Consumidor básico processa detalhados em ordem; vazio não chama o callback.",
+            "Callback restrito para origem básica é rejeitado em strict.",
+            "Erro conserva identidade e interrompe antes do próximo elemento, sem mutar a coleção pela rotina."
+          ]
+        },
+        {
+          "id": "metodos",
+          "title": "Problema 2: detectar a brecha de uma assinatura de método",
+          "topics": [
+            "strictFunctionTypes",
+            "método versus propriedade de função",
+            "contrato de callback",
+            "testes negativos com ts-expect-error"
+          ],
+          "prompt": "Construa um caso com um método que usa pontos e pode ser atribuído a um contrato que oferece apenas id. Demonstre o erro em execução usando uma entrada básica. Em seguida substitua a assinatura por propriedade de função, verificando em strict que a mesma atribuição é rejeitada e que um callback amplo continua válido para entradas detalhadas.",
+          "solution": "type Registro = {id: string};\ntype Detalhado = Registro & {pontos: number};\ntype Metodo<T> = {processar(item: T): string};\ntype Propriedade<T> = {processar: (item: T) => string};\nconst metodoRestrito: Metodo<Detalhado> = {\n    processar(item) {return item.pontos.toFixed(0);}\n};\nconst metodoAmplo: Metodo<Registro> = metodoRestrito;\nlet falhou = false;\ntry {\n    metodoAmplo.processar({id: \"A\"});\n} catch (erro) {\n    if (!(erro instanceof TypeError)) throw erro;\n    falhou = true;\n}\nif (!falhou) throw new Error(\"falha não demonstrada\");\nconst propriedadeRestrita: Propriedade<Detalhado> = {\n    processar: item => item.pontos.toFixed(0)\n};\nconst propriedadeAmpla: Propriedade<Registro> = {\n    processar: item => item.id\n};\nconst destinoDetalhado: Propriedade<Detalhado> = propriedadeAmpla;\nif (false) {\n    // @ts-expect-error propriedades de função conferem a restrição do parâmetro\n    const invalida: Propriedade<Registro> = propriedadeRestrita;\n    void invalida;\n}\nconst resultado = destinoDetalhado.processar({id: \"B\", pontos: 4});\nif (resultado !== \"B\") throw new Error(\"substituição válida falhou\");\nconsole.log(falhou, resultado);",
+          "expectedOutput": [
+            "true B"
+          ],
+          "explanation": [
+            "A assinatura de método permite a relação mais permissiva, mas a entrada básica continua sem pontos em JavaScript. O exemplo captura apenas a TypeError esperada e verifica que a falha realmente aconteceu; não transforma toda exceção em sucesso. Essa demonstração liga a aceitação de tipos a uma chamada concreta que ela não protege.",
+            "A propriedade de função coloca o parâmetro sob a relação exigida por strictFunctionTypes. O caso negativo é simples e fica num ramo que não executa; uma alteração que torne a atribuição aceita faz a diretiva gerar diagnóstico de erro ausente. O caminho válido mantém a direção oposta: uma implementação que lê apenas id pode atender à posição que recebe registros detalhados."
+          ],
+          "checks": [
+            "Método amplo recebe registro básico e a falha real esperada é observada.",
+            "A atribuição restrita via propriedade é rejeitada em strict.",
+            "A implementação básica atende à posição detalhada e devolve o id previsto."
+          ]
+        }
+      ]
+    },
+    {
       "id": "ts-tipos-avancados",
       "title": "TypeScript: transformação e programação de tipos",
       "level": "Avançado",

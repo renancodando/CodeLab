@@ -1,8 +1,8 @@
 {
-  "edition": "2026-10-07-python-iteracao-recursos",
+  "edition": "2026-10-07-python-typescript-contratos",
   "originalLessons": 60,
-  "expandedLessons": 73,
-  "totalLessons": 133,
+  "expandedLessons": 74,
+  "totalLessons": 134,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
@@ -936,6 +936,93 @@
             }
           ],
           "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "ts-variancia-contratos",
+          "title": "TypeScript: variância, callbacks e contratos de leitura e escrita",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "compatibilidade estrutural",
+              "status": "introduzido"
+            },
+            {
+              "title": "covariância de resultados",
+              "status": "introduzido"
+            },
+            {
+              "title": "contravariância de parâmetros",
+              "status": "praticaIndependente",
+              "activities": [
+                "callbacks"
+              ]
+            },
+            {
+              "title": "invariância de leitura e escrita",
+              "status": "introduzido"
+            },
+            {
+              "title": "strictFunctionTypes",
+              "status": "praticaIndependente",
+              "activities": [
+                "metodos"
+              ]
+            },
+            {
+              "title": "método versus propriedade de função",
+              "status": "praticaIndependente",
+              "activities": [
+                "metodos"
+              ]
+            },
+            {
+              "title": "readonly e mutação por alias",
+              "status": "introduzido"
+            },
+            {
+              "title": "contrato de callback",
+              "status": "praticaIndependente",
+              "activities": [
+                "callbacks",
+                "metodos"
+              ]
+            },
+            {
+              "title": "testes negativos com ts-expect-error",
+              "status": "praticaIndependente",
+              "activities": [
+                "callbacks",
+                "metodos"
+              ]
+            },
+            {
+              "title": "limites de anotações in e out",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "callbacks",
+              "title": "Problema 1: aplicar um consumidor sem restringir a origem",
+              "topics": [
+                "contravariância de parâmetros",
+                "contrato de callback",
+                "testes negativos com ts-expect-error"
+              ]
+            },
+            {
+              "id": "metodos",
+              "title": "Problema 2: detectar a brecha de uma assinatura de método",
+              "topics": [
+                "strictFunctionTypes",
+                "método versus propriedade de função",
+                "contrato de callback",
+                "testes negativos com ts-expect-error"
+              ]
+            }
+          ],
+          "source": "https://www.typescriptlang.org/tsconfig/strictFunctionTypes.html",
           "status": "praticaDoModulo"
         },
         {
