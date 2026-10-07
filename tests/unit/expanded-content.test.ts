@@ -17,12 +17,12 @@ import {evaluate} from '../../src/execution/evaluate';
 const definitions:DeepCourse[]=[python,typescript,cpp,javascript,html,css,csharp,sql];
 describe('expansão por linguagem',()=>{
  it('publica oito percursos sequenciais com aulas reais em todas as linguagens',async()=>{
-  expect(expandedCourses).toHaveLength(8);expect(expandedLessons).toHaveLength(74);
-  expect(courses).toHaveLength(20);expect(lessons).toHaveLength(134);
+  expect(expandedCourses).toHaveLength(8);expect(expandedLessons).toHaveLength(75);
+  expect(courses).toHaveLength(20);expect(lessons).toHaveLength(135);
   expect(new Set(expandedLessons.map(l=>l.language))).toEqual(new Set(['html','javascript','typescript','python','csharp','cpp','sql']));
   let temas=0;
   for(const course of expandedCourses){
-   expect(course.lessonIds).toHaveLength(['python-completo','typescript-completo'].includes(course.id)?10:9);
+   expect(course.lessonIds).toHaveLength(['python-completo','typescript-completo','cpp-completo'].includes(course.id)?10:9);
    const aulas=await Promise.all(course.lessonIds.map(id=>resolveLesson(id)));
    expect(aulas[0]?.level).toBe('Fundamentos');expect(aulas.at(-1)?.level).toBe('Especialização');
    for(const aula of aulas){
@@ -38,7 +38,7 @@ describe('expansão por linguagem',()=>{
     expect(aula!.capitulos.find(c=>c.id==='pratica')!.pontos).toHaveLength(3);
    }
   }
-  expect(temas).toBe(626);
+  expect(temas).toBe(636);
  });
  it('conserva um único resultado de carregamento ao resolver a mesma aula simultaneamente',async()=>{
   const [a,b]=await Promise.all([resolveLesson('py-fundamentos'),resolveLesson('py-fundamentos')]);expect(a).toBe(b);expect(a?.capitulos).toHaveLength(13);
@@ -76,8 +76,8 @@ describe('expansão por linguagem',()=>{
 
 describe('prática independente e mapa de cobertura',()=>{
  const expanded=definitions.flatMap(c=>c.lessons).filter(l=>l.practices);
- it('publica vinte e seis aulas com dois problemas específicos e referências próprias',async()=>{
-  expect(expanded).toHaveLength(26);
+ it('publica vinte e sete aulas com dois problemas específicos e referências próprias',async()=>{
+  expect(expanded).toHaveLength(27);
   for(const entry of expanded){
    expect(entry.sections.flatMap(s=>s.text).join(' ').length,entry.id).toBeGreaterThan(4500);
    expect(entry.practices,entry.id).toHaveLength(2);
@@ -107,7 +107,7 @@ describe('prática independente e mapa de cobertura',()=>{
     }
    }
   }
-  expect(independent).toBe(144);
+  expect(independent).toBe(149);
  });
  for(const entry of javascript.lessons.filter(l=>'practices' in l)){
   it('executa exemplo, exercício e dois problemas de '+entry.id,async()=>{

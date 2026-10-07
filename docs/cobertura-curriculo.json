@@ -1,8 +1,8 @@
 {
-  "edition": "2026-10-07-python-typescript-contratos",
+  "edition": "2026-10-07-iteracao-variancia-invalidacao",
   "originalLessons": 60,
-  "expandedLessons": 74,
-  "totalLessons": 134,
+  "expandedLessons": 75,
+  "totalLessons": 135,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
@@ -1528,6 +1528,91 @@
             }
           ],
           "source": "https://eel.is/c++draft/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-iteradores-invalidacao",
+          "title": "C++: iteradores de vector, invalidação e remoção segura",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "intervalo [begin,end)",
+              "status": "introduzido"
+            },
+            {
+              "title": "iterador versus identidade",
+              "status": "introduzido"
+            },
+            {
+              "title": "size versus capacity",
+              "status": "introduzido"
+            },
+            {
+              "title": "realocação e invalidação",
+              "status": "introduzido"
+            },
+            {
+              "title": "retorno de erase e avanço",
+              "status": "praticaIndependente",
+              "activities": [
+                "consecutivos"
+              ]
+            },
+            {
+              "title": "remoções consecutivas",
+              "status": "praticaIndependente",
+              "activities": [
+                "consecutivos"
+              ]
+            },
+            {
+              "title": "erase-remove e tamanho lógico",
+              "status": "praticaIndependente",
+              "activities": [
+                "compactacao"
+              ]
+            },
+            {
+              "title": "ordem dos elementos preservados",
+              "status": "praticaIndependente",
+              "activities": [
+                "consecutivos",
+                "compactacao"
+              ]
+            },
+            {
+              "title": "custo de remoções repetidas",
+              "status": "praticaIndependente",
+              "activities": [
+                "compactacao"
+              ]
+            },
+            {
+              "title": "views e tempo de vida",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "consecutivos",
+              "title": "Problema 1: zeros consecutivos sem saltar candidatos",
+              "topics": [
+                "retorno de erase e avanço",
+                "remoções consecutivas",
+                "ordem dos elementos preservados"
+              ]
+            },
+            {
+              "id": "compactacao",
+              "title": "Problema 2: prefixo lógico, tamanho e custo",
+              "topics": [
+                "erase-remove e tamanho lógico",
+                "ordem dos elementos preservados",
+                "custo de remoções repetidas"
+              ]
+            }
+          ],
+          "source": "https://eel.is/c++draft/vector.modifiers",
           "status": "praticaDoModulo"
         },
         {
