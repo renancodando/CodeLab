@@ -2,11 +2,13 @@
 
 ## Estado em 7 de outubro de 2026
 
-- PR #1 e PR #2 integradas. Main conferida em `8943ee6011ae30e5590e3c2035ba097aa2f5ade3`: 108 aulas e 20 trilhas.
-- PR #3: 20 aulas aprofundadas e 40 problemas; propõe 128 aulas. Head `d978b46cba7b6825d93d222b243ed77e79564688`, run [37564135454](https://github.com/renancodando/CodeLab/actions/runs/37564135454).
-- Nesse head, instalação, auditoria sem vulnerabilidades, unidade, 112 exemplos e builds já passaram; os 48 testes de navegador ainda precisam concluir. Revisão automática concluída para `d978b46`, sem novos achados. Conferir o resultado final e resolver a thread anterior de gabaritos somente após os testes de ocultação e abertura passarem.
-- Entrega seguinte preparada na branch `conteudo/dialogos-grid-iteradores-isolamento`: quatro aulas próprias de HTML, CSS, C# e PostgreSQL, oito problemas, mantendo as aulas anteriores.
-- Catálogo proposto: 132 aulas, 20 trilhas, 72 módulos adicionais; 24 aulas têm prática independente. Matriz: 606 entradas, 134 vinculadas a atividades específicas, 472 introduzidas. Esses números descrevem o conteúdo e não esgotamento das especializações.
+- PR #1, #2 e #3 integradas. Main conferida em `42abffdaf236b13f66e0dbf50d43240f877a6a05`: 128 aulas e 20 trilhas.
+- PR #3 validada no head `d978b46cba7b6825d93d222b243ed77e79564688`, run [37564135454](https://github.com/renancodando/CodeLab/actions/runs/37564135454): 136 testes de unidade, 112 exemplos externos, 48 E2E, builds e 134 páginas. Auditoria sem vulnerabilidades.
+- Árvore integrada idêntica à testada: `24db0d534c7d3d9be39b21ea16b551966d2f5c80`. Revisão atual concluída sem novos achados e thread anterior dos gabaritos resolvida após os testes passarem.
+- PR #4 na branch `conteudo/dialogos-grid-iteradores-isolamento`: quatro aulas próprias e oito problemas, catálogo proposto de 132 aulas e 20 trilhas.
+- O head inicial `eaac3db2711864cf43341982f61dcf070e8dc29e` passou em unidade, exemplos, três cronogramas entre sessões, builds e auditoria; o navegador ainda estava em execução quando a revisão apontou uma condição de corrida no leitor de stderr.
+- Correção: verificador espera o evento close do processo para validar o SQLSTATE, com streams drenados. A aula diferencia psql interativo (retorna ao prompt e exige ROLLBACK) de entrada não interativa (encerra por ON_ERROR_STOP). Conferir o novo head e não integrar com base no CI anterior.
+- Catálogo proposto: 72 módulos adicionais, 24 aulas com prática independente, 606 entradas de cobertura, 134 vinculadas a atividades e 472 introduzidas. As especializações restantes seguem no mapa.
 
 ## Verificação da entrega seguinte
 
@@ -16,7 +18,7 @@ Os gabaritos SQL que exigem conexões distintas possuem postgresScenario na defi
 
 ## Critério de integração
 
-Integre PR #3 somente com todos os gates verdes no head atual. A entrega seguinte parte desse head e deve ser integrada depois. Confira main e PRs abertas antes de editar para evitar duplicação. Se main mudar enquanto o CI executa, confira a comparação e a árvore resultante; não ignore uma mudança material no código testado.
+PR #3 já está integrada. Integre PR #4 somente após CI verde no head atual e a resolução dos achados. Confira main e PRs abertas antes de editar para evitar duplicação. Se main mudar enquanto o CI executa, confira a comparação e a árvore resultante; não ignore uma mudança material no código testado.
 
 ## Conteúdo e próximas entregas
 

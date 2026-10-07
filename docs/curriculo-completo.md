@@ -2,7 +2,7 @@
 
 ## Conteúdo proposto nesta expansão
 
-A versão integrada tem **108 aulas em 20 trilhas**. A PR #3 propõe 128 aulas; a entrega seguinte acrescenta quatro aulas próprias e propõe **132 aulas**, após a aprovação dos gates de cada versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **24 aulas de 17 capítulos**, com **48 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora nove aulas cada; as 60 aulas originais continuam disponíveis.
+A versão integrada tem **128 aulas em 20 trilhas**. A PR #4 acrescenta quatro aulas próprias e propõe **132 aulas**, após a aprovação dos gates desta versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **24 aulas de 17 capítulos**, com **48 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora nove aulas cada; as 60 aulas originais continuam disponíveis.
 
 Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **606 entradas de cobertura**: **134** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **472** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 

@@ -22,7 +22,8 @@ function connect(name){
  let buffer='',stderr='',pending,closed=false,spawnError;
  const ended=new Promise(resolve=>{
   child.on('error',error=>{spawnError=error;closed=true;if(pending)finish(error);resolve();});
-  child.on('exit',code=>{
+  // close garante que stdout/stderr terminaram de drenar após a saída do processo.
+  child.on('close',code=>{
    closed=true;
    if(pending){
     if(pending.expectedError)finish(undefined,{rows:pending.rows,stderr,code});
