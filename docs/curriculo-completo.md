@@ -2,9 +2,9 @@
 
 ## Conteúdo publicado nesta expansão
 
-O catálogo desta edição tem **133 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **25 aulas de 17 capítulos**, com **50 problemas independentes**, soluções comentadas e critérios próprios. Python tem dez aulas no percurso; as outras sete trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
+O catálogo desta edição tem **134 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **26 aulas de 17 capítulos**, com **52 problemas independentes**, soluções comentadas e critérios próprios. Python e TypeScript têm dez aulas no percurso; as outras seis trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **616 entradas de cobertura**: **139** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **477** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **626 entradas de cobertura**: **144** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **482** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
@@ -29,6 +29,17 @@ Os quatro programas da aula e as três pausas têm saídas esperadas no verifica
 Referências oficiais: [protocolo de iteração](https://docs.python.org/3/reference/datamodel.html#object.__iter__), [itertools](https://docs.python.org/3/library/itertools.html), [iter e next](https://docs.python.org/3/library/functions.html#iter), [métodos dos geradores](https://docs.python.org/3/reference/expressions.html#generator-iterator-methods) e [contextlib.closing](https://docs.python.org/3/library/contextlib.html#contextlib.closing).
 
 Os identificadores dos conceitos disponíveis desde a PR #5 foram preservados. Novos conceitos usam a identidade da aula, conservando planos iniciados e conceitos lidos quando o catálogo ganha conteúdo.
+
+
+## Aprofundamento: variância e contratos TypeScript
+
+A aula `ts-variancia-contratos` oferece 17 capítulos, testes positivos e negativos em strict, rastreamento, diagnóstico de assinatura de método e dois problemas próprios. O primeiro testa callback amplo, coleção vazia, ordem, ausência de mutação pela rotina e propagação de erro. O segundo demonstra uma atribuição permissiva de método que falha em execução e a rejeição correspondente via propriedade de função.
+
+Três pausas conceituais nos blocos 1/3/5 verificam resultado covariante, entrada do callback e assinatura de propriedade. O catálogo passa a 31 atividades corrigíveis. A resposta do aluno permanece conceitual, sem executar compilador; os quatro programas de referência passam pelos verificadores de strict e de resultados no CI. `@ts-expect-error` exige um erro na linha, sem comprovar sozinho um código exato de diagnóstico.
+
+Readonly não promete congelamento profundo, e anotações in/out são introduzidas sem problema independente. Este módulo não cobre ainda resolução de pacotes em ambientes reais, modelos de eventos grandes ou performance do compilador.
+
+Referências oficiais: [strictFunctionTypes](https://www.typescriptlang.org/tsconfig/strictFunctionTypes.html), [compatibilidade estrutural](https://www.typescriptlang.org/docs/handbook/type-compatibility.html), [objetos e readonly](https://www.typescriptlang.org/docs/handbook/2/objects.html), [genéricos e variância](https://www.typescriptlang.org/docs/handbook/2/generics.html#variance-annotations), [mudança da checagem em 2.6](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-6.html) e [anotações em 4.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html).
 
 ## Percursos
 
@@ -106,6 +117,14 @@ Os identificadores dos conceitos disponíveis desde a PR #5 foram preservados. N
 - Aula: `#/aula/ts-genericos` e página `/aulas/ts-genericos/`.
 - Conteúdo: generic functions interfaces; constraints extends; keyof indexed access; defaults inference; overloads; callbacks variance; readonly collections; generic classes factories.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
+
+#### TypeScript: variância, callbacks e contratos de leitura e escrita
+
+- Nível: Avançado.
+- Aula: `#/aula/ts-variancia-contratos` e página `/aulas/ts-variancia-contratos/`.
+- Conteúdo: substituição estrutural; produtores/consumidores; células invariantes; strictFunctionTypes; método versus propriedade; readonly/alias; testes positivos, negativos e execução.
+- Entrega: teoria própria, quatro programas verificáveis, dois problemas independentes, três pausas conceituais e projeto manual.
+- Limites: in/out introduzidos; bibliotecas com eventos reais e módulos por ambiente exigem aprofundamentos posteriores.
 
 #### TypeScript: transformação e programação de tipos
 

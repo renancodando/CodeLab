@@ -70,3 +70,10 @@ Branch: `curriculo-python-iteracao-recursos`, a partir do checkpoint integrado d
 Os gabaritos incluem bordas de consumo, fonte infinita, limite zero, esgotamento, validação antes da fábrica e fechamento após erro. O verificador inclui quatro programas da aula e três fixtures das pausas. Há navegação dinâmica e estática nos testes e um fluxo novo de pausas offline com persistência e conclusão.
 
 A expansão conserva os 40 ids de conceitos da PR #5 para não invalidar planos iniciados nem conceitos lidos. Não integrar esta branch antes do CI completo e da revisão. Os contadores desta seção descrevem o conteúdo definido; não declaram aprovação antecipada dos gates nem currículo exaustivo. Atualizar head e resultados após validação.
+
+
+## Próxima expansão TypeScript em preparação
+
+Branch `curriculo-typescript-variancia-contratos` parte do head da PR #6 de Python. Integrar primeiro a dependência aprovada. O novo módulo `ts-variancia-contratos` oferece 17 capítulos, quatro programas com saídas esperadas, duas práticas independentes e três pausas offline. Na branch: 134 aulas/20 trilhas, Python e TypeScript 10, demais linguagens 9; 26 aulas próprias/52 problemas; 626 entradas (144 vinculadas/482 introduzidas); 31 atividades corrigíveis.
+
+Testar strict com casos negativos, execução real, diferença método/propriedade, callbacks vazios e erro propagado, restauração offline e páginas estáticas. Nenhum gate é declarado aprovado antes da leitura do CI. Não promover readonly, in/out ou todo o ecossistema TypeScript como especialização completa apenas por ter introdução no módulo.
