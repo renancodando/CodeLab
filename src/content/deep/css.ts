@@ -92,6 +92,132 @@ export default {
       ]
     },
     {
+      "id": "css-cascata-camadas",
+      "title": "CSS: cascata por camadas e valores de custom properties",
+      "level": "Fundamentos",
+      "summary": "Descubra qual declaração vence antes de aumentar a especificidade de um seletor. Esta aula separa origem, importância, camadas, especificidade e ordem, e mostra quando var usa seu fallback. Os problemas incluem importância com ordem de camadas invertida e um valor inválido após substituição, conferidos por estilos computados no navegador.",
+      "source": "https://www.w3.org/TR/css-cascade-5/",
+      "topics": [
+        "declaração aplicável e valor vencedor",
+        "ordem de camadas normais",
+        "regra normal sem camada",
+        "ordem invertida de important",
+        "especificidade dentro da etapa",
+        "herança de color",
+        "fallback de var",
+        "inválido no valor computado"
+      ],
+      "sections": [
+        {
+          "title": "A cascata escolhe declarações aplicáveis",
+          "text": [
+            "Um elemento pode corresponder a vários seletores e receber várias declarações para a mesma propriedade. A cascata estabelece uma ordem para escolher entre elas, mas começa com as regras aplicáveis no contexto atual. Uma regra dentro de uma media query falsa nem entra nessa comparação. Saber que existe uma declaração no arquivo não significa que ela participou da decisão para aquele elemento e naquele tamanho de viewport.",
+            "A ordem considera fatores como origem, importância, camada e especificidade. A origem inclui estilos do autor, do usuário e do navegador. Nesta aula os exemplos comparam declarações de autor e usam propriedades sem animações ou transições; essa delimitação deixa a disputa reproduzível. Não reduza toda a cascata à frase o seletor mais específico sempre vence, porque outras etapas podem decidir antes dele."
+          ]
+        },
+        {
+          "title": "Camadas organizam a prioridade de regras normais",
+          "text": [
+            "A declaração @layer base, componentes, ajustes estabelece uma ordem de camadas. Para regras normais de uma mesma origem, camadas posteriores têm prioridade sobre anteriores. Uma regra normal sem camada fica acima das regras normais em camadas nessa comparação. Assim um seletor de baixa especificidade numa camada posterior pode vencer um seletor mais específico numa anterior.",
+            "Use a ordem das camadas para expressar uma arquitetura de estilos, e não para corrigir um erro isolado sem documentar o efeito. A primeira declaração de ordem pode estabelecer a sequência que regras posteriores reutilizam. Em uma folha real, confira também imports e onde a camada foi criada. A especificidade continua relevante dentro da etapa em que as declarações ainda estão empatadas."
+          ]
+        },
+        {
+          "title": "Important altera a comparação e inverte camadas",
+          "text": [
+            "Para declarações importantes da mesma origem, a ordem de prioridade das camadas se inverte: a primeira camada fica acima das posteriores, e regras importantes em camadas ficam acima das importantes sem camada nessa etapa. Essa inversão permite proteger certas regras de base, mas também explica por que adicionar !important numa camada de ajustes pode não vencer uma declaração importante anterior.",
+            "A palavra important não é uma pontuação para forçar qualquer resultado sem análise. Há outras origens e etapas da cascata, além de situações com transições. Nos problemas, as regras ficam na origem do autor e sem estilos inline para que o mecanismo de camadas seja o foco. Escreva quais declarações estão sendo comparadas e por qual etapa uma delas venceu antes de sugerir outra declaração."
+          ]
+        },
+        {
+          "title": "Especificidade e ordem resolvem os empates restantes",
+          "text": [
+            "Dentro de uma mesma origem, importância e camada, a especificidade compara os seletores conforme suas categorias. Ids têm um papel diferente de classes e seletores de tipo. Um seletor :where tem especificidade zero para sua contribuição, enquanto outras pseudoclasses têm regras próprias. Não some a especificidade como um único número decimal arbitrário; compare as categorias na ordem apropriada.",
+            "Se ainda houver empate relevante, a ordem de aparecimento pode decidir entre declarações. A herança ocorre depois da escolha do valor aplicável para o elemento e não faz o seletor do pai disputar diretamente com o seletor do filho. Color é herdada em muitos casos, enquanto propriedades como margin não são. Para depurar, observe primeiro a declaração do próprio elemento e depois o valor vindo de seus ancestrais."
+          ]
+        },
+        {
+          "title": "Custom properties carregam valores para substituição",
+          "text": [
+            "Uma custom property como --accent participa da cascata e pode ser herdada. var(--accent, red) usa o fallback quando a custom property não tem um valor utilizável para aquela referência, por exemplo quando está ausente. O fallback não significa tente red se o texto substituído não for uma cor. Se --accent contém 18px, a substituição numa propriedade color torna essa declaração inválida no estágio de valor computado.",
+            "Quando a invalidez aparece depois de escolher a declaração, o navegador não volta simplesmente à segunda declaração antiga de color como se repetisse a cascata. O comportamento segue as regras do valor inválido naquele estágio, frequentemente equivalente ao valor inicial ou herdado conforme a propriedade. No exemplo color herda do pai. Esse mecanismo é uma razão para validar os contratos dos tokens e não confiar que um fallback corrige qualquer tipo errado."
+          ]
+        },
+        {
+          "title": "O estilo computado mostra a decisão final",
+          "text": [
+            "O painel de regras mostra candidatas e declarações vencidas; o estilo computado mostra o valor resultante. Os dois são úteis, mas respondem a perguntas diferentes. Um rgb final não explica sozinho se veio de uma camada, de herança ou de var. Monte uma tabela com seletor, camada, importância e valor, e marque a primeira etapa da comparação que diferencia as candidatas.",
+            "Os exemplos são documentos isolados, então você pode alterar uma regra de cada vez sem tocar nos estilos do produto. Os testes conferem cores computadas e propriedades concretas. Transfira o método para um componente que recebe tokens: descreva os valores aceitos, a camada da implementação e a camada de ajustes. Evite acumular seletores cada vez maiores quando a prioridade estrutural da cascata é a causa da disputa."
+          ]
+        }
+      ],
+      "code": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Camadas da cascata</title>\n<style>\n@layer base, componente, ajuste;\n@layer base {#painel {color: rgb(180,0,0);}}\n@layer componente {.painel {color: rgb(0,100,0);}}\n@layer ajuste {:where(.painel) {color: rgb(0,0,180);}}\n.painel {border: 2px solid currentColor; padding: 1rem;}\n</style></head><body><main><h1>Camadas da cascata</h1><p id=\"painel\" class=\"painel\">A camada ajuste vence a disputa de color.</p></main></body></html>",
+      "output": "Color de painel é rgb(0, 0, 180). O id da camada base não vence a camada posterior; border usa essa cor por currentColor.",
+      "trace": [
+        "As três declarações color são normais e da mesma origem.",
+        "A ordem das camadas decide antes de comparar especificidade.",
+        "A regra sem camada modifica border e padding, mas não disputa color neste exemplo."
+      ],
+      "exercise": "Crie duas camadas, base e ajuste, com declarações normais de color para um mesmo elemento. Em seguida adicione uma regra normal sem camada com outra cor e confira que ela vence, sem usar important.",
+      "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Regra normal sem camada</title><style>\n@layer base, ajuste;\n@layer base {#alvo {color:rgb(180,0,0);}}\n@layer ajuste {.alvo {color:rgb(0,100,0);}}\n.alvo {color:rgb(0,0,180);}\n</style></head><body><main><h1>Regra sem camada</h1><p id=\"alvo\" class=\"alvo\">Esta regra normal não pertence a uma camada.</p></main></body></html>",
+      "bug": "O token --accent contém 18px. O autor espera que var use o fallback vermelho em color, mas o token existe e a substituição produz um valor inválido para cor.",
+      "bugCode": "<div style=\"color:rgb(0,100,0)\">\n<p style=\"--accent:18px;color:var(--accent,rgb(180,0,0))\">Qual cor?</p>\n</div>",
+      "repair": "Garanta que o token de cor contém uma cor válida ou deixe-o ausente quando o fallback deve ser usado. No trecho, color acaba herdando a cor verde do pai; o fallback não valida a gramática do valor substituído.",
+      "checks": [
+        "Explique a etapa em que a camada decidiu a cor.",
+        "Uma regra normal sem camada vence as normais em camadas.",
+        "Diferencie token ausente de token existente com tipo inadequado."
+      ],
+      "project": "Crie um componente isolado com camadas de base, componente e ajustes, e dois tokens de cor. Documente valores permitidos e crie uma tabela de disputas reais. Confira o estilo computado para estado padrão e ajuste, sem aumentar a especificidade como primeira tentativa.",
+      "question": "Quando --accent tem o valor 18px, var(--accent, red) em color usa automaticamente red?",
+      "answer": "Não; o token existe e a substituição pode invalidar color no estágio de valor computado.",
+      "distractors": [
+        "Sim; o fallback de var valida qualquer valor e corrige seu tipo.",
+        "Sim, desde que o seletor tenha um id e portanto especificidade suficiente."
+      ],
+      "practices": [
+        {
+          "id": "important",
+          "title": "Problema 1: ordem invertida nas camadas",
+          "topics": [
+            "ordem invertida de important",
+            "especificidade dentro da etapa"
+          ],
+          "prompt": "Use camadas base e ajuste, ambas com color important no mesmo elemento, e uma regra important sem camada. A cor da primeira camada deve vencer. Explique a disputa sem mudar seletores.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Importância por camada</title><style>\n@layer base, ajuste;\n@layer base {.alvo {color:rgb(180,0,0)!important;}}\n@layer ajuste {#alvo {color:rgb(0,100,0)!important;}}\n#alvo {color:rgb(0,0,180)!important;}\n</style></head><body><main><h1>Importância por camada</h1><p id=\"alvo\" class=\"alvo\">A primeira camada vence.</p></main></body></html>",
+          "explanation": [
+            "Todas as declarações são importantes e da origem do autor. A inversão de camadas faz base vencer ajuste e as declarações importantes sem camada nesta comparação.",
+            "O id em ajuste não resolve uma disputa já decidida pela camada. Remover important das três regras altera a prioridade e exige revisar a expectativa de cor."
+          ],
+          "checks": [
+            "Color computada é rgb(180, 0, 0).",
+            "A regra sem camada não vence neste caso importante.",
+            "Explique qual seria o resultado se todas fossem normais."
+          ]
+        },
+        {
+          "id": "token",
+          "title": "Problema 2: token ausente e valor inválido",
+          "topics": [
+            "fallback de var",
+            "inválido no valor computado",
+            "herança de color"
+          ],
+          "prompt": "Crie dois parágrafos sob um pai verde. Um usa --accent ausente e deve ficar vermelho pelo fallback; outro define --accent como 18px e deve herdar verde por invalidez de color após substituição.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Fallback e valor computado</title><style>\n.grupo {color:rgb(0,100,0);}\n.ausente {color:var(--accent,rgb(180,0,0));}\n.invalido {--accent:18px;color:var(--accent,rgb(180,0,0));}\n</style></head><body><main><h1>Fallback e valor computado</h1><div class=\"grupo\">\n<p id=\"ausente\" class=\"ausente\">Token ausente.</p><p id=\"invalido\" class=\"invalido\">Token com valor inadequado para color.</p>\n</div></main></body></html>",
+          "explanation": [
+            "No primeiro caso a referência não encontra --accent e usa o fallback. No segundo o token é encontrado, então a substituição ocorre antes de a declaração se revelar inadequada para color.",
+            "Como color é uma propriedade herdada, o segundo parágrafo usa a cor do pai. Essa atividade demonstra um mecanismo específico; não conclua que toda propriedade inválida terá a mesma cor ou será herdada."
+          ],
+          "checks": [
+            "O parágrafo ausente fica vermelho.",
+            "O parágrafo inválido fica verde.",
+            "Explique por que fallback não é uma validação de tipo."
+          ]
+        }
+      ]
+    },
+    {
       "id": "css-caixas",
       "title": "CSS: caixas, fluxo e posicionamento",
       "level": "Fundamentos",
@@ -174,6 +300,132 @@ export default {
       "distractors": [
         "Sim; basta usar o maior inteiro possível.",
         "Sim; z-index sempre ignora todos os ancestrais."
+      ]
+    },
+    {
+      "id": "css-caixas-intrinseco",
+      "title": "CSS: dimensões de caixa, conteúdo intrínseco e overflow",
+      "level": "Fundamentos",
+      "summary": "Calcule o espaço que uma caixa ocupa e investigue por que um texto comprido pode quebrar o layout. Esta aula compara content-box e border-box, limites de tamanho em Flexbox e rolagem dentro de um contêiner. Os exercícios medem caixas no navegador e tratam conteúdos adversos sem esconder o problema com overflow indiscriminado.",
+      "source": "https://www.w3.org/TR/css-sizing-3/",
+      "topics": [
+        "content-box e dimensão externa",
+        "border-box e espaço de conteúdo",
+        "padding e border no cálculo",
+        "tamanho mínimo automático de flex item",
+        "min-inline-size zero",
+        "overflow-wrap anywhere",
+        "overflow e contêiner de rolagem",
+        "sticky e referência de rolagem"
+      ],
+      "sections": [
+        {
+          "title": "A dimensão declarada não é sempre a dimensão externa",
+          "text": [
+            "No modelo content-box, width ou inline-size dimensiona a caixa de conteúdo. Padding e border acrescentam espaço ao redor dela. Uma caixa com conteúdo de 180px, padding de 20px em cada lado e border de 2px ocupa 224px nesse eixo. Margin fica fora da borda e não entra no tamanho obtido por getBoundingClientRect, embora participe do posicionamento em outros cálculos.",
+            "Com border-box, a dimensão declarada inclui conteúdo, padding e border no caso comum. A mesma declaração de 180px deixa 136px para conteúdo quando os extras somam 44px. O espaço de conteúdo não pode ser negativo; dimensões e restrições ainda interagem quando os extras são grandes. Calcule as partes antes de depurar um alinhamento, em vez de ajustar valores sucessivamente até parecer certo."
+          ]
+        },
+        {
+          "title": "Dimensões lógicas seguem o modo de escrita",
+          "text": [
+            "Inline-size corresponde ao eixo em linha do modo de escrita, e block-size ao eixo de blocos. Em um documento horizontal comum, inline-size funciona como a largura; em outros modos a correspondência muda. Padding-inline e margin-block também expressam relações lógicas. Essa abordagem facilita componentes que precisam adaptar a direção e o modo de escrita sem duplicar regras físicas para cada caso.",
+            "O cálculo do exemplo usa escrita horizontal para tornar as medidas previsíveis. Ao internacionalizar um componente, confira alinhamentos, ícones e ordem de leitura além de trocar left por uma propriedade lógica. Dimensões lógicas não alteram o significado do conteúdo. Uma lista deve continuar em ordem coerente no DOM, mesmo quando o eixo visual ou a direção de escrita muda."
+          ]
+        },
+        {
+          "title": "O conteúdo contribui para o tamanho mínimo",
+          "text": [
+            "Alguns modelos de layout consideram tamanhos intrínsecos do conteúdo. Uma palavra longa sem oportunidades de quebra pode exigir mais espaço do que uma caixa disponível. Em Flexbox, um item pode ter um tamanho mínimo automático ligado ao conteúdo, impedindo a redução que o autor esperava de flex-shrink. Flex: 1 não garante sozinho que qualquer texto caiba em qualquer espaço.",
+            "Quando o item deve poder encolher no eixo relevante, min-inline-size: 0 pode remover essa restrição mínima apropriada ao caso. Overflow-wrap: anywhere oferece oportunidades de quebra para sequências longas e afeta contribuições intrínsecas de modo útil. Escolha a regra pelo conteúdo: um identificador pode quebrar para leitura, enquanto uma tabela de código talvez precise de rolagem horizontal com indicação clara."
+          ]
+        },
+        {
+          "title": "Overflow descreve o que acontece com conteúdo excedente",
+          "text": [
+            "Overflow pode deixar o conteúdo visível, recortar ou criar rolagem conforme o valor e o eixo. Esconder o excedente não resolve automaticamente a causa de uma dimensão incorreta e pode tornar informações inacessíveis. Se uma caixa contém conteúdo essencial, teste se a pessoa consegue alcançá-lo por rolagem, reflow ou outro mecanismo. Um layout sem barra horizontal pode ainda ter texto recortado.",
+            "Definir overflow num ancestral também pode afetar qual contêiner de rolagem certas propriedades consideram. Por isso uma regra adicionada para esconder um efeito lateral pode mudar sticky. Inspecione os ancestrais e suas dimensões antes de concluir que position sticky não funciona. A escolha de recorte, rolagem e tamanho deve ser coerente com a interação pretendida."
+          ]
+        },
+        {
+          "title": "Sticky tem limites definidos pelo contexto",
+          "text": [
+            "Position sticky conserva uma relação com o fluxo e aplica deslocamentos conforme a posição de rolagem e seus limites. Um inset como top: 0 permite observar a adesão no eixo escolhido. O elemento continua limitado pelo bloco e pelo contexto em que está; ele não se torna um elemento fixed solto em relação a toda a página. Um contêiner sem conteúdo suficiente para rolar não demonstra o efeito.",
+            "No problema, o contêiner tem altura definida e overflow auto, e o cabeçalho está dentro dele. A verificação mede a posição antes e depois de alterar scrollTop. Não use apenas uma captura da primeira tela para declarar sticky pronto, pois ali o elemento pode estar na mesma posição sem qualquer rolagem. Teste o mecanismo que o exemplo pretende ensinar."
+          ]
+        },
+        {
+          "title": "Meça comportamento sob conteúdo adverso",
+          "text": [
+            "Use getBoundingClientRect para verificar a dimensão da borda em exemplos sem transformações, e getComputedStyle para identificar regras aplicadas. Compare scrollWidth com clientWidth no contêiner relevante para descobrir excesso horizontal. Essas medidas têm significados diferentes: scrollWidth inclui o espaço de conteúdo rolável, enquanto uma caixa visual transformada pode apresentar outro retângulo.",
+            "Teste viewport estreita, palavra comprida, conteúdo vazio e mais itens que o normal. Uma solução que depende do texto curto original pode falhar na tradução ou no dado real. Transfira o cálculo para cartões de documentação: documente o eixo, a caixa medida e a política de quebra ou rolagem. Evite mascarar uma falha de tamanho com uma regra global de overflow hidden."
+          ]
+        }
+      ],
+      "code": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Medindo caixas</title><style>\nbody {margin:0;}\n.caixa {inline-size:180px;padding:20px;border:2px solid; margin-block:8px;}\n#conteudo {box-sizing:content-box;}\n#borda {box-sizing:border-box;}\n</style></head><body><main><h1>Medindo caixas</h1>\n<p id=\"conteudo\" class=\"caixa\">Content-box</p><p id=\"borda\" class=\"caixa\">Border-box</p>\n</main></body></html>",
+      "output": "A caixa conteudo tem largura externa de 224px; borda tem 180px. Padding e border continuam existindo nas duas.",
+      "trace": [
+        "Em content-box os extras de 44px são acrescentados aos 180px de conteúdo.",
+        "Em border-box os extras estão contidos na largura declarada de 180px.",
+        "As margens verticais não fazem parte da largura medida da borda."
+      ],
+      "exercise": "Construa uma linha Flexbox de 220px com um título curto e um identificador de 80 letras. O identificador deve quebrar e o contêiner não deve ter excesso horizontal. Explique o papel de min-inline-size e overflow-wrap.",
+      "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Texto comprido em Flexbox</title><style>\nbody {margin:0;}\n.linha {display:flex;gap:8px;inline-size:220px;max-inline-size:100%;box-sizing:border-box;}\n.titulo {flex:0 0 40px;}\n.texto {flex:1;min-inline-size:0;overflow-wrap:anywhere;}\n</style></head><body><main><h1>Flexbox</h1><div id=\"linha\" class=\"linha\">\n<span class=\"titulo\">Código</span><span class=\"texto\">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span>\n</div></main></body></html>",
+      "bug": "O autor define width 180px, padding 20px e border 2px, mas espera uma largura externa de 180px sem mudar box-sizing. A caixa content-box ocupa 224px.",
+      "bugCode": ".caixa {width:180px;padding:20px;border:2px solid;box-sizing:content-box;}",
+      "repair": "Se a dimensão declarada deve incluir os extras, use border-box. Se ela deve representar o espaço de conteúdo, mantenha content-box e calcule a dimensão externa. A escolha depende do contrato do layout.",
+      "checks": [
+        "As larguras medidas são 224px e 180px.",
+        "Conteúdo longo quebra sem criar excesso no contêiner Flexbox.",
+        "A rolagem de um contêiner é distinguida da rolagem da página."
+      ],
+      "project": "Crie cartões de documentação com títulos, identificadores e blocos de código. Defina quais conteúdos quebram e quais rolam, confira caixas e viewport estreita e mantenha o DOM em ordem de leitura. Registre medidas para um texto longo e uma tradução maior.",
+      "question": "Quanto ocupa externamente uma caixa content-box de 180px com padding 20px e border 2px em cada lado?",
+      "answer": "224px, pois padding e border são acrescentados à largura de conteúdo.",
+      "distractors": [
+        "180px, porque width sempre inclui padding e border.",
+        "204px, porque somente um lado do padding participa do cálculo."
+      ],
+      "practices": [
+        {
+          "id": "minimo",
+          "title": "Problema 1: conteúdo intrínseco em item flexível",
+          "topics": [
+            "tamanho mínimo automático de flex item",
+            "min-inline-size zero",
+            "overflow-wrap anywhere"
+          ],
+          "prompt": "Crie um contêiner flexível de no máximo 240px com uma etiqueta de 48px e um texto sem espaços de 64 letras. Permita encolhimento e quebra do texto, mantendo toda a informação disponível em viewport de 200px.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Limite do item flexível</title><style>\nbody {margin:0;}\n#grupo {display:flex;gap:8px;inline-size:min(240px,100%);}\n.etiqueta {flex:0 0 48px;}\n#valor {flex:1;min-inline-size:0;overflow-wrap:anywhere;}\n</style></head><body><main><h1>Conteúdo</h1><div id=\"grupo\">\n<span class=\"etiqueta\">Valor</span><span id=\"valor\">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>\n</div></main></body></html>",
+          "explanation": [
+            "min-inline-size permite o encolhimento do item no eixo em linha e overflow-wrap cria oportunidades de quebra para o conteúdo sem espaços.",
+            "A etiqueta mantém sua parcela, enquanto o texto ocupa o restante. O teste precisa medir scrollWidth do grupo e do texto; esconder o excesso com recorte não atenderia ao contrato de manter toda a informação."
+          ],
+          "checks": [
+            "A viewport de 200px não produz excesso horizontal no grupo.",
+            "O texto continua inteiro no DOM.",
+            "O item de texto pode encolher e tem altura de mais de uma linha."
+          ]
+        },
+        {
+          "id": "sticky",
+          "title": "Problema 2: cabeçalho dentro de uma rolagem local",
+          "topics": [
+            "overflow e contêiner de rolagem",
+            "sticky e referência de rolagem"
+          ],
+          "prompt": "Construa um contêiner de 120px de altura com conteúdo suficiente para rolar e um cabeçalho sticky top zero. Ao rolar o contêiner 80px, o cabeçalho deve continuar no topo desse contêiner, sem virar fixed da página.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><title>Rolagem local</title><style>\nbody {margin:0;}\n#rolagem {block-size:120px;inline-size:240px;max-inline-size:100%;overflow:auto;}\n#cabecalho {position:sticky;top:0;background:white;margin:0;block-size:24px;}\n#conteudo {block-size:400px;}\n</style></head><body><main><h1>Rolagem local</h1><div id=\"rolagem\">\n<h2 id=\"cabecalho\">Seção</h2><div id=\"conteudo\"><p>Conteúdo rolável para verificar o cabeçalho.</p></div>\n</div></main></body></html>",
+          "explanation": [
+            "A altura limitada e overflow auto criam uma região que pode rolar. O cabeçalho está no fluxo dessa região e o inset top permite a adesão durante a rolagem.",
+            "Ao mudar scrollTop, compare o topo do cabeçalho com o topo do contêiner. Essa medida demonstra o comportamento local e evita confundir uma posição inicial estática com uma implementação sticky funcionando."
+          ],
+          "checks": [
+            "scrollHeight supera clientHeight.",
+            "Após scrollTop 80, o cabeçalho continua junto ao topo do contêiner.",
+            "O cabeçalho usa sticky e mantém seu lugar no fluxo."
+          ]
+        }
       ]
     },
     {

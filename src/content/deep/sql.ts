@@ -94,6 +94,149 @@ export default {
       ]
     },
     {
+      "id": "sql-null-logica",
+      "title": "SQL: NULL, lógica de três valores e dados ausentes",
+      "level": "Fundamentos",
+      "summary": "Escreva consultas que distinguem valor zero, valor ausente e comparação desconhecida. Esta aula usa PostgreSQL para explicar WHERE, CHECK, IS NULL, IS DISTINCT FROM, agregações e o risco de NOT IN com NULL. Todos os exemplos criam dados temporários e desfazem a transação, com verificações executadas sobre o resultado real.",
+      "source": "https://www.postgresql.org/docs/current/functions-comparison.html",
+      "topics": [
+        "NULL como ausência de valor",
+        "comparação com resultado unknown",
+        "WHERE aceita apenas true",
+        "IS NULL e IS NOT NULL",
+        "IS DISTINCT FROM",
+        "CHECK e NOT NULL",
+        "count estrela versus count coluna",
+        "NOT IN com NULL e NOT EXISTS"
+      ],
+      "sections": [
+        {
+          "title": "Ausência não é zero nem texto vazio",
+          "text": [
+            "NULL representa ausência de um valor no modelo SQL. Um saldo zero informa um valor conhecido; um saldo NULL pode indicar que ele ainda não foi apurado. Uma string vazia também é um valor textual conhecido. A escolha de permitir NULL deve ser documentada no esquema e no domínio, porque consultas e restrições terão de lidar com essa possibilidade em vez de substituir tudo por um valor padrão.",
+            "Não use NULL para armazenar vários significados incompatíveis sem um campo que os diferencie. Desconhecido, não aplicável e removido podem exigir estados separados no produto. A aula usa saldo ausente apenas como ainda não informado. Isso permite estudar as regras da linguagem sem fingir que uma marca única resolve todas as necessidades de um modelo real."
+          ]
+        },
+        {
+          "title": "Comparações comuns podem produzir unknown",
+          "text": [
+            "Comparar um valor com NULL usando = ou <> normalmente produz o estado lógico desconhecido, inclusive NULL = NULL. Esse resultado não é true nem false. WHERE mantém linhas em que a condição é true; false e unknown ficam fora do resultado. Assim WHERE saldo <> 0 não seleciona automaticamente linhas com saldo ausente, mesmo que a pessoa imagine ausente como diferente de zero.",
+            "As operações AND, OR e NOT têm regras para três valores. false AND unknown é false, enquanto true AND unknown é unknown; true OR unknown é true. NOT unknown continua unknown. Para entender uma consulta, escreva a tabela lógica dos estados relevantes e não aplique cegamente as regras de um booleano de duas possibilidades. Isso é especialmente útil quando uma condição combina comparação e campo opcional."
+          ]
+        },
+        {
+          "title": "Testes de ausência e igualdade nula são explícitos",
+          "text": [
+            "IS NULL e IS NOT NULL verificam ausência de forma direta. IS DISTINCT FROM permite comparar valores tratando NULL como comparável para decidir diferença: dois NULL não são distintos; NULL e zero são distintos. IS NOT DISTINCT FROM expressa a relação inversa. Escolha a operação pelo significado: uma busca por campos não preenchidos deve usar IS NULL, sem fabricar um valor mágico que represente todos os dados ausentes.",
+            "COALESCE escolhe a primeira expressão não NULL, mas não transforma a origem em um dado conhecido. Ele pode servir para apresentação ou para uma regra explícita de cálculo. Se um saldo não informado deve ficar destacado, COALESCE(saldo, 0) pode esconder a falta do dado. No exemplo, CASE produz uma classificação descritiva e preserva a diferença entre desconhecido, zero e positivo."
+          ]
+        },
+        {
+          "title": "Restrições têm sua própria regra de aceitação",
+          "text": [
+            "No PostgreSQL, uma restrição CHECK é satisfeita quando a expressão resulta em true ou NULL. Portanto CHECK (saldo >= 0) não rejeita sozinho um saldo NULL. Se o campo é obrigatório, combine NOT NULL com a restrição de faixa. A regra de aceitação de CHECK difere da seleção de WHERE, que mantém apenas true. Esse detalhe precisa ser explicado antes de usar um check como prova de presença.",
+            "Restrições protegem a integridade na base e devem refletir regras que valem para todos os caminhos de escrita. Validar só em um formulário não cobre importações e outras aplicações. Na atividade, usamos tabelas temporárias e uma transação para observar uma violação controlada sem modificar dados permanentes. Em migrações reais, analise os dados existentes e como a nova regra será validada."
+          ]
+        },
+        {
+          "title": "Agregações e exclusões exigem atenção à ausência",
+          "text": [
+            "count(*) conta linhas; count(coluna) conta valores não NULL nessa coluna. sum ignora valores NULL e pode retornar NULL quando não há valores para somar. Escolha se esse resultado representa ausência adequada ou se uma regra explícita autoriza transformá-lo em zero. Uma média calculada com linhas e valores ausentes também precisa de um denominador coerente com o domínio.",
+            "NOT IN pode produzir unknown quando a lista ou subconsulta contém NULL e nenhuma igualdade verdadeira resolve a comparação. Isso faz uma exclusão retornar menos linhas que o esperado. NOT EXISTS com uma correlação explícita frequentemente expressa melhor a pergunta não existe registro correspondente, mas ainda exige definir como chaves NULL devem se relacionar. Evitar um operador sem entender o contrato de correspondência não é suficiente."
+          ]
+        },
+        {
+          "title": "Verifique consultas com dados que exponham os estados",
+          "text": [
+            "Um conjunto mínimo útil tem uma linha NULL, uma linha zero e uma linha positiva. Adicione uma lista de exclusão com NULL e um valor conhecido. Compare os resultados de IS NULL, <> 0, IS DISTINCT FROM 0 e NOT EXISTS. Esses dados pequenos permitem prever todas as linhas e detectar uma expectativa errada antes de testar em milhares de registros.",
+            "Os programas da aula têm BEGIN, objetos temporários, verificações em DO e ROLLBACK. Se um resultado divergir, RAISE EXCEPTION faz o CI falhar. O rollback mantém o exercício sem efeitos permanentes, mas a prática precisa ocorrer em uma base de estudo. Transfira a modelagem para um relatório de avaliação: destaque notas ainda não lançadas em vez de convertê-las silenciosamente em nota zero."
+          ]
+        }
+      ],
+      "code": "BEGIN;\nCREATE TEMP TABLE leitura_null(id integer PRIMARY KEY, saldo numeric CHECK(saldo >= 0));\nINSERT INTO leitura_null VALUES (1,NULL),(2,0),(3,12);\nCREATE TEMP VIEW classificacao_null AS\nSELECT id, CASE WHEN saldo IS NULL THEN 'desconhecido'\n                WHEN saldo = 0 THEN 'zero' ELSE 'positivo' END AS estado\nFROM leitura_null;\nDO $$\nBEGIN\n IF (SELECT count(*) FROM leitura_null WHERE saldo <> 0) <> 1 THEN RAISE EXCEPTION 'WHERE'; END IF;\n IF (SELECT count(saldo) FROM leitura_null) <> 2 THEN RAISE EXCEPTION 'count'; END IF;\n IF (SELECT count(*) FROM leitura_null WHERE saldo IS DISTINCT FROM 0) <> 2 THEN RAISE EXCEPTION 'distinct'; END IF;\nEND $$;\nSELECT id,estado FROM classificacao_null ORDER BY id;\nROLLBACK;",
+      "expectedOutput": [
+        "1|desconhecido",
+        "2|zero",
+        "3|positivo"
+      ],
+      "output": "As linhas classificadas são 1|desconhecido, 2|zero e 3|positivo. saldo <> 0 seleciona somente a terceira; count(saldo) conta duas.",
+      "trace": [
+        "CHECK de faixa aceita o NULL porque não está combinado com NOT NULL.",
+        "CASE testa ausência antes de igualdade com zero.",
+        "As verificações distinguem a aceitação de CHECK, a seleção de WHERE e a contagem de valores."
+      ],
+      "exercise": "Crie uma tabela temporária com valores NULL, 0 e 5. Retorne os ids de valores ausentes ou positivos sem incluir zero. Verifique que count(*) é 3 e count(valor) é 2.",
+      "solution": "BEGIN;\nCREATE TEMP TABLE atividade_null(id integer PRIMARY KEY, valor integer);\nINSERT INTO atividade_null VALUES (1,NULL),(2,0),(3,5);\nDO $$\nBEGIN\n IF (SELECT count(*) FROM atividade_null) <> 3 OR (SELECT count(valor) FROM atividade_null) <> 2\n THEN RAISE EXCEPTION 'contagens'; END IF;\n IF (SELECT array_agg(id ORDER BY id) FROM atividade_null WHERE valor IS NULL OR valor > 0)\n IS DISTINCT FROM ARRAY[1,3] THEN RAISE EXCEPTION 'resultado'; END IF;\nEND $$;\nSELECT id FROM atividade_null WHERE valor IS NULL OR valor > 0 ORDER BY id;\nROLLBACK;",
+      "solutionOutput": [
+        "1",
+        "3"
+      ],
+      "bug": "A consulta tenta localizar dados ausentes com valor = NULL. A comparação não produz true para a linha NULL, então nenhuma linha satisfaz essa condição em WHERE.",
+      "bugCode": "SELECT id FROM dados WHERE valor = NULL;",
+      "repair": "Use valor IS NULL. Se a pergunta for igualdade entre duas colunas que podem ser NULL, considere IS NOT DISTINCT FROM conforme o contrato; não generalize IS NULL para qualquer comparação.",
+      "checks": [
+        "Ausência, zero e positivo têm resultados diferentes.",
+        "As contagens de linhas e valores conhecidos são distintas.",
+        "Explique por que CHECK de faixa não prova obrigatoriedade."
+      ],
+      "project": "Modele avaliações ainda não lançadas, notas zero e notas positivas. Escreva contagens e médias com denominadores documentados, destaque ausência no relatório e combine NOT NULL apenas nos estados em que o dado é realmente obrigatório.",
+      "question": "Por que CHECK (saldo >= 0) permite saldo NULL no PostgreSQL?",
+      "answer": "CHECK aceita a condição verdadeira ou desconhecida; NOT NULL é uma restrição separada.",
+      "distractors": [
+        "NULL sempre é convertido para zero antes de avaliar a restrição.",
+        "CHECK nunca valida números e só examina o nome da coluna."
+      ],
+      "practices": [
+        {
+          "id": "exclusao",
+          "title": "Problema 1: exclusão com uma chave ausente",
+          "topics": [
+            "NOT IN com NULL e NOT EXISTS",
+            "WHERE aceita apenas true",
+            "comparação com resultado unknown"
+          ],
+          "prompt": "Crie ids 1, 2 e 3 e uma lista de bloqueio com 2 e NULL. Mostre que NOT IN não retorna nenhum id nesse caso e que NOT EXISTS com igualdade retorna 1 e 3. As chaves externas da lista principal são não nulas.",
+          "solution": "BEGIN;\nCREATE TEMP TABLE candidatos_null(id integer PRIMARY KEY);\nCREATE TEMP TABLE bloqueios_null(id integer);\nINSERT INTO candidatos_null VALUES(1),(2),(3);\nINSERT INTO bloqueios_null VALUES(2),(NULL);\nDO $$\nBEGIN\n IF (SELECT count(*) FROM candidatos_null WHERE id NOT IN (SELECT id FROM bloqueios_null)) <> 0\n THEN RAISE EXCEPTION 'NOT IN'; END IF;\n IF (SELECT array_agg(c.id ORDER BY c.id) FROM candidatos_null c\n     WHERE NOT EXISTS(SELECT 1 FROM bloqueios_null b WHERE b.id=c.id))\n IS DISTINCT FROM ARRAY[1,3] THEN RAISE EXCEPTION 'NOT EXISTS'; END IF;\nEND $$;\nSELECT c.id FROM candidatos_null c WHERE NOT EXISTS(SELECT 1 FROM bloqueios_null b WHERE b.id=c.id) ORDER BY c.id;\nROLLBACK;",
+          "expectedOutput": [
+            "1",
+            "3"
+          ],
+          "explanation": [
+            "Para 1 e 3, a presença de NULL deixa NOT IN desconhecido; para 2, a igualdade conhecida exclui a linha. WHERE não mantém nenhuma delas.",
+            "A correlação de NOT EXISTS procura uma igualdade verdadeira com a chave candidata, que nesta tabela é não nula. Se as chaves candidatas também pudessem ser NULL, a política de correspondência teria de ser discutida explicitamente."
+          ],
+          "checks": [
+            "NOT IN retorna zero linhas.",
+            "NOT EXISTS retorna exatamente 1 e 3.",
+            "Explique a hipótese de chave candidata não nula."
+          ]
+        },
+        {
+          "id": "obrigatorio",
+          "title": "Problema 2: campo obrigatório e faixa válida",
+          "topics": [
+            "CHECK e NOT NULL",
+            "NULL como ausência de valor",
+            "IS NULL e IS NOT NULL"
+          ],
+          "prompt": "Crie um campo obrigatório inteiro não negativo, aceite zero e detecte rejeição de NULL e -1. Capture somente as violações esperadas dentro de DO e verifique que as inserções rejeitadas não deixaram linhas.",
+          "solution": "BEGIN;\nCREATE TEMP TABLE quantidades_null(valor integer NOT NULL CHECK(valor >= 0));\nINSERT INTO quantidades_null VALUES(0);\nDO $$\nBEGIN\n BEGIN\n  INSERT INTO quantidades_null VALUES(NULL);\n  RAISE EXCEPTION 'NULL foi aceito';\n EXCEPTION WHEN not_null_violation THEN NULL;\n END;\n BEGIN\n  INSERT INTO quantidades_null VALUES(-1);\n  RAISE EXCEPTION 'negativo foi aceito';\n EXCEPTION WHEN check_violation THEN NULL;\n END;\n IF (SELECT count(*) FROM quantidades_null) <> 1 THEN RAISE EXCEPTION 'linhas'; END IF;\nEND $$;\nSELECT valor FROM quantidades_null;\nROLLBACK;",
+          "expectedOutput": [
+            "0"
+          ],
+          "explanation": [
+            "NOT NULL estabelece presença e CHECK estabelece a faixa. Zero satisfaz as duas regras e continua diferente de dado ausente.",
+            "Cada bloco captura somente a classe de violação que a atividade espera. Uma exceção que diz que o valor inválido foi aceito não é capturada como sucesso, então uma restrição faltando fará o teste falhar."
+          ],
+          "checks": [
+            "Zero é inserido.",
+            "NULL e -1 produzem violações específicas.",
+            "A tabela final tem apenas a linha válida."
+          ]
+        }
+      ]
+    },
+    {
       "id": "sql-consultas-joins",
       "title": "SQL: consultas, joins e composição",
       "level": "Intermediário",
@@ -176,6 +319,151 @@ export default {
       "distractors": [
         "Sim; as cláusulas são sempre equivalentes.",
         "Sim; LEFT JOIN nunca produz NULL."
+      ]
+    },
+    {
+      "id": "sql-joins-cardinalidade",
+      "title": "SQL: cardinalidade de joins e agregação sem duplicar totais",
+      "level": "Intermediário",
+      "summary": "Preveja quantas linhas uma junção pode produzir e escolha a granularidade do resultado antes de somar. Esta aula investiga LEFT JOIN, filtros em ON ou WHERE, count em linhas estendidas e multiplicação de relações um-para-muitos. Os problemas usam dados temporários com clientes sem pedido e pedidos com vários itens e pagamentos.",
+      "source": "https://www.postgresql.org/docs/current/queries-table-expressions.html",
+      "topics": [
+        "granularidade antes da consulta",
+        "cardinalidade um para muitos",
+        "LEFT JOIN e linha estendida",
+        "filtro em ON versus WHERE",
+        "count da chave relacionada",
+        "agregação antes do join",
+        "fanout entre duas coleções",
+        "EXISTS para testar presença"
+      ],
+      "sections": [
+        {
+          "title": "Escolha o que uma linha do resultado representa",
+          "text": [
+            "Antes de escrever SELECT, diga se cada linha representa um cliente, um pedido ou um item. Essa granularidade determina as chaves e as agregações necessárias. Uma junção de cliente com pedidos produz uma linha por combinação correspondente, não uma linha por cliente automaticamente. Se um cliente tem três pedidos, seus dados aparecem em três linhas. Essa repetição é uma propriedade esperada da relação, e não um bug do banco.",
+            "A cardinalidade indica quantos registros de um lado podem se relacionar com cada registro do outro. Uma chave estrangeira válida protege a referência, mas não limita sozinha quantos pedidos um cliente pode ter. Uma restrição UNIQUE na chave relacionada pode estabelecer uma relação de no máximo um. Consulte as restrições do esquema antes de supor que um join preservará a quantidade de linhas."
+          ]
+        },
+        {
+          "title": "LEFT JOIN mantém linhas sem correspondência",
+          "text": [
+            "Um LEFT JOIN preserva as linhas da esquerda e acrescenta colunas NULL quando não existe correspondência da direita. Essa linha estendida permite apresentar clientes sem pedido. Ela não significa que foi criado um pedido com id NULL no armazenamento; é uma representação do resultado da consulta. A distinção afeta contagens e filtros depois da junção.",
+            "Count(*) conta a linha estendida de um cliente sem pedidos, enquanto count(p.id) conta apenas ids não nulos dos pedidos relacionados. Se o relatório pede quantidade de pedidos, use a chave do registro relacionado, cuja não nulidade é garantida pela primary key. Um valor opcional de outra coluna poderia ter NULL mesmo num pedido existente e produzir uma contagem incorreta."
+          ]
+        },
+        {
+          "title": "A posição do filtro muda a preservação",
+          "text": [
+            "Um filtro na condição ON participa da decisão sobre quais registros da direita se relacionam à esquerda. Um filtro em WHERE é aplicado ao resultado da junção e pode remover a linha estendida. Assim LEFT JOIN pedidos p ON p.cliente_id=c.id AND p.status='pago' preserva clientes sem pedido pago. Mover status='pago' para WHERE normalmente exclui esses clientes porque a comparação com o NULL estendido não é true.",
+            "Não memorize sempre coloque tudo em ON. Um filtro de cliente pode pertencer a WHERE, e uma pergunta que exige somente clientes com pedido pago pode usar um join ou EXISTS apropriado. A escolha depende do conjunto que o relatório deve manter. Escreva a regra em palavras e teste um cliente sem pedido, um com pedido não pago e um com pedido pago para diferenciar as consultas."
+          ]
+        },
+        {
+          "title": "Duas coleções podem multiplicar combinações",
+          "text": [
+            "Um pedido com dois itens e dois pagamentos gera quatro combinações se você juntar as duas coleções diretamente pela mesma chave do pedido. Somar valores dos itens nesse resultado repete cada item para cada pagamento; somar pagamentos repete cada pagamento para cada item. O join pode estar sintaticamente correto e respeitar todas as chaves estrangeiras, mas a agregação não corresponde à granularidade pretendida.",
+            "SUM(DISTINCT valor) não é uma correção geral. Itens diferentes podem ter valores iguais e a remoção de duplicatas por valor apagaria contribuições legítimas. Agregue cada coleção na chave do pedido antes de juntar os resumos, ou use subconsultas correlacionadas adequadas. O resultado intermediário precisa ter no máximo uma linha por chave na etapa que o relatório espera."
+          ]
+        },
+        {
+          "title": "Presença e dados detalhados são perguntas diferentes",
+          "text": [
+            "Se você só quer saber quais clientes têm pelo menos um pedido, EXISTS expressa a presença sem multiplicar linhas de clientes para cada pedido. Uma junção seguida de DISTINCT pode produzir o mesmo conjunto em certos casos, mas exige compreender quais colunas participam da deduplicação. Escolha a forma que deixa clara a pergunta e confira a cardinalidade observável.",
+            "Para retornar detalhes de pedidos, o join continua adequado. Para contagem por cliente, a agregação precisa conservar a chave e tratar a linha sem correspondência. A consulta pode combinar várias etapas com CTEs, cada uma com sua granularidade descrita. Nomear uma etapa como totais_por_pedido ajuda a revisar a promessa de uma linha por pedido antes da junção seguinte."
+          ]
+        },
+        {
+          "title": "Dados pequenos devem incluir as combinações difíceis",
+          "text": [
+            "Use um cliente sem pedidos, um com dois pedidos, dois itens com o mesmo valor e mais de um pagamento no mesmo pedido. Esses registros expõem falhas que uma base com uma linha por tabela esconderia. Preveja a quantidade de combinações antes de somar e compare o resultado com os totais calculados separadamente. Uma contagem correta é parte da prova do relatório.",
+            "Nos exercícios, tabelas e views são temporárias e as verificações SQL lançam exceção se a expectativa falhar. Os valores são numéricos decimais e a apresentação usa uma escala explícita. Transfira o raciocínio para relatórios de faturamento: documente a granularidade de cada etapa, o conjunto preservado e a regra de ausência antes de otimizar o plano. Um índice não corrige uma soma duplicada."
+          ]
+        }
+      ],
+      "code": "BEGIN;\nCREATE TEMP TABLE clientes_card(id integer PRIMARY KEY);\nCREATE TEMP TABLE pedidos_card(id integer PRIMARY KEY, cliente_id integer REFERENCES clientes_card, total numeric(10,2) NOT NULL);\nINSERT INTO clientes_card VALUES(1),(2),(3);\nINSERT INTO pedidos_card VALUES(10,1,20),(11,1,30),(12,3,15);\nCREATE TEMP VIEW resumo_card AS\nSELECT c.id,count(p.id) AS pedidos,coalesce(sum(p.total),0)::numeric(10,2) AS total\nFROM clientes_card c LEFT JOIN pedidos_card p ON p.cliente_id=c.id\nGROUP BY c.id;\nDO $$\nBEGIN\n IF (SELECT count(*) FROM resumo_card) <> 3 THEN RAISE EXCEPTION 'clientes'; END IF;\n IF (SELECT pedidos FROM resumo_card WHERE id=2) <> 0 THEN RAISE EXCEPTION 'sem pedidos'; END IF;\n IF (SELECT total FROM resumo_card WHERE id=1) <> 50 THEN RAISE EXCEPTION 'total'; END IF;\nEND $$;\nSELECT id,pedidos,total FROM resumo_card ORDER BY id;\nROLLBACK;",
+      "expectedOutput": [
+        "1|2|50.00",
+        "2|0|0.00",
+        "3|1|15.00"
+      ],
+      "output": "São três clientes no resumo: 1 tem dois pedidos e total 50.00; 2 tem zero e 0.00; 3 tem um e 15.00.",
+      "trace": [
+        "O join produz duas combinações para cliente 1 e uma linha estendida para cliente 2.",
+        "count(p.id) não conta a linha estendida como pedido.",
+        "GROUP BY volta à granularidade de cliente e a escala numérica torna a saída explícita."
+      ],
+      "exercise": "Crie clientes 1, 2 e 3 e pedidos apenas para 1 e 3. Retorne clientes que têm pelo menos um pedido com EXISTS, mantendo uma linha por cliente mesmo se 1 tiver dois pedidos.",
+      "solution": "BEGIN;\nCREATE TEMP TABLE clientes_presenca(id integer PRIMARY KEY);\nCREATE TEMP TABLE pedidos_presenca(id integer PRIMARY KEY,cliente_id integer REFERENCES clientes_presenca);\nINSERT INTO clientes_presenca VALUES(1),(2),(3);\nINSERT INTO pedidos_presenca VALUES(10,1),(11,1),(12,3);\nDO $$\nBEGIN\n IF (SELECT array_agg(c.id ORDER BY c.id) FROM clientes_presenca c\n     WHERE EXISTS(SELECT 1 FROM pedidos_presenca p WHERE p.cliente_id=c.id))\n IS DISTINCT FROM ARRAY[1,3] THEN RAISE EXCEPTION 'presença'; END IF;\nEND $$;\nSELECT c.id FROM clientes_presenca c WHERE EXISTS(SELECT 1 FROM pedidos_presenca p WHERE p.cliente_id=c.id) ORDER BY c.id;\nROLLBACK;",
+      "solutionOutput": [
+        "1",
+        "3"
+      ],
+      "bug": "O relatório usa count(*) após LEFT JOIN e informa um pedido para o cliente sem correspondência. Ele conta a linha estendida de cliente, não um registro real de pedido.",
+      "bugCode": "SELECT c.id,count(*) AS pedidos\nFROM clientes c LEFT JOIN pedidos p ON p.cliente_id=c.id\nGROUP BY c.id;",
+      "repair": "Use count(p.id), com p.id não nulo no esquema, quando a pergunta é quantidade de pedidos. Se a granularidade pretendida for outra, revise o agrupamento e as chaves antes de trocar a função.",
+      "checks": [
+        "Clientes sem pedidos permanecem e têm contagem zero.",
+        "A granularidade de cada etapa é explicitada.",
+        "Duas relações um-para-muitos não duplicam valores no resumo final."
+      ],
+      "project": "Crie um relatório por pedido com total de itens, pagamentos e saldo. Inclua pedidos sem pagamentos, itens com valores iguais e múltiplos pagamentos. Compare os totais por coleção e explique por que a junção dos resumos não cria fanout.",
+      "question": "Por que somar itens depois de juntar dois itens e dois pagamentos pode dobrar o total dos itens?",
+      "answer": "A junção gera quatro combinações e repete cada item para cada pagamento.",
+      "distractors": [
+        "SUM sempre duplica valores numéricos por definição.",
+        "Primary keys impedem qualquer repetição nas linhas de resultado, então essa duplicação é impossível."
+      ],
+      "practices": [
+        {
+          "id": "filtro",
+          "title": "Problema 1: preservar clientes sem pedido pago",
+          "topics": [
+            "filtro em ON versus WHERE",
+            "LEFT JOIN e linha estendida",
+            "count da chave relacionada"
+          ],
+          "prompt": "Crie clientes 1, 2 e 3; 1 tem um pedido pago e um aberto, 2 só aberto e 3 nenhum. Conte pedidos pagos preservando todos os clientes. Confira que o filtro em ON produz contagens 1, 0 e 0.",
+          "solution": "BEGIN;\nCREATE TEMP TABLE clientes_filtro(id integer PRIMARY KEY);\nCREATE TEMP TABLE pedidos_filtro(id integer PRIMARY KEY,cliente_id integer REFERENCES clientes_filtro,status text NOT NULL);\nINSERT INTO clientes_filtro VALUES(1),(2),(3);\nINSERT INTO pedidos_filtro VALUES(10,1,'pago'),(11,1,'aberto'),(12,2,'aberto');\nCREATE TEMP VIEW pagos_filtro AS\nSELECT c.id,count(p.id) AS pagos FROM clientes_filtro c\nLEFT JOIN pedidos_filtro p ON p.cliente_id=c.id AND p.status='pago' GROUP BY c.id;\nDO $$\nBEGIN\n IF (SELECT array_agg(pagos ORDER BY id) FROM pagos_filtro) IS DISTINCT FROM ARRAY[1,0,0]::bigint[]\n THEN RAISE EXCEPTION 'preservação'; END IF;\nEND $$;\nSELECT id,pagos FROM pagos_filtro ORDER BY id;\nROLLBACK;",
+          "expectedOutput": [
+            "1|1",
+            "2|0",
+            "3|0"
+          ],
+          "explanation": [
+            "ON decide quais pedidos podem corresponder sem remover a linha de cliente. Quando nenhum pago existe, a linha estendida preserva o cliente e count da chave resulta em zero.",
+            "Mover o filtro para WHERE muda a pergunta e elimina clientes 2 e 3. Compare os conjuntos antes de considerar equivalentes as duas versões."
+          ],
+          "checks": [
+            "Os três clientes são preservados.",
+            "Só o pedido pago entra na contagem.",
+            "Explique o resultado que surgiria com o filtro em WHERE."
+          ]
+        },
+        {
+          "id": "fanout",
+          "title": "Problema 2: somar coleções antes de combinar",
+          "topics": [
+            "agregação antes do join",
+            "fanout entre duas coleções",
+            "granularidade antes da consulta",
+            "cardinalidade um para muitos"
+          ],
+          "prompt": "Um pedido tem dois itens de 10 cada e pagamentos de 5 e 7. Produza total de itens 20 e total de pagamentos 12. Agregue por pedido antes do join; não use SUM(DISTINCT valor), pois os itens iguais são legítimos.",
+          "solution": "BEGIN;\nCREATE TEMP TABLE itens_fanout(pedido_id integer,valor numeric NOT NULL);\nCREATE TEMP TABLE pagamentos_fanout(pedido_id integer,valor numeric NOT NULL);\nINSERT INTO itens_fanout VALUES(7,10),(7,10);\nINSERT INTO pagamentos_fanout VALUES(7,5),(7,7);\nCREATE TEMP VIEW totais_fanout AS\nWITH itens AS (SELECT pedido_id,sum(valor) AS total FROM itens_fanout GROUP BY pedido_id),\npagamentos AS (SELECT pedido_id,sum(valor) AS total FROM pagamentos_fanout GROUP BY pedido_id)\nSELECT i.pedido_id,i.total AS itens,p.total AS pagamentos FROM itens i JOIN pagamentos p USING(pedido_id);\nDO $$\nBEGIN\n IF (SELECT count(*) FROM totais_fanout) <> 1 OR\n    (SELECT itens FROM totais_fanout) <> 20 OR (SELECT pagamentos FROM totais_fanout) <> 12\n THEN RAISE EXCEPTION 'fanout'; END IF;\nEND $$;\nSELECT pedido_id,itens,pagamentos FROM totais_fanout;\nROLLBACK;",
+          "expectedOutput": [
+            "7|20|12"
+          ],
+          "explanation": [
+            "Cada CTE reduz sua coleção a uma linha por pedido. A junção combina dois resumos nessa mesma granularidade e não multiplica itens por pagamentos.",
+            "Dois itens de dez somam vinte e não podem ser deduplicados por valor. Para preservar pedidos sem uma das coleções, inclua uma tabela de pedidos e faça LEFT JOIN dos resumos, aplicando a regra de ausência adequada."
+          ],
+          "checks": [
+            "Os totais são 20 e 12 em uma única linha.",
+            "Itens iguais continuam contando duas vezes.",
+            "Descreva como preservar pedidos sem pagamentos."
+          ]
+        }
       ]
     },
     {
