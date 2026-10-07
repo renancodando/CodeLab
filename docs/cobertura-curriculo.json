@@ -1,8 +1,8 @@
 {
-  "edition": "2026-10-07-interacoes-isolamento",
+  "edition": "2026-10-07-python-iteracao-recursos",
   "originalLessons": 60,
-  "expandedLessons": 72,
-  "totalLessons": 132,
+  "expandedLessons": 73,
+  "totalLessons": 133,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
@@ -360,6 +360,91 @@
             }
           ],
           "source": "https://docs.python.org/3/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-iteracao-recursos",
+          "title": "Python: iteradores, geradores e consumo com recursos",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "iterável e iterador de uso único",
+              "status": "introduzido"
+            },
+            {
+              "title": "protocolo __iter__ e __next__",
+              "status": "introduzido"
+            },
+            {
+              "title": "StopIteration e esgotamento",
+              "status": "introduzido"
+            },
+            {
+              "title": "suspensão e retomada com yield",
+              "status": "introduzido"
+            },
+            {
+              "title": "delegação com yield from",
+              "status": "introduzido"
+            },
+            {
+              "title": "validação antes da iteração",
+              "status": "praticaIndependente",
+              "activities": [
+                "lotes"
+              ]
+            },
+            {
+              "title": "lotes com itertools.islice",
+              "status": "praticaIndependente",
+              "activities": [
+                "lotes"
+              ]
+            },
+            {
+              "title": "consumo sem leitura antecipada",
+              "status": "praticaIndependente",
+              "activities": [
+                "lotes",
+                "fechamento"
+              ]
+            },
+            {
+              "title": "posse e fechamento explícito",
+              "status": "praticaIndependente",
+              "activities": [
+                "fechamento"
+              ]
+            },
+            {
+              "title": "finally e interrupção do consumidor",
+              "status": "praticaIndependente",
+              "activities": [
+                "fechamento"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "lotes",
+              "title": "Problema 1: lotes sem consumir o próximo bloco",
+              "topics": [
+                "validação antes da iteração",
+                "lotes com itertools.islice",
+                "consumo sem leitura antecipada"
+              ]
+            },
+            {
+              "id": "fechamento",
+              "title": "Problema 2: consumo limitado com dono explícito",
+              "topics": [
+                "posse e fechamento explícito",
+                "finally e interrupção do consumidor",
+                "consumo sem leitura antecipada"
+              ]
+            }
+          ],
+          "source": "https://docs.python.org/3/library/itertools.html",
           "status": "praticaDoModulo"
         },
         {

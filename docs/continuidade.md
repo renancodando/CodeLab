@@ -61,3 +61,12 @@ O executor local continua falhando na preparação de ACL antes de iniciar proce
 ## Retomada
 
 A automação continuar-melhorias-do-codelab permanece configurada neste chat. Confira gates de main e PRs abertas, retome o estado existente e comunique somente progresso significativo, falha ou ação necessária. Se um limite impedir publicação, registre o head e o último gate conhecido; retome quando houver disponibilidade. O pedido integral ainda está em andamento enquanto os aprofundamentos e a verificação da implantação estiverem pendentes.
+
+
+## Expansão Python em preparação
+
+Branch: `curriculo-python-iteracao-recursos`, a partir do checkpoint integrado da PR #5. A definição acrescenta `py-iteracao-recursos`, 17 capítulos, dois problemas independentes e três pausas offline. O catálogo desta branch é 133 aulas/20 trilhas (Python 10, outras linguagens 9), 25 aulas próprias/50 problemas e 616 entradas (139 vinculadas, 477 introduzidas), com 28 atividades corrigíveis.
+
+Os gabaritos incluem bordas de consumo, fonte infinita, limite zero, esgotamento, validação antes da fábrica e fechamento após erro. O verificador inclui quatro programas da aula e três fixtures das pausas. Há navegação dinâmica e estática nos testes e um fluxo novo de pausas offline com persistência e conclusão.
+
+A expansão conserva os 40 ids de conceitos da PR #5 para não invalidar planos iniciados nem conceitos lidos. Não integrar esta branch antes do CI completo e da revisão. Os contadores desta seção descrevem o conteúdo definido; não declaram aprovação antecipada dos gates nem currículo exaustivo. Atualizar head e resultados após validação.

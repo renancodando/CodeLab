@@ -22,3 +22,10 @@ Referências de implementação: [Service Workers](https://developer.mozilla.org
 ## Verificação requerida
 
 Executar toda a suíte de unidade, exemplos externos, cronogramas SQL, builds e navegador. Novos fluxos cobrem depuração, bordas, assistência, habilidades, leitura sem crédito, sessão retomável, offline após preparação, projeto com vários arquivos, exportação/backup, invalidação de evidência e telas entre 220 e 4000 px. Registrar os resultados reais da versão integrada; não substituir evidência por contagens planejadas.
+
+
+## Pausas Python e continuidade do catálogo
+
+A aula `py-iteracao-recursos` acrescenta `py-prever-esgotamento`, `py-ordenar-lote` e `py-fechar-consumo`. O total passa de 25 para 28 atividades. Elas funcionam nas pausas da aula, no catálogo e na revisão por habilidade. Seus gabaritos são executados com Python no CI; a resposta da pessoa continua avaliada conceitualmente no navegador.
+
+As habilidades novas são Python → Iteradores → Consumo/Lotes/Recursos. Os ids das 40 entradas de conceito da PR #5 são preservados em `legacy-concept-ids.ts`. Novos conceitos usam rank e id da aula, sem posição do catálogo. Um teste restaura o plano iniciado com ids antigos e conserva os conceitos lidos no dia seguinte.

@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+"py-prever-esgotamento":{"accepted":["0\n[1, 2]\n[]"],"failure":"O cursor não reinicia. Acompanhe qual elemento next retirou e quantos restam para cada list.","solution":"0\n[1, 2]\n[]"},
+"py-ordenar-lote":{"accepted":[],"order":["declarar","cursor","consumir","retornar"],"failure":"Crie o cursor antes de passá-lo a islice e devolva apenas a tupla produzida; cada linha deve aparecer uma vez.","solution":"def primeiro_lote(fonte, tamanho):\n    origem = iter(fonte)\n    lote = tuple(islice(origem, tamanho))\n    return lote"},
+"py-fechar-consumo":{"accepted":["closing"],"failure":"O trecho deve definir a liberação inclusive em exceção e evitar ler a fonte inteira. break não chama close genericamente.","solution":"with closing(fonte) as origem:\n    processar(next(origem))"},
  'html-label-vinculo':{accepted:['email-contato'],failure:'Compare o atributo for com o id do controle; name tem outra função.',solution:'email-contato'},
  'html-dialogo-foco':{accepted:['cancelar'],failure:'Revise qual ação recebe foco inicialmente e se o trecho mantém a navegação natural de teclado.',solution:'<button autofocus type="button">Cancelar</button>'},
  'html-ordenar-formulario':{accepted:[],order:['inicio','rotulo','campo','botao','fim'],failure:'Mantenha o form externo, o rótulo antes do campo e o botão antes do fechamento.',solution:'<form action="/contato" method="post">\n  <label for="nome">Nome</label>\n  <input id="nome" name="nome" required>\n  <button type="submit">Enviar</button>\n</form>'},
