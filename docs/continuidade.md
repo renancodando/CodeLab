@@ -2,9 +2,11 @@
 
 ## Estado em 7 de outubro de 2026
 
-- PRs #1, #2, #3, #4 e #5 integradas. O catálogo tem 132 aulas em 20 trilhas; as oito trilhas por linguagem têm nove aulas cada.
-- Há 48 módulos panorâmicos de 13 capítulos e 24 aulas próprias de 17 capítulos, além das 60 aulas originais. As aulas próprias oferecem 48 problemas independentes.
-- Matriz com 606 entradas: 134 vinculadas a atividades específicas e 472 introduzidas. Entradas podem repetir conceitos em contextos diferentes; a contagem não representa esgotamento das especializações.
+- PRs #1 a #8 integradas. Catálogo: 135 aulas em 20 trilhas; Python, TypeScript e C++ têm dez aulas, outras cinco linguagens nove.
+- 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 27 aulas próprias de 17 capítulos, com 54 problemas independentes.
+- Matriz: 636 entradas, 149 vinculadas a atividades específicas e 487 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.
+- 34 atividades corrigíveis: quatro programas JS e 30 atividades conceituais. Nove pausas novas distribuídas em Python, TypeScript e C++ exigem preparação do conceito na sessão diária.
+- Pedido integral em andamento: [17 frentes restantes](etapas-restantes.md). Não há contagem finita auditada de aulas que esgote todos os ecossistemas.
 
 ## Evidências da entrega curricular anterior
 
@@ -30,11 +32,11 @@ O [run 37641654276](https://github.com/renancodando/CodeLab/actions/runs/3764165
 
 As duas sugestões de revisão foram corrigidas, verificadas e resolvidas: revelar solução após tentativa atualiza imediatamente o agendamento; a linguagem fica fixa depois de iniciar o plano do dia. A suíte também conferiu falha na instalação de cache, quota indisponível com exportação dos arquivos em memória, backup válido acima de 2 MB e restauração que conserva a jornada anterior quando a gravação falha. O limite de importação agora é 16 MB.
 
-Este checkpoint altera documentação. A workflow de main após a integração/checkpoint deve ser conferida na próxima retomada; uma nova falha real exige investigação. A implantação pública e a sincronização local continuam limitadas pelos problemas já descritos.
+Os runs de main 37675611114 e 37676345090 aprovaram a integração da PR #5 e o checkpoint anterior. A PR #6 também teve main aprovado no run 37680250543. Confira o CI do checkpoint atual na próxima retomada; uma falha real exige investigação. A sincronização local foi concluída; a verificação pública passou no fluxo Python e continua parcial, conforme descrito abaixo.
 
 ## Próxima ação editorial
 
-Leia docs/curriculo-completo.md. Priorize aulas próprias sobre biblioteca padrão e protocolos Python; variância e módulos TypeScript; iteradores, invalidação e algoritmos C++; propriedade e protótipos JavaScript. Continue a aprofundar as oito linguagens, projetos maiores, ecossistemas e diagnóstico. Não marque temas apenas listados como prática pronta.
+Leia docs/curriculo-completo.md. As aulas de iteradores Python, variância TypeScript e invalidação C++ foram integradas. Priorize agora propriedades, descritores e protótipos JavaScript; depois biblioteca padrão Python por domínio, módulos TypeScript por ambiente e templates/algoritmos C++ com contratos próprios. Continue a aprofundar as oito linguagens, projetos maiores, ecossistemas e diagnóstico. Não marque temas apenas listados como prática pronta.
 
 O diálogo modal, Grid com trilhas automáticas, iteradores C# e snapshots/conflito PostgreSQL já possuem aulas e verificações próprias. Ampliar esses assuntos com novas atividades exige mecanismos adicionais, evitando repetir o que já foi entregue.
 
@@ -48,42 +50,47 @@ Antes de editar, confira main, PRs abertas e este checkpoint. Preserve critério
 
 ## Preservação do produto
 
-Preservar aparência, mundo, clima, áudio, editor e armazenamento local. Os estilos novos pertencem aos exemplos didáticos. A bancada orienta o dialeto da aula: PostgreSQL na expansão e SQLite nos exemplos originais correspondentes. Não acrescentar login, contas ou progresso remoto.
+Preservar aparência, mundo, clima, áudio, editor e armazenamento local. A expansão editorial utiliza as superfícies existentes; as adaptações responsivas da PR #5 têm verificação própria. A bancada orienta o dialeto da aula: PostgreSQL na expansão e SQLite nos exemplos originais correspondentes. Não acrescentar login, contas ou progresso remoto.
 
 ## Verificação da implantação e execução local
 
-O conector Vercel recusou leitura do projeto code-lab em renancodandos-projects com 403. A ampliação de acesso já foi solicitada ao usuário; ainda não houve resposta. Preview Ready não comprova a implantação.
+As tentativas anteriores pelo conector Vercel retornaram 403 e a ferramenta pública não abriu o endereço. Nesta retomada, uma consulta HTTP retornou 200 em https://code-lab-omega.vercel.app e um navegador Edge isolado verificou o fluxo Python: abrir py-iteracao-recursos com 17 capítulos e três pausas, conferir a previsão, salvar estado, retomar a resposta após recarregar e repetir a retomada offline depois da preparação do cache. Não houve pageerror nem requestfailed nesse cenário. A captura está em outputs/verificacao-publica-python.png e o script em outputs/verify-production.mjs.
 
-A consulta pública também não conseguiu acessar o endereço pela ferramenta web. O navegador de teste local falhou ao iniciar com erro de caminho dos assets do kernel. Isso não demonstra que o site esteja fora do ar; a verificação do fluxo publicado permanece pendente.
+Essa evidência cobre esse fluxo publicado; não substitui a verificação dos demais fluxos, falhas de armazenamento e configuração da execução externa no endereço público. O preview Ready continua insuficiente sozinho. A leitura de logs/configuração pelo conector continua sem acesso confirmado.
 
-O executor local continua falhando na preparação de ACL antes de iniciar processos. A cópia local não foi sincronizada. Não alterar ACLs do sistema nem sobrescrever clones ou arquivos não rastreados. Quando a execução local voltar, inspecione mudanças e arquivos não rastreados antes de sincronizar.
+O executor padrão e o kernel Node ainda falham na preparação de ACLs. A execução autorizada fora do sandbox recuperou a leitura e a sincronização local, sem alterar ACLs do sistema. Os dois commits antigos foram preservados na branch local local-preservado-20261007 (head 80be23d); três arquivos não rastreados foram guardados em outputs/preservado-local-20261007, com hashes conferidos e manifest.json. A main local foi criada a partir da origem atual e está limpa. Conferir novamente Git antes de atualizar; não sobrescrever alterações futuras.
 
 ## Retomada
 
 A automação continuar-melhorias-do-codelab permanece configurada neste chat. Confira gates de main e PRs abertas, retome o estado existente e comunique somente progresso significativo, falha ou ação necessária. Se um limite impedir publicação, registre o head e o último gate conhecido; retome quando houver disponibilidade. O pedido integral ainda está em andamento enquanto os aprofundamentos e a verificação da implantação estiverem pendentes.
 
 
-## Expansão Python em preparação
+## Python integrado e verificado
 
-Branch: `curriculo-python-iteracao-recursos`, a partir do checkpoint integrado da PR #5. A definição acrescenta `py-iteracao-recursos`, 17 capítulos, dois problemas independentes e três pausas offline. O catálogo desta branch é 133 aulas/20 trilhas (Python 10, outras linguagens 9), 25 aulas próprias/50 problemas e 616 entradas (139 vinculadas, 477 introduzidas), com 28 atividades corrigíveis.
+Branch: `curriculo-python-iteracao-recursos`, a partir do checkpoint integrado da PR #5. A entrega acrescenta `py-iteracao-recursos`, 17 capítulos, dois problemas independentes e três pausas offline. O catálogo desta branch é 133 aulas/20 trilhas (Python 10, outras linguagens 9), 25 aulas próprias/50 problemas e 616 entradas (139 vinculadas, 477 introduzidas), com 28 atividades corrigíveis.
 
 Os gabaritos incluem bordas de consumo, fonte infinita, limite zero, esgotamento, validação antes da fábrica e fechamento após erro. O verificador inclui quatro programas da aula e três fixtures das pausas. Há navegação dinâmica e estática nos testes e um fluxo novo de pausas offline com persistência e conclusão.
 
-A expansão conserva os 40 ids de conceitos da PR #5 para não invalidar planos iniciados nem conceitos lidos. Não integrar esta branch antes do CI completo e da revisão. Os contadores desta seção descrevem o conteúdo definido; não declaram aprovação antecipada dos gates nem currículo exaustivo. Atualizar head e resultados após validação.
+A expansão conserva os 40 ids de conceitos da PR #5 para não invalidar planos iniciados nem conceitos lidos. O head 9525287e92e7584d2599a1dd3f9e5c3b445e489a foi aprovado no run 37677492690: 252 unidade, 131 programas externos, 81 navegador, builds/API, 153 páginas e auditoria sem vulnerabilidades. Integração 8b87854b93ca34e3fda16fb6cc08a87df74c6af9 com árvore 4c6b09542936e9d32ca118b983c4f0d5ea83bb16 idêntica à testada. As contagens descrevem essa entrega, sem currículo exaustivo.
 
 
-## Próxima expansão TypeScript em preparação
+## TypeScript integrado e verificado
 
-Branch `curriculo-typescript-variancia-contratos` parte do head da PR #6 de Python. Integrar primeiro a dependência aprovada. O novo módulo `ts-variancia-contratos` oferece 17 capítulos, quatro programas com saídas esperadas, duas práticas independentes e três pausas offline. Na branch: 134 aulas/20 trilhas, Python e TypeScript 10, demais linguagens 9; 26 aulas próprias/52 problemas; 626 entradas (144 vinculadas/482 introduzidas); 31 atividades corrigíveis.
+Branch `curriculo-typescript-variancia-contratos` parte do head da PR #6 de Python. A dependência Python foi integrada antes. O novo módulo `ts-variancia-contratos` oferece 17 capítulos, quatro programas com saídas esperadas, duas práticas independentes e três pausas offline. Na branch: 134 aulas/20 trilhas, Python e TypeScript 10, demais linguagens 9; 26 aulas próprias/52 problemas; 626 entradas (144 vinculadas/482 introduzidas); 31 atividades corrigíveis.
 
-Testar strict com casos negativos, execução real, diferença método/propriedade, callbacks vazios e erro propagado, restauração offline e páginas estáticas. Nenhum gate é declarado aprovado antes da leitura do CI. Não promover readonly, in/out ou todo o ecossistema TypeScript como especialização completa apenas por ter introdução no módulo.
+Testar strict com casos negativos, execução real, diferença método/propriedade, callbacks vazios e erro propagado, restauração offline e páginas estáticas. O head final 0d98f529c39c28dddddc5fb96d352da104d1d9f6 teve 259 testes de unidade, 135 programas externos, 83 testes de navegador, builds/API, 154 páginas e auditoria sem vulnerabilidades no run 37680909578. Integração 7f27f1759c610edbf86d9d61fe1a589b307cc07e, árvore 0547361ce77cf3af0281b1f5379b5cbd886f7c67 idêntica à testada. Não promover readonly, in/out ou todo o ecossistema TypeScript como especialização completa apenas por ter introdução no módulo.
 
-A revisão TypeScript restringiu a substituição de ler/usar via readonly e acrescentou testes negativos dessa permissão. As novas atividades avançadas têm requiredConcepts no catálogo diário para conservar a primeira sessão nos fundamentos; o conceito pode precedê-las no mesmo plano, sem criar domínio pela leitura. Conferir os novos testes de catálogo e o início da sessão TypeScript no navegador antes de integrar o head final.
+A revisão TypeScript restringiu a substituição de ler/usar via readonly e acrescentou testes negativos dessa permissão. As novas atividades avançadas têm requiredConcepts no catálogo diário para conservar a primeira sessão nos fundamentos; o conceito pode precedê-las no mesmo plano, sem criar domínio pela leitura. Os testes de catálogo e início da sessão foram aprovados no head final.
 
 A correção de sequência diária também cobre as três atividades de iteradores Python publicadas na PR #6; seu desafio de fechamento não deve substituir o desafio de fundamentos na primeira sessão Python. O teste verifica preparação de conceito e plano novo nas duas linguagens.
 
-## Iteradores C++ em preparação
+## Iteradores C++ integrados e verificados
 
 Branch `curriculo-cpp-iteradores-invalidacao`, a partir da integração TypeScript `7f27f1759c610edbf86d9d61fe1a589b307cc07e`. A PR #7 teve 259 testes de unidade, 135 programas externos e 83 testes de navegador aprovados no run 37680909578; sua árvore integrada é a testada `0547361ce77cf3af0281b1f5379b5cbd886f7c67`.
 
-A expansão C++ define 135 aulas/20 trilhas, 27 aulas próprias/54 problemas, 636 entradas (149 vinculadas, 487 introduzidas) e 34 atividades. Python, TypeScript e C++ têm dez aulas; as outras linguagens têm nove. Validar os quatro programas, três fixtures e fluxo offline com reconstrução, persistência e conclusão antes de integrar. Os contadores descrevem conteúdo definido, sem antecipar aprovação do CI nem concluir o currículo integral.
+A expansão C++ define 135 aulas/20 trilhas, 27 aulas próprias/54 problemas, 636 entradas (149 vinculadas, 487 introduzidas) e 34 atividades. Python, TypeScript e C++ têm dez aulas; as outras linguagens têm nove. A [PR #8](https://github.com/renancodando/CodeLab/pull/8) foi integrada em `b217be7e63bf0225808117739de2e2011e0831d5`. Head aprovado: `3ecd7fdd147bc9e15057a211f54eb1aee370e57d`; árvore `d35985c0b81b8b28947e2aa23e604b9a0a6f0ad2`, idêntica à testada. O [run 37701742395](https://github.com/renancodando/CodeLab/actions/runs/37701742395) aprovou 263 testes de unidade em 15 arquivos, 142 programas externos, três cenários Git, três cronogramas PostgreSQL, ZIP interoperável, 85 testes de navegador, builds frontend/API e 155 páginas. Auditoria sem vulnerabilidades. Revisão manual concluída, sem threads abertas.
+
+Os resultados cobrem os quatro programas, três fixtures e fluxo offline com reconstrução, persistência e conclusão. Projetos têm rubrica manual; span/views e identidade estável permanecem introduzidos. Esta entrega não conclui o currículo integral.
+
+
+O CI de main após a PR #7 também foi aprovado no run 37700233574. O checkpoint final tem seu próprio run e deve ser conferido quando concluir.

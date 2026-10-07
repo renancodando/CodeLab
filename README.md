@@ -1,6 +1,6 @@
 # CODELAB
 
-Plataforma de estudo de programação com **20 trilhas, 132 aulas e oito missões de código**. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
+Plataforma de estudo de programação com **20 trilhas, 135 aulas e oito missões de código**. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
 
 ## Executar
 
@@ -22,7 +22,7 @@ O servidor atende em `http://127.0.0.1:5080/` e também serve o conteúdo de `di
 
 ## Aprender e criar
 
-As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. As oito trilhas por linguagem têm nove aulas: os módulos panorâmicos têm **13 capítulos**, e as 24 aulas de aprofundamento têm **17 capítulos**, incluindo dois problemas independentes e resoluções comentadas. A leitura original segue esta sequência: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
+As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. Python, TypeScript e C++ têm dez aulas por trilha; as outras cinco linguagens têm nove: os módulos panorâmicos têm **13 capítulos**, e as 27 aulas de aprofundamento têm **17 capítulos**, incluindo dois problemas independentes e resoluções comentadas. A leitura original segue esta sequência: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
 
 | Trilha | Conteúdo |
 | --- | --- |
@@ -39,7 +39,7 @@ As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. 
 | Full stack | Arquitetura, integração, testes de jornada, publicação e desempenho |
 | Projetos reais | Diário, tarefas, painel de clima, catálogo e entrega documentada |
 
-As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As aulas originais possuem roteiros por tema e a expansão acrescenta seis seções de teoria própria por módulo. Todas as **132 aulas têm conteúdo, prática e aplicação específicos**. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram respostas sobre um conceito; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
+As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As aulas originais possuem roteiros por tema e a expansão acrescenta seis seções de teoria própria por módulo. Todas as **135 aulas têm conteúdo, prática e aplicação específicos**. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram respostas sobre um conceito; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
 
 O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **152 páginas educacionais estáticas**, incluindo as aulas, os seis percursos e os oito projetos, legíveis sem JavaScript. O aplicativo mantém a leitura extensa e acrescenta pausas corrigíveis nas aulas ligadas às novas atividades.
 
@@ -128,7 +128,7 @@ Referências técnicas: [MDN](https://developer.mozilla.org/pt-BR/docs/), [Micro
 
 ## Currículo aprofundado por linguagem
 
-O catálogo tem 132 aulas em 20 trilhas. A expansão acrescenta percursos de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL, com 48 módulos panorâmicos de treze capítulos e 24 aulas aprofundadas de dezessete capítulos. A matriz identifica 134 entradas com prática específica, além dos temas introduzidos; isso não representa esgotamento de todas as especializações. Consulte [a matriz de cobertura](docs/curriculo-completo.md) para temas, ambientes, gates e os aprofundamentos editoriais ainda previstos.
+O catálogo tem 135 aulas em 20 trilhas. A expansão acrescenta percursos de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL, com 48 módulos panorâmicos de treze capítulos e 27 aulas aprofundadas de dezessete capítulos. A matriz identifica 149 entradas com prática específica, além dos temas introduzidos; isso não representa esgotamento de todas as especializações. Consulte [a matriz de cobertura](docs/curriculo-completo.md) para temas, ambientes, gates e os aprofundamentos editoriais ainda previstos.
 
 O conteúdo novo carrega por linguagem ao abrir a aula, mantendo um índice leve para navegação e busca. O build também entrega capítulos completos em páginas públicas sem JavaScript. TypeScript e PostgreSQL têm seu ambiente indicado, sem simular execução no laboratório atual.
 
@@ -141,19 +141,14 @@ Para conferir os cronogramas entre conexões, use o mesmo ambiente de estudo com
 Ao editar uma definição em `src/content/deep/`, execute `npm run content:generate` para atualizar o índice leve e a matriz JSON. O build rejeita artefatos desatualizados. Revise também o mapa editorial e as contagens esperadas nos testes ao publicar novas aulas; conserve os critérios de profundidade e execução.
 
 
-### Iteração Python e pausas conceituais
+### Últimos aprofundamentos integrados
 
-A edição do catálogo inclui 133 aulas em 20 trilhas: Python tem dez aulas no percurso aprofundado e as outras sete linguagens têm nove. `py-iteracao-recursos` aborda cursors de uso único, geradores, lotes sem leitura extra e fechamento explícito. São dois problemas independentes e três pausas offline, elevando o catálogo de atividades corrigíveis a 28.
+| Linguagem | Aula própria | Prática e interação |
+| --- | --- | --- |
+| Python | `py-iteracao-recursos` | Iteradores, lotes, recursos; dois problemas e três pausas offline |
+| TypeScript | `ts-variancia-contratos` | Variância, callbacks e propriedades de função; dois problemas e três pausas offline |
+| C++ | `cpp-iteradores-invalidacao` | Retorno de erase, reserva e compactação; dois problemas e três pausas offline |
 
-Os programas de referência entram no verificador Python do CI. As pausas do aluno são conceituais e os projetos têm revisão manual. O mapa conserva a distinção entre tema introduzido e prática independente; esta expansão não declara esgotamento das linguagens ou implantação validada.
+O catálogo tem **135 aulas em 20 trilhas**, **27 aulas próprias de 17 capítulos**, **54 problemas independentes** e **34 atividades corrigíveis**. Quatro atividades executam JavaScript no sandbox; as 30 restantes são conceituais. Python, TypeScript e C++ têm dez aulas nos percursos aprofundados; as outras cinco linguagens têm nove.
 
-
-### Contratos TypeScript
-
-A edição seguinte acrescenta `ts-variancia-contratos`: produtores, consumidores, leitura/escrita, callbacks e a diferença de checagem entre métodos e propriedades. Dois problemas têm testes positivos/negativos de tipos e resultados em execução; três pausas são conceituais offline.
-
-O catálogo definido tem 134 aulas/20 trilhas, 26 aulas próprias/52 problemas e 31 atividades. Python e TypeScript têm dez aulas nos percursos aprofundados; as outras seis linguagens têm nove. Verifique o checkpoint para conhecer o último head integrado e os gates reais, sem confundir um conteúdo em revisão com implantação validada.
-
-### Aprofundamento de iteradores C++
-
-A edição de conteúdo acrescenta `cpp-iteradores-invalidacao`: 17 capítulos, dois problemas independentes e três pausas conceituais offline. O catálogo definido chega a 135 aulas em 20 trilhas e 34 atividades corrigíveis. Os gabaritos usam C++20; a resposta conceitual não comprova compilação do código do estudante. Consulte a matriz e o checkpoint para a cobertura e os gates efetivamente concluídos.
+Os gabaritos dessas entregas passam por ferramentas reais no CI. A resposta conceitual do estudante não comprova compilação; projetos abertos têm rubrica manual. Consulte [o checkpoint](docs/continuidade.md) para os heads e gates aprovados, e [as 17 frentes restantes](docs/etapas-restantes.md) para acompanhar o pedido integral. A verificação pública passou no fluxo Python de leitura, correção, persistência e retomada offline preparada; os demais fluxos publicados ainda precisam de evidências próprias.

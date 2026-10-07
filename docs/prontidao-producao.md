@@ -35,7 +35,7 @@ O mapa de currículo mantém as especializações ainda por aprofundar. Nesta ed
 
 A expansão de leitura utiliza os componentes existentes. Os arquivos de aparência, mundo e editor não precisam mudar para acrescentar aulas. Alterações futuras nessas áreas exigem verificação do comportamento que afetarem. A migração interativa deve continuar gradual e preservar o acesso à leitura extensa.
 
-## Verificação da hospedagem nesta entrega
+## Histórico da hospedagem na PR #3
 
 O bot da Vercel registra um preview Ready para a PR #3. A leitura pelo conector retornou 403 por falta de acesso ao escopo renancodandos-projects; o executor local também impediu usar o CLI. Esses resultados não comprovam o funcionamento do endereço publicado. Os gates de build e navegador do Actions continuam sendo a evidência verificável do repositório até haver acesso à implantação.
 
@@ -60,3 +60,17 @@ O [run 37641654276](https://github.com/renancodando/CodeLab/actions/runs/3764165
 Foram verificados depuração com casos de borda, assistência após resposta, domínio por habilidade, sessão diária estável, revisão por calendário local, estudo offline preparado e falha de instalação do cache. Projetos com vários arquivos retomam e exportam ZIP; alterações invalidam evidências anteriores. O navegador também conferiu quota indisponível com recuperação por exportação, backup válido acima de 2 MB e falha de restauração que preserva a jornada anterior. O limite de importação é 16 MB. As oito larguras de 220 a 4000 px passaram nos fluxos cobertos.
 
 A rubrica dos projetos é manual. As atividades conceituais não certificam compilação; os casos do executor local são inspecionáveis. A migração interativa é parcial e o aprofundamento editorial continua. O preview da PR #5 foi informado como Ready pela Vercel, mas a ferramenta pública não conseguiu abri-lo; a implantação continua sem verificação do fluxo publicado. O executor local ainda falha na preparação de ACL e a cópia local permanece sem sincronização.
+
+## Aprofundamentos Python, TypeScript e C++
+
+Python foi integrado pela PR #6 após o run 37677492690 (252 unidade, 131 programas externos, 81 navegador e 153 páginas), com árvore idêntica à testada. TypeScript foi integrado pela PR #7 após o run 37680909578 (259 unidade, 135 programas externos, 83 navegador e 154 páginas), também com árvore idêntica. Ambos concluíram builds/API e auditoria sem vulnerabilidades.
+
+A [PR #8](https://github.com/renancodando/CodeLab/pull/8) foi integrada em `b217be7e63bf0225808117739de2e2011e0831d5`. Head aprovado: `3ecd7fdd147bc9e15057a211f54eb1aee370e57d`; árvore `d35985c0b81b8b28947e2aa23e604b9a0a6f0ad2`, idêntica à testada. O [run 37701742395](https://github.com/renancodando/CodeLab/actions/runs/37701742395) aprovou 263 testes de unidade em 15 arquivos, 142 programas externos, três cenários Git, três cronogramas PostgreSQL, ZIP interoperável, 85 testes de navegador, builds frontend/API e 155 páginas. Auditoria sem vulnerabilidades. Revisão manual concluída, sem threads abertas.
+
+Essas entregas ampliam teoria e prática independente; não encerram os ecossistemas. Consulte [as 17 frentes abertas](etapas-restantes.md). Uma verificação no endereço público passou no fluxo Python (17 capítulos, três pausas, correção, retomada após recarregar e recarregamento offline preparado, sem erros de página ou requisições nesse cenário). Os demais fluxos publicados continuam por verificar. A cópia local foi sincronizada, com commits e arquivos antigos preservados. Os gabaritos compilados no CI não tornam atividades conceituais um compilador de código do estudante.
+
+## Evidência pública e local desta retomada
+
+A execução autorizada fora do sandbox permitiu superar a falha de preparação do executor para os comandos desta tarefa, sem alterar ACLs do sistema. A main local foi sincronizada e seu estado limpo foi conferido; os dois commits e três arquivos anteriores foram preservados com hashes. O executor padrão e o kernel continuam falhando; utilizar o caminho de execução autorizado e inspecionar Git na próxima retomada.
+
+O fluxo público Python foi conferido em um contexto Edge novo: home HTTP 200, aula py-iteracao-recursos com 17 capítulos e três pausas, previsão correta, estado local e resposta restaurados após reload e recarregamento offline depois da preparação do cache. Sem pageerror/requestfailed nessa execução. Script e captura estão em outputs. Esse resultado valida a fronteira de leitura/avaliação conceitual/persistência testada; não prova os demais fluxos públicos nem a implantação integral pronta para produção.

@@ -50,7 +50,7 @@ A aula `cpp-iteradores-invalidacao` tem 17 capítulos, seis seções originais, 
 | `consecutivos` | Retorno de erase, zeros consecutivos, vazio, todos e nenhum removido, ordem preservada |
 | `compactacao` | remove_if seguido de erase, prefixo lógico versus size, contagem de predicado e comparação com erase_if C++20 |
 
-Os quatro programas completos e três fixtures das pausas devem compilar em C++20 e conferir saídas e asserts no CI antes de integração. O trecho quebrado contém acesso invalidado e não é executado como se tivesse saída garantida. O exercício recupera um valor por índice somente após reserve, sem inserção, remoção nem reordenação. Views, span e identidade estável permanecem introduzidos e precisam de práticas próprias. Os gabaritos de autoria não equivalem à correção universal do código do estudante.
+Os quatro programas completos e três fixtures das pausas compilaram em C++20 e conferiram saídas e asserts no CI da PR #8. O trecho quebrado contém acesso invalidado e não é executado como se tivesse saída garantida. O exercício recupera um valor por índice somente após reserve, sem inserção, remoção nem reordenação. Views, span e identidade estável permanecem introduzidos e precisam de práticas próprias. Os gabaritos de autoria não equivalem à correção universal do código do estudante.
 
 Referências: [capacidade e reserve](https://eel.is/c++draft/vector.capacity), [modificações de vector](https://eel.is/c++draft/vector.modifiers), [remove](https://eel.is/c++draft/alg.remove) e [erase_if](https://eel.is/c++draft/vector.erasure). O rascunho atual inclui APIs posteriores, mas os programas desta aula usam C++20.
 
@@ -624,7 +624,7 @@ Os gabaritos SQL entre sessões mostram um cronograma para conexões separadas. 
 1. Catálogo: ids, relações, sequência, capítulos e profundidade da teoria própria.
 2. JavaScript: exemplos e saídas reais no interpretador isolado; soluções executáveis.
 3. TypeScript: exemplos e soluções passam pela verificação semântica com `strict`.
-4. Python, C++, C#, PostgreSQL e TypeScript: 118 exemplos/soluções compilados ou executados em processos/base temporários no CI. Nas aulas novas, as saídas são comparadas com expectativas explícitas; TypeScript também passa por strict, incluindo problemas e expectativas negativas de tipos.
+4. Python, C++, C#, PostgreSQL e TypeScript: Todos os exemplos/soluções externos compilados ou executados em processos/base temporários no CI. Nas aulas novas, as saídas são comparadas com expectativas explícitas; TypeScript também passa por strict, incluindo problemas e expectativas negativas de tipos.
 5. Navegador: navegação, busca antes de carregar capítulos, progresso local, falha de download, saída durante carregamento e páginas sem JavaScript; os trechos HTML/CSS das aulas independentes verificam árvore, formulários, valores computados, dimensões e rolagem.
 6. PostgreSQL concorrente: três cronogramas com conexões distintas, sem pausas arbitrárias para presumir confirmações.
 7. Gates anteriores de build, API, acessibilidade e ciclos de memória continuam ativos.
@@ -635,7 +635,7 @@ Este é o percurso principal publicado; a solicitação de conteúdo completo co
 
 - Transformar tópicos agrupados em aulas próprias com mais de um problema e casos de transferência.
 - Python: biblioteca padrão por domínio, descritores, typing avançado, multiprocessing com falhas, distribuição e interoperabilidade.
-- TypeScript: testes de tipos em bibliotecas reais, resolução de módulos por ambiente, variância e validação de dados aninhados.
+- TypeScript: testes de tipos em bibliotecas reais, resolução de módulos por ambiente e validação de dados aninhados.
 - C++: allocators, corrotinas com scheduler real, memória atômica, interoperabilidade, builds com várias unidades e versões posteriores a C++20.
 - HTML/CSS: mídia com arquivos e legendas reais, widgets além do diálogo modal, container queries, compatibilidade por navegador e recursos recentes com fallback.
 - JavaScript: protocolos completos, internacionalização, workers e cancelamento, módulos em diferentes hosts e gerenciamento explícito de recursos.
@@ -648,3 +648,7 @@ A automação existente retoma a expansão a cada quatro horas. Deve conferir o 
 ## Manutenção do catálogo
 
 As definições por linguagem são a fonte de verdade. `npm run content:generate` recria o índice de navegação e a matriz JSON; `npm run build` confere que os dois estão sincronizados. Uma aula nova exige revisar também o mapa editorial, os limites de cobertura da edição e as contagens dos testes. Vincule cada tópico de prática independente aos ids de atividades que o exercitam; um título novo ou exemplo geral não promove sozinho o status de todos os tópicos. Não reduza os critérios de profundidade para acomodar conteúdo incompleto.
+
+## Escopo ainda aberto
+
+O pedido integral reúne [17 frentes abertas](etapas-restantes.md), com próximo aprofundamento e evidência exigida. A sincronização local foi concluída preservando commits e arquivos antigos. O fluxo público Python foi verificado; isso não encerra os demais fluxos de produção. Consulte continuidade.md para os resultados e o próximo passo.

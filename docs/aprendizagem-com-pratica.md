@@ -2,7 +2,7 @@
 
 ## Mecanismos nesta expansão
 
-- 25 atividades próprias em HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL. Quatro desafios JS começam quebrados e são conferidos com casos distintos, entradas vazias, negativos, não mutação e limites.
+- 34 atividades próprias em HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL. Quatro desafios JS começam quebrados e são conferidos com casos distintos, entradas vazias, negativos, não mutação e limites.
 - Metadados de apresentação não incluem soluções ou verificações. Consultar solução é explícito e registrado como assistência. Os verificadores locais são inspecionáveis; não se promete sigilo nem integridade contra edição do armazenamento.
 - Pausas por afterBlock 1, 3 e 5 são inseridas somente nas aulas referenciadas. As demais aulas continuam com leitura completa e suas práticas existentes; a migração geral permanece trabalho futuro.
 - Evidência de domínio usa avaliações distintas por habilidade, tentativas, pistas e assistência. Repetir o mesmo problema não aumenta a quantidade praticada. Percentual é resumo de evidências, não certificação.
@@ -44,3 +44,9 @@ A mesma preparação é aplicada às três atividades novas de iteradores Python
 `cpp-iteradores-invalidacao` acrescenta `cpp-prever-intervalo`, `cpp-ordenar-erase` e `cpp-reobter-reserva`, levando o total a 34 atividades. As habilidades são C++ → Vector → Iteração/Remoção/Realocação. As pausas exigem o conceito correspondente no plano diário, preservam respostas e funcionam offline após preparação. Leitura não fabrica domínio. A reconstrução usa os fechamentos identificados do if e do for; a previsão nunca desreferencia end nem um iterador inválido.
 
 Os gabaritos das pausas são compilados em C++20 no CI; a resposta do estudante permanece conceitual. Compilação geral e validação automática de projetos abertos continuam fora desse mecanismo.
+
+## Edição verificada atual
+
+As expansões Python, TypeScript e C++ levam o catálogo a 34 atividades: quatro programas JS executados e 30 atividades conceituais. O catálogo principal tem 135 aulas, incluindo 27 aulas próprias de 17 capítulos e 54 problemas independentes. As nove pausas novas têm conceitos exigidos no plano diário; as atividades anteriores conservam seu comportamento. A construção de uma sequência completa de pré-requisitos em todo o catálogo permanece no mapa de interatividade.
+
+O fluxo Python publicado foi conferido em Edge isolado, com correção, persistência após recarregar e retomada offline depois da preparação do cache. O CI do C++ está registrado em continuidade.md. O pedido integral permanece aberto em [17 frentes](etapas-restantes.md).
