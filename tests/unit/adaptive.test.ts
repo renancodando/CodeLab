@@ -200,6 +200,21 @@ describe('sessão diária limitada e estável',()=>{
   expect(plan.items.filter(item=>item.kind==='practice').map(item=>item.activityId)).toEqual(['cart-total','price-empty']);
   expect(plan.items.at(-1)?.activityId).toBe('checkout-challenge');
  });
+ it('mantém revisões antigas globais, mas estuda apenas o idioma escolhido nos slots novos',()=>{
+  const state=freshAdaptive();record(state,'2026-10-05',{skillIds:['css.grid'],assessmentId:'css-old',activityId:'css-old'});
+  const catalog:AdaptiveCatalog={preferredLanguage:'javascript',
+   skills:[...basicCatalog.skills,{id:'css.grid',label:'Grid',path:['CSS','Grid']},{id:'python.controle',label:'Controle',path:['Python','Controle']}],
+   activities:[...basicCatalog.activities,activity('css-old','practice','css.grid'),activity('aaa-css-concept','concept','css.grid'),
+    activity('aaa-css-practice','practice','css.grid'),activity('aaa-css-final','challenge','css.grid'),
+    activity('aaa-python-concept','concept','python.controle'),activity('aaa-python-practice','practice','python.controle'),activity('aaa-python-final','challenge','python.controle')]};
+  const plan=buildDailySession(state,catalog,clock('2026-10-06'));
+  expect(plan.items[0]).toMatchObject({kind:'review',activityId:'aaa-css-practice',skillId:'css.grid'});
+  expect(plan.items.slice(1).map(item=>item.activityId)).toEqual(['concept-conversion','cart-total','price-empty','checkout-challenge']);
+  const stored=ensureDailySession(state,catalog,clock('2026-10-06'));
+  expect(ensureDailySession(state,{...catalog,preferredLanguage:'python'},clock('2026-10-06'))).toBe(stored);
+  delete state.daily;
+  expect(ensureDailySession(state,{...catalog,preferredLanguage:'python'},clock('2026-10-06')).items.find(item=>item.kind==='concept')?.activityId).toBe('aaa-python-concept');
+ });
  it('exige duas avaliações independentes e domínio mínimo para abrir pré-requisitos',()=>{
   const state=freshAdaptive();
   const catalog:AdaptiveCatalog={...basicCatalog,activities:[...basicCatalog.activities,{...activity('advanced-concept','concept'),prerequisites:['javascript.conversao']}]};

@@ -21,7 +21,7 @@ export type DailySession = {day:string; items:DailyItem[]; completed:string[]; t
 export type AdaptiveState = {version:1;skills:Record<string,SkillProgress>;eventIds:string[];seenConcepts:string[];daily?:DailySession};
 export type SkillDefinition = {id:string;label:string;path:string[];prerequisites?:string[]};
 export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[]};
-export type AdaptiveCatalog = {skills:SkillDefinition[];activities:LearningActivity[]};
+export type AdaptiveCatalog = {skills:SkillDefinition[];activities:LearningActivity[];preferredLanguage?:string};
 export type EvidenceResult = {accepted:boolean;credited:boolean;reason:'recorded'|'duplicate'|'stale'|'invalid'};
 export type SkillMastery = {skillId:string;score:number|null;practiced:number;assisted:number;dueDay:string|null;stage:number};
 
@@ -211,7 +211,7 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
    .sort((a,b)=>Number(b.kind==='practice')-Number(a.kind==='practice')||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||compare(a.id,b.id))[0];
   if(activity)add('review',activity,skillId);
  }
- const eligible=activities.filter(activity=>prerequisitesMet(state,activity,catalog));
+ const eligible=activities.filter(activity=>(!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage))&&prerequisitesMet(state,activity,catalog));
  const concept=eligible.filter(activity=>activity.kind==='concept'&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id))[0];
  if(concept)add('concept',concept);
  const focus=new Set([...(concept?.skillIds??[]),...items.flatMap(item=>item.skillId?[item.skillId]:[])]);
