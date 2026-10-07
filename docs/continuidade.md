@@ -2,11 +2,11 @@
 
 ## Estado em 7 de outubro de 2026
 
-- PRs #1, #2, #3 e #4 integradas. O catálogo tem 132 aulas em 20 trilhas; as oito trilhas por linguagem têm nove aulas cada.
+- PRs #1, #2, #3, #4 e #5 integradas. O catálogo tem 132 aulas em 20 trilhas; as oito trilhas por linguagem têm nove aulas cada.
 - Há 48 módulos panorâmicos de 13 capítulos e 24 aulas próprias de 17 capítulos, além das 60 aulas originais. As aulas próprias oferecem 48 problemas independentes.
 - Matriz com 606 entradas: 134 vinculadas a atividades específicas e 472 introduzidas. Entradas podem repetir conceitos em contextos diferentes; a contagem não representa esgotamento das especializações.
 
-## Evidências da última entrega
+## Evidências da entrega curricular anterior
 
 - Código validado no head `9cd2122d36b8a6c9d025c7f993812045536220e0`.
 - Run [37566327714](https://github.com/renancodando/CodeLab/actions/runs/37566327714): 136 testes de unidade, 118 programas externos, três cronogramas PostgreSQL com conexões distintas, 59 testes de navegador, builds frontend/API e 138 páginas.
@@ -16,17 +16,21 @@
 - Heap no ciclo medido: 12.860.480 para 15.156.564 bytes, crescimento 2.296.084; zero editores visíveis restantes e 114 geometrias. É evidência deste cenário.
 - A PR #3 também teve CI aprovado após sua integração em main, no run 37565921506.
 
-Este checkpoint altera apenas documentação. As execuções automáticas de main podem estar em andamento; confira seu resultado na próxima retomada e investigue qualquer falha real antes de ampliar código.
+Os dados acima descrevem a entrega curricular da PR #4. A expansão de aprendizagem da PR #5 está registrada abaixo; confira o CI atual de main antes de ampliar código.
 
-## Nova prioridade autorizada: aprendizagem com prática e projetos
+## Aprendizagem com prática e projetos integrada
 
-Branch de trabalho: aprendizagem-debug-habilidades-projetos, iniciada na main e7bca514800b284b84bc926ccfed33ce3d391768, cujos gates de main foram aprovados (37568195439). Esta expansão ainda deve passar em todos os gates antes de integrar.
+A [PR #5](https://github.com/renancodando/CodeLab/pull/5) foi integrada em 53715e9b01993f0a5594030f1f7db04408bdf9b7. O head testado foi 35c2163b507c6f15c465aac940faac102c092b55; a árvore integrada 845ff30b1e94dc2381ef8c153ca962f9dbb16352 é idêntica à testada.
 
-Implementado na branch: 25 atividades distribuídas nas oito linguagens (quatro programas JS quebrados); pausas corrigíveis nos capítulos ligados a essas atividades; domínio por habilidade com evidência distinta e assistência; revisão 1/3/7/14/30/60 por calendário local; sessão diária limitada; seis percursos com 18 etapas; oito projetos de conclusão com 57 marcos e 171 critérios manuais; vários arquivos, exportação ZIP e backup integrado; cache versionado da aplicação e módulos para estudo offline após preparação; adaptação de 220 a 4000 px.
+Disponível em main: 25 atividades distribuídas nas oito linguagens (quatro programas JS quebrados); pausas corrigíveis nos capítulos ligados a essas atividades; domínio por habilidade com evidência distinta e assistência; revisão 1/3/7/14/30/60 por calendário local; sessão diária limitada; seis percursos com 18 etapas; oito projetos de conclusão com 57 marcos e 171 critérios manuais; vários arquivos, exportação ZIP e backup integrado; cache versionado da aplicação e módulos para estudo offline após preparação; adaptação de 220 a 4000 px.
 
 O catálogo principal permanece com 132 aulas. As 18 etapas dos percursos são novas unidades separadas, não aulas de 17 capítulos. A correção de respostas conceituais não comprova compilação; projetos abertos têm rubrica manual. Os casos reservados ficam fora da tela durante a tentativa e são inspecionáveis no pacote local. Não declarar autocorreção universal.
 
-A primeira versão completa da expansão foi aprovada no head 045072f7df785c0117b0cde5121c492bbde1098e, run [37638438456](https://github.com/renancodando/CodeLab/actions/runs/37638438456): 236 testes de unidade, 124 exemplos externos, ZIP interoperável, três cronogramas PostgreSQL, 74 testes de navegador, builds e 152 páginas. As oito larguras de 220 a 4000 px passaram. A revisão apontou assistência após resposta e troca de linguagem; as correções já foram publicadas em e82cdf8b86c45b54c7eaa542d3603f211688e295, com lógica, exemplos, três cenários Git e builds aprovados e navegador em andamento. Também foram acrescentados tratamento de falha ao instalar cache, falha real de armazenamento e verificação dos exemplos dos percursos. O último ajuste amplia a importação para 16 MB e preserva a jornada anterior se a restauração não conseguir gravar. A versão final ainda precisa concluir todos os gates antes de integrar. Verifique o head da PR, os resultados finais e qualquer revisão antes de integrar. A implantação pública e a sincronização local continuam limitadas pelos problemas já descritos.
+O [run 37641654276](https://github.com/renancodando/CodeLab/actions/runs/37641654276) aprovou 248 testes de unidade, 124 exemplos externos, três cenários Git, três cronogramas PostgreSQL em conexões distintas, ZIP interoperável, 79 testes de navegador, builds frontend/API e 152 páginas. npm audit informou zero vulnerabilidades. As oito larguras de 220 a 4000 px passaram nos fluxos testados.
+
+As duas sugestões de revisão foram corrigidas, verificadas e resolvidas: revelar solução após tentativa atualiza imediatamente o agendamento; a linguagem fica fixa depois de iniciar o plano do dia. A suíte também conferiu falha na instalação de cache, quota indisponível com exportação dos arquivos em memória, backup válido acima de 2 MB e restauração que conserva a jornada anterior quando a gravação falha. O limite de importação agora é 16 MB.
+
+Este checkpoint altera documentação. A workflow de main após a integração/checkpoint deve ser conferida na próxima retomada; uma nova falha real exige investigação. A implantação pública e a sincronização local continuam limitadas pelos problemas já descritos.
 
 ## Próxima ação editorial
 

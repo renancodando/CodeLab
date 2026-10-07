@@ -132,7 +132,7 @@ O catálogo tem 132 aulas em 20 trilhas. A expansão acrescenta percursos de HTM
 
 O conteúdo novo carrega por linguagem ao abrir a aula, mantendo um índice leve para navegação e busca. O build também entrega capítulos completos em páginas públicas sem JavaScript. TypeScript e PostgreSQL têm seu ambiente indicado, sem simular execução no laboratório atual.
 
-As aulas de diálogos, Grid, iteradores e isolamento acrescentam testes de foco, dimensões, descarte e três cronogramas PostgreSQL com conexões reais. A versão integrada foi validada com 118 exemplos externos, três cronogramas, 136 testes de unidade e 59 testes de navegador. As evidências e os aprofundamentos pendentes estão em docs/continuidade.md.
+As aulas de diálogos, Grid, iteradores e isolamento acrescentam testes de foco, dimensões, descarte e três cronogramas PostgreSQL com conexões reais. A entrega curricular da PR #4 foi validada com 118 exemplos externos, três cronogramas, 136 testes de unidade e 59 testes de navegador. A PR #5 de aprendizagem foi integrada após aprovação de 248 testes de unidade, 124 exemplos externos, três cenários Git, três cronogramas e 79 testes de navegador no [run 37641654276](https://github.com/renancodando/CodeLab/actions/runs/37641654276). As evidências e os aprofundamentos pendentes estão em docs/continuidade.md.
 
 Para verificar exemplos externos em um ambiente de CI com Python, g++, .NET 10 e PostgreSQL disponível: `node scripts/verify-content-examples.mjs`. Esse script executa somente exemplos publicados do repositório; código de usuário continua no executor isolado do aplicativo.
 

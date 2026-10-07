@@ -8,11 +8,11 @@ Cada módulo tem seis seções de teoria original, exemplo completo, resultado e
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
-## Aprendizagem e engenharia em implementação
+## Aprendizagem e engenharia integradas
 
-A branch aprendizagem-debug-habilidades-projetos acrescenta 25 atividades corrigíveis, seis percursos próprios com 18 etapas e oito projetos progressivos com 57 marcos. Esses percursos cobrem algoritmos, estruturas de dados, redes, Git, testes e arquitetura. Os projetos têm escopo, restrições, entregáveis, diagnóstico, critérios de revisão e exportação de arquivos. Não são projetos completos entregues pela plataforma: a pessoa deve implementar e validar seu próprio trabalho.
+A PR #5 integrada acrescenta 25 atividades corrigíveis, seis percursos próprios com 18 etapas e oito projetos progressivos com 57 marcos. Esses percursos cobrem algoritmos, estruturas de dados, redes, Git, testes e arquitetura. Os projetos têm escopo, restrições, entregáveis, diagnóstico, critérios de revisão e exportação de arquivos. Não são projetos completos entregues pela plataforma: a pessoa deve implementar e validar seu próprio trabalho.
 
-As pausas interativas se ligam explicitamente a capítulos e habilidades. Sua correção é específica: quatro desafios JavaScript usam casos de comportamento no sandbox; as demais atividades avaliam decisões conceituais locais. Ainda resta converter práticas abertas e ampliar a densidade de interação nas aulas que não possuem atividade vinculada. A expansão deve ser integrada somente após CI aprovado.
+As pausas interativas se ligam explicitamente a capítulos e habilidades. Sua correção é específica: quatro desafios JavaScript usam casos de comportamento no sandbox; as demais atividades avaliam decisões conceituais locais. Ainda resta converter práticas abertas e ampliar a densidade de interação nas aulas que não possuem atividade vinculada. A expansão foi integrada após aprovação do head 35c2163b507c6f15c465aac940faac102c092b55 no CI, com 248 testes de unidade, 79 testes de navegador e 124 exemplos externos.
 
 ## Percursos
 
@@ -550,8 +550,8 @@ Os gabaritos SQL entre sessões mostram um cronograma para conexões separadas. 
 
 - Capítulos novos carregam ao abrir a aula; o índice inicial conserva títulos, resumo e temas para busca.
 - O build gera páginas completas sem JavaScript e o catálogo usado pela API existente.
-- A aparência e os arquivos de estilo do produto não foram alterados.
-- JavaScript e HTML/CSS usam as capacidades já existentes do laboratório. Python, C# e C++ dependem da disponibilidade do executor externo configurado.
+- A identidade visual foi preservada. A PR #5 acrescenta adaptações responsivas verificadas de 220 a 4000 px e controles que usam as superfícies existentes.
+- JavaScript e HTML/CSS usam as capacidades já existentes do laboratório. A execução completa de Python, C# e C++ na bancada depende do executor externo configurado; atividades conceituais locais dessas linguagens funcionam sem Judge0 após preparação offline.
 - TypeScript exige compilação real com `tsc`; os exemplos são verificados com `strict`, sem oferecer um botão que simule suporte de execução.
 - A trilha SQL nova declara **PostgreSQL**. Seus exemplos são executados em uma base descartável no CI; não são apresentados como compatíveis com qualquer executor SQLite.
 
@@ -577,7 +577,7 @@ Este é o percurso principal publicado; a solicitação de conteúdo completo co
 - JavaScript: protocolos completos, internacionalização, workers e cancelamento, módulos em diferentes hosts e gerenciamento explícito de recursos.
 - C#: testes com frameworks, ASP.NET por fluxo, EF Core com provedor real, source generators, AOT e diagnóstico de produção.
 - SQL: locks e deadlocks entre sessões, Serializable e regras de negócio concorrentes, repetição com efeitos externos idempotentes, planos com distribuição realista, migrations e restauração verificada. Os casos Read Committed, Repeatable Read e conflito 40001 já têm cronogramas próprios.
-- Algoritmos, estruturas de dados, redes, Git, testes e arquitetura: acrescentar percursos próprios além do contexto presente nos módulos.
+- Algoritmos, estruturas de dados, redes, Git, testes e arquitetura: aprofundar os seis percursos próprios já publicados, com 18 etapas; expandir cenários, estruturas, protocolos e revisão dos projetos.
 
 A automação existente retoma a expansão a cada quatro horas. Deve conferir o checkpoint e a PR antes de editar e avisar apenas sobre mudanças relevantes.
 
