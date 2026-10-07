@@ -1,8 +1,12 @@
 import type { Progress } from './types';
 import {normalizeSessions} from './learning/session';
+import {normalizeAdaptive,prepareAdaptiveBackup} from './learning/adaptive';
+import {normalizePracticeAnswers,preparePracticeAnswers} from './learning/activity-state';
+import {normalizeProjectWorkspaces,prepareProjectWorkspaces} from './learning/projects';
+export const MAX_BACKUP_BYTES=16*1024*1024;
 const key = 'codelab.progress.v2';
 const legacyKey = 'codelab.progress.v1';
-const fresh = (): Progress => ({version:2,lessonSessions:{},completed:[],lessons:[],projects:[],drafts:{},attempts:{},hints:{},history:{},review:{},activeDays:[],name:'Explorador'});
+const fresh = (): Progress => ({version:2,learningLanguage:'javascript',adaptive:normalizeAdaptive(undefined),practiceAnswers:{},projectWorkspaces:{},lessonSessions:{},completed:[],lessons:[],projects:[],drafts:{},attempts:{},hints:{},history:{},review:{},activeDays:[],name:'Explorador'});
 const safeKey=(key:unknown):key is string=>typeof key==='string'&&/^[a-z0-9][a-z0-9-]{0,79}$/i.test(key)&&!['constructor','prototype'].includes(key);
 export function normalizeProgress(raw: unknown): Progress {
  const result=fresh();if(!raw||typeof raw!=='object')return result;const p=raw as Record<string,unknown>;
@@ -13,6 +17,10 @@ export function normalizeProgress(raw: unknown): Progress {
  if(p.history&&typeof p.history==='object')for(const [k,v] of Object.entries(p.history).slice(0,12))if(safeKey(k)&&Array.isArray(v))result.history[k]=v.filter(x=>x&&typeof x.code==='string'&&typeof x.date==='string').slice(-5).map(x=>({code:x.code.slice(0,15000),date:x.date.slice(0,40)}));
  if(Array.isArray(p.projects))result.projects=p.projects.filter(x=>x&&safeKey(x.id)&&typeof x.title==='string'&&typeof x.code==='string'&&['html','javascript','python','csharp','cpp','sql'].includes(x.language)).slice(0,12).map(x=>({id:x.id,title:x.title.slice(0,60),code:x.code.slice(0,30000),language:x.language,updatedAt:typeof x.updatedAt==='string'?x.updatedAt.slice(0,40):''}));
  result.lessonSessions=normalizeSessions(p.lessonSessions);
+ result.learningLanguage=['html','css','javascript','typescript','python','csharp','cpp','sql'].includes(String(p.learningLanguage))?String(p.learningLanguage):'javascript';
+ result.adaptive=normalizeAdaptive(p.adaptive);
+ result.practiceAnswers=normalizePracticeAnswers(p.practiceAnswers);
+ result.projectWorkspaces=normalizeProjectWorkspaces(p.projectWorkspaces);
  return result;
 }
 export function readProgress(): Progress {
@@ -66,11 +74,15 @@ export function prepareBackup(value:unknown):Progress {
    if(typeof a.value!=='string'||a.value.length>30000||typeof a.attempts!=='number'||!Number.isInteger(a.attempts)||a.attempts<0||a.attempts>100000||typeof a.hints!=='number'||!Number.isInteger(a.hints)||a.hints<0||a.hints>10||['passed','assisted','firstTry'].some(field=>typeof a[field]!=='boolean'))invalid('Há uma resposta de aula inválida ou maior que o limite.');
   }
  }
+ if(p.learningLanguage!==undefined&&!['html','css','javascript','typescript','python','csharp','cpp','sql'].includes(String(p.learningLanguage)))invalid('A linguagem de estudo é inválida.');
+ prepareAdaptiveBackup(p.adaptive);
+ preparePracticeAnswers(p.practiceAnswers);
+ prepareProjectWorkspaces(p.projectWorkspaces);
  return normalizeProgress(value);
 }
 export let progress=readProgress();
-export function saveProgress(){try{localStorage.setItem(key,JSON.stringify(progress));window.dispatchEvent(new Event('progresschange'));}catch{window.dispatchEvent(new CustomEvent('storageerror'));}}
-export function replaceProgress(value:unknown){progress=normalizeProgress(value);saveProgress();}
+export function saveProgress():boolean{try{localStorage.setItem(key,JSON.stringify(progress));window.dispatchEvent(new Event('progresschange'));return true;}catch{window.dispatchEvent(new CustomEvent('storageerror'));return false;}}
+export function replaceProgress(value:unknown):boolean{const restored=normalizeProgress(value);try{localStorage.setItem(key,JSON.stringify(restored));}catch{window.dispatchEvent(new CustomEvent('storageerror'));return false;}progress=restored;window.dispatchEvent(new Event('progresschange'));return true;}
 export function snapshot(id:string,code:string){if(!safeKey(id))return;code=code.slice(0,30000);const list=progress.history[id]||=[];if(list.at(-1)?.code!==code)list.push({code:code.slice(0,15000),date:new Date().toISOString()});progress.history[id]=list.slice(-5);progress.drafts[id]=code;saveProgress();}
 export function recordResult(id:string,passed:boolean){progress.attempts[id]=(progress.attempts[id]||0)+1;if(passed&&!progress.completed.includes(id))progress.completed.push(id);progress.review[id]=new Date(Date.now()+(passed?7:1)*86400000).toISOString();const today=new Date().toLocaleDateString('en-CA');if(!progress.activeDays.includes(today))progress.activeDays.push(today);saveProgress();}
 export const escapeHtml=(s:unknown)=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));

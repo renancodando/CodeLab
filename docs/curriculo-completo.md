@@ -8,6 +8,12 @@ Cada módulo tem seis seções de teoria original, exemplo completo, resultado e
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
+## Aprendizagem e engenharia em implementação
+
+A branch aprendizagem-debug-habilidades-projetos acrescenta 25 atividades corrigíveis, seis percursos próprios com 18 etapas e oito projetos progressivos com 57 marcos. Esses percursos cobrem algoritmos, estruturas de dados, redes, Git, testes e arquitetura. Os projetos têm escopo, restrições, entregáveis, diagnóstico, critérios de revisão e exportação de arquivos. Não são projetos completos entregues pela plataforma: a pessoa deve implementar e validar seu próprio trabalho.
+
+As pausas interativas se ligam explicitamente a capítulos e habilidades. Sua correção é específica: quatro desafios JavaScript usam casos de comportamento no sandbox; as demais atividades avaliam decisões conceituais locais. Ainda resta converter práticas abertas e ampliar a densidade de interação nas aulas que não possuem atividade vinculada. A expansão deve ser integrada somente após CI aprovado.
+
 ## Percursos
 
 ### Python · do zero ao avançado

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --configLoader runner --host 127.0.0.1",
-    "build": "node scripts/generate-curriculum-index.mjs --check && tsc --noEmit && vite build --configLoader runner && node scripts/prerender.mjs",
+    "build": "node scripts/generate-curriculum-index.mjs --check && tsc --noEmit && vite build --configLoader runner && node scripts/prerender.mjs && node scripts/build-offline.mjs",
     "preview": "vite preview --configLoader runner --host 127.0.0.1",
     "test": "vitest run --configLoader runner",
     "test:e2e": "playwright test",
