@@ -678,6 +678,152 @@ export default {
       ]
     },
     {
+      "id": "py-iteracao-recursos",
+      "title": "Python: iteradores, geradores e consumo com recursos",
+      "level": "Avançado",
+      "summary": "Diferencie um objeto iterável de um cursor de uso único, acompanhe a suspensão de um gerador e componha processamento em lotes sem carregar a fonte inteira. A aula separa consumo de dados, validação e posse de recursos: os exercícios verificam ausência de leitura antecipada, esgotamento, limpeza após interrupção e propagação de erros. As pausas conceituais funcionam offline; os programas de referência são executados com Python no CI.",
+      "source": "https://docs.python.org/3/library/itertools.html",
+      "topics": [
+        "iterável e iterador de uso único",
+        "protocolo __iter__ e __next__",
+        "StopIteration e esgotamento",
+        "suspensão e retomada com yield",
+        "delegação com yield from",
+        "validação antes da iteração",
+        "lotes com itertools.islice",
+        "consumo sem leitura antecipada",
+        "posse e fechamento explícito",
+        "finally e interrupção do consumidor"
+      ],
+      "sections": [
+        {
+          "title": "Iterável descreve acesso; iterador guarda uma posição",
+          "text": [
+            "iter(objeto) pede um iterador ao objeto. Um iterador oferece __next__, que devolve o próximo elemento ou levanta StopIteration ao terminar, e __iter__, que devolve o próprio iterador. Uma lista costuma produzir um cursor novo a cada iter(lista); já iter(cursor) devolve esse mesmo cursor. Portanto receber um Iterable não promete que será possível repetir a leitura: um gerador também é iterável e normalmente só permite uma passagem.",
+            "A posição pertence ao cursor, e não a uma cópia invisível da coleção. Ao chamar next(it) e depois list(it), a lista reúne apenas os elementos restantes. Outra chamada a list(it) encontra o cursor esgotado. Para percorrer duas vezes, o contrato pode exigir uma coleção reutilizável, uma fábrica de fontes novas ou uma materialização explícita. Essa última decisão custa memória e pode ser impossível para uma sequência infinita."
+          ]
+        },
+        {
+          "title": "O protocolo de parada não é um valor de negócio",
+          "text": [
+            "StopIteration sinaliza o fim do protocolo. None, zero e uma string vazia podem ser elementos legítimos e não devem ser usados como sinal improvisado de término. O laço for solicita valores até receber StopIteration. Depois de esgotado, um iterador correto continua sinalizando o fim nas chamadas seguintes; ele não reinicia sozinho. Um objeto iterável reutilizável oferece um novo iterador quando se deseja outra passagem.",
+            "next(it, padrao) fornece um resultado alternativo quando o cursor acabou. Se esse padrão também puder ocorrer nos dados, use um objeto sentinela cuja identidade possa ser conferida com is. A sobrecarga iter(chamavel, sentinela) chama a função até obter um valor igual à sentinela, então só serve quando essa fronteira representa corretamente o domínio. A classe do exemplo usa um limite explícito e mantém StopIteration fora dos valores produzidos."
+          ]
+        },
+        {
+          "title": "yield suspende o corpo e conserva seu ambiente",
+          "text": [
+            "Uma função que contém yield produz um objeto gerador quando é chamada; seu corpo começa na primeira retomada. Cada yield entrega um elemento e suspende a execução, conservando variáveis locais e a posição. Isso permite transformar uma fonte aos poucos. Suspensão não torna a operação paralela nem assíncrona: o consumidor ainda determina quando solicitar o próximo elemento. list(gerador) solicita todos os restantes, eliminando essa vantagem quando a fonte é grande.",
+            "yield from delega a produção a outro iterável, simplificando a composição de sequências. O protocolo também oferece send para enviar um valor ao ponto suspenso e throw para injetar uma exceção; um gerador recém-criado só aceita None como primeiro send. Nesta aula os exercícios usam next e yield from, sem exigir domínio de corrotinas. Para encerrar normalmente o corpo de um gerador, use return; levantar StopIteration diretamente ali pode se transformar em RuntimeError."
+          ]
+        },
+        {
+          "title": "islice delimita consumo e lotes delimitam memória",
+          "text": [
+            "islice(iterator, n) entrega no máximo n elementos e avança o cursor compartilhado. Montar uma tupla desses elementos permite oferecer um lote estável. Repetir isso até uma tupla vazia organiza a fonte em blocos, conservando o lote final incompleto. O exercício verifica também que construir o adaptador não lê a fonte e que pedir um lote de tamanho dois não consome o terceiro elemento antecipadamente.",
+            "Processamento preguiçoso não significa custo constante em qualquer operação. sorted materializa dados; guardar cada lote em uma lista externa volta a acumular a fonte inteira. itertools.tee cria cursors independentes usando armazenamento intermediário, que pode crescer muito quando um consumidor fica atrás do outro. No projeto, use um único consumidor e descarte cada lote após tratá-lo. O tamanho do lote limita os itens desse adaptador, mas não controla buffers que o arquivo, cliente de rede ou próprio consumidor mantêm."
+          ]
+        },
+        {
+          "title": "Validar agora ou no primeiro next é uma decisão de API",
+          "text": [
+            "Se a validação estiver dentro do corpo que contém yield, ela só ocorre quando o gerador é retomado. O chamador pode criar um adaptador com tamanho inválido e só descobrir o problema bem depois. Uma função externa comum pode validar o tamanho e devolver um gerador interno. O exercício especifica que a rejeição deve ocorrer na chamada, antes de adquirir o cursor ou consumir dados. Esse momento também faz parte do contrato verificável.",
+            "Nos problemas, um tamanho válido é exatamente um int positivo; bool é rejeitado mesmo sendo uma subclasse de int em Python. Essa regra é deliberada, não um requisito de todo programa Python. Erros da fonte devem continuar visíveis para o consumidor; capturar qualquer Exception e fingir que a sequência terminou esconderia uma falha de leitura. Escreva testes para entrada vazia, limite parcial, valores falsy e exceção antes de escolher uma estratégia de recuperação."
+          ]
+        },
+        {
+          "title": "Interromper a leitura não define quem fecha o recurso",
+          "text": [
+            "Um break termina o laço consumidor, mas não chama genericamente close no iterador que ele abandonou. Um gerador que adquiriu um recurso pode estar suspenso dentro de try/finally. Quem é dono dessa fonte precisa encerrá-la de maneira explícita. contextlib.closing chama close na saída do bloco, inclusive se houver erro. Quando o objeto já oferece um context manager adequado, use seu with diretamente. Não feche uma fonte emprestada sem declarar essa transferência de responsabilidade.",
+            "Fechar um gerador suspenso permite executar seu finally; fechar um gerador que nunca começou não executa um corpo que ainda não foi iniciado. Por isso zero elementos não prova que um finally interno tenha rodado. O segundo problema usa uma fábrica que entrega um recurso com close e verifica a chamada explícita inclusive no limite zero. Não dependa do instante de coleta de lixo para liberar arquivos ou conexões. O exemplo de fechamento antecipado e os testes de erro conferem o caminho de liberação sem suprimir a exceção da leitura."
+          ]
+        }
+      ],
+      "code": "from contextlib import closing\n\nclass Contador:\n    def __init__(self, limite):\n        self.atual = 0\n        self.limite = limite\n    def __iter__(self):\n        return self\n    def __next__(self):\n        if self.atual >= self.limite:\n            raise StopIteration\n        valor = self.atual\n        self.atual += 1\n        return valor\n\nit = Contador(3)\nassert iter(it) is it\nprint(next(it), list(it), list(it))\nfor _ in range(2):\n    try:\n        next(it)\n    except StopIteration:\n        pass\n    else:\n        raise AssertionError(\"cursor reiniciou\")\n\ndef quadrados(limite):\n    yield from (valor * valor for valor in range(limite))\n\ng = quadrados(4)\nprint(next(g), list(g))\n\neventos = []\ndef fonte():\n    try:\n        for valor in range(3):\n            eventos.append(f\"leu {valor}\")\n            yield valor\n    finally:\n        eventos.append(\"fechou\")\n\nwith closing(fonte()) as origem:\n    print(next(origem))\nassert eventos == [\"leu 0\", \"fechou\"]\nprint(eventos)",
+      "expectedOutput": [
+        "0 [1, 2] []",
+        "0 [1, 4, 9]",
+        "0",
+        "['leu 0', 'fechou']"
+      ],
+      "output": "Saída: 0 [1, 2] []; depois 0 [1, 4, 9]; depois 0 e ['leu 0', 'fechou']. O primeiro cursor não reinicia. O gerador da fonte foi retomado uma vez e encerrado explicitamente, sem ler o segundo elemento.",
+      "trace": [
+        "next(it) avança o cursor; list(it) consome os restantes e uma nova lista encontra esgotamento.",
+        "yield from entrega os quadrados sob demanda, mantendo o estado entre as solicitações.",
+        "closing chama close na saída, levando o gerador suspenso ao finally sem consumir o restante."
+      ],
+      "exercise": "Crie Pares(limite) como iterável reutilizável dos inteiros pares de 0 até limite excluído. Aceite exatamente int não negativo; rejeite bool e outros tipos. Duas chamadas a iter no mesmo objeto devem ter posições independentes. Teste limite zero, dois cursors intercalados e repetição da sequência inteira.",
+      "solution": "class Pares:\n    def __init__(self, limite):\n        if type(limite) is not int:\n            raise TypeError(\"limite deve ser int, sem bool\")\n        if limite < 0:\n            raise ValueError(\"limite negativo\")\n        self.limite = limite\n    def __iter__(self):\n        return (valor for valor in range(0, self.limite, 2))\n\npares = Pares(6)\na, b = iter(pares), iter(pares)\nassert a is not b and iter(a) is a\nassert next(a) == 0 and next(a) == 2 and next(b) == 0\nassert list(a) == [4] and list(b) == [2, 4]\nassert list(pares) == [0, 2, 4] and list(pares) == [0, 2, 4]\nassert list(Pares(0)) == []\nfor invalido in (True, 2.0, \"2\", None):\n    try:\n        Pares(invalido)\n    except TypeError:\n        pass\n    else:\n        raise AssertionError(\"tipo aceito\")\ntry:\n    Pares(-1)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"limite negativo aceito\")\nprint(list(pares), list(Pares(0)))",
+      "solutionOutput": [
+        "[0, 2, 4] []"
+      ],
+      "bug": "O programa presume que um gerador pode ser percorrido duas vezes. A primeira soma esgota a fonte; a segunda conta zero elementos. O erro é de contrato de consumo, não do cálculo de sum.",
+      "bugCode": "valores = (numero for numero in range(3))\ntotal = sum(valores)\nquantidade = sum(1 for _ in valores)\nprint(total, quantidade)  # 3 0, embora a fonte tenha produzido três itens",
+      "repair": "Se a fonte for finita e couber em memória, materialize uma vez e reutilize a coleção. Para uma fonte grande ou de passagem única, mantenha soma e quantidade no mesmo laço. Para reler uma fonte externa, exija uma fábrica que possa abri-la novamente e defina quem fecha cada instância. Teste duas operações intercaladas para revelar o esgotamento.",
+      "checks": [
+        "Explique e teste a diferença entre iterável reutilizável e cursor esgotado.",
+        "Construa lotes sem leitura antecipada e rejeite tamanho inválido antes da iteração.",
+        "Feche recursos de sua posse em consumo parcial e erro, preservando a exceção original."
+      ],
+      "project": "Construa um importador de registros em lotes com uma fonte de estudo que registra cada leitura e fechamento. Valide o tamanho antes de abrir a fonte, processe apenas o lote atual e ofereça um limite de registros. Registre testes para arquivo vazio, último lote incompleto, falha de leitura e interrupção solicitada. A versão com arquivos deve usar um context manager e preservar os dados de entrada. A revisão do projeto é manual; a atividade conceitual não comprova execução do seu importador.",
+      "question": "Uma função recebe um gerador, chama next nele e depois percorre list(gerador). O que essa lista contém?",
+      "answer": "Somente os elementos restantes; o cursor não reinicia para recuperar o item já consumido.",
+      "distractors": [
+        "Todos os elementos desde o início, porque list sempre reinicia qualquer iterável.",
+        "Nenhum elemento, porque uma única chamada a next esgota obrigatoriamente todo gerador."
+      ],
+      "practices": [
+        {
+          "id": "lotes",
+          "title": "Problema 1: lotes sem consumir o próximo bloco",
+          "topics": [
+            "validação antes da iteração",
+            "lotes com itertools.islice",
+            "consumo sem leitura antecipada"
+          ],
+          "prompt": "Implemente em_lotes(fonte, tamanho), que devolve um iterador de tuplas de até tamanho elementos, incluindo o último lote parcial. tamanho precisa ser exatamente int positivo; rejeite bool, tipos diferentes e valores não positivos na própria chamada. Criar o adaptador não deve chamar next na fonte. Solicitar o primeiro lote não deve ler elementos do segundo. A fonte é emprestada: este adaptador não a fecha.",
+          "solution": "from itertools import islice, count\n\ndef em_lotes(fonte, tamanho):\n    if type(tamanho) is not int:\n        raise TypeError(\"tamanho deve ser int, sem bool\")\n    if tamanho <= 0:\n        raise ValueError(\"tamanho deve ser positivo\")\n    origem = iter(fonte)\n    def produzir():\n        while True:\n            lote = tuple(islice(origem, tamanho))\n            if not lote:\n                return\n            yield lote\n    return produzir()\n\nleituras = []\ndef rastreada():\n    for valor in range(5):\n        leituras.append(valor)\n        yield valor\n\ngrupos = em_lotes(rastreada(), 2)\nassert leituras == []\nprimeiro = next(grupos)\nassert primeiro == (0, 1) and leituras == [0, 1]\nrestantes = list(grupos)\nassert restantes == [(2, 3), (4,)] and leituras == list(range(5))\nassert list(grupos) == [] and primeiro == (0, 1)\nassert list(em_lotes([], 3)) == []\nassert list(em_lotes([None, 0, \"\"], 2)) == [(None, 0), (\"\",)]\ninfinita = em_lotes(count(10), 2)\nassert next(infinita) == (10, 11) and next(infinita) == (12, 13)\ninfinita.close()\n\nfor invalido in (True, 2.0, \"2\", None, 0, -1):\n    leituras_antes = []\n    def nao_ler():\n        leituras_antes.append(\"leu\")\n        yield 1\n    try:\n        em_lotes(nao_ler(), invalido)\n    except (TypeError, ValueError) as erro:\n        esperado = TypeError if type(invalido) is not int else ValueError\n        assert type(erro) is esperado\n    else:\n        raise AssertionError(\"validação foi adiada\")\n    assert leituras_antes == []\n\ndef falha():\n    yield 1\n    raise OSError(\"leitura falhou\")\ntry:\n    next(em_lotes(falha(), 2))\nexcept OSError as erro:\n    assert str(erro) == \"leitura falhou\"\nelse:\n    raise AssertionError(\"erro da fonte foi escondido\")\nprint(primeiro, restantes)\nprint(\"lotes: bordas, consumo e erro conferidos\")",
+          "expectedOutput": [
+            "(0, 1) [(2, 3), (4,)]",
+            "lotes: bordas, consumo e erro conferidos"
+          ],
+          "explanation": [
+            "A função externa valida o tamanho antes de obter o cursor e devolve um gerador interno. Cada retomada materializa apenas uma tupla de até tamanho elementos. islice não solicita o primeiro item do próximo lote para decidir se o lote atual está cheio; o teste de leituras expõe esse contrato. Uma tupla vazia encerra o gerador sem gerar um lote artificial.",
+            "O lote final incompleto é preservado e valores falsy continuam sendo dados. A fonte infinita pode fornecer dois lotes sem ser esgotada. Erros da fonte se propagam: se ela falhar no meio de um lote, esse lote não é entregue parcialmente. Como a fonte é emprestada, fechar produzir não fecha a origem; seu dono continua responsável por ela."
+          ],
+          "checks": [
+            "Criar o adaptador não consome e pedir um lote não antecipa o seguinte.",
+            "Vazio, lote incompleto, valores falsy e fonte infinita conservam o contrato.",
+            "Tamanho inválido falha na chamada e um erro da fonte não vira término normal."
+          ]
+        },
+        {
+          "id": "fechamento",
+          "title": "Problema 2: consumo limitado com dono explícito",
+          "topics": [
+            "posse e fechamento explícito",
+            "finally e interrupção do consumidor",
+            "consumo sem leitura antecipada"
+          ],
+          "prompt": "Implemente coletar_ate(fabrica, limite). A fábrica cria um iterador novo com método close, cuja posse é transferida à função. limite precisa ser exatamente int não negativo e deve ser validado antes de chamar a fábrica. Devolva até limite valores e feche a fonte exatamente uma vez em consumo completo, parcial, zero e erro. Não esconda a exceção de leitura. Para este exercício close termina normalmente.",
+          "solution": "from contextlib import closing\nfrom itertools import islice\n\ndef coletar_ate(fabrica, limite):\n    if type(limite) is not int:\n        raise TypeError(\"limite deve ser int, sem bool\")\n    if limite < 0:\n        raise ValueError(\"limite negativo\")\n    with closing(fabrica()) as origem:\n        return list(islice(origem, limite))\n\nclass Fonte:\n    def __init__(self, valores, falhar_em=None):\n        self.valores = list(valores)\n        self.posicao = 0\n        self.falhar_em = falhar_em\n        self.leituras = []\n        self.fechamentos = 0\n    def __iter__(self):\n        return self\n    def __next__(self):\n        if self.posicao == self.falhar_em:\n            raise OSError(\"origem falhou\")\n        if self.posicao >= len(self.valores):\n            raise StopIteration\n        valor = self.valores[self.posicao]\n        self.leituras.append(valor)\n        self.posicao += 1\n        return valor\n    def close(self):\n        self.fechamentos += 1\n\nfontes = []\ndef criar(valores, falhar_em=None):\n    def fabrica():\n        fonte = Fonte(valores, falhar_em)\n        fontes.append(fonte)\n        return fonte\n    return fabrica\n\nassert coletar_ate(criar([0, None, 2]), 1) == [0]\nassert fontes[-1].leituras == [0] and fontes[-1].fechamentos == 1\nassert coletar_ate(criar([0, None]), 5) == [0, None]\nassert fontes[-1].fechamentos == 1\nassert coletar_ate(criar([9]), 0) == []\nassert fontes[-1].leituras == [] and fontes[-1].fechamentos == 1\nassert coletar_ate(criar([]), 3) == [] and fontes[-1].fechamentos == 1\ntry:\n    coletar_ate(criar([1, 2, 3], falhar_em=1), 3)\nexcept OSError as erro:\n    assert str(erro) == \"origem falhou\"\nelse:\n    raise AssertionError(\"exceção suprimida\")\nassert fontes[-1].leituras == [1] and fontes[-1].fechamentos == 1\nquantidade = len(fontes)\nfor invalido in (True, \"1\", 1.0, None, -1):\n    try:\n        coletar_ate(criar([1]), invalido)\n    except (TypeError, ValueError) as erro:\n        esperado = TypeError if type(invalido) is not int else ValueError\n        assert type(erro) is esperado\n    else:\n        raise AssertionError(\"limite inválido aceito\")\nassert len(fontes) == quantidade\nprint([fonte.fechamentos for fonte in fontes])\nprint(\"fechamento: parcial, zero, vazio e erro conferidos\")",
+          "expectedOutput": [
+            "[1, 1, 1, 1, 1]",
+            "fechamento: parcial, zero, vazio e erro conferidos"
+          ],
+          "explanation": [
+            "A validação externa evita abrir uma fonte para uma chamada inválida. closing define a fronteira de posse e chama close ao sair; islice limita o número de elementos solicitado. O limite zero abre e fecha o recurso criado pela fábrica, sem solicitar um elemento. Esse comportamento está explicitado no contrato e não depende de iniciar o corpo de um gerador.",
+            "Quando __next__ levanta OSError, a saída do with ainda fecha o recurso e a exceção continua visível. Os testes contam as liberações e os elementos lidos, pois uma saída correta por si só não provaria a ausência de leitura antecipada. A classe de estudo guarda uma lista apenas para tornar as observações reproduzíveis; ela não representa uma implementação de arquivo com memória constante."
+          ],
+          "checks": [
+            "A fonte de posse transferida é fechada uma vez em cada caminho, inclusive limite zero.",
+            "Uma interrupção parcial não lê o elemento seguinte e conserva None como dado.",
+            "Erro de leitura é propagado e limites inválidos não chegam à fábrica."
+          ]
+        }
+      ]
+    },
+    {
       "id": "py-biblioteca-dados",
       "title": "Python: arquivos, exceções e biblioteca padrão",
       "level": "Intermediário",
