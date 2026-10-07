@@ -1,6 +1,7 @@
 import {test,expect,type Page} from '@playwright/test';
 import {getPracticeSolution} from '../../src/learning/practice';
 import {capstoneProjects,learningPaths} from '../../src/content/project-paths';
+import {createProjectWorkspace,markMilestoneEvidence} from '../../src/learning/projects';
 import {freshAdaptive,recordEvidence,learningDay} from '../../src/learning/adaptive';
 test.use({timezoneId:'America/Sao_Paulo'});
 const feedback=(page:Page)=>page.locator('.practice-feedback');
@@ -90,4 +91,21 @@ test('consultar solução após acertar revisão encurta o intervalo imediatamen
  const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(before.adaptive.skills['python.controle.range'].review.stage).toBe(1);await expect(page.locator('[data-language]')).toBeDisabled();
  await page.locator('[data-solution]').click();await expect(feedback(page)).toContainText('consulta foi registrada');
  const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!)),skill=after.adaptive.skills['python.controle.range'];expect(skill.review.stage).toBe(0);expect(skill.review.lastOutcome).toBe('assisted');expect(skill.review.dueDay).toBe(learningDay({now:Date.now()+86400000,timeZone:'America/Sao_Paulo'}));expect(skill.evidence['py-prever-range'].assistedDay).toBe(learningDay({now:Date.now(),timeZone:'America/Sao_Paulo'}));expect(after.adaptive.daily.items.map((x:{id:string})=>x.id)).toEqual(before.adaptive.daily.items.map((x:{id:string})=>x.id));
+});
+
+test('backup válido acima de 2 MB recupera todos os projetos e evidências',async({page})=>{
+ const projectWorkspaces:Record<string,ReturnType<typeof createProjectWorkspace>>={};const content='ação'.repeat(7500),note='ação '.repeat(400),date=new Date().toISOString();
+ for(const project of capstoneProjects){let workspace=createProjectWorkspace(project,date);workspace={...workspace,files:{'index.html':content,'app.js':content,'style.css':content,'notas.md':content}};
+  for(const milestone of project.milestones)for(const criterion of milestone.criteria)workspace=markMilestoneEvidence(workspace,project,milestone.id,criterion.id,note,date);
+  projectWorkspaces[project.id]=workspace;
+ }
+ const data={version:2,name:'Jornada completa',projectWorkspaces,projects:[1,2,3].map(n=>({id:'copia-estudo-'+n,title:'Anotações '+n,language:'javascript',code:content}))},payload=Buffer.from(JSON.stringify(data));expect(payload.byteLength).toBeGreaterThan(2_000_000);
+ await page.goto('/#/perfil');await page.locator('#import-progress').setInputFiles({name:'jornada-completa.json',mimeType:'application/json',buffer:payload});await page.getByRole('button',{name:'Restaurar jornada',exact:true}).click();await expect(page.getByRole('heading',{name:'Sua jornada, Jornada completa.'})).toBeVisible();
+ const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(Object.keys(saved.projectWorkspaces)).toHaveLength(8);
+ for(const project of capstoneProjects){expect(saved.projectWorkspaces[project.id].files).toEqual(projectWorkspaces[project.id].files);expect(saved.projectWorkspaces[project.id].evidence).toEqual(projectWorkspaces[project.id].evidence);}
+});
+test('restauração com falha de gravação mantém a jornada anterior',async({page})=>{
+ await page.addInitScript(()=>{localStorage.setItem('codelab.progress.v2',JSON.stringify({version:2,name:'Jornada anterior'}));const original=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key==='codelab.progress.v2')throw new DOMException('Quota de estudo','QuotaExceededError');return original.call(this,key,value);};});
+ await page.goto('/#/perfil');await page.locator('#import-progress').setInputFiles({name:'outra-jornada.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({version:2,name:'Jornada substituta'}))});await page.getByRole('button',{name:'Restaurar jornada',exact:true}).click();await expect(page.locator('.toast')).toContainText('jornada atual foi preservada');
+ await expect(page.getByRole('heading',{name:'Sua jornada, Jornada anterior.'})).toBeVisible();await page.goto('/#/home');expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).name)).toBe('Jornada anterior');
 });

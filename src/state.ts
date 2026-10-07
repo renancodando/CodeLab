@@ -3,6 +3,7 @@ import {normalizeSessions} from './learning/session';
 import {normalizeAdaptive,prepareAdaptiveBackup} from './learning/adaptive';
 import {normalizePracticeAnswers,preparePracticeAnswers} from './learning/activity-state';
 import {normalizeProjectWorkspaces,prepareProjectWorkspaces} from './learning/projects';
+export const MAX_BACKUP_BYTES=16*1024*1024;
 const key = 'codelab.progress.v2';
 const legacyKey = 'codelab.progress.v1';
 const fresh = (): Progress => ({version:2,learningLanguage:'javascript',adaptive:normalizeAdaptive(undefined),practiceAnswers:{},projectWorkspaces:{},lessonSessions:{},completed:[],lessons:[],projects:[],drafts:{},attempts:{},hints:{},history:{},review:{},activeDays:[],name:'Explorador'});
@@ -81,7 +82,7 @@ export function prepareBackup(value:unknown):Progress {
 }
 export let progress=readProgress();
 export function saveProgress():boolean{try{localStorage.setItem(key,JSON.stringify(progress));window.dispatchEvent(new Event('progresschange'));return true;}catch{window.dispatchEvent(new CustomEvent('storageerror'));return false;}}
-export function replaceProgress(value:unknown){progress=normalizeProgress(value);saveProgress();}
+export function replaceProgress(value:unknown):boolean{const restored=normalizeProgress(value);try{localStorage.setItem(key,JSON.stringify(restored));}catch{window.dispatchEvent(new CustomEvent('storageerror'));return false;}progress=restored;window.dispatchEvent(new Event('progresschange'));return true;}
 export function snapshot(id:string,code:string){if(!safeKey(id))return;code=code.slice(0,30000);const list=progress.history[id]||=[];if(list.at(-1)?.code!==code)list.push({code:code.slice(0,15000),date:new Date().toISOString()});progress.history[id]=list.slice(-5);progress.drafts[id]=code;saveProgress();}
 export function recordResult(id:string,passed:boolean){progress.attempts[id]=(progress.attempts[id]||0)+1;if(passed&&!progress.completed.includes(id))progress.completed.push(id);progress.review[id]=new Date(Date.now()+(passed?7:1)*86400000).toISOString();const today=new Date().toLocaleDateString('en-CA');if(!progress.activeDays.includes(today))progress.activeDays.push(today);saveProgress();}
 export const escapeHtml=(s:unknown)=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
