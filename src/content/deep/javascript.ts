@@ -92,6 +92,149 @@ export default {
       ]
     },
     {
+      "id": "js-conversao-limites",
+      "title": "JavaScript: conversão explícita e números nos limites",
+      "level": "Fundamentos",
+      "summary": "Trate a entrada recebida antes de permitir que os operadores escolham uma conversão implícita. Esta aula explica concatenação, igualdade, números seguros, NaN e preservação de zero. Os problemas constroem uma quantidade inteira e um total em centavos com contratos que rejeitam dados ambíguos, sem depender de parseInt para validar um campo completo.",
+      "source": "https://tc39.es/ecma262/multipage/abstract-operations.html#sec-tonumber",
+      "topics": [
+        "coerção do operador mais",
+        "Number e conversão explícita",
+        "parseInt e prefixo válido",
+        "NaN e Number.isNaN",
+        "inteiros seguros",
+        "zero e operador nullish",
+        "BigInt e Number separados",
+        "validação antes do cálculo"
+      ],
+      "sections": [
+        {
+          "title": "O operador trabalha com os valores que recebeu",
+          "text": [
+            "Em JavaScript, o operador + pode somar números ou concatenar strings depois das conversões aplicáveis. Se um campo de formulário contém '12', campo + 1 pode produzir '121'. Outros operadores podem converter o mesmo texto para número e produzir uma aparência de inconsistência. O problema é deixar a representação da entrada implícita. Decida na fronteira se o dado é texto, uma quantidade inteira ou uma medida antes de calcular.",
+            "Uma conversão explícita não basta sem uma regra de validade. Number('') e Number('   ') resultam em zero; Number('12') resulta em 12; Number('12kg') produz NaN. O domínio de quantidade desta aula não aceita vazio ou espaços. Conferir a gramática antes da conversão impede que o número zero apareça por um caminho que deveria ser uma rejeição. Zero fornecido corretamente continua sendo um valor válido."
+          ]
+        },
+        {
+          "title": "Converter um prefixo não aceita um campo inteiro",
+          "text": [
+            "parseInt procura uma representação inteira no início do texto e pode parar antes do fim. Com base dez, parseInt('12kg', 10) produz 12. Isso pode ser útil quando o contrato permite um prefixo, mas não valida o campo de quantidade. Um parser para um formulário precisa escolher se aceita espaços, sinais e notação exponencial. Não transfira ao usuário uma gramática acidental determinada pela função de conversão escolhida.",
+            "Nesta aula, uma expressão ancorada exige de um a seis dígitos ASCII, sem sinal e sem separadores. Em JavaScript, a âncora $ pode corresponder antes de uma quebra de linha final; para um consumo estrito usamos uma verificação adicional de fim sem caractere restante. Uma alternativa é percorrer os caracteres e conferir comprimento. O objetivo é provar que toda a entrada atende ao contrato, e não ensinar uma expressão regular decorada."
+          ]
+        },
+        {
+          "title": "NaN, infinito e fração têm verificações diferentes",
+          "text": [
+            "NaN indica um resultado numérico que não representa um número comum, e sua igualdade consigo mesmo é falsa. Number.isNaN verifica especificamente esse valor sem converter a entrada. Number.isFinite aceita apenas números finitos, enquanto a função global isFinite faz coerção. Se o domínio é contagem, finitude ainda não basta: 2.5 é finito, mas não é inteiro. Number.isSafeInteger reúne integralidade e faixa de exatidão para o tipo Number.",
+            "Não use if (!numero) como validação universal. Essa condição rejeita zero e NaN, mas aceita vários valores que podem estar fora do domínio. A validação precisa descrever diretamente tipo, finitude, integralidade e faixa conforme o problema. Um valor negativo pode ser uma temperatura válida e uma quantidade inválida. O teste deve refletir a unidade e a regra da função que recebe o número."
+          ]
+        },
+        {
+          "title": "Precisão tem limites antes de existir overflow infinito",
+          "text": [
+            "Number usa uma representação binária de precisão finita. Inteiros até Number.MAX_SAFE_INTEGER em magnitude têm a garantia esperada de exatidão; acima dessa região, operações podem perder a distinção entre inteiros consecutivos. Um resultado ainda finito pode estar incorreto para um identificador ou total de unidades exatas. Confira o resultado de somas e produtos quando a função promete permanecer em inteiros seguros.",
+            "BigInt fornece aritmética inteira com magnitudes além da faixa segura de Number, limitada por recursos. Ele não mistura automaticamente suas operações aritméticas com Number e não representa frações. Converter um Number já impreciso para BigInt não recupera o inteiro pretendido. Para um identificador grande recebido em JSON ou formulário, preserve o texto decimal original até uma conversão que mantenha sua exatidão."
+          ]
+        },
+        {
+          "title": "Defaults não devem apagar dados válidos",
+          "text": [
+            "O operador || escolhe o valor à direita quando o da esquerda é falsy, incluindo zero, false e string vazia. O operador ?? só substitui null e undefined. Se o limite zero é permitido, limite || 10 muda a regra do usuário. Isso é um bug de negócio que não exige erro de sintaxe e pode passar em testes que usam apenas limites positivos.",
+            "Depois de aplicar um default, valide o resultado. Uma configuração null pode significar ausência aceitável num sistema e erro de integração em outro. O operador não escolhe essa política sozinho. Uma função pode devolver { ok: true, valor } ou { ok: false, erro } para tornar sucesso e falha observáveis. O consumidor então confere ok, sem tentar inferir validade a partir de o valor ser verdadeiro em uma condição."
+          ]
+        },
+        {
+          "title": "Teste a fronteira e o resultado numérico",
+          "text": [
+            "Monte casos com texto vazio, espaço, zero, zeros iniciais, sufixo, sinal, quebra de linha final, fração e limite exato. Para cálculo, use também um valor seguro cujo produto exceda a faixa segura. Essa combinação confere tanto a forma textual quanto a capacidade do resultado. Converter uma vez e usar o número por todo o domínio evita coerções espalhadas em várias fórmulas.",
+            "As soluções usam uma função verificar que lança Error em divergências. Isso permite executar o mesmo código no interpretador do laboratório e no CI sem uma biblioteca de testes externa. Transfira a regra para um carrinho em centavos: defina faixa de preço e quantidade, valide o produto e só depois formate. Se a faixa não for suficiente para o negócio, altere a representação e a serialização junto com os testes."
+          ]
+        }
+      ],
+      "code": "function quantidade(texto) {\n  if (typeof texto !== \"string\" || !/^[0-9]{1,6}(?![\\s\\S])/.test(texto))\n    return {ok:false,erro:\"formato\"};\n  const valor=Number(texto);\n  return valor<=500 ? {ok:true,valor} : {ok:false,erro:\"faixa\"};\n}\nconst zero=quantidade(\"0\"),ruim=quantidade(\"12kg\");\nif (!zero.ok || zero.valor!==0 || ruim.ok || quantidade(\"12\\n\").ok) throw new Error(\"quantidade\");\nconsole.log(JSON.stringify(zero));\nconsole.log(JSON.stringify(ruim));\nconsole.log(\"12\"+1,Number(\"12\")+1);\nconsole.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER+1));",
+      "expectedOutput": [
+        "{\"ok\":true,\"valor\":0}",
+        "{\"ok\":false,\"erro\":\"formato\"}",
+        "121 13",
+        "false"
+      ],
+      "output": "Saída: sucesso com valor zero, falha de formato, 121 13 e false. A última linha mostra que um número finito pode sair da faixa segura de inteiros.",
+      "trace": [
+        "A gramática exige o consumo integral, inclusive quando há quebra de linha final.",
+        "Number só é chamado após a prova do formato; o zero não é usado como sentinela de falha.",
+        "O operador + recebe tipos diferentes em duas expressões e produz resultados diferentes."
+      ],
+      "exercise": "Calcule totalCentavos(preco, quantidade) para números inteiros seguros não negativos. Confira também que o produto é inteiro seguro. Retorne um resultado discriminado e teste quantidade zero, fração, valor negativo e produto além do limite.",
+      "solution": "function totalCentavos(preco,quantidade) {\n  if (!Number.isSafeInteger(preco) || preco<0 || !Number.isSafeInteger(quantidade) || quantidade<0)\n    return {ok:false,erro:\"entrada\"};\n  const valor=preco*quantidade;\n  return Number.isSafeInteger(valor) ? {ok:true,valor} : {ok:false,erro:\"limite\"};\n}\nconst bom=totalCentavos(1250,3),zero=totalCentavos(1250,0);\nif (!bom.ok || bom.valor!==3750 || !zero.ok || zero.valor!==0 ||\n    totalCentavos(1.5,2).ok || totalCentavos(-1,2).ok || totalCentavos(Number.MAX_SAFE_INTEGER,2).ok)\n  throw new Error(\"total\");\nconsole.log(JSON.stringify(bom));",
+      "solutionOutput": [
+        "{\"ok\":true,\"valor\":3750}"
+      ],
+      "bug": "parseInt aceita 12kg como 12. A função chama isso de validação de quantidade inteira, mas verifica só um prefixo. Acrescentar base dez não resolve o consumo do sufixo.",
+      "bugCode": "const entrada=\"12kg\";\nconst quantidade=parseInt(entrada,10);\nif (!Number.isNaN(quantidade)) console.log(\"aceito\",quantidade);",
+      "repair": "Escolha a gramática do campo e confira todos os caracteres antes de Number. Depois valide faixa e resultado. Para um contrato que aceita sufixos, modele também qual unidade o sufixo representa, em vez de ignorá-lo.",
+      "checks": [
+        "Zero textual é aceito e ausência ou formato inválido são rejeitados.",
+        "O produto é conferido depois de calcular com entradas válidas.",
+        "Explique por que parseInt não verifica o campo inteiro."
+      ],
+      "project": "Construa um orçamento em centavos com limite de itens. Separe a entrada textual do cálculo, preserve limite zero e gere mensagens para formato, faixa e capacidade. Documente como serializar totais se migrar para BigInt.",
+      "question": "Por que Number.isFinite(total) não basta para um total de centavos exatos?",
+      "answer": "Um número finito pode ser fracionário ou estar fora da faixa de inteiros seguros.",
+      "distractors": [
+        "Number.isFinite sempre aceita strings e não pode ser usado com números.",
+        "Todo número finito é um inteiro seguro em JavaScript."
+      ],
+      "practices": [
+        {
+          "id": "default",
+          "title": "Problema 1: configurar limite sem apagar zero",
+          "topics": [
+            "zero e operador nullish",
+            "validação antes do cálculo"
+          ],
+          "prompt": "Crie limite(valor) para usar 10 quando valor for null ou undefined, preservar inteiros seguros de zero a cem e rejeitar o restante com uma falha explícita. Teste zero, ausência, string numérica e NaN.",
+          "solution": "function limite(entrada) {\n  const valor=entrada??10;\n  return Number.isSafeInteger(valor) && valor>=0 && valor<=100\n    ? {ok:true,valor} : {ok:false,erro:\"limite\"};\n}\nif (limite(0).valor!==0 || limite(null).valor!==10 || limite(undefined).valor!==10 ||\n    limite(\"3\").ok || limite(NaN).ok) throw new Error(\"limite\");\nconsole.log(JSON.stringify(limite(0)));\nconsole.log(JSON.stringify(limite(undefined)));",
+          "expectedOutput": [
+            "{\"ok\":true,\"valor\":0}",
+            "{\"ok\":true,\"valor\":10}"
+          ],
+          "explanation": [
+            "?? implementa a política de ausência escolhida para os dois valores nulos. A validação depois do default mantém números de outra faixa e texto fora do domínio.",
+            "O teste com zero detecta o uso acidental de ||. O consumidor usa ok para saber se há sucesso, sem depender do valor numérico ser truthy."
+          ],
+          "checks": [
+            "0 é preservado.",
+            "null e undefined usam o padrão.",
+            "Texto e NaN falham sem coerção."
+          ]
+        },
+        {
+          "id": "identificador",
+          "title": "Problema 2: preservar um identificador grande",
+          "topics": [
+            "BigInt e Number separados",
+            "inteiros seguros",
+            "Number e conversão explícita"
+          ],
+          "prompt": "Converta o texto 9007199254740993 diretamente para BigInt e demonstre que Number perde a distinção com 9007199254740992. Não passe primeiro por Number para obter BigInt. Serializar o identificador deve produzir string.",
+          "solution": "const texto=\"9007199254740993\";\nconst exato=BigInt(texto);\nconst aproximado=Number(texto);\nif (exato.toString()!==texto || aproximado!==Number(\"9007199254740992\")) throw new Error(\"representação\");\nconst transporte=JSON.stringify({id:exato.toString()});\nconsole.log(exato.toString());\nconsole.log(transporte);",
+          "expectedOutput": [
+            "9007199254740993",
+            "{\"id\":\"9007199254740993\"}"
+          ],
+          "explanation": [
+            "O texto original contém a informação necessária para BigInt. A etapa intermediária por Number arredondaria o inteiro e a conversão posterior não recuperaria o dígito perdido.",
+            "JSON.stringify não transporta BigInt diretamente pela regra padrão; o contrato de intercâmbio escolhe uma string decimal. O consumidor precisa conhecer essa regra em vez de supor que o campo seja um Number."
+          ],
+          "checks": [
+            "O texto decimal é preservado exatamente.",
+            "A perda em Number fica demonstrada por dois textos diferentes.",
+            "O objeto serializado contém uma string, sem BigInt bruto."
+          ]
+        }
+      ]
+    },
+    {
       "id": "js-funcoes-this",
       "title": "JavaScript: funções, this e composição",
       "level": "Intermediário",
@@ -173,6 +316,148 @@ export default {
       "distractors": [
         "Sim; toda função recebe o objeto imediatamente à esquerda.",
         "Sim; mas somente quando o objeto foi declarado com const."
+      ]
+    },
+    {
+      "id": "js-closures-estado",
+      "title": "JavaScript: closures, identidade e estado de uma instância",
+      "level": "Fundamentos",
+      "summary": "Acompanhe os ambientes léxicos que uma função conserva e separe o estado de duas instâncias. Esta aula constrói um contador com contrato, compara captura de variável com cópia de valor e explica por que const não congela um objeto. Os problemas investigam callbacks em laços e snapshots independentes, com todas as saídas previstas antes da execução.",
+      "source": "https://tc39.es/ecma262/multipage/ecmascript-language-functions-and-classes.html#sec-function-definitions",
+      "topics": [
+        "escopo léxico",
+        "closure e binding capturado",
+        "fábrica e estado por instância",
+        "const e objeto mutável",
+        "identidade versus cópia",
+        "let em laço",
+        "var e ambiente compartilhado",
+        "snapshot sem referência interna"
+      ],
+      "sections": [
+        {
+          "title": "Uma função usa o ambiente em que foi criada",
+          "text": [
+            "O escopo léxico é determinado pela posição em que o código aparece. Uma função criada dentro de outra pode acessar variáveis do ambiente externo mesmo depois de a chamada externa terminar. Essa combinação de função e acesso ao ambiente é uma closure. O ambiente necessário permanece alcançável enquanto houver funções ou outros caminhos que dependem dele; não se trata de copiar automaticamente todos os valores no momento da criação.",
+            "Se a variável externa muda antes de a closure lê-la, a função pode observar o valor novo. Para capturar um valor específico, crie um novo binding com aquele valor e preserve-o conforme o contrato. A distinção aparece em callbacks agendados, configurações e laços. Pergunte qual variável a função referencia e quando ela será lida, em vez de dizer apenas que a função guarda o número."
+          ]
+        },
+        {
+          "title": "Uma fábrica pode isolar o estado das instâncias",
+          "text": [
+            "Cada chamada de uma função fábrica cria seus próprios bindings locais. Duas chamadas de criarContador produzem estados separados, mesmo que os métodos retornados tenham o mesmo código. Os métodos de uma mesma chamada compartilham o binding que precisam atualizar. Essa estrutura permite oferecer uma pequena API sem expor diretamente a variável interna do contador.",
+            "Isolamento de binding não exige que todos os dados sejam independentes. Se a fábrica recebe um objeto externo e guarda a mesma referência, as instâncias podem continuar compartilhando aquele objeto. Copie ou valide a representação quando o contrato exigir independência. Para um contador numérico local, o estado é um Number e a mudança fica restrita aos métodos da instância."
+          ]
+        },
+        {
+          "title": "const protege o binding, não o conteúdo",
+          "text": [
+            "const impede reatribuir a variável declarada, mas um objeto referenciado pode continuar mutável. const dados = { total: 0 } permite dados.total = 1. Um nome constante não estabelece um contrato de imutabilidade profunda. Object.freeze restringe alterações de propriedades próprias no objeto congelado, mas não congela automaticamente objetos internos. Entender o nível da garantia evita expor estado que uma API promete controlar.",
+            "A igualdade estrita entre objetos compara identidade, não conteúdo. Dois objetos com campos iguais são referências diferentes; uma cópia rasa cria um objeto novo, mas pode conservar referências internas. Ao devolver um snapshot de estado, escolha se cada parte precisa ser copiada. Para uma lista de strings simples, copiar a lista separa a coleção; para objetos aninhados, as propriedades internas exigem uma decisão adicional."
+          ]
+        },
+        {
+          "title": "Callbacks de laço mostram qual binding é capturado",
+          "text": [
+            "Um for com let cria bindings adequados por iteração para closures que dependem daquela variável do laço. Um laço com var pode deixar todas as funções apontando para o mesmo binding, que ao final contém o valor terminal. Assim, três callbacks podem devolver três vezes o mesmo número. Não é um atraso de execução que escolhe um índice aleatório; é a relação entre a função e a variável capturada.",
+            "Para investigar, crie as funções primeiro e só depois execute todas em ordem. Essa separação torna visível que os valores observados dependem do estado final ou do binding de cada iteração. Você também pode criar uma função auxiliar que recebe o índice e devolve uma closure; cada chamada fornece um ambiente próprio. Compare as duas correções e explique por que funcionam."
+          ]
+        },
+        {
+          "title": "Mutações precisam de condições antes da escrita",
+          "text": [
+            "Um contador que recebe um incremento pode exigir inteiro seguro positivo. Valide o incremento e o próximo total antes de atualizar a variável. Se a entrada falhar, o estado deve permanecer como antes. Essa pós-condição ajuda a usar a API sem precisar conhecer sua implementação. Não atualize primeiro e tente consertar depois, pois isso amplia os estados intermediários e pode perder a informação original.",
+            "A closure oferece uma forma de encapsulamento, mas não fornece persistência, autenticação ou segurança geral. Quem tem os métodos ainda pode chamá-los conforme a API. O estado desaparece quando não é preservado por nenhuma referência ou mecanismo de armazenamento. Use esse recorte para estudar uma instância em memória; as aulas de persistência e arquitetura tratam a vida de dados entre recargas e diferentes componentes."
+          ]
+        },
+        {
+          "title": "Um snapshot deve corresponder à promessa da API",
+          "text": [
+            "Se um método retorna diretamente o array interno, o chamador pode alterá-lo sem passar pela validação da instância. Um método snapshot pode retornar uma cópia da coleção e expor somente dados aceitos. Teste isso alterando o resultado e consultando a instância novamente. A verificação compara a relação entre estado interno e saída, não apenas o conteúdo da primeira saída.",
+            "Transfira o padrão para uma lista de estudos ou uma seleção de itens. Defina operações válidas, limites e o nível de cópia dos snapshots. A depuração deve listar instância, binding e objeto compartilhado. Quando ocorrer uma alteração inesperada, descubra qual referência ainda permite escrever no objeto. Esse raciocínio também ajuda a encontrar vazamentos de memória quando listeners conservam closures depois de a interface ser removida."
+          ]
+        }
+      ],
+      "code": "function criarContador(inicial=0) {\n  if (!Number.isSafeInteger(inicial) || inicial<0) throw new Error(\"inicial\");\n  let total=inicial;\n  return {\n    somar(valor) {\n      const proximo=total+valor;\n      if (!Number.isSafeInteger(valor) || valor<=0 || !Number.isSafeInteger(proximo)) return false;\n      total=proximo;\n      return true;\n    },\n    ler() {return total;}\n  };\n}\nconst a=criarContador(1),b=criarContador(10);\nif (!a.somar(2) || a.somar(-1) || a.ler()!==3 || b.ler()!==10) throw new Error(\"estado\");\nconsole.log(a.ler(),b.ler());\nlet valor=1;\nconst ler=()=>valor;\nvalor=7;\nconsole.log(ler());",
+      "expectedOutput": [
+        "3 10",
+        "7"
+      ],
+      "output": "Saída: 3 10 e 7. Os contadores têm ambientes separados; a closure ler observa o binding valor depois de sua alteração.",
+      "trace": [
+        "Cada chamada da fábrica cria um total local.",
+        "A falha de somar não modifica total; b permanece independente de a.",
+        "ler conserva acesso à variável valor e não a uma cópia automática de 1."
+      ],
+      "exercise": "Crie uma fábrica de placar com pontos iniciais zero, adicionar(inteiro positivo) e ler(). Rejeite incrementos inválidos sem mudar o placar. Demonstre independência entre duas instâncias.",
+      "solution": "function criarPlacar() {\n  let pontos=0;\n  return {\n    adicionar(valor) {\n      if (!Number.isSafeInteger(valor) || valor<=0 || !Number.isSafeInteger(pontos+valor)) return false;\n      pontos+=valor;\n      return true;\n    },\n    ler:()=>pontos\n  };\n}\nconst a=criarPlacar(),b=criarPlacar();\nif (!a.adicionar(4) || a.adicionar(0) || a.adicionar(1.5) || a.ler()!==4 || b.ler()!==0)\n  throw new Error(\"placar\");\nconsole.log(a.ler(),b.ler());",
+      "solutionOutput": [
+        "4 0"
+      ],
+      "bug": "Callbacks criados com var no laço compartilham a variável i. Quando são executados depois do laço, todos observam o valor terminal, em vez do índice da criação.",
+      "bugCode": "const callbacks=[];\nfor (var i=0;i<3;i++) callbacks.push(()=>i);\nconsole.log(callbacks.map(fn=>fn())); // [3,3,3]",
+      "repair": "Use let no laço ou uma fábrica que receba o índice e crie um binding por chamada. Explique qual ambiente cada callback mantém, sem atribuir o resultado a uma execução aleatória.",
+      "checks": [
+        "Instâncias diferentes conservam estados independentes.",
+        "Incremento inválido não modifica o estado.",
+        "Explique captura de binding e diferença entre const e congelamento."
+      ],
+      "project": "Implemente uma lista de estudos em memória com adicionar, remover e snapshot. Não devolva o array interno e documente o nível de cópia para cada item. Use duas instâncias e tente alterar um snapshot para verificar a promessa de isolamento.",
+      "question": "Por que uma closure pode ler 7 depois de a variável externa ter começado em 1?",
+      "answer": "Ela conserva acesso ao binding, que pode ter sido atualizado antes da leitura.",
+      "distractors": [
+        "Toda closure copia o primeiro valor, mas o motor altera essa cópia automaticamente.",
+        "Closures só podem ler constantes e o exemplo exige erro de sintaxe."
+      ],
+      "practices": [
+        {
+          "id": "callbacks",
+          "title": "Problema 1: uma função por índice",
+          "topics": [
+            "let em laço",
+            "var e ambiente compartilhado",
+            "closure e binding capturado"
+          ],
+          "prompt": "Construa três callbacks que, executados depois do laço, devolvam 0, 1 e 2. Use let e compare com a versão var. Não execute os callbacks durante a criação, porque isso esconderia o problema.",
+          "solution": "const corretos=[],compartilhados=[];\nfor (let i=0;i<3;i++) corretos.push(()=>i);\nfor (var j=0;j<3;j++) compartilhados.push(()=>j);\nconst a=corretos.map(fn=>fn()),b=compartilhados.map(fn=>fn());\nif (JSON.stringify(a)!==\"[0,1,2]\" || JSON.stringify(b)!==\"[3,3,3]\") throw new Error(\"bindings\");\nconsole.log(JSON.stringify(a));\nconsole.log(JSON.stringify(b));",
+          "expectedOutput": [
+            "[0,1,2]",
+            "[3,3,3]"
+          ],
+          "explanation": [
+            "Os callbacks são executados só depois dos laços. Isso demonstra os bindings de cada iteração com let e o binding único com var.",
+            "Uma função auxiliar criarLeitor(indice) também seria correta, pois cada chamada teria seu parâmetro local. A condição importante é a relação de cada closure com a variável que lê."
+          ],
+          "checks": [
+            "A sequência let produz 0, 1 e 2.",
+            "A sequência var produz 3 três vezes.",
+            "Explique por que executar dentro do laço não testa o mesmo cenário."
+          ]
+        },
+        {
+          "id": "snapshot",
+          "title": "Problema 2: snapshot de lista sem alias",
+          "topics": [
+            "snapshot sem referência interna",
+            "identidade versus cópia",
+            "fábrica e estado por instância"
+          ],
+          "prompt": "Crie uma lista de strings com adicionar e snapshot. O snapshot deve ser um array novo, e alterar esse array não pode alterar o estado da instância. Teste duas instâncias e dois snapshots da mesma instância.",
+          "solution": "function criarLista() {\n  const itens=[];\n  return {\n    adicionar(texto) {\n      if (typeof texto!==\"string\" || texto.trim()===\"\") return false;\n      itens.push(texto.trim());\n      return true;\n    },\n    snapshot:()=>[...itens]\n  };\n}\nconst a=criarLista(),b=criarLista();\na.adicionar(\" HTML \");\nconst primeiro=a.snapshot(),segundo=a.snapshot();\nprimeiro.push(\"CSS\");\nif (primeiro===segundo || JSON.stringify(a.snapshot())!=='[\"HTML\"]' || b.snapshot().length!==0)\n  throw new Error(\"snapshot\");\nconsole.log(JSON.stringify(a.snapshot()));\nconsole.log(JSON.stringify(primeiro));",
+          "expectedOutput": [
+            "[\"HTML\"]",
+            "[\"HTML\",\"CSS\"]"
+          ],
+          "explanation": [
+            "Spread cria uma nova coleção. Os elementos são strings imutáveis, então essa cópia rasa atende ao nível de independência exigido nesta atividade.",
+            "Se a API passar a armazenar objetos mutáveis, a cópia do array não separará automaticamente os objetos. Revise o contrato e acrescente um teste de alteração de campo interno antes de escolher uma estratégia de cópia."
+          ],
+          "checks": [
+            "Alterar snapshot não altera a lista.",
+            "Snapshots diferentes têm identidades diferentes.",
+            "A segunda instância permanece vazia."
+          ]
+        }
       ]
     },
     {

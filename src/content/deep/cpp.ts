@@ -93,6 +93,285 @@ export default {
       ]
     },
     {
+      "id": "cpp-texto-conversao",
+      "title": "C++: entrada textual, conversão completa e estados de erro",
+      "level": "Fundamentos",
+      "summary": "Leia texto sem perder partes da entrada e transforme uma quantidade somente quando o campo inteiro atende ao contrato. Você vai distinguir falha de conversão, texto residual e valor fora da faixa. A aula usa C++20, std::string, getline e from_chars, com programas pequenos que tornam visíveis os estados de erro sem acessar memória inválida.",
+      "source": "https://eel.is/c++draft/charconv.from.chars",
+      "topics": [
+        "string como sequência de unidades char",
+        "getline e leitura de linha",
+        "extração formatada e texto residual",
+        "from_chars e errc",
+        "consumo completo da entrada",
+        "limites de int",
+        "optional para conversão",
+        "gramática ASCII e faixa de domínio"
+      ],
+      "sections": [
+        {
+          "title": "Um texto precisa ser recebido inteiro",
+          "text": [
+            "A leitura por operator>> costuma separar tokens pelo espaço; getline recebe o conteúdo até o delimitador de linha. Se um nome pode ter espaço, ler apenas um token perde parte do dado antes da validação. Ao misturar extração formatada e getline no mesmo stream, o delimitador remanescente pode produzir uma linha vazia inesperada. Defina primeiro se o campo é uma linha, um token ou um registro com separadores.",
+            "Os exemplos usam istringstream com dados fixos para que o resultado seja reproduzível no CI e no computador do aluno. O mesmo estado de stream existe ao ler cin ou um arquivo. Uma operação pode falhar e marcar failbit; continuar lendo sem entender esse estado não conserta a entrada. Em uma interface interativa, decida se vai rejeitar o registro, limpar o estado e descartar a linha, ou encerrar. Não repita indefinidamente a mesma leitura falha."
+          ]
+        },
+        {
+          "title": "char não equivale a letra percebida",
+          "text": [
+            "std::string é uma sequência contígua de unidades char e mantém seu próprio armazenamento. A biblioteca de strings não escolhe automaticamente uma codificação Unicode. Em um texto UTF-8, uma letra acentuada pode ocupar vários bytes; size informa quantidade de unidades char. Cortar em um índice arbitrário pode dividir uma sequência codificada. Nesta aula os campos numéricos usam ASCII, o que permite uma gramática simples e explícita.",
+            "Um índice válido para obter um elemento está entre zero e size() - 1. A função at verifica a faixa e pode lançar out_of_range; operator[] não oferece a mesma verificação de fronteira para índices de elementos. Antes de analisar o primeiro caractere, confira se a string está vazia. Não use o elemento de terminação como se fosse mais um caractere do campo e não suponha que toda leitura produz pelo menos um símbolo."
+          ]
+        },
+        {
+          "title": "Conversão parcial não é validação completa",
+          "text": [
+            "from_chars recebe um intervalo de caracteres e um destino numérico. O resultado contém um ponteiro para o primeiro caractere não consumido e um código de erro. Para aceitar um inteiro que ocupa o campo inteiro, exija código de sucesso e ponteiro igual ao fim do intervalo. Uma conversão que encontra 12 no início de '12kg' não prova que '12kg' seja uma quantidade válida pelo contrato do formulário.",
+            "A conversão inteira de from_chars não ignora automaticamente espaços iniciais como certas outras funções e não aceita um sinal de mais inicial nessa interface. Não transforme essas características em uma gramática acidental. Se o domínio exige somente dígitos ASCII, confira essa regra antes e depois confira a faixa do número. Assim a mensagem pode distinguir formato inválido de quantidade proibida."
+          ]
+        },
+        {
+          "title": "Largura do tipo e faixa do domínio são limites diferentes",
+          "text": [
+            "int tem uma faixa de representação dependente da implementação, consultável em numeric_limits<int>. A quantidade permitida pelo produto pode ser muito menor, por exemplo até 500 ingressos. Um valor pode caber em int e ainda ser rejeitado semanticamente. from_chars informa result_out_of_range quando não consegue representar o número no destino; não ignore esse estado nem reutilize o valor do destino como se a conversão tivesse concluído.",
+            "A política de erro da função deve ser previsível. std::optional<int> pode representar quantidade válida ou ausência de resultado da conversão, mantendo zero como sucesso. Se precisa diferenciar causas, use um tipo de resultado com um código de erro, em vez de sobrecarregar -1 e zero. Um cast não verifica a faixa e não serve para transformar um texto numérico em um valor validado."
+          ]
+        },
+        {
+          "title": "O intervalo de análise depende da vida do texto",
+          "text": [
+            "Os ponteiros passados a from_chars apontam para o armazenamento de uma string existente. Durante a chamada o texto precisa continuar vivo e seu armazenamento não deve ser invalidado por uma mutação. Faça a conversão dentro do escopo em que a string é válida e retorne o número, não um ponteiro para o texto local. Esse cuidado introduz o conceito de tempo de vida que será aprofundado nas aulas de referências e posse.",
+            "Um string_view pode observar um texto sem copiar, mas não mantém o dono vivo. Não o use para devolver uma vista de uma string criada dentro da função. Nesta etapa, uma assinatura const std::string& documenta leitura sem alteração e evita a cópia do campo. Ela não muda a obrigação de o argumento existir durante a chamada. A posse fica com quem chamou, enquanto o resultado é um valor independente."
+          ]
+        },
+        {
+          "title": "Rejeições também são resultados de estudo",
+          "text": [
+            "Para conferir o conversor, use vazio, espaço inicial, espaço final, sinal, sufixo, fração, um valor gigante e o limite exato. Inclua zero e uma sequência com zeros iniciais quando essa forma for aceita. Apenas um teste com '42' não distingue conversão completa de parcial. A matriz de casos mostra qual camada rejeita o dado: gramática, capacidade do tipo ou faixa de negócio.",
+            "Compile com avisos e execute as verificações do exemplo. Os asserts servem para conferir o código de estudo e podem ser removidos em builds com NDEBUG; a validação de dados externos precisa estar em condições normais do programa. Transfira o conversor para um importador de estoque e mantenha a separação entre texto bruto, quantidade válida e mensagem de rejeição. Não descarte um erro apenas para produzir um número conveniente."
+          ]
+        }
+      ],
+      "code": "#include <charconv>\n#include <optional>\n#include <string>\n#include <iostream>\n#include <cassert>\n\nstd::optional<int> quantidade(const std::string& texto) {\n    if (texto.empty() || texto.size() > 3) return std::nullopt;\n    for (char c : texto) if (c < '0' || c > '9') return std::nullopt;\n    int valor = 0;\n    const auto fim = texto.data() + texto.size();\n    const auto resultado = std::from_chars(texto.data(), fim, valor);\n    if (resultado.ec != std::errc{} || resultado.ptr != fim || valor > 500)\n        return std::nullopt;\n    return valor;\n}\nint main() {\n    const auto zero = quantidade(\"0\"), dez = quantidade(\"010\");\n    assert(zero && *zero == 0 && dez && *dez == 10);\n    assert(!quantidade(\"12kg\") && !quantidade(\"501\") && !quantidade(\"\"));\n    std::cout << *zero << ' ' << *dez << '\\n';\n}",
+      "expectedOutput": [
+        "0 10"
+      ],
+      "output": "Saída: 0 10. Texto com sufixo, campo vazio e quantidade maior que 500 são rejeitados; zero continua válido.",
+      "trace": [
+        "A gramática limita o comprimento e os símbolos antes da conversão.",
+        "from_chars precisa indicar sucesso e ter consumido todo o intervalo.",
+        "optional com valor zero é presente; !optional testa ausência, sem testar o inteiro."
+      ],
+      "exercise": "Crie uma função para converter um código ASCII de exatamente quatro dígitos em int, aceitando zeros iniciais. Rejeite qualquer outra forma e retorne optional. Confira 0000, 0042, 123, +123 e 12x4.",
+      "solution": "#include <charconv>\n#include <optional>\n#include <string>\n#include <cassert>\n#include <iostream>\nstd::optional<int> codigo(const std::string& texto) {\n    if (texto.size() != 4) return std::nullopt;\n    for (char c : texto) if (c < '0' || c > '9') return std::nullopt;\n    int valor = 0;\n    const auto fim = texto.data() + texto.size();\n    const auto r = std::from_chars(texto.data(), fim, valor);\n    if (r.ec != std::errc{} || r.ptr != fim) return std::nullopt;\n    return valor;\n}\nint main() {\n    assert(codigo(\"0000\") == 0 && codigo(\"0042\") == 42);\n    assert(!codigo(\"123\") && !codigo(\"+123\") && !codigo(\"12x4\"));\n    std::cout << *codigo(\"0042\") << '\\n';\n}",
+      "solutionOutput": [
+        "42"
+      ],
+      "bug": "A extração formatada aceita o prefixo 12 de 12kg e o programa apresenta a entrada inteira como válida. A ausência de crash não comprova que todos os caracteres foram consumidos.",
+      "bugCode": "#include <sstream>\n#include <iostream>\nint main() {\n    std::istringstream entrada(\"12kg\");\n    int quantidade = 0;\n    if (entrada >> quantidade) std::cout << quantidade << '\\n'; // sufixo não conferido\n}",
+      "repair": "Quando o campo precisa ser integralmente numérico, confira sua gramática e o ponteiro final de from_chars. Se escolher um stream, confira também o texto residual e defina uma política de espaços.",
+      "checks": [
+        "0 e 010 produzem valores presentes.",
+        "Campo vazio, sufixo e 501 são rejeitados.",
+        "Explique a diferença entre código de sucesso e consumo completo."
+      ],
+      "project": "Monte um importador de estoque com um campo por linha. Preserve o texto bruto no relatório de rejeição, valide quantidade e limite, e calcule totais apenas com registros aceitos. Documente a gramática ASCII e o que mudaria para campos localizados com separador decimal.",
+      "question": "O que precisa ser conferido além de ec == std::errc{} para aceitar o campo inteiro com from_chars?",
+      "answer": "Que ptr chegou ao fim do intervalo de caracteres.",
+      "distractors": [
+        "Que o valor convertido é diferente de zero, porque zero indica erro.",
+        "Que a string foi convertida para string_view, pois isso garante sua validade."
+      ],
+      "practices": [
+        {
+          "id": "linhas",
+          "title": "Problema 1: nome completo e linha vazia",
+          "topics": [
+            "getline e leitura de linha",
+            "string como sequência de unidades char"
+          ],
+          "prompt": "Leia duas linhas de um istringstream: 'Ana Maria' e uma linha vazia. Preserve o espaço interno, aceite a linha vazia como leitura realizada e detecte o fim do stream na terceira tentativa.",
+          "solution": "#include <sstream>\n#include <string>\n#include <cassert>\n#include <iostream>\nint main() {\n    std::istringstream entrada(\"Ana Maria\\n\\n\");\n    std::string nome, vazia, extra;\n    const bool primeira = static_cast<bool>(std::getline(entrada, nome));\n    const bool segunda = static_cast<bool>(std::getline(entrada, vazia));\n    const bool terceira = static_cast<bool>(std::getline(entrada, extra));\n    assert(primeira && nome == \"Ana Maria\" && segunda && vazia.empty() && !terceira);\n    std::cout << nome << '\\n' << vazia.size() << '\\n';\n}",
+          "expectedOutput": [
+            "Ana Maria",
+            "0"
+          ],
+          "explanation": [
+            "getline mantém o espaço interno e remove o delimitador de linha. Uma linha vazia antes de um delimitador é diferente de não conseguir ler nenhum dado no fim do stream.",
+            "O estado de sucesso da operação é conferido separadamente do tamanho do texto. Essa distinção também aparece ao validar um CSV: um campo vazio pode existir mesmo que seu contrato depois o rejeite."
+          ],
+          "checks": [
+            "O nome contém o espaço interno.",
+            "A segunda leitura tem sucesso com string vazia.",
+            "A terceira leitura detecta fim, sem repetir indefinidamente."
+          ]
+        },
+        {
+          "id": "inteiro",
+          "title": "Problema 2: conversão completa com estouro detectado",
+          "topics": [
+            "from_chars e errc",
+            "consumo completo da entrada",
+            "limites de int",
+            "optional para conversão"
+          ],
+          "prompt": "Converta um inteiro com sinal opcional de menos, sem espaços nem sinal de mais. Aceite -12 e 0, rejeite 12x e um número de 40 dígitos. Use os estados de from_chars; não calcule manualmente um int que possa estourar.",
+          "solution": "#include <charconv>\n#include <string>\n#include <optional>\n#include <cassert>\n#include <iostream>\nstd::optional<int> inteiro(const std::string& texto) {\n    if (texto.empty()) return std::nullopt;\n    int valor = 0;\n    const auto fim = texto.data() + texto.size();\n    const auto r = std::from_chars(texto.data(), fim, valor);\n    if (r.ec != std::errc{} || r.ptr != fim) return std::nullopt;\n    return valor;\n}\nint main() {\n    assert(inteiro(\"-12\") == -12 && inteiro(\"0\") == 0);\n    assert(!inteiro(\"12x\") && !inteiro(\"+12\") && !inteiro(\" 12\"));\n    assert(!inteiro(std::string(40, '9')));\n    std::cout << *inteiro(\"-12\") << '\\n';\n}",
+          "expectedOutput": [
+            "-12"
+          ],
+          "explanation": [
+            "O conversor informa falha quando o valor não cabe em int, sem exigir uma multiplicação potencialmente inválida no parser escrito pelo aluno.",
+            "O ponteiro final distingue prefixo válido de campo válido. A gramática escolhida admite o sinal de menos suportado pela conversão inteira, mas não adiciona espaços ou sinal de mais implicitamente."
+          ],
+          "checks": [
+            "Aceite -12 e zero.",
+            "Rejeite sufixo, espaço e sinal de mais.",
+            "O número gigante falha sem overflow aritmético no programa."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cpp-funcoes-referencias",
+      "title": "C++: funções, cópia, referência e tempo de vida",
+      "level": "Fundamentos",
+      "summary": "Escolha uma assinatura de função que explique quem pode alterar um objeto e por quanto tempo uma referência é válida. Você vai comparar passagem por valor, referência mutável e referência const, proteger um saldo com pré-condições e retornar objetos por valor. Os exercícios mostram cópia de coleções e empréstimo de dados sem devolver referências a variáveis destruídas.",
+      "source": "https://eel.is/c++draft/dcl.ref",
+      "topics": [
+        "parâmetro por valor",
+        "referência mutável",
+        "referência const",
+        "pré-condição e pós-condição",
+        "retorno por valor",
+        "referência para objeto local",
+        "const não significa posse",
+        "cópia de vector e dados originais"
+      ],
+      "sections": [
+        {
+          "title": "Uma chamada estabelece um contrato observável",
+          "text": [
+            "Uma função deve dizer o que recebe, o que pode modificar e como representa a falha. A assinatura não precisa listar todas as regras do domínio, mas é o primeiro lugar para indicar valores, observação e mutação. Se a operação promete debitar um saldo, a pós-condição pode ser saldo_final == saldo_inicial - valor no sucesso e saldo inalterado na falha. Essa regra permite conferir o comportamento sem olhar a implementação.",
+            "Em C++, tipos fundamentais passados por valor tornam-se valores locais independentes do chamador. Alterar o parâmetro não altera a variável original. Esse isolamento é conveniente para pequenos dados e funções de cálculo. Retornar o resultado por valor torna a transformação explícita. Uma função void que altera uma cópia local e não retorna nada provavelmente não entrega o efeito que seu nome sugere."
+          ]
+        },
+        {
+          "title": "Referência mutável permite alterar o argumento",
+          "text": [
+            "Um parâmetro int& se refere ao objeto do chamador. Uma atribuição ao parâmetro modifica esse objeto; não existe uma cópia independente do inteiro para a escrita. Use essa forma quando o efeito faz parte do contrato e fique atento à possibilidade de dois parâmetros se referirem ao mesmo objeto. Um algoritmo que pressupõe objetos diferentes precisa declarar ou evitar essa hipótese.",
+            "Validar antes da primeira alteração simplifica a promessa de deixar o estado intacto na falha. Para debitar, confira valor não negativo e saldo suficiente, depois subtraia. Se a validação vier depois da subtração, você pode precisar desfazer o efeito e ainda lidar com aritmética inválida. Organizar a operação em conferir e então modificar reduz os estados intermediários que o chamador pode observar."
+          ]
+        },
+        {
+          "title": "Referência const observa sem adquirir posse",
+          "text": [
+            "const std::vector<int>& permite observar uma coleção sem copiar o vector e impede certas alterações por essa referência. Ela não mantém o objeto vivo por conta própria e não garante que não exista outra referência mutável. O chamador continua sendo o dono. Durante uma chamada normal e síncrona, ele precisa fornecer um objeto que permanece válido enquanto a função usa o argumento.",
+            "Const descreve uma restrição de acesso e deve ser lido junto do tempo de vida. Não é uma garantia geral de imutabilidade profunda, thread safety ou ausência de efeitos. Uma classe pode conter membros mutáveis ou referências a outros objetos. Nesta aula a coleção contém inteiros, o que torna a regra de leitura simples; os módulos de posse e concorrência aprofundam os casos em que observação e validade interagem."
+          ]
+        },
+        {
+          "title": "Retornar por valor evita empréstimos de locais mortos",
+          "text": [
+            "Uma variável local automática é destruída ao terminar seu escopo. Retornar uma referência a essa variável deixa o chamador com uma referência sem um objeto válido para usar. O programa pode compilar com aviso e a falha pode parecer desaparecer em uma execução, mas esse comportamento não estabelece um contrato seguro. O mesmo problema ocorre ao devolver uma vista ou ponteiro para armazenamento pertencente a um objeto local.",
+            "Retorne std::vector<int> por valor quando a função produz uma nova coleção. A linguagem e a biblioteca oferecem elisão de cópia e movimentos para evitar cópias desnecessárias em muitos casos. Não introduza uma referência inválida como otimização antecipada. O chamador recebe um objeto com sua própria vida; a função fica livre para encerrar e destruir os dados temporários que não fazem parte do resultado."
+          ]
+        },
+        {
+          "title": "Cópia de coleção conserva uma relação de independência",
+          "text": [
+            "Copiar um vector de inteiros cria uma nova coleção de valores. Alterar um elemento do vector copiado não altera o correspondente no original. Essa propriedade permite funções que recebem uma coleção por valor e a transformam localmente, devolvendo a nova versão. O custo da cópia depende do tamanho, portanto a decisão deve considerar a necessidade de independência e a frequência da operação.",
+            "A mesma conclusão não vale automaticamente para um vector de ponteiros ou objetos que compartilham recursos: a coleção pode ser copiada, mas os objetos apontados continuam compartilhados. Especifique o nível de independência que o domínio exige. Nos exemplos com int, os valores não carregam referências internas, de modo que testar o original depois de alterar a cópia confere diretamente a propriedade estudada."
+          ]
+        },
+        {
+          "title": "Teste efeitos e vida, além do resultado",
+          "text": [
+            "Para uma função que modifica estado, confira sucesso, falha e preservação do argumento no ramo de falha. Para uma função que devolve cópia, altere o resultado e confira o original. Esses testes verificam a relação entre objetos; um teste que compara somente a saída inicial pode deixar passar uma assinatura que devolve um empréstimo quando deveria produzir um novo valor.",
+            "Ative avisos do compilador e use sanitizers quando estiver estudando acessos e tempo de vida. Uma execução sem diagnóstico não prova que todos os usos possíveis sejam válidos, então a explicação do dono e do escopo continua necessária. Transfira o contrato para um carrinho ou orçamento: escolha se a operação retorna uma proposta nova ou modifica o estado atual, e documente a política de falha antes de escrever a subtração."
+          ]
+        }
+      ],
+      "code": "#include <cassert>\n#include <iostream>\nbool debitar(int& saldo, int valor) {\n    if (valor < 0 || valor > saldo) return false;\n    saldo -= valor;\n    return true;\n}\nint dobro(int valor) {\n    valor *= 2;\n    return valor;\n}\nint main() {\n    int saldo = 100;\n    assert(debitar(saldo, 30) && saldo == 70);\n    assert(!debitar(saldo, 80) && saldo == 70);\n    int base = 4;\n    const int resultado = dobro(base);\n    assert(base == 4 && resultado == 8);\n    std::cout << saldo << ' ' << base << ' ' << resultado << '\\n';\n}",
+      "expectedOutput": [
+        "70 4 8"
+      ],
+      "output": "Saída: 70 4 8. O débito válido modifica saldo, a tentativa inválida conserva 70 e dobro não altera base.",
+      "trace": [
+        "int& entrega acesso ao saldo do chamador; a validação vem antes da alteração.",
+        "A tentativa de debitar 80 retorna false sem subtrair.",
+        "dobro trabalha com uma cópia de base e devolve um valor independente."
+      ],
+      "exercise": "Escreva creditar(int& saldo, int valor) com saldo e valor não negativos. Rejeite uma soma que exceda numeric_limits<int>::max() sem calcular primeiro a soma perigosa; conserve o saldo na falha.",
+      "solution": "#include <limits>\n#include <cassert>\n#include <iostream>\nbool creditar(int& saldo, int valor) {\n    if (saldo < 0 || valor < 0 || valor > std::numeric_limits<int>::max() - saldo)\n        return false;\n    saldo += valor;\n    return true;\n}\nint main() {\n    int saldo = 10;\n    assert(creditar(saldo, 5) && saldo == 15);\n    assert(!creditar(saldo, -1) && saldo == 15);\n    saldo = std::numeric_limits<int>::max();\n    assert(!creditar(saldo, 1) && saldo == std::numeric_limits<int>::max());\n    std::cout << \"crédito verificado\\n\";\n}",
+      "solutionOutput": [
+        "crédito verificado"
+      ],
+      "bug": "Uma função devolve const int& apontando para uma variável local. A referência não prolonga a vida dessa variável. Não execute o trecho para tentar descobrir se funciona: explique o escopo do objeto e corrija o tipo de retorno.",
+      "bugCode": "const int& resultado() {\n    int local = 42;\n    return local; // referência inválida depois do retorno\n}",
+      "repair": "Retorne int por valor. Se a função precisa devolver referência a um objeto do chamador, o contrato deve dizer quem o mantém vivo e por quanto tempo; isso não se aplica ao local criado no trecho.",
+      "checks": [
+        "O débito inválido preserva o saldo.",
+        "A soma que excederia int é rejeitada antes da aritmética.",
+        "Explique quem é dono dos objetos recebidos por referência."
+      ],
+      "project": "Construa um orçamento em memória com funções de crédito e débito. Cada operação precisa documentar suas pré-condições e conservar o saldo na rejeição. Acrescente uma função que cria um relatório por valor e demonstre que ele continua válido depois do retorno.",
+      "question": "Por que const T& para um parâmetro não significa que a função passou a ser dona do objeto?",
+      "answer": "A referência restringe acesso por ela, mas o dono continua responsável pelo tempo de vida.",
+      "distractors": [
+        "Toda referência const copia automaticamente o objeto para dentro da função.",
+        "Const impede a destruição do objeto até todas as referências serem removidas."
+      ],
+      "practices": [
+        {
+          "id": "copia",
+          "title": "Problema 1: criar uma coleção independente",
+          "topics": [
+            "parâmetro por valor",
+            "retorno por valor",
+            "cópia de vector e dados originais"
+          ],
+          "prompt": "Receba um vector<int> por valor, substitua os números negativos por zero e devolva a nova coleção. Demonstre que o vector original conserva um valor negativo e que alterar o resultado depois não o modifica.",
+          "solution": "#include <vector>\n#include <cassert>\n#include <iostream>\nstd::vector<int> normalizar(std::vector<int> valores) {\n    for (int& valor : valores) if (valor < 0) valor = 0;\n    return valores;\n}\nint main() {\n    const std::vector<int> original{-2, 3};\n    auto copia = normalizar(original);\n    assert((copia == std::vector<int>{0, 3}));\n    copia[1] = 9;\n    assert(original[0] == -2 && original[1] == 3);\n    assert(normalizar({}).empty());\n    std::cout << original[0] << ' ' << copia[0] << ' ' << copia[1] << '\\n';\n}",
+          "expectedOutput": [
+            "-2 0 9"
+          ],
+          "explanation": [
+            "A passagem por valor cria uma coleção local para a transformação; o retorno entrega o novo valor ao chamador. O caso vazio não faz nenhum acesso a elemento.",
+            "A atividade usa vector<int>, portanto a independência inclui os elementos. Se os elementos fossem ponteiros para objetos compartilhados, copiar o vector não copiaria automaticamente os objetos."
+          ],
+          "checks": [
+            "O negativo torna-se zero somente na cópia.",
+            "Alterar a cópia não altera o original.",
+            "A coleção vazia permanece válida."
+          ]
+        },
+        {
+          "id": "observacao",
+          "title": "Problema 2: observar o tamanho sem modificar",
+          "topics": [
+            "referência const",
+            "const não significa posse",
+            "pré-condição e pós-condição"
+          ],
+          "prompt": "Receba uma coleção por referência const e conte os valores negativos. Verifique zero ocorrências, duas ocorrências e vazio, garantindo que os elementos não mudam. Explique por que o resultado deve ser um valor, sem referência a um contador local.",
+          "solution": "#include <vector>\n#include <cstddef>\n#include <cassert>\n#include <iostream>\nstd::size_t negativos(const std::vector<int>& valores) {\n    std::size_t total = 0;\n    for (int valor : valores) if (valor < 0) ++total;\n    return total;\n}\nint main() {\n    const std::vector<int> valores{-2, 0, -1, 4};\n    assert(negativos(valores) == 2 && negativos({1, 0}) == 0 && negativos({}) == 0);\n    assert((valores == std::vector<int>{-2, 0, -1, 4}));\n    std::cout << negativos(valores) << '\\n';\n}",
+          "expectedOutput": [
+            "2"
+          ],
+          "explanation": [
+            "A referência const evita copiar a coleção para uma operação de leitura. O contador usa size_t, um tipo capaz de representar contagens de elementos da coleção.",
+            "O retorno por valor não depende da vida do contador local. A função não guarda a referência para uso posterior, e o contrato de observação mantém a coleção recebida intacta."
+          ],
+          "checks": [
+            "Duas ocorrências são contadas.",
+            "Zero e coleção vazia retornam zero.",
+            "Explique por que retornar const size_t& seria incorreto para esse contador."
+          ]
+        }
+      ]
+    },
+    {
       "id": "cpp-classes-raii",
       "title": "C++: classes, RAII e semântica de valor",
       "level": "Intermediário",
