@@ -4,7 +4,7 @@ import html from '../../src/content/deep/html';
 import css from '../../src/content/deep/css';
 
 test('aulas aprofundadas mantêm leitura, mapa, referências e progresso local',async({page})=>{
- for(const id of ['py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade']){
+ for(const id of ['py-numeros-texto','ts-validacao-aninhada','cpp-funcoes-referencias','js-closures-estado','html-dados-formulario','css-cascata-camadas','cs-decimal-limites','sql-joins-cardinalidade','py-funcoes-contratos','ts-genericos-relacoes','cpp-raii-posse-unica','js-promessas-contratos']){
   await page.goto('/#/aula/'+id);
   await expect(page.locator('.lesson-chapter')).toHaveCount(17);
   await expect(page.locator('.lesson-map a')).toHaveCount(17);

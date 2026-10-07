@@ -457,6 +457,146 @@ export default {
       ]
     },
     {
+      "id": "cpp-raii-posse-unica",
+      "title": "C++: RAII, posse exclusiva e transferência de recursos",
+      "level": "Intermediário",
+      "summary": "Associe a duração de um recurso a um objeto e acompanhe o que acontece na saída normal ou por exceção. Esta aula usa RAII e unique_ptr para mostrar aquisição, destruição e transferência de posse, distinguindo mover o ponteiro de copiar o objeto. Os problemas verificam a quantidade de objetos vivos e a preservação de invariantes durante falhas.",
+      "source": "https://eel.is/c++draft/unique.ptr",
+      "topics": [
+        "RAII e duração do recurso",
+        "destrutor na saída de escopo",
+        "desenrolamento por exceção",
+        "unique_ptr não copiável",
+        "move transfere a posse",
+        "ponteiro movido e estado vazio",
+        "rule of zero na composição",
+        "observador sem propriedade"
+      ],
+      "sections": [
+        {
+          "title": "Um recurso precisa de um dono claro",
+          "text": [
+            "Memória dinâmica, arquivos e locks têm uma duração que precisa ser controlada. Adquirir um recurso e confiar que cada caminho lembrará de liberá-lo cria uma relação frágil entre trechos distantes. RAII associa o recurso a um objeto: a aquisição estabelece uma instância válida e a destruição libera o recurso quando sua vida termina. O nome histórico menciona inicialização, mas o benefício central é a relação entre vida do objeto e liberação.",
+            "Um dono deve ser distinguido de um observador. Um ponteiro bruto pode apontar para um objeto sem assumir sua liberação; isso precisa estar claro no contrato. Se dois trechos acham que são os donos exclusivos, podem tentar liberar duas vezes. Se nenhum é dono, o recurso pode ficar sem liberação. O desenho da API deve tornar a responsabilidade visível antes de qualquer otimização."
+          ]
+        },
+        {
+          "title": "O escopo oferece um ponto de destruição previsível",
+          "text": [
+            "Objetos automáticos já construídos são destruídos na saída do escopo, em ordem inversa à construção conforme as regras da linguagem. Isso acontece também em caminhos de retorno antecipado e no desenrolamento de pilha por exceções. Um gerenciador RAII usa essa relação para manter a liberação próxima da definição de posse, sem repetir limpeza em cada ramo.",
+            "Há limites: terminar o processo de certas formas não equivale a um desenrolamento normal, e um construtor que falha não executa o destrutor do objeto completo que nunca terminou de ser construído. Subobjetos já construídos têm suas próprias regras de destruição. Prefira membros que já gerenciam recursos para que uma falha durante a construção não exija uma coleção de ponteiros crus e limpezas manuais."
+          ]
+        },
+        {
+          "title": "unique_ptr representa posse exclusiva",
+          "text": [
+            "std::unique_ptr<T> é um objeto que gerencia um recurso e não pode ser copiado como uma segunda posse exclusiva do mesmo objeto. std::make_unique<T> constrói o objeto gerenciado e entrega o dono. Quando o dono válido é destruído, o deleter correspondente libera o recurso. Não execute delete manual no endereço observado por get, porque a responsabilidade continua com o gerenciador.",
+            "Um unique_ptr vazio não possui objeto e pode ser testado antes do acesso. operator* e operator-> exigem que exista um objeto adequado para o uso. O tipo do ponteiro não remove a obrigação de conferir estado vazio após uma operação que pode esvaziá-lo. A regra de posse evita várias falhas de liberação, mas não torna automaticamente qualquer desreferência válida."
+          ]
+        },
+        {
+          "title": "Mover transfere o gerenciador, sem copiar o objeto",
+          "text": [
+            "Mover um unique_ptr para outro transfere sua responsabilidade e deixa o ponteiro de origem vazio, conforme o contrato desse tipo. O objeto gerenciado não precisa ser copiado e pode permanecer no mesmo endereço. std::move é uma conversão de categoria que permite selecionar uma operação de movimento; não é uma função que por si só desloca bytes ou destrói um recurso.",
+            "Não generalize o estado vazio para todo objeto movido. Muitos tipos ficam válidos, mas com estado não especificado, e precisam ser usados conforme seus contratos. Nesta aula verificamos o estado definido de unique_ptr depois da transferência. O contador de objetos vivos demonstra que mover o gerenciador não cria uma segunda instância de T nem destrói a instância transferida."
+          ]
+        },
+        {
+          "title": "Composição permite seguir a regra de zero",
+          "text": [
+            "Se uma classe contém string, vector e unique_ptr, seus membros podem gerenciar a própria vida. A classe frequentemente não precisa escrever manualmente destrutor, copy e move para liberar esses recursos. Essa preferência é conhecida como rule of zero. A possibilidade de cópia ou movimento da classe resultante depende dos membros; conter unique_ptr torna a cópia padrão incompatível com posse exclusiva.",
+            "Um objeto de domínio pode precisar de uma operação de clone explícita quando copiar significa produzir outro recurso independente. Não transforme uma cópia em compartilhamento silencioso só para compilar. Também não implemente um destrutor sem revisar o efeito sobre operações especiais e invariantes. A aula usa tipos pequenos com posse clara para preparar esse raciocínio antes de cenários de herança e recursos personalizados."
+          ]
+        },
+        {
+          "title": "Verifique vida do recurso em caminhos de falha",
+          "text": [
+            "Um teste de RAII deve observar saída normal, transferência e exceção depois da aquisição. Um contador de instâncias vivas torna essas transições visíveis em um exemplo de estudo. Confira que o contador retorna a zero depois do escopo e que uma transferência conserva uma instância viva, em vez de criar duas. Um teste que só acessa um valor do objeto não demonstra que a limpeza ocorreu.",
+            "Observe também a duração de ponteiros não proprietários. Um endereço obtido por get continua válido somente enquanto o objeto gerenciado vive e não foi substituído ou liberado. Guardar esse endereço depois de destruir o dono cria uma referência pendente. Transfira o modelo para arquivos e locks usando gerenciadores da biblioteca e documente a relação entre dono, observador e escopo no desenho da API."
+          ]
+        }
+      ],
+      "code": "#include <memory>\n#include <utility>\n#include <cassert>\n#include <iostream>\nstruct Recurso {\n    inline static int vivos = 0;\n    Recurso() {++vivos;}\n    ~Recurso() {--vivos;}\n    Recurso(const Recurso&) = delete;\n    Recurso& operator=(const Recurso&) = delete;\n};\nint main() {\n    {\n        auto origem = std::make_unique<Recurso>();\n        auto* endereco = origem.get();\n        auto destino = std::move(origem);\n        assert(!origem && destino.get() == endereco && Recurso::vivos == 1);\n        std::cout << Recurso::vivos << '\\n';\n    }\n    assert(Recurso::vivos == 0);\n    std::cout << Recurso::vivos << '\\n';\n}",
+      "expectedOutput": [
+        "1",
+        "0"
+      ],
+      "output": "Saída: 1 e 0. A transferência conserva o objeto e o escopo do novo dono determina sua liberação.",
+      "trace": [
+        "make_unique cria uma instância gerenciada e um dono.",
+        "Mover transfere o dono para destino e deixa origem vazia.",
+        "Ao sair do escopo, destino libera o objeto e o contador volta a zero."
+      ],
+      "exercise": "Crie um recurso RAII com contador de instâncias. Adquira-o com make_unique, lance runtime_error depois da aquisição e confira, no catch externo, que não ficou instância viva.",
+      "solution": "#include <memory>\n#include <stdexcept>\n#include <cassert>\n#include <iostream>\nstruct Recurso {\n    inline static int vivos = 0;\n    Recurso() {++vivos;}\n    ~Recurso() {--vivos;}\n};\nint main() {\n    bool capturou = false;\n    try {\n        auto recurso = std::make_unique<Recurso>();\n        assert(Recurso::vivos == 1);\n        throw std::runtime_error(\"falha depois da aquisição\");\n    } catch (const std::runtime_error&) {\n        capturou = true;\n        assert(Recurso::vivos == 0);\n    }\n    assert(capturou);\n    std::cout << \"recurso liberado\\n\";\n}",
+      "solutionOutput": [
+        "recurso liberado"
+      ],
+      "bug": "O programa obtém um endereço por get e executa delete nele, embora o unique_ptr continue dono. Ao terminar o escopo haverá uma segunda tentativa de liberação. O trecho deve ser analisado e corrigido, sem executar a falha como demonstração.",
+      "bugCode": "auto dono = std::make_unique<int>(42);\nint* observador = dono.get();\ndelete observador; // não transferiu a responsabilidade do dono",
+      "repair": "Não libere o observador. Deixe o unique_ptr gerenciar a destruição ou use uma operação de transferência explícita prevista pela API quando realmente necessária. Um endereço observado não equivale a posse adquirida.",
+      "checks": [
+        "Mover o gerenciador conserva uma única instância.",
+        "Saída normal e exceção liberam o recurso.",
+        "Um observador não assume responsabilidade de delete."
+      ],
+      "project": "Crie uma classe que reúne um recurso gerenciado e um relatório em vector. Prefira membros RAII e explique as operações de cópia e movimento permitidas. Simule falha após aquisição e registre o número de recursos vivos antes e depois.",
+      "question": "O que ocorre com o objeto gerenciado ao mover um unique_ptr para outro?",
+      "answer": "A posse é transferida; não é necessário copiar o objeto e a origem fica vazia.",
+      "distractors": [
+        "O objeto é copiado e ambos os ponteiros passam a ser donos exclusivos da mesma instância.",
+        "Std::move libera imediatamente o objeto, deixando o destino com um endereço inválido."
+      ],
+      "practices": [
+        {
+          "id": "composicao",
+          "title": "Problema 1: recurso como membro de uma classe",
+          "topics": [
+            "rule of zero na composição",
+            "destrutor na saída de escopo",
+            "RAII e duração do recurso"
+          ],
+          "prompt": "Crie uma classe Caixa que contém unique_ptr<int>, sem destrutor manual. Verifique que não é copiável e é movível, transfira uma instância e preserve o valor 42. Não escreva delete.",
+          "solution": "#include <memory>\n#include <utility>\n#include <type_traits>\n#include <cassert>\n#include <iostream>\nstruct Caixa {std::unique_ptr<int> valor = std::make_unique<int>(42);};\nstatic_assert(!std::is_copy_constructible_v<Caixa>);\nstatic_assert(std::is_move_constructible_v<Caixa>);\nint main() {\n    Caixa a;\n    Caixa b = std::move(a);\n    assert(!a.valor && b.valor && *b.valor == 42);\n    std::cout << *b.valor << '\\n';\n}",
+          "expectedOutput": [
+            "42"
+          ],
+          "explanation": [
+            "O membro unique_ptr gerencia sua própria destruição. A classe não precisa repetir uma limpeza manual; suas operações especiais resultam da composição dos membros.",
+            "Os static_assert conferem o contrato de cópia e movimento do tipo, enquanto o assert de execução confere o estado após a transferência. A posse exclusiva é preservada e o valor continua disponível no novo dono."
+          ],
+          "checks": [
+            "A classe não é copiável.",
+            "A classe pode ser movida.",
+            "O novo dono conserva o valor e nenhum delete manual aparece."
+          ]
+        },
+        {
+          "id": "observador",
+          "title": "Problema 2: observar enquanto o dono permanece vivo",
+          "topics": [
+            "observador sem propriedade",
+            "unique_ptr não copiável",
+            "ponteiro movido e estado vazio"
+          ],
+          "prompt": "Obtenha um ponteiro observador de um unique_ptr, mova a posse para outro unique_ptr e confira que o observador ainda aponta para o objeto enquanto o novo dono está vivo. Encerre o uso do observador antes de liberar o dono.",
+          "solution": "#include <memory>\n#include <utility>\n#include <cassert>\n#include <iostream>\nint main() {\n    auto primeiro = std::make_unique<int>(8);\n    int* observador = primeiro.get();\n    auto segundo = std::move(primeiro);\n    assert(!primeiro && segundo.get() == observador && *observador == 8);\n    *observador = 9;\n    assert(*segundo == 9);\n    std::cout << *segundo << '\\n';\n    observador = nullptr;\n    segundo.reset();\n    assert(!segundo && observador == nullptr);\n}",
+          "expectedOutput": [
+            "9"
+          ],
+          "explanation": [
+            "Mover o gerenciador não muda o endereço da instância gerenciada neste contrato. O observador continua válido durante a vida do objeto, mas não controla sua liberação.",
+            "Antes de reset, o exemplo termina o uso e elimina sua referência observadora. Isso não é um mecanismo geral que limpa todos os aliases automaticamente: outros observadores também precisariam respeitar a mesma duração."
+          ],
+          "checks": [
+            "A origem fica vazia após o movimento.",
+            "O observador acessa o mesmo objeto enquanto ele vive.",
+            "Nenhum uso acontece depois de reset."
+          ]
+        }
+      ]
+    },
+    {
       "id": "cpp-stl-algoritmos",
       "title": "C++: STL, iteradores, algoritmos e ranges",
       "level": "Intermediário",

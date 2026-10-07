@@ -715,6 +715,147 @@ export default {
       ]
     },
     {
+      "id": "js-promessas-contratos",
+      "title": "JavaScript: promises, propagação de falhas e concorrência limitada",
+      "level": "Avançado",
+      "summary": "Entenda o que uma promise representa e como o fluxo muda quando uma tarefa falha. Esta aula compara sequência, concorrência, all e allSettled, sem confundir rejeição com cancelamento. Os problemas constroem recuperação com um valor definido e um grupo de trabalhadores com limite, usando microtarefas reproduzíveis no laboratório.",
+      "source": "https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all",
+      "topics": [
+        "promise pendente fulfilled rejected",
+        "then retorna outra promise",
+        "throw vira rejeição no callback",
+        "await e propagação de erro",
+        "all não cancela tarefas",
+        "allSettled conserva resultados",
+        "concorrência limitada por trabalhadores",
+        "ordem de saída versus ordem de término"
+      ],
+      "sections": [
+        {
+          "title": "Uma promise representa um resultado futuro",
+          "text": [
+            "Uma promise pode estar pendente ou estabelecida como fulfilled ou rejected. O estado estabelecido não alterna entre sucesso e falha depois. A promise é uma representação do resultado; iniciar a operação que a produz pode acontecer antes de você começar a aguardá-la. Por isso criar várias promises e depois fazer await de cada uma não implica que as operações tenham sido iniciadas em sequência.",
+            "A concorrência descreve operações em andamento com períodos de espera que podem se intercalar. Ela não prova execução paralela de código JavaScript no mesmo agente. Uma tarefa intensiva em CPU sem ceder ainda pode impedir outras tarefas de avançar. Os exemplos da aula usam esperas por promises já resolvidas para estudar ordenação de jobs, sem depender de rede, timers ou APIs que o interpretador não fornece."
+          ]
+        },
+        {
+          "title": "Encadear significa construir outro resultado",
+          "text": [
+            "then retorna uma nova promise. Se o callback retorna um valor, esse valor participa do sucesso da nova promise; se lança, a nova promise é rejeitada. Se retorna uma promise, o encadeamento acompanha o resultado dela conforme as regras de resolução. Esquecer return de uma operação assíncrona interna pode deixar o encadeamento externo concluir antes da operação que você queria aguardar.",
+            "Catch é um caminho de tratamento que também produz outra promise. Se o handler retorna um valor, ele recupera o encadeamento como sucesso com esse valor. Se apenas registra o erro e não retorna nada, o sucesso seguinte pode receber undefined. Se o erro deve continuar falha, relance ou devolva uma rejeição apropriada. A política precisa dizer se houve recuperação, substituição ou só observação."
+          ]
+        },
+        {
+          "title": "Await muda a forma de escrever a mesma propagação",
+          "text": [
+            "Uma função async retorna uma promise, mesmo quando seu corpo retorna um valor simples. Await aguarda o resultado e permite continuar com o valor de sucesso; uma rejeição se apresenta como uma exceção nesse ponto da função. Um try/catch pode tratar a falha. Não use await como se ele transformasse qualquer operação num processo cancelável ou escolhesse automaticamente uma política de repetição.",
+            "Await de uma promise já estabelecida também participa do fluxo assíncrono, não se comporta como uma chamada direta puramente síncrona que simplesmente copia o valor e continua no mesmo trecho. Esse detalhe explica intercalamentos de logs. Ao rastrear, separe as linhas executadas imediatamente das continuações agendadas e escreva quando cada operação foi iniciada."
+          ]
+        },
+        {
+          "title": "All e allSettled respondem a perguntas diferentes",
+          "text": [
+            "Promise.all entrega valores em ordem dos elementos de entrada quando todos concluem com sucesso. Quando uma rejeição determina sua falha, ele rejeita sem oferecer um mecanismo automático de cancelamento das demais operações. Tarefas já iniciadas podem continuar produzindo efeitos. Se o domínio exige interromper trabalho, cada operação precisa de um protocolo de cancelamento que ela realmente respeite.",
+            "Promise.allSettled aguarda o estabelecimento de todos os resultados e descreve cada um com status e valor ou razão. Isso permite um relatório parcial, mas não faz uma falha desaparecer nem escolhe se o conjunto é aceitável para o negócio. Um painel pode exibir dados parciais; uma operação atômica pode exigir que qualquer falha invalide o conjunto. Escolha o combinador junto da regra de resultado."
+          ]
+        },
+        {
+          "title": "Limitar concorrência exige controlar a partida das tarefas",
+          "text": [
+            "Mapear todos os itens para funções async inicia muitas operações antes de Promise.all aguardá-las. O combinador não impõe um limite de partidas. Um grupo de trabalhadores pode buscar índices de uma fila compartilhada e iniciar no máximo uma tarefa por trabalhador por vez. A quantidade de trabalhadores então define o limite de operações ativas, desde que a função de tarefa respeite sua promise de término.",
+            "Reserve o índice antes do await para que cada trabalhador receba uma posição distinta. Guarde o resultado nessa posição quando a tarefa terminar, preservando a ordem de saída mesmo se a ordem de término variar. Defina a política de falha: abortar o grupo, registrar por item ou continuar. O exemplo desta aula registra resultados; operações externas reais também precisam tratar cancelamento e liberação de recursos."
+          ]
+        },
+        {
+          "title": "Teste ordem, máximo ativo e recuperação",
+          "text": [
+            "Um teste de concorrência limitada precisa medir quantas tarefas estão ativas, não apenas comparar o resultado final. Incremente um contador no início, atualize o pico, espere uma microtarefa e diminua em finally. Verifique que pico nunca supera o limite e que todos os índices foram processados exatamente uma vez. O caso vazio e um limite inválido pertencem à interface do grupo.",
+            "Para propagação de falha, teste o handler que retorna um fallback e o que relança. Para relatório parcial, inclua um item rejeitado entre dois válidos. Transfira o grupo para importação ou consultas, mantendo a ordem requerida e a política de efeitos. Uma rejeição informada na promise não desfaz automaticamente uma gravação que já ocorreu; idempotência e compensação são contratos adicionais."
+          ]
+        }
+      ],
+      "code": "async function tarefa(valor) {\n  await Promise.resolve();\n  if (valor<0) throw new Error(\"negativo\");\n  return valor*2;\n}\nasync function principal() {\n  const resultados=await Promise.allSettled([tarefa(2),tarefa(-1),tarefa(3)]);\n  const resumo=resultados.map(r=>r.status===\"fulfilled\"?r.value:\"erro\");\n  if (JSON.stringify(resumo)!=='[4,\"erro\",6]') throw new Error(\"relatório\");\n  console.log(JSON.stringify(resumo));\n  const recuperado=await Promise.reject(new Error(\"indisponível\")).catch(()=>0);\n  if (recuperado!==0) throw new Error(\"recuperação\");\n  console.log(recuperado);\n}\nprincipal().catch(erro=>console.log(\"ERRO\",erro.message));",
+      "expectedOutput": [
+        "[4,\"erro\",6]",
+        "0"
+      ],
+      "output": "Saída: [4,\"erro\",6] e 0. O relatório conserva a ordem de entrada e o catch final da operação rejeitada recupera com um número explícito.",
+      "trace": [
+        "As três operações são iniciadas antes de allSettled aguardar o conjunto.",
+        "Cada status é traduzido sem apagar a presença da falha do segundo item.",
+        "O handler de recuperação retorna zero, em vez de registrar e retornar undefined."
+      ],
+      "exercise": "Processe uma lista de inteiros em sequência com uma tarefa async que dobra cada valor. Preserve ordem, aceite vazio e rejeite valores negativos. Demonstre que a chamada continua retornando uma promise de resultado.",
+      "solution": "async function dobrar(valores) {\n  const resultado=[];\n  for (const valor of valores) {\n    await Promise.resolve();\n    if (valor<0) throw new Error(\"negativo\");\n    resultado.push(valor*2);\n  }\n  return resultado;\n}\nasync function verificar() {\n  const resultado=await dobrar([1,2,3]);\n  if (JSON.stringify(resultado)!==\"[2,4,6]\" || (await dobrar([])).length!==0) throw new Error(\"sequência\");\n  let falhou=false;\n  try {await dobrar([-1]);} catch (erro) {falhou=erro.message===\"negativo\";}\n  if (!falhou) throw new Error(\"rejeição\");\n  console.log(JSON.stringify(resultado));\n}\nverificar().catch(erro=>console.log(\"ERRO\",erro.message));",
+      "solutionOutput": [
+        "[2,4,6]"
+      ],
+      "bug": "O catch registra a falha sem retornar fallback nem relançar. A próxima etapa recebe undefined e o encadeamento passou a ser sucesso, embora o autor pense que o erro continua sendo propagado.",
+      "bugCode": "Promise.reject(new Error(\"falha\"))\n .catch(erro=>{console.log(erro.message);})\n .then(valor=>console.log(valor)); // undefined",
+      "repair": "Escolha uma política: retornar um valor de recuperação válido, relançar para manter rejeição ou apenas observar e relançar. Um log não estabelece sozinho qual resultado a etapa seguinte deve receber.",
+      "checks": [
+        "A falha parcial é preservada no relatório.",
+        "Recuperação retorna um valor explicitamente definido.",
+        "Um limite controla operações ativas e não só a quantidade de resultados aguardados."
+      ],
+      "project": "Crie um importador por lotes com grupo de trabalhadores, relatório por índice e uma política documentada para falhas. Use uma tarefa simulada antes de integrar rede; depois acrescente cancelamento conforme a API de host usada, sem dizer que Promise.all cancela automaticamente.",
+      "question": "O que Promise.all faz automaticamente com outras operações já iniciadas quando uma delas rejeita?",
+      "answer": "Não as cancela; o cancelamento exige um mecanismo respeitado pelas operações.",
+      "distractors": [
+        "Cancela todas imediatamente e desfaz os efeitos já produzidos.",
+        "Converte todas as rejeições em valores de sucesso e ignora a falha."
+      ],
+      "practices": [
+        {
+          "id": "recuperacao",
+          "title": "Problema 1: fallback ou propagação",
+          "topics": [
+            "then retorna outra promise",
+            "throw vira rejeição no callback",
+            "await e propagação de erro"
+          ],
+          "prompt": "Demonstre um encadeamento que recupera uma rejeição devolvendo 5 e outro que relança a falha, sendo capturado em try/catch. Confira os dois estados com await e não trate registrar o erro como uma política de recuperação.",
+          "solution": "async function verificar() {\n  const valor=await Promise.resolve(2).then(()=>{throw new Error(\"falha\");}).catch(()=>5);\n  let propagou=false;\n  try {\n    await Promise.reject(new Error(\"original\")).catch(erro=>{throw erro;});\n  } catch (erro) {propagou=erro.message===\"original\";}\n  if (valor!==5 || !propagou) throw new Error(\"contrato\");\n  console.log(valor,propagou);\n}\nverificar().catch(erro=>console.log(\"ERRO\",erro.message));",
+          "expectedOutput": [
+            "5 true"
+          ],
+          "explanation": [
+            "O primeiro catch fornece um valor e estabelece sucesso no novo encadeamento. O segundo relança a mesma falha e a promise resultante continua rejeitada, sendo observada pelo await dentro do try.",
+            "O teste compara resultado e propagação separadamente. A diferença não é apenas a existência de um catch, mas o que o handler retorna ou lança e qual contrato isso entrega à próxima etapa."
+          ],
+          "checks": [
+            "A recuperação devolve 5.",
+            "A propagação conserva a mensagem original.",
+            "Nenhuma falha inesperada é confundida com o fallback esperado."
+          ]
+        },
+        {
+          "id": "trabalhadores",
+          "title": "Problema 2: limitar operações ativas",
+          "topics": [
+            "concorrência limitada por trabalhadores",
+            "ordem de saída versus ordem de término",
+            "all não cancela tarefas"
+          ],
+          "prompt": "Processe cinco números com no máximo dois trabalhadores e mantenha a ordem da saída. A tarefa simulada deve contar ativos, aguardar uma microtarefa e diminuir em finally. Confira pico, total processado e resultado; nesta atividade nenhuma tarefa falha.",
+          "solution": "async function mapaLimitado(valores,limite,tarefa) {\n  if (!Number.isSafeInteger(limite) || limite<1) throw new Error(\"limite\");\n  let proximo=0;\n  const resultado=new Array(valores.length);\n  async function trabalhador() {\n    while (proximo<valores.length) {\n      const indice=proximo++;\n      resultado[indice]=await tarefa(valores[indice]);\n    }\n  }\n  await Promise.all(Array.from({length:Math.min(limite,valores.length)},()=>trabalhador()));\n  return resultado;\n}\nasync function verificar() {\n  let ativos=0,pico=0,total=0;\n  async function tarefa(n) {\n    ativos++;pico=Math.max(pico,ativos);\n    try {await Promise.resolve();total++;return n*2;}\n    finally {ativos--;}\n  }\n  const resultado=await mapaLimitado([1,2,3,4,5],2,tarefa);\n  if (pico>2 || pico<1 || total!==5 || ativos!==0 || JSON.stringify(resultado)!==\"[2,4,6,8,10]\")\n    throw new Error(\"concorrência\");\n  if ((await mapaLimitado([],2,tarefa)).length!==0) throw new Error(\"vazio\");\n  console.log(JSON.stringify(resultado));\n  console.log(pico,total,ativos);\n}\nverificar().catch(erro=>console.log(\"ERRO\",erro.message));",
+          "expectedOutput": [
+            "[2,4,6,8,10]",
+            "2 5 0"
+          ],
+          "explanation": [
+            "O índice é reservado antes do await e cada trabalhador inicia uma nova operação só depois de terminar a anterior. O número de trabalhadores controla o máximo ativo e as posições de escrita preservam a ordem da entrada.",
+            "Promise.all aguarda os trabalhadores, mas não cancela os outros se um falhar. A atividade usa tarefas sem falha para isolar o limite; num relatório parcial, capture a falha por item e guarde um resultado discriminado, como no exemplo com allSettled."
+          ],
+          "checks": [
+            "O pico ativo não supera dois.",
+            "Cinco itens são processados e a saída conserva a ordem.",
+            "Explique a política adicional necessária se uma tarefa rejeitar."
+          ]
+        }
+      ]
+    },
+    {
       "id": "js-modulos-engenharia",
       "title": "JavaScript: módulos, testes e arquitetura",
       "level": "Especialização",

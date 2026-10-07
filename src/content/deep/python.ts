@@ -454,6 +454,145 @@ export default {
       ]
     },
     {
+      "id": "py-funcoes-contratos",
+      "title": "Python: parâmetros, escopo e funções com contratos",
+      "level": "Intermediário",
+      "summary": "Leia uma função como um acordo entre entrada, resultado e efeitos. Você vai escolher parâmetros posicionais ou nomeados, evitar defaults mutáveis compartilhados, compreender LEGB e produzir uma closure com estado próprio. Os problemas verificam independência entre chamadas e preservação dos dados de entrada, incluindo testes que expõem erros que uma única execução esconderia.",
+      "source": "https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions",
+      "topics": [
+        "contrato de entrada e retorno",
+        "parâmetros nomeados e keyword-only",
+        "default avaliado na definição",
+        "sentinela None para default mutável",
+        "escopo LEGB",
+        "nonlocal e binding externo",
+        "closure por chamada",
+        "retorno novo sem modificar entrada"
+      ],
+      "sections": [
+        {
+          "title": "Uma função organiza um contrato verificável",
+          "text": [
+            "Uma função não é apenas um bloco que evita repetição. Ela estabelece o que recebe, o que devolve e quais efeitos pode produzir. Se calcular_total recebe preços, seu contrato precisa dizer a unidade, se aceita uma sequência vazia e se pode modificar a coleção. Escrever essas regras antes do corpo permite avaliar duas implementações diferentes pela mesma expectativa, sem depender dos nomes de variáveis internos.",
+            "Uma docstring pode registrar o contrato perto da implementação, mas texto não aplica regras por si só. Valide o que vem de uma fronteira externa e teste os casos que definem o domínio. Nesta aula algumas funções assumem inteiros fornecidos por quem chama, enquanto outras conferem explicitamente a representação. Distinguir pré-condição de validação executada evita afirmar uma garantia que o código não oferece."
+          ]
+        },
+        {
+          "title": "A assinatura orienta como chamar a operação",
+          "text": [
+            "Parâmetros podem receber argumentos por posição ou por nome conforme a assinatura. Um asterisco antes de certo parâmetro pode torná-lo keyword-only, exigindo que a chamada explicite seu nome. Isso é útil para opções cujo significado não é claro numa lista de valores, como desconto ou incluir_cancelados. Um contrato bem escolhido reduz a chance de trocar dois argumentos que têm o mesmo tipo.",
+            "Use valores padrão para regras estáveis e documentadas, não para esconder dados obrigatórios ausentes. Um parâmetro opcional precisa ter um comportamento definido. Args e kwargs ampliam a flexibilidade, mas podem deixar a interface menos visível quando usados sem necessidade. Prefira uma assinatura explícita para o problema atual e acrescente flexibilidade quando houver uma relação concreta entre as chamadas que precisa suportar."
+          ]
+        },
+        {
+          "title": "Defaults são avaliados quando a função é definida",
+          "text": [
+            "Um objeto usado como valor padrão é criado na avaliação da definição, não novamente a cada chamada. Assim def adicionar(item, lista=[]) pode compartilhar a mesma lista entre chamadas que omitem o argumento. A primeira execução parece correta; a segunda revela dados de uma chamada anterior. Isso não significa que toda lista seja global: significa que o default é um objeto alcançado pela função.",
+            "Use None como sentinela e crie uma lista dentro do corpo quando o argumento não foi fornecido. Se None também for um valor legítimo do domínio e precisar ser distinguido de ausência, use uma sentinela própria. Outra decisão é exigir a coleção explicitamente. A escolha depende do contrato de efeitos: receber uma lista pode autorizar modificá-la ou pode exigir produzir um resultado novo."
+          ]
+        },
+        {
+          "title": "Escopo procura nomes e não copia valores",
+          "text": [
+            "A resolução usual de nomes envolve ambiente local, ambientes de funções externas, módulo global e builtins, frequentemente resumida como LEGB. Uma atribuição a um nome dentro do corpo normalmente o torna local naquele escopo, o que pode impedir uma leitura anterior do nome externo e gerar UnboundLocalError. Não é necessário usar global para qualquer função que consulta um dado do módulo; leitura e atribuição são operações distintas.",
+            "nonlocal permite reatribuir um binding existente no escopo de uma função externa. Ele não cria uma variável de módulo e não mantém uma cópia do valor inicial. Uma closure que lê o binding observa suas alterações conforme o fluxo. No exemplo de acumulador, nonlocal deixa os métodos de uma mesma instância atualizarem total, enquanto chamadas diferentes da fábrica têm seus próprios bindings."
+          ]
+        },
+        {
+          "title": "Estado independente depende dos objetos compartilhados",
+          "text": [
+            "Cada chamada da fábrica pode criar um ambiente novo, mas um objeto recebido de fora pode continuar compartilhado. Se duas instâncias guardam a mesma lista, alterações nessa lista atravessam a separação dos bindings. Copiar a coleção separa o contêiner, mas pode continuar compartilhando elementos mutáveis internos. Documente o nível de independência necessário e teste uma alteração que o exponha.",
+            "Uma função que promete não modificar entrada deve construir outro resultado ou operar apenas com leitura. Para uma lista de inteiros, uma cópia rasa atende à separação de elementos necessária porque os inteiros são imutáveis. Para uma árvore de objetos mutáveis, a estratégia precisa ser revista. Não faça deepcopy automaticamente para qualquer situação: cópias podem ter custo e significados que o domínio não deseja."
+          ]
+        },
+        {
+          "title": "Repetir chamadas é um caso de teste essencial",
+          "text": [
+            "Teste uma função com default mutável pelo menos duas vezes sem fornecer o argumento. Teste também uma lista fornecida explicitamente e confira a política de preservação ou mutação. Para uma fábrica, crie duas instâncias e intercale chamadas. Esses casos verificam relações entre chamadas e ambientes, enquanto um teste isolado só confere um resultado inicial.",
+            "Os exercícios incluem asserts que tornam as expectativas reproduzíveis. Ao transferir o padrão para processamento de arquivos ou uma API, mantenha as entradas explícitas e evite estado de módulo desnecessário. Uma função pura é mais fácil de comparar, mas efeitos podem ser legítimos quando são parte de uma interface clara. O objetivo é saber onde o estado mora, quem pode alterá-lo e o que a função promete conservar."
+          ]
+        }
+      ],
+      "code": "def criar_acumulador(inicial=0):\n    total = inicial\n    def somar(valor):\n        nonlocal total\n        if valor <= 0:\n            return total\n        total += valor\n        return total\n    return somar\n\na = criar_acumulador(1)\nb = criar_acumulador(10)\nassert a(2) == 3 and a(4) == 7 and b(1) == 11\nprint(a(0), b(0))\n\ndef rotulo(nome, *, prefixo=\"Aula\"):\n    return f\"{prefixo}: {nome}\"\n\nprint(rotulo(\"Funções\", prefixo=\"Módulo\"))",
+      "expectedOutput": [
+        "7 11",
+        "Módulo: Funções"
+      ],
+      "output": "Saída: 7 11 e Módulo: Funções. As chamadas da fábrica têm totais separados; prefixo só pode ser fornecido por nome.",
+      "trace": [
+        "Cada fábrica cria seu binding total e devolve a função que o alcança.",
+        "nonlocal permite a atualização do binding externo dessa chamada.",
+        "O asterisco na assinatura torna prefixo keyword-only."
+      ],
+      "exercise": "Crie anexar(valor, valores=None) que sempre devolve uma lista nova com o valor no final e não modifica uma lista fornecida. Duas chamadas sem lista devem produzir resultados independentes.",
+      "solution": "def anexar(valor, valores=None):\n    resultado = [] if valores is None else list(valores)\n    resultado.append(valor)\n    return resultado\n\na = anexar(1)\nb = anexar(2)\noriginal = [3]\nc = anexar(4, original)\nassert a == [1] and b == [2] and c == [3, 4] and original == [3]\nassert a is not b and c is not original\nprint(a, b, c, original)",
+      "solutionOutput": [
+        "[1] [2] [3, 4] [3]"
+      ],
+      "bug": "A lista padrão é compartilhada entre chamadas que omitem o argumento. Executar apenas uma vez não revela a falha de independência prometida pela função.",
+      "bugCode": "def adicionar(valor, valores=[]):\n    valores.append(valor)\n    return valores\nprint(adicionar(1))\nprint(adicionar(2))  # contém também o 1 anterior",
+      "repair": "Use uma sentinela None e construa a lista dentro de cada chamada. Se a função promete preservar uma lista fornecida, copie-a também antes de anexar; apenas mudar o default não resolve esse segundo contrato.",
+      "checks": [
+        "Duas chamadas sem coleção não compartilham dados.",
+        "A coleção recebida permanece inalterada.",
+        "Explique qual binding nonlocal altera e qual assinatura exige argumento nomeado."
+      ],
+      "project": "Crie um processador de registros com função de transformação sem mutação e uma fábrica que acumula estatísticas. Intercale duas instâncias e guarde o resultado de chamadas anteriores para conferir que ele não muda depois de uma chamada nova.",
+      "question": "Quando a lista em um parâmetro padrão como valores=[] é criada?",
+      "answer": "Na avaliação da definição da função, podendo ser reutilizada entre chamadas.",
+      "distractors": [
+        "Sempre no começo de cada chamada, portanto nunca pode compartilhar estado.",
+        "Só quando append é chamado; o compilador cria uma lista por elemento."
+      ],
+      "practices": [
+        {
+          "id": "assinatura",
+          "title": "Problema 1: opção exigida por nome",
+          "topics": [
+            "parâmetros nomeados e keyword-only",
+            "contrato de entrada e retorno"
+          ],
+          "prompt": "Implemente etiqueta(nome, *, prefixo='Estudo') e teste chamada com prefixo nomeado e rejeição de um segundo argumento posicional. Preserve o nome recebido e não use args para aceitar silenciosamente a forma errada.",
+          "solution": "def etiqueta(nome, *, prefixo=\"Estudo\"):\n    return f\"{prefixo}: {nome}\"\n\nassert etiqueta(\"HTML\") == \"Estudo: HTML\"\nassert etiqueta(\"HTML\", prefixo=\"Aula\") == \"Aula: HTML\"\ntry:\n    etiqueta(\"HTML\", \"Aula\")\nexcept TypeError:\n    pass\nelse:\n    raise AssertionError(\"argumento posicional aceito\")\nprint(etiqueta(\"HTML\", prefixo=\"Aula\"))",
+          "expectedOutput": [
+            "Aula: HTML"
+          ],
+          "explanation": [
+            "O asterisco separa a parte que pode ser chamada por posição das opções exigidas por nome. A chamada errada falha antes de executar o corpo, porque não atende à assinatura.",
+            "Esse teste verifica a forma de uso da função, além do resultado formatado. Se o produto passar a permitir o segundo argumento por posição, mude a assinatura e revise a expectativa de rejeição."
+          ],
+          "checks": [
+            "O padrão produz Estudo: HTML.",
+            "O argumento nomeado produz Aula: HTML.",
+            "A chamada posicional indevida gera TypeError."
+          ]
+        },
+        {
+          "id": "isolamento",
+          "title": "Problema 2: coletor com estado por instância",
+          "topics": [
+            "closure por chamada",
+            "retorno novo sem modificar entrada",
+            "sentinela None para default mutável"
+          ],
+          "prompt": "Crie uma fábrica de coletor que recebe uma lista inicial opcional, copia os dados e devolve adicionar e snapshot. A alteração de um snapshot ou da lista inicial após a criação não pode alterar o coletor. Use inteiros como elementos.",
+          "solution": "def coletor(iniciais=None):\n    valores = [] if iniciais is None else list(iniciais)\n    def adicionar(valor):\n        valores.append(valor)\n    def snapshot():\n        return list(valores)\n    return adicionar, snapshot\n\noriginal = [1]\nadicionar, snapshot = coletor(original)\noutro_add, outro_snapshot = coletor()\noriginal.append(9)\nadicionar(2)\ncopia = snapshot()\ncopia.append(8)\nassert snapshot() == [1, 2] and outro_snapshot() == []\nassert original == [1, 9]\noutro_add(3)\nassert outro_snapshot() == [3] and snapshot() == [1, 2]\nprint(snapshot(), outro_snapshot())",
+          "expectedOutput": [
+            "[1, 2] [3]"
+          ],
+          "explanation": [
+            "A fábrica copia a coleção inicial e cada snapshot copia novamente o contêiner interno. Os elementos são inteiros, portanto esse nível de cópia atende ao contrato definido pela atividade.",
+            "Adicionar muda a lista interna sem reatribuir o binding valores, então nonlocal não é necessário para append. Duas chamadas da fábrica mantêm listas independentes, o que a sequência intercalada de testes demonstra."
+          ],
+          "checks": [
+            "A lista inicial pode mudar sem alterar o coletor.",
+            "Um snapshot pode mudar sem alterar o coletor.",
+            "As duas instâncias têm dados independentes."
+          ]
+        }
+      ]
+    },
+    {
       "id": "py-objetos-protocolos",
       "title": "Python: classes, protocolos e metaprogramação",
       "level": "Avançado",

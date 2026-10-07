@@ -2,9 +2,9 @@
 
 ## Conteúdo publicado nesta expansão
 
-O catálogo tem **124 aulas em 20 trilhas**. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **16 aulas de 17 capítulos**, com **32 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora oito aulas cada; as 60 aulas originais continuam disponíveis.
+O catálogo tem **128 aulas em 20 trilhas**. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **20 aulas de 17 capítulos**, com **40 problemas independentes**, soluções comentadas e critérios próprios. As oito trilhas por linguagem têm agora oito ou nove aulas cada; as 60 aulas originais continuam disponíveis.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **542 entradas de cobertura**: **82** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **460** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **574 entradas de cobertura**: **106** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **468** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
@@ -494,6 +494,36 @@ Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de exp
 - Atividades: Problema 1: preservar clientes sem pedido pago (`filtro`); Problema 2: somar coleções antes de combinar (`fanout`).
 - Referência principal: [www.postgresql.org/docs/current/queries-table-expressions.html](https://www.postgresql.org/docs/current/queries-table-expressions.html).
 
+## Segundo aprofundamento desta entrega
+
+### Python: parâmetros, escopo e funções com contratos
+
+- Aula: `#/aula/py-funcoes-contratos`; nível Intermediário; 17 capítulos.
+- Mecanismos: contrato de entrada e retorno; parâmetros nomeados e keyword-only; default avaliado na definição; sentinela None para default mutável; escopo LEGB; nonlocal e binding externo; closure por chamada; retorno novo sem modificar entrada.
+- Atividades: Problema 1: opção exigida por nome (`assinatura`); Problema 2: coletor com estado por instância (`isolamento`).
+- Referência principal: [docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions](https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions).
+
+### TypeScript: genéricos que preservam relações entre dados
+
+- Aula: `#/aula/ts-genericos-relacoes`; nível Avançado; 17 capítulos.
+- Mecanismos: parâmetro de tipo como relação; inferência do tipo de retorno; constraint extends; keyof e chave válida; indexed access T K; readonly na entrada genérica; tipo específico não inventado; teste negativo de propriedade.
+- Atividades: Problema 1: seleção de propriedade opcional (`opcional`); Problema 2: construir T por uma fábrica (`fabrica`).
+- Referência principal: [www.typescriptlang.org/docs/handbook/2/generics.html](https://www.typescriptlang.org/docs/handbook/2/generics.html).
+
+### C++: RAII, posse exclusiva e transferência de recursos
+
+- Aula: `#/aula/cpp-raii-posse-unica`; nível Intermediário; 17 capítulos.
+- Mecanismos: RAII e duração do recurso; destrutor na saída de escopo; desenrolamento por exceção; unique_ptr não copiável; move transfere a posse; ponteiro movido e estado vazio; rule of zero na composição; observador sem propriedade.
+- Atividades: Problema 1: recurso como membro de uma classe (`composicao`); Problema 2: observar enquanto o dono permanece vivo (`observador`).
+- Referência principal: [eel.is/c++draft/unique.ptr](https://eel.is/c++draft/unique.ptr).
+
+### JavaScript: promises, propagação de falhas e concorrência limitada
+
+- Aula: `#/aula/js-promessas-contratos`; nível Avançado; 17 capítulos.
+- Mecanismos: promise pendente fulfilled rejected; then retorna outra promise; throw vira rejeição no callback; await e propagação de erro; all não cancela tarefas; allSettled conserva resultados; concorrência limitada por trabalhadores; ordem de saída versus ordem de término.
+- Atividades: Problema 1: fallback ou propagação (`recuperacao`); Problema 2: limitar operações ativas (`trabalhadores`).
+- Referência principal: [tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all](https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all).
+
 ## Ambiente e entrega
 
 - Capítulos novos carregam ao abrir a aula; o índice inicial conserva títulos, resumo e temas para busca.
@@ -508,7 +538,7 @@ Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de exp
 1. Catálogo: ids, relações, sequência, capítulos e profundidade da teoria própria.
 2. JavaScript: exemplos e saídas reais no interpretador isolado; soluções executáveis.
 3. TypeScript: exemplos e soluções passam pela verificação semântica com `strict`.
-4. Python, C++, C#, PostgreSQL e TypeScript: 100 exemplos/soluções compilados ou executados em processos/base temporários no CI. Nas aulas novas, as saídas são comparadas com expectativas explícitas; TypeScript também passa por strict, incluindo problemas e expectativas negativas de tipos.
+4. Python, C++, C#, PostgreSQL e TypeScript: 112 exemplos/soluções compilados ou executados em processos/base temporários no CI. Nas aulas novas, as saídas são comparadas com expectativas explícitas; TypeScript também passa por strict, incluindo problemas e expectativas negativas de tipos.
 5. Navegador: navegação, busca antes de carregar capítulos, progresso local, falha de download, saída durante carregamento e páginas sem JavaScript; os 16 trechos HTML/CSS das aulas independentes verificam árvore, formulários, valores computados, dimensões e rolagem.
 6. Gates anteriores de build, API, acessibilidade e ciclos de memória continuam ativos.
 

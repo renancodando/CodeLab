@@ -1,8 +1,8 @@
 {
   "edition": "2026-10-06",
   "originalLessons": 60,
-  "expandedLessons": 64,
-  "totalLessons": 124,
+  "expandedLessons": 68,
+  "totalLessons": 128,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
@@ -240,6 +240,81 @@
             }
           ],
           "source": "https://docs.python.org/3/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "py-funcoes-contratos",
+          "title": "Python: parâmetros, escopo e funções com contratos",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "contrato de entrada e retorno",
+              "status": "praticaIndependente",
+              "activities": [
+                "assinatura"
+              ]
+            },
+            {
+              "title": "parâmetros nomeados e keyword-only",
+              "status": "praticaIndependente",
+              "activities": [
+                "assinatura"
+              ]
+            },
+            {
+              "title": "default avaliado na definição",
+              "status": "introduzido"
+            },
+            {
+              "title": "sentinela None para default mutável",
+              "status": "praticaIndependente",
+              "activities": [
+                "isolamento"
+              ]
+            },
+            {
+              "title": "escopo LEGB",
+              "status": "introduzido"
+            },
+            {
+              "title": "nonlocal e binding externo",
+              "status": "introduzido"
+            },
+            {
+              "title": "closure por chamada",
+              "status": "praticaIndependente",
+              "activities": [
+                "isolamento"
+              ]
+            },
+            {
+              "title": "retorno novo sem modificar entrada",
+              "status": "praticaIndependente",
+              "activities": [
+                "isolamento"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "assinatura",
+              "title": "Problema 1: opção exigida por nome",
+              "topics": [
+                "parâmetros nomeados e keyword-only",
+                "contrato de entrada e retorno"
+              ]
+            },
+            {
+              "id": "isolamento",
+              "title": "Problema 2: coletor com estado por instância",
+              "topics": [
+                "closure por chamada",
+                "retorno novo sem modificar entrada",
+                "sentinela None para default mutável"
+              ]
+            }
+          ],
+          "source": "https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions",
           "status": "praticaDoModulo"
         },
         {
@@ -696,6 +771,89 @@
           "status": "praticaDoModulo"
         },
         {
+          "id": "ts-genericos-relacoes",
+          "title": "TypeScript: genéricos que preservam relações entre dados",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "parâmetro de tipo como relação",
+              "status": "praticaIndependente",
+              "activities": [
+                "fabrica"
+              ]
+            },
+            {
+              "title": "inferência do tipo de retorno",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "constraint extends",
+              "status": "praticaIndependente",
+              "activities": [
+                "fabrica"
+              ]
+            },
+            {
+              "title": "keyof e chave válida",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "indexed access T K",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            },
+            {
+              "title": "readonly na entrada genérica",
+              "status": "introduzido"
+            },
+            {
+              "title": "tipo específico não inventado",
+              "status": "praticaIndependente",
+              "activities": [
+                "fabrica"
+              ]
+            },
+            {
+              "title": "teste negativo de propriedade",
+              "status": "praticaIndependente",
+              "activities": [
+                "opcional"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "opcional",
+              "title": "Problema 1: seleção de propriedade opcional",
+              "topics": [
+                "indexed access T K",
+                "keyof e chave válida",
+                "inferência do tipo de retorno",
+                "teste negativo de propriedade"
+              ]
+            },
+            {
+              "id": "fabrica",
+              "title": "Problema 2: construir T por uma fábrica",
+              "topics": [
+                "constraint extends",
+                "tipo específico não inventado",
+                "parâmetro de tipo como relação"
+              ]
+            }
+          ],
+          "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+          "status": "praticaDoModulo"
+        },
+        {
           "id": "ts-tipos-avancados",
           "title": "TypeScript: transformação e programação de tipos",
           "level": "Avançado",
@@ -1078,6 +1236,85 @@
             }
           ],
           "source": "https://eel.is/c++draft/",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "cpp-raii-posse-unica",
+          "title": "C++: RAII, posse exclusiva e transferência de recursos",
+          "level": "Intermediário",
+          "topics": [
+            {
+              "title": "RAII e duração do recurso",
+              "status": "praticaIndependente",
+              "activities": [
+                "composicao"
+              ]
+            },
+            {
+              "title": "destrutor na saída de escopo",
+              "status": "praticaIndependente",
+              "activities": [
+                "composicao"
+              ]
+            },
+            {
+              "title": "desenrolamento por exceção",
+              "status": "introduzido"
+            },
+            {
+              "title": "unique_ptr não copiável",
+              "status": "praticaIndependente",
+              "activities": [
+                "observador"
+              ]
+            },
+            {
+              "title": "move transfere a posse",
+              "status": "introduzido"
+            },
+            {
+              "title": "ponteiro movido e estado vazio",
+              "status": "praticaIndependente",
+              "activities": [
+                "observador"
+              ]
+            },
+            {
+              "title": "rule of zero na composição",
+              "status": "praticaIndependente",
+              "activities": [
+                "composicao"
+              ]
+            },
+            {
+              "title": "observador sem propriedade",
+              "status": "praticaIndependente",
+              "activities": [
+                "observador"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "composicao",
+              "title": "Problema 1: recurso como membro de uma classe",
+              "topics": [
+                "rule of zero na composição",
+                "destrutor na saída de escopo",
+                "RAII e duração do recurso"
+              ]
+            },
+            {
+              "id": "observador",
+              "title": "Problema 2: observar enquanto o dono permanece vivo",
+              "topics": [
+                "observador sem propriedade",
+                "unique_ptr não copiável",
+                "ponteiro movido e estado vazio"
+              ]
+            }
+          ],
+          "source": "https://eel.is/c++draft/unique.ptr",
           "status": "praticaDoModulo"
         },
         {
@@ -1623,6 +1860,85 @@
             }
           ],
           "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-promessas-contratos",
+          "title": "JavaScript: promises, propagação de falhas e concorrência limitada",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "promise pendente fulfilled rejected",
+              "status": "introduzido"
+            },
+            {
+              "title": "then retorna outra promise",
+              "status": "praticaIndependente",
+              "activities": [
+                "recuperacao"
+              ]
+            },
+            {
+              "title": "throw vira rejeição no callback",
+              "status": "praticaIndependente",
+              "activities": [
+                "recuperacao"
+              ]
+            },
+            {
+              "title": "await e propagação de erro",
+              "status": "praticaIndependente",
+              "activities": [
+                "recuperacao"
+              ]
+            },
+            {
+              "title": "all não cancela tarefas",
+              "status": "praticaIndependente",
+              "activities": [
+                "trabalhadores"
+              ]
+            },
+            {
+              "title": "allSettled conserva resultados",
+              "status": "introduzido"
+            },
+            {
+              "title": "concorrência limitada por trabalhadores",
+              "status": "praticaIndependente",
+              "activities": [
+                "trabalhadores"
+              ]
+            },
+            {
+              "title": "ordem de saída versus ordem de término",
+              "status": "praticaIndependente",
+              "activities": [
+                "trabalhadores"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "recuperacao",
+              "title": "Problema 1: fallback ou propagação",
+              "topics": [
+                "then retorna outra promise",
+                "throw vira rejeição no callback",
+                "await e propagação de erro"
+              ]
+            },
+            {
+              "id": "trabalhadores",
+              "title": "Problema 2: limitar operações ativas",
+              "topics": [
+                "concorrência limitada por trabalhadores",
+                "ordem de saída versus ordem de término",
+                "all não cancela tarefas"
+              ]
+            }
+          ],
+          "source": "https://tc39.es/ecma262/multipage/control-abstraction-objects.html#sec-promise.all",
           "status": "praticaDoModulo"
         },
         {

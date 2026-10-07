@@ -539,6 +539,146 @@ export default {
       ]
     },
     {
+      "id": "ts-genericos-relacoes",
+      "title": "TypeScript: genéricos que preservam relações entre dados",
+      "level": "Avançado",
+      "summary": "Use parâmetros de tipo para manter uma relação que se perderia com any ou unions desconectadas. Esta aula constrói seleção de propriedade e transformação de coleções, compara constraints com assertions e mostra por que uma função genérica não pode inventar qualquer T. Os problemas incluem keyof, indexed access, inferência e casos negativos conferidos pelo compilador.",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "topics": [
+        "parâmetro de tipo como relação",
+        "inferência do tipo de retorno",
+        "constraint extends",
+        "keyof e chave válida",
+        "indexed access T K",
+        "readonly na entrada genérica",
+        "tipo específico não inventado",
+        "teste negativo de propriedade"
+      ],
+      "sections": [
+        {
+          "title": "Um genérico preserva informação da chamada",
+          "text": [
+            "Uma função identidade que recebe any e retorna any permite a chamada, mas perde a relação estática entre entrada e saída. Uma função identidade<T>(valor: T): T conserva essa relação: se a chamada recebe um objeto com nome, o retorno ainda descreve aquele objeto. O parâmetro T não é um objeto de execução e não cria uma verificação do dado. Ele liga posições do contrato analisado pelo compilador.",
+            "Use um parâmetro de tipo quando a operação realmente relaciona dados, como elemento de uma coleção e resultado encontrado. Acrescentar letras genéricas sem uma relação pode tornar a assinatura mais difícil sem aumentar a garantia. Uma função que sempre devolve string provavelmente pode declarar string diretamente. Uma função que transforma T em U precisa dizer de onde vem a transformação, normalmente por um callback ou outro argumento que estabelece U."
+          ]
+        },
+        {
+          "title": "Inferência aproveita os argumentos disponíveis",
+          "text": [
+            "O compilador pode inferir T a partir da entrada e U a partir do callback de transformação. Isso reduz a necessidade de escrever parâmetros de tipo na chamada e mantém informação específica. Se uma função recebe readonly T[] e um callback (valor: T) => U, pode devolver U[] sem usar assertions. A implementação cria uma coleção nova e aplica o callback a cada valor, preservando o contrato de elemento.",
+            "A inferência depende do contexto e das relações oferecidas pela assinatura. Se você anota um argumento como um tipo amplo antes de chamar, parte da informação já pode ter sido perdida. Um parâmetro explícito pode ser útil, mas não deve servir para afirmar um tipo incompatível com o dado. Confira qual tipo entrou na chamada e qual saiu, em vez de assumir que o genérico sempre reconstrói a forma original mais estreita."
+          ]
+        },
+        {
+          "title": "Constraints limitam operações permitidas",
+          "text": [
+            "T extends { id: string } informa que todo T aceito oferece ao menos id string, então a função pode ler essa propriedade. A constraint não significa que T é exatamente aquele objeto mínimo. Uma chamada pode escolher um T com campos adicionais obrigatórios. Por isso uma implementação que promete devolver T não pode simplesmente construir { id: 'x' } e presumir que satisfez todos os requisitos do tipo concreto.",
+            "A mensagem de que algo atende à constraint mas T poderia ser outro subtipo aponta essa diferença. Retorne o dado recebido, um tipo mínimo declarado ou use uma fábrica fornecida pelo chamador para construir o tipo concreto. Uma assertion as T pode apagar o diagnóstico sem produzir os campos ausentes. O contrato genérico precisa ser realizável para todas as instâncias de tipo que a assinatura aceita."
+          ]
+        },
+        {
+          "title": "Uma chave depende da forma do objeto",
+          "text": [
+            "keyof T descreve as chaves conhecidas de T. Um segundo parâmetro K extends keyof T conecta a chave ao objeto, e o retorno T[K] representa o tipo da propriedade selecionada. Se o objeto tem id number e nome string, escolher id devolve number, enquanto escolher nome devolve string. Uma chave inexistente deve ser rejeitada na chamada, sem precisar esperar por undefined em runtime.",
+            "Essa relação não valida automaticamente um texto recebido de uma URL como chave segura. Uma variável string ampla pode não pertencer a keyof do objeto e precisa de uma verificação na fronteira. Também existem objetos com index signatures que aceitam conjuntos mais amplos de chaves. Estude a assinatura real do modelo antes de tratar keyof como uma lista fechada em qualquer contexto."
+          ]
+        },
+        {
+          "title": "Somente leitura e ausência continuam fazendo parte do tipo",
+          "text": [
+            "Um parâmetro readonly T[] permite receber coleções de leitura e evita mutação por essa referência na implementação. Uma função que transforma a coleção produz outra, preservando a entrada. Readonly não faz uma cópia e não estabelece imutabilidade profunda para o elemento T. Se T contém objetos mutáveis, o callback ainda pode produzir efeitos ou compartilhar dados, dependendo de seu contrato.",
+            "Se uma propriedade é opcional, o indexed access correspondente inclui a possibilidade de undefined sob strictNullChecks. O genérico deve preservar essa informação e o consumidor precisa tratá-la. Uma assinatura que apaga ausência por assertion devolve uma visão mais conveniente, mas não uma garantia maior. Teste um objeto sem a propriedade opcional para conferir o comportamento que o tipo promete."
+          ]
+        },
+        {
+          "title": "Tipos específicos precisam de testes específicos",
+          "text": [
+            "Use verificações de atribuição para exigir que uma seleção de id seja number e uma seleção de nome seja string. Acrescente @ts-expect-error nas chamadas com chave inexistente e em atribuições de retorno incompatível. Cada expectativa negativa deve mirar um erro concreto. Se a função passar a retornar any, esses testes podem revelar a perda do contrato porque as operações inválidas deixam de ser rejeitadas.",
+            "Execute também os exemplos após o apagamento dos tipos. A implementação pode selecionar a chave errada ou modificar o array recebido mesmo que sua assinatura pareça adequada. Nesta aula a análise strict e a comparação de saídas conferem as duas dimensões. Transfira a relação genérica para um seletor de catálogo ou uma biblioteca de coleções, mantendo dados externos unknown até a validação."
+          ]
+        }
+      ],
+      "code": "function ler<T,K extends keyof T>(objeto:T,chave:K):T[K] {\n  return objeto[chave];\n}\nconst pessoa={id:7,nome:\"Lia\"};\nconst id:number=ler(pessoa,\"id\");\nconst nome:string=ler(pessoa,\"nome\");\nfunction contratosNegativos():void {\n  // @ts-expect-error a chave não existe em pessoa\n  ler(pessoa,\"idade\");\n  // @ts-expect-error a seleção de id retorna number\n  const errado:string=ler(pessoa,\"id\");\n  void errado;\n}\nvoid contratosNegativos;\nif (id!==7 || nome!==\"Lia\") throw new Error(\"seleção\");\nconsole.log(id,nome);",
+      "expectedOutput": [
+        "7 Lia"
+      ],
+      "output": "Saída: 7 Lia. O compilador conserva o tipo de cada propriedade e exige os diagnósticos das duas operações negativas.",
+      "trace": [
+        "T é inferido da forma do objeto e K do literal da chave.",
+        "A constraint impede escolher uma chave que não pertence ao objeto.",
+        "T[K] mantém a relação de retorno, em vez de produzir any ou uma union desnecessariamente ampla."
+      ],
+      "exercise": "Implemente transformar<T,U> que recebe readonly T[] e um callback, retornando uma nova U[]. Transforme números em textos com prefixo, aceite vazio e confira que o array original não muda.",
+      "solution": "function transformar<T,U>(valores:readonly T[],mapear:(valor:T)=>U):U[] {\n  const resultado:U[]=[];\n  for (const valor of valores) resultado.push(mapear(valor));\n  return resultado;\n}\nconst original:readonly number[]=[1,2];\nconst textos:string[]=transformar(original,n=>\"n=\"+n);\nif (JSON.stringify(textos)!=='[\"n=1\",\"n=2\"]' || original[0]!==1 || transformar([],x=>x).length!==0)\n  throw new Error(\"transformação\");\nconsole.log(JSON.stringify(textos));",
+      "solutionOutput": [
+        "[\"n=1\",\"n=2\"]"
+      ],
+      "bug": "A função promete qualquer T que possua id, mas cria somente o objeto mínimo. Um T concreto também pode exigir nome; uma assertion não cria esse campo em runtime.",
+      "bugCode": "function criar<T extends {id:string}>():T {\n  return {id:\"x\"} as T; // promessa sem os campos de um T concreto\n}\nconst pessoa=criar<{id:string;nome:string}>();\nconsole.log(pessoa.nome); // undefined",
+      "repair": "Retorne {id:string} se esse é o valor que a função constrói, ou receba uma fábrica () => T do chamador. Não use as T para prometer campos que a implementação não sabe construir.",
+      "checks": [
+        "A seleção mantém number ou string conforme a chave.",
+        "Chaves inexistentes são rejeitadas pelo compilador.",
+        "Uma transformação produz outra coleção sem apagar o tipo dos elementos."
+      ],
+      "project": "Crie uma biblioteca pequena com ler, transformar e buscar por id. Documente ausência na busca e mutação no callback. Inclua testes de tipo que falham se a API for alargada para any, além de testes de resultado e preservação da entrada.",
+      "question": "Por que T extends {id:string} não permite construir qualquer T só com {id:'x'}?",
+      "answer": "Um T aceito pode exigir outros campos além dos garantidos pela constraint.",
+      "distractors": [
+        "Extends exige que T seja exatamente o objeto mínimo, sem campos adicionais.",
+        "O compilador cria automaticamente os campos restantes quando encontra as T."
+      ],
+      "practices": [
+        {
+          "id": "opcional",
+          "title": "Problema 1: seleção de propriedade opcional",
+          "topics": [
+            "indexed access T K",
+            "keyof e chave válida",
+            "inferência do tipo de retorno",
+            "teste negativo de propriedade"
+          ],
+          "prompt": "Implemente ler e use um tipo com id obrigatório e apelido opcional. A seleção de apelido precisa ser string | undefined, e uma atribuição direta a string deve ser um erro esperado. Execute com o campo ausente.",
+          "solution": "function ler<T,K extends keyof T>(objeto:T,chave:K):T[K] {return objeto[chave];}\ntype Perfil={id:number;apelido?:string};\nconst perfil:Perfil={id:1};\nconst nome:string|undefined=ler(perfil,\"apelido\");\nfunction negativo():void {\n  // @ts-expect-error apelido pode estar ausente\n  const obrigatorio:string=ler(perfil,\"apelido\");\n  void obrigatorio;\n}\nvoid negativo;\nif (nome!==undefined || ler(perfil,\"id\")!==1) throw new Error(\"ausência\");\nconsole.log(String(nome));",
+          "expectedOutput": [
+            "undefined"
+          ],
+          "explanation": [
+            "A relação T[K] preserva a opcionalidade do campo. A declaração do modelo, e não um valor padrão inventado na seleção, determina a possibilidade de undefined.",
+            "O caso negativo garante que strictNullChecks continue exigindo tratamento da ausência. A execução mostra que o objeto realmente não tem apelido; a análise estática não substitui esse teste de comportamento."
+          ],
+          "checks": [
+            "O retorno inclui undefined.",
+            "A atribuição que apaga ausência exige um diagnóstico.",
+            "O id obrigatório continua retornando number."
+          ]
+        },
+        {
+          "id": "fabrica",
+          "title": "Problema 2: construir T por uma fábrica",
+          "topics": [
+            "constraint extends",
+            "tipo específico não inventado",
+            "parâmetro de tipo como relação"
+          ],
+          "prompt": "Receba uma fábrica () => T para produzir um objeto com id e campos específicos. Preserve o T inferido, exija id string e teste a rejeição de uma fábrica com id numérico. Não use assertions.",
+          "solution": "function produzir<T extends {id:string}>(fabrica:()=>T):T {\n  return fabrica();\n}\nconst pessoa=produzir(()=>({id:\"p1\",nome:\"Lia\"}));\nconst nome:string=pessoa.nome;\nfunction negativo():void {\n  // @ts-expect-error id numérico não atende à constraint\n  produzir(()=>({id:1}));\n}\nvoid negativo;\nif (pessoa.id!==\"p1\" || nome!==\"Lia\") throw new Error(\"fábrica\");\nconsole.log(pessoa.id,nome);",
+          "expectedOutput": [
+            "p1 Lia"
+          ],
+          "explanation": [
+            "Quem chama fornece a construção do tipo concreto e a função genérica preserva o resultado dessa fábrica. A implementação não tenta fabricar campos que desconhece.",
+            "A constraint limita o conjunto de fábricas aceitas sem reduzir T ao objeto mínimo. O teste negativo protege a regra de id, e o teste positivo confirma que nome permanece disponível com tipo string."
+          ],
+          "checks": [
+            "O campo específico nome é preservado.",
+            "Id numérico é rejeitado no teste de tipos.",
+            "A implementação retorna o valor produzido sem assertions."
+          ]
+        }
+      ]
+    },
+    {
       "id": "ts-tipos-avancados",
       "title": "TypeScript: transformação e programação de tipos",
       "level": "Avançado",
