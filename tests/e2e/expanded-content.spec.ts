@@ -4,7 +4,7 @@ import {resolveLesson} from '../../src/content/curriculum';
 test('novas trilhas abrem conteúdo completo e guardam progresso local',async({page})=>{
  await page.goto('/#/aprender');await expect(page.locator('.trail-grid .trail')).toHaveCount(20);
  await page.getByRole('link',{name:/Python · do zero ao avançado/}).click();
- await expect(page.locator('.mission-list .mission-row')).toHaveCount(6);
+ await expect(page.locator('.mission-list .mission-row')).toHaveCount(8);
  await page.getByRole('link',{name:/Python: execução, tipos e controle/}).click();
  await expect(page.locator('.lesson-chapter')).toHaveCount(13);
  await expect(page.locator('#aula-contexto')).toContainText('interpretador executa');
