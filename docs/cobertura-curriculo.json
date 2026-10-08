@@ -1,8 +1,8 @@
 {
-  "edition": "2026-10-07-iteracao-variancia-invalidacao",
+  "edition": "2026-10-07-javascript-propriedades",
   "originalLessons": 60,
-  "expandedLessons": 75,
-  "totalLessons": 135,
+  "expandedLessons": 76,
+  "totalLessons": 136,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
@@ -2031,6 +2031,93 @@
             }
           ],
           "source": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
+          "status": "praticaDoModulo"
+        },
+        {
+          "id": "js-propriedades-prototipos",
+          "title": "JavaScript: propriedades, descritores e receptores de acesso",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "propriedade própria versus herdada",
+              "status": "praticaIndependente",
+              "activities": [
+                "extracao"
+              ]
+            },
+            {
+              "title": "descritor de dados e acessor",
+              "status": "praticaIndependente",
+              "activities": [
+                "extracao"
+              ]
+            },
+            {
+              "title": "enumerabilidade e escolha de chaves",
+              "status": "praticaIndependente",
+              "activities": [
+                "extracao"
+              ]
+            },
+            {
+              "title": "writable configurable e escrita recusada",
+              "status": "introduzido"
+            },
+            {
+              "title": "getters e efeitos de leitura",
+              "status": "praticaIndependente",
+              "activities": [
+                "extracao"
+              ]
+            },
+            {
+              "title": "receiver na cadeia de protótipos",
+              "status": "praticaIndependente",
+              "activities": [
+                "receptor"
+              ]
+            },
+            {
+              "title": "estado próprio por instância",
+              "status": "praticaIndependente",
+              "activities": [
+                "receptor"
+              ]
+            },
+            {
+              "title": "cópia de valores versus descritores",
+              "status": "introduzido"
+            },
+            {
+              "title": "freeze raso e objetos aninhados",
+              "status": "introduzido"
+            },
+            {
+              "title": "fronteira com Proxy e dados externos",
+              "status": "introduzido"
+            }
+          ],
+          "practices": [
+            {
+              "id": "extracao",
+              "title": "Problema 1: opções próprias sem executar acessores",
+              "topics": [
+                "propriedade própria versus herdada",
+                "descritor de dados e acessor",
+                "enumerabilidade e escolha de chaves",
+                "getters e efeitos de leitura"
+              ]
+            },
+            {
+              "id": "receptor",
+              "title": "Problema 2: um protótipo, dois estados",
+              "topics": [
+                "receiver na cadeia de protótipos",
+                "estado próprio por instância"
+              ]
+            }
+          ],
+          "source": "https://tc39.es/ecma262/multipage/fundamental-objects.html#sec-object.getownpropertydescriptor",
           "status": "praticaDoModulo"
         },
         {
