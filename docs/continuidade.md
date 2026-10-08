@@ -2,6 +2,10 @@
 
 ## Estado em 8 de outubro de 2026
 
+Prioridade humana mais recente: concluir primeiro a reestruturação meteorológica, depois retomar aprendizagem ativa e aprofundamentos. A branch de clima preserva o catálogo; veja [o contrato e limitações](meteorologia.md). Não confundir previsão Open-Meteo com observação atual nem ativar chuva local por código WMO.
+
+Main anterior `22e02d7cf9325f0c2e04e5ea4ca6a77505119562`: runs 37802151482, 37802009510 e 37801960626 concluídos com sucesso, incluindo as integrações #9/#10. O CI da nova branch precisa concluir antes da integração.
+
 - PRs #1 a #10 integradas. Catálogo: 136 aulas em 20 trilhas; Python, TypeScript, C++ e JavaScript têm dez aulas, outras quatro linguagens nove.
 - 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 28 aulas próprias de 17 capítulos, com 56 problemas independentes.
 - Matriz: 646 entradas, 155 vinculadas a atividades específicas e 491 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.

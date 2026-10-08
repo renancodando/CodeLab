@@ -58,18 +58,18 @@ As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às 2
 
 ## Ambiente vivo
 
-- Consulta Open-Meteo optativa, com **intervalo e validade de cache de cinco minutos**.
+- Motor de evidência separa modelo, observação, radar e pluviômetro. Open-Meteo é previsão, com consulta optativa a cada 30 min; previsão isolada não inicia chuva local.
 - Uma consulta compartilhada por local, cancelamento ao trocar de seleção, timeout de dez segundos e cache limitado a quatro locais. Sem gravar coordenadas no perfil; localização aproximada, solicitada apenas ao acionar a opção.
-- Dados atuais, previsão horária e nascer/pôr do sol. Códigos WMO distinguem garoa, chuva, neve, neblina e trovoadas. A previsão prepara nuvens e não é apresentada como chuva atual.
-- Falha de rede reaproveita dados da mesma cidade por no máximo duas horas, com identificação de cache. Depois disso o ambiente fica neutro e explicitamente ilustrativo.
+- Observação NOAA/AWC METAR usa backend .NET, sete estações permitidas e cache de 10 min, sem enviar coordenadas ao NOAA. Fora da cobertura ou sem backend, o mundo continua estimado. Radar, CPTEC e Cemaden não estão ativos; consulte [fontes e limitações](docs/meteorologia.md).
+- Captura, recebimento, validade, distância e concordância regulam confiança. Falhas mantêm o último estado, envelhecem dados e retiram sustentação de chuva local, sem travar navegação.
 - Transições mais lentas e graduais, umidade acumulada, secagem conforme temperatura/sol/vento/umidade, materiais mais escuros e menos ásperos, poças e ondulações aproximadas por shaders.
-- O mundo prioriza microanimações discretas: vegetação com dois ritmos de vento de baixa amplitude, nuvens com deslocamento lento, água com ondas menores, estrelas com oscilação quase imperceptível, janelas com variação sutil de luz, aves com voo menos mecânico e parallax reduzido.
+- Campo persistente de nuvens baixas, médias e altas, com sementes, vida, crescimento e dissipação; células visuais acompanham massas baixas. Vento e rajadas são compartilhados com vegetação, chuva, névoa, água e áudio.
 - Chuva inclinada, partículas reaproveitadas, respingos menores, neve/granizo, folhas, vento coerente na vegetação, água e nuvens. Aves diminuem progressivamente com chuva, vento e tempestade; cachoeiras respondem ao histórico de chuva.
-- Sol e Lua calculados com SunCalc, fase lunar, estrelas e iluminação noturna. Clarões suaves só com códigos de trovoada, desativados por padrão e suprimidos com movimento reduzido. Trovão tem atraso estimado pela distância simulada.
+- Sol e Lua calculados com SunCalc, fase lunar e máscaras espaciais nas estrelas. Camadas e radiação modulam luz. Clarões exigem evidência observacional convectiva, ficam desativados por padrão e são suprimidos com movimento reduzido. Trovão tem atraso pela distância simulada.
 - Áudio procedural de vento, chuva, cobertura, água, aves, noite e trovões, agora com volumes e transições mais discretos. Só começa após interação; pausa quando a aba fica oculta.
 - Mundo continua em todas as páginas, com menor frequência fora da home. Aba oculta pausa desenho; qualidade se adapta aos tempos medidos. Movimento reduzido acompanha o sistema.
 
-O interior é uma imagem com janelas transparentes; o exterior é 3D estilizado. Reflexos e efeitos de água são aproximações visuais, não simulações físicas ou um ambiente fotorealista integralmente 3D. O intervalo de consulta de cinco minutos não altera a frequência de atualização dos dados fornecidos pela Open-Meteo.
+O interior é uma imagem com janelas transparentes; o exterior é 3D estilizado. Reflexos, névoa, células e secagem são aproximações coerentes, sem precisão física ou espacial de radar. Condensação atua nas janelas 3D; não há máscara independente dos vidros do interior. Cadência de consulta não altera a frequência de atualização da fonte.
 
 ## Memória e execução
 

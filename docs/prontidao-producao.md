@@ -21,6 +21,8 @@ O escopo de uma versão precisa estar explícito. Uma entrega editorial pode est
 
 ## Dependências de uma implantação real
 
+- Meteorologia: o backend .NET precisa servir a rota de observação na mesma origem para METAR. Hospedagem apenas estática mantém previsão/fallback; não afirmar radar ou pluviômetros ativos. Conferir [contratos, fontes e lacunas](meteorologia.md) e a idade dos boletins no domínio publicado.
+
 - Endereço público definido pelo ambiente e disponibilidade dos recursos estáticos e rotas.
 - Execução externa configurada quando o produto oferecer Python, C# ou C++; conferir indisponibilidade e erros no ambiente publicado.
 - Os exemplos TypeScript e PostgreSQL não são apresentados como execução nativa do laboratório atual.
