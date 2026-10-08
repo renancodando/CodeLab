@@ -2,9 +2,9 @@
 
 ## Conteúdo publicado nesta expansão
 
-O catálogo desta edição tem **135 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **27 aulas de 17 capítulos**, com **54 problemas independentes**, soluções comentadas e critérios próprios. Python, TypeScript e C++ têm dez aulas no percurso; as outras cinco trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
+O catálogo desta edição tem **136 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **28 aulas de 17 capítulos**, com **56 problemas independentes**, soluções comentadas e critérios próprios. Python, TypeScript, C++ e JavaScript têm dez aulas no percurso; as outras quatro trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **636 entradas de cobertura**: **149** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **487** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **646 entradas de cobertura**: **155** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **491** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
@@ -53,6 +53,21 @@ A aula `cpp-iteradores-invalidacao` tem 17 capítulos, seis seções originais, 
 Os quatro programas completos e três fixtures das pausas compilaram em C++20 e conferiram saídas e asserts no CI da PR #8. O trecho quebrado contém acesso invalidado e não é executado como se tivesse saída garantida. O exercício recupera um valor por índice somente após reserve, sem inserção, remoção nem reordenação. Views, span e identidade estável permanecem introduzidos e precisam de práticas próprias. Os gabaritos de autoria não equivalem à correção universal do código do estudante.
 
 Referências: [capacidade e reserve](https://eel.is/c++draft/vector.capacity), [modificações de vector](https://eel.is/c++draft/vector.modifiers), [remove](https://eel.is/c++draft/alg.remove) e [erase_if](https://eel.is/c++draft/vector.erasure). O rascunho atual inclui APIs posteriores, mas os programas desta aula usam C++20.
+
+## Aprofundamento: propriedades e protótipos JavaScript
+
+`js-propriedades-prototipos` acrescenta 17 capítulos, seis seções originais, exemplo rastreado, exercício, dois problemas independentes e três pausas. O catálogo definido tem 37 atividades: cinco desafios executam JavaScript e 32 são conceituais.
+
+| Prática independente | Contrato |
+| --- | --- |
+| `extracao` | Campos próprios opcionais, inclusão de não enumeráveis, recusa de acessor sem executar getter, saída de protótipo null e não mutação |
+| `receptor` | Protótipo compartilhado, estado próprio, Reflect.get/set com receiver, validação antes de alterar e limite da convenção não enumerável |
+
+O novo debugging `js-debug-numero-proprio` confere seis grupos de comportamento: finitos/zero/negativos, ausência e herança, getter não chamado, tipos e não finitos, chaves especiais/não enumeráveis e preservação da entrada. As entradas pressupõem objetos ordinários sem Proxy; a função não certifica essa pré-condição. Não apresentar a solução como sanitizador geral.
+
+Os quatro programas possuem saídas e asserts, executados em Node.js durante autoria; a suíte da aula exige também execução no QuickJS. O teste de unidade também confronta os trechos de previsão e escolha. Conferir CI completo antes de integrar. Freeze profundo, Proxy, objetos host e campos privados permanecem introduzidos e exigem problemas próprios.
+
+Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-objects.html#sec-object.hasown), [descritores](https://tc39.es/ecma262/multipage/fundamental-objects.html#sec-object.getownpropertydescriptor), [leitura e receiver](https://tc39.es/ecma262/multipage/ordinary-and-exotic-objects-behaviours.html#sec-ordinaryget), [escrita e receiver](https://tc39.es/ecma262/multipage/ordinary-and-exotic-objects-behaviours.html#sec-ordinarysetwithowndescriptor).
 
 ## Percursos
 
@@ -234,6 +249,14 @@ Referências: [capacidade e reserve](https://eel.is/c++draft/vector.capacity), [
 - Aula: `#/aula/js-objetos-modelos` e página `/aulas/js-objetos-modelos/`.
 - Conteúdo: property keys descriptors; own versus inherited; prototype chain; classes constructors private fields; getters setters; composition inheritance super; symbols; Proxy Reflect; prototype pollution boundaries.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
+
+#### JavaScript: propriedades, descritores e receptores de acesso
+
+- Nível: Avançado.
+- Aula: `#/aula/js-propriedades-prototipos` e página `/aulas/js-propriedades-prototipos/`.
+- Conteúdo: propriedades próprias/herdadas; descritores; enumeração; permissões; efeitos de getters; receiver; estado por instância; limites de cópia, freeze e Proxy.
+- Entrega: 17 capítulos, dois problemas independentes, três pausas e projeto manual.
+- Limites: Proxy não é detectado pela função de referência; cópia e congelamento profundos ainda precisam de práticas específicas.
 
 #### JavaScript: coleções, iteradores e memória
 

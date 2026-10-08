@@ -2,7 +2,7 @@
 
 ## Mecanismos nesta expansão
 
-- 34 atividades próprias em HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL. Quatro desafios JS começam quebrados e são conferidos com casos distintos, entradas vazias, negativos, não mutação e limites.
+- 37 atividades próprias em HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL. Cinco desafios JS começam quebrados e são conferidos com casos distintos, entradas vazias, negativos, não mutação e limites.
 - Metadados de apresentação não incluem soluções ou verificações. Consultar solução é explícito e registrado como assistência. Os verificadores locais são inspecionáveis; não se promete sigilo nem integridade contra edição do armazenamento.
 - Pausas por afterBlock 1, 3 e 5 são inseridas somente nas aulas referenciadas. As demais aulas continuam com leitura completa e suas práticas existentes; a migração geral permanece trabalho futuro.
 - Evidência de domínio usa avaliações distintas por habilidade, tentativas, pistas e assistência. Repetir o mesmo problema não aumenta a quantidade praticada. Percentual é resumo de evidências, não certificação.
@@ -50,3 +50,9 @@ Os gabaritos das pausas são compilados em C++20 no CI; a resposta do estudante 
 As expansões Python, TypeScript e C++ levam o catálogo a 34 atividades: quatro programas JS executados e 30 atividades conceituais. O catálogo principal tem 135 aulas, incluindo 27 aulas próprias de 17 capítulos e 54 problemas independentes. As nove pausas novas têm conceitos exigidos no plano diário; as atividades anteriores conservam seu comportamento. A construção de uma sequência completa de pré-requisitos em todo o catálogo permanece no mapa de interatividade.
 
 O fluxo Python publicado foi conferido em Edge isolado, com correção, persistência após recarregar e retomada offline depois da preparação do cache. O CI do C++ está registrado em continuidade.md. O pedido integral permanece aberto em [17 frentes](etapas-restantes.md).
+
+## Propriedades JavaScript e quinto debugging
+
+A edição da branch de propriedades define 37 atividades: cinco executam JavaScript e 32 são conceituais. As três novas pausas são `js-prever-propriedade`, `js-descritor-sem-getter` e `js-debug-numero-proprio`, ligadas às habilidades JavaScript → Objetos → Propriedades/Descritores/Validação. Todas exigem o conceito no plano diário, conservando fundamentos na primeira sessão.
+
+O desafio corrige uma implementação completa no QuickJS; os outros dois são conceituais. As seis famílias de casos são inspecionáveis no pacote e não prometem sigilo. O fluxo de navegador deve verificar falha seguida de correção, ausência de solução automática, prova executada, persistência offline e conclusão antes de integrar.

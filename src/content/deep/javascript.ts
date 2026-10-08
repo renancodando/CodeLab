@@ -546,6 +546,159 @@ export default {
       ]
     },
     {
+      "id": "js-propriedades-prototipos",
+      "title": "JavaScript: propriedades, descritores e receptores de acesso",
+      "level": "Avançado",
+      "summary": "Distinga uma propriedade do próprio objeto de um valor encontrado no protótipo, investigue descritores e compreenda por que ler um campo pode executar código. Extraia configurações por um contrato explícito e acompanhe o receiver de getters e setters. Pratique com entradas herdadas, números nos limites, acessores e instâncias independentes; Proxy e congelamento profundo permanecem aprofundamentos futuros.",
+      "topics": [
+        "propriedade própria versus herdada",
+        "descritor de dados e acessor",
+        "enumerabilidade e escolha de chaves",
+        "writable configurable e escrita recusada",
+        "getters e efeitos de leitura",
+        "receiver na cadeia de protótipos",
+        "estado próprio por instância",
+        "cópia de valores versus descritores",
+        "freeze raso e objetos aninhados",
+        "fronteira com Proxy e dados externos"
+      ],
+      "source": "https://tc39.es/ecma262/multipage/fundamental-objects.html#sec-object.getownpropertydescriptor",
+      "sections": [
+        {
+          "title": "Encontrar um valor não explica sua origem",
+          "text": [
+            "Considere um registro que nasce por Object.create(base). Ele pode responder a uma leitura de nivel sem possuir esse campo. Desenhe duas caixas: o registro e seu protótipo. A busca de uma propriedade começa no registro e pode continuar na cadeia. Já Object.hasOwn pergunta sobre a caixa inicial. A regra do seu programa precisa decidir se aceita essa herança; uma tela de apresentação e uma validação de configuração podem exigir contratos diferentes.",
+            "No exemplo, nivel pertence à base e nome pertence a pessoa. Por isso Object.hasOwn(pessoa, 'nivel') e o operador in respondem a perguntas distintas. Não substitua essas verificações por Boolean(pessoa.nivel): zero, string vazia e undefined podem ser valores próprios, enquanto um valor herdado pode ser verdadeiro. A ausência de uma propriedade e sua presença com undefined precisam de políticas explícitas.",
+            "Um objeto com protótipo null não recebe os métodos habituais de Object.prototype. Chamar entrada.hasOwnProperty pode falhar ou atingir um campo que a própria entrada forneceu. Use a operação da linguagem diretamente para esse contrato. Isso não elimina todos os efeitos de objetos arbitrários: Proxy pode interceptar consultas. Nesta aula, as entradas de estudo pressupõem objetos ordinários sem Proxy. Essa pré-condição não é certificada pela função; a fronteira mais ampla ainda precisa de estudo."
+          ]
+        },
+        {
+          "title": "Descreva a propriedade antes de ler seu valor",
+          "text": [
+            "Um descritor de dados associa valor e permissões. Um descritor de acessor associa funções de leitura ou escrita. Inspecionar getOwnPropertyDescriptor em um objeto ordinário permite distinguir as duas formas sem chamar o getter da propriedade inspecionada. Ler entrada.nome diretamente pode ter efeitos, lançar uma exceção ou retornar valores diferentes a cada chamada. A ordem entre validar e ler é parte do comportamento, não um detalhe de estilo.",
+            "No exercício, a função aceita apenas uma propriedade própria de dados cujo valor seja number finito. Ela rejeita herança, ausência, strings numéricas e acessores, sem transformar valores por Number. A validação do objeto e da chave ocorre primeiro; depois o descritor é obtido uma vez e seu valor é examinado. Zero e números negativos continuam válidos. O objetivo é ler um dado sob um contrato específico, e não bloquear todos os comportamentos possíveis de JavaScript.",
+            "Descritores de dados e de acessores não são formas que podem ser misturadas livremente numa definição. Ao criar uma propriedade por defineProperty, explicite os atributos exigidos pela API; atributos booleanos omitidos não recebem automaticamente as permissões de uma atribuição comum. Para estudar, registre o descritor antes e depois de cada mudança e confronte-o com a leitura observada. Não apresente copiar um descritor como se fosse copiar um valor já calculado."
+          ]
+        },
+        {
+          "title": "Enumerar campos também escolhe um contrato",
+          "text": [
+            "Object.keys seleciona propriedades próprias enumeráveis de chave string. Um campo próprio não enumerável pode existir e ser lido sem aparecer nesse resultado. Reflect.ownKeys inclui também chaves symbol e não enumeráveis; for...in pode alcançar chaves enumeráveis da cadeia de protótipos. Uma tarefa que pede duas opções conhecidas não precisa percorrer todas essas categorias: pode consultar os descritores de nome e tentativas diretamente.",
+            "O primeiro problema recebe campos opcionais. A ausência é permitida; um campo presente com tipo inválido é recusado. tentativas não enumerável ainda participa porque o contrato pede propriedade própria, independentemente da enumeração. Chaves desconhecidas ficam fora da saída. O programa define a lista antes de ler, evitando que uma enumeração ampla decida silenciosamente o formato aceito.",
+            "A saída usa protótipo null e propriedades de dados com permissões explícitas. A política não é uma cópia genérica nem promete sanitizar qualquer objeto. Os valores aceitos são primitivas, evitando compartilhamento de objetos aninhados nesse problema. Uma chave especial fora da lista não altera o protótipo da saída porque ela sequer é criada. Registre esse limite e não transfira a receita automaticamente para merge recursivo, bibliotecas ou objetos com comportamento interceptado."
+          ]
+        },
+        {
+          "title": "Permissão de escrita e permissão de redefinir",
+          "text": [
+            "writable regula a alteração do valor de uma propriedade de dados; configurable regula operações como redefinir o descritor ou excluir a propriedade sob as regras aplicáveis. Não confunda impedir reatribuição com impedir uma mudança na estrutura interna do valor guardado. Um campo pode apontar para um objeto mutável e ainda ser não gravável. O exemplo usa intencionalmente um número para isolar a permissão do campo.",
+            "Reflect.set oferece um resultado booleano quando uma escrita ordinária não pode ser realizada. Uma atribuição em modo estrito pode lançar TypeError nessa situação; código não estrito pode deixar de escrever sem esse lançamento. Isso não significa que Reflect.set absorva qualquer erro: se um setter executado lançar, a exceção se propaga. Distinga recusa de escrita, resultado retornado e erro do código que foi chamado.",
+            "Object.freeze limita a estrutura imediata do objeto, mas não congela recursivamente todas as referências que ele guarda. Antes de prometer imutabilidade, desenhe o grafo de objetos compartilhados e identifique quem pode alterá-los. Congelamento profundo, ciclos e objetos especiais permanecem introduzidos nesta aula. Não promover esse tema como prática especializada só porque um campo não gravável foi demonstrado."
+          ]
+        },
+        {
+          "title": "O receptor da leitura pode ser outro objeto",
+          "text": [
+            "Um getter encontrado no protótipo pode executar com o objeto receptor como this. No exemplo, dobro está no protótipo e valor está no objeto observado. O resultado acompanha o receptor usado na leitura. Reflect.get permite indicar explicitamente esse receptor, tornando visível uma parte do mecanismo que a expressão objeto.dobro normalmente resolve para você. Não confunda o local em que a função foi encontrada com o objeto que ela observa.",
+            "A escrita via um setter também usa um receptor. O segundo problema coloca o acessor valor num protótipo compartilhado e o estado _valor em cada instância. Ao usar Reflect.set(proto, 'valor', 4, a), a atualização deve atingir a e conservar b. Depois, Reflect.get com b como receptor deve ler o estado de b. Os testes conferem esses efeitos, sem depender apenas de que a função tenha sido chamada.",
+            "O nome iniciado por sublinhado e o atributo não enumerável são convenções e opções de apresentação, não privacidade. O campo aparece em getOwnPropertyNames e pode ser lido ou alterado diretamente. A validação do setter só vale para operações realizadas por esse acessor; ela não estabelece uma barreira de segurança contra outro código que possui a referência. Campos privados de classes exigem seus próprios mecanismos e ficam para aprofundamento posterior."
+          ]
+        },
+        {
+          "title": "Defina a fronteira e teste efeitos observáveis",
+          "text": [
+            "Escreva o contrato antes de escolher uma operação: quais objetos entram, quais chaves são aceitas, se herança participa, se acessores são permitidos, qual tipo retorna e quais efeitos são proibidos. Para a leitura numérica, um contador no getter deve permanecer zero depois da rejeição. Para extração, a saída deve ter protótipo null e a entrada deve permanecer intacta. Para receptor, duas instâncias devem conservar estados diferentes.",
+            "Teste vazio, valor zero, negativo, ausência, campo herdado, campo não enumerável e entradas inválidas. Um programa que funciona somente com um literal simples ainda pode ler uma propriedade herdada ou chamar um getter involuntariamente. O desafio de depuração começa com Number(objeto[chave] ?? 0), que converte strings e inventa um valor para ausência. A correção é avaliada com casos distintos no interpretador local; o feedback aponta a fronteira que falhou.",
+            "Os gabaritos completos têm saídas e verificações concretas. A previsão e a escolha do trecho são atividades conceituais; o desafio executa a implementação JavaScript em sandbox. Os casos reservados não aparecem durante a tentativa, mas são inspecionáveis no pacote local. Nenhum desses mecanismos comprova autoria nem corrige universalmente projetos abertos. Proxy, cópia profunda, objetos host e contratos para campos privados continuam no mapa de aprofundamento."
+          ]
+        }
+      ],
+      "code": "function conferir(condicao, mensagem) { if (!condicao) throw new Error(mensagem); }\nconst base = { nivel: \"base\" };\nconst pessoa = Object.create(base);\npessoa.nome = \"Lia\";\nObject.defineProperty(pessoa, \"interno\", { value: 7, enumerable: false });\nconferir(!Object.hasOwn(pessoa, \"nivel\") && \"nivel\" in pessoa, \"herança\");\nconsole.log(Object.hasOwn(pessoa, \"nivel\"), \"nivel\" in pessoa);\nconsole.log(Object.keys(pessoa).join(\",\"));\nconst proto = { get dobro() { return this.valor * 2; } };\nconst objeto = Object.create(proto);\nobjeto.valor = 3;\nconferir(objeto.dobro === 6, \"receiver normal\");\nconferir(Reflect.get(proto, \"dobro\", { valor: 5 }) === 10, \"receiver explícito\");\nconsole.log(objeto.dobro, Reflect.get(proto, \"dobro\", { valor: 5 }));\nObject.defineProperty(objeto, \"fixo\", { value: 9, writable: false, configurable: false });\nconferir(Reflect.set(objeto, \"fixo\", 10) === false && objeto.fixo === 9, \"escrita recusada\");\nconsole.log(Reflect.set(objeto, \"fixo\", 10), objeto.fixo);",
+      "expectedOutput": [
+        "false true",
+        "nome",
+        "6 10",
+        "false 9"
+      ],
+      "output": "As quatro linhas são false true; nome; 6 10; false 9. A leitura herdada existe, a enumeração ignora interno, o getter usa o receptor e a propriedade não gravável conserva 9.",
+      "trace": [
+        "nivel está no protótipo; nome é a única chave própria enumerável string de pessoa.",
+        "O getter dobro lê this.valor, incluindo o receptor explícito de Reflect.get.",
+        "Reflect.set recusa fixo não gravável e seu valor continua 9."
+      ],
+      "exercise": "Implemente lerNumeroProprio(objeto, chave). As entradas de estudo pressupõem objetos ordinários sem Proxy; a função não detecta Proxy. Confira objeto não nulo, não array, e chave string. Exija uma propriedade própria de dados com number finito e devolva seu valor sem conversão, leitura de getter ou mutação. Rejeite fora do contrato com TypeError; Proxy não faz parte das entradas admitidas.",
+      "solution": "function conferir(condicao, mensagem) { if (!condicao) throw new Error(mensagem); }\nfunction lerNumeroProprio(objeto, chave) {\n  if (objeto === null || typeof objeto !== \"object\" || Array.isArray(objeto) || typeof chave !== \"string\") {\n    throw new TypeError(\"Objeto e chave fora do contrato\");\n  }\n  const descriptor = Object.getOwnPropertyDescriptor(objeto, chave);\n  if (!descriptor || !Object.hasOwn(descriptor, \"value\") ||\n      typeof descriptor.value !== \"number\" || !Number.isFinite(descriptor.value)) {\n    throw new TypeError(\"Propriedade própria de número finito exigida\");\n  }\n  return descriptor.value;\n}\nconferir(lerNumeroProprio({ saldo: 0 }, \"saldo\") === 0, \"zero\");\nconferir(lerNumeroProprio({ saldo: -3 }, \"saldo\") === -3, \"negativo\");\nconst nulo = Object.create(null);\nObject.defineProperty(nulo, \"__proto__\", { value: 4 });\nconferir(lerNumeroProprio(nulo, \"__proto__\") === 4, \"chave como dado\");\nlet leituras = 0;\nconst acessor = { get saldo() { leituras++; return 20; } };\nconst invalidos = [[Object.create({ saldo: 20 }), \"saldo\"], [acessor, \"saldo\"],\n  [{ saldo: \"20\" }, \"saldo\"], [{ saldo: Infinity }, \"saldo\"], [{ saldo: NaN }, \"saldo\"],\n  [null, \"saldo\"], [[], \"length\"], [{}, \"ausente\"], [{ saldo: 20 }, 1]];\nfor (const [entrada, chave] of invalidos) {\n  let recusou = false;\n  try { lerNumeroProprio(entrada, chave); } catch (erro) { recusou = erro instanceof TypeError; }\n  conferir(recusou, \"entrada inválida\");\n}\nconferir(leituras === 0, \"getter não chamado\");\nconsole.log(lerNumeroProprio({ saldo: 0 }, \"saldo\"), lerNumeroProprio({ saldo: -3 }, \"saldo\"));\nconsole.log(leituras, lerNumeroProprio(nulo, \"__proto__\"));",
+      "solutionOutput": [
+        "0 -3",
+        "0 4"
+      ],
+      "bug": "A leitura direta pode chamar um getter, alcançar herança e converter strings. O default também trata ausência como se fosse um dado real. O contrato pede número próprio finito sem esses efeitos.",
+      "bugCode": "function lerNumeroProprio(objeto, chave) {\n  return Number(objeto[chave] ?? 0);\n}",
+      "repair": "Valide objeto e chave, obtenha um descritor próprio e exija sua forma de dados. Examine descriptor.value sem conversão e devolva-o; rejeite ausência, herança, acessor e número não finito. Meça chamadas de getter para verificar efeitos.",
+      "checks": [
+        "Aceitar zero e negativos finitos em propriedades próprias, inclusive não enumeráveis.",
+        "Rejeitar herança, ausência, acessores e tipos inválidos sem chamar getter.",
+        "Conservar a entrada e distinguir receiver, propriedade de dados e permissões."
+      ],
+      "project": "Crie um carregador de configurações com lista explícita de campos e tipos primitivos, junto de objetos de apresentação que compartilham um protótipo. Entregue testes de herança, campos não enumeráveis, valores falsy, acessores recusados e duas instâncias com estado separado. Registre a fronteira de objetos ordinários e as operações permitidas; projetos com Proxy, cópia profunda ou campos privados exigem regras adicionais. Revisão manual.",
+      "question": "Como ler um número próprio de dados sem chamar o getter da propriedade em um objeto ordinário?",
+      "answer": "Consultar o descritor próprio, exigir value numérico finito e retornar esse valor.",
+      "distractors": [
+        "Converter objeto[chave] com Number e usar zero quando faltar.",
+        "Usar for...in e aceitar qualquer valor encontrado no protótipo."
+      ],
+      "practices": [
+        {
+          "id": "extracao",
+          "title": "Problema 1: opções próprias sem executar acessores",
+          "prompt": "Implemente extrairOpcoes para registros ordinários não nulos e não arrays. nome e tentativas são opcionais, mas, quando próprios, devem ser dados: string para nome e inteiro seguro não negativo para tentativas. Inclua campos não enumeráveis, ignore herança e demais chaves, não chame getters e devolva objeto de protótipo null com as permissões explícitas do gabarito.",
+          "topics": [
+            "propriedade própria versus herdada",
+            "descritor de dados e acessor",
+            "enumerabilidade e escolha de chaves",
+            "getters e efeitos de leitura"
+          ],
+          "solution": "function conferir(condicao, mensagem) { if (!condicao) throw new Error(mensagem); }\nfunction extrairOpcoes(entrada) {\n  if (entrada === null || typeof entrada !== \"object\" || Array.isArray(entrada)) throw new TypeError(\"Registro exigido\");\n  const saida = Object.create(null);\n  for (const chave of [\"nome\", \"tentativas\"]) {\n    const d = Object.getOwnPropertyDescriptor(entrada, chave);\n    if (!d) continue;\n    if (!Object.hasOwn(d, \"value\")) throw new TypeError(\"Acessor não permitido\");\n    const valor = d.value;\n    if (chave === \"nome\" ? typeof valor !== \"string\" : !Number.isSafeInteger(valor) || valor < 0) throw new TypeError(\"Valor inválido\");\n    Object.defineProperty(saida, chave, { value: valor, writable: true, enumerable: true, configurable: true });\n  }\n  return saida;\n}\nconst entrada = Object.create({ nome: \"Herdado\" });\nObject.defineProperty(entrada, \"tentativas\", { value: 0, enumerable: false });\nconst resultado = extrairOpcoes(entrada);\nconferir(Object.getPrototypeOf(resultado) === null, \"sem protótipo\");\nconferir(!Object.hasOwn(resultado, \"nome\") && resultado.tentativas === 0, \"somente próprios\");\nlet leituras = 0;\nconst acessor = { get nome() { leituras++; return \"Lia\"; } };\nlet recusou = false;\ntry { extrairOpcoes(acessor); } catch (erro) { recusou = erro instanceof TypeError; }\nconferir(recusou && leituras === 0, \"getter recusado sem chamada\");\nfor (const valor of [-1, 1.5, \"2\", Infinity, NaN, Number.MAX_SAFE_INTEGER + 1]) {\n  recusou = false;\n  try { extrairOpcoes({ tentativas: valor }); } catch (erro) { recusou = erro instanceof TypeError; }\n  conferir(recusou, \"tentativas inválidas\");\n}\nconst especial = Object.create(null);\nObject.defineProperty(especial, \"__proto__\", { value: { ativo: true }, enumerable: true });\nespecial.nome = \"Lia\";\nconst copia = extrairOpcoes(especial);\nconferir(Object.keys(copia).join(\",\") === \"nome\", \"lista permitida\");\nconferir(Object.getPrototypeOf(copia) === null && !Object.hasOwn(copia, \"__proto__\"), \"campo fora da lista\");\nconferir(Object.keys(extrairOpcoes({})).length === 0, \"registro vazio\");\ncopia.nome = \"Outra\";\nconferir(especial.nome === \"Lia\", \"sem mutação\");\nconsole.log(Object.keys(resultado).join(\",\"), resultado.tentativas);\nconsole.log(copia.nome, especial.nome, leituras);",
+          "expectedOutput": [
+            "tentativas 0",
+            "Outra Lia 0"
+          ],
+          "explanation": [
+            "A lista de campos é definida pela API antes da inspeção, e cada descritor próprio é obtido uma vez. Ausência não é confundida com valor inválido. Ao rejeitar acessores pelo descritor, o programa mantém o contador do getter em zero; campos não enumeráveis continuam elegíveis porque enumeração não faz parte desse contrato.",
+            "A saída cria propriedades de dados com permissões próprias e protótipo null. Apenas primitivas admitidas são transferidas, e alterar nome na saída não modifica a entrada. O caso de chave especial fora da lista confronta o escopo da extração, sem alegar proteção universal contra objetos interceptados ou merge profundo."
+          ],
+          "checks": [
+            "Ignorar nome herdado e incluir tentativas próprias não enumeráveis com zero.",
+            "Rejeitar acessor sem executá-lo e recusar tentativas fora da faixa segura.",
+            "Devolver protótipo null, ignorar chaves desconhecidas e preservar a entrada."
+          ]
+        },
+        {
+          "id": "receptor",
+          "title": "Problema 2: um protótipo, dois estados",
+          "prompt": "Implemente criarContador usando um protótipo compartilhado com getter/setter valor e um campo próprio _valor não enumerável por instância. Aceite apenas inteiros seguros pelo construtor e setter. Verifique Reflect.get e Reflect.set com receptor explícito, atualização de uma instância sem mudar a outra e recusa antes de alterar estado. O campo _valor não é privado.",
+          "topics": [
+            "receiver na cadeia de protótipos",
+            "estado próprio por instância"
+          ],
+          "solution": "function conferir(condicao, mensagem) { if (!condicao) throw new Error(mensagem); }\nconst prototipo = {\n    get valor() { return this._valor; },\n    set valor(novo) {\n      if (!Number.isSafeInteger(novo)) throw new TypeError(\"Inteiro seguro exigido\");\n      this._valor = novo;\n    }\n};\nfunction criarContador(inicial) {\n  if (!Number.isSafeInteger(inicial)) throw new TypeError(\"Inteiro seguro exigido\");\n  return Object.create(prototipo, {\n    _valor: { value: inicial, writable: true, enumerable: false, configurable: false }\n  });\n}\nconst a = criarContador(1), b = criarContador(9);\nconst proto = Object.getPrototypeOf(a);\nconferir(proto === Object.getPrototypeOf(b), \"protótipo compartilhado\");\nconferir(!Object.hasOwn(a, \"valor\") && Object.hasOwn(a, \"_valor\"), \"estado por receptor\");\nconferir(Reflect.set(proto, \"valor\", 4, a) === true, \"escrita no receiver\");\nconferir(a.valor === 4 && b.valor === 9, \"instâncias independentes\");\nconferir(!Object.hasOwn(proto, \"_valor\"), \"protótipo sem estado\");\nconferir(Reflect.get(proto, \"valor\", b) === 9, \"leitura no outro receiver\");\nlet recusou = false;\ntry { a.valor = 2.5; } catch (erro) { recusou = erro instanceof TypeError; }\nconferir(recusou && a.valor === 4, \"validação antes de mudar\");\nfor (const invalido of [NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, \"4\", null]) {\n  recusou = false;\n  try { criarContador(invalido); } catch (erro) { recusou = erro instanceof TypeError; }\n  conferir(recusou, \"construtor inválido\");\n  recusou = false;\n  try { a.valor = invalido; } catch (erro) { recusou = erro instanceof TypeError; }\n  conferir(recusou && a.valor === 4, \"setter inválido sem mudança\");\n}\nconferir(criarContador(0).valor === 0 && criarContador(-1).valor === -1, \"inteiros permitidos\");\nconferir(Object.keys(a).length === 0 && Object.getOwnPropertyNames(a).includes(\"_valor\"), \"não enumerável não é privado\");\nconsole.log(a.valor, b.valor, Reflect.get(proto, \"valor\", b));\nconsole.log(Object.hasOwn(proto, \"_valor\"), Object.keys(a).length);\n",
+          "expectedOutput": [
+            "4 9 9",
+            "false 0"
+          ],
+          "explanation": [
+            "O getter e o setter são encontrados no protótipo compartilhado, enquanto this aponta para o receptor da operação. A escrita explícita com a deve mudar apenas seu campo próprio; a leitura com b deve alcançar o estado de b. Os asserts conferem protótipo, posse do campo e independência, evitando aceitar uma implementação que guarde todo estado numa variável compartilhada.",
+            "A validação acontece antes da atribuição pelo setter. Uma entrada fracionária deve lançar TypeError e conservar o valor anterior. O teste de enumeração também explica o limite: _valor fica fora de Object.keys, mas continua observável por getOwnPropertyNames. Isso verifica organização do acesso, sem prometer encapsulamento contra mudanças diretas."
+          ],
+          "checks": [
+            "Compartilhar o protótipo, manter _valor próprio e conservar b ao atualizar a.",
+            "Ler b por Reflect.get e escrever a por Reflect.set com o receptor correspondente.",
+            "Recusar fracionário sem mudança e distinguir não enumerável de privado."
+          ]
+        }
+      ]
+    },
+    {
       "id": "js-colecoes-iteracao",
       "title": "JavaScript: coleções, iteradores e memória",
       "level": "Avançado",

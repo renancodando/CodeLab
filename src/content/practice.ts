@@ -457,6 +457,76 @@ export const practiceActivities:PracticeActivity[]=[
   "hint": "Os valores foram preservados, mas os endereços anteriores não são um contrato válido depois da realocação.",
   "minutes": 2
 }
+,{
+  "id": "js-prever-propriedade",
+  "requiresConcept": true,
+  "language": "javascript",
+  "lessonIds": [
+    "js-propriedades-prototipos"
+  ],
+  "skillIds": [
+    "javascript.objetos.propriedades"
+  ],
+  "afterBlock": 1,
+  "kind": "predict",
+  "capability": "leitura",
+  "title": "O campo está no registro?",
+  "prompt": "Escreva as duas linhas. hasOwn verifica o objeto inicial; in pode alcançar sua cadeia. Esta pausa compara uma previsão e não executa o programa.",
+  "code": "const base = { nivel: \"base\" };\nconst registro = Object.create(base);\nconsole.log(Object.hasOwn(registro, \"nivel\"), \"nivel\" in registro);\nconsole.log(registro.nivel);",
+  "hint": "Separe a existência na cadeia da posse da propriedade no registro.",
+  "minutes": 2
+},
+{
+  "id": "js-descritor-sem-getter",
+  "requiresConcept": true,
+  "language": "javascript",
+  "lessonIds": [
+    "js-propriedades-prototipos"
+  ],
+  "skillIds": [
+    "javascript.objetos.descritores"
+  ],
+  "afterBlock": 3,
+  "kind": "choice",
+  "capability": "reconhecimento",
+  "title": "Inspecione antes de ler",
+  "prompt": "entrada é um objeto ordinário, sem Proxy. nome pode ser getter. Qual operação consulta seu descritor próprio sem chamar esse getter? Decisão conceitual; nenhuma promessa de controlar objetos interceptados.",
+  "options": [
+    {
+      "id": "descriptor",
+      "text": "Object.getOwnPropertyDescriptor(entrada, \"nome\")"
+    },
+    {
+      "id": "leitura",
+      "text": "entrada.nome"
+    },
+    {
+      "id": "copia",
+      "text": "Object.assign({}, entrada)"
+    }
+  ],
+  "hint": "Ler o valor e copiar valores podem executar um acessor. Procure a operação que fornece a forma da propriedade.",
+  "minutes": 2
+},
+{
+  "id": "js-debug-numero-proprio",
+  "requiresConcept": true,
+  "language": "javascript",
+  "lessonIds": [
+    "js-propriedades-prototipos"
+  ],
+  "skillIds": [
+    "javascript.objetos.validacao"
+  ],
+  "afterBlock": 5,
+  "kind": "debug",
+  "capability": "depuracao",
+  "title": "O saldo veio do protótipo",
+  "prompt": "Implemente lerNumeroProprio(objeto, chave). As entradas de estudo pressupõem objetos ordinários sem Proxy; a função não detecta Proxy. Confira objeto não nulo, não array, e chave string. Exija uma propriedade própria de dados com number finito e devolva seu valor sem conversão, leitura de getter ou mutação. Rejeite fora do contrato com TypeError; Proxy não faz parte das entradas admitidas. O programa quebrado também converte strings e inventa zero. Corrija a função inteira: os casos conferem ausência, herança, acessores, chaves especiais e não mutação. Os verificadores locais são inspecionáveis e não comprovam autoria.",
+  "code": "function lerNumeroProprio(objeto, chave) {\n  return Number(objeto[chave] ?? 0);\n}",
+  "hint": "Inspecione o descritor próprio antes de obter valor; uma leitura direta já pode chamar código.",
+  "minutes": 4
+}
 ];
 export function practicesForLesson(id:string):PracticeActivity[]{
  return practiceActivities.filter(activity=>activity.lessonIds.includes(id));

@@ -100,3 +100,11 @@ O CI de main após a PR #7 também foi aprovado no run 37700233574. O checkpoint
 O build local após sincronização encontrou um falso desatualizado no índice: o checkout usa CRLF, enquanto o gerador produz LF. A branch `fix/indice-crlf-windows` normaliza apenas CRLF na comparação --check, preservando diferenças de conteúdo, formato e contagens. Dois testes executam o gerador em fixtures LF/CRLF e exigem falha em metadados e matriz realmente divergentes. Ambos passaram no Windows; o build local ultrapassou índice/matriz e TypeScript, e está concluindo a geração dos assets.
 
 Conferir a PR de portabilidade e seu CI completo antes de integrar. O catálogo permanece com 135 aulas e 34 atividades; esta correção não amplia cobertura curricular nem comprova implantação integral.
+
+## Propriedades JavaScript em preparação
+
+Branch `curriculo-javascript-propriedades-descritores`, a partir da correção Windows `bc291e4bba41c06637d714d5925e1dc9ba784381` (PR #9). Integrar primeiro essa dependência após CI completo. Novo módulo `js-propriedades-prototipos`: 17 capítulos, quatro programas com asserts e saídas, dois problemas independentes, previsão, escolha e debugging executado.
+
+Na branch: 136 aulas/20 trilhas, 28 aulas próprias/56 problemas, 646 entradas (155 vinculadas, 491 introduzidas), 37 atividades (cinco JS executadas, 32 conceituais). Python, TypeScript, C++ e JavaScript têm dez aulas; as outras quatro linguagens têm nove. Quatro programas passaram em Node.js durante autoria; validar também QuickJS, casos específicos e fluxo offline/persistência no CI antes de integrar.
+
+A pré-condição dos exemplos exclui Proxy e não é detectada pelo validador. Não declarar sanitização genérica, freeze profundo ou projetos automaticamente aprovados. A verificação pública C++ passou após a PR #8 (17 capítulos, três pausas, correção e persistência, sem pageerror/requestfailed nesse cenário). O fluxo Python público também passou offline. Os demais fluxos de produção continuam no mapa de 17 frentes.

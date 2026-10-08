@@ -79,3 +79,12 @@ it('invalidação C++ espera o conceito sem antecipar conteúdo na primeira sess
  expect(prepared.items[0].activityId).toBe(concept);
  expect(new Set(prepared.items.slice(1).map(i=>i.activityId))).toEqual(new Set(advanced));
 });
+
+it('a primeira sessão JavaScript conserva fundamentos antes das novas práticas de objetos',()=>{
+ const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'javascript'};
+ const advanced=['js-prever-propriedade','js-descritor-sem-getter','js-debug-numero-proprio'],concept='conceito-2-js-propriedades-prototipos';
+ expect(buildDailySession(state,catalog,clock).items.some(i=>advanced.includes(i.activityId))).toBe(false);
+ state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
+ const plan=buildDailySession(state,catalog,clock);
+ expect(plan.items[0].activityId).toBe(concept);expect(new Set(plan.items.slice(1).map(i=>i.activityId))).toEqual(new Set(advanced));
+});

@@ -55,6 +55,7 @@ describe('prática distribuída e verificação de comportamento',()=>{
   expect(result.feedback).toContain('negativos');
  });
  const conceptualAnswers:Record<string,string|string[]>={
+'js-prever-propriedade':'false true\nbase','js-descritor-sem-getter':'descriptor',
 'cpp-prever-intervalo':'6,2','cpp-ordenar-erase':['for','testar','apagar','senao','avancar','fimif','fimfor'],'cpp-reobter-reserva':'reobter',
   'html-label-vinculo':'email-contato','html-dialogo-foco':'cancelar','html-ordenar-formulario':['inicio','rotulo','campo','botao','fim'],
   'css-grid-minimo':'minmax(0,1fr)','css-grade-estreita':'adaptar','css-prever-cascata':'green',
@@ -103,4 +104,23 @@ describe('prática distribuída e verificação de comportamento',()=>{
   expect((await evaluatePractice('py-prever-range','x'.repeat(30001))).passed).toBe(false);
   expect((await evaluatePractice('js-debug-carrinho',['linha'])).passed).toBe(false);
  });
+});
+
+it('leitura numérica própria relata herança após o caso comum sem entregar a solução',async()=>{
+ const result=await evaluatePractice('js-debug-numero-proprio','function lerNumeroProprio(obj,chave){return Number(obj[chave]??0);}');
+ expect(result.tests[0].passed).toBe(true);expect(result.tests[1].passed).toBe(false);
+ expect(result.feedback).toContain('herança');expect(result.feedback).not.toContain('getOwnPropertyDescriptor');
+});
+it('retornar um número fixo não passa pelos contratos de leitura própria',async()=>{
+ const result=await evaluatePractice('js-debug-numero-proprio','function lerNumeroProprio(){return 0;}');
+ expect(result.passed).toBe(false);expect(result.tests[0].passed).toBe(false);
+});
+
+it('previsão e escolha de descritor JavaScript correspondem aos trechos publicados',async()=>{
+ const prediction=practiceActivities.find(a=>a.id==='js-prever-propriedade')!;
+ const source=practiceActivities.find(a=>a.id==='js-descritor-sem-getter')!.options!.find(o=>o.id==='descriptor')!.text;
+ const {evaluate}=await import('../../src/execution/evaluate');
+ let result=await evaluate(prediction.code!,'laboratorio');expect(result.error).toBeUndefined();expect(result.logs).toEqual(['false true','base']);
+ result=await evaluate('let leituras=0;const entrada={get nome(){leituras++;return "Lia";}};const d='+source+';console.log(typeof d.get,leituras,Object.hasOwn(d,"value"));','laboratorio');
+ expect(result.error).toBeUndefined();expect(result.logs).toEqual(['function 0 false']);
 });
