@@ -30,7 +30,7 @@ count(source);
 const matrix=JSON.stringify({edition,originalLessons,expandedLessons:lessons.length,totalLessons:originalLessons+lessons.length,totalCourses:original+courses.length,statusLegend:previous.statusLegend,courses:coverage.map(c=>({...c,lessons:c.lessons.map(l=>({...l,status:'praticaDoModulo',topics:l.topics.map(title=>({title,status:l.practices?.some(p=>p.topics.includes(title))?'praticaIndependente':'introduzido',...(l.practices?.some(p=>p.topics.includes(title))?{activities:l.practices.filter(p=>p.topics.includes(title)).map(p=>p.id)}:{})}))}))}))},null,2)+'\n';
 for(const [path,content] of [['src/content/deep/index.ts',index],['docs/cobertura-curriculo.json',matrix]]){
  if(process.argv.includes('--check')){
-  if(await readFile(path,'utf8')!==content)throw new Error(path+' está desatualizado. Execute npm run content:generate e revise as contagens/documentação.');
+  if((await readFile(path,'utf8')).replace(/\r\n/g,'\n')!==content)throw new Error(path+' está desatualizado. Execute npm run content:generate e revise as contagens/documentação.');
  }else await writeFile(path,content);
 }
 console.log('Índice e matriz '+(process.argv.includes('--check')?'conferidos':'atualizados')+': '+courses.length+' percursos adicionais, '+lessons.length+' aulas.');
