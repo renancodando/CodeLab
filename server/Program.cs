@@ -9,9 +9,12 @@ builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = 
 builder.Services.AddSingleton<ExecutionQueue>();
 builder.Services.AddHostedService(provider => provider.GetRequiredService<ExecutionQueue>());
 builder.Services.AddHttpClient("judge0",client => client.Timeout = TimeSpan.FromSeconds(20));
+builder.Services.AddSingleton<Meteorologia>();
+builder.Services.AddHttpClient("meteorologia",cliente => { cliente.Timeout=TimeSpan.FromSeconds(6);cliente.MaxResponseContentBufferSize=100_000;cliente.DefaultRequestHeaders.UserAgent.ParseAdd("CodeLab/0.1"); });
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = 429;
+    options.AddPolicy("meteorologia",context => RateLimitPartition.GetFixedWindowLimiter(context.Connection.RemoteIpAddress?.ToString() ?? "unknown",_ => new FixedWindowRateLimiterOptions { PermitLimit = 12, Window = TimeSpan.FromMinutes(1), QueueLimit = 0 }));
     options.AddPolicy("execution",context => RateLimitPartition.GetFixedWindowLimiter(context.Connection.RemoteIpAddress?.ToString() ?? "unknown",_ => new FixedWindowRateLimiterOptions { PermitLimit = 10, Window = TimeSpan.FromMinutes(1), QueueLimit = 0 }));
 });
 var app = builder.Build();
@@ -33,6 +36,11 @@ app.Use(async (context,next) =>
 });
 app.UseRateLimiter();
 app.MapGet("/api/health",() => Results.Ok(new {status="ok",version="0.1.0"}));
+app.MapGet("/api/meteorologia/observacao",async (string estacao,Meteorologia meteorologia,HttpContext contexto) => {
+    if(!Meteorologia.Estacoes.Contains(estacao))return Results.BadRequest(new {erro="Estação não disponível."});
+    contexto.Response.Headers.CacheControl="no-store";
+    return Results.Ok(await meteorologia.Consultar(estacao,contexto.RequestAborted));
+}).RequireRateLimiting("meteorologia");
 app.MapGet("/api/capabilities",(ExecutionQueue queue) => Results.Ok(new {accounts=false,progress=false,judge0=queue.Configured,storage="browser-only"}));
 var curriculumPath=Path.Combine(app.Environment.ContentRootPath,"Content","curriculum.json");
 app.MapGet("/api/trilhas",() => Results.Json(ReadContent("trails")));

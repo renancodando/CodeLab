@@ -89,17 +89,20 @@ jobs:
       - name: Compilar a API
         run: dotnet build server/CodeLab.Api.csproj --configuration Release
 
+      - name: Validar cache e falhas da observação meteorológica sem rede
+        run: dotnet run --project tests/meteorologia-api/Verificacao.csproj --configuration Release
+
       - name: Instalar Chromium para os testes de navegador
         run: npx playwright install --with-deps chromium
 
       - name: Validar os fluxos no navegador
         run: npm run test:e2e
 
-      - name: Guardar relatório, capturas e traces em caso de falha
-        if: failure()
+      - name: Guardar relatório e cenários atmosféricos
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-falhas
+          name: playwright-verificacao
           path: |
             test-results/
             playwright-report/
