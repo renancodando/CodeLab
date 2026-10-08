@@ -74,3 +74,8 @@ Essas entregas ampliam teoria e prática independente; não encerram os ecossist
 A execução autorizada fora do sandbox permitiu superar a falha de preparação do executor para os comandos desta tarefa, sem alterar ACLs do sistema. A main local foi sincronizada e seu estado limpo foi conferido; os dois commits e três arquivos anteriores foram preservados com hashes. O executor padrão e o kernel continuam falhando; utilizar o caminho de execução autorizado e inspecionar Git na próxima retomada.
 
 O fluxo público Python foi conferido em um contexto Edge novo: home HTTP 200, aula py-iteracao-recursos com 17 capítulos e três pausas, previsão correta, estado local e resposta restaurados após reload e recarregamento offline depois da preparação do cache. Sem pageerror/requestfailed nessa execução. Script e captura estão em outputs. Esse resultado valida a fronteira de leitura/avaliação conceitual/persistência testada; não prova os demais fluxos públicos nem a implantação integral pronta para produção.
+
+
+## Portabilidade Windows e propriedades JavaScript integradas
+
+As PRs #9 e #10 foram integradas com árvores idênticas às testadas, registradas em continuidade.md. O run 37707217346 aprovou 275 testes unitários, 142 exemplos externos, 87 testes de navegador, 156 páginas, builds/API, SQL/Git/ZIP e auditoria. Inclui debugging JavaScript executado, feedback sem gabarito automático e persistência offline. O run anterior 37704436528 teve timeout em um teste interativo; duas suítes completas posteriores passaram o cenário sem aumentar o limite. A verificação pública C++ confirmou leitura, correção e persistência online; Python também confirmou reload offline preparado. Os demais fluxos públicos e o currículo integral permanecem abertos.

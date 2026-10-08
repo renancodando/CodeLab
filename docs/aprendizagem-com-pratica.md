@@ -45,7 +45,7 @@ A mesma preparação é aplicada às três atividades novas de iteradores Python
 
 Os gabaritos das pausas são compilados em C++20 no CI; a resposta do estudante permanece conceitual. Compilação geral e validação automática de projetos abertos continuam fora desse mecanismo.
 
-## Edição verificada atual
+## Edição verificada anterior (PR #8)
 
 As expansões Python, TypeScript e C++ levam o catálogo a 34 atividades: quatro programas JS executados e 30 atividades conceituais. O catálogo principal tem 135 aulas, incluindo 27 aulas próprias de 17 capítulos e 54 problemas independentes. As nove pausas novas têm conceitos exigidos no plano diário; as atividades anteriores conservam seu comportamento. A construção de uma sequência completa de pré-requisitos em todo o catálogo permanece no mapa de interatividade.
 
@@ -53,6 +53,6 @@ O fluxo Python publicado foi conferido em Edge isolado, com correção, persist�
 
 ## Propriedades JavaScript e quinto debugging
 
-A edição da branch de propriedades define 37 atividades: cinco executam JavaScript e 32 são conceituais. As três novas pausas são `js-prever-propriedade`, `js-descritor-sem-getter` e `js-debug-numero-proprio`, ligadas às habilidades JavaScript → Objetos → Propriedades/Descritores/Validação. Todas exigem o conceito no plano diário, conservando fundamentos na primeira sessão.
+A edição integrada pela PR #10 tem 37 atividades: cinco executam JavaScript e 32 são conceituais. As três novas pausas são `js-prever-propriedade`, `js-descritor-sem-getter` e `js-debug-numero-proprio`, ligadas às habilidades JavaScript → Objetos → Propriedades/Descritores/Validação. Todas exigem o conceito no plano diário, conservando fundamentos na primeira sessão.
 
-O desafio corrige uma implementação completa no QuickJS; os outros dois são conceituais. As seis famílias de casos são inspecionáveis no pacote e não prometem sigilo. O fluxo de navegador deve verificar falha seguida de correção, ausência de solução automática, prova executada, persistência offline e conclusão antes de integrar.
+O desafio corrige uma implementação completa no QuickJS; os outros dois são conceituais. As seis famílias de casos são inspecionáveis no pacote e não prometem sigilo. O run 37707217346 verificou falha seguida de correção, ausência de solução automática, prova executada, persistência offline e conclusão; 87 fluxos de navegador passaram.

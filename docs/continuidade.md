@@ -1,11 +1,11 @@
 # Continuidade do CODELAB
 
-## Estado em 7 de outubro de 2026
+## Estado em 8 de outubro de 2026
 
-- PRs #1 a #8 integradas. Catálogo: 135 aulas em 20 trilhas; Python, TypeScript e C++ têm dez aulas, outras cinco linguagens nove.
-- 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 27 aulas próprias de 17 capítulos, com 54 problemas independentes.
-- Matriz: 636 entradas, 149 vinculadas a atividades específicas e 487 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.
-- 34 atividades corrigíveis: quatro programas JS e 30 atividades conceituais. Nove pausas novas distribuídas em Python, TypeScript e C++ exigem preparação do conceito na sessão diária.
+- PRs #1 a #10 integradas. Catálogo: 136 aulas em 20 trilhas; Python, TypeScript, C++ e JavaScript têm dez aulas, outras quatro linguagens nove.
+- 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 28 aulas próprias de 17 capítulos, com 56 problemas independentes.
+- Matriz: 646 entradas, 155 vinculadas a atividades específicas e 491 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.
+- 37 atividades corrigíveis: cinco programas JS e 32 atividades conceituais. Doze pausas novas distribuídas em Python, TypeScript, C++ e JavaScript exigem preparação do conceito na sessão diária.
 - Pedido integral em andamento: [17 frentes restantes](etapas-restantes.md). Não há contagem finita auditada de aulas que esgote todos os ecossistemas.
 
 ## Evidências da entrega curricular anterior
@@ -36,7 +36,7 @@ Os runs de main 37675611114 e 37676345090 aprovaram a integração da PR #5 e o 
 
 ## Próxima ação editorial
 
-Leia docs/curriculo-completo.md. As aulas de iteradores Python, variância TypeScript e invalidação C++ foram integradas. Priorize agora propriedades, descritores e protótipos JavaScript; depois biblioteca padrão Python por domínio, módulos TypeScript por ambiente e templates/algoritmos C++ com contratos próprios. Continue a aprofundar as oito linguagens, projetos maiores, ecossistemas e diagnóstico. Não marque temas apenas listados como prática pronta.
+Leia docs/curriculo-completo.md. As aulas de iteradores Python, variância TypeScript e invalidação C++ foram integradas. Propriedades, descritores e receptores JavaScript foram integrados pela PR #10. Priorize biblioteca padrão Python por domínio, módulos TypeScript por ambiente e templates/algoritmos C++ com contratos próprios; prossiga também com internacionalização, workers e cancelamento JavaScript. Continue a aprofundar as oito linguagens, projetos maiores, ecossistemas e diagnóstico. Não marque temas apenas listados como prática pronta.
 
 O diálogo modal, Grid com trilhas automáticas, iteradores C# e snapshots/conflito PostgreSQL já possuem aulas e verificações próprias. Ampliar esses assuntos com novas atividades exige mecanismos adicionais, evitando repetir o que já foi entregue.
 
@@ -108,3 +108,14 @@ Branch `curriculo-javascript-propriedades-descritores`, a partir da correção W
 Na branch: 136 aulas/20 trilhas, 28 aulas próprias/56 problemas, 646 entradas (155 vinculadas, 491 introduzidas), 37 atividades (cinco JS executadas, 32 conceituais). Python, TypeScript, C++ e JavaScript têm dez aulas; as outras quatro linguagens têm nove. Quatro programas passaram em Node.js durante autoria; validar também QuickJS, casos específicos e fluxo offline/persistência no CI antes de integrar.
 
 A pré-condição dos exemplos exclui Proxy e não é detectada pelo validador. Não declarar sanitização genérica, freeze profundo ou projetos automaticamente aprovados. A verificação pública C++ passou após a PR #8 (17 capítulos, três pausas, correção e persistência, sem pageerror/requestfailed nesse cenário). O fluxo Python público também passou offline. Os demais fluxos de produção continuam no mapa de 17 frentes.
+
+
+## Integrações verificadas em 8 de outubro
+
+PR #9 integrada em ee5436648f8f878200220912003023619ec20ede, com árvore f50f3635f6878c94ad705eb9885c95fe3b814265 idêntica ao head bc291e4bba41c06637d714d5925e1dc9ba784381. Run [37705378788](https://github.com/renancodando/CodeLab/actions/runs/37705378788): 265 testes unitários, 142 exemplos externos, 85 fluxos de navegador, builds/API e auditoria aprovados. O build local Windows também concluiu as 155 páginas.
+
+PR #10 integrada em e04b385c18ac60b1d119670edb19c0ab73d2d01e, com árvore 5b3f2918d52f4f701e85675ede23b26b15318752 idêntica ao head baa3a7759095d646c5b57339d81a7ea7094bf29d. Run [37707217346](https://github.com/renancodando/CodeLab/actions/runs/37707217346): 275 testes unitários em 16 arquivos, 142 exemplos externos, três cenários Git, três cronogramas PostgreSQL, ZIP, 87 fluxos de navegador, 156 páginas, builds/API e auditoria aprovados. O fluxo novo verifica erro, feedback específico sem solução automática, correção executada no QuickJS, retomada offline e conclusão persistida. Nenhuma thread de revisão aberta na integração.
+
+O checkpoint anterior de main, run 37704436528, falhou por timeout de 180 segundos no fluxo interativo de 25 passos, com 84/85 testes aprovados. As duas suítes completas posteriores passaram esse fluxo sem ampliar o timeout. Registrar qualquer recorrência e investigar o trace; não apresentar aquele run como aprovado. Os CIs disparados pelas integrações #9/#10 e por este checkpoint devem ser conferidos na próxima retomada.
+
+As seções “em revisão” e “em preparação” acima registram a sequência histórica; as integrações desta seção são o estado atual. Continuam 17 frentes amplas abertas, sem contagem finita auditada das aulas futuras. A implantação pública segue parcialmente verificada.
