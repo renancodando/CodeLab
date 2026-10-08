@@ -94,3 +94,9 @@ Os resultados cobrem os quatro programas, três fixtures e fluxo offline com rec
 
 
 O CI de main após a PR #7 também foi aprovado no run 37700233574. O checkpoint final tem seu próprio run e deve ser conferido quando concluir.
+
+## Correção Windows em revisão
+
+O build local após sincronização encontrou um falso desatualizado no índice: o checkout usa CRLF, enquanto o gerador produz LF. A branch `fix/indice-crlf-windows` normaliza apenas CRLF na comparação --check, preservando diferenças de conteúdo, formato e contagens. Dois testes executam o gerador em fixtures LF/CRLF e exigem falha em metadados e matriz realmente divergentes. Ambos passaram no Windows; o build local ultrapassou índice/matriz e TypeScript, e está concluindo a geração dos assets.
+
+Conferir a PR de portabilidade e seu CI completo antes de integrar. O catálogo permanece com 135 aulas e 34 atividades; esta correção não amplia cobertura curricular nem comprova implantação integral.
