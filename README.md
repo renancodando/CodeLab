@@ -151,7 +151,7 @@ Ao editar aulas, atividades ou projetos, execute `npm run content:generate` para
 | JavaScript | `js-propriedades-prototipos` | Propriedades, descritores e receiver; dois problemas, três pausas e novo debugging executado |
 
 <!-- metricas:inicio -->
-O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **52 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **48 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
+O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **55 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **49 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
 <!-- metricas:fim -->
 
 O resumo acima é gerado com as [métricas do catálogo](docs/metricas-catalogo.md), também usadas pela interface. JavaScript possui atividades executadas no sandbox; as demais decisões são conceituais e não comprovam compilação. O build rejeita resumos desatualizados.
