@@ -48,7 +48,7 @@ Modelo e fontes complementares possuem cadências independentes. Cache do modelo
 - Sol, Lua e fase lunar continuam no SunCalc. Camadas, radiação e máscara espacial de massas modulam luz direta e noturna. Estrelas recebem máscara por região; nuvem alta fina atenua menos. Sombras acompanham luz quando o nível de qualidade permite.
 - Visibilidade, diferença temperatura/orvalho, umidade, vento, luz e umidade do solo contribuem para névoa contínua. Umidade alta isolada não obriga neblina.
 - Solo mantém água acumulada, umidade visual, precipitação recente e tempo desde chuva. Temperatura, Sol, vento e umidade regulam secagem aproximada. Poças, material escuro, brilho, escoamento e som residual diminuem gradualmente.
-- Condensação modifica acabamento e brilho das janelas 3D existentes. O interior continua uma imagem com transparências: não há máscara de embaçamento independente dos vidros dessa imagem.
+- Condensação modifica acabamento/brilho das janelas 3D e um véu CSS atrás do interior. A transparência da arte original deixa aparecer o embaçamento nos vidros; móveis e paredes continuam à frente. O estado combina proximidade ao orvalho, umidade, solo/chuva e luz, com adaptação de 120 s. Umidade sem orvalho não ativa o efeito. É uma aproximação visual: não há sensor de temperatura do vidro, umidade interna ou cálculo físico da condensação. O véu reduz brilho à noite, interpola opacidade, não intercepta controles e é limpo no descarte. Não acrescenta canvas, blur, filtros ou texturas.
 - Trovões exigem evidência observacional convectiva; previsão de trovoada ou chuva comum não basta. Clarões permanecem optativos e desligados com movimento reduzido. Distância/posição do evento são simuladas.
 - TS/VCTS isolados não confirmam precipitação. O motor mantém uma regra conservadora para efeitos de trovoada: precisa de fenômeno convectivo acompanhado de precipitação observada local. Trovoadas secas e descargas distantes ainda não possuem representação própria; não são substituídas por chuva inventada.
 
@@ -72,4 +72,6 @@ Uma fixture exclusiva dos testes renderiza 13 cenários em desktop e viewport m�
 
 ## Aprofundamentos restantes
 
-Concluir acesso sustentável a radar/pluviômetros regionais, ampliar estações sem prometer chuva pontual de observações distantes, medir em celulares físicos e avaliar uma máscara própria dos vidros do interior. Não substituir essas lacunas por previsão apresentada como observação.
+Concluir acesso sustentável a radar/pluviômetros regionais, ampliar estações sem prometer chuva pontual de observações distantes e medir em celulares físicos. O véu do interior aproveita o alpha da arte; não refrata nem borra a imagem do mundo. Efeitos ópticos mais caros exigem medição antes de adoção. Não substituir lacunas das fontes por previsão apresentada como observação.
+
+Os testes de vidros comparam regiões transparentes e quase opacas da arte no mesmo navegador, com fundo controlado, sem snapshots de página inteira. Conferem aparecimento/desaparecimento do véu, descarte, ausência de filtros, qualidade baixa/reduzida e orçamento nativo do canvas de 220 a 4000 px. Os testes de estado cobrem umidade isolada, orvalho, transição, luz e secagem com memória do solo. A fixture é sintética e não comprova condensação física ou FPS em celular real.

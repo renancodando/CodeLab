@@ -11,7 +11,7 @@ A edição atual já entrega conteúdo e mecanismos funcionais. Para declarar um
 | # | Frente aberta | Próximo aprofundamento | Evidência para encerrar uma entrega |
 | --- | --- | --- | --- |
 | 1 | HTML | Arquivos e legendas reais; componentes acessíveis além do diálogo; integração de formulários. | Aulas próprias com documentos, testes de teclado/validade e exercícios aplicados. |
-| 2 | CSS | Consultas de estilo e scroll-state; contenção intrínseca; outros eixos de escrita; compatibilidade e layouts complexos. | A aula de consultas de tamanho está em validação. Ampliar medidas computadas, navegação e práticas próprias por mecanismo. |
+| 2 | CSS | Consultas de estilo e scroll-state; contenção intrínseca; outros eixos de escrita; compatibilidade e layouts complexos. | Consultas de tamanho foram integradas e verificadas no domínio. Ampliar medidas computadas, navegação e práticas próprias por mecanismo. |
 | 3 | JavaScript | Descritores e protótipos; internacionalização; workers/cancelamento; módulos por host. | Programas executados, bordas e erros reais, depuração específica e projetos progressivos. |
 | 4 | TypeScript | Módulos por ambiente; bibliotecas reais; tipos aninhados e contratos avançados. | Strict e casos negativos úteis, execução depois do apagamento e teste de integração. |
 | 5 | Python | Biblioteca padrão por domínio; descritores; typing; processos com falhas; distribuição. | Programas reais com limites, exceções, recursos e projetos; manter prática offline honesta. |
