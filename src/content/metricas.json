@@ -1,0 +1,37 @@
+{
+  "aulas": 137,
+  "trilhas": 20,
+  "aulasOriginais": 60,
+  "aulasAprofundadas": 77,
+  "problemasIndependentes": 58,
+  "atividadesCorrigiveis": 40,
+  "aulasComPausas": 45,
+  "linguagens": [
+    "cpp",
+    "csharp",
+    "css",
+    "html",
+    "javascript",
+    "python",
+    "sql",
+    "typescript"
+  ],
+  "percursosEngenharia": 6,
+  "etapasEngenharia": 18,
+  "projetosConclusao": 8,
+  "marcosProjeto": 57,
+  "criteriosManuais": 171,
+  "entradasCobertura": 654,
+  "entradasComPratica": 162,
+  "entradasIntroduzidas": 492,
+  "atividadesPorLinguagem": {
+    "cpp": 6,
+    "csharp": 3,
+    "css": 6,
+    "html": 3,
+    "javascript": 7,
+    "python": 6,
+    "sql": 3,
+    "typescript": 6
+  }
+}

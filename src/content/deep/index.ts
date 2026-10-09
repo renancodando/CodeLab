@@ -103,6 +103,7 @@ export const expandedCourses:Course[]=[
       "css-flex-grid",
       "css-grid-trilhas",
       "css-responsivo",
+      "css-containers-contexto",
       "css-visual-movimento",
       "css-arquitetura"
     ]
@@ -1673,6 +1674,33 @@ export const expandedLessons:Lesson[]=[
     ],
     "language": "html",
     "source": "https://www.w3.org/Style/CSS/specs.en.html",
+    "capitulos": [],
+    "code": "",
+    "exercise": "",
+    "solution": "",
+    "error": "",
+    "question": "",
+    "options": [],
+    "correct": 0
+  },
+  {
+    "id": "css-containers-contexto",
+    "track": "css-completo",
+    "title": "CSS: container queries, contexto e limites",
+    "body": "Construa componentes que respondem ao espaço que realmente recebem. Investigue qual ancestral é consultado, o que muda ao nomeá-lo, por que o próprio elemento não responde à sua consulta e como validar os limites sem trocar a ordem de leitura. Compare regras condicionais, unidades cqi e uma base utilizável sem o aprimoramento.",
+    "level": "Avançado",
+    "topics": [
+      "ancestral elegível e dimensão inline",
+      "contêiner nomeado em contexto aninhado",
+      "consulta não mede o próprio elemento",
+      "limiares inclusivos e caixa de conteúdo",
+      "containment e tamanho intrínseco",
+      "unidades cqi e ancestral elegível",
+      "fallback progressivo com supports",
+      "ordem semântica e conteúdo longo"
+    ],
+    "language": "html",
+    "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
     "capitulos": [],
     "code": "",
     "exercise": "",

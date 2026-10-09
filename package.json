@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --configLoader runner --host 127.0.0.1",
-    "build": "node scripts/generate-curriculum-index.mjs --check && tsc --noEmit && node scripts/verificar-funcao-meteorologica.mjs && vite build --configLoader runner && node scripts/prerender.mjs && node scripts/build-offline.mjs",
+    "build": "node scripts/generate-curriculum-index.mjs --check && node scripts/gerar-metricas.mjs --check && tsc --noEmit && node scripts/verificar-funcao-meteorologica.mjs && vite build --configLoader runner && node scripts/prerender.mjs && node scripts/build-offline.mjs",
     "preview": "vite preview --configLoader runner --host 127.0.0.1",
     "test": "vitest run --configLoader runner",
     "test:e2e": "playwright test",
-    "content:generate": "node scripts/generate-curriculum-index.mjs"
+    "content:generate": "node scripts/generate-curriculum-index.mjs && node scripts/gerar-metricas.mjs"
   },
   "dependencies": {
     "@jitl/quickjs-wasmfile-release-sync": "0.31.0",

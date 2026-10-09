@@ -1,6 +1,6 @@
 # CODELAB
 
-Plataforma de estudo de programação com **20 trilhas, 136 aulas e oito missões de código**. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
+Plataforma de estudo de programação com trilhas, aulas e missões de código. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
 
 ## Executar
 
@@ -22,7 +22,7 @@ O servidor atende em `http://127.0.0.1:5080/` e também serve o conteúdo de `di
 
 ## Aprender e criar
 
-As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. Python, TypeScript, C++ e JavaScript têm dez aulas por trilha; as outras quatro linguagens têm nove: os módulos panorâmicos têm **13 capítulos**, e as 28 aulas de aprofundamento têm **17 capítulos**, incluindo dois problemas independentes e resoluções comentadas. A leitura original segue esta sequência: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
+As trilhas originais têm **12 capítulos internos por aula**. Os percursos aprofundados combinam módulos panorâmicos de **13 capítulos** e aulas com problemas independentes de **17 capítulos**, incluindo resoluções comentadas. A distribuição atual está nas [métricas geradas do catálogo](docs/metricas-catalogo.md). A leitura original segue esta sequência: conexão com a jornada, contexto, modelo mental, raciocínio passo a passo, leitura linha por linha, previsão, experimentos controlados, depuração, prática em quatro níveis, aplicação real, análise da solução e critérios de domínio:
 
 | Trilha | Conteúdo |
 | --- | --- |
@@ -39,22 +39,22 @@ As 12 trilhas originais têm cinco aulas e **12 capítulos internos por aula**. 
 | Full stack | Arquitetura, integração, testes de jornada, publicação e desempenho |
 | Projetos reais | Diário, tarefas, painel de clima, catálogo e entrega documentada |
 
-As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As aulas originais possuem roteiros por tema e a expansão acrescenta seis seções de teoria própria por módulo. Todas as **136 aulas têm conteúdo, prática e aplicação específicos**. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram respostas sobre um conceito; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
+As oito missões de fundamentos avaliam código e casos de fronteira automaticamente. As aulas originais possuem roteiros por tema e a expansão acrescenta seis seções de teoria própria por módulo. As aulas reúnem conteúdo, prática e aplicação próprios. Cada aula sabe qual conteúdo veio antes e qual vem depois, explica por que o assunto existe, constrói um modelo mental, desmonta o exemplo linha por linha, propõe experimentos, ensina depuração e termina com um pequeno projeto e critérios verificáveis de domínio. As perguntas registram respostas sobre um conceito; os exercícios abertos não possuem correção automática completa. Conceitos de autenticação fazem parte do conteúdo, mas não são funcionalidades de conta da plataforma.
 
-O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera **156 páginas educacionais estáticas**, incluindo as aulas, os seis percursos e os oito projetos, legíveis sem JavaScript. O aplicativo mantém a leitura extensa e acrescenta pausas corrigíveis nas aulas ligadas às novas atividades.
+O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em interpretador separado e exportação de arquivos. Até **12 projetos independentes** podem ser salvos, renomeados e removidos. Começar outro projeto não substitui o anterior. O build gera páginas educacionais estáticas, incluindo aulas, percursos e projetos, legíveis sem JavaScript. O aplicativo mantém a leitura extensa e acrescenta pausas corrigíveis nas aulas ligadas às novas atividades.
 
 ## Aprendizagem ativa
 
-- **25 atividades nas oito linguagens**, incluindo quatro programas JavaScript quebrados. Os verificadores conferem resultados e casos de borda, com feedback antes da solução. Os casos ficam fora da apresentação da tentativa e são inspecionáveis no pacote local.
+- **Atividades nas oito linguagens**, incluindo programas JavaScript quebrados. Os verificadores conferem resultados e casos de borda, com feedback antes da solução. As [métricas geradas](docs/metricas-catalogo.md) acompanham o catálogo atual. Os casos ficam fora da apresentação da tentativa e são inspecionáveis no pacote local.
 - **Python, C# e C++ sem Judge0 para atividades conceituais**: previsão, reconstrução e decisões com correção local. Essas respostas não comprovam execução de compilador; a bancada de execução completa mantém seus requisitos.
 - **Domínio por habilidade**: árvore por linguagem, assunto e habilidade, baseada em avaliações distintas, tentativas, pistas e assistência. Leitura e notas manuais de projeto não fabricam desempenho.
 - **Revisão de 1, 3, 7, 14, 30 e 60 dias**: erros encurtam o intervalo; revelar uma solução após tentativa registra assistência imediatamente. A sessão contém até duas revisões, um conceito, duas práticas e um desafio. O plano é retomável e a linguagem fica fixa depois de iniciá-lo.
-- **Seis percursos de engenharia, 18 etapas**: algoritmos, estruturas, redes, Git, testes e arquitetura com teoria própria, exemplos, falhas, exercício, solução e decisão conceitual corrigida.
-- **Oito projetos de conclusão, 57 marcos e 171 critérios**: um produto cresce durante cada percurso. Há vários arquivos, rubrica manual, notas preservadas, invalidação das evidências após editar, ZIP e backup da jornada.
+- **Percursos de engenharia**: algoritmos, estruturas, redes, Git, testes e arquitetura com teoria própria, exemplos, falhas, exercício, solução e decisão conceitual corrigida.
+- **Projetos de conclusão com marcos e critérios**: um produto cresce durante cada percurso. Há vários arquivos, rubrica manual, notas preservadas, invalidação das evidências após editar, ZIP e backup da jornada.
 - **Estudo offline após preparação**: no build de produção, o service worker prepara aplicativo, módulos, estilos e WASM. Aguarde a mensagem de preparação; conteúdo e atividades locais podem continuar sem conexão. APIs, clima, fontes externas e execução remota dependem de rede.
 - **Persistência informada**: se o navegador recusar a gravação, as alterações continuam em memória e podem ser exportadas antes de sair. Apagar os dados ou fechar uma sessão que não conseguiu salvar pode perder mudanças sem backup.
 
-As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às 25 atividades. A expansão das demais aulas e a autocorreção de exercícios abertos permanecem no mapa de trabalho. Consulte [os mecanismos e limites](docs/aprendizagem-com-pratica.md).
+As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às atividades corrigíveis. A expansão das demais aulas e a autocorreção de exercícios abertos permanecem no mapa de trabalho. Consulte [os mecanismos e limites](docs/aprendizagem-com-pratica.md).
 
 ## Ambiente vivo
 
@@ -128,7 +128,7 @@ Referências técnicas: [MDN](https://developer.mozilla.org/pt-BR/docs/), [Micro
 
 ## Currículo aprofundado por linguagem
 
-O catálogo tem 136 aulas em 20 trilhas. A expansão acrescenta percursos de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL, com 48 módulos panorâmicos de treze capítulos e 28 aulas aprofundadas de dezessete capítulos. A matriz identifica 155 entradas com prática específica, além dos temas introduzidos; isso não representa esgotamento de todas as especializações. Consulte [a matriz de cobertura](docs/curriculo-completo.md) para temas, ambientes, gates e os aprofundamentos editoriais ainda previstos.
+A expansão reúne percursos de HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL, com módulos panorâmicos e aulas próprias com problemas independentes. A matriz distingue entradas vinculadas a práticas específicas dos temas introduzidos; isso não representa esgotamento de todas as especializações. Consulte [a matriz de cobertura](docs/curriculo-completo.md) para temas, ambientes, gates e os aprofundamentos editoriais ainda previstos.
 
 O conteúdo novo carrega por linguagem ao abrir a aula, mantendo um índice leve para navegação e busca. O build também entrega capítulos completos em páginas públicas sem JavaScript. TypeScript e PostgreSQL têm seu ambiente indicado, sem simular execução no laboratório atual.
 
@@ -138,7 +138,7 @@ Para verificar exemplos externos em um ambiente de CI com Python, g++, .NET 10 e
 
 Para conferir os cronogramas entre conexões, use o mesmo ambiente de estudo com PostgreSQL e execute `node scripts/verify-sql-concurrency.mjs`. O verificador cria esquemas exclusivos e encerra sessões antes de removê-los. Não o aponte para uma base de produção.
 
-Ao editar uma definição em `src/content/deep/`, execute `npm run content:generate` para atualizar o índice leve e a matriz JSON. O build rejeita artefatos desatualizados. Revise também o mapa editorial e as contagens esperadas nos testes ao publicar novas aulas; conserve os critérios de profundidade e execução.
+Ao editar aulas, atividades ou projetos, execute `npm run content:generate` para atualizar o índice leve, a matriz JSON, as métricas compartilhadas e o resumo deste README. O build rejeita artefatos desatualizados. Revise também o mapa editorial e os critérios dos testes ao publicar conteúdo; conserve os critérios de profundidade e execução. Os números de runs anteriores nos checkpoints são evidência histórica, não o catálogo atual.
 
 
 ### Últimos aprofundamentos integrados
@@ -150,6 +150,10 @@ Ao editar uma definição em `src/content/deep/`, execute `npm run content:gener
 | C++ | `cpp-iteradores-invalidacao` | Retorno de erase, reserva e compactação; dois problemas e três pausas offline |
 | JavaScript | `js-propriedades-prototipos` | Propriedades, descritores e receiver; dois problemas, três pausas e novo debugging executado |
 
-O catálogo tem **136 aulas em 20 trilhas**, **28 aulas próprias de 17 capítulos**, **56 problemas independentes** e **37 atividades corrigíveis**. Cinco atividades executam JavaScript no sandbox; as 32 restantes são conceituais. Python, TypeScript, C++ e JavaScript têm dez aulas nos percursos aprofundados; as outras quatro linguagens têm nove.
+<!-- metricas:inicio -->
+O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **40 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **45 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
+<!-- metricas:fim -->
 
-Os gabaritos dessas entregas passam por ferramentas reais no CI. A resposta conceitual do estudante não comprova compilação; projetos abertos têm rubrica manual. Consulte [o checkpoint](docs/continuidade.md) para os heads e gates aprovados, e [as 17 frentes restantes](docs/etapas-restantes.md) para acompanhar o pedido integral. A verificação pública passou no fluxo Python de leitura, correção, persistência e retomada offline preparada; os demais fluxos publicados ainda precisam de evidências próprias.
+O resumo acima é gerado com as [métricas do catálogo](docs/metricas-catalogo.md), também usadas pela interface. JavaScript possui atividades executadas no sandbox; as demais decisões são conceituais e não comprovam compilação. O build rejeita resumos desatualizados.
+
+Os gabaritos dessas entregas passam por ferramentas reais no CI. A resposta conceitual do estudante não comprova compilação; projetos abertos têm rubrica manual. Consulte [o checkpoint](docs/continuidade.md) para os heads e gates aprovados, e [as frentes restantes](docs/etapas-restantes.md) para acompanhar o pedido integral. A verificação pública cobre os fluxos registrados em [prontidão de produção](docs/prontidao-producao.md); isso não valida automaticamente todos os ambientes, aparelhos ou configurações externas.

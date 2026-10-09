@@ -12,6 +12,77 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+   "id": "css-prever-contexto",
+   "language": "css",
+   "lessonIds": [
+     "css-containers-contexto"
+   ],
+   "skillIds": [
+     "css.componentes.contexto"
+   ],
+   "afterBlock": 1,
+   "kind": "predict",
+   "capability": "leitura",
+   "requiresConcept": true,
+   "title": "A condição e a unidade medem a mesma caixa?",
+   "prompt": "Considere painel externo de 600 px e coluna interna de 220 px, ambos com inline-size definido e sem bordas ou padding. O título está dentro da coluna. Escreva em duas linhas o indicador (amplo ou compacto) e o tamanho da fonte em pixels (só o número).",
+   "code": ".painel { container: painel / inline-size; width: 600px; }\n.coluna { container: coluna / inline-size; width: 220px; }\nh2 { font-size: 16px; }\n@container painel (min-width: 500px) {\n  .indicador::after { content: \"amplo\"; }\n  h2 { font-size: 10cqi; }\n}",
+   "hint": "Separe a caixa que torna a condição verdadeira da referência usada pela unidade cqi.",
+   "minutes": 3
+ },
+ {
+   "id": "css-corrigir-ancestral",
+   "language": "css",
+   "lessonIds": [
+     "css-containers-contexto"
+   ],
+   "skillIds": [
+     "css.componentes.ancestrais"
+   ],
+   "afterBlock": 3,
+   "kind": "choice",
+   "capability": "depuracao",
+   "requiresConcept": true,
+   "title": "O cartão não encontra um contexto",
+   "prompt": "O cartão é o único elemento com container-type. Ele mede 600 px, mas a regra abaixo não ativa duas colunas. Não existe outro contêiner ancestral. Qual mudança corrige a causa mantendo a medida local?",
+   "code": ".cartao { container-type: inline-size; width: 600px; display: grid; }\n@container (min-width: 480px) {\n  .cartao { grid-template-columns: 1fr 1fr; }\n}",
+   "options": [
+     {
+       "id": "viewport",
+       "text": "Trocar por @media para medir a janela."
+     },
+     {
+       "id": "envolver",
+       "text": "Criar uma região ancestral com container-type e deixar o cartão como descendente."
+     },
+     {
+       "id": "limiar",
+       "text": "Reduzir o limite para 1 px sem mudar o contêiner."
+     }
+   ],
+   "hint": "A regra aplica estilos ao cartão. Verifique onde ele procuraria o contêiner que fornece a medida.",
+   "minutes": 3
+ },
+ {
+   "id": "css-completar-limite",
+   "language": "css",
+   "lessonIds": [
+     "css-containers-contexto"
+   ],
+   "skillIds": [
+     "css.componentes.limites"
+   ],
+   "afterBlock": 5,
+   "kind": "fill",
+   "capability": "alteracao",
+   "requiresConcept": true,
+   "title": "A mudança inclui exatamente 480 px",
+   "prompt": "Complete apenas a condição entre parênteses. O painel já é um ancestral elegível chamado painel. O contrato exige uma coluna em 479 px e duas ao atingir 480 px; use a sintaxe min-width em pixels.",
+   "code": "@container painel (____) {\n  .cartao { grid-template-columns: repeat(2, minmax(0, 1fr)); }\n}",
+   "hint": "Diferencie atingir o limite de ultrapassá-lo. Não troque a medida local por uma media query.",
+   "minutes": 2
+ },
+ {
   id:'js-debug-carrinho',language:'javascript',lessonIds:['js-conversao-limites','js-semantica'],skillIds:['javascript.conversao'],afterBlock:3,kind:'debug',capability:'depuracao',
   title:'O carrinho virou NaN',
   prompt:'totalizar recebe itens com preco numérico finito não negativo e quantidade inteira segura não negativa. O exemplo deveria retornar o número 89.9 (R$ 89,90), mas retorna NaN. Corrija o comportamento para qualquer carrinho válido: vazio retorna 0; arredonde o total a dois decimais; o total arredondado em centavos precisa ser um inteiro seguro (até Number.MAX_SAFE_INTEGER); valores que excedem essa faixa ou produzem total não finito lançam TypeError, assim como dados fora do contrato; preserve a entrada. Não devolva apenas o total deste exemplo.',
