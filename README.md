@@ -138,7 +138,7 @@ Para verificar exemplos externos em um ambiente de CI com Python, g++, .NET 10 e
 
 Para conferir os cronogramas entre conexões, use o mesmo ambiente de estudo com PostgreSQL e execute `node scripts/verify-sql-concurrency.mjs`. O verificador cria esquemas exclusivos e encerra sessões antes de removê-los. Não o aponte para uma base de produção.
 
-Ao editar uma definição em `src/content/deep/`, execute `npm run content:generate` para atualizar o índice leve e a matriz JSON. O build rejeita artefatos desatualizados. Revise também o mapa editorial e as contagens esperadas nos testes ao publicar novas aulas; conserve os critérios de profundidade e execução.
+Ao editar aulas, atividades ou projetos, execute `npm run content:generate` para atualizar o índice leve, a matriz JSON, as métricas compartilhadas e o resumo deste README. O build rejeita artefatos desatualizados. Revise também o mapa editorial e os critérios dos testes ao publicar conteúdo; conserve os critérios de profundidade e execução. Os números de runs anteriores nos checkpoints são evidência histórica, não o catálogo atual.
 
 
 ### Últimos aprofundamentos integrados

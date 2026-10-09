@@ -2,9 +2,9 @@
 
 ## Conteúdo publicado nesta expansão
 
-O catálogo desta edição tem **136 aulas em 20 trilhas**. A PR #4 acrescentou quatro aulas próprias, após a aprovação de todos os gates dessa versão. A primeira expansão publicou 48 módulos com treze capítulos. O aprofundamento atual acrescenta **28 aulas de 17 capítulos**, com **56 problemas independentes**, soluções comentadas e critérios próprios. Python, TypeScript, C++ e JavaScript têm dez aulas no percurso; as outras quatro trilhas por linguagem têm nove cada; as 60 aulas originais continuam disponíveis.
+As [métricas geradas do catálogo](metricas-catalogo.md) registram a quantidade atual de aulas, trilhas, problemas, atividades e projetos. As aulas originais continuam disponíveis. A expansão reúne módulos panorâmicos e aulas próprias com problemas independentes, soluções e critérios; a presença de um tema no panorama não encerra seu aprofundamento.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com três critérios, solução, projeto e revisão. A matriz contém **646 entradas de cobertura**: **155** estão vinculadas a atividades específicas como `praticaIndependente`; as outras **491** permanecem `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com critérios, solução, projeto e revisão. O resumo gerado separa entradas vinculadas a problemas específicos (`praticaIndependente`) das entradas ainda `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
