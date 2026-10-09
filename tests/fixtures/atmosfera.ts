@@ -4,7 +4,13 @@ import {criarCenario} from '../../src/environment/meteorologia/cenarios';
 import type {cenariosAtmosfericos} from '../../src/environment/meteorologia/cenarios';
 import {initialFrame,stepEnvironment} from '../../src/environment/simulation';
 const mundo=new LivingWorld(document.querySelector('#world')!);
-Object.assign(window,{mostrarCenario(nome:typeof cenariosAtmosfericos[number]){
+const renderizador=Reflect.get(mundo,'renderer'),canvas=renderizador.domElement as HTMLCanvasElement;
+let maiorBuffer=canvas.width*canvas.height;
+for(const atributo of ['width','height'] as const){
+ const descritor=Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,atributo)!;
+ Object.defineProperty(canvas,atributo,{get(){return descritor.get!.call(canvas);},set(valor:number){descritor.set!.call(canvas,valor);maiorBuffer=Math.max(maiorBuffer,canvas.width*canvas.height);}});
+}
+Object.assign(window,{maiorBuffer:()=>maiorBuffer,mostrarCenario(nome:typeof cenariosAtmosfericos[number]){
  const estado=criarCenario(nome,defaultEnvironment,Date.now()),frame=initialFrame(estado);
  if(nome.startsWith('noite'))frame.daylight=0;
  if(nome==='pos-chuva'){frame.wetness=.8;frame.aguaAcumulada=2;}

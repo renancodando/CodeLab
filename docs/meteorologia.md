@@ -54,6 +54,12 @@ Modelo e fontes complementares possuem cadências independentes. Cache do modelo
 
 O shader de nuvens usa duas ou três escalas de ruído conforme qualidade; névoa usa duas a quatro faixas. Pools de partículas e geometrias são reaproveitados. A qualidade adapta resolução, sombras e quantidade de detalhes, preservando o estado meteorológico. Não foram acrescentados runtimes ou dependências ao carregamento inicial; Three.js permanece sob demanda.
 
+O controlador também recebe um teto determinístico de recursos disponíveis no navegador: até dois núcleos lógicos ou 2 GB informados começam em baixa; até quatro núcleos ou 4 GB limitam a média. Ausência ou valor inválido não inventam uma capacidade. Esses valores são aproximações fornecidas pelo navegador, não uma medição de GPU, e ficam somente em memória. A redução por frames lentos continua ativa; a recuperação não ultrapassa o teto e sair de movimento reduzido o respeita.
+
+O canvas mantém as dimensões CSS do mundo, mas limita a resolução interna a 4,5 milhões de pixels em alta, 2,5 milhões em média e 1,2 milhão em baixa/movimento reduzido. Isso evita multiplicar telas grandes pelo DPR sem orçamento. Nenhum nível muda fontes, confiança, intensidade meteorológica, memória do solo ou o pool de 42 massas. Os testes verificam a decisão e o canvas efetivo; não comprovam FPS em aparelho físico.
+
+Ao redimensionar, um buffer intermediário usa as menores dimensões e proporção entre o estado anterior e o novo. Só depois aplica tamanho e proporção finais juntos, sem aumentar o DPR contra as dimensões antigas. A fixture mede também cada escrita nativa de width/height: encolhimento e troca de orientação não devem esconder um pico transitório atrás do tamanho final correto. O teste reproduziu 1.827.000 pixels antes da correção e respeitou 1.200.000 depois.
+
 A água também recebe a atenuação de neblina do terreno; visibilidade modula luz direta. Tentativas do modelo possuem relógio próprio por local, incluindo falhas sem cache: atualizar METAR a cada 10 min não multiplica tentativas Open-Meteo dentro dos 30 min. Nenhuma falha rejuvenesce a captura.
 
 ## Diagnóstico e validação

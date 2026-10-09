@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Checkpoints reais do fluxo prático
+
+O teste agregado dos 25 passos excedeu seu limite em quatro heads, em momentos diferentes próximos da conclusão/reinício. O mesmo arquivo passou no CI dos heads de #14 e #16. A nova organização mantém todas as ações e expectativas em três etapas seriais: produz o checkpoint dos doze primeiros passos, retoma esse dado em outro contexto e conclui os treze restantes, depois verifica invalidação, assistência, revisão e reinício. Não preenche respostas corretas por estado fabricado e não desativa o mundo. Uma falha interrompe as etapas dependentes.
+
+Essas três etapas e o cenário de leitura passaram em Edge contra o domínio público da integração climática. É evidência do fluxo e da nova estrutura de teste; não comprova que a correção posterior do canvas esteja implantada. Os limites individuais não foram ampliados, e o CI completo do novo head continua obrigatório antes de integrar.
+
 ## Rascunhos e anotações do laboratório em validação
 
 A revisão do laboratório encontrou dois caminhos de perda de trabalho: os rascunhos persistidos de Python/C#/C++/SQL/anotações não eram carregados na nova montagem, e projetos de anotações eram descartados na normalização e rejeitados pelo próprio backup. Rascunhos HTML/JavaScript vazios também eram substituídos pelos exemplos padrão. A correção lê todas as chaves existentes, distingue vazio de ausência e conserva anotações nas mesmas listas de linguagens aceitas pela leitura e importação.

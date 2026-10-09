@@ -1,5 +1,19 @@
 # Continuidade do CODELAB
 
+## Revisão do buffer e timeout do fluxo longo
+
+A revisão da PR #17 identificou aumento transitório de resolução ao encolher a janela. Um teste com os setters nativos do canvas reproduziu 1.827.000 pixels no nível baixo, apesar do tamanho final caber no orçamento de 1.200.000. O redimensionamento agora usa um buffer intermediário limitado antes de aplicar dimensões/proporção finais. Passaram o teste ampliado de seis mudanças de viewport/orientação, movimento reduzido, chuva forte e 42 massas, e os treze cenários atmosféricos em duas larguras. O strict também passou; conferir o build completo e o próximo head no CI antes de integrar.
+
+Os heads das PRs #14 e #16 aprovaram seus CIs completos. O da PR #16 conferiu 372 testes unitários, 147 exemplos externos e 104 testes de navegador. Nos heads anteriores de #12/#13/#15/#17, somente o fluxo agregado dos 25 passos estourou 180 segundos; os demais cenários passaram. Novas tentativas foram iniciadas para #12/#13/#15. A correção de testes na branch atual separa o percurso em etapas seriais: cada contexto retoma o checkpoint realmente produzido pela etapa anterior, sem fabricar respostas. Preservar todas as verificações e exigir CI do head que for integrado; nenhum sucesso anterior valida uma alteração posterior.
+
+Os quatro cenários do novo arquivo passaram no domínio público: doze primeiros passos com erro e reload; retomada real dos treze restantes com avaliação; invalidação/assistência/revisão/descarte/recomeço; leitura sem aprovação por consultar solução. A aplicação publicada continua sendo a integração climática 7893a3200bc8eb2a7aa85e304eb7e64fcf168f54. A evidência valida a reorganização do teste e a recuperação real do checkpoint, não a implantação antecipada da correção de canvas. A configuração está em outputs/playwright-aula-publicada.config.mjs do workspace. Os dois primeiros casos conservam o limite de 180 segundos; os demais usam o limite padrão. Nenhuma verificação do percurso original foi removida.
+
+## Qualidade atmosférica para dispositivos limitados em validação
+
+A branch `clima/qualidade-dispositivos` parte do head `348988c1ee21c063e2c3be2089b247508ac111a3` da PR #16. Acrescenta teto inicial por recursos locais do navegador e orçamento de pixels para telas grandes. Mantém recuperação por FPS dentro do teto, movimento reduzido, partículas, fontes e 42 massas. Dez testes específicos incluem promoção indevida e orçamento de pixels; nove falharam antes da correção. Os 382 testes unitários, build e quatro cenários Edge passaram: os 25 passos da aula com retomada/assistência, leitura, treze estados atmosféricos em duas larguras e hardware limitado com chuva forte/canvas de 375 a 4000 px. Conferir o CI do novo head antes de integrar; não foram medidos FPS em celular físico.
+
+As oito larguras de 220 a 4000 px passaram no domínio público da integração climática, além dos treze fluxos anteriormente registrados. O CI atual da PR #14 aprovou 147 exemplos externos e 100 testes de navegador; as PRs dependentes e a nova otimização ainda precisam de seus próprios gates. Uma falha de timeout no run anterior da PR #13 ocorreu depois de a resposta final passar nas verificações, conforme o artefato; não atribuir esse timeout a uma resposta incorreta. Consultar o resultado dos heads atuais antes de decidir sobre repetição ou correção.
+
 ## Correção de rascunhos pronta para o gate
 
 A branch `correcao/rascunhos-laboratorio` parte da PR #15 com as revisões propagadas. Corrige leitura dos rascunhos de todas as linguagens do laboratório, preserva HTML/JavaScript vazios e aceita projetos de anotações na leitura e no próprio backup. Dois testes falharam antes da correção e passaram depois; a suíte local aprovou 372 testes em 23 arquivos, strict/build de produção e três fluxos Edge completos. Sem nova aparência, runtime, rede ou ampliação de limites.
