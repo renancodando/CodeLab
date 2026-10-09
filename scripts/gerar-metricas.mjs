@@ -35,7 +35,32 @@ const readme = (await readFile('README.md', 'utf8')).replace(/\r\n/g, '\n');
 if (readme.split(inicio).length !== 2 || readme.split(fim).length !== 2 || readme.indexOf(fim) < readme.indexOf(inicio)) {
  throw new Error('README precisa de um único bloco de métricas identificado.');
 }
-const documentacao = `# Métricas do catálogo\n\nGerado por \`npm run content:generate\` a partir das definições e da matriz do currículo. O build rejeita divergências. A interface usa o mesmo resumo JSON, sem carregar capítulos adicionais.\n\n${resumo}\n\n| Medida | Quantidade |\n| --- | ---: |\n| Aulas originais | ${metricas.aulasOriginais} |\n| Aulas nos percursos aprofundados | ${metricas.aulasAprofundadas} |\n| Linguagens com atividades | ${metricas.linguagens.length} |\n| Entradas de tópicos na matriz | ${metricas.entradasCobertura} |\n| Entradas ligadas a problemas específicos | ${metricas.entradasComPratica} |\n| Entradas introduzidas | ${metricas.entradasIntroduzidas} |\n\n## Atividades por linguagem\n\n| Linguagem | Atividades corrigíveis |\n| --- | ---: |\n${Object.entries(metricas.atividadesPorLinguagem).map(([linguagem, total]) => '| ' + ({html:'HTML',css:'CSS',javascript:'JavaScript',typescript:'TypeScript',python:'Python',csharp:'C#',cpp:'C++',sql:'SQL/PostgreSQL'}[linguagem] ?? linguagem) + ' | ' + total + ' |').join('\n')}\n\nContagem não mede domínio nem esgota os ecossistemas. Um tópico pode aparecer em mais de um contexto; entradas da matriz não são conceitos únicos. Problemas independentes têm critérios e soluções, mas não recebem correção automática universal. Atividades conceituais não comprovam compilação; projetos abertos usam revisão manual. Consulte [o mapa de cobertura](curriculo-completo.md) e [as etapas restantes](etapas-restantes.md).\n`;
+const nomesLinguagens = {html:'HTML', css:'CSS', javascript:'JavaScript', typescript:'TypeScript', python:'Python', csharp:'C#', cpp:'C++', sql:'SQL/PostgreSQL'};
+const distribuicao = Object.entries(metricas.atividadesPorLinguagem)
+ .map(([linguagem, total]) => '| ' + (nomesLinguagens[linguagem] ?? linguagem) + ' | ' + total + ' |').join('\n');
+const documentacao = `# Métricas do catálogo
+
+Gerado por \`npm run content:generate\` a partir das definições e da matriz do currículo. O build rejeita divergências. A interface usa o mesmo resumo JSON, sem carregar capítulos adicionais.
+
+${resumo}
+
+| Medida | Quantidade |
+| --- | ---: |
+| Aulas originais | ${metricas.aulasOriginais} |
+| Aulas nos percursos aprofundados | ${metricas.aulasAprofundadas} |
+| Linguagens com atividades | ${metricas.linguagens.length} |
+| Entradas de tópicos na matriz | ${metricas.entradasCobertura} |
+| Entradas ligadas a problemas específicos | ${metricas.entradasComPratica} |
+| Entradas introduzidas | ${metricas.entradasIntroduzidas} |
+
+## Atividades por linguagem
+
+| Linguagem | Atividades corrigíveis |
+| --- | ---: |
+${distribuicao}
+
+Contagem não mede domínio nem esgota os ecossistemas. Um tópico pode aparecer em mais de um contexto; entradas da matriz não são conceitos únicos. Problemas independentes têm critérios e soluções, mas não recebem correção automática universal. Atividades conceituais não comprovam compilação; projetos abertos usam revisão manual. Consulte [o mapa de cobertura](curriculo-completo.md) e [as etapas restantes](etapas-restantes.md).
+`;
 const arquivos = [
  ['src/content/metricas.json', JSON.stringify(metricas, null, 2) + '\n'],
  ['docs/metricas-catalogo.md', documentacao],
