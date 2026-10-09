@@ -1,5 +1,9 @@
 # Continuidade do CODELAB
 
+## Quota nativa e exportação verificadas
+
+A branch `qualidade/cota-real` acrescenta um teste de navegador que enche o armazenamento de um contexto descartável até QuotaExceededError real. O cenário preserva o checkpoint anterior, exporta ZIP e jornada com o trabalho em memória, libera somente suas chaves de preenchimento e confirma nova gravação e reload. Passou no build local e em `https://code-lab-omega.vercel.app` após a implantação climática, sem pageerror. O script público está em outputs/verificar-quota-publicada.mjs do workspace. Exigir CI do head antes de integrar; esta evidência não encerra todos os fluxos de produção.
+
 ## Clima integrado e próxima entrega
 
 A PR #11 foi integrada em `7893a3200bc8eb2a7aa85e304eb7e64fcf168f54`. O head `da6cf8138971fff27c1ff5dfce348865a1b8ac84` passou no [run 37870369915](https://github.com/renancodando/CodeLab/actions/runs/37870369915): 356 testes unitários, 94 de navegador, exemplos externos, SQL/Git/ZIP, builds, verificação .NET, módulos ESM Node e auditoria. A árvore integrada é idêntica à testada: `27b10296bc6167a5011796add88e2d28df71f8c0`. Três threads de revisão foram resolvidas.

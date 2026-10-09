@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Recuperação diante de quota real
+
+Um contexto Edge novo conferiu o domínio público depois da integração climática. O cenário preencheu localStorage até a API nativa lançar QuotaExceededError, sem substituir Storage.setItem. Ao editar depois disso, o aplicativo informou a falha, preservou o checkpoint armazenado e exportou o trabalho ainda em memória em ZIP e backup JSON. Depois de remover somente as chaves de preenchimento do teste, voltou a salvar e retomou o arquivo completo após reload. Não foram usados dados do navegador pessoal do usuário.
+
+O mesmo fluxo passou localmente no build de produção e está em `tests/e2e/armazenamento-real.spec.ts` para o CI da entrega sucessora. Os testes de exceção simulada continuam cobrindo outros caminhos. Essa evidência comprova o cenário de quota descrito; não promete recuperação após fechar a página sem exportar enquanto a gravação continua impossível.
+
 ## Motor atmosférico integrado
 
 A PR #11 foi integrada com a mesma árvore do head aprovado no [run 37870369915](https://github.com/renancodando/CodeLab/actions/runs/37870369915): 356 testes unitários, 94 fluxos de navegador, exemplos, SQL/Git/ZIP, builds/API e auditoria. O domínio público foi conferido depois da implantação, incluindo boletim NOAA real, cache, idade, rejeição 400/405, seleção de cidade e cena sem erros WebGL. Consulte [meteorologia.md](meteorologia.md) para escopo e limitações.
