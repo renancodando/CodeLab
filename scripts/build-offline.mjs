@@ -1,7 +1,7 @@
 import {readdir,readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 async function files(dir){const result=[];for(const e of await readdir(dir,{withFileTypes:true})){const p=dir+'/'+e.name;if(e.isDirectory())result.push(...await files(p));else result.push(p);}return result;}
-const paths=(await files('dist')).filter(p=>p==='dist/index.html'||p.startsWith('dist/assets/')||p==='dist/favicon.svg').sort();
+const paths=(await files('dist')).filter(p=>p==='dist/index.html'||p.startsWith('dist/assets/')||p.startsWith('dist/exemplos/imagens/')||p==='dist/favicon.svg').sort();
 const hash=createHash('sha256');for(const p of paths){hash.update(p);hash.update(await readFile(p));}
 const version=hash.digest('hex').slice(0,20),urls=paths.map(p=>'/'+p.slice(5));urls.push('/');
 await writeFile('dist/sw.js',`const CACHE='codelab-offline-${version}';
