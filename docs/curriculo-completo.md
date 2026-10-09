@@ -1,5 +1,9 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: NULL com contratos explícitos
+
+`sql-null-logica` aprofunda a diferença entre comparar, filtrar e restringir; três pausas novas preparam previsão, depuração e alteração. O exercício de exclusão exige decidir como tratar duas chaves ausentes sem convertê-las em zero. A pausa existente e os problemas independentes permanecem. Cenários externos PostgreSQL verificam os gabaritos e reproduzem falhas, com conjuntos vazios, duplicatas e violações específicas. A entrega está sujeita ao CI próprio; decisões conceituais do aluno não são execução SQL. Transações concorrentes, deadlocks, Serializable, administração, laboratório local e distribuição da interatividade continuam abertos. Métricas atuais são geradas em [metricas-catalogo.md](metricas-catalogo.md).
+
 ## Aprofundamento incremental: closures praticadas
 
 As três pausas executáveis de `js-closures-estado` ampliam a aula existente sem substituir seus problemas abertos. Contratos e investigação vêm antes da tentativa: distinguir bindings entre instâncias, chamadas tardias/repetidas e referências na entrada/saída. Os testes executam os gabaritos e recusam implementações que acertam apenas o exemplo, incluindo um contador que escreve um total inseguro e um snapshot que conserva o array interno. O recorte da cópia é somente uma coleção de strings; não comprova imutabilidade profunda ou encapsulamento como segurança. Permanecem abertos os demais aprofundamentos e a distribuição uniforme da prática.

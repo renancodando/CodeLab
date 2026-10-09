@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Checkpoint atual: main aprovada e closures verificadas publicamente
+
+As PRs #21/#22 foram integradas com árvores idênticas aos respectivos heads aprovados. A main `093584f82b7000c859b4b0898f1c2568c98b0ede` passou no CI 37965665399; o head #22 passou no run 37961175745 com 427 testes unitários, 152 exemplos externos, oito projetos TypeScript, sete cenários C++20 e 113 testes de navegador. O fluxo C++ passou em produção. A implantação posterior de closures `5CnXqjxpKeVFYHugrZKBeo3wpQNz` está READY/production. Sua verificação pública foi inicialmente impedida pela quota da aprovação automática; após a disponibilidade voltar, passou no domínio público com correções executadas, assistência, respostas/evidências offline e 220/4000 px. Essa pendência está resolvida.
+
+Robots, sitemap e canonical foram conferidos publicamente após configurar a origem de produção; não há evidência de indexação por buscadores. A próxima expansão SQL está em branch própria e exige PostgreSQL real, CI do head e verificação pública antes de ser declarada entregue. O escopo integral permanece aberto. As seções seguintes são registros históricos.
+
 ## Vidros e módulos TypeScript integrados e publicados
 
 A main `4790188f8ab6c7ddab7167a33984043dc86f216a` integra #19/#20 com árvores idênticas aos heads aprovados, sem revisões pendentes. O CI #20 (37953975921) aprovou 401 testes unitários, 152 exemplos externos, oito projetos TypeScript e 111 testes de navegador. O CI #19 aprovou 392 testes unitários, 152 exemplos externos e 110 testes de navegador.
