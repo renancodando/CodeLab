@@ -121,7 +121,8 @@ export default {
           "title": "Comparações comuns podem produzir unknown",
           "text": [
             "Comparar um valor com NULL usando = ou <> normalmente produz o estado lógico desconhecido, inclusive NULL = NULL. Esse resultado não é true nem false. WHERE mantém linhas em que a condição é true; false e unknown ficam fora do resultado. Assim WHERE saldo <> 0 não seleciona automaticamente linhas com saldo ausente, mesmo que a pessoa imagine ausente como diferente de zero.",
-            "As operações AND, OR e NOT têm regras para três valores. false AND unknown é false, enquanto true AND unknown é unknown; true OR unknown é true. NOT unknown continua unknown. Para entender uma consulta, escreva a tabela lógica dos estados relevantes e não aplique cegamente as regras de um booleano de duas possibilidades. Isso é especialmente útil quando uma condição combina comparação e campo opcional."
+            "As operações AND, OR e NOT têm regras para três valores. false AND unknown é false, enquanto true AND unknown é unknown; true OR unknown é true. NOT unknown continua unknown. Para entender uma consulta, escreva a tabela lógica dos estados relevantes e não aplique cegamente as regras de um booleano de duas possibilidades. Isso é especialmente útil quando uma condição combina comparação e campo opcional.",
+            "Na pausa seguinte, a consulta exibe a comparação em vez de filtrá-la. No PostgreSQL, ::text apresenta um booleano conhecido como true ou false; COALESCE escolhe o texto unknown somente se esse resultado estiver ausente. Essa apresentação não altera o saldo original. Preveja as linhas na ordem dos ids e depois explique por que negar a comparação ainda não faria o saldo NULL passar em WHERE."
           ]
         },
         {
@@ -135,14 +136,16 @@ export default {
           "title": "Restrições têm sua própria regra de aceitação",
           "text": [
             "No PostgreSQL, uma restrição CHECK é satisfeita quando a expressão resulta em true ou NULL. Portanto CHECK (saldo >= 0) não rejeita sozinho um saldo NULL. Se o campo é obrigatório, combine NOT NULL com a restrição de faixa. A regra de aceitação de CHECK difere da seleção de WHERE, que mantém apenas true. Esse detalhe precisa ser explicado antes de usar um check como prova de presença.",
-            "Restrições protegem a integridade na base e devem refletir regras que valem para todos os caminhos de escrita. Validar só em um formulário não cobre importações e outras aplicações. Na atividade, usamos tabelas temporárias e uma transação para observar uma violação controlada sem modificar dados permanentes. Em migrações reais, analise os dados existentes e como a nova regra será validada."
+            "Restrições protegem a integridade na base e devem refletir regras que valem para todos os caminhos de escrita. Validar só em um formulário não cobre importações e outras aplicações. Na atividade, usamos tabelas temporárias e uma transação para observar uma violação controlada sem modificar dados permanentes. Em migrações reais, analise os dados existentes e como a nova regra será validada.",
+            "Teste presença e faixa separadamente: zero e cinco devem entrar, NULL deve violar NOT NULL e menos um deve violar CHECK. COALESCE dentro do CHECK pode fazer uma ausência parecer zero para a condição, mantendo a coluna ausente. NOT NULL sozinho também não impede valores negativos. Capture apenas a violação esperada no teste; capturar qualquer exceção esconderia erros do próprio programa de verificação."
           ]
         },
         {
           "title": "Agregações e exclusões exigem atenção à ausência",
           "text": [
             "count(*) conta linhas; count(coluna) conta valores não NULL nessa coluna. sum ignora valores NULL e pode retornar NULL quando não há valores para somar. Escolha se esse resultado representa ausência adequada ou se uma regra explícita autoriza transformá-lo em zero. Uma média calculada com linhas e valores ausentes também precisa de um denominador coerente com o domínio.",
-            "NOT IN pode produzir unknown quando a lista ou subconsulta contém NULL e nenhuma igualdade verdadeira resolve a comparação. Isso faz uma exclusão retornar menos linhas que o esperado. NOT EXISTS com uma correlação explícita frequentemente expressa melhor a pergunta não existe registro correspondente, mas ainda exige definir como chaves NULL devem se relacionar. Evitar um operador sem entender o contrato de correspondência não é suficiente."
+            "NOT IN pode produzir unknown quando a lista ou subconsulta contém NULL e nenhuma igualdade verdadeira resolve a comparação. Isso faz uma exclusão retornar menos linhas que o esperado. NOT EXISTS com uma correlação explícita frequentemente expressa melhor a pergunta não existe registro correspondente, mas ainda exige definir como chaves NULL devem se relacionar. Evitar um operador sem entender o contrato de correspondência não é suficiente.",
+            "Se a regra escolhida mandar excluir uma chave ausente quando o bloqueio também tiver ausência, use IS NOT DISTINCT FROM na correlação: duas ausências correspondem; ausência e zero não. Com =, a comparação de dois NULL continua unknown e não encontra o bloqueio. Com COALESCE(chave, 0), um zero legítimo pode ser excluído indevidamente. Não deduza identidade de pessoas por esse predicado; a política pertence ao domínio e precisa estar explícita. Bloqueios duplicados não multiplicam as linhas de uma consulta NOT EXISTS."
           ]
         },
         {

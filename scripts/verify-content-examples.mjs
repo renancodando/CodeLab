@@ -7,6 +7,7 @@ import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs
 import {montarCasosCsv} from '../tests/fixtures/python-csv.mjs';
 import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
 import {verificarConceitosCpp} from '../tests/fixtures/cpp-conceitos.mjs';
+import {verificarAusenciasSql} from '../tests/fixtures/sql-null.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
@@ -66,6 +67,7 @@ try{
  const {getPracticeSolution}=await import(asUrl(practiceSource));
  const cenariosModulos=await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution);
  const cenariosConceitos=await verificarConceitosCpp(root,practiceActivities,getPracticeSolution);
+ const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
  const examples=[
   ...montarCasosCsv(practiceActivities, getPracticeSolution),
   ...montarCasosCancelamento(practiceActivities, getPracticeSolution),
@@ -127,4 +129,5 @@ try{
  console.log(count+' exemplos e soluções externos compilados/executados.');
  console.log(cenariosModulos+' projetos TypeScript conferidos, incluindo diagnósticos e falhas esperadas de resolução.');
  console.log(cenariosConceitos+' cenários C++20 conferidos, incluindo falhas esperadas de instanciação e ambiguidade.');
+ console.log(cenariosAusencias+' cenários PostgreSQL conferidos para ausência, restrições e correspondência.');
 }finally{await rm(root,{recursive:true,force:true});}

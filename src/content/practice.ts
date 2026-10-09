@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'sql-prever-desconhecido',language:'sql',lessonIds:['sql-null-logica'],skillIds:['sql.null.comparacoes'],afterBlock:2,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Negar uma comparação não recupera o valor ausente',
+  prompt:'Preveja as três linhas no formato id|diferente. O cast ::text transforma booleanos conhecidos em true/false; COALESCE apresenta unknown quando a comparação retorna NULL. Zero, ausência e cinco devem continuar distintos. Avaliação conceitual offline, sem executar sua consulta.',
+  code:"SELECT id, COALESCE((saldo <> 0)::text, 'unknown') AS diferente\nFROM (VALUES (1, NULL::integer), (2, 0), (3, 5)) AS dados(id, saldo)\nORDER BY id;",
+  hint:'Resolva a comparação antes da apresentação. Ausência não é um número diferente de zero.',minutes:3
+ },
+ {
+  id:'sql-corrigir-obrigatoriedade',language:'sql',lessonIds:['sql-null-logica'],skillIds:['sql.null.obrigatoriedade'],afterBlock:4,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O estoque aceita um saldo não informado',
+  prompt:'O contrato exige quantidade inteira presente e não negativa: 0 e 5 entram; NULL e -1 são rejeitados. A tabela abaixo aceita NULL. Qual definição cumpre as duas regras para qualquer caminho de escrita? A escolha é conceitual; não altera um banco no navegador.',
+  code:'CREATE TEMP TABLE estoque_null (valor integer CHECK (valor >= 0));',
+  options:[{id:'somente-presenca',text:'valor integer NOT NULL'},{id:'presenca-faixa',text:'valor integer NOT NULL CHECK (valor >= 0)'},{id:'substituir-ausencia',text:'valor integer CHECK (COALESCE(valor, 0) >= 0)'}],
+  hint:'Separe presença de faixa. Confira quais resultados lógicos CHECK aceita antes de trocar NULL por zero.',minutes:3
+ },
+ {
+  id:'sql-correlacionar-ausentes',language:'sql',lessonIds:['sql-null-logica'],skillIds:['sql.null.correspondencia'],afterBlock:5,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'A exclusão também precisa de uma política para NULL',
+  prompt:'Complete apenas o predicado entre as duas chaves. Neste exercício, duas ausências devem corresponder para fins de exclusão; NULL não vira zero. O resultado deve conter as ordens 2 e 4, preservando zero e a chave 3. Use o predicado de igualdade que trata duas ausências como correspondentes. Essa política é explícita do exercício, não prova de que pessoas com chaves desconhecidas sejam iguais. Resposta conceitual offline.',
+  code:'WITH candidatos(ordem, chave) AS (\n  VALUES (1, NULL::integer), (2, 0), (3, 2), (4, 3)\n), bloqueios(chave) AS (VALUES (2), (NULL::integer), (2))\nSELECT c.ordem FROM candidatos c\nWHERE NOT EXISTS (SELECT 1 FROM bloqueios b WHERE b.chave ____ c.chave)\nORDER BY c.ordem;',
+  hint:'NOT EXISTS só procura uma correspondência verdadeira. Decida como a comparação se comporta quando ambas as chaves estão ausentes.',minutes:4
+ },
+ {
   id:'js-debug-contadores',language:'javascript',lessonIds:['js-closures-estado'],skillIds:['javascript.closures.instancias'],afterBlock:2,kind:'debug',capability:'depuracao',requiresConcept:true,
   title:'Criar outro contador altera o primeiro',
   prompt:'Corrija criarContador(inicial=0). Cada instância começa no inteiro seguro não negativo recebido; inicial inválido lança TypeError. somar aceita apenas inteiro seguro positivo, retorna true ao somar e false ao rejeitar, preservando o estado inclusive em overflow. ler devolve o total. Os métodos devem funcionar também destacados do objeto. Investigue por que criar b modifica a. O código será executado no ambiente isolado, sem rede.',
