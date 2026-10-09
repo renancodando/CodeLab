@@ -545,6 +545,7 @@ export default {
       "title": "C#: async, cancelamento e recursos",
       "level": "Avançado",
       "summary": "Organize operações assíncronas com Task, await e cancelamento cooperativo, mantendo propagação de falhas e liberação de recursos. Estude composição, limites, IDisposable, IAsyncDisposable, streams assíncronos e o risco de bloquear uma operação assíncrona com Result ou Wait.",
+      "source": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads",
       "topics": [
         "Task async await",
         "Task.WhenAll WhenAny",
@@ -575,21 +576,24 @@ export default {
           "title": "Cancelamento e timeout",
           "text": [
             "CancellationToken comunica um pedido cooperativo. O código precisa verificá-lo ou passá-lo a operações que o aceitam. Cancelar não desfaz automaticamente uma gravação ou requisição que já produziu efeito.",
-            "Timeout limita uma espera e precisa de uma política para o trabalho restante. Distinga cancelamento solicitado de outras falhas, e preserve limpeza no encerramento. Não capture OperationCanceledException como sucesso sem justificar o contrato."
+            "Timeout limita uma espera e precisa de uma política para o trabalho restante. Distinga cancelamento solicitado de outras falhas, e preserve limpeza no encerramento. Não capture OperationCanceledException como sucesso sem justificar o contrato.",
+            "Na pausa, GravarAsync devolve uma Task concluída, mas verifica o token e incrementa antes de devolvê-la. A primeira chamada já produziu seu efeito quando Cancel acontece. A chamada seguinte encontra o pedido antes de incrementar. Desenhe uma linha do tempo com verificação, efeito e conclusão; repetir o pedido não desfaz a primeira gravação. Uma falha diferente de cancelamento precisa continuar observável."
           ]
         },
         {
           "title": "Limitar trabalho",
           "text": [
             "Iniciar uma task para cada registro pode saturar conexões ou memória. SemaphoreSlim e outras estruturas podem limitar concorrência; a vaga precisa ser liberada em finally ou por uma estrutura equivalente.",
-            "Cancelamento entre aquisição e execução exige cuidado com a contabilidade. Não libere uma vaga que nunca foi adquirida. Em fluxos longos, filas com limites ajudam a aplicar backpressure entre produtor e consumidor."
+            "Cancelamento entre aquisição e execução exige cuidado com a contabilidade. Não libere uma vaga que nunca foi adquirida. Em fluxos longos, filas com limites ajudam a aplicar backpressure entre produtor e consumidor.",
+            "Com WaitAsync(token), a conclusão normal representa uma aquisição. Coloque esse await antes do try que protege o trabalho; o finally correspondente libera a vaga adquirida. Se a espera for cancelada, não se entra nesse try. O overload com timeout devolve bool: false também significa que não houve aquisição e exige uma decisão explícita antes do Release."
           ]
         },
         {
           "title": "Descarte e enumeração assíncrona",
           "text": [
             "using chama Dispose no fim do escopo para recursos síncronos. await using usa descarte assíncrono quando o recurso o oferece. Ambos organizam liberação também em saídas por erro, mas não substituem tratar uma falha relevante da operação.",
-            "IAsyncEnumerable permite consumir uma sequência com await foreach. A origem pode manter um recurso vivo durante a enumeração; término antecipado e cancelamento devem liberar esse recurso. Não devolva uma sequência que depende de um recurso já descartado."
+            "IAsyncEnumerable permite consumir uma sequência com await foreach. A origem pode manter um recurso vivo durante a enumeração; término antecipado e cancelamento devem liberar esse recurso. Não devolva uma sequência que depende de um recurso já descartado.",
+            "CreateLinkedTokenSource combina pedidos sem transferir a posse das fontes originais. Passe vinculada.Token à operação e conserve a fonte vinculada até aguardar seu encerramento; depois descarte o que criou. Cancelar uma fonte original sinaliza a vinculada, sem cancelar automaticamente a outra original. Dispose libera recursos e não substitui Cancel nem await. A pausa usa uma espera infinita cancelável para isolar essa propagação, sem depender de rede ou de um prazo arbitrário."
           ]
         },
         {

@@ -4,7 +4,7 @@
   "aulasOriginais": 60,
   "aulasAprofundadas": 77,
   "problemasIndependentes": 58,
-  "atividadesCorrigiveis": 40,
+  "atividadesCorrigiveis": 43,
   "aulasComPausas": 45,
   "linguagens": [
     "cpp",
@@ -26,7 +26,7 @@
   "entradasIntroduzidas": 492,
   "atividadesPorLinguagem": {
     "cpp": 6,
-    "csharp": 3,
+    "csharp": 6,
     "css": 6,
     "html": 3,
     "javascript": 7,

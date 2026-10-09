@@ -3,6 +3,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
+import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
@@ -61,6 +62,7 @@ try{
  const practiceSource=compileContent(await readFile('src/learning/practice.ts','utf8')).replace(/from ['"]\.\.\/content\/practice['"]/g,'from '+JSON.stringify(metadataUrl));
  const {getPracticeSolution}=await import(asUrl(practiceSource));
  const examples=[
+  ...montarCasosCancelamento(practiceActivities, getPracticeSolution),
   {id:'cpp-prever-intervalo',key:'cpp',source:'#include <iostream>\n#include <vector>\nint main(){\n'+practiceActivities.find(a=>a.id==='cpp-prever-intervalo').code+'\n}',expected:['6,2']},
   {id:'cpp-ordenar-erase',key:'cpp',source:'#include <cassert>\n#include <iostream>\n#include <vector>\nint main(){\nstd::vector<int> dados{0,0,1,0,2,0};\n'+getPracticeSolution('cpp-ordenar-erase')+'\nassert((dados==std::vector<int>{1,2}));\nstd::cout << "zeros conferidos\\n";\n}',expected:['zeros conferidos']},
   {id:'cpp-reobter-reserva',key:'cpp',source:'#include <cassert>\n#include <cstddef>\n#include <iostream>\n#include <stdexcept>\n#include <vector>\nint main(){\nstd::vector<int> dados{4,6,8};\nconst std::size_t indice=1;\nconst auto capacidade=dados.capacity();\nif(capacidade==dados.max_size())throw std::length_error("capacidade máxima");\ndados.reserve(capacidade+1);\n'+getPracticeSolution('cpp-reobter-reserva')+'\nassert(valor==6 && dados.size()==3);\nstd::cout << valor << " " << dados.size() << "\\n";\n}',expected:['6 3']},
