@@ -45,16 +45,16 @@ O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em int
 
 ## Aprendizagem ativa
 
-- **25 atividades nas oito linguagens**, incluindo quatro programas JavaScript quebrados. Os verificadores conferem resultados e casos de borda, com feedback antes da solução. Os casos ficam fora da apresentação da tentativa e são inspecionáveis no pacote local.
+- **Atividades nas oito linguagens**, incluindo programas JavaScript quebrados. Os verificadores conferem resultados e casos de borda, com feedback antes da solução. As [métricas geradas](docs/metricas-catalogo.md) acompanham o catálogo atual. Os casos ficam fora da apresentação da tentativa e são inspecionáveis no pacote local.
 - **Python, C# e C++ sem Judge0 para atividades conceituais**: previsão, reconstrução e decisões com correção local. Essas respostas não comprovam execução de compilador; a bancada de execução completa mantém seus requisitos.
 - **Domínio por habilidade**: árvore por linguagem, assunto e habilidade, baseada em avaliações distintas, tentativas, pistas e assistência. Leitura e notas manuais de projeto não fabricam desempenho.
 - **Revisão de 1, 3, 7, 14, 30 e 60 dias**: erros encurtam o intervalo; revelar uma solução após tentativa registra assistência imediatamente. A sessão contém até duas revisões, um conceito, duas práticas e um desafio. O plano é retomável e a linguagem fica fixa depois de iniciá-lo.
-- **Seis percursos de engenharia, 18 etapas**: algoritmos, estruturas, redes, Git, testes e arquitetura com teoria própria, exemplos, falhas, exercício, solução e decisão conceitual corrigida.
-- **Oito projetos de conclusão, 57 marcos e 171 critérios**: um produto cresce durante cada percurso. Há vários arquivos, rubrica manual, notas preservadas, invalidação das evidências após editar, ZIP e backup da jornada.
+- **Percursos de engenharia**: algoritmos, estruturas, redes, Git, testes e arquitetura com teoria própria, exemplos, falhas, exercício, solução e decisão conceitual corrigida.
+- **Projetos de conclusão com marcos e critérios**: um produto cresce durante cada percurso. Há vários arquivos, rubrica manual, notas preservadas, invalidação das evidências após editar, ZIP e backup da jornada.
 - **Estudo offline após preparação**: no build de produção, o service worker prepara aplicativo, módulos, estilos e WASM. Aguarde a mensagem de preparação; conteúdo e atividades locais podem continuar sem conexão. APIs, clima, fontes externas e execução remota dependem de rede.
 - **Persistência informada**: se o navegador recusar a gravação, as alterações continuam em memória e podem ser exportadas antes de sair. Apagar os dados ou fechar uma sessão que não conseguiu salvar pode perder mudanças sem backup.
 
-As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às 25 atividades. A expansão das demais aulas e a autocorreção de exercícios abertos permanecem no mapa de trabalho. Consulte [os mecanismos e limites](docs/aprendizagem-com-pratica.md).
+As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às atividades corrigíveis. A expansão das demais aulas e a autocorreção de exercícios abertos permanecem no mapa de trabalho. Consulte [os mecanismos e limites](docs/aprendizagem-com-pratica.md).
 
 ## Ambiente vivo
 
@@ -150,6 +150,10 @@ Ao editar uma definição em `src/content/deep/`, execute `npm run content:gener
 | C++ | `cpp-iteradores-invalidacao` | Retorno de erase, reserva e compactação; dois problemas e três pausas offline |
 | JavaScript | `js-propriedades-prototipos` | Propriedades, descritores e receiver; dois problemas, três pausas e novo debugging executado |
 
-O catálogo tem **136 aulas em 20 trilhas**, **28 aulas próprias de 17 capítulos**, **56 problemas independentes** e **37 atividades corrigíveis**. Cinco atividades executam JavaScript no sandbox; as 32 restantes são conceituais. Python, TypeScript, C++ e JavaScript têm dez aulas nos percursos aprofundados; as outras quatro linguagens têm nove.
+<!-- metricas:inicio -->
+O catálogo tem **136 aulas em 20 trilhas**, **56 problemas independentes** e **37 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **44 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
+<!-- metricas:fim -->
+
+O resumo acima é gerado com as [métricas do catálogo](docs/metricas-catalogo.md), também usadas pela interface. JavaScript possui atividades executadas no sandbox; as demais decisões são conceituais e não comprovam compilação. O build rejeita resumos desatualizados.
 
 Os gabaritos dessas entregas passam por ferramentas reais no CI. A resposta conceitual do estudante não comprova compilação; projetos abertos têm rubrica manual. Consulte [o checkpoint](docs/continuidade.md) para os heads e gates aprovados, e [as 17 frentes restantes](docs/etapas-restantes.md) para acompanhar o pedido integral. A verificação pública passou no fluxo Python de leitura, correção, persistência e retomada offline preparada; os demais fluxos publicados ainda precisam de evidências próprias.
