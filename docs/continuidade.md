@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Qualidade atmosférica para dispositivos limitados em validação
+
+A branch `clima/qualidade-dispositivos` parte do head `348988c1ee21c063e2c3be2089b247508ac111a3` da PR #16. Acrescenta teto inicial por recursos locais do navegador e orçamento de pixels para telas grandes. Mantém recuperação por FPS dentro do teto, movimento reduzido, partículas, fontes e 42 massas. Dez testes específicos incluem promoção indevida e orçamento de pixels; nove falharam antes da correção. Os 382 testes unitários, build e quatro cenários Edge passaram: os 25 passos da aula com retomada/assistência, leitura, treze estados atmosféricos em duas larguras e hardware limitado com chuva forte/canvas de 375 a 4000 px. Conferir o CI do novo head antes de integrar; não foram medidos FPS em celular físico.
+
+As oito larguras de 220 a 4000 px passaram no domínio público da integração climática, além dos treze fluxos anteriormente registrados. O CI atual da PR #14 aprovou 147 exemplos externos e 100 testes de navegador; as PRs dependentes e a nova otimização ainda precisam de seus próprios gates. Uma falha de timeout no run anterior da PR #13 ocorreu depois de a resposta final passar nas verificações, conforme o artefato; não atribuir esse timeout a uma resposta incorreta. Consultar o resultado dos heads atuais antes de decidir sobre repetição ou correção.
+
 ## Correção de rascunhos pronta para o gate
 
 A branch `correcao/rascunhos-laboratorio` parte da PR #15 com as revisões propagadas. Corrige leitura dos rascunhos de todas as linguagens do laboratório, preserva HTML/JavaScript vazios e aceita projetos de anotações na leitura e no próprio backup. Dois testes falharam antes da correção e passaram depois; a suíte local aprovou 372 testes em 23 arquivos, strict/build de produção e três fluxos Edge completos. Sem nova aparência, runtime, rede ou ampliação de limites.

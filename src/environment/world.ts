@@ -5,7 +5,7 @@ import type { AmbientFrame,ThunderEvent } from './simulation';
 import { Clouds } from './clouds';
 import { WeatherEffects } from './effects';
 import {Neblina} from './neblina';
-import { QualityController } from './quality';
+import { QualityController,tetoQualidade,proporcaoRenderizacao } from './quality';
 import type { EnvironmentState } from '../types';
 import { defaultEnvironment } from './weather';
 import {combinarMeteorologia} from './meteorologia/confianca';
@@ -21,7 +21,7 @@ export class LivingWorld {
  private effects=new WeatherEffects();
  private neblina=new Neblina();
  private cloudLayer:Clouds;
- private qualityControl=new QualityController();
+ private qualityControl:QualityController;
  private wetMaterials:{material:THREE.MeshStandardMaterial;color:THREE.Color;roughness:number}[]=[];
  private lastAstronomy=0;
  private ultimaFusao=0;
@@ -56,8 +56,9 @@ export class LivingWorld {
  private lastFrame=0;
  private vegetationUniforms={time:{value:0},wind:{value:1},direction:{value:new THREE.Vector2(1,0)}};
  constructor(private container:HTMLElement,private onClimate:(frame:AmbientFrame)=>void=()=>{},private onThunder:(event:ThunderEvent)=>void=()=>{}) {
+  this.qualityControl=new QualityController(tetoQualidade(navigator.hardwareConcurrency,Reflect.get(navigator,'deviceMemory')));
   this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});
-  this.renderer.setPixelRatio(Math.min(devicePixelRatio,1.15));this.renderer.shadowMap.enabled=false;this.renderer.shadowMap.autoUpdate=false;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;this.sun.castShadow=true;this.sun.shadow.mapSize.set(1024,1024);Object.assign(this.sun.shadow.camera,{left:-60,right:60,top:65,bottom:-40,far:230});this.sun.shadow.bias=-.001;
+  this.ajustarResolucao();this.renderer.shadowMap.enabled=false;this.renderer.shadowMap.autoUpdate=false;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;this.sun.castShadow=true;this.sun.shadow.mapSize.set(1024,1024);Object.assign(this.sun.shadow.camera,{left:-60,right:60,top:65,bottom:-40,far:230});this.sun.shadow.bias=-.001;
   this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.08;
   container.append(this.renderer.domElement);this.renderer.domElement.setAttribute('aria-hidden','true');
   this.scene.fog=new THREE.FogExp2('#748f9d',.006);
@@ -86,9 +87,10 @@ export class LivingWorld {
   this.moon=new THREE.Mesh(new THREE.PlaneGeometry(6.5,6.5),moonMat);this.scene.add(this.moon);
   for(let i=0;i<9;i++){const bird=new THREE.Group();const mat=new THREE.MeshBasicMaterial({color:'#262d28',side:THREE.DoubleSide});for(const side of [-1,1]){const wing=new THREE.Mesh(new THREE.PlaneGeometry(.75,.12),mat);wing.position.x=side*.34;bird.add(wing);}bird.position.set(rng()*100-50,20+rng()*12,-35-rng()*45);bird.userData.seed=rng()*10;this.birds.push(bird);this.scene.add(bird);}
   const seen=new Set<THREE.Material>();this.scene.traverse(obj=>{if(obj instanceof THREE.Mesh){if(obj.material instanceof THREE.MeshStandardMaterial){obj.castShadow=true;obj.receiveShadow=true;if(!seen.has(obj.material)){seen.add(obj.material);this.wetMaterials.push({material:obj.material,color:obj.material.color.clone(),roughness:obj.material.roughness});}}}});
-  this.resize=new ResizeObserver(()=>{const {width,height}=container.getBoundingClientRect();this.renderer.setSize(width,height);this.camera.aspect=width/Math.max(height,1);this.camera.fov=width<600?60:47;this.camera.updateProjectionMatrix();});this.resize.observe(container);
+  this.resize=new ResizeObserver(()=>{const {width,height}=container.getBoundingClientRect();this.ajustarResolucao();this.renderer.setSize(width,height);this.camera.aspect=width/Math.max(height,1);this.camera.fov=width<600?60:47;this.camera.updateProjectionMatrix();});this.resize.observe(container);
   window.addEventListener('pointermove',this.onPointer);document.addEventListener('visibilitychange',this.onVisibility);this.renderer.domElement.addEventListener('webglcontextlost',this.onLost);this.renderer.domElement.addEventListener('webglcontextrestored',this.onRestored);this.renderer.render(this.scene,this.camera);this.animate();
  }
+ private ajustarResolucao(){const {width,height}=this.container.getBoundingClientRect();this.renderer.setPixelRatio(proporcaoRenderizacao(width,height,devicePixelRatio,this.qualityControl.tier));}
  private random(seed:number){return()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};}
  private island(x:number,y:number,z:number,r:number,h:number,rng:()=>number,castle:boolean){
   const group=new THREE.Group();group.position.set(x,y,z);
@@ -119,7 +121,7 @@ export class LivingWorld {
  private onRestored=()=>{delete this.container.dataset.status;this.onVisibility();};
  private animate=()=>{
   if(this.paused||this.disposed)return;this.frame=requestAnimationFrame(this.animate);const now=performance.now(),budget=this.reduced.matches?100:this.active?1000/30:1000/15,elapsed=now-this.lastFrame;if(elapsed<budget-1)return;this.lastFrame=now;const dt=Math.min(elapsed/1000,.25),t=this.clock.getElapsedTime();
-  if(this.qualityControl.sample(elapsed,budget,this.reduced.matches)){this.renderer.setPixelRatio(Math.min(devicePixelRatio,this.qualityControl.ratio));this.renderer.shadowMap.enabled=this.qualityControl.tier==='high';this.container.dataset.quality=this.qualityControl.tier;}
+  if(this.qualityControl.sample(elapsed,budget,this.reduced.matches)){this.ajustarResolucao();this.renderer.shadowMap.enabled=this.qualityControl.tier==='high';this.container.dataset.quality=this.qualityControl.tier;}
   const f=this.climate;if(now-this.ultimaFusao>=1000||this.ultimaFusao===0){this.ultimaFusao=now;this.atmosfera=combinarMeteorologia(this.target.fontes??[],Date.now());}
   stepEnvironment(f,this.target,dt,Date.now(),this.atmosfera);const day=f.daylight,cloud=f.clouds;
   this.cloudLayer.step(f,dt,this.reduced.matches?.1:1,this.qualityControl.particles);
