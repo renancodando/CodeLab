@@ -12,6 +12,27 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'js-debug-contadores',language:'javascript',lessonIds:['js-closures-estado'],skillIds:['javascript.closures.instancias'],afterBlock:2,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Criar outro contador altera o primeiro',
+  prompt:'Corrija criarContador(inicial=0). Cada instância começa no inteiro seguro não negativo recebido; inicial inválido lança TypeError. somar aceita apenas inteiro seguro positivo, retorna true ao somar e false ao rejeitar, preservando o estado inclusive em overflow. ler devolve o total. Os métodos devem funcionar também destacados do objeto. Investigue por que criar b modifica a. O código será executado no ambiente isolado, sem rede.',
+  code:'let total = 0;\nfunction criarContador(inicial = 0) {\n  if (!Number.isSafeInteger(inicial) || inicial < 0) throw new TypeError("inicial inválido");\n  total = inicial;\n  return {\n    somar(valor) {\n      if (!Number.isSafeInteger(valor) || valor <= 0 || !Number.isSafeInteger(total + valor)) return false;\n      total += valor;\n      return true;\n    },\n    ler() { return total; }\n  };\n}',
+  hint:'Desenhe o binding que cada método lê. Criar um objeto novo não garante um estado novo.',minutes:5
+ },
+ {
+  id:'js-debug-callbacks',language:'javascript',lessonIds:['js-closures-estado'],skillIds:['javascript.closures.iteracoes'],afterBlock:4,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Os callbacks só serão chamados depois do laço',
+  prompt:'Corrija criarCallbacks(quantidade). Para um inteiro seguro entre 0 e 32, devolva quantidade funções que retornam seus índices de criação. A execução acontece depois da fábrica terminar, em qualquer ordem e mais de uma vez. Chamadas distintas da fábrica são independentes. Quantidade inválida lança RangeError. Não devolva índices já calculados no lugar das funções.',
+  code:'function criarCallbacks(quantidade) {\n  if (!Number.isSafeInteger(quantidade) || quantidade < 0 || quantidade > 32) throw new RangeError("quantidade inválida");\n  const callbacks = [];\n  for (var indice = 0; indice < quantidade; indice++) {\n    callbacks.push(() => indice);\n  }\n  return callbacks;\n}',
+  hint:'Compare executar dentro do laço com executar depois. Qual variável ainda existe quando os callbacks finalmente são chamados?',minutes:5
+ },
+ {
+  id:'js-debug-snapshot',language:'javascript',lessonIds:['js-closures-estado'],skillIds:['javascript.closures.snapshots'],afterBlock:5,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Uma cópia de strings que não abre o estado interno',
+  prompt:'Corrija criarLista(iniciais=[]). iniciais deve ser um array de strings não vazias após trim; rejeite outro formato com TypeError sem alterar a entrada. Guarde as strings aparadas. adicionar(texto) retorna true ao adicionar string válida e false sem mudança nos demais casos. snapshot() devolve um array novo e mutável: mudar a entrada ou qualquer snapshot não pode modificar a instância. Preserve ordem e duplicatas. Os itens são somente strings; não é uma promessa de cópia profunda de objetos.',
+  code:'function criarLista(iniciais = []) {\n  if (!Array.isArray(iniciais) || !Array.from(iniciais).every(texto => typeof texto === "string" && texto.trim() !== "")) throw new TypeError("lista inválida");\n  const itens = iniciais;\n  for (let indice = 0; indice < itens.length; indice++) itens[indice] = itens[indice].trim();\n  return {\n    adicionar(texto) {\n      if (typeof texto !== "string" || texto.trim() === "") return false;\n      itens.push(texto.trim());\n      return true;\n    },\n    snapshot() { return itens; }\n  };\n}',
+  hint:'Liste todas as referências ao array: entrada, coleção interna e cada saída. Separar só uma dessas fronteiras pode deixar outro caminho de escrita.',minutes:6
+ },
+ {
   id:'cpp-requisito-verdadeiro',language:'cpp',lessonIds:['cpp-templates'],skillIds:['cpp.templates.requisitos'],afterBlock:3,kind:'fill',capability:'alteracao',requiresConcept:true,
   title:'A expressão é válida, mas o conceito é falso',
   prompt:'Em C++20, complete apenas o requisito dentro do bloco. Inteiro deve aceitar os tipos integrais da biblioteca, incluindo bool, e recusar double/string. Use um requisito aninhado, conservando std::integral<T>. A expressão simples abaixo aceitava double por estar bem formada. Avaliação conceitual offline; não compila sua resposta.',

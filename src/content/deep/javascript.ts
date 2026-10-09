@@ -346,7 +346,8 @@ export default {
           "title": "Uma fábrica pode isolar o estado das instâncias",
           "text": [
             "Cada chamada de uma função fábrica cria seus próprios bindings locais. Duas chamadas de criarContador produzem estados separados, mesmo que os métodos retornados tenham o mesmo código. Os métodos de uma mesma chamada compartilham o binding que precisam atualizar. Essa estrutura permite oferecer uma pequena API sem expor diretamente a variável interna do contador.",
-            "Isolamento de binding não exige que todos os dados sejam independentes. Se a fábrica recebe um objeto externo e guarda a mesma referência, as instâncias podem continuar compartilhando aquele objeto. Copie ou valide a representação quando o contrato exigir independência. Para um contador numérico local, o estado é um Number e a mudança fica restrita aos métodos da instância."
+            "Isolamento de binding não exige que todos os dados sejam independentes. Se a fábrica recebe um objeto externo e guarda a mesma referência, as instâncias podem continuar compartilhando aquele objeto. Copie ou valide a representação quando o contrato exigir independência. Para um contador numérico local, o estado é um Number e a mudança fica restrita aos métodos da instância.",
+            "Investigue a fábrica em duas fases: primeiro opere uma instância sozinha; depois crie outra e volte a consultar a primeira. Um total fora da fábrica pode passar no primeiro teste e falhar no segundo. Os métodos ler e somar podem conservar o estado por closure, inclusive quando chamados destacados do objeto. O contrato da próxima pausa exige inicial inteiro seguro não negativo e incrementos inteiros seguros positivos; uma recusa não deve escrever no estado."
           ]
         },
         {
@@ -360,14 +361,16 @@ export default {
           "title": "Callbacks de laço mostram qual binding é capturado",
           "text": [
             "Um for com let cria bindings adequados por iteração para closures que dependem daquela variável do laço. Um laço com var pode deixar todas as funções apontando para o mesmo binding, que ao final contém o valor terminal. Assim, três callbacks podem devolver três vezes o mesmo número. Não é um atraso de execução que escolhe um índice aleatório; é a relação entre a função e a variável capturada.",
-            "Para investigar, crie as funções primeiro e só depois execute todas em ordem. Essa separação torna visível que os valores observados dependem do estado final ou do binding de cada iteração. Você também pode criar uma função auxiliar que recebe o índice e devolve uma closure; cada chamada fornece um ambiente próprio. Compare as duas correções e explique por que funcionam."
+            "Para investigar, crie as funções primeiro e só depois execute todas em ordem. Essa separação torna visível que os valores observados dependem do estado final ou do binding de cada iteração. Você também pode criar uma função auxiliar que recebe o índice e devolve uma closure; cada chamada fornece um ambiente próprio. Compare as duas correções e explique por que funcionam.",
+            "Chame depois os callbacks fora de ordem e repita um deles. O índice pertence à função criada, não à contagem de chamadas. Uma fábrica que funciona apenas com três itens pode estar escondendo resultados fixos; confira também zero, um e outras quantidades. O limite de 32 da pausa é uma restrição pequena desse exercício para evitar trabalho excessivo, não uma limitação da linguagem."
           ]
         },
         {
           "title": "Mutações precisam de condições antes da escrita",
           "text": [
             "Um contador que recebe um incremento pode exigir inteiro seguro positivo. Valide o incremento e o próximo total antes de atualizar a variável. Se a entrada falhar, o estado deve permanecer como antes. Essa pós-condição ajuda a usar a API sem precisar conhecer sua implementação. Não atualize primeiro e tente consertar depois, pois isso amplia os estados intermediários e pode perder a informação original.",
-            "A closure oferece uma forma de encapsulamento, mas não fornece persistência, autenticação ou segurança geral. Quem tem os métodos ainda pode chamá-los conforme a API. O estado desaparece quando não é preservado por nenhuma referência ou mecanismo de armazenamento. Use esse recorte para estudar uma instância em memória; as aulas de persistência e arquitetura tratam a vida de dados entre recargas e diferentes componentes."
+            "A closure oferece uma forma de encapsulamento, mas não fornece persistência, autenticação ou segurança geral. Quem tem os métodos ainda pode chamá-los conforme a API. O estado desaparece quando não é preservado por nenhuma referência ou mecanismo de armazenamento. Use esse recorte para estudar uma instância em memória; as aulas de persistência e arquitetura tratam a vida de dados entre recargas e diferentes componentes.",
+            "Na lista de strings da próxima pausa, existem duas fronteiras independentes: receber a coleção inicial e devolver snapshots. Alterar a entrada após construir a lista não deve escrever nela; alterar uma saída também não. Valide todos os itens antes de produzir o estado, inclusive posições ausentes de arrays esparsos. Strings são imutáveis: uma cópia da coleção basta neste recorte. O bloco seguinte aprofunda essa promessa sem generalizá-la para objetos aninhados."
           ]
         },
         {

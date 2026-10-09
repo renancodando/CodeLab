@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Closures: depuração com execução isolada
+
+`js-closures-estado` passa a oferecer três programas quebrados nos blocos 2/4/5. O aluno corrige a independência dos contadores, os índices capturados por callbacks e as fronteiras de uma lista de strings. O executor QuickJS existente confere contratos específicos, inclusive instâncias intercaladas, overflow sem escrita, chamadas fora de ordem, quantidade zero, entrada esparsa, snapshots alterados e validação sem mutação parcial. Não há rede, runtime adicional ou mudança dos limites do sandbox.
+
+Os corretores aceitam comportamentos equivalentes: uma fábrica auxiliar de callbacks também passa. Saída fixa, cursor compartilhado e cópia apenas da entrada não passam nos casos adicionais. A teoria prepara os contratos antes de cada pausa; a sessão diária exige o conceito, leitura não cria domínio e consultar solução registra assistência. Referências consultadas: [ambientes e closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures) e [bindings de let](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let). As métricas atuais vêm de [metricas-catalogo.md](metricas-catalogo.md); números dos registros abaixo descrevem suas entregas históricas.
+
 ## C++20: requisito, instanciação e subsunção
 
 As pausas de `cpp-templates` distinguem validade de expressão, condição satisfeita, descarte de ramo dependente e escolha da sobrecarga por requisitos compartilhados. O conceito vem antes da prática na sessão diária; leitura não cria evidência de domínio. Respostas são locais e conceituais. Pistas apontam o mecanismo sem revelar imediatamente o trecho, e consultar solução registra assistência.
