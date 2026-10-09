@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Main verificada: vidros e módulos TypeScript
+
+As PRs #19 e #20 estão integradas, nessa ordem. A main `4790188f8ab6c7ddab7167a33984043dc86f216a` preserva a árvore do head #20 `0126d54776e3c5e014e99ad796135347aeb62b9b`: `275cd5b493f5a92fed455a9b0d7e2fafc4df88f1`. O CI 37953975921 aprovou 401 testes unitários, 152 exemplos externos, oito projetos TypeScript adicionais e 111 testes de navegador. A PR #19 aprovou 392/152/110 no run 37951920788 e seu merge `5b45b72d45a2d55f88f429ca159f508f346357e0` também teve árvore idêntica à testada. Não havia revisões abertas.
+
+O deployment `B4N9m1yekqkEJyQAbfBNF6PnX4UD` foi confirmado READY/production. No domínio code-lab-omega.vercel.app passaram o fluxo TypeScript offline completo e a verificação do estado/CSS dos vidros em 220/375/4000 px, um canvas, 42 massas, movimento reduzido e ausência de erros WebGL. O estado real dessa verificação tinha condensação zero: isso comprova conexão do motor e CSS publicados, não observação de vidro fisicamente embaçado. As regiões sintéticas embaçadas/secas foram conferidas na fixture do CI sem alterar a arte.
+
+A expansão local seguinte, `pratica/cpp-requisitos-sobrecargas`, aprofunda `cpp-templates` com requisitos simples/aninhados, instanciação e sobrecargas com requisitos compartilhados. Três pausas conceituais e sete cenários externos C++20 não introduzem compilador no navegador nem encerram templates/concorrência/memória. Passaram strict/build, 412 testes unitários, os sete cenários g++ e o fluxo Edge offline com respostas, assistência e retomada em 220/4000 px. Cinco cenários executam programas; dois exigem recusa da compilação. A suíte diária agora verifica a primeira sessão no catálogo completo e a preparação na família isolada, sem depender do desempate com práticas de fundamentos. Exigir o CI completo do head publicado antes de integrar. Os checkpoints abaixo são históricos, não pendências atuais das PRs já integradas.
+
 ## Próxima entrega: prática de módulos TypeScript
 
 A branch `pratica/typescript-modulos-host` parte do head `97b5725c0a08b1032f3bbeb4ac9103e99db9fa21` da PR #19, que ainda exige seu gate completo. A expansão da aula existente prepara extensão do artefato, alias e efeitos de imports de tipo antes de três pausas. As métricas são geradas pelo catálogo; não surgiu uma nova aula própria nem execução TypeScript no laboratório.

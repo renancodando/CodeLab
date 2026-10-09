@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## C++20: requisito, instanciação e subsunção
+
+As pausas de `cpp-templates` distinguem validade de expressão, condição satisfeita, descarte de ramo dependente e escolha da sobrecarga por requisitos compartilhados. O conceito vem antes da prática na sessão diária; leitura não cria evidência de domínio. Respostas são locais e conceituais. Pistas apontam o mecanismo sem revelar imediatamente o trecho, e consultar solução registra assistência.
+
+O verificador externo compila sete cenários, incluindo dois que devem falhar: if comum tentando size em int e chamada ambígua após copiar o requisito. Os demais conferem saídas e contratos, com tipos integrais/não integrais, coleções vazias, fixas/dinâmicas e conservação dos elementos. O fluxo de navegador cobre respostas erradas/corretas, ausência de solução antecipada, assistência e retomada offline. Não há execução de código do aluno ou novo runtime cliente.
+
 ## TypeScript: resolução e efeitos de módulos
 
 Três pausas em `ts-modulos-configuracao` distinguem caminho no artefato, alias do compilador e grafo de execução após apagar tipos. As habilidades são diferentes; previsões de saída continuam no eixo de leitura existente. Preparação conceitual é exigida na sessão diária. Falhas apontam o mecanismo e a solução fica sob solicitação, registrando assistência. A resposta é avaliada localmente, sem compilador ou execução TypeScript no navegador.

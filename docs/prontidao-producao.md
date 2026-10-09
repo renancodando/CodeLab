@@ -1,5 +1,13 @@
 # Prontidão de produção
 
+## Vidros e módulos TypeScript integrados e publicados
+
+A main `4790188f8ab6c7ddab7167a33984043dc86f216a` integra #19/#20 com árvores idênticas aos heads aprovados, sem revisões pendentes. O CI #20 (37953975921) aprovou 401 testes unitários, 152 exemplos externos, oito projetos TypeScript e 111 testes de navegador. O CI #19 aprovou 392 testes unitários, 152 exemplos externos e 110 testes de navegador.
+
+A implantação `B4N9m1yekqkEJyQAbfBNF6PnX4UD` foi confirmada READY/production. No domínio público, a aula TypeScript conferiu erro/acerto, solução sob solicitação, assistência, reload offline, domínio e larguras 220/4000 px. A inspeção dos vidros conferiu estado vindo do motor, camada CSS sem filtros/interceptação, arte original, um canvas, 42 massas e movimento reduzido em 220/375/4000 px. Condensação real era zero; o efeito ativo foi testado em cenários sintéticos no CI, não apresentado como observação meteorológica. Não comprova FPS físico, fontes adicionais ou cobertura curricular integral.
+
+As novas pausas C++ exigem seu próprio head/CI. Os registros abaixo são evidências históricas e não anulam as integrações posteriores.
+
 ## Estado atual e próximo gate
 
 A PR #18 está integrada na main `48971a4035d5131e1fa795fb36c150806de95f8c`, com árvore idêntica ao head aprovado no CI 37938119575: 389 testes unitários, 152 exemplos externos e 108 testes de navegador. O CI de push 37942664815 também aprovou a main. A implantação `GLwR5eRuoBeM1gF4mtUFY6D8y58v` foi confirmada em produção e o fluxo CSV passou no endereço público, incluindo retomada offline sem executor remoto. O catálogo e os limites pedagógicos permanecem descritos nas métricas geradas.
