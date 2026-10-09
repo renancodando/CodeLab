@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Próxima entrega: imagens com contexto e arquivos offline
+
+A branch `pratica/html-imagens-contexto` depende do head SQL `35b7267db303de45b78e5942dac5a1ce5c0f28e4` da PR #23, ainda exigindo CI completo. Acrescenta três pausas à aula existente `html-midia`, que não tinha atividades corrigíveis. Preserva suas seis seções e os exemplos SVG, aprofunda alternativas funcionais, sizes e seleção de picture, e fornece três diagramas locais no cache offline. A ordem inicial de picture é propositalmente incorreta; o aluno precisa movê-la. Não há novo executor, runtime, permissão de rede ou alteração de arte.
+
+Passaram 452 testes unitários, strict/build e dois fluxos Edge locais. A referência nativa confere nome acessível/foco, tamanho CSS, seleção nas larguras 220/600/601/4000, proporção, reprodução da fonte genérica antecipada e fallback. O fluxo do produto confere erro/acerto, assistência, respostas/ordem/evidências após reload offline, os três arquivos SVG acessíveis sem rede e layout 220/4000 px. A conferência do aluno continua conceitual; seleção de candidatos por densidade não é prometida como determinística nem medida como economia de fotografias. O bundle inicial cresce de 187,28 para 188,86 kB gzip; o mundo mantém tamanho e carregamento existentes. Após explicitar tipo SVG e dimensões nas sources, os 23 testes específicos, build e os dois fluxos foram conferidos novamente.
+
+O CI SQL falhou duas vezes antes do checkout por limite/timeouts do Docker Hub. Um commit separado passa a obter a mesma imagem oficial PostgreSQL 18 no registro público da AWS. A tag foi consultada e contém Linux/amd64; nenhum gate, porta, usuário descartável ou segredo foi modificado. Referência operacional: [pull público no ECR](https://docs.aws.amazon.com/AmazonECR/latest/public/docker-pull-ecr-image.html). Exigir os CIs dos heads atuais, resolver revisões e integrar SQL antes de HTML. Nenhuma falha de download comprova defeito ou aprovação dos exemplos.
+
 ## Checkpoint de 9 de outubro: C++ e closures integrados
 
 A main `093584f82b7000c859b4b0898f1c2568c98b0ede` integra as PRs #21 e #22, depois de #19/#20. A árvore `9289005baa4ace21d809fc241d0000957451dcf7` é idêntica ao head aprovado #22 `b2816488cd519663875cf35cf191879deb89941c`. O CI 37961175745 aprovou 427 testes unitários, 152 exemplos externos, oito projetos TypeScript, sete cenários C++20 e 113 testes de navegador. Os CIs de push 37964985020 e 37965665399 também passaram. Não há PRs abertas neste checkpoint.

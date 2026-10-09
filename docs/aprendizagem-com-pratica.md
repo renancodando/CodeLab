@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## HTML: alternativas e seleção de imagens
+
+`html-midia` recebe três pausas preparadas pelos blocos 1/2/5: nomear um link que só contém imagem, completar sizes conforme o espaço CSS e reconstruir picture quando a fonte genérica esconde a específica. O conceito é exigido na sessão diária; leitura não cria domínio e consultar solução registra assistência. São decisões conceituais, sem alegar que o aluno executou HTML ou concluiu uma auditoria de acessibilidade.
+
+As referências são verificadas pelo navegador real: nome acessível/foco, arquivos locais decodificados, medidas CSS, seleção de fonte nas bordas 600/601 px, proporção, reprodução da ordem errada e fallback. Os SVGs preservam as três etapas nas duas composições e ficam disponíveis offline. Não há promessa de uma escolha universal de srcset, economia medida de imagens raster ou teste com leitor de tela físico. Referências oficiais: [picture/source](https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element), [sizes](https://html.spec.whatwg.org/multipage/images.html#sizes-attributes) e [alternativas de imagens](https://html.spec.whatwg.org/multipage/images.html#alt).
+
 ## SQL: ausência, integridade e correspondência
 
 A aula `sql-null-logica` conserva a pausa inicial e recebe três decisões após os blocos 2/4/5: prever a comparação desconhecida, investigar a aceitação de NULL por CHECK e completar uma correlação com política explícita para duas ausências. Zero continua sendo um valor distinto; repetir bloqueios não pode multiplicar linhas. Pistas apontam o mecanismo, solução consultada registra assistência e leitura não cria domínio. As respostas do aluno são conceituais/offline; os gabaritos têm cenários PostgreSQL separados no verificador externo, ainda sujeitos ao gate desta entrega. Não surgiu um executor SQL no laboratório.

@@ -32,7 +32,7 @@ A edição atual já entrega conteúdo e mecanismos funcionais. Para declarar um
 
 1. Conferir o CI do checkpoint e a main atual antes de editar.
 2. Priorizar o motor meteorológico solicitado: evidência, continuidade, fontes viáveis, testes e verificação publicada. Esta frente ambiental é adicional às 17 frentes curriculares/de implantação acima; seus limites estão em docs/meteorologia.md.
-3. As expansões CSV, módulos TypeScript, conceitos C++ e closures foram integradas e verificadas publicamente até a PR #22. Concluir os gates da prática SQL de ausência/contratos. As demais especializações continuam abertas; três pausas não encerram uma linguagem.
+3. As expansões CSV, módulos TypeScript, conceitos C++ e closures foram integradas e verificadas publicamente até a PR #22. Concluir os gates da prática SQL de ausência/contratos e das novas pausas HTML de imagens; resolver o download PostgreSQL no CI e integrar somente os heads aprovados. As demais especializações continuam abertas; três pausas não encerram uma linguagem.
 4. Evoluir laboratório TypeScript/SQL, simulações didáticas Git/HTTP, diagnóstico e projetos conforme o pedido mais recente, sem tratar lista de temas como aulas completas.
 
 ## Limites que continuam explícitos
