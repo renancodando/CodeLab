@@ -1,11 +1,33 @@
 import * as THREE from 'three';
-import type { AmbientFrame } from './simulation';
+import type {AmbientFrame} from './simulation';
+import {CampoNuvens} from './meteorologia/campo-nuvens';
 export class Clouds {
  readonly group=new THREE.Group();
- private material=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,uniforms:{storm:{value:0},day:{value:1},cover:{value:.2}},vertexShader:'varying vec2 uvp;void main(){uvp=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:`varying vec2 uvp;uniform float storm;uniform float day;uniform float cover;
- float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
- float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.)),f.x),f.y);}
- void main(){vec2 p=uvp*2.-1.;float n=noise(uvp*6.)*.55+noise(uvp*15.)*.3+noise(uvp*33.)*.15;float a=smoothstep(.0,.6,1.-dot(p,p))*smoothstep(.16,.72,n)*(.22+cover*.62);vec3 c=mix(vec3(.84,.86,.85),vec3(.29,.32,.35),storm);c*=.42+day*.58;c*=.72+n*.28;gl_FragColor=vec4(c,a);}`});
- constructor(random:()=>number){const geometry=new THREE.PlaneGeometry(1,1);for(let i=0;i<22;i++){const cloud=new THREE.Mesh(geometry,this.material);cloud.position.set((random()-.5)*240,25+random()*28,-30-random()*135);cloud.scale.set(24+random()*32,7+random()*12,1);cloud.rotation.z=(random()-.5)*.08;cloud.userData.speed=.22+random()*.34;cloud.userData.baseY=cloud.position.y;cloud.userData.phase=random()*6.28;this.group.add(cloud);}}
- step(state:AmbientFrame,dt:number,motion:number){this.material.uniforms.storm.value=state.storm*.7+state.clouds*.3;this.material.uniforms.day.value=state.daylight;this.material.uniforms.cover.value=state.clouds;const a=state.direction*Math.PI/180;for(let i=0;i<this.group.children.length;i++){const cloud=this.group.children[i];cloud.visible=i<3+state.clouds*19;cloud.position.x-=Math.sin(a)*dt*(.08+state.wind/65)*cloud.userData.speed*motion;cloud.position.z-=Math.cos(a)*dt*(.08+state.wind/65)*cloud.userData.speed*motion;cloud.position.y=cloud.userData.baseY+Math.sin(performance.now()*.00008+cloud.userData.phase)*.06*motion;if(cloud.position.x>125)cloud.position.x=-125;if(cloud.position.x< -125)cloud.position.x=125;if(cloud.position.z> -25)cloud.position.z=-160;if(cloud.position.z< -165)cloud.position.z=-30;}}
+ readonly campo=new CampoNuvens();
+ private malhas:THREE.Mesh<THREE.PlaneGeometry,THREE.ShaderMaterial>[]=[];
+ private tempo=0;
+ constructor(_random:()=>number){
+  const geometria=new THREE.PlaneGeometry(1,1);
+  for(const massa of this.campo.massas){
+   const material=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,uniforms:{semente:{value:massa.semente},densidade:{value:0},dia:{value:1},camada:{value:massa.camada},tempo:{value:0},chuva:{value:0},qualidade:{value:1}},
+    vertexShader:'varying vec2 ponto;void main(){ponto=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+    fragmentShader:`varying vec2 ponto;uniform float semente;uniform float densidade;uniform float dia;uniform float camada;uniform float tempo;uniform float chuva;uniform float qualidade;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7))+semente)*43758.5453);}
+float ruido(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.)),f.x),f.y);}
+void main(){vec2 p=ponto*2.-1.;vec2 deriva=vec2(tempo*.002,semente*.03);float n=ruido(ponto*5.+deriva)*.57+ruido(ponto*12.+deriva)*.3;n+=qualidade>.45?ruido(ponto*27.)*.13:.065;
+float borda=smoothstep(0.,.65,1.-dot(p,p)+.22*(n-.5));float a=borda*smoothstep(.13,.7,n)*densidade*(camada>1.5?.43:.94);
+vec3 cor=mix(vec3(.85,.87,.86),vec3(.31,.35,.38),densidade*(camada<.5?.65:.25)+chuva*.2);cor*=.35+dia*.65;gl_FragColor=vec4(cor*(.8+n*.2),a);}`});
+   const malha=new THREE.Mesh(geometria,material);this.malhas.push(malha);this.group.add(malha);
+  }
+ }
+ step(estado:AmbientFrame,dt:number,movimento:number,qualidade=1){
+  this.tempo+=dt*movimento;this.campo.avancar(estado,dt,movimento);
+  for(let i=0;i<this.malhas.length;i++){
+   const massa=this.campo.massas[i],malha=this.malhas[i],uniformes=malha.material.uniforms;
+   const nascimento=Math.min(1,massa.idade/90);malha.position.set(massa.x,massa.y,massa.z);malha.scale.set(massa.largura*(.65+nascimento*.35),massa.altura,1);
+   uniformes.semente.value=massa.semente;uniformes.densidade.value=massa.densidade;uniformes.dia.value=estado.daylight;uniformes.tempo.value=this.tempo;uniformes.chuva.value=estado.rain;uniformes.qualidade.value=qualidade;
+   malha.visible=massa.densidade>.006;
+   uniformes.camada.value=massa.camada;
+  }
+ }
 }

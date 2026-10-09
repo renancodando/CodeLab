@@ -39,10 +39,11 @@ test('laboratório HTML renderiza sem acesso ao documento pai',async({page})=>{
  }
  await expect(page.getByRole('heading',{name:'Seu laboratório.'})).toBeVisible();
 });
-test('clima: dados normalizados, falha e geolocalização negada',async({page})=>{
- await page.route('https://api.open-meteo.com/**',route=>route.fulfill({json:{current:{temperature_2m:19,relative_humidity_2m:80,precipitation:2,weather_code:61,cloud_cover:90,wind_speed_10m:24,wind_direction_10m:210,wind_gusts_10m:39}}}));
- await page.goto('/');await page.getByRole('button',{name:'Configurar ambiente',exact:true}).click();await page.getByRole('button',{name:'Sincronizar com esta cidade'}).click();await expect(page.locator('#weather-message')).toContainText('Ambiente sincronizado');await page.getByRole('button',{name:'Fechar',exact:true}).click();await expect(page.locator('#weather-status')).toContainText('Ambiente sincronizado');
- await page.getByRole('button',{name:'Configurar ambiente',exact:true}).click();await page.route('https://api.open-meteo.com/**',r=>r.abort());await page.locator('#city').selectOption('Lisboa');await page.getByRole('button',{name:'Sincronizar com esta cidade'}).click();await expect(page.locator('#weather-message')).toContainText('Sem dados recentes');
+test('clima: previsão não confirma observação e falha em outra cidade indica dados insuficientes',async({page})=>{
+ await page.route('**/api/meteorologia/observacao?*',route=>route.fulfill({json:{dados:[],recebidoEm:Date.now()}}));
+ await page.route('https://api.open-meteo.com/**',route=>route.fulfill({json:{current:{time:Date.now()/1000,interval:900,temperature_2m:19,relative_humidity_2m:80,precipitation:2,weather_code:61,cloud_cover:90,wind_speed_10m:24,wind_direction_10m:210,wind_gusts_10m:39}}}));
+ await page.goto('/');await page.getByRole('button',{name:'Configurar ambiente',exact:true}).click();await page.getByRole('button',{name:'Sincronizar com esta cidade'}).click();await expect(page.locator('#weather-message')).toContainText('Possibilidade de chuva');await page.getByRole('button',{name:'Fechar',exact:true}).click();await expect(page.locator('#weather-status')).toContainText('Possibilidade de chuva');
+ await page.getByRole('button',{name:'Configurar ambiente',exact:true}).click();await page.route('https://api.open-meteo.com/**',r=>r.abort());await page.locator('#city').selectOption('Lisboa');await page.getByRole('button',{name:'Sincronizar com esta cidade'}).click();await expect(page.locator('#weather-message')).toContainText('Dados temporariamente insuficientes');
 });
 test('larguras contínuas sem overflow da página',async({page})=>{
  await page.goto('/');for(const width of [280,320,375,430,600,760,900,1100,1440,1920,2560,3840]){await page.setViewportSize({width,height:1000});await page.waitForTimeout(100);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`home ${width}`).toBe(true);}

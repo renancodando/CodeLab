@@ -1,6 +1,7 @@
 import type { EnvironmentState, ForecastHour, WeatherKind } from '../types';
+import {normalizarModelo} from './meteorologia/normalizacao';
 
-export const WEATHER_INTERVAL=5*60*1000;
+export const WEATHER_INTERVAL=30*60*1000;
 export const MAX_STALE=2*60*60*1000;
 export const clamp=(value:number,min=0,max=1)=>Math.min(max,Math.max(min,value));
 export const windDirection=(value:number)=>((value%360)+360)%360;
@@ -12,9 +13,7 @@ export function classifyWeather(code:number):WeatherKind {
 }
 export const weatherLabels:Record<WeatherKind,string>={'clear':'céu limpo','partly-cloudy':'parcialmente nublado','overcast':'nublado','fog':'neblina','drizzle':'garoa','rain-light':'chuva fraca','rain':'chuva moderada','rain-heavy':'chuva forte','snow':'neve','storm':'trovoada','hail':'trovoada com granizo','unknown':'condição não informada'};
 export function rainIntensity(rain:number,code:number):number {
- if(rain>0)return clamp(Math.log1p(rain)/Math.log(16));
- const kind=classifyWeather(code);
- return kind==='drizzle'?.06:kind==='rain-light'?.14:kind==='rain'?.35:kind==='rain-heavy'?.65:kind==='storm'||kind==='hail'?.45:0;
+ return Number.isFinite(rain)&&rain>0?clamp(Math.log1p(rain)/Math.log(16)):0;
 }
 type Data=Record<string,unknown>;
 const obj=(v:unknown):Data=>v&&typeof v==='object'&&!Array.isArray(v)?v as Data:{};
@@ -31,7 +30,7 @@ export function normalizeWeather(raw:unknown,location:{latitude:number;longitude
  const rain=number(c.rain,0,250),showers=number(c.showers,0,250)??0,snow=number(c.snowfall,0,100)??0;
  const precipitation=number(c.precipitation,0,250)??(rain??0)+showers;
  const dailyTime=(name:string)=>{const value=series(d,name,0);return typeof value==='number'?value*1000:null;};
- return {...location,wind,gust:Math.max(wind,number(c.wind_gusts_10m,0,400)??wind),direction:windDirection(number(c.wind_direction_10m,-3600,3600)??0),rain:rain===null?(snow>0?0:precipitation):rain+showers,clouds:number(c.cloud_cover,0,100)??35,temperature,humidity:number(c.relative_humidity_2m,0,100)??60,code,kind:classifyWeather(code),source:'live',updatedAt:now,observedAt:(number(c.time,0,1e12)??now/1000)*1000,apparentTemperature:number(c.apparent_temperature,-100,80),precipitation,showers,snow,pressure:number(c.pressure_msl,800,1100),visibility:number(c.visibility,0,100000)??nearest?.visibility??null,sunrise:dailyTime('sunrise'),sunset:dailyTime('sunset'),timezone:typeof data.timezone==='string'?data.timezone:'auto',forecast};
+ return {...location,wind,gust:Math.max(wind,number(c.wind_gusts_10m,0,400)??wind),direction:windDirection(number(c.wind_direction_10m,-3600,3600)??0),rain:rain===null?(snow>0?0:precipitation):rain+showers,clouds:number(c.cloud_cover,0,100)??35,temperature,humidity:number(c.relative_humidity_2m,0,100)??60,code,kind:classifyWeather(code),source:'live',updatedAt:now,observedAt:typeof c.time==='number'?c.time*1000:undefined,apparentTemperature:number(c.apparent_temperature,-100,80),precipitation,showers,snow,pressure:number(c.pressure_msl,800,1100),visibility:number(c.visibility,0,100000)??nearest?.visibility??null,sunrise:dailyTime('sunrise'),sunset:dailyTime('sunset'),timezone:typeof data.timezone==='string'?data.timezone:'auto',forecast,fontes:[normalizarModelo(raw,now)]};
 }
 export function forecastPreparation(state:EnvironmentState,now=Date.now()):number {
  const next=state.forecast?.find(hour=>hour.time>now&&hour.time-now<=3600000);

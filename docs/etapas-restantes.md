@@ -31,8 +31,9 @@ A edição atual já entrega conteúdo e mecanismos funcionais. Para declarar um
 ## Ordem imediata
 
 1. Conferir o CI do checkpoint e a main atual antes de editar.
-2. Aprofundar propriedades próprias, descritores e protótipos JavaScript, com problemas específicos.
-3. Avançar nos próximos mecanismos registrados em docs/curriculo-completo.md, ampliando pausas e verificadores.
+2. Priorizar o motor meteorológico solicitado: evidência, continuidade, fontes viáveis, testes e verificação publicada. Esta frente ambiental é adicional às 17 frentes curriculares/de implantação acima; seus limites estão em docs/meteorologia.md.
+3. Propriedades, descritores e protótipos JavaScript já foram integrados na PR #10. Retomar biblioteca padrão Python, módulos TypeScript por ambiente e templates/contratos C++, ampliando pausas e verificadores.
+4. Evoluir laboratório TypeScript/SQL, simulações didáticas Git/HTTP, diagnóstico e projetos conforme o pedido mais recente, sem tratar lista de temas como aulas completas.
 
 ## Limites que continuam explícitos
 

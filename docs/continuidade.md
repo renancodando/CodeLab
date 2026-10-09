@@ -2,6 +2,18 @@
 
 ## Estado em 8 de outubro de 2026
 
+Prioridade humana mais recente: concluir primeiro a reestruturação meteorológica, depois retomar aprendizagem ativa e aprofundamentos. A branch de clima preserva o catálogo; veja [o contrato e limitações](meteorologia.md). Não confundir previsão Open-Meteo com observação atual nem ativar chuva local por código WMO.
+
+Main anterior `22e02d7cf9325f0c2e04e5ea4ca6a77505119562`: runs 37802151482, 37802009510 e 37801960626 concluídos com sucesso, incluindo as integrações #9/#10. O CI da nova branch precisa concluir antes da integração.
+
+Clima em revisão na [PR #11](https://github.com/renancodando/CodeLab/pull/11), branch `clima/motor-atmosferico-continuo`. O head inicial `16ad5388dc805b11ce3859ce58d130794daf4f8d` passou o run 37816072375. Antes de integrar, verificar o head posterior: corrige qcField não booleano, precipitação sólida e cadência do modelo durante falha, além de névoa na água. Não usar o sucesso do head inicial como gate das correções.
+
+Retomada: 354 testes unitários passaram, incluindo 19 casos da nova rota Vercel/Node.js; sete testes de navegador meteorológicos passaram após as correções, com 13 cenários visuais em desktop e viewport móvel. O adaptador local recebeu boletim NOAA real HTTP 200. Vercel CLI autenticada como renancodando acessa o preview protegido; a rota no preview anterior e no domínio retorna 404. Publicar o próximo head, aguardar CI completo e testar a função no preview antes de integrar; conferir o domínio depois. As três threads de revisão ainda precisam ser resolvidas após a verificação.
+
+O preview de `1b2ab89` instalou a função, mas retornou 500 por import ESM sem extensão. A correção usa `.js` na entrada TypeScript; o build agora executa o JavaScript emitido em um processo Node separado, com 30 consultas concorrentes e fonte simulada. Conferir o preview do head corrigido: build Ready isoladamente não comprovou o funcionamento.
+
+Preview de `f22da3d`: função respondeu JSON HTTP 200, cache MISS/HIT preservou recepção, parâmetros extras retornaram 400 e escrita retornou 405. Navegador em 375 px conferiu seleção de cidade, boletim NOAA real nos detalhes, condição estimada, 42 massas e zero chuva local, sem pageerror/WebGL. Revisão manual posterior retirou a inferência de precipitação de VCTS isolado; TS/VCTS possuem teste próprio. Aguardar CI do próximo head antes de integrar. As três threads anteriores foram corrigidas, testadas e resolvidas.
+
 - PRs #1 a #10 integradas. Catálogo: 136 aulas em 20 trilhas; Python, TypeScript, C++ e JavaScript têm dez aulas, outras quatro linguagens nove.
 - 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 28 aulas próprias de 17 capítulos, com 56 problemas independentes.
 - Matriz: 646 entradas, 155 vinculadas a atividades específicas e 491 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.

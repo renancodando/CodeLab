@@ -21,6 +21,8 @@ O escopo de uma versão precisa estar explícito. Uma entrega editorial pode est
 
 ## Dependências de uma implantação real
 
+- Meteorologia: a rota de observação na mesma origem possui entradas .NET e Vercel/Node.js compatíveis. Hospedagem sem a rota mantém previsão/fallback; verificar HTTP, contrato, captura e recepção no preview e no domínio publicado antes de afirmar observação disponível. Radar ou pluviômetros não estão ativos. Conferir [contratos, fontes e lacunas](meteorologia.md).
+
 - Endereço público definido pelo ambiente e disponibilidade dos recursos estáticos e rotas.
 - Execução externa configurada quando o produto oferecer Python, C# ou C++; conferir indisponibilidade e erros no ambiente publicado.
 - Os exemplos TypeScript e PostgreSQL não são apresentados como execução nativa do laboratório atual.
