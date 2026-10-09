@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Correção de rascunhos pronta para o gate
+
+A branch `correcao/rascunhos-laboratorio` parte da PR #15 com as revisões propagadas. Corrige leitura dos rascunhos de todas as linguagens do laboratório, preserva HTML/JavaScript vazios e aceita projetos de anotações na leitura e no próprio backup. Dois testes falharam antes da correção e passaram depois; a suíte local aprovou 372 testes em 23 arquivos, strict/build de produção e três fluxos Edge completos. Sem nova aparência, runtime, rede ou ampliação de limites.
+
+As PRs #12/#13/#14/#15 continuam exigindo CI dos heads posteriores à revisão de contagens. Resolver revisões novas antes de integrar, nessa ordem, e conferir árvore idêntica à testada. A correção de rascunhos também precisa de PR própria, CI completo e verificação publicada após integrar. O pedido integral e os laboratórios TypeScript/SQL continuam abertos; não confundir essa correção com execução TypeScript implementada.
+
 ## Quota nativa e exportação verificadas
 
 A branch `qualidade/cota-real` acrescenta um teste de navegador que enche o armazenamento de um contexto descartável até QuotaExceededError real. O cenário preserva o checkpoint anterior, exporta ZIP e jornada com o trabalho em memória, libera somente suas chaves de preenchimento e confirma nova gravação e reload. Passou no build local e em `https://code-lab-omega.vercel.app` após a implantação climática, sem pageerror. O script público está em outputs/verificar-quota-publicada.mjs do workspace. Exigir CI do head antes de integrar; esta evidência não encerra todos os fluxos de produção.
