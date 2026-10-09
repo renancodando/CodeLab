@@ -100,6 +100,11 @@ describe('normalização e observação oficial',()=>{
   const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString:'UP'}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
   expect(resultado.intensidadeLiquida).toBe(0);expect(resumoMeteorologico({...defaultEnvironment,fontes},agora)).toBe('Precipitação observada na região');
  });
+ it.each(['TS','VCTS'])('%s isolado não confirma precipitação local nem próxima',wxString=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
+  expect(resultado.intensidadeLocal).toBe(0);expect(resultado.intensidadeDistante).toBe(0);
+  expect(fontes[0].detectouPrecipitacao).toBeUndefined();expect(resultado.situacao).toBe('estimada');
+ });
  it.each(['RA VCTS','RA VCSN'])('chuva local em %s não herda fenômenos sólidos ou convectivos próximos',wxString=>{
   const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
   expect(resultado.situacao).toBe('observada');expect(resultado.intensidadeLiquida).toBeGreaterThan(0);

@@ -50,6 +50,7 @@ Modelo e fontes complementares possuem cadências independentes. Cache do modelo
 - Solo mantém água acumulada, umidade visual, precipitação recente e tempo desde chuva. Temperatura, Sol, vento e umidade regulam secagem aproximada. Poças, material escuro, brilho, escoamento e som residual diminuem gradualmente.
 - Condensação modifica acabamento e brilho das janelas 3D existentes. O interior continua uma imagem com transparências: não há máscara de embaçamento independente dos vidros dessa imagem.
 - Trovões exigem evidência observacional convectiva; previsão de trovoada ou chuva comum não basta. Clarões permanecem optativos e desligados com movimento reduzido. Distância/posição do evento são simuladas.
+- TS/VCTS isolados não confirmam precipitação. O motor mantém uma regra conservadora para efeitos de trovoada: precisa de fenômeno convectivo acompanhado de precipitação observada local. Trovoadas secas e descargas distantes ainda não possuem representação própria; não são substituídas por chuva inventada.
 
 O shader de nuvens usa duas ou três escalas de ruído conforme qualidade; névoa usa duas a quatro faixas. Pools de partículas e geometrias são reaproveitados. A qualidade adapta resolução, sombras e quantidade de detalhes, preservando o estado meteorológico. Não foram acrescentados runtimes ou dependências ao carregamento inicial; Three.js permanece sob demanda.
 
