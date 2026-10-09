@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: módulos TypeScript por ambiente
+
+`ts-modulos-configuracao` passa a preparar e corrigir três decisões distintas: extensão do arquivo emitido em Node ESM direto, alias que só existe no verificador e efeito apagado por import type. A expansão conserva a aula existente, acrescenta uma seção sobre alias e aprofunda duas outras. As pausas vêm depois dos blocos 2/3/5 e são conceituais/offline; não executam TypeScript do aluno nem encerram a frente do laboratório. A previsão final revisita o grafo de execução depois de estudar também o papel das declarações.
+
+O verificador compartilhado compila projetos reais com TypeScript 5.9, package.json e tsconfig.json, inspeciona o JavaScript e executa o artefato em Node 24. Oito cenários incluem efeitos explícitos, correção dos imports, diagnóstico de extensão/interface e emissão bloqueada, além de erros reais de resolução após compilação aceita. Isso não equivale a testar publicação completa de bibliotecas, CommonJS, loaders ou todos os bundlers. Referências oficiais: [módulos](https://www.typescriptlang.org/docs/handbook/modules/reference.html), [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/verbatimModuleSyntax.html), [paths](https://www.typescriptlang.org/tsconfig/paths.html), [ESM do Node](https://nodejs.org/api/esm.html#mandatory-file-extensions).
+
 ## Aprofundamento incremental: importação CSV em Python
 
 `py-biblioteca-dados` ganha duas seções de teoria e três pausas sobre leitura de registros multilinha, perda de informação em cabeçalhos repetidos e validação de lote antes de modificar uma lista existente. Os gabaritos são executados pelo verificador Python compartilhado; a resposta do aluno continua conceitual/offline. Isso aprofunda uma aula agrupada e não acrescenta uma aula própria de toda a biblioteca padrão. Projetos de importação continuam exigindo construção e revisão por rubrica.
@@ -16,7 +22,7 @@ Cinco testes locais em Edge executaram o exemplo, o programa quebrado, o exercí
 
 As [métricas geradas do catálogo](metricas-catalogo.md) registram a quantidade atual de aulas, trilhas, problemas, atividades e projetos. As aulas originais continuam disponíveis. A expansão reúne módulos panorâmicos e aulas próprias com problemas independentes, soluções e critérios; a presença de um tema no panorama não encerra seu aprofundamento.
 
-Cada módulo tem seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com critérios, solução, projeto e revisão. O resumo gerado separa entradas vinculadas a problemas específicos (`praticaIndependente`) das entradas ainda `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
+Cada módulo tem ao menos seis seções de teoria original, exemplo completo, resultado esperado, rastreamento, falha para investigar, exercício com critérios, solução, projeto e revisão. O resumo gerado separa entradas vinculadas a problemas específicos (`praticaIndependente`) das entradas ainda `introduzido`. Entradas não equivalem a tópicos únicos, pois conceitos podem reaparecer em contextos diferentes. Essa contagem não declara que todos os ecossistemas e especializações foram esgotados.
 
 A matriz legível por ferramentas está em [cobertura-curriculo.json](cobertura-curriculo.json). Um tópico introduzido só deve ser marcado como prática independente quando houver uma atividade específica e validação correspondente.
 
