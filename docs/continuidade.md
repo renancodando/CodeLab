@@ -6,6 +6,10 @@ Prioridade humana mais recente: concluir primeiro a reestruturação meteorológ
 
 Main anterior `22e02d7cf9325f0c2e04e5ea4ca6a77505119562`: runs 37802151482, 37802009510 e 37801960626 concluídos com sucesso, incluindo as integrações #9/#10. O CI da nova branch precisa concluir antes da integração.
 
+Clima em revisão na [PR #11](https://github.com/renancodando/CodeLab/pull/11), branch `clima/motor-atmosferico-continuo`. O head inicial `16ad5388dc805b11ce3859ce58d130794daf4f8d` passou o run 37816072375. Antes de integrar, verificar o head posterior: corrige qcField não booleano, precipitação sólida e cadência do modelo durante falha, além de névoa na água. Não usar o sucesso do head inicial como gate das correções.
+
+Retomada: 354 testes unitários passaram, incluindo 19 casos da nova rota Vercel/Node.js; sete testes de navegador meteorológicos passaram após as correções, com 13 cenários visuais em desktop e viewport móvel. O adaptador local recebeu boletim NOAA real HTTP 200. Vercel CLI autenticada como renancodando acessa o preview protegido; a rota no preview anterior e no domínio retorna 404. Publicar o próximo head, aguardar CI completo e testar a função no preview antes de integrar; conferir o domínio depois. As três threads de revisão ainda precisam ser resolvidas após a verificação.
+
 - PRs #1 a #10 integradas. Catálogo: 136 aulas em 20 trilhas; Python, TypeScript, C++ e JavaScript têm dez aulas, outras quatro linguagens nove.
 - 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 28 aulas próprias de 17 capítulos, com 56 problemas independentes.
 - Matriz: 646 entradas, 155 vinculadas a atividades específicas e 491 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.

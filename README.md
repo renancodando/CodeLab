@@ -60,7 +60,7 @@ As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às 2
 
 - Motor de evidência separa modelo, observação, radar e pluviômetro. Open-Meteo é previsão, com consulta optativa a cada 30 min; previsão isolada não inicia chuva local.
 - Uma consulta compartilhada por local, cancelamento ao trocar de seleção, timeout de dez segundos e cache limitado a quatro locais. Sem gravar coordenadas no perfil; localização aproximada, solicitada apenas ao acionar a opção.
-- Observação NOAA/AWC METAR usa backend .NET, sete estações permitidas e cache de 10 min, sem enviar coordenadas ao NOAA. Fora da cobertura ou sem backend, o mundo continua estimado. Radar, CPTEC e Cemaden não estão ativos; consulte [fontes e limitações](docs/meteorologia.md).
+- Observação NOAA/AWC METAR usa uma rota na mesma origem, disponível no backend .NET e como função Node.js na Vercel: sete estações permitidas e cache de 10 min, sem enviar coordenadas ao NOAA. Fora da cobertura ou sem rota disponível, o mundo continua estimado. Radar, CPTEC e Cemaden não estão ativos; consulte [fontes e limitações](docs/meteorologia.md).
 - Captura, recebimento, validade, distância e concordância regulam confiança. Falhas mantêm o último estado, envelhecem dados e retiram sustentação de chuva local, sem travar navegação.
 - Transições mais lentas e graduais, umidade acumulada, secagem conforme temperatura/sol/vento/umidade, materiais mais escuros e menos ásperos, poças e ondulações aproximadas por shaders.
 - Campo persistente de nuvens baixas, médias e altas, com sementes, vida, crescimento e dissipação; células visuais acompanham massas baixas. Vento e rajadas são compartilhados com vegetação, chuva, névoa, água e áudio.
