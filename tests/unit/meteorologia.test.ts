@@ -178,6 +178,31 @@ describe('continuidade, vento, solo e nuvens',()=>{
   expect(Math.max(...velocidades)).toBeGreaterThan(25);expect(Math.max(...velocidades)).toBeLessThanOrEqual(65);
   expect(Math.max(...velocidades.slice(100))-Math.min(...velocidades.slice(100))).toBeGreaterThan(8);
  });
+ it('umidade sem ponto de orvalho não embaça o vidro, mesmo com solo molhado',()=>{
+  const frame=initialFrame(defaultEnvironment);frame.wetness=.9;frame.daylight=0;
+  const estado={...defaultEnvironment,humidity:100,fontes:[leitura('observacao',0,{variaveis:{temperatura:12,umidade:100}})]};
+  for(let i=0;i<600;i++)stepEnvironment(frame,estado,1,agora);
+  expect(frame.condensacao).toBe(0);
+ });
+ it('vidro embaça gradualmente perto do orvalho e seca sem apagar a memória do solo',()=>{
+  const estado=criarCenario('neblina',defaultEnvironment,agora),frame=initialFrame(estado);
+  frame.temperature=12;frame.humidity=99;frame.wetness=.8;frame.daylight=0;
+  stepEnvironment(frame,estado,1,agora);expect(frame.condensacao).toBeGreaterThan(0);expect(frame.condensacao).toBeLessThan(.01);
+  for(let i=0;i<600;i++)stepEnvironment(frame,estado,1,agora);
+  const embaçado=frame.condensacao;expect(embaçado).toBeGreaterThan(.4);
+  const seco={...defaultEnvironment,fontes:[leitura('observacao',0,{variaveis:{temperatura:25,umidade:40,pontoDeOrvalho:5}})]};
+  frame.daylight=1;stepEnvironment(frame,seco,1,agora);
+  expect(frame.condensacao).toBeGreaterThan(embaçado*.98);expect(frame.condensacao).toBeLessThan(embaçado);expect(frame.wetness).toBeGreaterThan(.5);
+  for(let i=0;i<900;i++)stepEnvironment(frame,seco,1,agora);
+  expect(frame.condensacao).toBeLessThan(.001);
+ });
+ it('luz diurna reduz condensação sem confundir umidade com chuva observada',()=>{
+  const estado=criarCenario('neblina',defaultEnvironment,agora),dia=initialFrame(estado),noite=initialFrame(estado);
+  for(const frame of [dia,noite]){frame.temperature=12;frame.humidity=99;frame.wetness=.8;}
+  noite.daylight=0;
+  for(let i=0;i<600;i++){stepEnvironment(dia,estado,1,agora);stepEnvironment(noite,estado,1,agora);}
+  expect(noite.condensacao).toBeGreaterThan(dia.condensacao*2);expect(dia.rain).toBe(0);expect(noite.rain).toBe(0);
+ });
  it('campo mantém identidade em atualizações, evolui sem realocar pool e distingue camadas',()=>{
   const campo=new CampoNuvens(10),frame=initialFrame(defaultEnvironment),massas=[...campo.massas],sementes=massas.map(m=>m.semente);
   for(let i=0;i<60;i++)campo.avancar(frame,1);

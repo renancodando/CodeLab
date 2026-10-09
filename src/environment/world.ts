@@ -30,6 +30,7 @@ export class LivingWorld {
  private transmissaoSolar=1;
  private alvoSolar=1;
  private ultimaMascara=0;
+ private condensacaoVisivel=-1;
  private diagnostico?:{atualizar:(frame:AmbientFrame)=>void;descartar:()=>void};
  private colors=[new THREE.Color("#74a4b4"),new THREE.Color("#6c7d84"),new THREE.Color("#d5c7a1"),new THREE.Color("#c58e77")];
  private flashes=false;
@@ -153,8 +154,10 @@ export class LivingWorld {
   for(let i=0;i<this.birds.length;i++){const bird=this.birds[i];bird.visible=i<f.birdActivity*this.birds.length;if(!bird.visible)continue;bird.position.x+=dt*(.72+f.wind*.012)*motion;if(bird.position.x>70)bird.position.x=-70;for(let j=0;j<bird.children.length;j++)bird.children[j].rotation.z=Math.sin(t*3.2+bird.userData.seed)*.3*(j?1:-1)*motion;}
   const water=this.water.material as THREE.ShaderMaterial;water.uniforms.time.value=t*motion;water.uniforms.light.value=day+f.moonlight*.25;water.uniforms.wind.value=wind;water.uniforms.rain.value=f.rain;
   for(let i=0;i<this.windows.length;i++){const material=this.windows[i];material.emissiveIntensity=((1-day)*(1.75+Math.sin(t*.17+i*.83)*.06)+.08)*(1-f.condensacao*.3);material.roughness=.55+f.condensacao*.4;}
+  const condensacao=Math.round(f.condensacao*1000)/1000;
+  if(condensacao!==this.condensacaoVisivel){this.condensacaoVisivel=condensacao;this.container.style.setProperty('--condensacao-vidro',String(condensacao));}
   if(!this.reduced.matches){this.camera.position.x=THREE.MathUtils.lerp(this.camera.position.x,2+this.pointer.x*.18,.012);this.camera.position.y=THREE.MathUtils.lerp(this.camera.position.y,15-this.pointer.y*.09,.012);}
   this.diagnostico?.atualizar(f);this.onClimate(f);this.renderer.render(this.scene,this.camera);
  }
- dispose(){this.disposed=true;this.diagnostico?.descartar();cancelAnimationFrame(this.frame);this.resize.disconnect();window.removeEventListener('pointermove',this.onPointer);document.removeEventListener('visibilitychange',this.onVisibility);this.scene.traverse(obj=>{if(obj instanceof THREE.Mesh||obj instanceof THREE.Points||obj instanceof THREE.LineSegments){obj.geometry.dispose();for(const m of Array.isArray(obj.material)?obj.material:[obj.material])m.dispose();}});this.renderer.domElement.removeEventListener("webglcontextlost",this.onLost);this.renderer.domElement.removeEventListener("webglcontextrestored",this.onRestored);this.renderer.dispose();this.container.replaceChildren();}
+ dispose(){this.disposed=true;this.diagnostico?.descartar();cancelAnimationFrame(this.frame);this.resize.disconnect();window.removeEventListener('pointermove',this.onPointer);document.removeEventListener('visibilitychange',this.onVisibility);this.scene.traverse(obj=>{if(obj instanceof THREE.Mesh||obj instanceof THREE.Points||obj instanceof THREE.LineSegments){obj.geometry.dispose();for(const m of Array.isArray(obj.material)?obj.material:[obj.material])m.dispose();}});this.renderer.domElement.removeEventListener("webglcontextlost",this.onLost);this.renderer.domElement.removeEventListener("webglcontextrestored",this.onRestored);this.renderer.dispose();this.container.replaceChildren();this.container.style.removeProperty('--condensacao-vidro');}
 }
