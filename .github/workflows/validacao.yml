@@ -30,7 +30,7 @@ jobs:
   validar:
     name: Testes e compilação
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     services:
       postgres:
         image: postgres:18

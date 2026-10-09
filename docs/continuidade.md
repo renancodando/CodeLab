@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Clima integrado e próxima entrega
+
+A PR #11 foi integrada em `7893a3200bc8eb2a7aa85e304eb7e64fcf168f54`. O head `da6cf8138971fff27c1ff5dfce348865a1b8ac84` passou no [run 37870369915](https://github.com/renancodando/CodeLab/actions/runs/37870369915): 356 testes unitários, 94 de navegador, exemplos externos, SQL/Git/ZIP, builds, verificação .NET, módulos ESM Node e auditoria. A árvore integrada é idêntica à testada: `27b10296bc6167a5011796add88e2d28df71f8c0`. Três threads de revisão foram resolvidas.
+
+O domínio público `https://code-lab-omega.vercel.app` foi conferido depois dessa implantação: boletim real SBSP HTTP 200, cache HIT sem rejuvenescer recebidoEm, entrada extra 400 e POST 405. Em Edge com viewport 375 px, o fluxo selecionou cidade, mostrou idade e estação a cerca de 9 km, manteve condição estimada e 42 massas sem erros WebGL. Script e captura estão nos outputs do workspace. Isso não comprova FPS em celular físico nem ativa radar/pluviômetros; os limites estão em meteorologia.md.
+
+A PR #12 centraliza métricas geradas. O run `37870417188` aprovou unidade, exemplos, builds e auditoria, mas o job completo atingiu 30 minutos durante o navegador, após 91 testes aprovados. Foi cancelado, não aprovado. O orçamento total agora é 40 minutos; timeouts individuais e testes foram preservados. Conferir o novo head e seu CI completo antes de integrar.
+
+A próxima expansão está salva em `curriculo/css-container-queries`, commit `5d3481b`, sobre a PR #12: aula própria, dois problemas e três pausas. Seus cinco testes Edge, 363 testes unitários e build local passaram. Publicar a branch, sincronizar a correção de CI, criar PR e exigir o gate completo; a aula ainda não está em main. Retomar depois os aprofundamentos de HTML/C#/SQL e as demais frentes, sem considerar todo o currículo concluído.
+
 ## Estado em 8 de outubro de 2026
 
 Prioridade humana mais recente: concluir primeiro a reestruturação meteorológica, depois retomar aprendizagem ativa e aprofundamentos. A branch de clima preserva o catálogo; veja [o contrato e limitações](meteorologia.md). Não confundir previsão Open-Meteo com observação atual nem ativar chuva local por código WMO.

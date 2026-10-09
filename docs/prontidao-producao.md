@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Motor atmosférico integrado
+
+A PR #11 foi integrada com a mesma árvore do head aprovado no [run 37870369915](https://github.com/renancodando/CodeLab/actions/runs/37870369915): 356 testes unitários, 94 fluxos de navegador, exemplos, SQL/Git/ZIP, builds/API e auditoria. O domínio público foi conferido depois da implantação, incluindo boletim NOAA real, cache, idade, rejeição 400/405, seleção de cidade e cena sem erros WebGL. Consulte [meteorologia.md](meteorologia.md) para escopo e limitações.
+
+Não há radar/pluviômetro regional ativo nem medição em celular físico. O embaçamento usa os vidros 3D existentes; o interior em imagem ainda não tem máscara independente. O pedido integral de conteúdo e produção permanece aberto. Na PR seguinte, métricas passaram nos gates anteriores ao navegador, mas o orçamento total de 30 minutos cancelou o run; a alteração para 40 minutos exige uma execução completa nova e não amplia limites individuais.
+
 ## Como avaliar uma entrega
 
 O escopo de uma versão precisa estar explícito. Uma entrega editorial pode estar validada para integração sem que todas as especializações solicitadas estejam concluídas. Não use uma quantidade de aulas, uma página de títulos ou o sucesso do build como prova de cobertura exaustiva.
