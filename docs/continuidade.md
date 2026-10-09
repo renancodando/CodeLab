@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Próxima entrega: prática de módulos TypeScript
+
+A branch `pratica/typescript-modulos-host` parte do head `97b5725c0a08b1032f3bbeb4ac9103e99db9fa21` da PR #19, que ainda exige seu gate completo. A expansão da aula existente prepara extensão do artefato, alias e efeitos de imports de tipo antes de três pausas. As métricas são geradas pelo catálogo; não surgiu uma nova aula própria nem execução TypeScript no laboratório.
+
+Passaram oito projetos reais TypeScript/Node (incluindo diagnósticos com emissão bloqueada e falhas esperadas de resolução), 401 testes unitários completos, strict/build e o fluxo Edge offline de respostas, assistência e retomada. A suíte detectou uma suposição antiga de catálogo fixo no teste de variância: o cenário agora isola a família sob estudo e verifica também módulos, mantendo todas as expectativas de preparação e leitura sem domínio. A previsão final vem no bloco 5 para participar como desafio da sessão diária. A verificação externa compartilhada mantém a contagem anterior de exemplos separada desses oito cenários de módulos. Exigir o CI completo do head atual antes de integrar; preservar a dependência da PR #19 e conferir árvores na ordem dos merges.
+
 ## Checkpoint atual: CSV integrado e vidros em validação
 
 A main `48971a4035d5131e1fa795fb36c150806de95f8c` integra a PR #18. O head `2b8c31b09dca516f5e6fa033409bbcca5f78ad7c` aprovou o CI 37938119575: 389 testes unitários, 152 exemplos compilados/executados e 108 testes de navegador. A árvore `f41e1fd0acb88496d0ca3ab8e3ed1ba02dcb1ae8` é idêntica à do merge. O CI da main 37942664815 também passou. A implantação `GLwR5eRuoBeM1gF4mtUFY6D8y58v` foi confirmada READY/production e o fluxo CSV passou no domínio público: erros/acertos, assistência, reload offline e respostas/ordem preservadas. São atividades conceituais, sem execução Python no navegador.

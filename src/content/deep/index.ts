@@ -658,7 +658,7 @@ export const expandedLessons:Lesson[]=[
       "source maps packaging"
     ],
     "language": "typescript",
-    "source": "https://www.typescriptlang.org/docs/",
+    "source": "https://www.typescriptlang.org/docs/handbook/modules/reference.html",
     "capitulos": [],
     "code": "",
     "exercise": "",

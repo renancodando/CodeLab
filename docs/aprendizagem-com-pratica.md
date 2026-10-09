@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## TypeScript: resolução e efeitos de módulos
+
+Três pausas em `ts-modulos-configuracao` distinguem caminho no artefato, alias do compilador e grafo de execução após apagar tipos. As habilidades são diferentes; previsões de saída continuam no eixo de leitura existente. Preparação conceitual é exigida na sessão diária. Falhas apontam o mecanismo e a solução fica sob solicitação, registrando assistência. A resposta é avaliada localmente, sem compilador ou execução TypeScript no navegador.
+
+O verificador externo lê tsconfig/package.json, compila oito projetos descartáveis e confere emissão, diagnósticos e execução real. Extensão incompleta e interface importada como valor devem bloquear emissão; bundler/paths aceitando o código não podem esconder o erro do artefato em Node ESM direto. O fluxo de navegador verifica erro, acerto, ausência de solução antecipada, assistência, persistência offline e layout de 220 a 4000 px. Conferir o CI do head antes de integrar.
+
 ## CSV com contratos e destino preservado
 
 A aula `py-biblioteca-dados` recebe pausas após os blocos 3/4/5: previsão de campos/registros/linhas físicas, investigação de cabeçalho duplicado e ordenação da confirmação de um lote. As habilidades são distintas e exigem preparação conceitual na sessão diária. Falhas dão uma pista específica; a solução permanece sob solicitação e seu uso registra assistência. As respostas são conceituais e locais, não prova de compilação/execução Python.

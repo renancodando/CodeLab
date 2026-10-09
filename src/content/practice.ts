@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'ts-import-extensao',language:'typescript',lessonIds:['ts-modulos-configuracao'],skillIds:['typescript.modulos.resolucao-node'],afterBlock:2,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'O import precisa encontrar o JavaScript emitido',
+  prompt:'TypeScript 5.9, Node.js 24 ESM direto, package.json com type:module e NodeNext. Não há bundler, loader ou reescrita de extensões. calculo.ts exporta dobrar. Complete apenas o caminho entre aspas para que entrada.ts compile e dist/entrada.js encontre dist/calculo.js. Avaliação conceitual offline, sem compilar sua resposta.',
+  code:'import {dobrar} from "____";\nconsole.log(dobrar(3));',
+  hint:'O arquivo encontrado pelo verificador e a extensão necessária no JavaScript emitido cumprem funções diferentes.',minutes:3
+ },
+ {
+  id:'ts-alias-emitido',language:'typescript',lessonIds:['ts-modulos-configuracao'],skillIds:['typescript.modulos.alias-runtime'],afterBlock:3,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Compilou, mas Node não encontrou o pacote',
+  prompt:'paths mapeia @dominio/* para ./*.ts. tsc passou, mas node dist/entrada.js falhou com ERR_MODULE_NOT_FOUND. O artefato conserva o import abaixo; dist/calculo.js existe. Sem bundler ou configuração de pacotes adicional, qual alteração corrige o contrato de resolução? Diagnóstico conceitual, sem executar Node no navegador.',
+  code:'import {dobrar} from "@dominio/calculo";\nconsole.log(dobrar(3));',
+  options:[{id:'relativo',text:'Usar ./calculo.js na origem, recompilar e executar o artefato emitido.'},{id:'paths',text:'Repetir o mesmo paths no tsconfig e executar o mesmo JavaScript.'},{id:'declarar',text:'Adicionar declare module para prometer que o pacote existe.'}],
+  hint:'Inspecione o texto do import no artefato, além da presença do arquivo. Uma declaração de tipos não instala um módulo.',minutes:3
+ },
+ {
+  id:'ts-import-tipo-efeito',language:'typescript',lessonIds:['ts-modulos-configuracao'],skillIds:['typescript.modulos.efeitos'],afterBlock:5,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Emitir uma dependência não é executá-la',
+  prompt:'Os dois arquivos são compilados com strict, NodeNext, verbatimModuleSyntax e noEmitOnError em pacote type:module. Execute somente node dist/entrada.js. Preveja as linhas impressas; não há outros imports ou código. Esta previsão é conceitual e não executa sua resposta.',
+  code:'// contratos.ts\nconsole.log("contratos");\nexport interface Medicao { valor: number; }\n\n// entrada.ts\nimport type {Medicao} from "./contratos.js";\nconst medicao: Medicao = {valor: 2};\nconsole.log(medicao.valor);',
+  hint:'Desenhe o grafo dos imports que sobrevivem ao apagamento dos tipos. Ter um .js no disco não o inclui nesse grafo.',minutes:3
+ },
+ {
   id:'py-csv-prever-registro',language:'python',lessonIds:['py-biblioteca-dados'],skillIds:['python.csv.registros'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Uma quebra de linha encerra o registro?',
   prompt:'Preveja as três linhas: quantidade de campos, quantidade recebida como texto e linhas físicas consumidas. As aspas pertencem ao formato CSV. Esta pausa compara sua previsão, sem executar Python no navegador.',

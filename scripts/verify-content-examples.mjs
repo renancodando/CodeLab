@@ -5,6 +5,7 @@ import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
 import {montarCasosCsv} from '../tests/fixtures/python-csv.mjs';
+import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
@@ -62,6 +63,7 @@ try{
  const {practiceActivities}=await import(metadataUrl);
  const practiceSource=compileContent(await readFile('src/learning/practice.ts','utf8')).replace(/from ['"]\.\.\/content\/practice['"]/g,'from '+JSON.stringify(metadataUrl));
  const {getPracticeSolution}=await import(asUrl(practiceSource));
+ const cenariosModulos=await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution);
  const examples=[
   ...montarCasosCsv(practiceActivities, getPracticeSolution),
   ...montarCasosCancelamento(practiceActivities, getPracticeSolution),
@@ -121,4 +123,5 @@ try{
  if((await readFile(rule,'utf8'))!==combined||!gitRun('log','--format=%H').split(/\s+/).includes(badCommit)||gitRun('rev-parse','HEAD').trim()===badCommit)throw new Error('Git: reversão não preservou histórico e regra anterior.');
  console.log('3 cenários Git conferidos: preparação, conflito por contrato e reversão com histórico.');
  console.log(count+' exemplos e soluções externos compilados/executados.');
+ console.log(cenariosModulos+' projetos TypeScript conferidos, incluindo diagnósticos e falhas esperadas de resolução.');
 }finally{await rm(root,{recursive:true,force:true});}
