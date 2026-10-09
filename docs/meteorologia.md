@@ -32,7 +32,7 @@ A escolha é optativa. Latitude/longitude são arredondadas para duas casas deci
 
 Na Vercel, a resposta pública por estação recebe `s-maxage=600`; erros sem boletim não são armazenados no CDN. Cache, deduplicação e backoff em memória duram apenas enquanto a instância existir. O CDN reduz chamadas entre instâncias, mas esse desenho não garante um limite global de 100 requisições/minuto durante expansão ou múltiplas regiões. Medir consumo antes de ampliar cobertura/tráfego; se necessário, acrescentar coordenação compartilhada no servidor. Não persistir coordenadas para isso.
 
-Hospedagem sem essa rota pode retornar 404 ou HTML; o cliente mantém modelo/últimas leituras e expira confiança. Antes da atualização, o domínio público e o preview autenticado retornaram 404. A consulta real pelo novo adaptador local recebeu JSON HTTP 200 da NOAA. Isso ainda não comprova implantação: conferir novamente o preview e o domínio no commit publicado.
+Hospedagem sem essa rota pode retornar 404 ou HTML; o cliente mantém modelo/últimas leituras e expira confiança. Antes da atualização, o domínio público e o preview autenticado retornaram 404. Depois da integração da PR #11, o domínio público respondeu HTTP 200 com boletim NOAA real, cache HIT e idade preservada; parâmetros extras retornaram 400 e escrita retornou 405. O navegador também conferiu a seleção de cidade, os detalhes da estação regional, 42 massas persistentes e ausência de erros WebGL. A observação a cerca de 9 km não confirmou chuva no ponto. Essa evidência cobre o fluxo descrito, não todos os locais ou aparelhos.
 
 Modelo e fontes complementares possuem cadências independentes. Cache do modelo limita quatro locais; complementares limitam 16 entradas. Fontes lentas expiram em 8 s. Troca de local cancela consultas anteriores, e revisão da seleção impede resposta atrasada de alterar o mundo. Falhas mantêm a última captura/recepção sem rejuvenescimento. Depois de três validades a leitura deixa de contribuir; a precipitação local deixa de ser sustentada antes disso, ao sair da janela recente. A interface recalcula idade e resumo a cada minuto, e o mundo a cada segundo. Renderização e astronomia continuam locais.
 
@@ -66,4 +66,4 @@ Uma fixture exclusiva dos testes renderiza 13 cenários em desktop e viewport m�
 
 ## Aprofundamentos restantes
 
-Concluir acesso sustentável a radar/pluviômetros regionais, ampliar estações sem prometer chuva pontual de observações distantes, verificar a rota de observação no domínio publicado, medir em celulares físicos e avaliar uma máscara própria dos vidros do interior. Não substituir essas lacunas por previsão apresentada como observação.
+Concluir acesso sustentável a radar/pluviômetros regionais, ampliar estações sem prometer chuva pontual de observações distantes, medir em celulares físicos e avaliar uma máscara própria dos vidros do interior. Não substituir essas lacunas por previsão apresentada como observação.
