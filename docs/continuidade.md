@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Correção de rascunhos pronta para o gate
+
+A branch `correcao/rascunhos-laboratorio` parte da PR #15 com as revisões propagadas. Corrige leitura dos rascunhos de todas as linguagens do laboratório, preserva HTML/JavaScript vazios e aceita projetos de anotações na leitura e no próprio backup. Dois testes falharam antes da correção e passaram depois; a suíte local aprovou 372 testes em 23 arquivos, strict/build de produção e três fluxos Edge completos. Sem nova aparência, runtime, rede ou ampliação de limites.
+
+As PRs #12/#13/#14/#15 continuam exigindo CI dos heads posteriores à revisão de contagens. Resolver revisões novas antes de integrar, nessa ordem, e conferir árvore idêntica à testada. A correção de rascunhos também precisa de PR própria, CI completo e verificação publicada após integrar. O pedido integral e os laboratórios TypeScript/SQL continuam abertos; não confundir essa correção com execução TypeScript implementada.
+
+## Quota nativa e exportação verificadas
+
+A branch `qualidade/cota-real` acrescenta um teste de navegador que enche o armazenamento de um contexto descartável até QuotaExceededError real. O cenário preserva o checkpoint anterior, exporta ZIP e jornada com o trabalho em memória, libera somente suas chaves de preenchimento e confirma nova gravação e reload. Passou no build local e em `https://code-lab-omega.vercel.app` após a implantação climática, sem pageerror. O script público está em outputs/verificar-quota-publicada.mjs do workspace. Exigir CI do head antes de integrar; esta evidência não encerra todos os fluxos de produção.
+
 ## Revisão de métricas e evidência pública
 
 O run 37874897089 aprovou a primeira correção do orçamento de CI, mas a revisão das PRs sucessoras identificou totais manuais antigos em outros parágrafos do README. Essas duplicações foram removidas: o catálogo atual fica somente no bloco gerado, e um teste rejeita contagens curriculares repetidas fora dele. Preservar evidências históricas de testes. Conferir o novo head da PR #12 e propagar a correção às PRs #13/#14/#15 antes de integrar; o run anterior não valida essa alteração.
@@ -14,7 +24,7 @@ O domínio público `https://code-lab-omega.vercel.app` foi conferido depois des
 
 A PR #12 centraliza métricas geradas. O run `37870417188` aprovou unidade, exemplos, builds e auditoria, mas o job completo atingiu 30 minutos durante o navegador, após 91 testes aprovados. Foi cancelado, não aprovado. O orçamento total agora é 40 minutos; timeouts individuais e testes foram preservados. Conferir o novo head e seu CI completo antes de integrar.
 
-A expansão CSS foi publicada na PR #13, head `d29d46d1cfa4de4630ee159f918043a9b839ac08`, sobre a PR #12: aula própria, dois problemas e três pausas. Seus cinco testes Edge, 363 testes unitários e build local passaram. O run `37875006506` deve concluir antes de integrar, depois da PR #12. A aula ainda não está em main. Retomar os aprofundamentos de HTML/SQL e as demais frentes, sem considerar todo o currículo concluído.
+A expansão CSS foi publicada na PR #13 sobre a PR #12: aula própria, dois problemas e três pausas. Seus cinco testes Edge, 363 testes unitários e build local passaram. Após a revisão do README, o head passou a `8d1b1880774e32f347f415639aa1b75cf9e9919a`; conferir seu run mais recente, sem reutilizar o gate do head anterior. A aula ainda não está em main. Retomar os aprofundamentos de HTML/SQL e as demais frentes, sem considerar todo o currículo concluído.
 
 A branch `pratica/csharp-cancelamento` acrescenta três pausas ao módulo assíncrono existente, com teoria anterior à tentativa, habilidades específicas e preparação na sessão diária. Cinco programas .NET 10 passaram localmente: previsão, bug de liberação sem aquisição, correção em quatro caminhos e dois tokens originais independentes. O verificador de exemplos do CI recebe os mesmos casos. Passaram também 369 testes unitários, strict/build e o fluxo Edge de retomada offline, assistência e persistência sem executor externo. As métricas geradas distinguem a branch sucessora da versão publicada; nenhuma nova aula própria foi inventada para contar essas pausas. Exigir o CI completo da PR sucessora e integrar dependências primeiro.
 

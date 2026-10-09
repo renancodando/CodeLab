@@ -1,5 +1,17 @@
 # Prontidão de produção
 
+## Rascunhos e anotações do laboratório em validação
+
+A revisão do laboratório encontrou dois caminhos de perda de trabalho: os rascunhos persistidos de Python/C#/C++/SQL/anotações não eram carregados na nova montagem, e projetos de anotações eram descartados na normalização e rejeitados pelo próprio backup. Rascunhos HTML/JavaScript vazios também eram substituídos pelos exemplos padrão. A correção lê todas as chaves existentes, distingue vazio de ausência e conserva anotações nas mesmas listas de linguagens aceitas pela leitura e importação.
+
+Dois testes reproduziram a falha de anotações antes da correção. Depois passaram 372 testes unitários, strict/build e três fluxos Edge: restauração dos rascunhos, edição Python após sair/recarregar sem executar, e projeto de anotações com reload/exportação/importação. Os limites de tamanho, quantidade e linguagens desconhecidas continuam aplicados. A correção ainda precisa do CI completo e de verificação depois da implantação; os treze fluxos públicos abaixo não a aprovam antecipadamente.
+
+## Recuperação diante de quota real
+
+Um contexto Edge novo conferiu o domínio público depois da integração climática. O cenário preencheu localStorage até a API nativa lançar QuotaExceededError, sem substituir Storage.setItem. Ao editar depois disso, o aplicativo informou a falha, preservou o checkpoint armazenado e exportou o trabalho ainda em memória em ZIP e backup JSON. Depois de remover somente as chaves de preenchimento do teste, voltou a salvar e retomou o arquivo completo após reload. Não foram usados dados do navegador pessoal do usuário.
+
+O mesmo fluxo passou localmente no build de produção e está em `tests/e2e/armazenamento-real.spec.ts` para o CI da entrega sucessora. Os testes de exceção simulada continuam cobrindo outros caminhos. Essa evidência comprova o cenário de quota descrito; não promete recuperação após fechar a página sem exportar enquanto a gravação continua impossível.
+
 ## Fluxos publicados conferidos nesta retomada
 
 Treze fluxos passaram em Edge no domínio público após a integração climática, com contextos novos de 375 px: depuração JavaScript executada e casos de borda, domínio sem crédito pela leitura, sessão diária, revisão encurtada por erro/assistência, Python/C#/C++ conceituais offline sem submissão remota, projetos com vários arquivos e invalidação de evidência, seis percursos, falha de instalação do cache, exportação sob falha de gravação, backup válido acima de 2 MB e restauração que preserva a jornada anterior. Inclui quota nativa preenchida até QuotaExceededError, exportação em memória e recuperação após liberar espaço. Configuração e relatório estão nos outputs do workspace.
