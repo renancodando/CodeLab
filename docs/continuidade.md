@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Revisão de métricas e evidência pública
+
+O run 37874897089 aprovou a primeira correção do orçamento de CI, mas a revisão das PRs sucessoras identificou totais manuais antigos em outros parágrafos do README. Essas duplicações foram removidas: o catálogo atual fica somente no bloco gerado, e um teste rejeita contagens curriculares repetidas fora dele. Preservar evidências históricas de testes. Conferir o novo head da PR #12 e propagar a correção às PRs #13/#14/#15 antes de integrar; o run anterior não valida essa alteração.
+
+Treze fluxos passaram no domínio público da integração climática, incluindo sessão diária, depuração executada, revisões, projetos, offline, backup grande, falhas de gravação e quota nativa. O escopo está em prontidao-producao.md. A lista aberta das PRs e seus heads atuais deve ser consultada no GitHub, sem retomar um head antigo deste histórico por engano.
+
 ## Clima integrado e próxima entrega
 
 A PR #11 foi integrada em `7893a3200bc8eb2a7aa85e304eb7e64fcf168f54`. O head `da6cf8138971fff27c1ff5dfce348865a1b8ac84` passou no [run 37870369915](https://github.com/renancodando/CodeLab/actions/runs/37870369915): 356 testes unitários, 94 de navegador, exemplos externos, SQL/Git/ZIP, builds, verificação .NET, módulos ESM Node e auditoria. A árvore integrada é idêntica à testada: `27b10296bc6167a5011796add88e2d28df71f8c0`. Três threads de revisão foram resolvidas.
