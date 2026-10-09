@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## C#: cancelamento e posse de recursos
+
+O módulo `cs-assincrono-recursos` passa a oferecer três pausas específicas depois dos blocos sobre cancelamento, concorrência e descarte. A previsão distingue efeito concluído de pedido futuro; a depuração identifica liberação de vaga sem aquisição; a alteração propaga o token vinculado. A teoria prepara essas decisões antes da tentativa, e a primeira sessão C# continua nos fundamentos. Esta expansão está em validação antes de integrar.
+
+Cinco programas usados pelo verificador compilam em .NET 10: previsão, versão quebrada da vaga, correção em sucesso/erro/cancelamento e propagação independente por cada origem. Os cenários controlam o momento sem rede nem sleeps; a espera infinita só é usada com cancelamento explícito e o processo de teste tem limite externo. A escolha correta e o preenchimento continuam sendo avaliações conceituais offline, sem execução do código do aluno nem domínio fabricado pela leitura. Consulte [cancelamento cooperativo](https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads), [aquisição assíncrona](https://learn.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim.waitasync?view=net-10.0) e [fontes vinculadas](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtokensource.createlinkedtokensource?view=net-10.0).
+
 ## Mecanismos nesta expansão
 
 - Atividades próprias em HTML, CSS, JavaScript, TypeScript, Python, C#, C++ e SQL. O [resumo gerado](metricas-catalogo.md) informa quantidades atuais e distribuição. Desafios JS começam quebrados e são conferidos com casos distintos, entradas vazias, negativos, não mutação e limites.

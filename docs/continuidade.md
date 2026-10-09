@@ -8,7 +8,9 @@ O domínio público `https://code-lab-omega.vercel.app` foi conferido depois des
 
 A PR #12 centraliza métricas geradas. O run `37870417188` aprovou unidade, exemplos, builds e auditoria, mas o job completo atingiu 30 minutos durante o navegador, após 91 testes aprovados. Foi cancelado, não aprovado. O orçamento total agora é 40 minutos; timeouts individuais e testes foram preservados. Conferir o novo head e seu CI completo antes de integrar.
 
-A próxima expansão está salva em `curriculo/css-container-queries`, commit `5d3481b`, sobre a PR #12: aula própria, dois problemas e três pausas. Seus cinco testes Edge, 363 testes unitários e build local passaram. Publicar a branch, sincronizar a correção de CI, criar PR e exigir o gate completo; a aula ainda não está em main. Retomar depois os aprofundamentos de HTML/C#/SQL e as demais frentes, sem considerar todo o currículo concluído.
+A expansão CSS foi publicada na PR #13, head `d29d46d1cfa4de4630ee159f918043a9b839ac08`, sobre a PR #12: aula própria, dois problemas e três pausas. Seus cinco testes Edge, 363 testes unitários e build local passaram. O run `37875006506` deve concluir antes de integrar, depois da PR #12. A aula ainda não está em main. Retomar os aprofundamentos de HTML/SQL e as demais frentes, sem considerar todo o currículo concluído.
+
+A branch `pratica/csharp-cancelamento` acrescenta três pausas ao módulo assíncrono existente, com teoria anterior à tentativa, habilidades específicas e preparação na sessão diária. Cinco programas .NET 10 passaram localmente: previsão, bug de liberação sem aquisição, correção em quatro caminhos e dois tokens originais independentes. O verificador de exemplos do CI recebe os mesmos casos. Passaram também 369 testes unitários, strict/build e o fluxo Edge de retomada offline, assistência e persistência sem executor externo. As métricas geradas distinguem a branch sucessora da versão publicada; nenhuma nova aula própria foi inventada para contar essas pausas. Exigir o CI completo da PR sucessora e integrar dependências primeiro.
 
 ## Estado em 8 de outubro de 2026
 

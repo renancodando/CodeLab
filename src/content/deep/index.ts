@@ -1919,7 +1919,7 @@ export const expandedLessons:Lesson[]=[
       "deadlocks Result Wait"
     ],
     "language": "csharp",
-    "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
+    "source": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads",
     "capitulos": [],
     "code": "",
     "exercise": "",

@@ -11,6 +11,77 @@ export type PracticeActivity = {
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
+  {
+    "id": "cs-prever-cancelamento",
+    "language": "csharp",
+    "lessonIds": [
+      "cs-assincrono-recursos"
+    ],
+    "skillIds": [
+      "csharp.assincrono.cancelamento"
+    ],
+    "afterBlock": 3,
+    "kind": "predict",
+    "capability": "leitura",
+    "requiresConcept": true,
+    "title": "O pedido de cancelamento desfaz o que já terminou?",
+    "prompt": "Preveja as duas linhas. A primeira gravação termina antes de Cancel. A segunda verifica o token antes de alterar gravados. Esta pausa compara raciocínio; não executa .NET no navegador.",
+    "code": "using var fonte = new CancellationTokenSource();\nint gravados = 0;\nTask GravarAsync(CancellationToken token) {\n    token.ThrowIfCancellationRequested();\n    gravados++;\n    return Task.CompletedTask;\n}\nawait GravarAsync(fonte.Token);\nfonte.Cancel();\ntry { await GravarAsync(fonte.Token); }\ncatch (OperationCanceledException) when (fonte.IsCancellationRequested) {\n    Console.WriteLine(\"cancelado\");\n}\nConsole.WriteLine(gravados);",
+    "hint": "Separe o efeito que já ocorreu da próxima operação que ainda precisa aceitar o pedido.",
+    "minutes": 3
+  },
+  {
+    "id": "cs-vaga-sem-posse",
+    "language": "csharp",
+    "lessonIds": [
+      "cs-assincrono-recursos"
+    ],
+    "skillIds": [
+      "csharp.assincrono.vagas"
+    ],
+    "afterBlock": 4,
+    "kind": "choice",
+    "capability": "depuracao",
+    "requiresConcept": true,
+    "title": "Uma vaga foi liberada por quem nunca entrou",
+    "prompt": "Outro consumidor já ocupa a única vaga. O token está cancelado antes da segunda espera. Mesmo sem adquirir, o programa libera uma vaga no finally. Qual alteração conserva o limite em sucesso, erro e cancelamento?",
+    "code": "using var vagas = new SemaphoreSlim(1, 1);\nawait vagas.WaitAsync();\nusing var fonte = new CancellationTokenSource();\nfonte.Cancel();\ntry {\n    try { await vagas.WaitAsync(fonte.Token); }\n    finally { vagas.Release(); }\n}\ncatch (OperationCanceledException) { }\nConsole.WriteLine(vagas.CurrentCount);",
+    "options": [
+      {
+        "id": "adquirir",
+        "text": "Aguardar a aquisição antes do try; envolver somente o trabalho adquirido em try/finally com Release."
+      },
+      {
+        "id": "duplicar",
+        "text": "Adicionar outro Release no catch para compensar o cancelamento."
+      },
+      {
+        "id": "suprimir",
+        "text": "Remover o token de WaitAsync para a espera nunca ser cancelada."
+      }
+    ],
+    "hint": "O finally executa também quando a espera falha. Identifique o instante em que esta chamada passa a possuir uma vaga.",
+    "minutes": 3
+  },
+  {
+    "id": "cs-token-vinculado",
+    "language": "csharp",
+    "lessonIds": [
+      "cs-assincrono-recursos"
+    ],
+    "skillIds": [
+      "csharp.assincrono.propagacao"
+    ],
+    "afterBlock": 5,
+    "kind": "fill",
+    "capability": "alteracao",
+    "requiresConcept": true,
+    "title": "Escutar o usuário e o encerramento da aplicação",
+    "prompt": "Complete somente o argumento de EsperarAsync. A operação deve atender tanto usuario quanto aplicacao; nenhuma dessas duas fontes pertence ao método chamado. A fonte vinculada permanece viva até a operação terminar. Não há execução .NET nesta pausa.",
+    "code": "using var usuario = new CancellationTokenSource();\nusing var aplicacao = new CancellationTokenSource();\nusing var vinculada = CancellationTokenSource.CreateLinkedTokenSource(\n    usuario.Token, aplicacao.Token);\nvar tarefa = EsperarAsync(____);\naplicacao.Cancel();\ntry { await tarefa; }\ncatch (OperationCanceledException) when (vinculada.IsCancellationRequested) {\n    Console.WriteLine(\"cancelado\");\n}\nConsole.WriteLine(usuario.IsCancellationRequested);\nstatic async Task EsperarAsync(CancellationToken token) {\n    await Task.Delay(Timeout.Infinite, token);\n}",
+    "hint": "A operação precisa receber o token que escuta os dois pedidos. Encerrar a aplicação não deve cancelar a fonte do usuário.",
+    "minutes": 3
+  },
  {
    "id": "css-prever-contexto",
    "language": "css",

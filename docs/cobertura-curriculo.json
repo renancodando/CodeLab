@@ -3736,7 +3736,7 @@
               "status": "introduzido"
             }
           ],
-          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
+          "source": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads",
           "status": "praticaDoModulo"
         },
         {
