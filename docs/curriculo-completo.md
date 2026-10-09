@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Componentes CSS orientados pelo contexto
+
+A aula própria `css-containers-contexto` trabalha consultas de tamanho, ancestrais elegíveis, nomes, unidades cqi, caixa de conteúdo e limites inclusivos. Dois problemas independentes exigem contextos aninhados e uma base navegável antes do aprimoramento. Três pausas avaliam previsão, investigação do ancestral e alteração de condição, com preparação conceitual e evidências por habilidade. Essas pausas não executam CSS do estudante.
+
+Cinco testes locais em Edge executaram o exemplo, o programa quebrado, o exercício e os dois gabaritos. Conferiram medidas, bordas 479/480/481, contextos independentes, conteúdo longo entre 220 e 4000 px, ordem de foco e retomada offline com assistência preservada. Remover a regra de aprimoramento testa a base declarada; não emula um navegador antigo. Consultas de estilo, scroll-state, contenção intrínseca e outros eixos de escrita ainda precisam de prática própria. Conferir o CI do head antes de integrar esta entrega.
+
 ## Conteúdo publicado nesta expansão
 
 As [métricas geradas do catálogo](metricas-catalogo.md) registram a quantidade atual de aulas, trilhas, problemas, atividades e projetos. As aulas originais continuam disponíveis. A expansão reúne módulos panorâmicos e aulas próprias com problemas independentes, soluções e critérios; a presença de um tema no panorama não encerra seu aprofundamento.

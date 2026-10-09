@@ -13,6 +13,12 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+"cs-prever-cancelamento":{"accepted":["cancelado\n1"],"failure":"A gravação concluída não é desfeita. Acompanhe a verificação antes do próximo incremento, sem tratar Cancel como rollback.","solution":"cancelado\n1"},
+"cs-vaga-sem-posse":{"accepted":["adquirir"],"failure":"A contagem representa vagas disponíveis, não tentativas de entrada. Uma chamada cancelada antes de adquirir não deve alterar essa contagem.","solution":"static async Task UsarVagaAsync(SemaphoreSlim vagas, Func<CancellationToken, Task> executar, CancellationToken token)\n{\n    await vagas.WaitAsync(token);\n    try { await executar(token); }\n    finally { vagas.Release(); }\n}"},
+"cs-token-vinculado":{"accepted":["vinculada.Token"],"failure":"Receber apenas um dos tokens ignora a outra origem. Descarte de fonte não equivale a pedido de cancelamento.","solution":"vinculada.Token"},
+"css-prever-contexto":{"accepted":["amplo\n22"],"failure":"Investigue separadamente o nome selecionado pela condição e o ancestral elegível da unidade. Não há obrigação de serem a mesma caixa.","solution":"amplo\n22"},
+"css-corrigir-ancestral":{"accepted":["envolver"],"failure":"Mudar o limite não cria um ancestral. A medida precisa vir de um contexto elegível fora do elemento que a regra está estilizando.","solution":"A região ancestral define container-type:inline-size; o cartão descendente recebe o layout."},
+"css-completar-limite":{"accepted":["min-width: 480px","min-width:480px"],"failure":"Teste a igualdade: o contrato muda ao atingir 480, não somente depois. A condição continua consultando o painel.","solution":"min-width: 480px"},
 "js-prever-propriedade":{"accepted":["false true\nbase"],"failure":"O registro encontra nivel na cadeia, mas não possui esse campo. Confira a diferença entre hasOwn e in.","solution":"false true\nbase"},
 "js-descritor-sem-getter":{"accepted":["descriptor"],"failure":"Ler entrada.nome já pode executar o getter. Copiar valores também pode executar leituras; inspecione a propriedade antes.","solution":"Object.getOwnPropertyDescriptor(entrada, \"nome\")"},
 "cpp-prever-intervalo":{"accepted":["6,2"],"failure":"Confira o valor da segunda posição e conte elementos, sem confundir end com o último valor.","solution":"6,2"},

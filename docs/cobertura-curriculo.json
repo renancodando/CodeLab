@@ -1,8 +1,8 @@
 {
   "edition": "2026-10-07-javascript-propriedades",
   "originalLessons": 60,
-  "expandedLessons": 76,
-  "totalLessons": 136,
+  "expandedLessons": 77,
+  "totalLessons": 137,
   "totalCourses": 20,
   "statusLegend": {
     "introduzido": "Explicado no módulo; não significa exercício independente e especialização completa no tópico.",
@@ -3243,6 +3243,89 @@
           "status": "praticaDoModulo"
         },
         {
+          "id": "css-containers-contexto",
+          "title": "CSS: container queries, contexto e limites",
+          "level": "Avançado",
+          "topics": [
+            {
+              "title": "ancestral elegível e dimensão inline",
+              "status": "praticaIndependente",
+              "activities": [
+                "nome-unidade"
+              ]
+            },
+            {
+              "title": "contêiner nomeado em contexto aninhado",
+              "status": "praticaIndependente",
+              "activities": [
+                "nome-unidade"
+              ]
+            },
+            {
+              "title": "consulta não mede o próprio elemento",
+              "status": "praticaIndependente",
+              "activities": [
+                "base-limite"
+              ]
+            },
+            {
+              "title": "limiares inclusivos e caixa de conteúdo",
+              "status": "praticaIndependente",
+              "activities": [
+                "base-limite"
+              ]
+            },
+            {
+              "title": "containment e tamanho intrínseco",
+              "status": "introduzido"
+            },
+            {
+              "title": "unidades cqi e ancestral elegível",
+              "status": "praticaIndependente",
+              "activities": [
+                "nome-unidade"
+              ]
+            },
+            {
+              "title": "fallback progressivo com supports",
+              "status": "praticaIndependente",
+              "activities": [
+                "base-limite"
+              ]
+            },
+            {
+              "title": "ordem semântica e conteúdo longo",
+              "status": "praticaIndependente",
+              "activities": [
+                "base-limite"
+              ]
+            }
+          ],
+          "practices": [
+            {
+              "id": "nome-unidade",
+              "title": "Problema 1: condição externa, medida interna",
+              "topics": [
+                "ancestral elegível e dimensão inline",
+                "contêiner nomeado em contexto aninhado",
+                "unidades cqi e ancestral elegível"
+              ]
+            },
+            {
+              "id": "base-limite",
+              "title": "Problema 2: aprimorar sem perder a base",
+              "topics": [
+                "consulta não mede o próprio elemento",
+                "limiares inclusivos e caixa de conteúdo",
+                "fallback progressivo com supports",
+                "ordem semântica e conteúdo longo"
+              ]
+            }
+          ],
+          "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
+          "status": "praticaDoModulo"
+        },
+        {
           "id": "css-visual-movimento",
           "title": "CSS: tipografia, cor e movimento",
           "level": "Avançado",
@@ -3653,7 +3736,7 @@
               "status": "introduzido"
             }
           ],
-          "source": "https://learn.microsoft.com/pt-br/dotnet/csharp/",
+          "source": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads",
           "status": "praticaDoModulo"
         },
         {
