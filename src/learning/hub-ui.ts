@@ -30,12 +30,14 @@ export function mountDaily(container:HTMLElement):()=>void{
   const selector=container.querySelector<HTMLSelectElement>('[data-language]')!,note=container.querySelector<HTMLElement>('[data-language-note]')!;const lock=()=>{selector.disabled=true;note.textContent=languageLockMessage;};next.addEventListener('click',()=>void render());selector.addEventListener('change',()=>{if(sessionStarted(plan)){selector.value=progress.learningLanguage;lock();return;}progress.learningLanguage=selector.value;delete progress.adaptive.daily;saveProgress();void render();});
   if(!pending){target.innerHTML='<h2>Sessão concluída</h2><p>As revisões futuras acompanham seu desempenho. Erros encurtam o intervalo; respostas assistidas continuam registradas como estudo.</p><a class="button primary" href="#/projetos">Fazer seu projeto crescer</a>';return;}
   const activity=adaptiveCatalog.activities.find(a=>a.id===pending.activityId)!;
-  if(pending.kind==='concept'){
-   const id=activity.lessonId!;let l;
+  const preparacaoPendente=activity.requiredConcepts?.filter(id=>!progress.adaptive.seenConcepts.includes(id)).map(id=>adaptiveCatalog.activities.find(atividade=>atividade.id===id)).find(Boolean);
+  const leitura=preparacaoPendente??activity;
+  if(pending.kind==='concept'||preparacaoPendente){
+   const id=leitura.lessonId!;let l;
    try{l=await resolveLesson(id);}catch{if(!disposed&&current===token){target.innerHTML='<p role="status">A aula ainda não está disponível neste navegador. Conecte para preparar o conteúdo offline e tente novamente.</p><button class="button primary" data-retry>Tentar novamente</button>';target.querySelector('[data-retry]')!.addEventListener('click',()=>void render());}return;}
    if(disposed||current!==token)return;l??=lessons.find(l=>l.id===id)!;
-   target.innerHTML='<section class="lesson-chapter"><h2>'+esc(l.title)+'</h2><p>'+esc(l.body)+'</p>'+l.capitulos.slice(0,2).map(cap=>cap.paragrafos.map(p=>'<p>'+esc(p)+'</p>').join('')+(cap.codigo?'<pre class="example-code"><code>'+esc(cap.codigo)+'</code></pre>':'')).join('')+'<p><a href="#/aula/'+id+'">Ler e experimentar a aula completa</a></p><button class="button primary" data-seen>Concluir leitura e praticar</button><p class="small">A leitura orienta o exercício e não atribui nota de domínio.</p></section>';
-   target.querySelector('[data-seen]')!.addEventListener('click',()=>{markConceptSeen(progress.adaptive,activity.id,learningClock());saveProgress();void render();});
+   target.innerHTML='<section class="lesson-chapter"><h2>'+esc(leitura.title)+'</h2><p>'+esc(l.body)+'</p>'+l.capitulos.slice(0,(leitura.preparacaoAteBloco??1)+1).map(cap=>'<h3>'+esc(cap.titulo)+'</h3>'+cap.paragrafos.map(p=>'<p>'+esc(p)+'</p>').join('')+(cap.codigo?'<pre class="example-code"><code>'+esc(cap.codigo)+'</code></pre>':'')).join('')+'<p><a href="#/aula/'+id+'">Ler e experimentar a aula completa</a></p><button class="button primary" data-seen>Concluir leitura e praticar</button><p class="small">A leitura orienta o exercício e não atribui nota de domínio.</p></section>';
+   target.querySelector('[data-seen]')!.addEventListener('click',()=>{markConceptSeen(progress.adaptive,leitura.id,learningClock());saveProgress();void render();});
   }else release=mountPractice(target,activity.id,{mode:pending.kind,onEvaluated:()=>{const updated=ensureDailySession(progress.adaptive,catalog(),learningClock());next.hidden=!updated.completed.includes(pending.id);lock();}});
  }
  void render();return()=>{disposed=true;token++;release();};

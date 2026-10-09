@@ -10,9 +10,15 @@ function lessonConceptId(id:string):string{
  const rank=({Fundamentos:'0','Intermediário':'1','Avançado':'2','Especialização':'3'} as Record<string,string>)[l.level??'Fundamentos']??'0';
  return legacyConceptIds[id]??'conceito-'+rank+'-'+id;
 }
-const activities:LearningActivity[]=practiceActivities.map(a=>({id:a.id,title:a.title,kind:a.afterBlock===5?'challenge':'practice',skillIds:a.skillIds,minutes:a.minutes,lessonId:a.lessonIds[0],...(a.requiresConcept?{requiredConcepts:[lessonConceptId(a.lessonIds[0])]}:{})}));
+export const idPreparacao=(aula:string)=>lessonConceptId(aula)+'-pratica-v1';
+const activities:LearningActivity[]=practiceActivities.map(a=>({id:a.id,title:a.title,kind:a.afterBlock===5?'challenge':'practice',skillIds:a.skillIds,minutes:a.minutes,lessonId:a.lessonIds[0],...(a.requiresConcept?{requiredConcepts:[idPreparacao(a.lessonIds[0])]}:{})}));
 for(const id of [...new Set(practiceActivities.flatMap(a=>a.lessonIds))]){
  const l=lessons.find(l=>l.id===id);if(!l)continue;const related=practiceActivities.filter(a=>a.lessonIds.includes(id));
  activities.push({id:lessonConceptId(id),title:l.title,kind:'concept',skillIds:[...new Set(related.flatMap(a=>a.skillIds))],minutes:3,lessonId:id});
+ const preparadas=related.filter(atividade=>atividade.requiresConcept);
+ if(preparadas.length){
+  const ateBloco=Math.max(...preparadas.map(atividade=>atividade.afterBlock));
+  activities.push({id:idPreparacao(id),title:'Preparação: '+l.title,kind:'concept',skillIds:[...new Set(preparadas.flatMap(atividade=>atividade.skillIds))],minutes:Math.max(3,ateBloco*2),lessonId:id,requiredConcepts:[lessonConceptId(id)],preparacaoAteBloco:ateBloco});
+ }
 }
 export const adaptiveCatalog:AdaptiveCatalog={skills,activities};

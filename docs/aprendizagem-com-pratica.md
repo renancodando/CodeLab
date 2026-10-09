@@ -6,6 +6,11 @@
 
 As referências são verificadas pelo navegador real: nome acessível/foco, arquivos locais decodificados, medidas CSS, seleção de fonte nas bordas 600/601 px, proporção, reprodução da ordem errada e fallback. Os SVGs preservam as três etapas nas duas composições e ficam disponíveis offline. Não há promessa de uma escolha universal de srcset, economia medida de imagens raster ou teste com leitor de tela físico. Referências oficiais: [picture/source](https://html.spec.whatwg.org/multipage/embedded-content.html#the-picture-element), [sizes](https://html.spec.whatwg.org/multipage/images.html#sizes-attributes) e [alternativas de imagens](https://html.spec.whatwg.org/multipage/images.html#alt).
 
+## Preparação na sessão diária
+
+As famílias que exigem conceito têm uma leitura preparatória com identidade própria, separada da introdução que já podia estar salva. A sessão apresenta os capítulos necessários antes da prática, sem exibir resoluções. A conclusão da leitura libera a sequência e não cria nota. Mesmo um plano antigo que já continha o exercício precisa mostrar a preparação ausente antes de retomá-lo; seus itens e respostas são preservados. Essa leitura declarada pelo aluno não certifica compreensão: as respostas e revisões continuam fornecendo as evidências.
+
+
 ## SQL: ausência, integridade e correspondência
 
 A aula `sql-null-logica` conserva a pausa inicial e recebe três decisões após os blocos 2/4/5: prever a comparação desconhecida, investigar a aceitação de NULL por CHECK e completar uma correlação com política explícita para duas ausências. Zero continua sendo um valor distinto; repetir bloqueios não pode multiplicar linhas. Pistas apontam o mecanismo, solução consultada registra assistência e leitura não cria domínio. As respostas do aluno são conceituais/offline; os gabaritos têm cenários PostgreSQL separados no verificador externo, ainda sujeitos ao gate desta entrega. Não surgiu um executor SQL no laboratório.

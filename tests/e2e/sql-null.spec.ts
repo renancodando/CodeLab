@@ -1,4 +1,40 @@
 import {test,expect} from '@playwright/test';
+import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
+import {buildDailySession,freshAdaptive} from '../../src/learning/adaptive';
+
+test('SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio',async({page:pagina})=>{
+ await pagina.goto('/#/diaria');
+ await expect(pagina.locator('[data-seen]')).toBeVisible();
+ const clock=await pagina.evaluate(()=>({now:Date.now(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone}));
+ const preparacao=adaptiveCatalog.activities.find(atividade=>atividade.id===idPreparacao('sql-null-logica'))!;
+ const antigo=preparacao.requiredConcepts![0];
+ const estado=freshAdaptive();estado.seenConcepts=[antigo];
+ const ids=['sql-prever-desconhecido','sql-corrigir-obrigatoriedade','sql-correlacionar-ausentes'];
+ const catalogoAntigo={...adaptiveCatalog,preferredLanguage:'sql',activities:adaptiveCatalog.activities.filter(atividade=>atividade.id===antigo||ids.includes(atividade.id)).map(atividade=>ids.includes(atividade.id)?{...atividade,requiredConcepts:[antigo]}:atividade)};
+ estado.daily=buildDailySession(estado,catalogoAntigo,clock);
+ expect(estado.daily.items.map(item=>item.kind)).toEqual(['practice','practice','challenge']);
+ await pagina.evaluate(estado=>{
+  const salvo=JSON.parse(localStorage.getItem('codelab.progress.v2')!);
+  salvo.learningLanguage='sql';salvo.adaptive=estado;
+  localStorage.setItem('codelab.progress.v2',JSON.stringify(salvo));
+ },estado);
+ await pagina.goto('/?retomada-preparacao=1#/diaria');
+ const leitura=pagina.locator('[data-current]');
+ await expect(leitura.getByRole('heading',{name:'Restrições têm sua própria regra de aceitação',exact:true})).toBeVisible();
+ await expect(leitura.getByRole('heading',{name:'Agregações e exclusões exigem atenção à ausência',exact:true})).toBeVisible();
+ await expect(leitura).toContainText('IS NOT DISTINCT FROM');
+ await expect(leitura.locator('[data-practice]')).toHaveCount(0);
+ await expect(leitura.getByRole('heading',{name:'Solução de referência',exact:true})).toHaveCount(0);
+ await pagina.getByRole('button',{name:'Concluir leitura e praticar',exact:true}).click();
+ await expect(pagina.locator('[data-practice="sql-corrigir-obrigatoriedade"]')).toBeVisible();
+ const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
+ expect(salvo.adaptive.daily).toEqual(estado.daily);
+ expect(salvo.adaptive.seenConcepts).toEqual([antigo,preparacao.id]);
+ expect(salvo.adaptive.skills).toEqual({});
+ await pagina.reload();
+ await expect(pagina.locator('[data-practice="sql-corrigir-obrigatoriedade"]')).toBeVisible();
+ await expect(pagina.locator('[data-seen]')).toHaveCount(0);
+});
 
 test('SQL: ausência e contratos retomam offline sem fingir execução de consultas',async({page:pagina,context:contexto})=>{
  const execucoes:string[]=[];
