@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Checkpoint atual: CSV integrado e vidros em validação
+
+A main `48971a4035d5131e1fa795fb36c150806de95f8c` integra a PR #18. O head `2b8c31b09dca516f5e6fa033409bbcca5f78ad7c` aprovou o CI 37938119575: 389 testes unitários, 152 exemplos compilados/executados e 108 testes de navegador. A árvore `f41e1fd0acb88496d0ca3ab8e3ed1ba02dcb1ae8` é idêntica à do merge. O CI da main 37942664815 também passou. A implantação `GLwR5eRuoBeM1gF4mtUFY6D8y58v` foi confirmada READY/production e o fluxo CSV passou no domínio público: erros/acertos, assistência, reload offline e respostas/ordem preservadas. São atividades conceituais, sem execução Python no navegador.
+
+A branch `clima/condensacao-interior` liga o estado gradual existente a um véu CSS atrás da arte original. A transparência do PNG expõe o efeito nos vidros e preserva o primeiro plano. Não mede a temperatura do vidro ou a umidade interna. Não acrescenta blur, texturas, canvas ou dependências. Descarte remove o estado CSS. Passaram 65 testes específicos, strict/build e quatro cenários Edge, incluindo amostras de pixels da composição e orçamento/qualidade de 220 a 4000 px. A primeira suíte local teve 391 aprovações e um timeout no teste preexistente de limite de memória do executor; esse teste passou isolado e depois a suíte inteira aprovou 392 testes com um worker, sem mudar limites. Conferir o CI completo do head antes de integrar.
+
+Após esse gate, retomar módulos TypeScript por ambiente e prática curricular. Radar/pluviômetros sustentáveis, medições em celulares físicos, laboratórios TypeScript/SQL e o aprofundamento integral permanecem abertos. Os registros abaixo são históricos de cada entrega; seus estados intermediários não substituem este checkpoint.
+
 ## Clima e entregas anteriores integrados em 9 de outubro
 
 A main `f4f28227869f90a1c7853e66dad628ea976c5390` integra a PR #17, cujo head `b15fc8adc5bd285476a30495b1cc23b486fee125` aprovou o run 37930523384: 382 testes unitários, 147 exemplos externos e 107 testes de navegador, builds, API, isolamento PostgreSQL e auditoria. A árvore do merge é idêntica à testada: `d0d39886dfc246b9c443f1edf7abe0f82dd0134d`. A revisão de redimensionamento foi resolvida. A main local também avançou sem apagar o histórico preservado.

@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Estado atual e próximo gate
+
+A PR #18 está integrada na main `48971a4035d5131e1fa795fb36c150806de95f8c`, com árvore idêntica ao head aprovado no CI 37938119575: 389 testes unitários, 152 exemplos externos e 108 testes de navegador. O CI de push 37942664815 também aprovou a main. A implantação `GLwR5eRuoBeM1gF4mtUFY6D8y58v` foi confirmada em produção e o fluxo CSV passou no endereço público, incluindo retomada offline sem executor remoto. O catálogo e os limites pedagógicos permanecem descritos nas métricas geradas.
+
+O embaçamento do interior está em validação separada. Usa a condensação gradual já simulada e a transparência da arte preservada, sem afirmar medição da superfície ou do ar interno. Quatro testes locais de navegador passaram, incluindo 13 cenários atmosféricos em duas larguras, redimensionamento nativo e composição dos vidros. Strict/build passaram. A primeira suíte local teve um timeout no teste de limite de memória do executor, com os outros 391 aprovados; o teste passou isolado e os 392 passaram na execução completa seguinte com um worker, sem ampliar limites. Exigir o CI do novo head, revisões e verificação publicada antes de integrar. Os registros seguintes descrevem evidências históricas, inclusive pendências que entregas posteriores resolveram.
+
 ## Integrações verificadas em 9 de outubro
 
 O head climático `b15fc8adc5bd285476a30495b1cc23b486fee125` aprovou o [CI completo 37930523384](https://github.com/renancodando/CodeLab/actions/runs/37930523384): 382 testes unitários, 147 exemplos externos e 107 testes de navegador. O merge `f4f28227869f90a1c7853e66dad628ea976c5390` preserva a árvore testada `d0d39886dfc246b9c443f1edf7abe0f82dd0134d`. Revisão resolvida; main local sincronizada.
