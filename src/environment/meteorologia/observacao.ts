@@ -16,7 +16,7 @@ export function normalizarMetar(raw:unknown,codigo:string,distancia:number,receb
   const tempo=typeof r.wxString==='string'?r.wxString:'',termos:string[]=tempo.split(/\s+/);
   const sensorIndisponivel=typeof r.rawOb==='string'&&/\bPWINO\b/.test(r.rawOb);
   const locais=termos.filter(t=>!t.startsWith('VC')&&!/^[+-]?(BL|DR)/.test(t)&&/^[+-]?(SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP)+$/.test(t));
-  const proximos=termos.filter(t=>/^VC(SH|TS|(SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP)+)$/.test(t)),proxima=locais.length===0&&proximos.length>0;
+  const proximos=termos.filter(t=>/^VC(SH|(SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP)+)$/.test(t)),proxima=locais.length===0&&proximos.length>0;
   const fenomenos=sensorIndisponivel?[]:locais.length?locais:proximos,liquida=fenomenos.some(t=>/(RA|DZ)/.test(t));
   const neve=fenomenos.some(t=>/(SN|SG|IC|PL)/.test(t)),granizo=fenomenos.some(t=>/(GR|GS)/.test(t)),solida=neve||granizo,precipita=fenomenos.length>0;
   const indicativa=fenomenos.some(t=>t.startsWith('+'))?6:fenomenos.some(t=>t.startsWith('-'))?.3:1.5;

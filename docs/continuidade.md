@@ -12,6 +12,8 @@ Retomada: 354 testes unitários passaram, incluindo 19 casos da nova rota Vercel
 
 O preview de `1b2ab89` instalou a função, mas retornou 500 por import ESM sem extensão. A correção usa `.js` na entrada TypeScript; o build agora executa o JavaScript emitido em um processo Node separado, com 30 consultas concorrentes e fonte simulada. Conferir o preview do head corrigido: build Ready isoladamente não comprovou o funcionamento.
 
+Preview de `f22da3d`: função respondeu JSON HTTP 200, cache MISS/HIT preservou recepção, parâmetros extras retornaram 400 e escrita retornou 405. Navegador em 375 px conferiu seleção de cidade, boletim NOAA real nos detalhes, condição estimada, 42 massas e zero chuva local, sem pageerror/WebGL. Revisão manual posterior retirou a inferência de precipitação de VCTS isolado; TS/VCTS possuem teste próprio. Aguardar CI do próximo head antes de integrar. As três threads anteriores foram corrigidas, testadas e resolvidas.
+
 - PRs #1 a #10 integradas. Catálogo: 136 aulas em 20 trilhas; Python, TypeScript, C++ e JavaScript têm dez aulas, outras quatro linguagens nove.
 - 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 28 aulas próprias de 17 capítulos, com 56 problemas independentes.
 - Matriz: 646 entradas, 155 vinculadas a atividades específicas e 491 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.
