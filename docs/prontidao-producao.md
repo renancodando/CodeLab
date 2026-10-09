@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Fluxos publicados conferidos nesta retomada
+
+Treze fluxos passaram em Edge no domínio público após a integração climática, com contextos novos de 375 px: depuração JavaScript executada e casos de borda, domínio sem crédito pela leitura, sessão diária, revisão encurtada por erro/assistência, Python/C#/C++ conceituais offline sem submissão remota, projetos com vários arquivos e invalidação de evidência, seis percursos, falha de instalação do cache, exportação sob falha de gravação, backup válido acima de 2 MB e restauração que preserva a jornada anterior. Inclui quota nativa preenchida até QuotaExceededError, exportação em memória e recuperação após liberar espaço. Configuração e relatório estão nos outputs do workspace.
+
+Esses fluxos testam o artefato publicado da integração 7893a3200bc8eb2a7aa85e304eb7e64fcf168f54. Não comprovam execução Judge0 configurada, todos os exercícios futuros ou desempenho em celular físico. As novas práticas CSS/C# ainda exigem seus próprios gates e verificação depois da implantação.
+
 ## Motor atmosférico integrado
 
 A PR #11 foi integrada com a mesma árvore do head aprovado no [run 37870369915](https://github.com/renancodando/CodeLab/actions/runs/37870369915): 356 testes unitários, 94 fluxos de navegador, exemplos, SQL/Git/ZIP, builds/API e auditoria. O domínio público foi conferido depois da implantação, incluindo boletim NOAA real, cache, idade, rejeição 400/405, seleção de cidade e cena sem erros WebGL. Consulte [meteorologia.md](meteorologia.md) para escopo e limitações.
