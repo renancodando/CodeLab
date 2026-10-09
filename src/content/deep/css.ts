@@ -725,6 +725,143 @@ export default {
       ]
     },
     {
+      "id": "css-containers-contexto",
+      "title": "CSS: container queries, contexto e limites",
+      "level": "Avançado",
+      "summary": "Construa componentes que respondem ao espaço que realmente recebem. Investigue qual ancestral é consultado, o que muda ao nomeá-lo, por que o próprio elemento não responde à sua consulta e como validar os limites sem trocar a ordem de leitura. Compare regras condicionais, unidades cqi e uma base utilizável sem o aprimoramento.",
+      "topics": [
+        "ancestral elegível e dimensão inline",
+        "contêiner nomeado em contexto aninhado",
+        "consulta não mede o próprio elemento",
+        "limiares inclusivos e caixa de conteúdo",
+        "containment e tamanho intrínseco",
+        "unidades cqi e ancestral elegível",
+        "fallback progressivo com supports",
+        "ordem semântica e conteúdo longo"
+      ],
+      "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
+      "sections": [
+        {
+          "title": "Viewport e espaço disponível são medidas diferentes",
+          "text": [
+            "Abra uma página larga com uma coluna lateral de 240 pixels. Uma media query de 800 pixels enxerga a janela inteira e pode liberar um layout que não cabe nessa coluna. O contrato de um componente deve dizer se a decisão depende da página, de sua região ou do conteúdo intrínseco. Container queries tornam explícita a segunda escolha, mas não substituem Grid, Flexbox ou quebra de texto.",
+            "No exemplo, há duas instâncias do mesmo artigo e uma única regra de componente. Antes de executar, desenhe as caixas: a região larga tem 600 pixels e a estreita tem 240. A condição mínima de 480 deve mudar somente a instância larga. Não use a largura da janela como justificativa para prever que ambas mudarão.",
+            "O resultado verificável é a geometria dos filhos, não a aparência de uma captura isolada. Compare suas coordenadas verticais e as larguras das trilhas; depois altere apenas uma região, mantendo a mesma viewport. Se a outra instância mudar sem uma regra que explique isso, investigue a seleção de contêiner e a cascata.",
+            "Para a primeira previsão, separe duas buscas. Uma condição @container painel escolhe um ancestral elegível com esse nome. Já cqi usa o ancestral elegível mais próximo no eixo inline, mesmo que tenha outro nome: 1cqi corresponde a 1% dessa medida. Uma região interna de 200 pixels fornece 20 pixels para 10cqi; nomear a condição externa não muda essa referência. As próximas seções investigam cada busca e suas falhas."
+          ]
+        },
+        {
+          "title": "A consulta procura um ancestral, não a própria caixa",
+          "text": [
+            "Para consultar uma dimensão, prepare um ancestral elegível com container-type. A abreviação container: painel / inline-size acrescenta também o nome. A regra interna seleciona descendentes, e cada elemento estilizado procura seu contexto. Colocar container-type no próprio cartão não permite que uma regra dirigida a esse cartão consulte sua própria largura.",
+            "Essa separação evita um contrato circular: imagine a condição mudar a largura que a própria condição mede. No exercício quebrado, o artigo é o único contêiner e a regra tenta mudar suas colunas. A largura de 600 pixels parece suficiente, mas falta o ancestral. Envolva o artigo em uma região e coloque ali o contexto de consulta.",
+            "Use inline-size quando a decisão depender do eixo inline. Não escolha size apenas por parecer mais completo: ele também impõe contenção de tamanho no eixo de bloco. Uma região de altura automática pode precisar de outro contrato. Registre a dimensão que você quer medir antes de mudar o tipo."
+          ]
+        },
+        {
+          "title": "Nomes resolvem qual contexto será consultado",
+          "text": [
+            "Um componente pode ter vários ancestrais preparados para consultas. Sem um nome, a busca encontra o ancestral elegível mais próximo para as características usadas. Com @container painel, o nome filtra os candidatos. Um contêiner interno chamado coluna não substitui automaticamente o externo chamado painel.",
+            "No primeiro problema, o painel externo mede 600 pixels e a coluna interna mede 220. O indicador informa se o painel é amplo, portanto consulta o nome painel. Repetir a consulta sem nome alteraria seu significado: ela passaria a medir a coluna. Essa diferença precisa aparecer no teste, mesmo quando o exemplo inicial casualmente dá o mesmo resultado.",
+            "Faça duas alterações independentes: reduza o painel abaixo de 500 sem mudar a coluna; depois restaure o painel e aumente só a coluna. O indicador deve acompanhar a primeira medida. Não esconda um erro de contexto alterando o número do breakpoint até a captura parecer correta."
+          ]
+        },
+        {
+          "title": "Teste o limite e a caixa que está sendo medida",
+          "text": [
+            "min-width:480px inclui o valor exato de 480. width > 480px não inclui. Defina no contrato se a mudança ocorre ao atingir o limite ou apenas depois dele e teste 479, 480 e 481. Uma implementação que passa somente em 300 e 1000 pode continuar errada justamente no ponto de mudança.",
+            "Consultas de tamanho usam a caixa de conteúdo. Padding e borda do contêiner podem fazer a medida observada em getBoundingClientRect diferir daquela que a condição consulta. Os exemplos deixam a região sem esses adicionais para isolar a regra; ao introduzi-los, calcule a caixa de conteúdo e confirme no DevTools.",
+            "Não force duas trilhas com mínimos que excedem o espaço disponível. minmax(0,1fr), mínimo inline zero nos filhos e overflow-wrap:anywhere tratam fontes distintas de overflow. Eles não justificam cortar texto, ocultar links ou mudar a ordem do DOM. Teste uma palavra longa e a sequência de Tab."
+          ]
+        },
+        {
+          "title": "A unidade cqi não herda o nome escrito na regra",
+          "text": [
+            "Uma condição nomeada e uma unidade relativa podem usar contextos diferentes. No problema aninhado, @container painel decide pela região externa; 10cqi no título usa o ancestral elegível mais próximo para o eixo inline, que é a coluna interna. Com 220 pixels nessa coluna, a fonte resultante é 22 pixels, mesmo que o painel meça 600.",
+            "Essa observação não é uma regra para decorar números. Escreva duas perguntas antes de depurar: qual contêiner decide se a declaração participa da cascata e qual fornece a referência da unidade? Mudar o painel para 480 desativa a declaração; mudar a coluna para 300, com a condição ativa, produz 30 pixels.",
+            "Sem contêiner elegível para o eixo, unidades de consulta usam a unidade da viewport pequena correspondente. Não use essa alternativa implícita como se medisse uma região que não foi preparada. Uma declaração base explícita, como font-size:16px, torna a intenção mais fácil de verificar."
+          ]
+        },
+        {
+          "title": "A base precisa funcionar antes do aprimoramento",
+          "text": [
+            "O segundo problema começa com uma coluna, links visíveis e texto que pode quebrar. @supports cerca o aprimoramento de containment e a mudança para duas colunas. Se esse aprimoramento não participar, a pessoa ainda consegue ler e navegar. Não faça a versão base depender de uma segunda regra que esconda informação.",
+            "Execute a versão completa no navegador e depois uma cópia contendo apenas a base declarada no enunciado. Essa segunda verificação testa o contrato de fallback, não emula um navegador antigo nem comprova sua compatibilidade real. Para uma versão suportada específica, consulte a documentação e teste naquele motor.",
+            "Conclua guardando medidas, entrada longa, sequência de foco e o motivo do limite escolhido. Consultas de estilo, scroll-state e eixos de escrita diferentes exigem práticas próprias; são próximos aprofundamentos, não habilidades comprovadas por esta aula."
+          ]
+        }
+      ],
+      "code": "<!doctype html>\n<html lang=\"pt-BR\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Espaço do componente</title>\n<style>\n*{box-sizing:border-box}\nbody{margin:0;padding:16px}\n.painel{container:painel / inline-size;max-inline-size:100%;margin-block:16px}\n.largo{inline-size:600px}.estreito{inline-size:240px}\n.cartao{display:grid;gap:16px;padding:16px;border:1px solid;overflow-wrap:anywhere}\nh2{margin:0;font-size:16px}\n@container painel (min-width:480px){\n .cartao{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}\n h2{font-size:clamp(16px,4cqi,32px)}\n}\n</style>\n<main><h1>Um cartão, dois contextos</h1>\n<div id=\"largo\" class=\"painel largo\"><article class=\"cartao\"><h2>Estudar</h2><p>Contexto amplo.</p></article></div>\n<div id=\"estreito\" class=\"painel estreito\"><article class=\"cartao\"><h2>Estudar</h2><p>Contexto estreito.</p></article></div></main>\n</html>",
+      "output": "Em uma viewport que comporte as regiões: o cartão de 600 px tem duas trilhas e título de 24 px; o de 240 px permanece em uma trilha e título de 16 px.",
+      "trace": [
+        "Cada instância encontra seu ancestral painel; a viewport é mantida fixa.",
+        "600 satisfaz o mínimo 480; 240 não satisfaz.",
+        "A regra altera descendentes; a sequência do documento permanece igual."
+      ],
+      "exercise": "Construa um cartão com dois links na ordem Ler o contrato → Praticar. Sua região recebe largura disponível variável: deve ter uma coluna abaixo de 480 px e duas ao atingir 480. Preserve os dois links, a ordem de Tab e um identificador sem espaços em 220 px de viewport. Compare 479, 480 e 481 sem redimensionar a janela.",
+      "solution": "<!doctype html>\n<html lang=\"pt-BR\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Cartão com limite verificável</title>\n<style>\n*{box-sizing:border-box}body{margin:0;padding:16px}\n.painel{inline-size:600px;max-inline-size:100%;container:painel / inline-size}\n.cartao{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;overflow-wrap:anywhere}\n.cartao>*{min-inline-size:0}a{display:block;padding:12px}\n@container painel (min-width:480px){\n .cartao{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}\n}\n</style>\n<main><h1>Escolhas de estudo</h1><div class=\"painel\" id=\"painel\"><nav class=\"cartao\" aria-label=\"Estudo\">\n<a id=\"primeiro\" href=\"#primeiro\">Ler o contrato</a>\n<a id=\"segundo\" href=\"#segundo\">Praticar com UmaPalavraMuitoLongaSemSeparadoresQuePrecisaCaberNoComponente</a>\n</nav></div></main></html>",
+      "bug": "O artigo tem 600 pixels, mas continua em uma coluna. A regra consulta ancestrais elegíveis, e o único contexto foi colocado no próprio artigo.",
+      "bugCode": "<!doctype html><html lang=\"pt-BR\"><meta charset=\"utf-8\"><title>Consulta sem ancestral</title>\n<style>.cartao{width:600px;container-type:inline-size;display:grid;grid-template-columns:1fr}\n@container(min-width:480px){.cartao{grid-template-columns:1fr 1fr}}</style>\n<article class=\"cartao\"><h1>Estudo</h1><p>A consulta não mede este próprio artigo.</p></article></html>",
+      "repair": "Separe a região medida do artigo estilizado: coloque container no invólucro e mantenha o artigo como descendente. Confira a condição de 480 e a cascata antes de mudar os valores.",
+      "checks": [
+        "479 px produz uma trilha; 480 e 481 produzem duas.",
+        "A palavra longa cabe e nenhum conteúdo é escondido em viewport de 220 px.",
+        "Os links mantêm a ordem do documento e de navegação por Tab."
+      ],
+      "project": "Integre o cartão ao projeto CSS em uma região principal e uma coluna lateral. Documente o contexto consultado, o limite escolhido pelo conteúdo, as medidas de três bordas e um teste de navegação. A pessoa deve construir a adaptação; a rubrica continua manual.",
+      "question": "Um título está dentro de coluna com 220 px, dentro de painel com 600 px. Uma regra @container painel (min-width:500px) aplica font-size:10cqi. Qual resultado corresponde ao contrato?",
+      "answer": "A condição é verdadeira pelo painel, e a fonte mede 22 px pela coluna elegível mais próxima.",
+      "distractors": [
+        "A condição é verdadeira e a fonte mede 60 px porque cqi fica preso ao nome painel.",
+        "A condição é falsa porque toda consulta é obrigada a usar a coluna mais próxima."
+      ],
+      "practices": [
+        {
+          "id": "nome-unidade",
+          "title": "Problema 1: condição externa, medida interna",
+          "topics": [
+            "ancestral elegível e dimensão inline",
+            "contêiner nomeado em contexto aninhado",
+            "unidades cqi e ancestral elegível"
+          ],
+          "prompt": "Construa painel de 600 px contendo coluna de 220 px. O indicador deve mostrar amplo somente quando o painel alcançar 500 px. Quando ativo, o título mede 10% do tamanho inline da coluna. Use consulta nomeada e cqi; teste também painel 480 e coluna 300 de forma independente.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><meta charset=\"utf-8\"><title>Nome e unidade</title>\n<style>\n*{box-sizing:border-box}body{margin:0;padding:16px}\n#painel{inline-size:600px;container:painel / inline-size}\n#coluna{inline-size:220px;container:coluna / inline-size}\n#titulo{font-size:16px;margin:0}\n#estado::after{content:\"compacto\"}\n@container painel (min-width:500px){\n #estado::after{content:\"amplo\"}\n #titulo{font-size:10cqi}\n}\n</style>\n<div id=\"painel\"><div id=\"coluna\"><h1 id=\"titulo\">Estudo</h1><p id=\"estado\"></p></div></div>\n</html>",
+          "explanation": [
+            "O nome seleciona o painel para a condição, mas não altera a referência própria de cqi.",
+            "600/220 resulta em amplo e 22 px; 480/220 resulta em compacto e a base de 16 px.",
+            "600/300 resulta em amplo e 30 px. As duas mudanças distinguem implementações que confundem os contextos. Se a fonte acompanhar o painel, inspecione a elegibilidade da coluna; se o indicador acompanhar a coluna, confira o nome na condição antes de alterar o limiar."
+          ],
+          "checks": [
+            "O indicador muda pelo painel, não pela coluna.",
+            "A fonte muda pela coluna enquanto a condição está ativa.",
+            "A base permanece 16 px quando a condição é falsa."
+          ]
+        },
+        {
+          "id": "base-limite",
+          "title": "Problema 2: aprimorar sem perder a base",
+          "topics": [
+            "consulta não mede o próprio elemento",
+            "limiares inclusivos e caixa de conteúdo",
+            "fallback progressivo com supports",
+            "ordem semântica e conteúdo longo"
+          ],
+          "prompt": "Produza uma base de uma coluna com dois links sempre legíveis. Acrescente uma melhoria com @supports e contêiner nomeado: duas colunas a partir de 480 px de conteúdo. Valide 479/480/481, palavra longa em 220 px, ordem de Tab e a versão somente base. Não use media query para substituir a medida local.",
+          "solution": "<!doctype html>\n<html lang=\"pt-BR\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Base e melhoria progressiva</title>\n<style>\n*{box-sizing:border-box}body{margin:0;padding:16px}\n.painel{inline-size:600px;max-inline-size:100%}\n.cartao{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;overflow-wrap:anywhere}\n.cartao>*{min-inline-size:0}a{display:block;padding:12px}\n@supports (container-type:inline-size){\n .painel{container:painel / inline-size}\n @container painel (min-width:480px){\n  .cartao{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}\n }\n}\n</style>\n<main><h1>Continua utilizável</h1><div class=\"painel\" id=\"painel\"><nav class=\"cartao\" aria-label=\"Próximas ações\">\n<a id=\"primeiro\" href=\"#primeiro\">Primeira ação</a><a id=\"segundo\" href=\"#segundo\">Segunda ação e UmIdentificadorMuitoLongoQueContinuaVisivelSemCortarConteudo</a>\n</nav></div></main></html>",
+          "explanation": [
+            "A base conserva uma coluna e a ordem dos links mesmo sem a melhoria.",
+            "O contexto fica na região; a regra aplica o layout à navegação descendente.",
+            "minmax(0,1fr) e quebra de texto permitem reduzir o componente sem ocultar suas ações. A cópia só com a base testa esse contrato, não um motor antigo. Compare 479, 480 e 481 para distinguir uma condição inclusiva de outra estrita, e use Tab para detectar mudanças indevidas de ordem."
+          ],
+          "checks": [
+            "O limite 480 é inclusivo e 479 permanece em uma coluna.",
+            "Texto e links permanecem visíveis nas larguras testadas.",
+            "A base isolada conserva foco e leitura sem a melhoria."
+          ]
+        }
+      ]
+    },
+    {
       "id": "css-visual-movimento",
       "title": "CSS: tipografia, cor e movimento",
       "level": "Avançado",
