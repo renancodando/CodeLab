@@ -10,6 +10,8 @@ Clima em revisão na [PR #11](https://github.com/renancodando/CodeLab/pull/11), 
 
 Retomada: 354 testes unitários passaram, incluindo 19 casos da nova rota Vercel/Node.js; sete testes de navegador meteorológicos passaram após as correções, com 13 cenários visuais em desktop e viewport móvel. O adaptador local recebeu boletim NOAA real HTTP 200. Vercel CLI autenticada como renancodando acessa o preview protegido; a rota no preview anterior e no domínio retorna 404. Publicar o próximo head, aguardar CI completo e testar a função no preview antes de integrar; conferir o domínio depois. As três threads de revisão ainda precisam ser resolvidas após a verificação.
 
+O preview de `1b2ab89` instalou a função, mas retornou 500 por import ESM sem extensão. A correção usa `.js` na entrada TypeScript; o build agora executa o JavaScript emitido em um processo Node separado, com 30 consultas concorrentes e fonte simulada. Conferir o preview do head corrigido: build Ready isoladamente não comprovou o funcionamento.
+
 - PRs #1 a #10 integradas. Catálogo: 136 aulas em 20 trilhas; Python, TypeScript, C++ e JavaScript têm dez aulas, outras quatro linguagens nove.
 - 60 aulas originais, 48 módulos panorâmicos de 13 capítulos e 28 aulas próprias de 17 capítulos, com 56 problemas independentes.
 - Matriz: 646 entradas, 155 vinculadas a atividades específicas e 491 introduzidas. Os conceitos podem reaparecer em contextos diferentes; não são contagem de especializações completas.
