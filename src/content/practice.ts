@@ -12,6 +12,27 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'cpp-requisito-verdadeiro',language:'cpp',lessonIds:['cpp-templates'],skillIds:['cpp.templates.requisitos'],afterBlock:3,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'A expressão é válida, mas o conceito é falso',
+  prompt:'Em C++20, complete apenas o requisito dentro do bloco. Inteiro deve aceitar os tipos integrais da biblioteca, incluindo bool, e recusar double/string. Use um requisito aninhado, conservando std::integral<T>. A expressão simples abaixo aceitava double por estar bem formada. Avaliação conceitual offline; não compila sua resposta.',
+  code:'#include <concepts>\ntemplate<class T>\nconcept Inteiro = requires {\n    ____\n};',
+  hint:'Há diferença entre a validade de uma expressão e a exigência de que sua condição seja satisfeita.',minutes:3
+ },
+ {
+  id:'cpp-ramo-descartado',language:'cpp',lessonIds:['cpp-templates'],skillIds:['cpp.templates.instanciacao'],afterBlock:4,kind:'fill',capability:'depuracao',requiresConcept:true,
+  title:'O ramo que int não pode instanciar',
+  prompt:'Complete apenas a palavra depois de if para descartar o ramo incompatível durante a instanciação. Entradas admitidas: int, std::string, std::vector<int> e std::array<int,N>. Coleção vazia tem quantidade zero; int representa um item. A condição requires verifica a existência de size sem executá-lo. Decisão conceitual, sem compilador C++ no navegador.',
+  code:'template<class T>\nstd::size_t quantidade(const T& valor) {\n    if ____ (requires { valor.size(); }) {\n        return valor.size();\n    } else {\n        return 1;\n    }\n}',
+  hint:'Um if comum não impede a instanciação do código que chama size em int.',minutes:3
+ },
+ {
+  id:'cpp-prever-sobrecarga',language:'cpp',lessonIds:['cpp-templates'],skillIds:['cpp.templates.subsuncao'],afterBlock:5,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'A coleção tem tamanho e também permite reserva',
+  prompt:'Preveja as duas linhas em C++20. ComReserva reutiliza ComTamanho, acrescentando reserve. As coleções são pequenas; alocação bem-sucedida é pressuposta. reserve não altera size nem os elementos. Esta previsão conceitual não compila ou executa sua resposta.',
+  code:'#include <array>\n#include <concepts>\n#include <cstddef>\n#include <iostream>\n#include <vector>\n\ntemplate<class T>\nconcept ComTamanho = requires(const T& valor) {\n    { valor.size() } -> std::convertible_to<std::size_t>;\n};\ntemplate<class T>\nconcept ComReserva = ComTamanho<T> && requires(T& valor, std::size_t n) {\n    valor.reserve(n);\n};\ntemplate<ComTamanho T>\nconst char* preparar(T&) { return "fixo"; }\ntemplate<ComReserva T>\nconst char* preparar(T& valor) {\n    valor.reserve(valor.size() + 4);\n    return "reserva";\n}\nint main() {\n    std::vector<int> dinamico{1, 2};\n    std::array<int, 2> fixo{1, 2};\n    std::cout << preparar(dinamico) << "\\n";\n    std::cout << preparar(fixo) << "\\n";\n}',
+  hint:'Descubra quais sobrecargas são viáveis para cada tipo e qual reutiliza os requisitos da outra.',minutes:4
+ },
+ {
   id:'ts-import-extensao',language:'typescript',lessonIds:['ts-modulos-configuracao'],skillIds:['typescript.modulos.resolucao-node'],afterBlock:2,kind:'fill',capability:'alteracao',requiresConcept:true,
   title:'O import precisa encontrar o JavaScript emitido',
   prompt:'TypeScript 5.9, Node.js 24 ESM direto, package.json com type:module e NodeNext. Não há bundler, loader ou reescrita de extensões. calculo.ts exporta dobrar. Complete apenas o caminho entre aspas para que entrada.ts compile e dist/entrada.js encontre dist/calculo.js. Avaliação conceitual offline, sem compilar sua resposta.',

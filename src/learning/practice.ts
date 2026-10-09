@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'cpp-requisito-verdadeiro':{accepted:['requires std::integral<T>;','requires std::integral<T> ;'],failure:'A expressão simples pode ser válida mesmo com valor false. Exija que a condição dependente de T seja satisfeita dentro do bloco.',solution:'requires std::integral<T>;'},
+ 'cpp-ramo-descartado':{accepted:['constexpr'],failure:'O ramo inválido para int precisa ser descartado na instanciação. Uma decisão comum de execução não elimina esse requisito de compilação.',solution:'constexpr'},
+ 'cpp-prever-sobrecarga':{accepted:['reserva\nfixo'],failure:'vector oferece reserva e tamanho; array oferece apenas tamanho. A escolha depende dos requisitos compartilhados, não da posição das funções no arquivo.',solution:'reserva\nfixo'},
  'ts-import-extensao':{accepted:['./calculo.js'],failure:'Confira o caminho relativo no JavaScript emitido. Neste contrato não há loader, bundler ou reescrita de extensão para completar o trabalho do Node ESM.',solution:'./calculo.js'},
  'ts-alias-emitido':{accepted:['relativo'],failure:'O alias continua no artefato. Uma configuração de tipos ou declaração não cria a resolução desse pacote no Node.',solution:'import {dobrar} from "./calculo.js";\nconsole.log(dobrar(3));'},
  'ts-import-tipo-efeito':{accepted:['2'],failure:'O arquivo de contratos foi emitido, mas o import da entrada é apenas de tipo. Acompanhe quais dependências restam no JavaScript antes de prever os efeitos.',solution:'2'},
