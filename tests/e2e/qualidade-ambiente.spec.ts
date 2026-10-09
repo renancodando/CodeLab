@@ -15,11 +15,12 @@ test('hardware limitado mantém chuva e nuvens com canvas dentro do orçamento',
  await expect(page.locator('#world')).toHaveAttribute('data-quality','low');
  await expect(page.locator('#world')).toHaveAttribute('data-massas','42');
  await expect.poll(async()=>Number(await page.locator('#world').getAttribute('data-chuva'))).toBeGreaterThan(.8);
- for(const largura of [375,4000]){
-  await page.setViewportSize({width:largura,height:812});
+ for(const [largura,altura] of [[375,812],[4000,812],[375,812],[220,1800],[4000,300],[375,812]]){
+  await page.setViewportSize({width:largura,height:altura});
   await expect.poll(()=>page.locator('#world canvas').evaluate(elemento=>Math.round(elemento.getBoundingClientRect().width))).toBe(largura);
   const dimensoes=await page.locator('#world canvas').evaluate(elemento=>({largura:(elemento as HTMLCanvasElement).width,altura:(elemento as HTMLCanvasElement).height}));
   expect(dimensoes.largura*dimensoes.altura).toBeLessThanOrEqual(1200000);
+  expect(await page.evaluate(()=>Reflect.get(window,'maiorBuffer')())).toBeLessThanOrEqual(1200000);
   await expect(page.locator('#world')).toHaveAttribute('data-quality','low');
   await expect(page.locator('#world')).toHaveAttribute('data-massas','42');
  }

@@ -22,6 +22,7 @@ export class LivingWorld {
  private neblina=new Neblina();
  private cloudLayer:Clouds;
  private qualityControl:QualityController;
+ private tamanhoRenderizado=new THREE.Vector2();
  private wetMaterials:{material:THREE.MeshStandardMaterial;color:THREE.Color;roughness:number}[]=[];
  private lastAstronomy=0;
  private ultimaFusao=0;
@@ -87,10 +88,16 @@ export class LivingWorld {
   this.moon=new THREE.Mesh(new THREE.PlaneGeometry(6.5,6.5),moonMat);this.scene.add(this.moon);
   for(let i=0;i<9;i++){const bird=new THREE.Group();const mat=new THREE.MeshBasicMaterial({color:'#262d28',side:THREE.DoubleSide});for(const side of [-1,1]){const wing=new THREE.Mesh(new THREE.PlaneGeometry(.75,.12),mat);wing.position.x=side*.34;bird.add(wing);}bird.position.set(rng()*100-50,20+rng()*12,-35-rng()*45);bird.userData.seed=rng()*10;this.birds.push(bird);this.scene.add(bird);}
   const seen=new Set<THREE.Material>();this.scene.traverse(obj=>{if(obj instanceof THREE.Mesh){if(obj.material instanceof THREE.MeshStandardMaterial){obj.castShadow=true;obj.receiveShadow=true;if(!seen.has(obj.material)){seen.add(obj.material);this.wetMaterials.push({material:obj.material,color:obj.material.color.clone(),roughness:obj.material.roughness});}}}});
-  this.resize=new ResizeObserver(()=>{const {width,height}=container.getBoundingClientRect();this.ajustarResolucao();this.renderer.setSize(width,height);this.camera.aspect=width/Math.max(height,1);this.camera.fov=width<600?60:47;this.camera.updateProjectionMatrix();});this.resize.observe(container);
+  this.resize=new ResizeObserver(()=>{const {width,height}=container.getBoundingClientRect();this.ajustarResolucao();this.camera.aspect=width/Math.max(height,1);this.camera.fov=width<600?60:47;this.camera.updateProjectionMatrix();});this.resize.observe(container);
   window.addEventListener('pointermove',this.onPointer);document.addEventListener('visibilitychange',this.onVisibility);this.renderer.domElement.addEventListener('webglcontextlost',this.onLost);this.renderer.domElement.addEventListener('webglcontextrestored',this.onRestored);this.renderer.render(this.scene,this.camera);this.animate();
  }
- private ajustarResolucao(){const {width,height}=this.container.getBoundingClientRect();this.renderer.setPixelRatio(proporcaoRenderizacao(width,height,devicePixelRatio,this.qualityControl.tier));}
+ private ajustarResolucao(){
+  const {width,height}=this.container.getBoundingClientRect(),anterior=this.renderer.getSize(this.tamanhoRenderizado);
+  const proporcao=proporcaoRenderizacao(width,height,devicePixelRatio,this.qualityControl.tier);
+  this.renderer.setDrawingBufferSize(Math.min(width,anterior.x),Math.min(height,anterior.y),Math.min(proporcao,this.renderer.getPixelRatio()));
+  this.renderer.setDrawingBufferSize(width,height,proporcao);
+  this.renderer.domElement.style.width=width+'px';this.renderer.domElement.style.height=height+'px';
+ }
  private random(seed:number){return()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};}
  private island(x:number,y:number,z:number,r:number,h:number,rng:()=>number,castle:boolean){
   const group=new THREE.Group();group.position.set(x,y,z);

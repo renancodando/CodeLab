@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Revisão do buffer e timeout do fluxo longo
+
+A revisão da PR #17 identificou aumento transitório de resolução ao encolher a janela. Um teste com os setters nativos do canvas reproduziu 1.827.000 pixels no nível baixo, apesar do tamanho final caber no orçamento de 1.200.000. O redimensionamento agora usa um buffer intermediário limitado antes de aplicar dimensões/proporção finais. Passaram o teste ampliado de seis mudanças de viewport/orientação, movimento reduzido, chuva forte e 42 massas, e os treze cenários atmosféricos em duas larguras. O strict também passou; conferir o build completo e o próximo head no CI antes de integrar.
+
+Os heads das PRs #14 e #16 aprovaram seus CIs completos. O da PR #16 conferiu 372 testes unitários, 147 exemplos externos e 104 testes de navegador. Nos heads anteriores de #12/#13/#15/#17, somente o fluxo agregado dos 25 passos estourou 180 segundos; os demais cenários passaram. Novas tentativas foram iniciadas para #12/#13/#15. A correção de testes na branch atual separa o percurso em etapas seriais: cada contexto retoma o checkpoint realmente produzido pela etapa anterior, sem fabricar respostas. Preservar todas as verificações e exigir CI do head que for integrado; nenhum sucesso anterior valida uma alteração posterior.
+
 ## Qualidade atmosférica para dispositivos limitados em validação
 
 A branch `clima/qualidade-dispositivos` parte do head `348988c1ee21c063e2c3be2089b247508ac111a3` da PR #16. Acrescenta teto inicial por recursos locais do navegador e orçamento de pixels para telas grandes. Mantém recuperação por FPS dentro do teto, movimento reduzido, partículas, fontes e 42 massas. Dez testes específicos incluem promoção indevida e orçamento de pixels; nove falharam antes da correção. Os 382 testes unitários, build e quatro cenários Edge passaram: os 25 passos da aula com retomada/assistência, leitura, treze estados atmosféricos em duas larguras e hardware limitado com chuva forte/canvas de 375 a 4000 px. Conferir o CI do novo head antes de integrar; não foram medidos FPS em celular físico.
