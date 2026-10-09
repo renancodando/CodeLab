@@ -1,5 +1,19 @@
 # Continuidade do CODELAB
 
+## Clima e entregas anteriores integrados em 9 de outubro
+
+A main `f4f28227869f90a1c7853e66dad628ea976c5390` integra a PR #17, cujo head `b15fc8adc5bd285476a30495b1cc23b486fee125` aprovou o run 37930523384: 382 testes unitários, 147 exemplos externos e 107 testes de navegador, builds, API, isolamento PostgreSQL e auditoria. A árvore do merge é idêntica à testada: `d0d39886dfc246b9c443f1edf7abe0f82dd0134d`. A revisão de redimensionamento foi resolvida. A main local também avançou sem apagar o histórico preservado.
+
+As PRs #12–#16 estão integradas. Foram usados heads sucessores com CI completo aprovado: #13 inclui os commits de #12, e #16 inclui os de #15. Os timeouts próprios de #12/#15 não foram tratados como aprovação. As árvores de cada merge conferem com os respectivos heads testados. O domínio recebeu métricas centralizadas, prática CSS/C#, teste de quota real e preservação de rascunhos/projetos de anotações.
+
+A implantação atmosférica `6zHHpnBuzYc8ec9hcPnWS2Z95sJB` foi confirmada READY/production, com alias code-lab-omega.vercel.app. Em produção, seis tamanhos/orientações entre 220 e 4000 px produziram pico medido de 1.198.483 pixels no nível baixo, conservaram 42 massas e alternaram movimento reduzido sem erros WebGL. A rota de observação retornou boletim real SBSP, cache HIT sem rejuvenescimento, 400 para parâmetro extra e 405 para escrita. A interface manteve condição estimada para estação a cerca de 9 km. Isso não comprova FPS físico, radar ativo ou chuva no ponto.
+
+Após a integração dos rascunhos passaram nove fluxos no domínio e quatro verificações isoladas dos exemplos CSS em Edge: práticas offline CSS/C#, quatro cenários dos 25 passos e três de rascunhos/projeto/backup. Scripts temporários estão em outputs do workspace. O pedido integral continua aberto, incluindo interior embaçado, fontes adicionais sustentáveis, laboratórios TypeScript/SQL e aprofundamentos curriculares.
+
+## Prática CSV em preparação
+
+A branch `pratica/python-csv-contratos` parte dessa main e aprofunda a aula existente `py-biblioteca-dados`: registros multilinha, cabeçalho completo e lote validado antes de alterar uma lista. Três pausas conceituais usam habilidades distintas. Sete testes falharam antes da implementação. Os gabaritos e reproduções de falhas entram no mesmo verificador Python do CI; conferir resultados locais e head remoto antes de integrar. Não houve criação de uma aula própria de toda a biblioteca padrão nem execução Python no navegador.
+
 ## Revisão do buffer e timeout do fluxo longo
 
 A revisão da PR #17 identificou aumento transitório de resolução ao encolher a janela. Um teste com os setters nativos do canvas reproduziu 1.827.000 pixels no nível baixo, apesar do tamanho final caber no orçamento de 1.200.000. O redimensionamento agora usa um buffer intermediário limitado antes de aplicar dimensões/proporção finais. Passaram o teste ampliado de seis mudanças de viewport/orientação, movimento reduzido, chuva forte e 42 massas, e os treze cenários atmosféricos em duas larguras. O strict também passou; conferir o build completo e o próximo head no CI antes de integrar.
