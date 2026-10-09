@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Próxima expansão: closures executáveis
+
+A branch `pratica/javascript-closures-estado` depende do head C++ `9b82a81814511aead5ba23ea4f6e3e9961b208d5` da PR #21, ainda em validação. Acrescenta três programas corrigíveis em QuickJS à aula existente, com contratos de instância, callbacks e snapshots, sem alterar limites ou dependências. Exigir os gates completos de cada head e integrar primeiro C++; conferir árvore e fluxo público após cada integração. Métricas são geradas e não demonstram currículo concluído.
+
+Passaram 427 testes unitários, strict/build e o fluxo Edge offline das três pausas: erro/acerto, assistência, respostas/evidências preservadas e larguras 220/4000 px. Os 17 capítulos existentes, incluindo problemas abertos, foram conservados. O teste inicial esperava somente 13 e foi corrigido para incluir esses problemas, sem retirar conteúdo. A suíte aceita uma fábrica auxiliar de callbacks e recusa resultados fixos, cursor compartilhado, overflow e snapshot com alias. O bundle inicial cresceu de 182,78 para 185,93 kB gzip, sem novo runtime; Three.js/Monaco e o WASM conservam seus carregamentos existentes. Não reutilizar esse gate local como comprovação do CI ou da implantação.
+
 ## Main verificada: vidros e módulos TypeScript
 
 As PRs #19 e #20 estão integradas, nessa ordem. A main `4790188f8ab6c7ddab7167a33984043dc86f216a` preserva a árvore do head #20 `0126d54776e3c5e014e99ad796135347aeb62b9b`: `275cd5b493f5a92fed455a9b0d7e2fafc4df88f1`. O CI 37953975921 aprovou 401 testes unitários, 152 exemplos externos, oito projetos TypeScript adicionais e 111 testes de navegador. A PR #19 aprovou 392/152/110 no run 37951920788 e seu merge `5b45b72d45a2d55f88f429ca159f508f346357e0` também teve árvore idêntica à testada. Não havia revisões abertas.

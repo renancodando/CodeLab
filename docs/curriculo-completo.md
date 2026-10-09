@@ -1,5 +1,9 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: closures praticadas
+
+As três pausas executáveis de `js-closures-estado` ampliam a aula existente sem substituir seus problemas abertos. Contratos e investigação vêm antes da tentativa: distinguir bindings entre instâncias, chamadas tardias/repetidas e referências na entrada/saída. Os testes executam os gabaritos e recusam implementações que acertam apenas o exemplo, incluindo um contador que escreve um total inseguro e um snapshot que conserva o array interno. O recorte da cópia é somente uma coleção de strings; não comprova imutabilidade profunda ou encapsulamento como segurança. Permanecem abertos os demais aprofundamentos e a distribuição uniforme da prática.
+
 ## Aprofundamento incremental: requisitos e sobrecargas C++20
 
 `cpp-templates` acrescenta uma seção de subsunção e aprofunda requisitos simples/aninhados e descarte de ramo dependente. Três pausas após os blocos 3/4/5 exercitam alteração do requisito, depuração da instanciação e previsão de sobrecarga. Coleções vazias conservam quantidade zero; reserve deve conservar tamanho/elementos. A prática do aluno é conceitual/offline, sem alegar compilação C++ no navegador.
