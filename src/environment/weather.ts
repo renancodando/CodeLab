@@ -8,12 +8,12 @@ type Location={latitude:number;longitude:number;city:string};
 export type FonteComplementar={nome:string;intervalo:number;consultar:(local:Location,sinal:AbortSignal)=>Promise<LeituraMeteorologica[]>};
 export class WeatherService {
  private cache=new Map<string,EnvironmentState>();
+ private tentativasModelo=new Map<string,number>();
  private pending?:{key:string;controller:AbortController;promise:Promise<EnvironmentState>};
  private timer?:ReturnType<typeof setTimeout>;
  private selection?:Location;
  private revision=0;
  private disposed=false;
- private lastAttempt=0;
  private listening=false;
  private leituras=new Map<string,{tentativa:number;dados:LeituraMeteorologica[]}>();
  private consultas=new Set<AbortController>();
@@ -46,10 +46,14 @@ export class WeatherService {
  }
  private get(location:Location):Promise<EnvironmentState>{
   const key=`${location.latitude},${location.longitude}`;const previous=this.cache.get(key);
-  if(this.pending?.key===key)return this.pending.promise;
-  this.pending?.controller.abort();
+  if(this.pending?.key===key&&!this.pending.controller.signal.aborted)return this.pending.promise;
+  if(this.pending){this.tentativasModelo.delete(this.pending.key);this.pending.controller.abort();}
   if(previous&&this.now()-previous.updatedAt<WEATHER_INTERVAL)return Promise.resolve({...previous,city:location.city});
-  const controller=new AbortController();this.lastAttempt=this.now();
+  const tentativa=this.tentativasModelo.get(key);
+  if(tentativa!==undefined&&this.now()-tentativa<WEATHER_INTERVAL)return Promise.resolve(previous?{...previous,source:'cached',city:location.city}:{...defaultEnvironment,...location,updatedAt:0});
+  this.tentativasModelo.delete(key);this.tentativasModelo.set(key,this.now());
+  if(this.tentativasModelo.size>4)this.tentativasModelo.delete(this.tentativasModelo.keys().next().value!);
+  const controller=new AbortController();
   const promise=this.load(location,key,controller).finally(()=>{if(this.pending?.controller===controller)this.pending=undefined;});
   this.pending={key,controller,promise};return promise;
  }
@@ -71,7 +75,7 @@ export class WeatherService {
  }
  private intervalo(){return Math.min(WEATHER_INTERVAL,...this.fontes.map(f=>Math.max(60000,f.intervalo)));}
  private schedule(){clearTimeout(this.timer);if(this.disposed||!this.selection||(typeof document!=='undefined'&&document.hidden))return;this.timer=setTimeout(()=>void this.refresh(),this.intervalo());}
- async refresh(){if(!this.selection||this.disposed)return;const revision=this.revision;try{const state=await this.get(this.selection);const combinado=await this.complementar(state,revision);if(revision===this.revision&&!this.disposed)this.onUpdate(combinado);}catch{/* uma seleção mais recente assume a consulta */}finally{if(revision===this.revision)this.schedule();}}
+ async refresh(){if(!this.selection||this.disposed)return;const revision=this.revision;try{const state=await this.get(this.selection);if(revision!==this.revision||this.disposed)return;const combinado=await this.complementar(state,revision);if(revision===this.revision&&!this.disposed)this.onUpdate(combinado);}catch{/* uma seleção mais recente assume a consulta */}finally{if(revision===this.revision)this.schedule();}}
  private visibility=()=>{clearTimeout(this.timer);if(!document.hidden)void this.refresh();};
- dispose(){this.disposed=true;++this.revision;clearTimeout(this.timer);this.pending?.controller.abort();for(const consulta of this.consultas)consulta.abort();this.consultas.clear();this.leituras.clear();if(this.listening)document.removeEventListener('visibilitychange',this.visibility);this.cache.clear();}
+ dispose(){this.disposed=true;++this.revision;clearTimeout(this.timer);this.pending?.controller.abort();for(const consulta of this.consultas)consulta.abort();this.consultas.clear();this.leituras.clear();if(this.listening)document.removeEventListener('visibilitychange',this.visibility);this.cache.clear();this.tentativasModelo.clear();}
 }

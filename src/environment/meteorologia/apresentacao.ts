@@ -4,7 +4,9 @@ import {rotulosChuva} from './modelo';
 import {escapeHtml} from '../../state';
 export function resumoMeteorologico(estado:EnvironmentState,agora=Date.now()){
  const resultado=combinarMeteorologia(estado.fontes??[],agora);
- return rotulosChuva[resultado.situacao]+(resultado.divergencia?' · Condições locais podem variar':'');
+ const rotulo=rotulosChuva[resultado.situacao],tipo=resultado.tipoPrecipitacao;
+ const descricao=tipo==='chuva'||!['observada','provavel','proximidades'].includes(resultado.situacao)?rotulo:rotulo.replace('Chuva',tipo==='neve'?'Neve':tipo==='granizo'?'Precipitação de granizo':tipo==='mista'?'Precipitação mista':'Precipitação');
+ return descricao+(resultado.divergencia?' · Condições locais podem variar':'');
 }
 export function detalhesMeteorologicos(estado:EnvironmentState,agora=Date.now()){
  const resultado=combinarMeteorologia(estado.fontes??[],agora),linhas=resultado.fontes.map(f=>{

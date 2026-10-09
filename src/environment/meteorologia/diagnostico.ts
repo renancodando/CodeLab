@@ -13,6 +13,6 @@ export function montarDiagnostico(obter:()=>EnvironmentState,aplicar:(estado:Env
  let ultima=0;
  return {atualizar(frame:AmbientFrame){
   if(frame.tempo-ultima<1)return;ultima=frame.tempo;const agora=Date.now(),resultado=combinarMeteorologia(obter().fontes??[],agora);
-  saida.textContent=JSON.stringify({representacao:'procedural; cenários são sintéticos',fontes:resultado.fontes.map(f=>({tipo:f.tipo,fonte:f.fonte,idade:f.capturadoEm===null?null:agora-f.capturadoEm,validade:f.validade,qualidade:qualidadeAtual(f,agora),precipitacao:f.variaveis.precipitacao})),resultado:{situacao:resultado.situacao,divergencia:resultado.divergencia,chuvaLocal:resultado.intensidadeLocal,chuvaDistante:resultado.intensidadeDistante},visual:frame},null,2);
+  saida.textContent=JSON.stringify({representacao:'procedural; cenários são sintéticos',fontes:resultado.fontes.map(f=>({tipo:f.tipo,fonte:f.fonte,idade:f.capturadoEm===null?null:agora-f.capturadoEm,validade:f.validade,qualidade:qualidadeAtual(f,agora),controleQualidade:f.controleQualidade,precipitacao:f.variaveis.precipitacao})),resultado:{situacao:resultado.situacao,divergencia:resultado.divergencia,precipitacaoLocal:resultado.intensidadeLocal,chuvaLiquida:resultado.intensidadeLiquida,tipoPrecipitacao:resultado.tipoPrecipitacao,chuvaDistante:resultado.intensidadeDistante},visual:frame},null,2);
  },descartar(){painel.remove();}};
 }

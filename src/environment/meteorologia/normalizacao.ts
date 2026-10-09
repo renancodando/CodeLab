@@ -14,7 +14,7 @@ export function normalizarModelo(raw:unknown,recebidoEm:number):LeituraMeteorolo
 }
 export type EntradaObservacional = {
  fonte:string; capturadoEm:number; recebidoEm:number; distanciaKm:number|null; cobertura:'ponto'|'proximidades'|'regional';
- qualidade:number; variaveis:Partial<VariaveisAtmosfericas>; detectouChuva?:boolean; intensidadeIndicativa?:number; tempestade?:boolean; granizo?:boolean; neve?:number;
+ qualidade:number; variaveis:Partial<VariaveisAtmosfericas>; detectouChuva?:boolean; detectouPrecipitacao?:boolean; fasePrecipitacao?:LeituraMeteorologica['fasePrecipitacao']; intensidadeIndicativa?:number; tempestade?:boolean; granizo?:boolean; neve?:number; controleQualidade?:number;
 };
 export function normalizarEvidencia(tipo:Exclude<TipoFonte,'modelo'>,entrada:EntradaObservacional):LeituraMeteorologica {
  const limites:Record<keyof VariaveisAtmosfericas,[number,number]>={temperatura:[-90,65],umidade:[0,100],pontoDeOrvalho:[-100,65],nebulosidade:[0,100],nuvensBaixas:[0,100],nuvensMedias:[0,100],nuvensAltas:[0,100],precipitacao:[0,250],probabilidade:[0,100],vento:[0,300],direcao:[0,360],rajada:[0,400],visibilidade:[0,100000],radiacaoDireta:[0,1500],radiacaoDifusa:[0,1500]};

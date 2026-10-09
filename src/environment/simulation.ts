@@ -14,7 +14,7 @@ export function wetnessAfter(wetness:number,dt:number,rain:number,temp:number,su
 }
 export function stepEnvironment(frame:AmbientFrame,target:EnvironmentState,dt:number,now=Date.now(),resultado?:ResultadoAtmosferico):void {
  dt=clamp(dt,0,5);frame.tempo+=dt;const atmosfera=resultado??combinarMeteorologia(target.fontes??[],now),valida=atmosfera.situacao!=='insuficiente';
- const precipitation=rainIntensity(atmosfera.intensidadeLocal,0);
+ const precipitation=rainIntensity(atmosfera.intensidadeLiquida,0);
  frame.preparation=forecastPreparation(target,now);
  frame.clouds=ease(frame.clouds,clamp((atmosfera.nebulosidade??target.clouds)/100+frame.preparation),dt,28);
  frame.nuvensBaixas=ease(frame.nuvensBaixas,clamp((atmosfera.nuvensBaixas??frame.clouds*60)/100),dt,45);

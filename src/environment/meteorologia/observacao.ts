@@ -13,16 +13,21 @@ export function distanciaEstacao(a:{latitude:number;longitude:number},b:{latitud
 export function normalizarMetar(raw:unknown,codigo:string,distancia:number,recebidoEm:number){
  if(!Array.isArray(raw))return [];
  return raw.filter(r=>r&&typeof r==='object'&&r.icaoId===codigo).slice(0,1).map(r=>{
-  const tempo=typeof r.wxString==='string'?r.wxString:'',termos=tempo.split(/\s+/),chuva=termos.some((t:string)=>!t.startsWith('VC')&&/(RA|DZ)/.test(t));
-  const proxima=termos.some((t:string)=>t.startsWith('VC')&&/(RA|SH|TS)/.test(t));
-  const seco=r.cover==='CAVOK'||tempo==='NSW'||/^(BR|FG|HZ)$/.test(tempo);
+  const tempo=typeof r.wxString==='string'?r.wxString:'',termos:string[]=tempo.split(/\s+/);
+  const sensorIndisponivel=typeof r.rawOb==='string'&&/\bPWINO\b/.test(r.rawOb);
+  const locais=termos.filter(t=>!t.startsWith('VC')&&!/^[+-]?(BL|DR)/.test(t)&&/^[+-]?(SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP)+$/.test(t));
+  const proximos=termos.filter(t=>/^VC(SH|TS|(SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP)+)$/.test(t)),proxima=locais.length===0&&proximos.length>0;
+  const fenomenos=sensorIndisponivel?[]:locais.length?locais:proximos,liquida=fenomenos.some(t=>/(RA|DZ)/.test(t));
+  const neve=fenomenos.some(t=>/(SN|SG|IC|PL)/.test(t)),granizo=fenomenos.some(t=>/(GR|GS)/.test(t)),solida=neve||granizo,precipita=fenomenos.length>0;
+  const indicativa=fenomenos.some(t=>t.startsWith('+'))?6:fenomenos.some(t=>t.startsWith('-'))?.3:1.5;
+  const seco=!sensorIndisponivel&&(r.cover==='CAVOK'||tempo==='NSW'||/^(BR|FG|HZ)$/.test(tempo));
   const n=(chave:string,min:number,max:number)=>limitarDado(r[chave],min,max),vento=n('wspd',0,160),rajada=n('wgst',0,220);
   const visibilidade=typeof r.visib==='number'?r.visib:typeof r.visib==='string'?Number(r.visib.replace('+','')):NaN;
   const cobertura=r.cover==='OVC'?100:r.cover==='BKN'?75:r.cover==='SCT'?40:r.cover==='FEW'?20:r.cover==='CAVOK'?10:null;
   const instante=n('obsTime',0,1e12);
-  return normalizarEvidencia('observacao',{fonte:'NOAA/AWC METAR '+codigo,capturadoEm:instante===null?NaN:instante*1000,recebidoEm,distanciaKm:distancia,qualidade:typeof r.qcField==='number'&&r.qcField!==0?.2:.95,cobertura:distancia<=5&&!proxima?'ponto':'proximidades',
-   detectouChuva:chuva||proxima?true:seco?false:undefined,intensidadeIndicativa:chuva||proxima?termos.some((t:string)=>t.startsWith('+'))?6:termos.some((t:string)=>t.startsWith('-'))?.3:1.5:undefined,
-   tempestade:termos.some((t:string)=>t.includes('TS')),granizo:termos.some((t:string)=>t.includes('GR')),
+  return normalizarEvidencia('observacao',{fonte:'NOAA/AWC METAR '+codigo,capturadoEm:instante===null?NaN:instante*1000,recebidoEm,distanciaKm:distancia,qualidade:.95,controleQualidade:n('qcField',0,Number.MAX_SAFE_INTEGER)??undefined,cobertura:distancia<=5&&!proxima?'ponto':'proximidades',
+   detectouChuva:liquida?true:seco?false:undefined,detectouPrecipitacao:precipita?true:seco?false:undefined,fasePrecipitacao:liquida&&solida?'mista':solida?'solida':liquida?'liquida':'desconhecida',intensidadeIndicativa:precipita?indicativa:undefined,
+   tempestade:!sensorIndisponivel&&termos.some(t=>!t.startsWith('VC')&&t.includes('TS')),granizo,neve:neve?Math.log1p(indicativa)/Math.log(7):0,
    variaveis:{temperatura:n('temp',-90,65),pontoDeOrvalho:n('dewp',-100,65),vento:vento===null?null:vento*1.852,rajada:rajada===null?null:rajada*1.852,direcao:n('wdir',0,360),nebulosidade:cobertura,visibilidade:limitarDado(visibilidade*1609.344,0,100000)}});
  });
 }

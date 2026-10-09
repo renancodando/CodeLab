@@ -9,6 +9,7 @@ import {transmissaoAtmosferica} from '../../src/environment/meteorologia/ilumina
 import {initialFrame,stepEnvironment} from '../../src/environment/simulation';
 import {defaultEnvironment,WeatherService} from '../../src/environment/weather';
 import {rainIntensity} from '../../src/environment/weather-state';
+import {resumoMeteorologico} from '../../src/environment/meteorologia/apresentacao';
 const agora=Date.parse('2026-10-08T12:00:00Z');
 const leitura=(tipo:TipoFonte,chuva:number,extra:Partial<LeituraMeteorologica>={}):LeituraMeteorologica=>({fonte:tipo,tipo,capturadoEm:agora,recebidoEm:agora,validade:900000,qualidade:1,distanciaKm:0,cobertura:'ponto',variaveis:{precipitacao:chuva},...extra});
 describe('evidência e chuva local',()=>{
@@ -41,6 +42,7 @@ describe('evidência e chuva local',()=>{
  });
  it('horário ausente ou futuro não vira dado novo ao receber',()=>{
   for(const capturadoEm of [null,NaN,agora+600000])expect(qualidadeAtual(leitura('radar',8,{capturadoEm}),agora)).toBe(0);
+  for(const campo of ['recebidoEm','validade','qualidade'])expect(qualidadeAtual({...leitura('radar',8),[campo]:NaN},agora)).toBe(0);
  });
  it('estação distante e distância desconhecida não provam chuva no ponto',()=>{
   for(const distanciaKm of [null,30])expect(combinarMeteorologia([leitura('observacao',10,{distanciaKm})],agora).intensidadeLocal).toBe(0);
@@ -54,6 +56,55 @@ describe('evidência e chuva local',()=>{
  });
 });
 describe('normalização e observação oficial',()=>{
+ it.each([true,false])('modelo mantém intervalo próprio durante falha, cache anterior: %s',async(comCache)=>{
+  vi.useFakeTimers();vi.setSystemTime(agora);
+  const modelo=vi.fn(async()=>{if(!comCache||modelo.mock.calls.length>1)throw new Error('offline');return new Response(JSON.stringify({current:{time:agora/1000,interval:900,temperature_2m:22,wind_speed_10m:10,rain:0}}));});
+  const consultar=vi.fn(async()=>[]),servico=new WeatherService(()=>{},modelo,()=>Date.now(),[{nome:'observacao',intervalo:600000,consultar}]);
+  try{
+   const inicial=await servico.select(1,1,'A');
+   await vi.advanceTimersByTimeAsync(3000000);
+   expect(modelo).toHaveBeenCalledTimes(2);expect(consultar).toHaveBeenCalledTimes(6);
+   const retomada=await servico.select(1,1,'A');expect(modelo).toHaveBeenCalledTimes(2);expect(retomada.updatedAt).toBe(inicial.updatedAt);
+   if(comCache)expect(retomada.fontes?.[0].capturadoEm).toBe(agora);
+   await vi.advanceTimersByTimeAsync(600000);expect(modelo).toHaveBeenCalledTimes(3);expect(consultar).toHaveBeenCalledTimes(7);
+  }finally{servico.dispose();vi.useRealTimers();}
+ });
+ it.each([0,1,4,12,128,undefined])('qcField %s não é interpretado como boletim inválido',qcField=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString:'RA',qcField}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
+  expect(resultado.situacao).toBe('observada');expect(resultado.intensidadeLiquida).toBeGreaterThan(0);
+  expect(fontes[0].controleQualidade).toBe(qcField);
+ });
+ it('sensor de tempo presente indisponível não confirma nem nega precipitação',()=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString:'RA',cover:'CAVOK',rawOb:'METAR SBSP RMK PWINO',temp:18}],'SBSP',0,agora);
+  const resultado=combinarMeteorologia(fontes,agora);expect(resultado.intensidadeLocal).toBe(0);expect(resultado.situacao).toBe('estimada');expect(resultado.temperatura).toBe(18);
+ });
+ it.each(['SN','SHSN','-SN','GR','+TSGR','SHGS','PL'])('precipitação sólida %s ativa partículas próprias sem fabricar chuva líquida',wxString=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
+  expect(resultado.situacao).toBe('observada');expect(resultado.intensidadeLocal).toBeGreaterThan(0);expect(resultado.intensidadeLiquida).toBe(0);
+  const estado={...defaultEnvironment,fontes},frame=initialFrame(estado);
+  for(let i=0;i<180;i++)stepEnvironment(frame,estado,1,agora);
+  expect(frame.rain).toBe(0);expect(frame.snow+frame.hail).toBeGreaterThan(.05);
+  expect(frame.storm>0).toBe(wxString.includes('TS'));
+  expect(resumoMeteorologico(estado,agora)).not.toContain('Chuva');
+ });
+ it('chuva e neve mistas preservam ambas as formas e o rótulo correspondente',()=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString:'RASN'}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
+  expect(resultado.neve).toBeGreaterThan(0);expect(resultado.intensidadeLiquida).toBeGreaterThan(0);expect(resumoMeteorologico({...defaultEnvironment,fontes},agora)).toContain('Precipitação mista');
+ });
+ it.each(['BLSN','DRSN','VCSN'])('%s não gera neve ou chuva local',wxString=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
+  expect(resultado.intensidadeLocal).toBe(0);expect(resultado.neve).toBe(0);expect(resultado.granizo).toBe(0);
+  if(wxString==='VCSN')expect(resumoMeteorologico({...defaultEnvironment,fontes},agora)).toContain('Neve nas proximidades');
+ });
+ it('precipitação desconhecida informa o fenômeno sem inventar fase líquida',()=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString:'UP'}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
+  expect(resultado.intensidadeLiquida).toBe(0);expect(resumoMeteorologico({...defaultEnvironment,fontes},agora)).toBe('Precipitação observada na região');
+ });
+ it.each(['RA VCTS','RA VCSN'])('chuva local em %s não herda fenômenos sólidos ou convectivos próximos',wxString=>{
+  const fontes=normalizarMetar([{icaoId:'SBSP',obsTime:agora/1000,wxString}],'SBSP',0,agora),resultado=combinarMeteorologia(fontes,agora);
+  expect(resultado.situacao).toBe('observada');expect(resultado.intensidadeLiquida).toBeGreaterThan(0);
+  expect(resultado.tempestade).toBe(0);expect(resultado.neve).toBe(0);expect(resultado.tipoPrecipitacao).toBe('chuva');
+ });
  it('observação falha sem derrubar o modelo e cada fonte mantém sua cadência',async()=>{
   vi.useFakeTimers();vi.setSystemTime(agora);
   const modelo=vi.fn(async()=>new Response(JSON.stringify({current:{time:agora/1000,interval:900,temperature_2m:22,wind_speed_10m:10,rain:8}})));
@@ -146,6 +197,7 @@ describe('continuidade, vento, solo e nuvens',()=>{
   const alto={...initialFrame(defaultEnvironment),nuvensBaixas:0,nuvensMedias:0,nuvensAltas:1},baixo={...alto,nuvensBaixas:1,nuvensAltas:0};
   expect(transmissaoAtmosferica(alto,0).direta).toBeGreaterThan(transmissaoAtmosferica(baixo,0).direta);
   expect(transmissaoAtmosferica(alto,1).direta).toBeLessThan(transmissaoAtmosferica(alto,0).direta);
+  expect(transmissaoAtmosferica({...alto,visibility:300},0).direta).toBeLessThan(transmissaoAtmosferica(alto,0).direta);
  });
  it.each(cenariosAtmosfericos)('cenário %s permanece finito e limitado',nome=>{
   const frame=initialFrame(defaultEnvironment),estado=criarCenario(nome,defaultEnvironment,agora),campo=new CampoNuvens();

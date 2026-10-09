@@ -13,7 +13,7 @@ test('modelo prevê tempestade, interface informa estimativa e o mundo permanece
 });
 test('observação próxima é apresentada sem afirmar chuva no ponto',async({page})=>{
  await page.route('https://api.open-meteo.com/**',route=>route.fulfill({json:{current:{time:Date.now()/1000,interval:900,temperature_2m:22,wind_speed_10m:10,rain:0,cloud_cover:60}}}));
- await page.route('**/api/meteorologia/observacao?*',route=>route.fulfill({json:{dados:[{icaoId:'SBSP',obsTime:Date.now()/1000,wxString:'RA',qcField:0,wspd:10}],recebidoEm:Date.now()}}));
+ await page.route('**/api/meteorologia/observacao?*',route=>route.fulfill({json:{dados:[{icaoId:'SBSP',obsTime:Date.now()/1000,wxString:'RA',qcField:12,wspd:10}],recebidoEm:Date.now()}}));
  await page.goto('/');await page.getByRole('button',{name:'Configurar ambiente',exact:true}).click();await page.locator('#apply-city').click();
  await expect(page.locator('#weather-message')).toContainText('Chuva nas proximidades');
  await page.getByText('Detalhes do clima',{exact:true}).click();await expect(page.locator('#weather-details')).toContainText('NOAA/AWC METAR SBSP');
@@ -40,3 +40,16 @@ test('rede indisponível preserva navegação, detalhes e a jornada em telas est
  expect(await page.locator('#dialog').evaluate(e=>e.scrollWidth<=e.clientWidth+1)).toBe(true);
  await page.getByRole('button',{name:'Fechar',exact:true}).click();await page.goto('/#/aprender');await expect(page.locator('.trail-grid .trail')).toHaveCount(20);
 });
+
+for(const [codigo,descricao,particula] of [['SN','Neve','neve'],['GR','Precipitação de granizo','granizo']]){
+ test('METAR '+codigo+' recente ativa partículas sólidas sem chuva líquida',async({page,context})=>{
+  await context.grantPermissions(['geolocation']);await context.setGeolocation({latitude:-23.627,longitude:-46.655});
+  await page.route('https://api.open-meteo.com/**',route=>route.fulfill({json:{current:{time:Date.now()/1000,interval:900,temperature_2m:0,wind_speed_10m:10,rain:0,cloud_cover:90}}}));
+  await page.route('**/api/meteorologia/observacao?*',route=>route.fulfill({json:{dados:[{icaoId:'SBSP',obsTime:Date.now()/1000,wxString:codigo,qcField:12}],recebidoEm:Date.now()}}));
+  await page.goto('/');await page.getByRole('button',{name:'Configurar ambiente',exact:true}).click();await page.locator('#geolocate').click();
+  await expect(page.locator('#weather-message')).toContainText(descricao+' observada na região');
+  await page.getByRole('button',{name:'Fechar',exact:true}).click();
+  await expect.poll(async()=>Number(await page.locator('#world').getAttribute('data-'+particula))).toBeGreaterThan(.02);
+  await expect(page.locator('#world')).toHaveAttribute('data-chuva','0');
+ });
+}

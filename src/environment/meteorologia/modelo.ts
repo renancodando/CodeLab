@@ -8,11 +8,11 @@ export type VariaveisAtmosfericas = {
 export type LeituraMeteorologica = {
  fonte:string; tipo:TipoFonte; capturadoEm:number|null; recebidoEm:number; validade:number;
  distanciaKm:number|null; qualidade:number; cobertura:'ponto'|'proximidades'|'regional';
- variaveis:Partial<VariaveisAtmosfericas>; detectouChuva?:boolean; intensidadeIndicativa?:number; tempestade?:boolean; granizo?:boolean; neve?:number;
+ variaveis:Partial<VariaveisAtmosfericas>; detectouChuva?:boolean; detectouPrecipitacao?:boolean; fasePrecipitacao?:'liquida'|'solida'|'mista'|'desconhecida'; intensidadeIndicativa?:number; tempestade?:boolean; granizo?:boolean; neve?:number; controleQualidade?:number;
 };
 export type SituacaoChuva = 'observada'|'provavel'|'proximidades'|'possibilidade'|'nao-detectada'|'estimada'|'insuficiente';
 export type ResultadoAtmosferico = VariaveisAtmosfericas & {
- situacao:SituacaoChuva; confiancaChuva:number; intensidadeLocal:number; intensidadeDistante:number;
+ situacao:SituacaoChuva; confiancaChuva:number; intensidadeLocal:number; intensidadeLiquida:number; intensidadeDistante:number; tipoPrecipitacao:'chuva'|'neve'|'granizo'|'mista'|'indefinida';
  tempestade:number; granizo:number; neve:number; divergencia:boolean; fontes:LeituraMeteorologica[];
 };
 export const rotulosChuva:Record<SituacaoChuva,string> = {

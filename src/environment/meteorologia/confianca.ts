@@ -24,10 +24,11 @@ export function combinarMeteorologia(fontes:LeituraMeteorologica[],agora=Date.no
  }
  const recentes=avaliadas.filter(f=>f.leitura.capturadoEm!==null&&agora-f.leitura.capturadoEm<=f.leitura.validade&&f.peso>.2);
  const locais=recentes.filter(f=>f.leitura.tipo!=='modelo'&&f.leitura.cobertura==='ponto'&&(f.leitura.tipo==='radar'||(f.leitura.distanciaKm!==null&&f.leitura.distanciaKm<=5)));
- const positivas=locais.filter(f=>f.leitura.detectouChuva===true||(f.leitura.variaveis.precipitacao??0)>.02);
- const negativas=locais.filter(f=>f.leitura.detectouChuva===false||f.leitura.variaveis.precipitacao===0);
+ const detectou=(f:typeof avaliadas[number])=>(f.leitura.detectouPrecipitacao??f.leitura.detectouChuva)===true||(f.leitura.variaveis.precipitacao??0)>.02;
+ const positivas=locais.filter(detectou);
+ const negativas=locais.filter(f=>!detectou(f)&&((f.leitura.detectouPrecipitacao??f.leitura.detectouChuva)===false||f.leitura.variaveis.precipitacao===0));
  const radar=positivas.some(f=>f.leitura.tipo==='radar'),pluvio=positivas.some(f=>f.leitura.tipo==='pluviometro');
- const distante=recentes.filter(f=>f.leitura.tipo!=='modelo'&&(f.leitura.cobertura==='proximidades'||f.leitura.cobertura==='ponto'&&!locais.includes(f))&&(f.leitura.detectouChuva===true||(f.leitura.variaveis.precipitacao??0)>.02));
+ const distante=recentes.filter(f=>f.leitura.tipo!=='modelo'&&(f.leitura.cobertura==='proximidades'||f.leitura.cobertura==='ponto'&&!locais.includes(f))&&detectou(f));
  const modelos=recentes.filter(f=>f.leitura.tipo==='modelo');
  const possibilidade=modelos.some(f=>(f.leitura.variaveis.precipitacao??0)>.02||(f.leitura.variaveis.probabilidade??0)>=35);
  const divergencia=positivas.length>0&&negativas.length>0||negativas.length>0&&possibilidade;
@@ -36,7 +37,11 @@ export function combinarMeteorologia(fontes:LeituraMeteorologica[],agora=Date.no
  const situacao=observada?'observada':positivas.length?'provavel':distante.length?'proximidades':negativas.length?'nao-detectada':possibilidade?'possibilidade':avaliadas.length?'estimada':'insuficiente';
  const confiancaChuva=limitar(positivas.reduce((p,f)=>Math.max(p,f.peso),0)+(radar&&pluvio?.18:0))*(divergencia?.45:1);
  const intensidadeLocal=positivas.length?taxa(positivas)*(divergencia?.35:1):0;
+ const liquidas=positivas.filter(f=>!f.leitura.fasePrecipitacao||f.leitura.fasePrecipitacao==='liquida'||f.leitura.fasePrecipitacao==='mista');
+ const relevantes=positivas.length?positivas:distante,temNeve=relevantes.some(f=>(f.leitura.neve??0)>0),temGranizo=relevantes.some(f=>f.leitura.granizo);
+ const temLiquida=relevantes.some(f=>!f.leitura.fasePrecipitacao||f.leitura.fasePrecipitacao==='liquida'||f.leitura.fasePrecipitacao==='mista');
+ const tipoPrecipitacao=temLiquida&&(temNeve||temGranizo)||temNeve&&temGranizo?'mista':temNeve?'neve':temGranizo?'granizo':temLiquida?'chuva':'indefinida';
  const convectiva=positivas.some(f=>f.leitura.tempestade===true)&&confiancaChuva>.5;
- return {...variaveis,situacao,confiancaChuva,intensidadeLocal,intensidadeDistante:taxa(distante),tempestade:convectiva?confiancaChuva:0,
-  granizo:convectiva&&positivas.some(f=>f.leitura.granizo)?intensidadeLocal:0,neve:locais.reduce((n,f)=>Math.max(n,f.leitura.neve??0),0),divergencia,fontes:[...unicas.values()]};
+ return {...variaveis,situacao,confiancaChuva,intensidadeLocal,intensidadeLiquida:taxa(liquidas)*(divergencia?.35:1),intensidadeDistante:taxa(distante.filter(f=>!f.leitura.fasePrecipitacao||f.leitura.fasePrecipitacao==='liquida'||f.leitura.fasePrecipitacao==='mista')),tipoPrecipitacao,tempestade:convectiva?confiancaChuva:0,
+  granizo:positivas.some(f=>f.leitura.granizo)?taxa(positivas.filter(f=>f.leitura.granizo))*(divergencia?.35:1):0,neve:positivas.reduce((n,f)=>Math.max(n,Math.min(1,f.leitura.neve??0)),0)*(divergencia?.35:1),divergencia,fontes:[...unicas.values()]};
 }
