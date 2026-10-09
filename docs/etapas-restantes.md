@@ -13,7 +13,7 @@ A edição atual já entrega conteúdo e mecanismos funcionais. Para declarar um
 | 1 | HTML | Arquivos e legendas reais; componentes acessíveis além do diálogo; integração de formulários. | Aulas próprias com documentos, testes de teclado/validade e exercícios aplicados. |
 | 2 | CSS | Consultas de estilo e scroll-state; contenção intrínseca; outros eixos de escrita; compatibilidade e layouts complexos. | Consultas de tamanho foram integradas e verificadas no domínio. Ampliar medidas computadas, navegação e práticas próprias por mecanismo. |
 | 3 | JavaScript | Descritores e protótipos; internacionalização; workers/cancelamento; módulos por host. | Programas executados, bordas e erros reais, depuração específica e projetos progressivos. |
-| 4 | TypeScript | Módulos por ambiente; bibliotecas reais; tipos aninhados e contratos avançados. | Strict e casos negativos úteis, execução depois do apagamento e teste de integração. |
+| 4 | TypeScript | Ampliar módulos para CommonJS, pacotes/exports e outros hosts; bibliotecas reais; tipos aninhados e contratos avançados. | Node ESM/extensões/alias/import type já têm prática e artefatos conferidos. Ampliar strict, casos negativos e consumidores reais. |
 | 5 | Python | Biblioteca padrão por domínio; descritores; typing; processos com falhas; distribuição. | Programas reais com limites, exceções, recursos e projetos; manter prática offline honesta. |
 | 6 | C# | Frameworks de testes; ASP.NET por fluxo; EF Core com provedor; generators/AOT. | Compilação .NET e cenários reais de dados, concorrência, erros e diagnóstico. |
 | 7 | C++ | Templates/concepts; allocators; corrotinas; atomics; builds com várias unidades. | C++20 e versões explicitadas; comportamento definido, bordas e medições com escopo. |
@@ -43,4 +43,4 @@ A revisão espaçada, sessão diária, domínio por habilidade, projetos progres
 
 ## Frente encerrada nesta retomada: sincronização local
 
-O checkout `work/CodeLab` foi sincronizado com main, mantendo os dois commits anteriores na branch local `local-preservado-20261007`. Os três arquivos não rastreados foram preservados em `outputs/preservado-local-20261007`, com SHA256 no manifest.json. O executor padrão ainda falha na preparação de ACLs; a execução autorizada fora do sandbox permitiu leitura e atualização sem alterar ACLs do sistema. Conferir o estado Git antes das próximas atualizações.
+O checkout `work/CodeLab` foi sincronizado com main, mantendo os dois commits anteriores na branch local `local-preservado-20261007`. Os três arquivos não rastreados foram preservados em `outputs/preservado-local-20261007`, com SHA256 no manifest.json. A falha anterior de preparação de ACLs foi contornada sem alterar ACLs do sistema; nesta retomada, leituras/edições no workspace funcionaram no executor padrão, e a publicação usou a autorização de rede necessária. Conferir o estado Git antes das próximas atualizações.

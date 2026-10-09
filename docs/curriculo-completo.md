@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: requisitos e sobrecargas C++20
+
+`cpp-templates` acrescenta uma seção de subsunção e aprofunda requisitos simples/aninhados e descarte de ramo dependente. Três pausas após os blocos 3/4/5 exercitam alteração do requisito, depuração da instanciação e previsão de sobrecarga. Coleções vazias conservam quantidade zero; reserve deve conservar tamanho/elementos. A prática do aluno é conceitual/offline, sem alegar compilação C++ no navegador.
+
+Sete cenários externos conferem compilação e comportamento em C++20: contrato integral positivo/negativo, reprodução da expressão falsa bem formada, ramo descartado com tipos distintos, erro de if comum, escolha de sobrecarga, preservação das coleções e ambiguidade com requisito copiado. Os dois casos de erro devem ser recusados antes de gerar executável. Não executam referência pendente ou outro comportamento indefinido. Os casos são pequenos e não generalizam limites de alocação ou todos os refinamentos possíveis. Referências do rascunho público: [requisitos simples](https://eel.is/c++draft/expr.prim.req.simple), [aninhados](https://eel.is/c++draft/expr.prim.req.nested), [if constexpr](https://eel.is/c++draft/stmt.if), [ordenação de restrições](https://eel.is/c++draft/temp.constr.order). O draft pode conter versões posteriores; os cenários desta entrega usam somente C++20.
+
 ## Aprofundamento incremental: módulos TypeScript por ambiente
 
 `ts-modulos-configuracao` passa a preparar e corrigir três decisões distintas: extensão do arquivo emitido em Node ESM direto, alias que só existe no verificador e efeito apagado por import type. A expansão conserva a aula existente, acrescenta uma seção sobre alias e aprofunda duas outras. As pausas vêm depois dos blocos 2/3/5 e são conceituais/offline; não executam TypeScript do aluno nem encerram a frente do laboratório. A previsão final revisita o grafo de execução depois de estudar também o papel das declarações.

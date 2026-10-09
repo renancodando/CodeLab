@@ -864,14 +864,25 @@ export default {
           "title": "Concepts e requires",
           "text": [
             "Concepts nomeiam requisitos; requires pode descrever expressões válidas e relações de tipos. Eles melhoram seleção de overloads e diagnósticos, mas muitos requisitos semânticos, como ordem consistente de um comparador, ainda dependem do código cliente.",
-            "Use conceitos da biblioteca padrão quando correspondem ao contrato. Um concept que apenas verifica a existência de operator+ não prova associatividade nem ausência de overflow. Documente requisitos que o compilador não consegue verificar."
+            "Use conceitos da biblioteca padrão quando correspondem ao contrato. Um concept que apenas verifica a existência de operator+ não prova associatividade nem ausência de overflow. Documente requisitos que o compilador não consegue verificar.",
+            "Dentro de requires { ... }, escrever std::integral<T>; cria um requisito simples: pergunta se essa expressão é bem formada. Ela também é bem formada para double, embora o valor do conceito seja false. Para exigir esse valor verdadeiro dentro do bloco, escreva requires std::integral<T>;. Outra forma, fora do bloco, é concept Inteiro = std::integral<T>. Não confunda testar uma expressão com exigir sua condição.",
+            "Compile provas positivas e negativas: Inteiro<int> e Inteiro<unsigned> devem passar; Inteiro<double> e Inteiro<std::string> devem falhar. std::integral inclui bool; excluir bool exige outro requisito explícito, não faz parte do contrato desta pausa. Referências do rascunho público: https://eel.is/c++draft/expr.prim.req.simple e https://eel.is/c++draft/expr.prim.req.nested. Os programas desta aula são conferidos em C++20."
           ]
         },
         {
           "title": "Decisões na instanciação",
           "text": [
             "if constexpr descarta ramos segundo uma condição constante no contexto apropriado. Isso permite usar operações específicas de um tipo sem instanciar o ramo incompatível. Não confunda com um if comum que decide somente durante a execução.",
-            "type_traits descreve propriedades e transformações de tipos. Prefira mecanismos explícitos e pequenos. Um grande conjunto de casos especiais pode indicar que interfaces separadas ficariam mais fáceis de manter do que um template universal."
+            "type_traits descreve propriedades e transformações de tipos. Prefira mecanismos explícitos e pequenos. Um grande conjunto de casos especiais pode indicar que interfaces separadas ficariam mais fáceis de manter do que um template universal.",
+            "quantidade recebe um objeto por const T&. Neste contrato, int representa um item e string, vector e array oferecem size(). O teste requires { valor.size(); } inspeciona a expressão sem executá-la. Um if comum ainda instancia o uso de valor.size() ao chamar quantidade(7), causando erro; if constexpr descarta esse ramo na instanciação de int. Para as coleções admitidas, o ramo escolhido chama size normalmente e conserva zero quando a coleção está vazia.",
+            "Essa técnica não torna válido qualquer código em um ramo descartado: o trecho continua precisando ser analisável e regras não dependentes do parâmetro continuam relevantes. Também não transforma um if fora de template em um mecanismo geral para esconder erros de tipo. O contrato limita os tipos admitidos; não afirma que qualquer método chamado size possui o mesmo significado ou custo. Consulte https://eel.is/c++draft/stmt.if."
+          ]
+        },
+        {
+          "title": "Sobrecargas com requisitos compartilhados",
+          "text": [
+            "ComTamanho descreve size() convertível para size_t. ComReserva reutiliza ComTamanho<T> e acrescenta a expressão reserva: valor.reserve(n). A família preparar possui uma sobrecarga ComTamanho e outra ComReserva. Para vector, ambas são viáveis e a segunda é mais restrita pelos requisitos compartilhados; array só oferece a primeira. A função especializada reserva espaço para quatro itens adicionais sem mudar size ou os elementos; a primeira conserva a coleção fixa.",
+            "Não escolha a sobrecarga contando frases ou supondo que o compilador demonstra qualquer equivalência lógica. A ordenação usa restrições normalizadas e identidade dos requisitos atômicos. Copiar o corpo de ComTamanho para um segundo conceito pode criar requisitos diferentes e uma chamada ambígua, mesmo que o texto pareça equivalente. Reutilize o conceito para representar o refinamento e compile consumidores de cada família. O exemplo usa coleções pequenas e não pretende resolver limites de capacidade ou falha de alocação para entradas arbitrárias. Referência do rascunho público: https://eel.is/c++draft/temp.constr.order."
           ]
         },
         {
