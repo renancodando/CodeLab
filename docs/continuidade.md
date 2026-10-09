@@ -4,6 +4,12 @@
 
 A branch `qualidade/cota-real` acrescenta um teste de navegador que enche o armazenamento de um contexto descartável até QuotaExceededError real. O cenário preserva o checkpoint anterior, exporta ZIP e jornada com o trabalho em memória, libera somente suas chaves de preenchimento e confirma nova gravação e reload. Passou no build local e em `https://code-lab-omega.vercel.app` após a implantação climática, sem pageerror. O script público está em outputs/verificar-quota-publicada.mjs do workspace. Exigir CI do head antes de integrar; esta evidência não encerra todos os fluxos de produção.
 
+## Revisão de métricas e evidência pública
+
+O run 37874897089 aprovou a primeira correção do orçamento de CI, mas a revisão das PRs sucessoras identificou totais manuais antigos em outros parágrafos do README. Essas duplicações foram removidas: o catálogo atual fica somente no bloco gerado, e um teste rejeita contagens curriculares repetidas fora dele. Preservar evidências históricas de testes. Conferir o novo head da PR #12 e propagar a correção às PRs #13/#14/#15 antes de integrar; o run anterior não valida essa alteração.
+
+Treze fluxos passaram no domínio público da integração climática, incluindo sessão diária, depuração executada, revisões, projetos, offline, backup grande, falhas de gravação e quota nativa. O escopo está em prontidao-producao.md. A lista aberta das PRs e seus heads atuais deve ser consultada no GitHub, sem retomar um head antigo deste histórico por engano.
+
 ## Clima integrado e próxima entrega
 
 A PR #11 foi integrada em `7893a3200bc8eb2a7aa85e304eb7e64fcf168f54`. O head `da6cf8138971fff27c1ff5dfce348865a1b8ac84` passou no [run 37870369915](https://github.com/renancodando/CodeLab/actions/runs/37870369915): 356 testes unitários, 94 de navegador, exemplos externos, SQL/Git/ZIP, builds, verificação .NET, módulos ESM Node e auditoria. A árvore integrada é idêntica à testada: `27b10296bc6167a5011796add88e2d28df71f8c0`. Três threads de revisão foram resolvidas.
@@ -12,7 +18,7 @@ O domínio público `https://code-lab-omega.vercel.app` foi conferido depois des
 
 A PR #12 centraliza métricas geradas. O run `37870417188` aprovou unidade, exemplos, builds e auditoria, mas o job completo atingiu 30 minutos durante o navegador, após 91 testes aprovados. Foi cancelado, não aprovado. O orçamento total agora é 40 minutos; timeouts individuais e testes foram preservados. Conferir o novo head e seu CI completo antes de integrar.
 
-A expansão CSS foi publicada na PR #13, head `d29d46d1cfa4de4630ee159f918043a9b839ac08`, sobre a PR #12: aula própria, dois problemas e três pausas. Seus cinco testes Edge, 363 testes unitários e build local passaram. O run `37875006506` deve concluir antes de integrar, depois da PR #12. A aula ainda não está em main. Retomar os aprofundamentos de HTML/SQL e as demais frentes, sem considerar todo o currículo concluído.
+A expansão CSS foi publicada na PR #13 sobre a PR #12: aula própria, dois problemas e três pausas. Seus cinco testes Edge, 363 testes unitários e build local passaram. Após a revisão do README, o head passou a `8d1b1880774e32f347f415639aa1b75cf9e9919a`; conferir seu run mais recente, sem reutilizar o gate do head anterior. A aula ainda não está em main. Retomar os aprofundamentos de HTML/SQL e as demais frentes, sem considerar todo o currículo concluído.
 
 A branch `pratica/csharp-cancelamento` acrescenta três pausas ao módulo assíncrono existente, com teoria anterior à tentativa, habilidades específicas e preparação na sessão diária. Cinco programas .NET 10 passaram localmente: previsão, bug de liberação sem aquisição, correção em quatro caminhos e dois tokens originais independentes. O verificador de exemplos do CI recebe os mesmos casos. Passaram também 369 testes unitários, strict/build e o fluxo Edge de retomada offline, assistência e persistência sem executor externo. As métricas geradas distinguem a branch sucessora da versão publicada; nenhuma nova aula própria foi inventada para contar essas pausas. Exigir o CI completo da PR sucessora e integrar dependências primeiro.
 
