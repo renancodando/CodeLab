@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## CSV com contratos e destino preservado
+
+A aula `py-biblioteca-dados` recebe pausas após os blocos 3/4/5: previsão de campos/registros/linhas físicas, investigação de cabeçalho duplicado e ordenação da confirmação de um lote. As habilidades são distintas e exigem preparação conceitual na sessão diária. Falhas dão uma pista específica; a solução permanece sob solicitação e seu uso registra assistência. As respostas são conceituais e locais, não prova de compilação/execução Python.
+
+Os programas de referência usam o parser real da biblioteca padrão e verificam cabeçalhos ausentes, repetidos, invertidos, extras; registros vazios e incompletos; quantidade zero, limite, sinais, espaços e algarismos não ASCII; falha de leitura e CSV malformado após um registro válido. A lista de destino deve conservar seu conteúdo diante dessas falhas. A representação não promete transação de banco, retorno do iterador ao início ou recuperação durante falha de memória na gravação. As métricas atuais continuam geradas pelo catálogo.
+
 ## C#: cancelamento e posse de recursos
 
 O módulo `cs-assincrono-recursos` passa a oferecer três pausas específicas depois dos blocos sobre cancelamento, concorrência e descarte. A previsão distingue efeito concluído de pedido futuro; a depuração identifica liberação de vaga sem aquisição; a alteração propaga o token vinculado. A teoria prepara essas decisões antes da tentativa, e a primeira sessão C# continua nos fundamentos. Esta expansão está em validação antes de integrar.

@@ -858,7 +858,25 @@ export default {
           "title": "Dados estruturados e validação",
           "text": [
             "json.loads interpreta estrutura, mas não garante o contrato da aplicação. Confira tipo do objeto, chaves obrigatórias, tipos dos campos e limites. Não use eval para ler dados: texto recebido não deve virar código.",
-            "csv lida com delimitadores, aspas e quebras dentro de campos. Abra arquivos CSV com newline='' para permitir o tratamento correto pelo módulo. Converta números depois da leitura e preserve o número da linha para explicar falhas de importação."
+            "CSV não se resolve separando o texto por vírgula e depois por quebra de linha: um nome entre aspas pode conter ambos. Entregue o fluxo ao módulo csv, com o delimitador combinado com quem produz os dados. O leitor devolve texto; interpretar uma quantidade continua sendo uma decisão da aplicação.",
+            "Abra o arquivo com encoding explícito e newline='' para deixar o módulo tratar as quebras. StringIO permite experimentar o mesmo fluxo em memória. Um registro lógico pode ocupar várias linhas físicas; line_num indica quantas linhas o leitor consumiu, e não quantos registros produziu. Registre qual dessas posições seu diagnóstico usa. A próxima pausa diferencia essas três contagens."
+          ]
+        },
+        {
+          "title": "O cabeçalho também é dado externo",
+          "text": [
+            "Imagine uma entrega que exige exatamente produto,quantidade nessa ordem. Antes de ler os itens, compare o cabeçalho completo com essa sequência. Um arquivo sem cabeçalho, com nome repetido, coluna extra ou ordem diferente deve ser rejeitado por esse contrato. Outra aplicação pode permitir reordenação, mas precisa fazer essa escolha explicitamente; não basta aceitar qualquer conjunto de nomes.",
+            "DictReader transforma colunas em chaves. Se o arquivo repetir produto, o segundo valor ocupará a mesma chave e o primeiro não ficará disponível no registro convertido. Comparar apenas set(fieldnames) deixa essa repetição passar. Inspecione fieldnames antes de consumir registros. Essa verificação protege a informação antes de uma transformação que pode perdê-la.",
+            "Cabeçalho correto não garante linhas corretas. DictReader pode preencher ausências com None e guardar campos excedentes em uma chave especial; não leia isso como preenchimento válido do domínio. Defina também a quantidade de campos por registro. Para uma fronteira pequena e explícita, csv.reader mais uma validação própria costuma facilitar a investigação. Consulte as referências oficiais de csv e io ligadas nesta aula."
+          ]
+        },
+        {
+          "title": "Valide um lote antes de alterar o destino",
+          "text": [
+            "Considere uma lista destino com dados já aceitos. Se cada registro novo for acrescentado imediatamente, um erro no segundo registro deixa o primeiro gravado. Dizer que a importação falhou passa a esconder uma mudança parcial. Prepare uma lista temporária, valide cada registro e só então acrescente o lote ao destino. Uma falha de leitura durante a iteração também deve acontecer antes dessa mudança.",
+            "Nesta prática, cada registro contém dois textos: produto não vazio após strip e quantidade de um a nove algarismos ASCII, com zero permitido. Sinal, fração, espaço na quantidade e algarismos de outros alfabetos são rejeitados deliberadamente. Essas são escolhas do arquivo de estudo, não uma regra universal para quantidades. O limite de comprimento restringe a conversão. O índice passado ao validador identifica o registro lógico; line_num seria a posição física do parser.",
+            "O lote ocupa memória proporcional à entrada. Para um arquivo grande, estabeleça um limite ou use armazenamento temporário e uma estratégia de confirmação adequada. Esta função preserva a lista diante de erro de leitura/validação; não promete recuperação de falta de memória durante extend, falha de processo ou acesso concorrente. Não equivale a uma transação de banco. O iterador de entrada já foi consumido e não volta ao início automaticamente.",
+            "Depois de ordenar, teste destino previamente preenchido, entrada vazia, quantidade zero, campos a mais/menos e erro após um registro válido. Use também um gerador que levanta OSError no meio da leitura. Confira tanto a exceção quanto o destino. Assim o teste detecta uma implementação que devolve erro correto, mas deixa dados parciais. Referências: https://docs.python.org/3/library/csv.html e https://docs.python.org/3/library/io.html#io.StringIO."
           ]
         },
         {

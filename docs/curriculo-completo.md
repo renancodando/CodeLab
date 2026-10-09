@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: importação CSV em Python
+
+`py-biblioteca-dados` ganha duas seções de teoria e três pausas sobre leitura de registros multilinha, perda de informação em cabeçalhos repetidos e validação de lote antes de modificar uma lista existente. Os gabaritos são executados pelo verificador Python compartilhado; a resposta do aluno continua conceitual/offline. Isso aprofunda uma aula agrupada e não acrescenta uma aula própria de toda a biblioteca padrão. Projetos de importação continuam exigindo construção e revisão por rubrica.
+
+Referências oficiais consultadas: [csv](https://docs.python.org/3/library/csv.html), [StringIO](https://docs.python.org/3/library/io.html#io.StringIO). A política de dois campos, ordem do cabeçalho e quantidade limitada é um contrato do exercício; não é uma restrição geral do formato CSV.
+
 ## Componentes CSS orientados pelo contexto
 
 A aula própria `css-containers-contexto` trabalha consultas de tamanho, ancestrais elegíveis, nomes, unidades cqi, caixa de conteúdo e limites inclusivos. Dois problemas independentes exigem contextos aninhados e uma base navegável antes do aprimoramento. Três pausas avaliam previsão, investigação do ancestral e alteração de condição, com preparação conceitual e evidências por habilidade. Essas pausas não executam CSS do estudante.

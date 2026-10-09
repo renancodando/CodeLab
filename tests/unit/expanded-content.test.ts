@@ -28,7 +28,8 @@ describe('expansão por linguagem',()=>{
    for(const aula of aulas){
     expect(aula).toBeDefined();expect(aula!.track).toBe(course.id);
     const entry=definitions.find(c=>c.id===course.id)!.lessons.find(l=>l.id===aula!.id)!;
-    const chapters=13+2*(entry.practices?.length??0);expect(aula!.capitulos).toHaveLength(chapters);
+    const chapters=7+entry.sections.length+2*(entry.practices?.length??0);expect(aula!.capitulos).toHaveLength(chapters);
+    expect(aula!.capitulos.slice(1,1+entry.sections.length).map(capitulo=>capitulo.titulo)).toEqual(entry.sections.map(secao=>secao.title));
     expect(new Set(aula!.capitulos.map(c=>c.id)).size).toBe(chapters);
     expect(aula!.topics!.length).toBeGreaterThanOrEqual(8);temas+=aula!.topics!.length;
     const teoria=aula!.capitulos.filter(c=>c.id==='contexto'||c.id.startsWith('teoria-'));

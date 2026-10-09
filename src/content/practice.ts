@@ -11,6 +11,39 @@ export type PracticeActivity = {
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
+ {
+  id:'py-csv-prever-registro',language:'python',lessonIds:['py-biblioteca-dados'],skillIds:['python.csv.registros'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Uma quebra de linha encerra o registro?',
+  prompt:'Preveja as três linhas: quantidade de campos, quantidade recebida como texto e linhas físicas consumidas. As aspas pertencem ao formato CSV. Esta pausa compara sua previsão, sem executar Python no navegador.',
+  code:'import csv\nfrom io import StringIO\n\ntexto = \'produto,quantidade\\n"caderno,\\nazul",2\\n\'\nleitor = csv.reader(StringIO(texto, newline=""), strict=True)\nnext(leitor)\nregistro = next(leitor)\nprint(len(registro))\nprint(registro[1])\nprint(leitor.line_num)',
+  hint:'Separe campo, registro lógico e linha física. O leitor conserva a quebra que está dentro das aspas.',minutes:3
+ },
+ {
+  id:'py-csv-cabecalho',language:'python',lessonIds:['py-biblioteca-dados'],skillIds:['python.csv.cabecalho'],afterBlock:4,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O primeiro produto desapareceu na importação',
+  prompt:'O contrato exige exatamente produto,quantidade nessa ordem. O arquivo tem um nome repetido e o primeiro valor desaparece do dicionário. Qual verificação deve acontecer antes de consumir os registros? Diagnóstico conceitual; não há execução local de Python.',
+  code:'import csv\nfrom io import StringIO\n\ntexto = "produto,produto,quantidade\\ncaneta,caderno,2\\n"\nleitor = csv.DictReader(StringIO(texto, newline=""))\nregistro = next(leitor)\nprint(registro["produto"])',
+  options:[
+   {id:'conjunto',text:'Comparar somente set(leitor.fieldnames) com o conjunto dos nomes esperados.'},
+   {id:'sequencia',text:'Comparar a sequência completa de fieldnames com os dois nomes esperados na ordem exigida.'},
+   {id:'preencher',text:'Preencher produtos vazios depois de converter cada registro em dicionário.'}
+  ],hint:'Um conjunto apaga repetições. Quando duas colunas viram a mesma chave, conferir somente o valor final já é tarde.',minutes:3
+ },
+ {
+  id:'py-csv-lote',language:'python',lessonIds:['py-biblioteca-dados'],skillIds:['python.csv.validacao-lote'],afterBlock:5,kind:'order',capability:'aplicacao',requiresConcept:true,
+  title:'Uma linha inválida não pode deixar meia importação',
+  prompt:'Ordene a função. registros vem do leitor CSV depois de validar o cabeçalho; destino é uma lista existente. Se a leitura ou validação falhar, destino deve conservar o conteúdo anterior. validar_registro aceita dois campos, produto não vazio e quantidade de 1 a 9 algarismos ASCII (zero permitido). O número identifica o registro lógico, incluindo o cabeçalho como primeiro. Ordenação conceitual, sem executar Python; não simula transação de banco.',
+  code:'def validar_registro(registro, numero):\n    if len(registro) != 2:\n        raise ValueError(f"registro {numero}: esperados dois campos")\n    produto, quantidade = registro\n    if not produto.strip():\n        raise ValueError(f"registro {numero}: produto vazio")\n    if not (1 <= len(quantidade) <= 9 and quantidade.isascii() and quantidade.isdecimal()):\n        raise ValueError(f"registro {numero}: quantidade inválida")\n    return produto.strip(), int(quantidade)',
+  lines:[
+   {id:'funcao',code:'def importar_registros(registros, destino):'},
+   {id:'lote',code:'    lote = []'},
+   {id:'percorrer',code:'    for numero, registro in enumerate(registros, start=2):'},
+   {id:'validar',code:'        produto, quantidade = validar_registro(registro, numero)'},
+   {id:'gravar',code:'    destino.extend(lote)'},
+   {id:'acumular',code:'        lote.append((produto, quantidade))'},
+   {id:'retornar',code:'    return len(lote)'}
+  ],hint:'Separe a lista temporária da lista que já existe. A mudança no destino depende de todo o lote ter passado pela leitura e validação.',minutes:4
+ },
   {
     "id": "cs-prever-cancelamento",
     "language": "csharp",
