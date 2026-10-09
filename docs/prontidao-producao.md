@@ -1,5 +1,13 @@
 # Prontidão de produção
 
+## Integrações verificadas em 9 de outubro
+
+O head climático `b15fc8adc5bd285476a30495b1cc23b486fee125` aprovou o [CI completo 37930523384](https://github.com/renancodando/CodeLab/actions/runs/37930523384): 382 testes unitários, 147 exemplos externos e 107 testes de navegador. O merge `f4f28227869f90a1c7853e66dad628ea976c5390` preserva a árvore testada `d0d39886dfc246b9c443f1edf7abe0f82dd0134d`. Revisão resolvida; main local sincronizada.
+
+O deployment `6zHHpnBuzYc8ec9hcPnWS2Z95sJB` está READY/production com alias `code-lab-omega.vercel.app`. A verificação pública mediu cada escrita nativa do canvas durante seis redimensionamentos/orientações: pico de 1.198.483 pixels para orçamento de 1.200.000 no nível baixo, 42 massas persistentes e movimento reduzido, sem erros WebGL. O fluxo de observação real/cache/entrada inválida passou e conservou condição estimada para a estação regional. Não comprova FPS físico, radar/pluviômetros ativos ou conhecimento da chuva no ponto.
+
+As PRs anteriores entraram por sucessores aprovados: #13 inclui #12 e #16 inclui #15. As árvores de cada merge foram conferidas. Depois da publicação dos rascunhos, passaram nove fluxos do domínio e quatro testes isolados de exemplos CSS em Edge; o escopo inclui retomada offline CSS/C#, os 25 passos, HTML/JS vazios, rascunhos de todas as linguagens existentes e projeto de anotações com exportação/importação. Os testes novos de CSV ainda exigem seu próprio head/CI antes de integrar. O pedido curricular integral e os laboratórios TypeScript/SQL permanecem abertos.
+
 ## Checkpoints reais do fluxo prático
 
 O teste agregado dos 25 passos excedeu seu limite em quatro heads, em momentos diferentes próximos da conclusão/reinício. O mesmo arquivo passou no CI dos heads de #14 e #16. A nova organização mantém todas as ações e expectativas em três etapas seriais: produz o checkpoint dos doze primeiros passos, retoma esse dado em outro contexto e conclui os treze restantes, depois verifica invalidação, assistência, revisão e reinício. Não preenche respostas corretas por estado fabricado e não desativa o mundo. Uma falha interrompe as etapas dependentes.
