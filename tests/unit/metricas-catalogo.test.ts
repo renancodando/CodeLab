@@ -1,4 +1,5 @@
 import {describe, expect, it} from 'vitest';
+import {readFile} from 'node:fs/promises';
 import metricas from '../../src/content/metricas.json';
 import {courses, lessons} from '../../src/content/curriculum';
 import {practiceActivities} from '../../src/content/practice';
@@ -6,6 +7,12 @@ import {learningPaths, capstoneProjects} from '../../src/content/project-paths';
 import matriz from '../../docs/cobertura-curriculo.json';
 
 describe('métricas publicadas', () => {
+ it('mantém totais do catálogo somente no resumo gerado do README', async () => {
+  const readme = await readFile('README.md','utf8');
+  const foraDoResumo = readme.replace(/<!-- metricas:inicio -->[\s\S]*?<!-- metricas:fim -->/g,'');
+  const contagens = foraDoResumo.match(/\b\d+\s+(?:aulas|trilhas|atividades corrigíveis|problemas independentes|páginas educacionais|entradas com prática|módulos panorâmicos)\b/g);
+  expect(contagens).toBeNull();
+ });
  it('conserva os totais reais usados pela interface sem carregar aulas completas', () => {
   expect(metricas.aulas).toBe(lessons.length);
   expect(metricas.trilhas).toBe(courses.length);
