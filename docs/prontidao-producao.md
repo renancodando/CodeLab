@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Gate adicional: revisão da preparação diária
+
+A PR #23 recebeu uma correção após a revisão detectar liberação de exercícios pela leitura apenas da introdução. A preparação agora tem identidade própria e cobre os capítulos necessários; planos antigos exigem a leitura ausente sem perder itens/respostas. O novo head precisa repetir CI completo e fluxo público. Leituras antigas não passam a contar como preparação nova nem geram domínio. As evidências dos heads anteriores não validam essa alteração de fluxo.
+
 ## Checkpoint atual: main aprovada e closures verificadas publicamente
 
 As PRs #21/#22 foram integradas com árvores idênticas aos respectivos heads aprovados. A main `093584f82b7000c859b4b0898f1c2568c98b0ede` passou no CI 37965665399; o head #22 passou no run 37961175745 com 427 testes unitários, 152 exemplos externos, oito projetos TypeScript, sete cenários C++20 e 113 testes de navegador. O fluxo C++ passou em produção. A implantação posterior de closures `5CnXqjxpKeVFYHugrZKBeo3wpQNz` está READY/production. Sua verificação pública foi inicialmente impedida pela quota da aprovação automática; após a disponibilidade voltar, passou no domínio público com correções executadas, assistência, respostas/evidências offline e 220/4000 px. Essa pendência está resolvida.

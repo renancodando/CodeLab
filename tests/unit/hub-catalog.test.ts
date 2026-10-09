@@ -2,7 +2,7 @@ import {it,expect} from 'vitest';
 import {lessons} from '../../src/content/curriculum';
 import {practiceActivities} from '../../src/content/practice';
 import {capstoneProjects} from '../../src/content/project-paths';
-import {adaptiveCatalog} from '../../src/learning/hub-catalog';
+import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
 import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen} from '../../src/learning/adaptive';
 it('todas as ligações de práticas e projetos apontam para aulas existentes',()=>{
  const ids=new Set(lessons.map(l=>l.id));const missing:string[]=[];
@@ -38,7 +38,7 @@ it('inserir uma aula conserva conceitos lidos e o plano iniciado antes da expans
 it.each(['ts-variancia-contratos','ts-modulos-configuracao','cpp-templates','js-closures-estado','sql-null-logica'])('%s espera seu conceito e leitura não fabrica domínio na família isolada',aula=>{
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'};
  const advanced=practiceActivities.filter(atividade=>atividade.lessonIds.includes(aula)&&atividade.requiresConcept).map(atividade=>atividade.id);
- const concept=adaptiveCatalog.activities.find(atividade=>atividade.kind==='concept'&&atividade.lessonId===aula)!.id;
+ const concept=idPreparacao(aula);
  const catalogoCompleto={...adaptiveCatalog,preferredLanguage:practiceActivities.find(atividade=>atividade.lessonIds.includes(aula))!.language};
  const catalog={...catalogoCompleto,activities:adaptiveCatalog.activities.filter(atividade=>atividade.kind==='concept'||advanced.includes(atividade.id))};
  const first=buildDailySession(state,catalogoCompleto,clock);
@@ -59,9 +59,28 @@ it('um pré-requisito de conceito inexistente é rejeitado no catálogo diário'
  expect(buildDailySession(state,catalog,clock).items.some(i=>i.activityId==='ts-zero-ausencia')).toBe(false);
 });
 
+it('preparação nova conserva a leitura antiga sem tratá-la como cobertura dos capítulos posteriores',()=>{
+ const preparacao=adaptiveCatalog.activities.find(atividade=>atividade.id===idPreparacao('sql-null-logica'))!;
+ expect(preparacao.preparacaoAteBloco).toBe(5);
+ const antigo=preparacao.requiredConcepts![0];
+ expect(antigo).not.toBe(preparacao.id);
+ expect(adaptiveCatalog.activities.find(atividade=>atividade.id===antigo)?.kind).toBe('concept');
+ const state=freshAdaptive(),clock={now:Date.parse('2026-10-09T12:00:00Z'),timeZone:'UTC'};
+ state.seenConcepts=adaptiveCatalog.activities.filter(atividade=>atividade.kind==='concept'&&!atividade.preparacaoAteBloco).map(atividade=>atividade.id);
+ const plano=buildDailySession(state,{...adaptiveCatalog,preferredLanguage:'sql'},clock);
+ expect(plano.items[0].activityId).toBe(preparacao.id);
+ expect(state.seenConcepts).toContain(antigo);expect(state.seenConcepts).not.toContain(preparacao.id);
+ expect(state.skills).toEqual({});
+ for(const atividade of practiceActivities.filter(atividade=>atividade.requiresConcept)){
+  const entrada=adaptiveCatalog.activities.find(item=>item.id===atividade.id)!;
+  const leitura=adaptiveCatalog.activities.find(item=>item.id===entrada.requiredConcepts![0])!;
+  expect(leitura.preparacaoAteBloco).toBeGreaterThanOrEqual(atividade.afterBlock);
+ }
+});
+
 it('o desafio novo de recursos Python não antecipa o conceito numa primeira sessão',()=>{
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'python'};
- const advanced=['py-prever-esgotamento','py-ordenar-lote','py-fechar-consumo'],concept='conceito-2-py-iteracao-recursos';
+ const advanced=['py-prever-esgotamento','py-ordenar-lote','py-fechar-consumo'],concept=idPreparacao('py-iteracao-recursos');
  const first=buildDailySession(state,catalog,clock);
  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
@@ -73,7 +92,7 @@ it('o desafio novo de recursos Python não antecipa o conceito numa primeira ses
 
 it('invalidação C++ espera o conceito sem antecipar conteúdo na primeira sessão',()=>{
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'cpp'};
- const advanced=['cpp-prever-intervalo','cpp-ordenar-erase','cpp-reobter-reserva'],concept='conceito-2-cpp-iteradores-invalidacao';
+ const advanced=['cpp-prever-intervalo','cpp-ordenar-erase','cpp-reobter-reserva'],concept=idPreparacao('cpp-iteradores-invalidacao');
  const first=buildDailySession(state,catalog,clock);
  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
@@ -85,7 +104,7 @@ it('invalidação C++ espera o conceito sem antecipar conteúdo na primeira sess
 
 it('a primeira sessão JavaScript conserva fundamentos antes das novas práticas de objetos',()=>{
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'javascript'};
- const advanced=['js-prever-propriedade','js-descritor-sem-getter','js-debug-numero-proprio'],concept='conceito-2-js-propriedades-prototipos';
+ const advanced=['js-prever-propriedade','js-descritor-sem-getter','js-debug-numero-proprio'],concept=idPreparacao('js-propriedades-prototipos');
  expect(buildDailySession(state,catalog,clock).items.some(i=>advanced.includes(i.activityId))).toBe(false);
  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
  const plan=buildDailySession(state,catalog,clock);
