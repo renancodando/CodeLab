@@ -906,6 +906,7 @@ export default {
     },
     {
       "id": "ts-modulos-configuracao",
+      "source": "https://www.typescriptlang.org/docs/handbook/modules/reference.html",
       "title": "TypeScript: módulos, configuração e declarações",
       "level": "Especialização",
       "summary": "Configure TypeScript de acordo com o ambiente onde o JavaScript será executado. Aprenda target, lib, module, moduleResolution, strict, arquivos de declaração e organização de bibliotecas, distinguindo suporte de sintaxe, disponibilidade de APIs e resolução real de arquivos.",
@@ -932,14 +933,25 @@ export default {
           "title": "Módulos e resolução",
           "text": [
             "module define o formato ou a interpretação dos módulos; moduleResolution determina como o compilador procura imports. NodeNext acompanha regras de Node, enquanto bundler modela ambientes com bundlers. A configuração deve refletir como o programa será resolvido em produção.",
-            "ESM e CommonJS têm diferenças de exportação, extensão e interoperabilidade. Um alias em paths ajuda o compilador a localizar código, mas não reescreve automaticamente todos os imports emitidos para o runtime. Configure a outra ponta do alias."
+            "ESM e CommonJS têm diferenças de exportação, extensão e interoperabilidade. Um alias em paths ajuda o compilador a localizar código, mas não reescreve automaticamente todos os imports emitidos para o runtime. Configure a outra ponta do alias.",
+            "Neste laboratório de arquivos, usamos TypeScript 5.9, Node.js 24, package.json com type:module, module e moduleResolution em NodeNext, strict, verbatimModuleSyntax e noEmitOnError. calculo.ts exporta dobrar; entrada.ts escreve import {dobrar} from './calculo.js'. O compilador encontra o .ts correspondente, mas conserva .js no artefato que Node executa. A extensão descreve o destino emitido. Não há loader de TypeScript, bundler ou reescrita de extensões neste exercício.",
+            "Investigue em duas etapas: tsc verifica e emite; node dist/entrada.js resolve os arquivos emitidos. Sem extensão, NodeNext aponta TS2835 antes de emitir. moduleResolution:bundler pode aceitar esse mesmo import, mas o JavaScript sem extensão falha no Node ESM direto. A ausência de diagnóstico no ambiente escolhido não demonstra compatibilidade com outro host. Confira a exigência de extensão na documentação ESM do Node: https://nodejs.org/api/esm.html#mandatory-file-extensions."
+          ]
+        },
+        {
+          "title": "O alias precisa existir depois do build",
+          "text": [
+            "O projeto de estudo define paths com @dominio/* apontando para ./*.ts. O verificador encontra calculo.ts para import {dobrar} from '@dominio/calculo', porém dist/entrada.js conserva '@dominio/calculo'. Executá-lo diretamente em Node não cria esse pacote. Abra o artefato antes de concluir que a pasta sumiu: o problema pode ser a regra de resolução que só existia no compilador.",
+            "Para este projeto sem ferramenta adicional, troque por './calculo.js', compile e execute novamente. Um bundler ou imports de package.json pode oferecer outros contratos, mas exige configuração própria testada no host e não faz parte desta correção. Não use paths apenas para esconder um erro. Consulte a opção oficial: https://www.typescriptlang.org/tsconfig/paths.html."
           ]
         },
         {
           "title": "Imports de tipo e efeitos",
           "text": [
             "import type declara uma dependência usada apenas pelo verificador e permite apagá-la. Imports de valores podem executar efeitos do módulo importado. verbatimModuleSyntax torna mais explícita essa distinção e exige coerência com o formato de módulos.",
-            "Separe arquivos que só descrevem contratos de inicialização com efeitos. Dependências circulares podem produzir valores ainda não inicializados durante a execução; o grafo de tipos não deve esconder um ciclo no grafo real de valores."
+            "Separe arquivos que só descrevem contratos de inicialização com efeitos. Dependências circulares podem produzir valores ainda não inicializados durante a execução; o grafo de tipos não deve esconder um ciclo no grafo real de valores.",
+            "contratos.ts pode conter uma interface e também console.log('contratos'). Se entrada.ts usa apenas import type {Medicao} from './contratos.js', esse import inteiro desaparece: executar entrada.js não avalia contratos.js. Emitir o arquivo da dependência não significa carregá-lo. Adicionar import './contratos.js' mantém uma dependência de execução explícita e faz o efeito acontecer antes do corpo da entrada.",
+            "Com verbatimModuleSyntax, importar uma interface como valor produz um diagnóstico; não remova a opção para ignorá-lo. Decida se precisa apenas do contrato ou também de inicialização. Evite efeitos escondidos em arquivos de tipos. Esta pausa prevê a execução após a compilação; não compila a resposta do aluno no navegador. Regras oficiais: https://www.typescriptlang.org/tsconfig/verbatimModuleSyntax.html."
           ]
         },
         {

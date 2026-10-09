@@ -35,9 +35,11 @@ it('inserir uma aula conserva conceitos lidos e o plano iniciado antes da expans
  expect(adaptiveCatalog.activities.some(a=>a.id==='conceito-2-py-iteracao-recursos')).toBe(true);
 });
 
-it('variância avançada espera seu conceito e leitura não fabrica domínio',()=>{
- const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'},catalog={...adaptiveCatalog,preferredLanguage:'typescript'};
- const advanced=['ts-fonte-covariancia','ts-callback-entrada','ts-propriedade-funcao'],concept='conceito-2-ts-variancia-contratos';
+it.each(['ts-variancia-contratos','ts-modulos-configuracao'])('%s espera seu conceito e leitura não fabrica domínio',aula=>{
+ const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'};
+ const advanced=practiceActivities.filter(atividade=>atividade.lessonIds.includes(aula)).map(atividade=>atividade.id);
+ const concept=adaptiveCatalog.activities.find(atividade=>atividade.kind==='concept'&&atividade.lessonId===aula)!.id;
+ const catalog={...adaptiveCatalog,preferredLanguage:'typescript',activities:adaptiveCatalog.activities.filter(atividade=>!atividade.requiredConcepts?.length||atividade.lessonId===aula)};
  const first=buildDailySession(state,catalog,clock);
  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
