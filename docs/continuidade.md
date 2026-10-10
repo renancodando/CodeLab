@@ -302,3 +302,7 @@ Passaram 470 testes unitários em 31 arquivos, strict/build, dez cenários .NET 
 
 Os dois fluxos Edge passaram depois do ajuste do rótulo (1,4 s referência nativa; 22,7 s produto; 26,0 s total). A referência confere bordas 150/120/30 px, falha com mínimo automático, identificador inteiro sem recorte, texto vazio e posição do cabeçalho antes/depois de scrollTop 80 em 200/220/375/4000 px. O produto confere respostas, assistência, evidências offline e layout 220/4000 px. Essas evidências locais não substituem o CI completo nem a implantação deste head.
 
+
+## Artefatos completos nos testes de navegador
+
+O run 38065369704 do head 99604b5 aprovou 498 testes de unidade, exemplos, builds e auditoria. Os grupos de navegador passaram 61/61 e 61/62: a API de catálogo falhou porque o novo job recuperava dist, mas não server/Content/curriculum.json, gerado pela pré-renderização e ignorado no Git. O artefato agora transporta os dois destinos com a raiz preservada; a suíte continua exigindo o catálogo completo. Não considerar aquele run verde. As duas execuções antigas da PR #25 esgotaram o limite de 40 minutos. A PR #28 contém integralmente os commits das PRs #25–#27; integrar esse conjunto somente no novo head após os quatro jobs completos, revisão e comparação da árvore, preservando os commits separados.
