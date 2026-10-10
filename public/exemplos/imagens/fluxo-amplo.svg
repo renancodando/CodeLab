@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240">
+  <rect width="720" height="240" fill="#f8f4ea"/>
+  <g fill="#e2e9dd" stroke="#42644b" stroke-width="2">
+    <rect x="20" y="70" width="200" height="100" rx="12"/>
+    <rect x="260" y="70" width="200" height="100" rx="12"/>
+    <rect x="500" y="70" width="200" height="100" rx="12"/>
+    <path d="M225 120h28m-8-8 8 8-8 8M465 120h28m-8-8 8 8-8 8" fill="none"/>
+  </g>
+  <g font-family="sans-serif" font-size="22" text-anchor="middle" fill="#243b2c">
+    <text x="120" y="128">1. Escrever</text><text x="360" y="128">2. Executar</text><text x="600" y="128">3. Revisar</text>
+  </g>
+</svg>

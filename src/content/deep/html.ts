@@ -533,21 +533,25 @@ export default {
           "title": "Alternativa de imagem pelo contexto",
           "text": [
             "alt descreve a informação que a imagem fornece naquele contexto, não uma lista genérica de objetos visíveis. Uma imagem decorativa pode ter alt vazio para não repetir conteúdo sem função. Uma imagem que é link precisa comunicar o destino ou a ação.",
-            "Dimensões ajudam a reservar espaço e reduzir mudanças de layout. Uma descrição extensa de um gráfico pode exigir texto ou tabela adicional, além de um alt curto que identifique a informação e a localização da explicação."
+            "Dimensões ajudam a reservar espaço e reduzir mudanças de layout. Uma descrição extensa de um gráfico pode exigir texto ou tabela adicional, além de um alt curto que identifique a informação e a localização da explicação.",
+            "Quando um link contém apenas uma imagem, sem outro texto ou nome fornecido, a alternativa da imagem deve comunicar o destino ou a ação. Um arquivo chamado fluxo-amplo.svg não explica que o link abre o relatório. Alt vazio é adequado para decoração quando a informação necessária já está em outro lugar; não o aplique por regra a todas as imagens pequenas. Teste o nome exposto e o foco do link pelo teclado; isso ainda não substitui conferir o contexto com tecnologias assistivas."
           ]
         },
         {
           "title": "Imagens responsivas",
           "text": [
             "srcset oferece candidatos e sizes descreve o tamanho de exibição esperado para candidatos por largura. O navegador escolhe conforme layout, densidade e outras condições; não suponha uma escolha fixa para todos os dispositivos.",
-            "picture permite alternativas de formato ou direção de arte. Preserve um img como fallback. Verifique os arquivos reais e o conteúdo alternativo; uma marcação sofisticada não corrige uma imagem inadequada ou um caminho inexistente."
+            "picture permite alternativas de formato ou direção de arte. Preserve um img como fallback. Verifique os arquivos reais e o conteúdo alternativo; uma marcação sofisticada não corrige uma imagem inadequada ou um caminho inexistente.",
+            "Com descritores w, cada número corresponde à largura intrínseca do arquivo, não ao espaço CSS reservado. sizes descreve esse espaço: se o CSS ocupa a janela inteira até 600 px e metade acima, declare (max-width: 600px) 100vw, 50vw. sizes sozinho não muda a largura desenhada. A resolução, cache e decisões do navegador ainda influenciam o candidato; não apresente essa lista como uma promessa de baixar exatamente um arquivo em qualquer dispositivo.",
+            "Dentro de picture, a primeira source cujas condições se aplicam e cujo tipo é suportado fornece os candidatos. Uma source sem media antes da versão compacta pode esconder o recorte específico. O img continua responsável pela alternativa textual e pelo fallback. Os diagramas fornecidos nas atividades têm versões vertical e horizontal com as mesmas três etapas; uma mudança de composição não deve eliminar informação essencial."
           ]
         },
         {
           "title": "Figuras e legenda",
           "text": [
             "figure reúne conteúdo autocontido e figcaption sua legenda. Nem toda imagem precisa de figure, e a legenda visível não substitui necessariamente alt. Os dois podem cumprir papéis diferentes sem repetir a mesma frase sem necessidade.",
-            "Para uma imagem técnica, explique eixos, unidade e conclusão no texto. O leitor deve conseguir acessar a informação principal mesmo se o arquivo falhar ou não puder ser percebido visualmente."
+            "Para uma imagem técnica, explique eixos, unidade e conclusão no texto. O leitor deve conseguir acessar a informação principal mesmo se o arquivo falhar ou não puder ser percebido visualmente.",
+            "Teste também a proporção do recorte. Width e height do img ajudam a reservar espaço para sua versão padrão, mas uma fonte vertical pode ter outra razão. Defina dimensões coerentes nas sources quando precisar reservar esse recorte e use height: auto para não esticá-lo. Os exemplos de imagem das pausas fornecem arquivos SVG locais, que também entram no cache offline; o uso vetorial permite conferir a seleção sem prometer economia de bytes equivalente à de fotografias."
           ]
         },
         {

@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'html-imagem-destino',language:'html',lessonIds:['html-midia'],skillIds:['html.imagens.alternativas'],afterBlock:1,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O link contém apenas uma imagem',
+  prompt:'A imagem é o único conteúdo de um link que abre o relatório de estudo. Não há aria-label nem outro texto no link. Qual alt fornece o nome necessário para essa ação? O gráfico completo continua disponível no relatório. Decisão conceitual offline; não é auditoria automática de toda a acessibilidade.',
+  code:'<a href="#relatorio"><img src="/exemplos/imagens/fluxo-amplo.svg" alt="" width="720" height="240"></a>',
+  options:[{id:'arquivo',text:'alt="fluxo-amplo.svg"'},{id:'destino',text:'alt="Abrir relatório de estudo"'},{id:'decorativa',text:'alt="" porque o arquivo já tem um nome'}],
+  hint:'Substitua mentalmente a imagem pelo texto. A pessoa conseguiria decidir o que o link faz?',minutes:3
+ },
+ {
+  id:'html-completar-sizes',language:'html',lessonIds:['html-midia'],skillIds:['html.imagens.tamanho'],afterBlock:2,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'Declare o espaço da imagem, não a largura do arquivo',
+  prompt:'Complete apenas o tamanho em vw. Até 600 px inclusive, a imagem ocupa 100% da viewport; acima disso, 50%. Não há margens, padding ou bordas. O CSS já define o layout. sizes deve descrevê-lo para os candidatos w, sem prometer qual arquivo o navegador escolherá. Avaliação conceitual offline.',
+  code:'<style>body { margin: 0; } img { display: block; width: 50vw; height: auto; }\n@media (max-width: 600px) { img { width: 100vw; } }</style>\n<img src="/exemplos/imagens/fluxo-amplo.svg"\n     srcset="/exemplos/imagens/fluxo-360.svg 360w, /exemplos/imagens/fluxo-amplo.svg 720w"\n     sizes="(max-width: 600px) ____, 50vw"\n     width="720" height="240" alt="Etapas: escrever, executar e revisar">',
+  hint:'sizes informa o espaço em pixels CSS. O descritor w informa a largura intrínseca do recurso; um não substitui o outro.',minutes:3
+ },
+ {
+  id:'html-ordenar-picture',language:'html',lessonIds:['html-midia'],skillIds:['html.imagens.fontes'],afterBlock:5,kind:'order',capability:'aplicacao',requiresConcept:true,
+  title:'Uma fonte genérica esconde o recorte compacto',
+  prompt:'Ordene todas as linhas. Até 600 px, inclusive, use o diagrama vertical; em larguras maiores, o horizontal. As duas fontes SVG são suportadas neste cenário. picture usa a primeira source aplicável, e img mantém a alternativa textual e o fallback. Cada diagrama preserva as três etapas. A escolha é conceitual; a plataforma não executa sua marcação nesta pausa.',
+  lines:[{id:'abrir',code:'<picture>'},{id:'ampla',code:'  <source type="image/svg+xml" srcset="/exemplos/imagens/fluxo-amplo.svg" width="720" height="240">'},{id:'compacta',code:'  <source type="image/svg+xml" media="(max-width: 600px)" srcset="/exemplos/imagens/fluxo-compacto.svg" width="240" height="360">'},{id:'fallback',code:'  <img src="/exemplos/imagens/fluxo-amplo.svg" width="720" height="240" alt="Etapas: escrever, executar e revisar">'},{id:'fechar',code:'</picture>'}],
+  hint:'Uma condição genérica antes da específica pode impedir que a segunda seja considerada. O img continua necessário dentro de picture.',minutes:4
+ },
+ {
   id:'sql-prever-desconhecido',language:'sql',lessonIds:['sql-null-logica'],skillIds:['sql.null.comparacoes'],afterBlock:2,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Negar uma comparação não recupera o valor ausente',
   prompt:'Preveja as três linhas no formato id|diferente. O cast ::text transforma booleanos conhecidos em true/false; COALESCE apresenta unknown quando a comparação retorna NULL. Zero, ausência e cinco devem continuar distintos. Avaliação conceitual offline, sem executar sua consulta.',

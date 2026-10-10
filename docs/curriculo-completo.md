@@ -1,5 +1,9 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: imagens HTML com contexto
+
+A aula existente `html-midia` passa a praticar três mecanismos diferentes: alternativa funcional, declaração do espaço em sizes e ordem das fontes de picture. As seis seções, exemplos SVG e exercícios anteriores permanecem. Diagramas reais, proporção e fallback têm conferência nativa no navegador e ficam disponíveis no cache offline. Respostas das pausas são conceituais, não execução nem prova de acessibilidade completa. A distribuição avança para uma aula que ainda não tinha pausas; mídia, legendas, componentes e acessibilidade continuam exigindo aprofundamentos próprios.
+
 ## Aprofundamento incremental: NULL com contratos explícitos
 
 `sql-null-logica` aprofunda a diferença entre comparar, filtrar e restringir; três pausas novas preparam previsão, depuração e alteração. O exercício de exclusão exige decidir como tratar duas chaves ausentes sem convertê-las em zero. A pausa existente e os problemas independentes permanecem. Cenários externos PostgreSQL verificam os gabaritos e reproduzem falhas, com conjuntos vazios, duplicatas e violações específicas. A entrega está sujeita ao CI próprio; decisões conceituais do aluno não são execução SQL. Transações concorrentes, deadlocks, Serializable, administração, laboratório local e distribuição da interatividade continuam abertos. Métricas atuais são geradas em [metricas-catalogo.md](metricas-catalogo.md).

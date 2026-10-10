@@ -1,8 +1,13 @@
 # Prontidão de produção
 
+## Gates seguintes: SQL e imagens HTML
+
+A PR #23 ganhou um commit operacional separado após duas falhas de download do Docker Hub antes do checkout. PostgreSQL 18 passa a ser obtido no repositório público oficial Docker da AWS, com manifest Linux/amd64 disponível; o próximo CI precisa executar todos os gates. A branch HTML depende desse head e tem evidências locais de 452 testes unitários, strict/build e dois fluxos Edge, incluindo referências nativas e arquivos realmente recuperados offline. Isso não autoriza tratar SQL/HTML como integrados ou publicados antes dos gates dos heads e da verificação posterior no domínio. Os checkpoints abaixo descrevem a main já integrada.
+
 ## Gate adicional: revisão da preparação diária
 
 A PR #23 recebeu uma correção após a revisão detectar liberação de exercícios pela leitura apenas da introdução. A preparação agora tem identidade própria e cobre os capítulos necessários; planos antigos exigem a leitura ausente sem perder itens/respostas. O novo head precisa repetir CI completo e fluxo público. Leituras antigas não passam a contar como preparação nova nem geram domínio. As evidências dos heads anteriores não validam essa alteração de fluxo.
+
 
 ## Checkpoint atual: main aprovada e closures verificadas publicamente
 

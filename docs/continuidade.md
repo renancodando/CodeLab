@@ -1,12 +1,23 @@
 # Continuidade do CODELAB
 
+## Próxima entrega: imagens com contexto e arquivos offline
+
+A branch `pratica/html-imagens-contexto` depende do head SQL `09d232b5b3c197c4180e68ffea2b0484dd3fce52` da PR #23, ainda exigindo CI completo. Acrescenta três pausas à aula existente `html-midia`, que não tinha atividades corrigíveis. Preserva suas seis seções e os exemplos SVG, aprofunda alternativas funcionais, sizes e seleção de picture, e fornece três diagramas locais no cache offline. A ordem inicial de picture é propositalmente incorreta; o aluno precisa movê-la. Não há novo executor, runtime, permissão de rede ou alteração de arte.
+
+Após incorporar a preparação diária revisada, passaram 453 testes unitários, strict/build e novamente os dois fluxos HTML no Edge (26,5 s total). As referências nativas e os arquivos offline continuam válidos. O bundle inicial dessa combinação é 189,10 kB gzip, com 33 recursos locais preparados. Exigir o CI deste head sucessor; o run da branch anterior à revisão não cobre a nova preparação.
+
+Passaram 452 testes unitários, strict/build e dois fluxos Edge locais. A referência nativa confere nome acessível/foco, tamanho CSS, seleção nas larguras 220/600/601/4000, proporção, reprodução da fonte genérica antecipada e fallback. O fluxo do produto confere erro/acerto, assistência, respostas/ordem/evidências após reload offline, os três arquivos SVG acessíveis sem rede e layout 220/4000 px. A conferência do aluno continua conceitual; seleção de candidatos por densidade não é prometida como determinística nem medida como economia de fotografias. O bundle inicial cresce de 187,28 para 188,86 kB gzip; o mundo mantém tamanho e carregamento existentes. Após explicitar tipo SVG e dimensões nas sources, os 23 testes específicos, build e os dois fluxos foram conferidos novamente.
+
+O CI SQL falhou duas vezes antes do checkout por limite/timeouts do Docker Hub. Um commit separado passa a obter a mesma imagem oficial PostgreSQL 18 no registro público da AWS. A tag foi consultada e contém Linux/amd64; nenhum gate, porta, usuário descartável ou segredo foi modificado. Referência operacional: [pull público no ECR](https://docs.aws.amazon.com/AmazonECR/latest/public/docker-pull-ecr-image.html). Exigir os CIs dos heads atuais, resolver revisões e integrar SQL antes de HTML. Nenhuma falha de download comprova defeito ou aprovação dos exemplos.
+
 ## Revisão: preparação real e retomada de planos antigos
 
 A revisão da PR #23 apontou que requiresConcept só exigia a introdução: a sessão mostrava dois capítulos, enquanto restrições e correlação estavam nos blocos posteriores. A correção acrescenta uma preparação identificada por revisão para cada família que exige conceito, exibindo os capítulos até o último bloco necessário. A leitura introdutória conserva seu identificador; não é transformada em leitura dos novos capítulos. A preparação tem seu próprio identificador v1, que deve ser revisto quando seu contrato pedagógico mudar.
 
-Planos já salvos conservam itens, respostas e conclusões. Antes de montar uma atividade cuja preparação ainda não foi lida, a sessão mostra essa leitura e só então retoma o mesmo item. Não apaga domínio anterior nem cria evidência de habilidade por leitura. Gabaritos e capítulos de resolução ficam fora desse recorte. A correção será propagada para a branch HTML; exigir CIs dos novos heads, não dos anteriores à revisão.
+Planos já salvos conservam itens, respostas e conclusões. Antes de montar uma atividade cuja preparação ainda não foi lida, a sessão mostra essa leitura e só então retoma o mesmo item. Não apaga domínio anterior nem cria evidência de habilidade por leitura. Gabaritos e capítulos de resolução ficam fora desse recorte. A correção foi incorporada à branch HTML; exigir CIs dos novos heads, não dos anteriores à revisão.
 
 Passaram 442 testes unitários e strict/build. Os fluxos Edge de fundamentos e prática SQL passaram; o caso novo de plano antigo passou após corrigir seu setup para abrir uma sessão e salvar o estado antes de alterá-lo. Confere capítulos 4/5 visíveis, resolução ausente, leitura antiga preservada, plano idêntico, domínio vazio e retomada após reload. O CI anterior já executou os 12 cenários PostgreSQL com sucesso, mas a revisão de fluxo exige novo gate completo. O bundle inicial da branch SQL está em 187,49 kB gzip.
+
 
 ## Checkpoint de 9 de outubro: C++ e closures integrados
 
