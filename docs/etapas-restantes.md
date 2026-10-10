@@ -21,7 +21,7 @@ A edição atual já entrega conteúdo e mecanismos funcionais. Para declarar um
 | 9 | Algoritmos | Expandir as três etapas iniciais para busca, ordenação, análise e estratégias. | Mais de um problema por família, complexidade justificada e casos de transferência. |
 | 10 | Estruturas de dados | Ampliar estruturas, invariantes e custo das operações. | Implementação, uso aplicado, casos vazios/degenerados e escolha entre estruturas. |
 | 11 | Redes | Protocolos, HTTP, falhas, latência e comunicação entre processos. | Experimentos reproduzíveis, diagnóstico e testes de condições adversas. |
-| 12 | Git | Conflitos, histórico, colaboração, recuperação e automação. | Repositórios descartáveis, comandos conferidos e exercícios de recuperação. |
+| 12 | Git | Ampliar o modelo interativo de preparação para conflitos, branches, colaboração e recuperação. | A bancada inicial compara trabalho/preparação/HEAD e é conferida contra Git real; demais operações continuam com experimentos externos. Exigir repositórios descartáveis e recuperação efetiva. |
 | 13 | Testes | Unidade, integração, navegador, dublês e testes de propriedades. | Suítes que detectem falhas reais e documentem limites, sem espelhar a implementação. |
 | 14 | Arquitetura | Limites, dependências, mudanças, decisões e evolução dos projetos. | Projeto maior revisado por rubrica, fluxo integrado e justificativas verificáveis. |
 | 15 | Interatividade | Migrar progressivamente aulas que ainda não têm pausas ligadas à teoria. | Atividades a cada poucos blocos, persistência, offline e pré-requisitos pedagógicos em todo o catálogo; a entrega atual prepara apenas as novas pausas avançadas. |

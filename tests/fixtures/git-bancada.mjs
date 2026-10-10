@@ -1,0 +1,50 @@
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {spawnSync} from 'node:child_process';
+import assert from 'node:assert/strict';
+import ts from 'typescript';
+export async function verificarBancadaGit(raiz){
+ const executar=(comando,argumentos)=>{const resultado=spawnSync(comando,argumentos,{encoding:'utf8',timeout:90000,maxBuffer:4*1024*1024});if(resultado.error||resultado.status!==0)throw new Error(comando+' falhou: '+(resultado.error?.message??resultado.stderr));return resultado.stdout.replace(/\r\n/g,'\n');};
+ // Git usa um repositório de estudo descartável, sem remotos nem configuração global.
+ const fonte=await readFile('src/learning/git.ts','utf8'),emitido=ts.transpileModule(fonte,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+ const motor=await import('data:text/javascript;base64,'+Buffer.from(emitido).toString('base64'));
+ let estado=motor.registrarCommitGit(motor.prepararArquivoGit(motor.iniciarRepositorioGit(motor.novoRepositorioGit())),'Criar cálculo inicial');
+ estado=motor.editarArquivoGit(motor.prepararArquivoGit(motor.editarArquivoGit(estado,'total=10\n')),'total=20\n');
+ const comparar=async()=>{
+  assert.equal(estado.trabalho,await readFile(arquivoCalculo,'utf8'));
+  assert.equal(estado.preparacao,executarGit('show',':calculo.txt'));
+  assert.equal(estado.historico.at(-1).conteudo,executarGit('show','HEAD:calculo.txt'));
+  assert.equal(estado.historico.length,Number(executarGit('rev-list','--count','HEAD').trim()));
+ };
+ const pastaGit=join(raiz,'estudo-git');await mkdir(pastaGit);
+ const executarGit=(...args)=>executar('git',['-C',pastaGit,...args]);
+ executarGit('init','-b','main');executarGit('config','core.autocrlf','false');executarGit('config','user.name','CodeLab CI');executarGit('config','user.email','ci@example.invalid');executarGit('config','commit.gpgsign','false');
+ const arquivoCalculo=join(pastaGit,'calculo.txt');await writeFile(arquivoCalculo,'total=0\n');executarGit('add','calculo.txt');executarGit('commit','-m','Criar cálculo inicial');
+ await writeFile(arquivoCalculo,'total=10\n');executarGit('add','calculo.txt');await writeFile(arquivoCalculo,'total=20\n');
+ if(executarGit('show','HEAD:calculo.txt').trim()!=='total=0'||executarGit('show',':calculo.txt').trim()!=='total=10'||(await readFile(arquivoCalculo,'utf8')).trim()!=='total=20')throw new Error('Git: trabalho, preparação e HEAD foram confundidos.');
+ if(!executarGit('diff','--cached').includes('+total=10')||!executarGit('diff').includes('+total=20'))throw new Error('Git: diferenças de preparação divergentes.');
+ await comparar();
+ executarGit('commit','-m','Ajustar total para dez');
+ estado=motor.registrarCommitGit(estado,'Ajustar total para dez');await comparar();
+ assert.ok(motor.conferirPreparacaoGit(estado).every(teste=>teste.passed));
+ const semMudanca=spawnSync('git',['-C',pastaGit,'commit','-m','Sem mudança preparada'],{encoding:'utf8',timeout:90000});
+ assert.equal(semMudanca.status,1);assert.throws(()=>motor.registrarCommitGit(estado,'Sem mudança preparada'));await comparar();
+ if(executarGit('show','HEAD:calculo.txt').trim()!=='total=10'||(await readFile(arquivoCalculo,'utf8')).trim()!=='total=20')throw new Error('Git: commit alterou a cópia de trabalho.');
+ executarGit('add','calculo.txt');estado=motor.prepararArquivoGit(estado);await comparar();executarGit('commit','-m','Preparar novamente');estado=motor.registrarCommitGit(estado,'Preparar novamente');await comparar();
+ await writeFile(arquivoCalculo,'');executarGit('add','calculo.txt');estado=motor.prepararArquivoGit(motor.editarArquivoGit(estado,''));executarGit('commit','-m','Arquivo vazio');estado=motor.registrarCommitGit(estado,'Arquivo vazio');await comparar();
+ assert.deepEqual(motor.restaurarRepositorioGit(JSON.stringify(estado)),estado);
+ const arquivoRegra=join(pastaGit,'regra.js'),textoRegra=condicao=>'export const desconto = (total, clienteAtivo) => '+condicao+';\n';
+ await writeFile(arquivoRegra,textoRegra('total >= 100'));executarGit('add','regra.js');executarGit('commit','-m','Criar regra base');
+ executarGit('switch','-c','cliente-ativo');await writeFile(arquivoRegra,textoRegra('total >= 100 && clienteAtivo'));executarGit('add','regra.js');executarGit('commit','-m','Exigir cliente ativo');
+ executarGit('switch','main');await writeFile(arquivoRegra,textoRegra('total >= 120'));executarGit('add','regra.js');executarGit('commit','-m','Ajustar fronteira');
+ const conflito=spawnSync('git',['-C',pastaGit,'merge','cliente-ativo'],{encoding:'utf8',timeout:90000});
+ if(conflito.error||conflito.status!==1||!((await readFile(arquivoRegra,'utf8')).includes('<<<<<<<')))throw new Error('Git: o conflito esperado não aconteceu.');
+ const regraCombinada=textoRegra('total >= 120 && clienteAtivo');await writeFile(arquivoRegra,regraCombinada);executarGit('add','regra.js');executarGit('commit','-m','Combinar regras por contrato');
+ if(executarGit('rev-list','--parents','-n','1','HEAD').trim().split(/\s+/).length!==3)throw new Error('Git: resolução não preservou os dois pais.');
+ const arquivoConferencia=join(pastaGit,'conferir.mjs');await writeFile(arquivoConferencia,regraCombinada+'\nconst casos=[[119,true,false],[120,true,true],[119,false,false],[120,false,false]]; for(const [total,ativo,esperado] of casos)if(desconto(total,ativo)!==esperado)throw new Error("Regra divergente");');
+ executar(process.execPath,[arquivoConferencia]);
+ await writeFile(arquivoRegra,textoRegra('total >= 999'));executarGit('add','regra.js');executarGit('commit','-m','Regra de estudo a reverter');const commitRuim=executarGit('rev-parse','HEAD').trim();
+ executarGit('revert','--no-edit',commitRuim);
+ if((await readFile(arquivoRegra,'utf8'))!==regraCombinada||!executarGit('log','--format=%H').split(/\s+/).includes(commitRuim)||executarGit('rev-parse','HEAD').trim()===commitRuim)throw new Error('Git: reversão não preservou histórico e regra anterior.');
+ console.log('5 cenários Git reais conferidos: snapshots, nova preparação, arquivo vazio, conflito e reversão.');
+}
