@@ -1,5 +1,23 @@
 # Prontidão de produção
 
+## Gates pendentes: integração, descritores e parcelas do navegador
+
+CSS (#26) e rascunhos (#27) passaram nos CIs 38018467196/38019095799, com 120/122 testes de navegador e 484 unitários. C# (#25) atingiu o limite de duração após 114 testes aprovados; foi reenviado no mesmo head e continua exigindo conclusão completa. Nenhuma dessas evidências substitui a conferência das árvores, revisões e domínio após integração.
+
+A preparação seguinte acrescenta descritores Python, com 498 unitários e nove cenários Python reais locais aprovados. Strict/build passaram. O teste de navegador detectou duas causas de overflow a 220 px; a correção manteve o conteúdo e passou no fluxo completo Edge com assistência, recarga offline e 220/4000 px (40,4 s). As métricas 70/52 são da branch, não uma declaração de publicação. Nenhum executor ou dependência foi acrescentado.
+
+O novo workflow conserva validação, compiladores, PostgreSQL, API, cache meteorológico e auditoria, distribuindo apenas o navegador em duas parcelas que usam o mesmo build. A listagem local comprova união completa e sem duplicações dos 123 testes; não comprova execução no GitHub. Exigir sucesso da validação comum e de ambas as parcelas, com relatórios próprios, antes de integrar esse head.
+
+## Gate seguinte: caixas CSS
+
+A branch CSS depende do head C# da PR #25 e exige integração nessa ordem após os gates próprios. Tem 484 unitários e strict/build aprovados; os 29 testes específicos foram conferidos após o ajuste do rótulo. O primeiro teste nativo detectou uma hipótese incorreta sobre min-content do próprio rótulo, mantendo a exigência em vez de reduzir a asserção. A referência precisa passar novamente e o CI completo do head final continua obrigatório. Nenhuma mudança foi feita na aparência do produto, no sandbox, em permissões de rede, nos runtimes ou nas dependências.
+
+## SQL e HTML publicados; próximo gate de iteradores C#
+
+As PRs #23/#24 passaram nos respectivos CIs finais 37996313180 e 37996662758, com 442/453 unitários e 115/117 testes de navegador. Os exemplos incluíram PostgreSQL real e as árvores dos merges coincidiram com os heads validados. A implantação da main 04217e927284326444946cda02e5600e876f37cd está READY/production; os dois fluxos SQL e os dois HTML passaram no domínio. Essas pendências de integração/publicação estão encerradas para os comportamentos testados.
+
+A preparação de iteradores C# tem dez cenários locais .NET aprovados e 31 testes específicos de prática/catálogo, com strict. Ainda exige suíte completa, build, navegador, CI e publicação. Não acrescenta runtime ao cliente, rede ao aluno, pacotes ou permissões de execução. As evidências das PRs anteriores não validam automaticamente esse próximo head.
+
 ## Gates seguintes: SQL e imagens HTML
 
 A PR #23 ganhou um commit operacional separado após duas falhas de download do Docker Hub antes do checkout. PostgreSQL 18 passa a ser obtido no repositório público oficial Docker da AWS, com manifest Linux/amd64 disponível; o próximo CI precisa executar todos os gates. A branch HTML depende desse head e tem evidências locais de 452 testes unitários, strict/build e dois fluxos Edge, incluindo referências nativas e arquivos realmente recuperados offline. Isso não autoriza tratar SQL/HTML como integrados ou publicados antes dos gates dos heads e da verificação posterior no domínio. Os checkpoints abaixo descrevem a main já integrada.

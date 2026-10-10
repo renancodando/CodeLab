@@ -13,6 +13,37 @@ async function escrever(pagina:Page,codigo:string) {
  await campo.evaluate((elemento,texto)=>{const transferencia=new DataTransfer();transferencia.setData('text/plain',texto);elemento.dispatchEvent(new ClipboardEvent('paste',{clipboardData:transferencia,bubbles:true,cancelable:true}));},codigo);
 }
 
+for(const anotacao of ['Minhas decisões','']){
+test('trocas consecutivas de linguagem conservam os rascunhos '+(anotacao?'com anotações':'com anotações vazias'),async({page:pagina})=>{
+ const rascunhos={'lab-html':'<p>Meu HTML</p>','lab-js':'console.log("Meu JavaScript");','lab-text':anotacao,'lab-python':'print("Meu Python")'};
+ await pagina.addInitScript(drafts=>{
+  if(!localStorage.getItem('codelab.progress.v2'))localStorage.setItem('codelab.progress.v2',JSON.stringify({version:2,drafts}));
+ },rascunhos);
+ const enviadas:string[]=[];
+ pagina.on('request',pedido=>{if(/\/api\/executions/.test(pedido.url()))enviadas.push(pedido.url());});
+ await pagina.goto('/#/laboratorio');await expect(pagina.locator('#lab-run')).toBeEnabled();
+ await pagina.locator('#lab-language').selectOption('javascript');
+ await expect(pagina.locator('#lab-note')).toContainText('JavaScript em worker');
+ expect((await exportarTexto(pagina)).texto).toBe(rascunhos['lab-js']);
+ await pagina.locator('#lab-language').evaluate(seletor=>{
+  for(const linguagem of ['text','python']){
+   (seletor as HTMLSelectElement).value=linguagem;
+   seletor.dispatchEvent(new Event('change',{bubbles:true}));
+  }
+ });
+ await expect(pagina.locator('#lab-note')).toContainText('Executar envia');
+ expect(await exportarTexto(pagina)).toEqual({nome:'projeto.py',texto:rascunhos['lab-python']});
+ await expect.poll(()=>pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).drafts['lab-text'])).toBe(rascunhos['lab-text']);
+ await pagina.goto('/#/home');await pagina.goto('/#/laboratorio');await pagina.reload();
+ await expect(pagina.locator('#lab-run')).toBeEnabled();
+ for(const [linguagem,chave] of [['html','lab-html'],['javascript','lab-js'],['text','lab-text'],['python','lab-python']]){
+  await pagina.locator('#lab-language').selectOption(linguagem);
+  await expect.poll(async()=>(await exportarTexto(pagina)).texto).toBe(rascunhos[chave as keyof typeof rascunhos]);
+ }
+ expect(enviadas).toEqual([]);
+});
+}
+
 test('laboratório restaura cada rascunho e conserva HTML e JavaScript vazios',async({page})=>{
  const rascunhos={'lab-html':'','lab-js':'','lab-python':'print("rascunho")','lab-csharp':'System.Console.WriteLine(7);','lab-cpp':'int main(){return 0;}','lab-sql':'SELECT 7;','lab-text':'Decisão anotada'};
  await page.addInitScript(drafts=>localStorage.setItem('codelab.progress.v2',JSON.stringify({version:2,drafts})),rascunhos);

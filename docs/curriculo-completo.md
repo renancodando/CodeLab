@@ -1,5 +1,13 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: caixas CSS praticadas
+
+A aula css-caixas-intrinseco passa de explicações e problemas abertos para três pausas próprias com decisões corrigíveis. Os seis blocos e dois problemas continuam disponíveis. Cálculo da borda, encolhimento de conteúdo sem espaços e referência de sticky são habilidades distintas, preparadas pela teoria e conferidas com referências nativas. O exemplo de Flexbox usa ID como rótulo curto: palavras maiores também participam do mínimo automático e exigem decisão de layout. A expansão não cria uma aula nova nem conclui dimensões intrínsecas, CSS ou a distribuição integral da prática.
+
+## Aprofundamento incremental: iteradores C# com decisões verificáveis
+
+cs-iteradores-descarte conserva seis seções, os exemplos e dois problemas próprios, além da pausa anterior de using. As três novas práticas investigam produção sob demanda, liberação na saída precoce/com erro e repetição de efeitos versus materialização. Os gabaritos e contraexemplos têm dez cenários executados no .NET 10; respostas locais das pausas não equivalem à execução do código do aluno. A expansão aprofunda uma aula já interativa: não aumenta a quantidade de aulas com pausas. As métricas continuam geradas pelo catálogo, sem declarar C#, LINQ ou o currículo integral concluídos.
+
 ## Aprofundamento incremental: imagens HTML com contexto
 
 A aula existente `html-midia` passa a praticar três mecanismos diferentes: alternativa funcional, declaração do espaço em sizes e ordem das fontes de picture. As seis seções, exemplos SVG e exercícios anteriores permanecem. Diagramas reais, proporção e fallback têm conferência nativa no navegador e ficam disponíveis no cache offline. Respostas das pausas são conceituais, não execução nem prova de acessibilidade completa. A distribuição avança para uma aula que ainda não tinha pausas; mídia, legendas, componentes e acessibilidade continuam exigindo aprofundamentos próprios.

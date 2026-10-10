@@ -597,6 +597,7 @@ export default {
       "title": "Python: classes, protocolos e metaprogramação",
       "level": "Avançado",
       "summary": "Modele objetos por responsabilidades e contratos, usando classes, dataclasses, propriedades e composição. Entenda o sistema de atributos, métodos especiais, herança, super, protocolos, decoradores e context managers para criar APIs previsíveis, sem recorrer a mecanismos avançados quando uma função simples resolve o problema.",
+      "source": "https://docs.python.org/3/howto/descriptor.html",
       "topics": [
         "classes instâncias self",
         "dataclasses",
@@ -627,6 +628,7 @@ export default {
           "title": "Atributos, propriedades e descritores",
           "text": [
             "property permite oferecer uma interface de atributo com cálculo ou validação. Evite esconder operações caras ou efeitos inesperados em uma leitura aparentemente simples. Um descritor controla acesso por __get__, __set__ ou __delete__.",
+            "Na busca padrão de atributos, um descritor de dados encontrado na classe tem precedência sobre o dicionário da instância. Com __get__ e __set__ ou __delete__, ele participa dessa prioridade; property a mantém mesmo quando não permite atribuição. Um descritor apenas com __get__ é não dados e pode ser sombreado por uma entrada da instância. Instalar um descritor no dicionário de uma instância não ativa automaticamente esse protocolo. As pausas usam classes sem redefinição de __getattribute__, pois uma busca personalizada exige analisar outro contrato.",
             "__slots__ pode restringir atributos e reduzir memória em cenários adequados; não é uma garantia geral de velocidade ou imutabilidade. Antes de usar uma metaclasse, avalie se um decorador de classe, __init_subclass__ ou composição atende ao mesmo contrato."
           ]
         },
@@ -634,14 +636,16 @@ export default {
           "title": "Métodos especiais e identidade",
           "text": [
             "__repr__ deve ajudar no diagnóstico; __str__ na apresentação. __eq__ define igualdade por valor. Se valores iguais podem entrar em um set ou como chave de dict, seu hash precisa ser igual e permanecer estável enquanto estiverem armazenados.",
-            "Objetos mutáveis com igualdade baseada em campos alteráveis geralmente não devem ser hashable. Para operadores que não reconhecem o outro operando, devolver NotImplemented permite que o protocolo tente o método correspondente do outro lado."
+            "Objetos mutáveis com igualdade baseada em campos alteráveis geralmente não devem ser hashable. Para operadores que não reconhecem o outro operando, devolver NotImplemented permite que o protocolo tente o método correspondente do outro lado.",
+            "O descritor instalado no corpo da classe é um objeto compartilhado pelos pedidos. Guardar self.valor nele mistura o estado dos consumidores. __set_name__ pode registrar uma chave distinta para cada atributo declarado, e __set__ pode validar antes de gravar essa chave no dicionário da instância recebida. Dois atributos precisam de dois descritores neste exemplo; reutilizar o mesmo objeto sob dois nomes sobrescreveria sua chave. Um teste com duas instâncias e dois campos detecta erros que uma única atribuição não revela. Este armazenamento exige __dict__; classes somente com slots precisam de outro desenho."
           ]
         },
         {
           "title": "Duck typing e contratos verificáveis",
           "text": [
             "Duck typing permite aceitar um objeto pelas operações que ele oferece. Um protocolo de typing descreve esse contrato para ferramentas estáticas; anotações não validam valores automaticamente durante a execução.",
-            "Um iterador exige __iter__ e __next__; um context manager usa __enter__ e __exit__. Protocolos explícitos em fronteiras de componentes facilitam testes com colaboradores pequenos e evitam acoplar toda a aplicação a uma classe concreta."
+            "Um iterador exige __iter__ e __next__; um context manager usa __enter__ e __exit__. Protocolos explícitos em fronteiras de componentes facilitam testes com colaboradores pequenos e evitam acoplar toda a aplicação a uma classe concreta.",
+            "O protocolo __get__ recebe a instância ou None no acesso pela classe. Devolver self nesse segundo caso permite inspecionar o descritor, mas é uma decisão de sua API. Confira instancia is None: not instancia confunde ausência com objetos que redefinem __bool__ ou __len__, e == pode chamar __eq__. O exemplo aceita inteiros não negativos e rejeita bool explicitamente, embora bool seja subclasse de int. Rejeitar um novo valor deve conservar o valor anterior. O nome com sublinhado organiza o estado; não é isolamento de segurança contra acesso direto ao dicionário."
           ]
         },
         {

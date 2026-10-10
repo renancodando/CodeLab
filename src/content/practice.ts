@@ -12,6 +12,72 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'py-prever-atributo',language:'python',lessonIds:['py-objetos-protocolos'],skillIds:['python.descritores.precedencia'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O dicionário da instância vence toda leitura?',
+  prompt:'Preveja as três linhas. As classes usam a busca padrão de atributos, sem sobrescrever __getattribute__. cache tem apenas __get__; total é uma property sem setter. Esta pausa compara raciocínio, sem executar Python.',
+  code:'class Origem:\n    def __get__(self, instancia, dono=None):\n        return self if instancia is None else "calculado"\n\nclass Registro:\n    cache = Origem()\n\n    @property\n    def total(self):\n        return 10\n\nitem = Registro()\nitem.__dict__.update(cache="guardado", total=99)\nprint(item.cache)\nprint(item.total)\nprint(isinstance(Registro.cache, Origem))',
+  hint:'Classifique os dois atributos da classe antes de consultar o dicionário da instância. Acesso pela classe também pode chamar __get__, com outra entrada.',minutes:4
+ },
+ {
+  id:'py-isolar-descritor',language:'python',lessonIds:['py-objetos-protocolos'],skillIds:['python.descritores.armazenamento'],afterBlock:4,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Dois pedidos disputam o mesmo valor',
+  prompt:'A saída é 20 e 20, mas os pedidos devem conservar 10 e 20. Escolha a correção que mantém a validação antes de gravar e separa o estado por instância. São objetos com __dict__; esta solução não cobre classes apenas com slots.',
+  code:'class Quantidade:\n    def __set_name__(self, dono, nome):\n        self.chave = "_" + nome\n\n    def __get__(self, instancia, dono=None):\n        if instancia is None:\n            return self\n        return self.valor\n\n    def __set__(self, instancia, valor):\n        if type(valor) is not int or valor < 0:\n            raise ValueError("quantidade inválida")\n        self.valor = valor\n\nclass Pedido:\n    quantidade = Quantidade()\n\n    def __init__(self, quantidade):\n        self.quantidade = quantidade\n\nprimeiro = Pedido(10)\nsegundo = Pedido(20)\nprint(primeiro.quantidade)\nprint(segundo.quantidade)',
+  options:[{id:'compartilhar',text:'Trocar self.valor por self.chave em ambas as operações, guardando o número no descritor.'},{id:'separar',text:'Ler e gravar instancia.__dict__[self.chave], conservando a guarda de classe e a validação antes da gravação.'},{id:'reatribuir',text:'Gravar instancia.quantidade = valor dentro de __set__, mantendo __get__ como está.'}],
+  hint:'self é o descritor instalado na classe. Investigue a quem pertence o valor: mudar o nome do campo compartilhado não separa os pedidos.',minutes:4
+ },
+ {
+  id:'py-acessar-classe',language:'python',lessonIds:['py-objetos-protocolos'],skillIds:['python.descritores.acesso-classe'],afterBlock:5,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'Uma instância falsa ainda é uma instância',
+  prompt:'Complete a condição usando identidade com None. O acesso Pedido.quantidade deve devolver o descritor; uma instância cujo __bool__ devolve False deve continuar devolvendo seu número. Preserve o retorno pelo dicionário e a validação. Escreva só a condição, sem if nem dois-pontos.',
+  code:'class Quantidade:\n    def __set_name__(self, dono, nome):\n        self.chave = "_" + nome\n\n    def __get__(self, instancia, dono=None):\n        if ____:\n            return self\n        return instancia.__dict__[self.chave]\n\n    def __set__(self, instancia, valor):\n        if type(valor) is not int or valor < 0:\n            raise ValueError("quantidade inválida")\n        instancia.__dict__[self.chave] = valor\n\nclass Pedido:\n    quantidade = Quantidade()\n\n    def __init__(self, quantidade):\n        self.quantidade = quantidade\n\n    def __bool__(self):\n        return False\n\nprint(isinstance(Pedido.quantidade, Quantidade))\nprint(Pedido(0).quantidade)',
+  hint:'Ausência de instância e falsidade lógica são situações diferentes. Igualdade também pode executar um método definido pelo objeto.',minutes:4
+ },
+ {
+  id:'css-prever-bordas',language:'css',lessonIds:['css-caixas-intrinseco'],skillIds:['css.caixas.dimensao'],afterBlock:1,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O conteúdo não pode ter tamanho negativo',
+  prompt:'Em escrita horizontal, sem outras regras ou transformações, preveja a largura da borda de conteudo, borda e estreita. Digite só os três números em pixels, um por linha, na ordem dos elementos. Padding e bordas continuam existindo mesmo na caixa muito estreita.',
+  code:'<style>\n.caixa { inline-size: 120px; padding-inline: 12px; border-inline: 3px solid; }\n#conteudo { box-sizing: content-box; }\n#borda { box-sizing: border-box; }\n#estreita { box-sizing: border-box; inline-size: 20px; }\n</style>\n<div id="conteudo" class="caixa"></div>\n<div id="borda" class="caixa"></div>\n<div id="estreita" class="caixa"></div>',
+  hint:'Some os extras dos dois lados e confira o piso zero do conteúdo. A borda não pode ficar menor que os extras sem que eles também mudem.',minutes:4
+ },
+ {
+  id:'css-reduzir-minimo',language:'css',lessonIds:['css-caixas-intrinseco'],skillIds:['css.caixas.encolhimento'],afterBlock:3,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'Flex pode encolher, mas o mínimo impede',
+  prompt:'Complete com zero sem unidade ou em px para permitir que texto encolha no eixo em linha. A política de quebra já está definida e precisa permanecer; não recorte o identificador nem altere o rótulo.',
+  code:'<style>\nbody { margin: 0; font: 16px/20px monospace; }\n.linha { display: flex; gap: 8px; inline-size: min(240px, 100%); }\n.rotulo { flex: 0 0 48px; }\n.texto { flex: 1; min-inline-size: ____; overflow-wrap: break-word; }\n</style>\n<div class="linha"><span class="rotulo">ID</span><span class="texto">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></div>',
+  hint:'O tamanho mínimo automático ainda considera o identificador. Remova esse piso do item; flex-shrink e quebra de texto resolvem partes diferentes do comportamento.',minutes:4
+ },
+ {
+  id:'css-corrigir-rolagem',language:'css',lessonIds:['css-caixas-intrinseco'],skillIds:['css.caixas.rolagem'],afterBlock:5,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O cabeçalho está preso à referência errada',
+  prompt:'O cabeçalho aparece no topo da janela. Ele deve continuar no fluxo da seção e aderir ao topo da região rolável, inclusive após scrollTop = 80. Qual mudança de position resolve esse contrato sem esconder conteúdo ou usar JavaScript?',
+  code:'<style>\nbody { margin: 0; }\n#rolagem { margin-block-start: 60px; block-size: 120px; inline-size: min(240px, 100%); overflow: auto; }\n#cabecalho { position: fixed; inset-block-start: 0; margin: 0; block-size: 24px; background: white; }\n.conteudo { block-size: 400px; }\n</style>\n<section id="rolagem" aria-label="Registros"><h2 id="cabecalho">Registros</h2><div class="conteudo">Conteúdo da seção.</div></section>',
+  options:[{id:'relativo',text:'Usar position: relative, mantendo o inset zero.'},{id:'aderir',text:'Usar position: sticky, mantendo o inset zero e a região com overflow auto.'},{id:'absoluto',text:'Usar position: absolute para retirar o cabeçalho do fluxo.'}],
+  hint:'Identifique o ancestral que rola e a posição que conserva espaço no fluxo enquanto responde a essa rolagem.',minutes:4
+ },
+ {
+  id:'cs-prever-percurso',language:'csharp',lessonIds:['cs-iteradores-descarte'],skillIds:['csharp.iteradores.avanco'],afterBlock:2,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Cada avanço produz só o próximo valor',
+  prompt:'Preveja as seis linhas. A sequência tem três valores, mas o consumidor pede apenas dois. Produzir e devolver um valor são acontecimentos diferentes de construir a sequência.',
+  code:'int produzidos = 0;\nIEnumerable<int> Fonte()\n{\n    for (int valor = 1; valor <= 3; valor++)\n    {\n        produzidos++;\n        yield return valor;\n    }\n}\nvar sequencia = Fonte();\nConsole.WriteLine(produzidos);\nusing (var percurso = sequencia.GetEnumerator())\n{\n    Console.WriteLine(percurso.MoveNext());\n    Console.WriteLine($"{percurso.Current}|{produzidos}");\n    Console.WriteLine(percurso.MoveNext());\n    Console.WriteLine($"{percurso.Current}|{produzidos}");\n}\nConsole.WriteLine(produzidos);',
+  hint:'Marque a posição de suspensão em cada yield. Criar o enumerador não consome os três valores, e descartá-lo não precisa pedir o último.',minutes:4
+ },
+ {
+  id:'cs-descartar-percurso',language:'csharp',lessonIds:['cs-iteradores-descarte'],skillIds:['csharp.iteradores.descarte'],afterBlock:3,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O consumidor abandona um recurso ativo',
+  prompt:'O programa imprime 10 e depois 1: o recurso ainda está ativo. Escolha a correção que processa no máximo o primeiro valor e garante descarte também se Processar lançar. Não percorra o restante só para tentar fechar a origem.',
+  code:'int ativos = 0;\nIEnumerable<int> Fonte()\n{\n    ativos++;\n    try { yield return 10; yield return 20; }\n    finally { ativos--; }\n}\nvoid Processar(int valor) => Console.WriteLine(valor);\nvar percurso = Fonte().GetEnumerator();\nif (percurso.MoveNext()) Processar(percurso.Current);\nConsole.WriteLine(ativos);',
+  options:[{id:'continuar',text:'Avançar até MoveNext retornar false após Processar.'},{id:'delimitar',text:'Envolver a aquisição do enumerador e o processamento em um bloco using, antes de consultar ativos.'},{id:'coletar',text:'Zerar a referência do enumerador e chamar GC.Collect antes de consultar ativos.'}],
+  hint:'O produtor já tem finally. Investigue quem deve encerrar o enumerador manual quando o consumidor sai cedo ou falha.',minutes:4
+ },
+ {
+  id:'cs-materializar-consulta',language:'csharp',lessonIds:['cs-iteradores-descarte'],skillIds:['csharp.iteradores.materializacao'],afterBlock:5,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'Duas leituras, uma produção',
+  prompt:'Complete com uma chamada LINQ sem argumentos. Esta origem finita incrementa um contador; o contrato exige produzi-la uma única vez, guardar os inteiros e ler o mesmo resultado duas vezes. A saída deve ser 2,4; 2,4; 4, uma linha por expressão.',
+  code:'int produzidos = 0;\nIEnumerable<int> Fonte()\n{\n    for (int valor = 1; valor <= 4; valor++)\n    {\n        produzidos++;\n        yield return valor;\n    }\n}\nvar consulta = Fonte().Where(valor => valor % 2 == 0);\nvar guardados = consulta.____;\nConsole.WriteLine(string.Join(",", guardados));\nConsole.WriteLine(string.Join(",", guardados));\nConsole.WriteLine(produzidos);',
+  hint:'Guardar a consulta conserva uma receita. Escolha uma operação que percorra a origem agora e armazene os resultados; não é uma regra para fontes infinitas.',minutes:4
+ },
+ {
   id:'html-imagem-destino',language:'html',lessonIds:['html-midia'],skillIds:['html.imagens.alternativas'],afterBlock:1,kind:'choice',capability:'depuracao',requiresConcept:true,
   title:'O link contém apenas uma imagem',
   prompt:'A imagem é o único conteúdo de um link que abre o relatório de estudo. Não há aria-label nem outro texto no link. Qual alt fornece o nome necessário para essa ação? O gráfico completo continua disponível no relatório. Decisão conceitual offline; não é auditoria automática de toda a acessibilidade.',

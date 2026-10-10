@@ -5,9 +5,11 @@ import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
 import {montarCasosCsv} from '../tests/fixtures/python-csv.mjs';
+import {montarCasosDescritores} from '../tests/fixtures/python-descritores.mjs';
 import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
 import {verificarConceitosCpp} from '../tests/fixtures/cpp-conceitos.mjs';
 import {verificarAusenciasSql} from '../tests/fixtures/sql-null.mjs';
+import {verificarIteradoresCsharp} from '../tests/fixtures/csharp-iteradores.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
@@ -68,7 +70,9 @@ try{
  const cenariosModulos=await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution);
  const cenariosConceitos=await verificarConceitosCpp(root,practiceActivities,getPracticeSolution);
  const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
+ const cenariosIteradores=await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution);
  const examples=[
+  ...montarCasosDescritores(practiceActivities,getPracticeSolution),
   ...montarCasosCsv(practiceActivities, getPracticeSolution),
   ...montarCasosCancelamento(practiceActivities, getPracticeSolution),
   {id:'cpp-prever-intervalo',key:'cpp',source:'#include <iostream>\n#include <vector>\nint main(){\n'+practiceActivities.find(a=>a.id==='cpp-prever-intervalo').code+'\n}',expected:['6,2']},
@@ -130,4 +134,5 @@ try{
  console.log(cenariosModulos+' projetos TypeScript conferidos, incluindo diagnósticos e falhas esperadas de resolução.');
  console.log(cenariosConceitos+' cenários C++20 conferidos, incluindo falhas esperadas de instanciação e ambiguidade.');
  console.log(cenariosAusencias+' cenários PostgreSQL conferidos para ausência, restrições e correspondência.');
+ console.log(cenariosIteradores+' cenários .NET conferidos para suspensão, descarte e materialização.');
 }finally{await rm(root,{recursive:true,force:true});}

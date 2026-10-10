@@ -1,5 +1,45 @@
 # Continuidade do CODELAB
 
+## Preparação seguinte: descritores Python e duração do CI
+
+O primeiro CI #28 (38064749952) encontrou dois critérios que foram acrescentados depois da última suíte local: a estrutura da prática aberta exigia os três critérios originais. Esses critérios originais foram preservados, e o aprofundamento dos descritores continua nos blocos e nas pausas próprios. Repetir a suíte e o CI completo no novo head; não usar o resultado anterior como gate.
+
+A branch pratica/python-descritores-estado parte do head 3e417cac340fd325815b429e585a06faad0c8e28 da PR #27. Preserva as seis seções, o exemplo dataclass, o exercício Retangulo/Quadro e o projeto de py-objetos-protocolos. Acrescenta três pausas após os blocos 3/4/5: precedência de atributos, depuração de valores compartilhados pelo descritor e acesso pela classe sem confundir None com falsidade ou igualdade. Esta aula antiga não possui o par de problemas independentes das expansões recentes; não houve remoção de problemas.
+
+Passaram 498 testes unitários e nove cenários Python reais. O verificador compartilhado inclui esses cenários, reproduz os programas quebrados e confere valores independentes, dois campos, rejeição sem mutação, zero, bool, herança, acesso pela classe, identidade equivalente, igualdade não executada e property sem setter. As respostas do aluno continuam conceituais e offline, sem enviar Python a executor. Strict/build passaram; o bundle inicial está em 193,18 kB gzip, o mundo em 135,94 kB, com 32 recursos locais e 157 páginas.
+
+O fluxo offline encontrou transbordamento de uma alternativa longa e da palavra metaprogramação no título a 220 px. A correção permite quebra de identificadores nas alternativas e palavras longas nos títulos de leitura, preservando conteúdo, fonte e ordem. Após essas correções, o fluxo Edge passou em 40,4 s (57,5 s total), incluindo erro/acerto, assistência, armazenamento, recarga offline e 220/4000 px.
+
+O CI C# 38017961491 foi cancelado no limite de 40 min após 114 testes de navegador aprovados; o mesmo head foi reenviado para validação, sem considerá-lo aprovado. CSS 38018467196 passou com 484 unitários e 120 testes de navegador; rascunhos 38019095799 passou com 484 unitários e 122 testes. As revisões consultadas estavam vazias. Conferir os gates finais, integrar #25/#26/#27 na ordem e verificar publicação.
+
+Para não manter toda a suíte de navegador presa ao mesmo limite, o próximo workflow separa dois jobs depois da validação comum, recuperando o mesmo artefato dist. A lista Playwright conferiu os 123 testes desta branch em parcelas de 62/61, sem omissões ou duplicações. Cada parcela conserva um worker, os três servidores e os relatórios; não reduz asserções nem executa duas vezes os compiladores e o PostgreSQL. O novo desenho ainda exige CI real, incluindo a transferência do artefato.
+
+As métricas geradas desta branch são 70 atividades em 52 das 137 aulas; 85 aulas ainda não têm pausas na teoria. A produção precisa ser conferida separadamente. Esta contagem não mede conclusão de linguagens, do currículo integral ou de todas as frentes de produção.
+
+## Correção em preparação: trocas consecutivas no laboratório
+
+A branch correcao/rascunhos-troca-linguagem parte do head 766f5a78fde7f3bd6c4054849caa1999ab7bba20 da PR #26; depende da integração verificada de C# (#25) e CSS (#26). O teste de navegador reproduziu uma perda real: trocar de JavaScript para anotações e imediatamente para Python salvava o JavaScript sobre as anotações enquanto o import do editor ainda aguardava. A troca agora usa o módulo Monaco já carregado e atualiza linguagem/conteúdo na mesma operação síncrona, mantendo persistência e cancelamento existentes.
+
+Os quatro fluxos iniciais passaram no Edge: troca consecutiva, restauração de rascunhos incluindo código vazio, edição Python após navegação/recarga sem executar e projeto de anotações com exportação/importação da jornada (1,5 min). A regressão foi ampliada para anotações vazias: os dois cenários consecutivos passaram em 47,4 s. O teste exige exportação correta de cada linguagem, conteúdo preservado no armazenamento e ausência de requisições de execução. Não foi acrescentado executor, runtime ou permissão ao código do aluno.
+
+Strict e build passaram. O editor continua sob demanda; o bundle inicial está em 191,73 kB gzip e o mundo em 135,94 kB. A referência dinâmica duplicada ao Monaco desapareceu e seus dois chunks foram reunidos no chunk lazy do editor; isso explica 32 arquivos do manifesto offline em vez de 33, sem retirada de conteúdo. Exigir CI completo do head final, revisões, árvore de integração e fluxo no domínio público antes de declarar a correção publicada. As métricas curriculares continuam 67 atividades em 51 das 137 aulas nesta branch; a produção ainda precisa ser conferida separadamente.
+
+## Preparação seguinte: caixas CSS com conteúdo adverso
+
+A branch pratica/css-caixas-conteudo parte do head 658e2b5d9f59106b255a41e47e55f490c0a8ce2e da PR #25, cuja integração deve ser conferida antes desta entrega. A aula css-caixas-intrinseco conserva seis seções, exemplos e dois problemas independentes; recebe três pausas onde ainda não havia atividades corrigíveis: prever a borda quando o conteúdo chega a zero, permitir encolhimento sem recortar texto e corrigir a referência de um cabeçalho durante rolagem local.
+
+Passaram 484 testes unitários, strict/build e, após corrigir o rótulo do exemplo, 29 testes específicos de prática/catálogo. O primeiro teste nativo encontrou que Código excedia os 48px previstos pelo mínimo automático; o exemplo agora usa o rótulo curto ID para isolar a restrição do identificador, sem recorte ou mudança das regras do produto. O teste continua exigindo 48px para esse rótulo e o identificador inteiro. O bundle inicial está em 191,78 kB gzip e o mundo mantém 135,94 kB. Exigir os fluxos de navegador e CI do head final, resolver revisões e integrar C# antes de CSS.
+
+As métricas desta branch incluem a dependência C#: 67 atividades em 51 das 137 aulas. Isso deixa 86 aulas sem pausas na teoria e não significa 86 entregas até um currículo exaustivo. A main publicada no início desta preparação tinha 61 atividades; conferir o checkpoint e as PRs para o estado posterior.
+
+## Checkpoint: SQL e HTML integrados; iteradores C# em preparação
+
+As PRs #23/#24 foram integradas com árvores idênticas aos heads aprovados. SQL: head 09d232b5b3c197c4180e68ffea2b0484dd3fce52, CI 37996313180, 442 unitários e 115 testes de navegador. HTML: head 241ccbd68061e81f0f47cd08ff723c514cd3a9fc, CI 37996662758, 453 unitários e 117 testes de navegador. Ambos executaram 152 exemplos externos, oito projetos TypeScript, sete cenários C++20 e 12 cenários PostgreSQL, além dos gates de isolamento, API, build e auditoria. A revisão da preparação diária foi resolvida.
+
+A main 04217e927284326444946cda02e5600e876f37cd tem árvore 32f3e829a5d8061f69067dabc1db6078e03ea80a, igual à do head HTML aprovado. A implantação AhnGXJpGEpzJ2h9zVstzcBiiLJCP foi confirmada READY/production nesse SHA. Os dois fluxos SQL passaram no domínio (15,5 s), incluindo plano antigo e respostas offline. Os dois fluxos HTML passaram em seguida (9,3 s), incluindo referências nativas, fallback e arquivos SVG recuperados offline. A main local foi sincronizada sem descartar branches. Os registros anteriores de gates pendentes são históricos.
+
+A próxima branch pratica/csharp-iteradores-percursos preserva a atividade de using preexistente e os dois problemas independentes de cs-iteradores-descarte. Acrescenta previsão de avanço, depuração de enumerador abandonado e materialização de consulta finita. ToArray e ToList são decisões válidas nesse contrato, sem promover a materialização universal. Os dez cenários .NET 10 passaram localmente, com suspensão, nova enumeração, reprodução da fuga, descarte normal/por exceção, origem vazia, duas materializações, repetição de efeitos e filtro vazio. O build local precisou executar fora do sandbox porque o SDK não conseguiu ler a configuração NuGet do usuário; o projeto descartável desativa fontes de pacotes e não acrescenta dependências. Exigir testes completos, CI do head, revisões e verificação publicada antes da integração.
+
 ## Próxima entrega: imagens com contexto e arquivos offline
 
 A branch `pratica/html-imagens-contexto` depende do head SQL `09d232b5b3c197c4180e68ffea2b0484dd3fce52` da PR #23, ainda exigindo CI completo. Acrescenta três pausas à aula existente `html-midia`, que não tinha atividades corrigíveis. Preserva suas seis seções e os exemplos SVG, aprofunda alternativas funcionais, sizes e seleção de picture, e fornece três diagramas locais no cache offline. A ordem inicial de picture é propositalmente incorreta; o aluno precisa movê-la. Não há novo executor, runtime, permissão de rede ou alteração de arte.
@@ -252,3 +292,17 @@ PR #10 integrada em e04b385c18ac60b1d119670edb19c0ab73d2d01e, com árvore 5b3f29
 O checkpoint anterior de main, run 37704436528, falhou por timeout de 180 segundos no fluxo interativo de 25 passos, com 84/85 testes aprovados. As duas suítes completas posteriores passaram esse fluxo sem ampliar o timeout. Registrar qualquer recorrência e investigar o trace; não apresentar aquele run como aprovado. Os CIs disparados pelas integrações #9/#10 e por este checkpoint devem ser conferidos na próxima retomada.
 
 As seções “em revisão” e “em preparação” acima registram a sequência histórica; as integrações desta seção são o estado atual. Continuam 17 frentes amplas abertas, sem contagem finita auditada das aulas futuras. A implantação pública segue parcialmente verificada.
+
+## Validação local da prática de iteradores
+
+Passaram 470 testes unitários em 31 arquivos, strict/build, dez cenários .NET 10 e o fluxo Edge offline (23,2 s; 25,6 s total). A referência preserva solução assistida, tentativas anteriores, respostas após reload e ausência de overflow em 220/4000 px. O bundle inicial está em 190,42 kB gzip; o mundo mantém 135,94 kB e carregamento sob demanda. São 64 atividades no catálogo desta branch, em 50 aulas; 61 estão publicadas na main. Exigir o gate completo do commit publicado e conferir revisões antes de integrar.
+
+
+## Validação de navegador das caixas CSS
+
+Os dois fluxos Edge passaram depois do ajuste do rótulo (1,4 s referência nativa; 22,7 s produto; 26,0 s total). A referência confere bordas 150/120/30 px, falha com mínimo automático, identificador inteiro sem recorte, texto vazio e posição do cabeçalho antes/depois de scrollTop 80 em 200/220/375/4000 px. O produto confere respostas, assistência, evidências offline e layout 220/4000 px. Essas evidências locais não substituem o CI completo nem a implantação deste head.
+
+
+## Artefatos completos nos testes de navegador
+
+O run 38065369704 do head 99604b5 aprovou 498 testes de unidade, exemplos, builds e auditoria. Os grupos de navegador passaram 61/61 e 61/62: a API de catálogo falhou porque o novo job recuperava dist, mas não server/Content/curriculum.json, gerado pela pré-renderização e ignorado no Git. O artefato agora transporta os dois destinos com a raiz preservada; a suíte continua exigindo o catálogo completo. Não considerar aquele run verde. As duas execuções antigas da PR #25 esgotaram o limite de 40 minutos. A PR #28 contém integralmente os commits das PRs #25–#27; integrar esse conjunto somente no novo head após os quatro jobs completos, revisão e comparação da árvore, preservando os commits separados.

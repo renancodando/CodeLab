@@ -1,5 +1,23 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Python: atributos e estado de descritores
+
+py-objetos-protocolos recebe previsão de precedência, diagnóstico de armazenamento compartilhado e alteração da guarda no acesso pela classe. As pausas exigem preparação dos blocos 3/4/5 na sessão diária. Leitura não gera domínio; assistência e respostas são preservadas offline. Nenhum programa do aluno é executado nessas pausas. A teoria foi aprofundada, mantendo o exercício Retangulo e seus critérios e exemplos anteriores.
+
+Os nove cenários de referência são executados com Python no verificador do CI, incluindo reprodução dos defeitos, duas instâncias, dois atributos, zero, inteiros grandes, rejeição de bool/negativo/outros tipos sem mutação, herança, property, sombra de atributo e identidade sem chamar igualdade. O armazenamento proposto usa __dict__, a busca padrão e uma instância de descritor por campo; não cobre slots exclusivos, busca personalizada, reuso do mesmo descritor sob vários nomes ou isolamento de segurança. Referências oficiais: [guia de descritores](https://docs.python.org/3/howto/descriptor.html) e [protocolo do modelo de dados](https://docs.python.org/3/reference/datamodel.html#implementing-descriptors). A aula e suas atividades não encerram metaprogramação Python.
+
+## CSS: caixa medida, mínimo do item e rolagem local
+
+css-caixas-intrinseco recebe previsão, alteração e depuração após os blocos 1/3/5, mantendo os exercícios e problemas anteriores. A primeira pausa exige considerar o piso zero da área de conteúdo de border-box; a segunda distingue flex-shrink, mínimo automático e a política de quebra break-word; a terceira mantém o cabeçalho no fluxo e mede sua adesão ao contêiner que realmente rola. A leitura preparatória vem antes da família diária e não produz domínio. Respostas são conceituais, com assistência sob solicitação e progresso offline.
+
+Referências oficiais consultadas: [dimensionamento de caixas](https://www.w3.org/TR/css-sizing-3/#box-sizing), [mínimo automático em Flexbox](https://www.w3.org/TR/css-flexbox-1/#min-size-auto), [quebra de texto](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/overflow-wrap) e [posicionamento aderente](https://www.w3.org/TR/css-position-3/#sticky-pos). A referência nativa verifica bordas reais, reprodução do overflow, texto inteiro sem recorte, rótulo curto, fonte vazia e scrollTop efetivamente alterado. O escopo usa escrita horizontal e navegadores dos testes; não certifica todos os modos de escrita, leitores de tela ou motores CSS.
+
+## C#: percursos, descarte e materialização
+
+A aula cs-iteradores-descarte passa a distribuir três novas pausas após os blocos 2/3/5. Prever MoveNext exercita estado e suspensão; corrigir o consumidor que abandona o enumerador exercita a fronteira de Dispose inclusive em exceção; completar uma materialização distingue receita de resultado guardado. A atividade de using anterior e os dois problemas independentes permanecem. A preparação diária cobre os blocos necessários, leitura não gera domínio e solução consultada registra assistência. Respostas continuam conceituais/offline; não houve execução .NET do aluno.
+
+O verificador compartilhado compila um projeto .NET 10 descartável sem pacotes externos e confere dez cenários. Além dos gabaritos, reproduz o recurso ativo sem Dispose e a duplicação de efeitos por reenumeração. Origem vazia, falha no consumidor, filtro vazio e nova enumeração têm contratos observáveis. A origem é finita e os valores são inteiros; isso não testa arquivos, IAsyncEnumerable, cópia profunda ou todas as origens LINQ. Referências oficiais: [yield e descarte](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield), [using](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using) e [avaliação adiada](https://learn.microsoft.com/en-us/dotnet/standard/linq/deferred-execution-lazy-evaluation).
+
 ## HTML: alternativas e seleção de imagens
 
 `html-midia` recebe três pausas preparadas pelos blocos 1/2/5: nomear um link que só contém imagem, completar sizes conforme o espaço CSS e reconstruir picture quando a fonte genérica esconde a específica. O conceito é exigido na sessão diária; leitura não cria domínio e consultar solução registra assistência. São decisões conceituais, sem alegar que o aluno executou HTML ou concluiu uma auditoria de acessibilidade.
