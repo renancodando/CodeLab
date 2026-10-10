@@ -934,7 +934,7 @@ export const expandedLessons:Lesson[]=[
       "sanitizers UB"
     ],
     "language": "cpp",
-    "source": "https://eel.is/c++draft/",
+    "source": "https://eel.is/c++draft/smartptr",
     "capitulos": [],
     "code": "",
     "exercise": "",

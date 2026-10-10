@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## C++: transferência, posse temporária e retorno de texto
+
+cpp-memoria-posse recebe três pausas após os blocos 2/3/4, mantendo a pausa anterior de invalidação no bloco 5. A pessoa diagnostica a tentativa de mover um unique_ptr constante, prevê a vida conservada pelo shared_ptr obtido de lock e completa um retorno de string com posse. As novas habilidades exigem preparação na sessão diária. Respostas são conceituais, sem compilação do aluno; assistência, respostas e evidências continuam no progresso local. O exercício de optional e o projeto de árvore foram preservados.
+
+O verificador compartilhado inclui oito cenários C++20: recusa de transferência constante, transferência modificável, conversão sem transferência, previsão de lock, observador vazio/expirado, liberação da última posse e retorno independente com texto vazio/curto/longo. A alternativa string_view é recusada por uma asserção de tipo antes de qualquer chamada; nenhum acesso pendente é executado. Esses casos ainda exigem confirmação do CI desta entrega. Não representam teste de concorrência nem encerram span, allocators, ciclos ou análise geral de lifetime. Referências: [construtores de unique_ptr](https://eel.is/c++draft/unique.ptr.single.ctor), [lock e expired](https://eel.is/c++draft/util.smartptr.weak.obs), [string_view](https://eel.is/c++draft/string.view.template) e [std::move](https://eel.is/c++draft/forward).
+
 ## Python: atributos e estado de descritores
 
 py-objetos-protocolos recebe previsão de precedência, diagnóstico de armazenamento compartilhado e alteração da guarda no acesso pela classe. As pausas exigem preparação dos blocos 3/4/5 na sessão diária. Leitura não gera domínio; assistência e respostas são preservadas offline. Nenhum programa do aluno é executado nessas pausas. A teoria foi aprofundada, mantendo o exercício Retangulo e seus critérios e exemplos anteriores.
@@ -130,7 +136,7 @@ O percurso Git conserva as três etapas, exemplos, investigação, solução e c
 
 O rascunho usa practiceAnswers e entra no backup existente. Há limite explícito de 600 caracteres por versão, 16 commits e 28 mil caracteres serializados; não há truncamento silencioso. Rascunhos incompatíveis são preservados para exportação, com reinício específico. Uma falha de armazenamento mantém o estado em memória e orienta a exportar. Consultar a solução existente registra assistência na bancada. Repetir a conferência não gera nota de domínio.
 
-A bancada não é somada ao catálogo de atividades das oito linguagens: a fonte de métricas continua com 70 atividades em 52 aulas. Ela é um experimento adicional do percurso Git. O verificador compartilhado compara snapshots do modelo com Git real, incluindo arquivo vazio, preparação repetida e commit sem mudança; mantém os casos reais de conflito por contrato e reversão. Referências: [git add](https://git-scm.com/docs/git-add), [git commit](https://git-scm.com/docs/git-commit) e [as três áreas](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F).
+A bancada não é somada ao catálogo de atividades das oito linguagens: os totais atuais são gerados em [métricas do catálogo](metricas-catalogo.md). Ela é um experimento adicional do percurso Git. O verificador compartilhado compara snapshots do modelo com Git real, incluindo arquivo vazio, preparação repetida e commit sem mudança; mantém os casos reais de conflito por contrato e reversão. Referências: [git add](https://git-scm.com/docs/git-add), [git commit](https://git-scm.com/docs/git-commit) e [as três áreas](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F).
 
 ## Relógio HTTP e repetição de uma intenção
 
