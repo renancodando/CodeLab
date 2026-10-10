@@ -11,3 +11,7 @@ export function createEditor(container:HTMLElement,value:string,language='javasc
  editor.onDidDispose(()=>model?.dispose());
  return editor;
 }
+export function alterarLinguagem(editor:monaco.editor.IStandaloneCodeEditor,linguagem:string){
+ const modelo=editor.getModel();
+ if(modelo)monaco.editor.setModelLanguage(modelo,linguagem);
+}
