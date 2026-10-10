@@ -9,6 +9,7 @@ import {montarCasosCsv} from '../tests/fixtures/python-csv.mjs';
 import {montarCasosDescritores} from '../tests/fixtures/python-descritores.mjs';
 import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
 import {verificarConceitosCpp} from '../tests/fixtures/cpp-conceitos.mjs';
+import {verificarPosseCpp} from '../tests/fixtures/cpp-posse.mjs';
 import {verificarAusenciasSql} from '../tests/fixtures/sql-null.mjs';
 import {verificarIteradoresCsharp} from '../tests/fixtures/csharp-iteradores.mjs';
 
@@ -70,6 +71,7 @@ try{
  const {getPracticeSolution}=await import(asUrl(practiceSource));
  const cenariosModulos=await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution);
  const cenariosConceitos=await verificarConceitosCpp(root,practiceActivities,getPracticeSolution);
+ const cenariosPosse=await verificarPosseCpp(root,practiceActivities,getPracticeSolution);
  const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
  const cenariosIteradores=await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution);
  const examples=[
@@ -111,6 +113,7 @@ try{
  console.log(count+' exemplos e soluções externos compilados/executados.');
  console.log(cenariosModulos+' projetos TypeScript conferidos, incluindo diagnósticos e falhas esperadas de resolução.');
  console.log(cenariosConceitos+' cenários C++20 conferidos, incluindo falhas esperadas de instanciação e ambiguidade.');
+ console.log(cenariosPosse+' cenários C++20 de posse conferidos, sem executar acessos pendentes.');
  console.log(cenariosAusencias+' cenários PostgreSQL conferidos para ausência, restrições e correspondência.');
  console.log(cenariosIteradores+' cenários .NET conferidos para suspensão, descarte e materialização.');
 }finally{await rm(root,{recursive:true,force:true});}
