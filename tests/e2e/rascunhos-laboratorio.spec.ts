@@ -38,7 +38,7 @@ test('trocas consecutivas de linguagem conservam os rascunhos '+(anotacao?'com a
  await expect(pagina.locator('#lab-run')).toBeEnabled();
  for(const [linguagem,chave] of [['html','lab-html'],['javascript','lab-js'],['text','lab-text'],['python','lab-python']]){
   await pagina.locator('#lab-language').selectOption(linguagem);
-  await expect.poll(async()=>(await exportarTexto(pagina)).texto).toBe(rascunhos[chave as keyof typeof rascunhos]);
+  expect((await exportarTexto(pagina)).texto).toBe(rascunhos[chave as keyof typeof rascunhos]);
  }
  expect(enviadas).toEqual([]);
 });
@@ -56,7 +56,7 @@ test('laboratório restaura cada rascunho e conserva HTML e JavaScript vazios',a
  ]) {
   await page.locator('#lab-language').selectOption(linguagem);
   await expect(page.locator('#lab-note')).toContainText(nota);
-  await expect.poll(async()=> (await exportarTexto(page)).texto).toBe(rascunhos[chave as keyof typeof rascunhos]);
+  expect((await exportarTexto(page)).texto).toBe(rascunhos[chave as keyof typeof rascunhos]);
  }
 });
 
@@ -72,7 +72,7 @@ test('laboratório retoma edição Python depois de sair e recarregar sem execut
  await page.goto('/#/home');await page.goto('/#/laboratorio');await page.reload();
  await expect(page.locator('#lab-run')).toBeEnabled();await page.locator('#lab-language').selectOption('python');
  await expect(page.locator('#lab-note')).toContainText('Executar envia');
- await expect.poll(async()=> (await exportarTexto(page)).texto).toBe(codigo);
+ expect((await exportarTexto(page)).texto).toBe(codigo);
  expect(enviadas).toEqual([]);
 });
 
