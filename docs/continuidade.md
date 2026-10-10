@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Checkpoint: SQL e HTML integrados; iteradores C# em preparação
+
+As PRs #23/#24 foram integradas com árvores idênticas aos heads aprovados. SQL: head 09d232b5b3c197c4180e68ffea2b0484dd3fce52, CI 37996313180, 442 unitários e 115 testes de navegador. HTML: head 241ccbd68061e81f0f47cd08ff723c514cd3a9fc, CI 37996662758, 453 unitários e 117 testes de navegador. Ambos executaram 152 exemplos externos, oito projetos TypeScript, sete cenários C++20 e 12 cenários PostgreSQL, além dos gates de isolamento, API, build e auditoria. A revisão da preparação diária foi resolvida.
+
+A main 04217e927284326444946cda02e5600e876f37cd tem árvore 32f3e829a5d8061f69067dabc1db6078e03ea80a, igual à do head HTML aprovado. A implantação AhnGXJpGEpzJ2h9zVstzcBiiLJCP foi confirmada READY/production nesse SHA. Os dois fluxos SQL passaram no domínio (15,5 s), incluindo plano antigo e respostas offline. Os dois fluxos HTML passaram em seguida (9,3 s), incluindo referências nativas, fallback e arquivos SVG recuperados offline. A main local foi sincronizada sem descartar branches. Os registros anteriores de gates pendentes são históricos.
+
+A próxima branch pratica/csharp-iteradores-percursos preserva a atividade de using preexistente e os dois problemas independentes de cs-iteradores-descarte. Acrescenta previsão de avanço, depuração de enumerador abandonado e materialização de consulta finita. ToArray e ToList são decisões válidas nesse contrato, sem promover a materialização universal. Os dez cenários .NET 10 passaram localmente, com suspensão, nova enumeração, reprodução da fuga, descarte normal/por exceção, origem vazia, duas materializações, repetição de efeitos e filtro vazio. O build local precisou executar fora do sandbox porque o SDK não conseguiu ler a configuração NuGet do usuário; o projeto descartável desativa fontes de pacotes e não acrescenta dependências. Exigir testes completos, CI do head, revisões e verificação publicada antes da integração.
+
 ## Próxima entrega: imagens com contexto e arquivos offline
 
 A branch `pratica/html-imagens-contexto` depende do head SQL `09d232b5b3c197c4180e68ffea2b0484dd3fce52` da PR #23, ainda exigindo CI completo. Acrescenta três pausas à aula existente `html-midia`, que não tinha atividades corrigíveis. Preserva suas seis seções e os exemplos SVG, aprofunda alternativas funcionais, sizes e seleção de picture, e fornece três diagramas locais no cache offline. A ordem inicial de picture é propositalmente incorreta; o aluno precisa movê-la. Não há novo executor, runtime, permissão de rede ou alteração de arte.
@@ -252,3 +260,8 @@ PR #10 integrada em e04b385c18ac60b1d119670edb19c0ab73d2d01e, com árvore 5b3f29
 O checkpoint anterior de main, run 37704436528, falhou por timeout de 180 segundos no fluxo interativo de 25 passos, com 84/85 testes aprovados. As duas suítes completas posteriores passaram esse fluxo sem ampliar o timeout. Registrar qualquer recorrência e investigar o trace; não apresentar aquele run como aprovado. Os CIs disparados pelas integrações #9/#10 e por este checkpoint devem ser conferidos na próxima retomada.
 
 As seções “em revisão” e “em preparação” acima registram a sequência histórica; as integrações desta seção são o estado atual. Continuam 17 frentes amplas abertas, sem contagem finita auditada das aulas futuras. A implantação pública segue parcialmente verificada.
+
+## Validação local da prática de iteradores
+
+Passaram 470 testes unitários em 31 arquivos, strict/build, dez cenários .NET 10 e o fluxo Edge offline (23,2 s; 25,6 s total). A referência preserva solução assistida, tentativas anteriores, respostas após reload e ausência de overflow em 220/4000 px. O bundle inicial está em 190,42 kB gzip; o mundo mantém 135,94 kB e carregamento sob demanda. São 64 atividades no catálogo desta branch, em 50 aulas; 61 estão publicadas na main. Exigir o gate completo do commit publicado e conferir revisões antes de integrar.
+

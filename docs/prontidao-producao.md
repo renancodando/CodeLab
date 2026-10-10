@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## SQL e HTML publicados; próximo gate de iteradores C#
+
+As PRs #23/#24 passaram nos respectivos CIs finais 37996313180 e 37996662758, com 442/453 unitários e 115/117 testes de navegador. Os exemplos incluíram PostgreSQL real e as árvores dos merges coincidiram com os heads validados. A implantação da main 04217e927284326444946cda02e5600e876f37cd está READY/production; os dois fluxos SQL e os dois HTML passaram no domínio. Essas pendências de integração/publicação estão encerradas para os comportamentos testados.
+
+A preparação de iteradores C# tem dez cenários locais .NET aprovados e 31 testes específicos de prática/catálogo, com strict. Ainda exige suíte completa, build, navegador, CI e publicação. Não acrescenta runtime ao cliente, rede ao aluno, pacotes ou permissões de execução. As evidências das PRs anteriores não validam automaticamente esse próximo head.
+
 ## Gates seguintes: SQL e imagens HTML
 
 A PR #23 ganhou um commit operacional separado após duas falhas de download do Docker Hub antes do checkout. PostgreSQL 18 passa a ser obtido no repositório público oficial Docker da AWS, com manifest Linux/amd64 disponível; o próximo CI precisa executar todos os gates. A branch HTML depende desse head e tem evidências locais de 452 testes unitários, strict/build e dois fluxos Edge, incluindo referências nativas e arquivos realmente recuperados offline. Isso não autoriza tratar SQL/HTML como integrados ou publicados antes dos gates dos heads e da verificação posterior no domínio. Os checkpoints abaixo descrevem a main já integrada.

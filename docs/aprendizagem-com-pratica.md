@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## C#: percursos, descarte e materialização
+
+A aula cs-iteradores-descarte passa a distribuir três novas pausas após os blocos 2/3/5. Prever MoveNext exercita estado e suspensão; corrigir o consumidor que abandona o enumerador exercita a fronteira de Dispose inclusive em exceção; completar uma materialização distingue receita de resultado guardado. A atividade de using anterior e os dois problemas independentes permanecem. A preparação diária cobre os blocos necessários, leitura não gera domínio e solução consultada registra assistência. Respostas continuam conceituais/offline; não houve execução .NET do aluno.
+
+O verificador compartilhado compila um projeto .NET 10 descartável sem pacotes externos e confere dez cenários. Além dos gabaritos, reproduz o recurso ativo sem Dispose e a duplicação de efeitos por reenumeração. Origem vazia, falha no consumidor, filtro vazio e nova enumeração têm contratos observáveis. A origem é finita e os valores são inteiros; isso não testa arquivos, IAsyncEnumerable, cópia profunda ou todas as origens LINQ. Referências oficiais: [yield e descarte](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield), [using](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using) e [avaliação adiada](https://learn.microsoft.com/en-us/dotnet/standard/linq/deferred-execution-lazy-evaluation).
+
 ## HTML: alternativas e seleção de imagens
 
 `html-midia` recebe três pausas preparadas pelos blocos 1/2/5: nomear um link que só contém imagem, completar sizes conforme o espaço CSS e reconstruir picture quando a fonte genérica esconde a específica. O conceito é exigido na sessão diária; leitura não cria domínio e consultar solução registra assistência. São decisões conceituais, sem alegar que o aluno executou HTML ou concluiu uma auditoria de acessibilidade.
