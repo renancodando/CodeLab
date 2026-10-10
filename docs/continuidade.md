@@ -1,5 +1,19 @@
 # Continuidade do CODELAB
 
+## Preparação seguinte: descritores Python e duração do CI
+
+A branch pratica/python-descritores-estado parte do head 3e417cac340fd325815b429e585a06faad0c8e28 da PR #27. Preserva as seis seções, o exemplo dataclass, o exercício Retangulo/Quadro e o projeto de py-objetos-protocolos. Acrescenta três pausas após os blocos 3/4/5: precedência de atributos, depuração de valores compartilhados pelo descritor e acesso pela classe sem confundir None com falsidade ou igualdade. Esta aula antiga não possui o par de problemas independentes das expansões recentes; não houve remoção de problemas.
+
+Passaram 498 testes unitários e nove cenários Python reais. O verificador compartilhado inclui esses cenários, reproduz os programas quebrados e confere valores independentes, dois campos, rejeição sem mutação, zero, bool, herança, acesso pela classe, identidade equivalente, igualdade não executada e property sem setter. As respostas do aluno continuam conceituais e offline, sem enviar Python a executor. Strict/build passaram; o bundle inicial está em 193,18 kB gzip, o mundo em 135,94 kB, com 32 recursos locais e 157 páginas.
+
+O fluxo offline encontrou transbordamento de uma alternativa longa e da palavra metaprogramação no título a 220 px. A correção permite quebra de identificadores nas alternativas e palavras longas nos títulos de leitura, preservando conteúdo, fonte e ordem. Após essas correções, o fluxo Edge passou em 40,4 s (57,5 s total), incluindo erro/acerto, assistência, armazenamento, recarga offline e 220/4000 px.
+
+O CI C# 38017961491 foi cancelado no limite de 40 min após 114 testes de navegador aprovados; o mesmo head foi reenviado para validação, sem considerá-lo aprovado. CSS 38018467196 passou com 484 unitários e 120 testes de navegador; rascunhos 38019095799 passou com 484 unitários e 122 testes. As revisões consultadas estavam vazias. Conferir os gates finais, integrar #25/#26/#27 na ordem e verificar publicação.
+
+Para não manter toda a suíte de navegador presa ao mesmo limite, o próximo workflow separa dois jobs depois da validação comum, recuperando o mesmo artefato dist. A lista Playwright conferiu os 123 testes desta branch em parcelas de 62/61, sem omissões ou duplicações. Cada parcela conserva um worker, os três servidores e os relatórios; não reduz asserções nem executa duas vezes os compiladores e o PostgreSQL. O novo desenho ainda exige CI real, incluindo a transferência do artefato.
+
+As métricas geradas desta branch são 70 atividades em 52 das 137 aulas; 85 aulas ainda não têm pausas na teoria. A produção precisa ser conferida separadamente. Esta contagem não mede conclusão de linguagens, do currículo integral ou de todas as frentes de produção.
+
 ## Correção em preparação: trocas consecutivas no laboratório
 
 A branch correcao/rascunhos-troca-linguagem parte do head 766f5a78fde7f3bd6c4054849caa1999ab7bba20 da PR #26; depende da integração verificada de C# (#25) e CSS (#26). O teste de navegador reproduziu uma perda real: trocar de JavaScript para anotações e imediatamente para Python salvava o JavaScript sobre as anotações enquanto o import do editor ainda aguardava. A troca agora usa o módulo Monaco já carregado e atualiza linguagem/conteúdo na mesma operação síncrona, mantendo persistência e cancelamento existentes.
