@@ -359,7 +359,7 @@ export const learningPaths:LearningPath[] = [
         "minutes": 35,
         "theory": [
           "Uma conexão pode falhar depois que o servidor aceitou uma operação. O cliente não sabe se a alteração ocorreu e pode tentar de novo. Repetir uma consulta é diferente de repetir uma cobrança. A identidade da operação precisa sobreviver à tentativa: a mesma chave de idempotência representa a mesma intenção, não uma nova compra.",
-          "Um simulador local pode manter um mapa de chave para resultado e outro para o conteúdo da solicitação. A primeira solicitação calcula e guarda o resultado; uma repetição com a mesma chave devolve o resultado guardado. A mesma chave com dados diferentes precisa ser rejeitada. Isso exercita o contrato, mas um sistema real ainda precisa persistência, atomicidade, validade da chave e proteção de operações concorrentes."
+          "Um simulador local pode manter um mapa de chave para resultado e outro para o conteúdo da solicitação. A primeira solicitação calcula e guarda o resultado; uma repetição com a mesma chave devolve o resultado guardado. A mesma chave com dados diferentes precisa ser rejeitada. Timeout encerra a espera do cliente, não comprova rollback no servidor. Antes de repetir, investigue o contrato e o efeito possível. 429 pode fornecer Retry-After como espera ou data; o experimento usa dois segundos contados após receber a resposta. 503 não garante ausência de efeito em qualquer API. Uma política de repetição real precisa limitar tentativas e tempo total, considerar backoff e variação entre clientes e evitar repetir uma intenção insegura. Um conflito de conteúdo com 409 exige corrigir a intenção, não insistir no mesmo pedido. Isso exercita o contrato, mas um sistema real ainda precisa persistência, atomicidade, validade da chave e proteção de operações concorrentes. A chave faz parte desse contrato da aplicação: POST não se torna idempotente apenas porque o cliente enviou um identificador. O servidor precisa vincular identidade, conteúdo e resultado de forma consistente. Um processo reiniciado perde um mapa apenas em memória; duas operações concorrentes podem ultrapassar uma verificação separada da gravação."
         ],
         "example": "const operacoes = new Map();\nfunction reservar(chave, quantidade) {\n const anterior = operacoes.get(chave);\n if (anterior) {\n  if (anterior.quantidade !== quantidade) throw new Error('Conflito de chave');\n  return anterior.resultado;\n }\n const resultado = {reservado:quantidade};\n operacoes.set(chave, {quantidade,resultado});\n return resultado;\n}",
         "bug": "// Uma nova chave a cada tentativa representa uma nova operação:\nrepetir(() => reservar(crypto.randomUUID(), 2));",
@@ -386,7 +386,9 @@ export const learningPaths:LearningPath[] = [
           ]
         },
         "references": [
-          "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview"
+          "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2",
+          "https://www.rfc-editor.org/rfc/rfc6585.html#section-4",
+          "https://www.rfc-editor.org/rfc/rfc9110.html#section-10.2.3"
         ]
       }
     ]
