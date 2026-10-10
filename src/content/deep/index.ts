@@ -299,7 +299,7 @@ export const expandedLessons:Lesson[]=[
       "slots metaclasses"
     ],
     "language": "python",
-    "source": "https://docs.python.org/3/",
+    "source": "https://docs.python.org/3/howto/descriptor.html",
     "capitulos": [],
     "code": "",
     "exercise": "",

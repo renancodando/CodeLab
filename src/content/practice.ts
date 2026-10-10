@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'py-prever-atributo',language:'python',lessonIds:['py-objetos-protocolos'],skillIds:['python.descritores.precedencia'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O dicionário da instância vence toda leitura?',
+  prompt:'Preveja as três linhas. As classes usam a busca padrão de atributos, sem sobrescrever __getattribute__. cache tem apenas __get__; total é uma property sem setter. Esta pausa compara raciocínio, sem executar Python.',
+  code:'class Origem:\n    def __get__(self, instancia, dono=None):\n        return self if instancia is None else "calculado"\n\nclass Registro:\n    cache = Origem()\n\n    @property\n    def total(self):\n        return 10\n\nitem = Registro()\nitem.__dict__.update(cache="guardado", total=99)\nprint(item.cache)\nprint(item.total)\nprint(isinstance(Registro.cache, Origem))',
+  hint:'Classifique os dois atributos da classe antes de consultar o dicionário da instância. Acesso pela classe também pode chamar __get__, com outra entrada.',minutes:4
+ },
+ {
+  id:'py-isolar-descritor',language:'python',lessonIds:['py-objetos-protocolos'],skillIds:['python.descritores.armazenamento'],afterBlock:4,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Dois pedidos disputam o mesmo valor',
+  prompt:'A saída é 20 e 20, mas os pedidos devem conservar 10 e 20. Escolha a correção que mantém a validação antes de gravar e separa o estado por instância. São objetos com __dict__; esta solução não cobre classes apenas com slots.',
+  code:'class Quantidade:\n    def __set_name__(self, dono, nome):\n        self.chave = "_" + nome\n\n    def __get__(self, instancia, dono=None):\n        if instancia is None:\n            return self\n        return self.valor\n\n    def __set__(self, instancia, valor):\n        if type(valor) is not int or valor < 0:\n            raise ValueError("quantidade inválida")\n        self.valor = valor\n\nclass Pedido:\n    quantidade = Quantidade()\n\n    def __init__(self, quantidade):\n        self.quantidade = quantidade\n\nprimeiro = Pedido(10)\nsegundo = Pedido(20)\nprint(primeiro.quantidade)\nprint(segundo.quantidade)',
+  options:[{id:'compartilhar',text:'Trocar self.valor por self.chave em ambas as operações, guardando o número no descritor.'},{id:'separar',text:'Ler e gravar instancia.__dict__[self.chave], conservando a guarda de classe e a validação antes da gravação.'},{id:'reatribuir',text:'Gravar instancia.quantidade = valor dentro de __set__, mantendo __get__ como está.'}],
+  hint:'self é o descritor instalado na classe. Investigue a quem pertence o valor: mudar o nome do campo compartilhado não separa os pedidos.',minutes:4
+ },
+ {
+  id:'py-acessar-classe',language:'python',lessonIds:['py-objetos-protocolos'],skillIds:['python.descritores.acesso-classe'],afterBlock:5,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'Uma instância falsa ainda é uma instância',
+  prompt:'Complete a condição usando identidade com None. O acesso Pedido.quantidade deve devolver o descritor; uma instância cujo __bool__ devolve False deve continuar devolvendo seu número. Preserve o retorno pelo dicionário e a validação. Escreva só a condição, sem if nem dois-pontos.',
+  code:'class Quantidade:\n    def __set_name__(self, dono, nome):\n        self.chave = "_" + nome\n\n    def __get__(self, instancia, dono=None):\n        if ____:\n            return self\n        return instancia.__dict__[self.chave]\n\n    def __set__(self, instancia, valor):\n        if type(valor) is not int or valor < 0:\n            raise ValueError("quantidade inválida")\n        instancia.__dict__[self.chave] = valor\n\nclass Pedido:\n    quantidade = Quantidade()\n\n    def __init__(self, quantidade):\n        self.quantidade = quantidade\n\n    def __bool__(self):\n        return False\n\nprint(isinstance(Pedido.quantidade, Quantidade))\nprint(Pedido(0).quantidade)',
+  hint:'Ausência de instância e falsidade lógica são situações diferentes. Igualdade também pode executar um método definido pelo objeto.',minutes:4
+ },
+ {
   id:'css-prever-bordas',language:'css',lessonIds:['css-caixas-intrinseco'],skillIds:['css.caixas.dimensao'],afterBlock:1,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'O conteúdo não pode ter tamanho negativo',
   prompt:'Em escrita horizontal, sem outras regras ou transformações, preveja a largura da borda de conteudo, borda e estreita. Digite só os três números em pixels, um por linha, na ordem dos elementos. Padding e bordas continuam existindo mesmo na caixa muito estreita.',

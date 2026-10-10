@@ -359,7 +359,7 @@
               "status": "introduzido"
             }
           ],
-          "source": "https://docs.python.org/3/",
+          "source": "https://docs.python.org/3/howto/descriptor.html",
           "status": "praticaDoModulo"
         },
         {

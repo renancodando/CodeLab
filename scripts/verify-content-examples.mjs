@@ -5,6 +5,7 @@ import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
 import {montarCasosCsv} from '../tests/fixtures/python-csv.mjs';
+import {montarCasosDescritores} from '../tests/fixtures/python-descritores.mjs';
 import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
 import {verificarConceitosCpp} from '../tests/fixtures/cpp-conceitos.mjs';
 import {verificarAusenciasSql} from '../tests/fixtures/sql-null.mjs';
@@ -71,6 +72,7 @@ try{
  const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
  const cenariosIteradores=await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution);
  const examples=[
+  ...montarCasosDescritores(practiceActivities,getPracticeSolution),
   ...montarCasosCsv(practiceActivities, getPracticeSolution),
   ...montarCasosCancelamento(practiceActivities, getPracticeSolution),
   {id:'cpp-prever-intervalo',key:'cpp',source:'#include <iostream>\n#include <vector>\nint main(){\n'+practiceActivities.find(a=>a.id==='cpp-prever-intervalo').code+'\n}',expected:['6,2']},
