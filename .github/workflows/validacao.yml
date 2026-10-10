@@ -92,17 +92,52 @@ jobs:
       - name: Validar cache e falhas da observação meteorológica sem rede
         run: dotnet run --project tests/meteorologia-api/Verificacao.csproj --configuration Release
 
+      - name: Guardar a aplicação compilada
+        uses: actions/upload-artifact@v4
+        with:
+          name: aplicacao-compilada
+          path: dist/
+          if-no-files-found: error
+          retention-days: 1
+
+  navegador:
+    name: Navegador (${{ matrix.parcela }}/2)
+    needs: validar
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        parcela: [1, 2]
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Preparar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Instalar dependências
+        run: npm ci
+      - name: Recuperar a aplicação verificada
+        uses: actions/download-artifact@v4
+        with:
+          name: aplicacao-compilada
+          path: dist/
       - name: Instalar Chromium para os testes de navegador
         run: npx playwright install --with-deps chromium
-
       - name: Validar os fluxos no navegador
-        run: npm run test:e2e
+        run: npm run test:e2e -- --shard=${{ matrix.parcela }}/2
 
       - name: Guardar relatório e cenários atmosféricos
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-verificacao
+          name: playwright-verificacao-${{ matrix.parcela }}
           path: |
             test-results/
             playwright-report/
