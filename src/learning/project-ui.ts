@@ -13,6 +13,7 @@ export function capstonesHTML(){
 }
 export function mountPath(container:HTMLElement,id:string):()=>void{
  const path=learningPaths.find(p=>p.id===id);if(!path){container.textContent='Percurso não encontrado.';return ()=>{};}
+ let encerrado=false,encerrarBancada:(()=>void)|undefined;
  container.innerHTML='<article class="page reading learning-path"><a class="back" href="#/aprender">Todas as trilhas</a><p class="eyebrow">PERCURSO PRÁTICO · '+path.stages.length+' ETAPAS</p><h1>'+esc(path.title)+'</h1><p class="lead">'+esc(path.description)+'</p>'+path.stages.map((s,i)=>'<section class="lesson-chapter" data-stage="'+s.id+'"><p class="eyebrow">ETAPA '+(i+1)+' · ≈ '+s.minutes+' MIN</p><h2>'+esc(s.title)+'</h2>'+s.theory.map(p=>'<p>'+esc(p)+'</p>').join('')+'<pre class="example-code"><code>'+esc(s.example)+'</code></pre><h3>Investigue esta falha</h3><p>'+esc(s.bug)+'</p><h3>Construa e confira</h3><p>'+esc(s.exercise)+'</p><ol class="lesson-points">'+s.checkpoints.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ol><details class="lesson-solution"><summary>Consultar solução e decisões</summary><pre class="example-code">'+esc(s.solution)+'</pre><p>'+esc(s.explanation)+'</p></details><form class="lesson-check"><fieldset><legend>'+esc(s.assessment.prompt)+'</legend>'+s.assessment.options.map((o,index)=>'<label><input type="radio" name="answer" value="'+index+'" required><span>'+esc(o)+'</span></label>').join('')+'</fieldset><button class="button primary">Conferir decisão</button><p role="status" aria-live="polite"></p></form><p class="small">Esta conferência verifica o conceito. A implementação aberta e seus testes precisam ser realizados no ambiente indicado.</p><p>'+s.references.map((url,index)=>'<a href="'+esc(url)+'" target="_blank" rel="noopener">Referência '+(index+1)+'</a>').join(' · ')+'</p></section>').join('')+capstonesHTML()+'</article>';
  for(const s of path.stages){
   const section=container.querySelector<HTMLElement>('[data-stage="'+s.id+'"]')!,form=section.querySelector<HTMLFormElement>('form')!,key='percurso-'+path.id+'-'+s.id,a=progress.practiceAnswers[key]??=emptyPracticeAnswer();
@@ -21,8 +22,17 @@ export function mountPath(container:HTMLElement,id:string):()=>void{
   if(a.passed)status.textContent='Decisão conferida. Reconstrua e teste a implementação para avançar no projeto.';
   section.querySelector('details')!.addEventListener('toggle',event=>{if((event.target as HTMLDetailsElement).open){a.assisted=true;saveProgress();}});
   form.addEventListener('submit',event=>{event.preventDefault();const value=String(new FormData(form).get('answer')),index=Number(value);a.value=value;a.attempts++;a.passed=index===s.assessment.correct;a.updatedAt=new Date().toISOString();saveProgress();status.textContent=s.assessment.feedback[index]+(a.passed?' Decisão conceitual conferida.':' Revise o mecanismo e tente novamente.')+(a.assisted?' Você consultou a solução nesta atividade.':'');});
+  if(path.id==='git'&&s.id==='preparacao'){
+   const botao=document.createElement('button'),alvo=document.createElement('div');botao.className='button subtle';botao.textContent='Experimentar trabalho, preparação e commit';
+   section.querySelector('.example-code')!.after(botao,alvo);
+   botao.addEventListener('click',async()=>{
+    botao.disabled=true;
+    try{const bancada=await import('./git-ui');if(encerrado)return;encerrarBancada=bancada.montarBancadaGit(alvo);botao.remove();}
+    catch{if(!encerrado){botao.disabled=false;alvo.textContent='Não foi possível abrir a bancada. Tente novamente quando o recurso estiver disponível.';}}
+   });
+  }
  }
- return ()=>{};
+ return ()=>{encerrado=true;encerrarBancada?.();};
 }
 export function mountProject(container:HTMLElement,id:string,options:Options):()=>void{
  const found=capstoneProjects.find(p=>p.id===id);if(!found){container.textContent='Projeto não encontrado.';return ()=>{};}
