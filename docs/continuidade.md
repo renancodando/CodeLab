@@ -2,6 +2,8 @@
 
 ## Preparação seguinte: descritores Python e duração do CI
 
+O primeiro CI #28 (38064749952) encontrou dois critérios que foram acrescentados depois da última suíte local: a estrutura da prática aberta exigia os três critérios originais. Esses critérios originais foram preservados, e o aprofundamento dos descritores continua nos blocos e nas pausas próprios. Repetir a suíte e o CI completo no novo head; não usar o resultado anterior como gate.
+
 A branch pratica/python-descritores-estado parte do head 3e417cac340fd325815b429e585a06faad0c8e28 da PR #27. Preserva as seis seções, o exemplo dataclass, o exercício Retangulo/Quadro e o projeto de py-objetos-protocolos. Acrescenta três pausas após os blocos 3/4/5: precedência de atributos, depuração de valores compartilhados pelo descritor e acesso pela classe sem confundir None com falsidade ou igualdade. Esta aula antiga não possui o par de problemas independentes das expansões recentes; não houve remoção de problemas.
 
 Passaram 498 testes unitários e nove cenários Python reais. O verificador compartilhado inclui esses cenários, reproduz os programas quebrados e confere valores independentes, dois campos, rejeição sem mutação, zero, bool, herança, acesso pela classe, identidade equivalente, igualdade não executada e property sem setter. As respostas do aluno continuam conceituais e offline, sem enviar Python a executor. Strict/build passaram; o bundle inicial está em 193,18 kB gzip, o mundo em 135,94 kB, com 32 recursos locais e 157 páginas.

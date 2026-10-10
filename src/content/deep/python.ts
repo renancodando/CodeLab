@@ -671,9 +671,7 @@ export default {
       "checks": [
         "Objetos independentes não compartilham coleções mutáveis.",
         "A construção rejeita dimensões negativas.",
-        "A área reflete o contrato e a composição não exige herança artificial.",
-        "Descritores não misturam valores de instâncias nem de campos, e rejeitar uma atribuição conserva o estado anterior.",
-        "A leitura pela classe distingue ausência de instância, falsidade e igualdade personalizada."
+        "A área reflete o contrato e a composição não exige herança artificial."
       ],
       "project": "Modele pedidos, itens e uma política de desconto recebida por composição. Use um protocolo para a política, uma dataclass para dados e um context manager para um recurso de saída. Justifique cada mecanismo usado.",
       "question": "O que uma anotação de tipo faz por si só durante a execução?",

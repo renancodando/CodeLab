@@ -2,7 +2,7 @@
 
 ## Python: atributos e estado de descritores
 
-py-objetos-protocolos recebe previsão de precedência, diagnóstico de armazenamento compartilhado e alteração da guarda no acesso pela classe. As pausas exigem preparação dos blocos 3/4/5 na sessão diária. Leitura não gera domínio; assistência e respostas são preservadas offline. Nenhum programa do aluno é executado nessas pausas. A teoria e os critérios foram aprofundados, mantendo o exercício Retangulo e os exemplos anteriores.
+py-objetos-protocolos recebe previsão de precedência, diagnóstico de armazenamento compartilhado e alteração da guarda no acesso pela classe. As pausas exigem preparação dos blocos 3/4/5 na sessão diária. Leitura não gera domínio; assistência e respostas são preservadas offline. Nenhum programa do aluno é executado nessas pausas. A teoria foi aprofundada, mantendo o exercício Retangulo e seus critérios e exemplos anteriores.
 
 Os nove cenários de referência são executados com Python no verificador do CI, incluindo reprodução dos defeitos, duas instâncias, dois atributos, zero, inteiros grandes, rejeição de bool/negativo/outros tipos sem mutação, herança, property, sombra de atributo e identidade sem chamar igualdade. O armazenamento proposto usa __dict__, a busca padrão e uma instância de descritor por campo; não cobre slots exclusivos, busca personalizada, reuso do mesmo descritor sob vários nomes ou isolamento de segurança. Referências oficiais: [guia de descritores](https://docs.python.org/3/howto/descriptor.html) e [protocolo do modelo de dados](https://docs.python.org/3/reference/datamodel.html#implementing-descriptors). A aula e suas atividades não encerram metaprogramação Python.
 
