@@ -1,6 +1,32 @@
 # Continuidade do CODELAB
 
-## Próxima expansão: closures executáveis
+## Revisão: preparação real e retomada de planos antigos
+
+A revisão da PR #23 apontou que requiresConcept só exigia a introdução: a sessão mostrava dois capítulos, enquanto restrições e correlação estavam nos blocos posteriores. A correção acrescenta uma preparação identificada por revisão para cada família que exige conceito, exibindo os capítulos até o último bloco necessário. A leitura introdutória conserva seu identificador; não é transformada em leitura dos novos capítulos. A preparação tem seu próprio identificador v1, que deve ser revisto quando seu contrato pedagógico mudar.
+
+Planos já salvos conservam itens, respostas e conclusões. Antes de montar uma atividade cuja preparação ainda não foi lida, a sessão mostra essa leitura e só então retoma o mesmo item. Não apaga domínio anterior nem cria evidência de habilidade por leitura. Gabaritos e capítulos de resolução ficam fora desse recorte. A correção será propagada para a branch HTML; exigir CIs dos novos heads, não dos anteriores à revisão.
+
+Passaram 442 testes unitários e strict/build. Os fluxos Edge de fundamentos e prática SQL passaram; o caso novo de plano antigo passou após corrigir seu setup para abrir uma sessão e salvar o estado antes de alterá-lo. Confere capítulos 4/5 visíveis, resolução ausente, leitura antiga preservada, plano idêntico, domínio vazio e retomada após reload. O CI anterior já executou os 12 cenários PostgreSQL com sucesso, mas a revisão de fluxo exige novo gate completo. O bundle inicial da branch SQL está em 187,49 kB gzip.
+
+## Checkpoint de 9 de outubro: C++ e closures integrados
+
+A main `093584f82b7000c859b4b0898f1c2568c98b0ede` integra as PRs #21 e #22, depois de #19/#20. A árvore `9289005baa4ace21d809fc241d0000957451dcf7` é idêntica ao head aprovado #22 `b2816488cd519663875cf35cf191879deb89941c`. O CI 37961175745 aprovou 427 testes unitários, 152 exemplos externos, oito projetos TypeScript, sete cenários C++20 e 113 testes de navegador. Os CIs de push 37964985020 e 37965665399 também passaram. Não há PRs abertas neste checkpoint.
+
+O fluxo C++ passou no domínio público, incluindo erro/acerto, assistência, retomada offline e 220/4000 px. A implantação posterior de closures `5CnXqjxpKeVFYHugrZKBeo3wpQNz` foi confirmada READY/production. A primeira tentativa pública de JavaScript não começou por quota da aprovação automática, sem determinação de insegurança. Após a disponibilidade voltar, o mesmo fluxo passou no domínio: três correções executadas, assistência, respostas/evidências offline e 220/4000 px (8,7 s; 11,7 s total). A pendência de verificação pública de closures está resolvida.
+
+A configuração de produção `CODELAB_PUBLIC_URL` foi preenchida com a origem pública. Na implantação C++ foram conferidos robots permitindo conteúdo, sitemap com as URLs próprias e canonical sem noindex em duas páginas; isso não comprova indexação por buscadores. Nenhum segredo foi acrescentado ao cliente.
+
+## Entrega seguinte: ausência e contratos SQL
+
+A branch `pratica/sql-null-contratos` parte dessa main. Preserva a pausa inicial e os dois problemas independentes de `sql-null-logica`; acrescenta previsão, depuração da restrição e alteração da correlação após os blocos 2/4/5. As três habilidades exigem preparação conceitual na sessão diária. Há 12 cenários PostgreSQL no verificador compartilhado: comparação exibida, negação com unknown, violações específicas, reprodução das restrições incompletas, correspondência nula, duplicatas, zero e conjuntos vazios. O computador local não dispõe de psql; executar esses casos no PostgreSQL real do CI antes de integrar. Não existe execução SQL do aluno no navegador nesta entrega.
+
+Passaram 441 testes unitários e o build com strict, geração de métricas, função meteorológica, páginas e cache offline. Os testes conservaram a pausa SQL preexistente em vez de tratá-la como atividade nova; somente as três práticas novas exigem a preparação adicional. O bundle inicial passou de 185,93 para 187,28 kB gzip, sem dependência ou runtime novo; o mundo permanece com o mesmo artefato.
+
+O fluxo Edge local das três pausas também passou (22,8 s; 25,2 s total): erro/acerto, solução sob solicitação, assistência, respostas e evidências retomadas offline, nenhum pedido de execução remota e larguras 220/4000 px. Os 17 capítulos e os dois problemas independentes permanecem. Ainda exigir o CI completo do head e os cenários PostgreSQL antes da integração.
+
+Os registros abaixo são históricos. Pendências de branches já integradas descrevem o momento daquele registro, não o estado atual.
+
+## Histórico: preparação das closures executáveis
 
 A branch `pratica/javascript-closures-estado` depende do head C++ `9b82a81814511aead5ba23ea4f6e3e9961b208d5` da PR #21, ainda em validação. Acrescenta três programas corrigíveis em QuickJS à aula existente, com contratos de instância, callbacks e snapshots, sem alterar limites ou dependências. Exigir os gates completos de cada head e integrar primeiro C++; conferir árvore e fluxo público após cada integração. Métricas são geradas e não demonstram currículo concluído.
 

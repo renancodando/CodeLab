@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'sql-prever-desconhecido':{accepted:['1|unknown\n2|false\n3|true'],failure:'Resolva cada comparação separadamente: NULL não produz true nem false. O COALESCE só apresenta o resultado desconhecido; não compara saldo com zero.',solution:'1|unknown\n2|false\n3|true'},
+ 'sql-corrigir-obrigatoriedade':{accepted:['presenca-faixa'],failure:'Um campo presente ainda pode ser negativo; uma faixa válida ainda pode aceitar ausência. CHECK aceita true ou unknown, e COALESCE pode ocultar NULL.',solution:'CREATE TEMP TABLE estoque_null (valor integer NOT NULL CHECK (valor >= 0));'},
+ 'sql-correlacionar-ausentes':{accepted:[],failure:'Trocar NOT IN por NOT EXISTS não define sozinho a igualdade. Compare duas ausências, ausência com zero e duas chaves conhecidas conforme o contrato.',solution:'IS NOT DISTINCT FROM'},
  'cpp-requisito-verdadeiro':{accepted:['requires std::integral<T>;','requires std::integral<T> ;'],failure:'A expressão simples pode ser válida mesmo com valor false. Exija que a condição dependente de T seja satisfeita dentro do bloco.',solution:'requires std::integral<T>;'},
  'cpp-ramo-descartado':{accepted:['constexpr'],failure:'O ramo inválido para int precisa ser descartado na instanciação. Uma decisão comum de execução não elimina esse requisito de compilação.',solution:'constexpr'},
  'cpp-prever-sobrecarga':{accepted:['reserva\nfixo'],failure:'vector oferece reserva e tamanho; array oferece apenas tamanho. A escolha depende dos requisitos compartilhados, não da posição das funções no arquivo.',solution:'reserva\nfixo'},
@@ -161,7 +164,8 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    else submitted=normalized(answer).split('\n').map(normalized).filter(Boolean);
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
    passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
-  }else passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer));
+  }else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
+  else passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer));
   result.passed=passed;
   result.tests=[{label:concept.order?'Todas as linhas respeitam a estrutura solicitada.':'A resposta corresponde ao contrato da atividade.',passed}];
   result.feedback=(passed?'Sua resposta está correta. ':concept.failure+' ')+'Esta atividade comprova uma decisão conceitual; não houve execução de '+activity.language+'.';
