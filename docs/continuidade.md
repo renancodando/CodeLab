@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Preparação seguinte: caixas CSS com conteúdo adverso
+
+A branch pratica/css-caixas-conteudo parte do head 658e2b5d9f59106b255a41e47e55f490c0a8ce2e da PR #25, cuja integração deve ser conferida antes desta entrega. A aula css-caixas-intrinseco conserva seis seções, exemplos e dois problemas independentes; recebe três pausas onde ainda não havia atividades corrigíveis: prever a borda quando o conteúdo chega a zero, permitir encolhimento sem recortar texto e corrigir a referência de um cabeçalho durante rolagem local.
+
+Passaram 484 testes unitários, strict/build e, após corrigir o rótulo do exemplo, 29 testes específicos de prática/catálogo. O primeiro teste nativo encontrou que Código excedia os 48px previstos pelo mínimo automático; o exemplo agora usa o rótulo curto ID para isolar a restrição do identificador, sem recorte ou mudança das regras do produto. O teste continua exigindo 48px para esse rótulo e o identificador inteiro. O bundle inicial está em 191,78 kB gzip e o mundo mantém 135,94 kB. Exigir os fluxos de navegador e CI do head final, resolver revisões e integrar C# antes de CSS.
+
+As métricas desta branch incluem a dependência C#: 67 atividades em 51 das 137 aulas. Isso deixa 86 aulas sem pausas na teoria e não significa 86 entregas até um currículo exaustivo. A main publicada no início desta preparação tinha 61 atividades; conferir o checkpoint e as PRs para o estado posterior.
+
 ## Checkpoint: SQL e HTML integrados; iteradores C# em preparação
 
 As PRs #23/#24 foram integradas com árvores idênticas aos heads aprovados. SQL: head 09d232b5b3c197c4180e68ffea2b0484dd3fce52, CI 37996313180, 442 unitários e 115 testes de navegador. HTML: head 241ccbd68061e81f0f47cd08ff723c514cd3a9fc, CI 37996662758, 453 unitários e 117 testes de navegador. Ambos executaram 152 exemplos externos, oito projetos TypeScript, sete cenários C++20 e 12 cenários PostgreSQL, além dos gates de isolamento, API, build e auditoria. A revisão da preparação diária foi resolvida.
@@ -264,4 +272,9 @@ As seções “em revisão” e “em preparação” acima registram a sequênc
 ## Validação local da prática de iteradores
 
 Passaram 470 testes unitários em 31 arquivos, strict/build, dez cenários .NET 10 e o fluxo Edge offline (23,2 s; 25,6 s total). A referência preserva solução assistida, tentativas anteriores, respostas após reload e ausência de overflow em 220/4000 px. O bundle inicial está em 190,42 kB gzip; o mundo mantém 135,94 kB e carregamento sob demanda. São 64 atividades no catálogo desta branch, em 50 aulas; 61 estão publicadas na main. Exigir o gate completo do commit publicado e conferir revisões antes de integrar.
+
+
+## Validação de navegador das caixas CSS
+
+Os dois fluxos Edge passaram depois do ajuste do rótulo (1,4 s referência nativa; 22,7 s produto; 26,0 s total). A referência confere bordas 150/120/30 px, falha com mínimo automático, identificador inteiro sem recorte, texto vazio e posição do cabeçalho antes/depois de scrollTop 80 em 200/220/375/4000 px. O produto confere respostas, assistência, evidências offline e layout 220/4000 px. Essas evidências locais não substituem o CI completo nem a implantação deste head.
 

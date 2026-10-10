@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Gate seguinte: caixas CSS
+
+A branch CSS depende do head C# da PR #25 e exige integração nessa ordem após os gates próprios. Tem 484 unitários e strict/build aprovados; os 29 testes específicos foram conferidos após o ajuste do rótulo. O primeiro teste nativo detectou uma hipótese incorreta sobre min-content do próprio rótulo, mantendo a exigência em vez de reduzir a asserção. A referência precisa passar novamente e o CI completo do head final continua obrigatório. Nenhuma mudança foi feita na aparência do produto, no sandbox, em permissões de rede, nos runtimes ou nas dependências.
+
 ## SQL e HTML publicados; próximo gate de iteradores C#
 
 As PRs #23/#24 passaram nos respectivos CIs finais 37996313180 e 37996662758, com 442/453 unitários e 115/117 testes de navegador. Os exemplos incluíram PostgreSQL real e as árvores dos merges coincidiram com os heads validados. A implantação da main 04217e927284326444946cda02e5600e876f37cd está READY/production; os dois fluxos SQL e os dois HTML passaram no domínio. Essas pendências de integração/publicação estão encerradas para os comportamentos testados.

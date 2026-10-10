@@ -1,5 +1,11 @@
 # Aprendizagem com prática, revisão e projetos
 
+## CSS: caixa medida, mínimo do item e rolagem local
+
+css-caixas-intrinseco recebe previsão, alteração e depuração após os blocos 1/3/5, mantendo os exercícios e problemas anteriores. A primeira pausa exige considerar o piso zero da área de conteúdo de border-box; a segunda distingue flex-shrink, mínimo automático e a política de quebra break-word; a terceira mantém o cabeçalho no fluxo e mede sua adesão ao contêiner que realmente rola. A leitura preparatória vem antes da família diária e não produz domínio. Respostas são conceituais, com assistência sob solicitação e progresso offline.
+
+Referências oficiais consultadas: [dimensionamento de caixas](https://www.w3.org/TR/css-sizing-3/#box-sizing), [mínimo automático em Flexbox](https://www.w3.org/TR/css-flexbox-1/#min-size-auto), [quebra de texto](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/overflow-wrap) e [posicionamento aderente](https://www.w3.org/TR/css-position-3/#sticky-pos). A referência nativa verifica bordas reais, reprodução do overflow, texto inteiro sem recorte, rótulo curto, fonte vazia e scrollTop efetivamente alterado. O escopo usa escrita horizontal e navegadores dos testes; não certifica todos os modos de escrita, leitores de tela ou motores CSS.
+
 ## C#: percursos, descarte e materialização
 
 A aula cs-iteradores-descarte passa a distribuir três novas pausas após os blocos 2/3/5. Prever MoveNext exercita estado e suspensão; corrigir o consumidor que abandona o enumerador exercita a fronteira de Dispose inclusive em exceção; completar uma materialização distingue receita de resultado guardado. A atividade de using anterior e os dois problemas independentes permanecem. A preparação diária cobre os blocos necessários, leitura não gera domínio e solução consultada registra assistência. Respostas continuam conceituais/offline; não houve execução .NET do aluno.
