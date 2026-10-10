@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'css-prever-bordas':{accepted:['150\n120\n30'],failure:'Separe a dimensão declarada dos extras em cada modelo. O espaço de conteúdo tem piso zero, portanto não absorve padding e bordas além desse limite.',solution:'150\n120\n30'},
+ 'css-reduzir-minimo':{accepted:['0','0px'],failure:'O mínimo automático pode impedir o item de encolher. Alterar apenas flex não remove esse piso, e cortar o texto não atende ao contrato.',solution:'0'},
+ 'css-corrigir-rolagem':{accepted:['aderir'],failure:'Relative acompanha o conteúdo ao rolar, e absolute sai do fluxo. O cabeçalho deve responder à região rolável sem perder seu lugar no documento.',solution:'position: sticky;'},
  'cs-prever-percurso':{accepted:['0\nTrue\n1|1\nTrue\n2|2\n2'],failure:'A construção não percorre a fonte. Acompanhe cada MoveNext até o próximo yield, sem produzir o terceiro elemento no descarte.',solution:'0\nTrue\n1|1\nTrue\n2|2\n2'},
  'cs-descartar-percurso':{accepted:['delimitar'],failure:'Consumir até o fim pode executar trabalho extra e nem ser possível. A liberação precisa acontecer também quando Processar falha; coleta de lixo não estabelece esse contrato.',solution:'using (var percurso = Fonte().GetEnumerator())\n{\n    if (percurso.MoveNext()) Processar(percurso.Current);\n}\nConsole.WriteLine(ativos);'},
  'cs-materializar-consulta':{accepted:['ToArray()','ToList()'],failure:'Guardar IEnumerable não armazena necessariamente os valores. A segunda enumeração pode repetir os efeitos; escolha uma materialização adequada à origem finita.',solution:'ToArray()'},

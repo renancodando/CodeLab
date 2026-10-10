@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'css-prever-bordas',language:'css',lessonIds:['css-caixas-intrinseco'],skillIds:['css.caixas.dimensao'],afterBlock:1,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O conteúdo não pode ter tamanho negativo',
+  prompt:'Em escrita horizontal, sem outras regras ou transformações, preveja a largura da borda de conteudo, borda e estreita. Digite só os três números em pixels, um por linha, na ordem dos elementos. Padding e bordas continuam existindo mesmo na caixa muito estreita.',
+  code:'<style>\n.caixa { inline-size: 120px; padding-inline: 12px; border-inline: 3px solid; }\n#conteudo { box-sizing: content-box; }\n#borda { box-sizing: border-box; }\n#estreita { box-sizing: border-box; inline-size: 20px; }\n</style>\n<div id="conteudo" class="caixa"></div>\n<div id="borda" class="caixa"></div>\n<div id="estreita" class="caixa"></div>',
+  hint:'Some os extras dos dois lados e confira o piso zero do conteúdo. A borda não pode ficar menor que os extras sem que eles também mudem.',minutes:4
+ },
+ {
+  id:'css-reduzir-minimo',language:'css',lessonIds:['css-caixas-intrinseco'],skillIds:['css.caixas.encolhimento'],afterBlock:3,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'Flex pode encolher, mas o mínimo impede',
+  prompt:'Complete com zero sem unidade ou em px para permitir que texto encolha no eixo em linha. A política de quebra já está definida e precisa permanecer; não recorte o identificador nem altere o rótulo.',
+  code:'<style>\nbody { margin: 0; font: 16px/20px monospace; }\n.linha { display: flex; gap: 8px; inline-size: min(240px, 100%); }\n.rotulo { flex: 0 0 48px; }\n.texto { flex: 1; min-inline-size: ____; overflow-wrap: break-word; }\n</style>\n<div class="linha"><span class="rotulo">ID</span><span class="texto">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></div>',
+  hint:'O tamanho mínimo automático ainda considera o identificador. Remova esse piso do item; flex-shrink e quebra de texto resolvem partes diferentes do comportamento.',minutes:4
+ },
+ {
+  id:'css-corrigir-rolagem',language:'css',lessonIds:['css-caixas-intrinseco'],skillIds:['css.caixas.rolagem'],afterBlock:5,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O cabeçalho está preso à referência errada',
+  prompt:'O cabeçalho aparece no topo da janela. Ele deve continuar no fluxo da seção e aderir ao topo da região rolável, inclusive após scrollTop = 80. Qual mudança de position resolve esse contrato sem esconder conteúdo ou usar JavaScript?',
+  code:'<style>\nbody { margin: 0; }\n#rolagem { margin-block-start: 60px; block-size: 120px; inline-size: min(240px, 100%); overflow: auto; }\n#cabecalho { position: fixed; inset-block-start: 0; margin: 0; block-size: 24px; background: white; }\n.conteudo { block-size: 400px; }\n</style>\n<section id="rolagem" aria-label="Registros"><h2 id="cabecalho">Registros</h2><div class="conteudo">Conteúdo da seção.</div></section>',
+  options:[{id:'relativo',text:'Usar position: relative, mantendo o inset zero.'},{id:'aderir',text:'Usar position: sticky, mantendo o inset zero e a região com overflow auto.'},{id:'absoluto',text:'Usar position: absolute para retirar o cabeçalho do fluxo.'}],
+  hint:'Identifique o ancestral que rola e a posição que conserva espaço no fluxo enquanto responde a essa rolagem.',minutes:4
+ },
+ {
   id:'cs-prever-percurso',language:'csharp',lessonIds:['cs-iteradores-descarte'],skillIds:['csharp.iteradores.avanco'],afterBlock:2,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Cada avanço produz só o próximo valor',
   prompt:'Preveja as seis linhas. A sequência tem três valores, mas o consumidor pede apenas dois. Produzir e devolver um valor são acontecimentos diferentes de construir a sequência.',

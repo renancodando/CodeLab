@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir das definições e da matriz do currículo. O build rejeita divergências. A interface usa o mesmo resumo JSON, sem carregar capítulos adicionais.
 
-O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **64 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **50 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
+O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **67 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **51 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
 
 | Medida | Quantidade |
 | --- | ---: |
@@ -19,7 +19,7 @@ O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **
 | --- | ---: |
 | C++ | 9 |
 | C# | 9 |
-| CSS | 6 |
+| CSS | 9 |
 | HTML | 6 |
 | JavaScript | 10 |
 | Python | 9 |

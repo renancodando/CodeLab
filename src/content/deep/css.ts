@@ -323,7 +323,8 @@ export default {
           "title": "A dimensão declarada não é sempre a dimensão externa",
           "text": [
             "No modelo content-box, width ou inline-size dimensiona a caixa de conteúdo. Padding e border acrescentam espaço ao redor dela. Uma caixa com conteúdo de 180px, padding de 20px em cada lado e border de 2px ocupa 224px nesse eixo. Margin fica fora da borda e não entra no tamanho obtido por getBoundingClientRect, embora participe do posicionamento em outros cálculos.",
-            "Com border-box, a dimensão declarada inclui conteúdo, padding e border no caso comum. A mesma declaração de 180px deixa 136px para conteúdo quando os extras somam 44px. O espaço de conteúdo não pode ser negativo; dimensões e restrições ainda interagem quando os extras são grandes. Calcule as partes antes de depurar um alinhamento, em vez de ajustar valores sucessivamente até parecer certo."
+            "Com border-box, a dimensão declarada inclui conteúdo, padding e border no caso comum. A mesma declaração de 180px deixa 136px para conteúdo quando os extras somam 44px. O espaço de conteúdo não pode ser negativo; dimensões e restrições ainda interagem quando os extras são grandes. Calcule as partes antes de depurar um alinhamento, em vez de ajustar valores sucessivamente até parecer certo.",
+            "A primeira pausa inclui uma borda declarada de 20px com padding e bordas somando 30px. O cálculo border-box não cria conteúdo negativo para fazer os extras desaparecerem: o conteúdo para em zero e a borda ocupa pelo menos esses extras. Estamos medindo a borda em escrita horizontal, sem transformações nem restrições adicionais; margem não participa desse retângulo."
           ]
         },
         {
@@ -337,7 +338,8 @@ export default {
           "title": "O conteúdo contribui para o tamanho mínimo",
           "text": [
             "Alguns modelos de layout consideram tamanhos intrínsecos do conteúdo. Uma palavra longa sem oportunidades de quebra pode exigir mais espaço do que uma caixa disponível. Em Flexbox, um item pode ter um tamanho mínimo automático ligado ao conteúdo, impedindo a redução que o autor esperava de flex-shrink. Flex: 1 não garante sozinho que qualquer texto caiba em qualquer espaço.",
-            "Quando o item deve poder encolher no eixo relevante, min-inline-size: 0 pode remover essa restrição mínima apropriada ao caso. Overflow-wrap: anywhere oferece oportunidades de quebra para sequências longas e afeta contribuições intrínsecas de modo útil. Escolha a regra pelo conteúdo: um identificador pode quebrar para leitura, enquanto uma tabela de código talvez precise de rolagem horizontal com indicação clara."
+            "Quando o item deve poder encolher no eixo relevante, min-inline-size: 0 pode remover essa restrição mínima apropriada ao caso. Overflow-wrap: anywhere oferece oportunidades de quebra para sequências longas e afeta contribuições intrínsecas de modo útil. Escolha a regra pelo conteúdo: um identificador pode quebrar para leitura, enquanto uma tabela de código talvez precise de rolagem horizontal com indicação clara.",
+            "Na pausa de encolhimento, overflow-wrap: break-word permite quebrar a sequência quando falta espaço, mas não usa essas quebras para reduzir a contribuição min-content. Assim, o mínimo automático do item ainda pode impedir o encolhimento. min-inline-size: 0 libera o item e a política de quebra já definida torna o texto legível no espaço restante. Anywhere trata a contribuição intrínseca de outra forma; não é necessário usar as duas regras em todos os layouts."
           ]
         },
         {
@@ -351,7 +353,8 @@ export default {
           "title": "Sticky tem limites definidos pelo contexto",
           "text": [
             "Position sticky conserva uma relação com o fluxo e aplica deslocamentos conforme a posição de rolagem e seus limites. Um inset como top: 0 permite observar a adesão no eixo escolhido. O elemento continua limitado pelo bloco e pelo contexto em que está; ele não se torna um elemento fixed solto em relação a toda a página. Um contêiner sem conteúdo suficiente para rolar não demonstra o efeito.",
-            "No problema, o contêiner tem altura definida e overflow auto, e o cabeçalho está dentro dele. A verificação mede a posição antes e depois de alterar scrollTop. Não use apenas uma captura da primeira tela para declarar sticky pronto, pois ali o elemento pode estar na mesma posição sem qualquer rolagem. Teste o mecanismo que o exemplo pretende ensinar."
+            "No problema, o contêiner tem altura definida e overflow auto, e o cabeçalho está dentro dele. A verificação mede a posição antes e depois de alterar scrollTop. Não use apenas uma captura da primeira tela para declarar sticky pronto, pois ali o elemento pode estar na mesma posição sem qualquer rolagem. Teste o mecanismo que o exemplo pretende ensinar.",
+            "Compare as referências com um contêiner afastado 60px do topo da janela. Um cabeçalho fixed com inset zero fica no topo da janela neste exemplo; relative apenas conserva sua posição no conteúdo, que sai da área ao rolar. Sticky com inset zero conserva o lugar no fluxo e adere ao topo da região de rolagem enquanto houver espaço dentro dos seus limites. Meça antes e depois de scrollTop = 80, mantendo o texto e a região rolável."
           ]
         },
         {
