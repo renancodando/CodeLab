@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Correção em preparação: trocas consecutivas no laboratório
+
+A branch correcao/rascunhos-troca-linguagem parte do head 766f5a78fde7f3bd6c4054849caa1999ab7bba20 da PR #26; depende da integração verificada de C# (#25) e CSS (#26). O teste de navegador reproduziu uma perda real: trocar de JavaScript para anotações e imediatamente para Python salvava o JavaScript sobre as anotações enquanto o import do editor ainda aguardava. A troca agora usa o módulo Monaco já carregado e atualiza linguagem/conteúdo na mesma operação síncrona, mantendo persistência e cancelamento existentes.
+
+Os quatro fluxos iniciais passaram no Edge: troca consecutiva, restauração de rascunhos incluindo código vazio, edição Python após navegação/recarga sem executar e projeto de anotações com exportação/importação da jornada (1,5 min). A regressão foi ampliada para anotações vazias: os dois cenários consecutivos passaram em 47,4 s. O teste exige exportação correta de cada linguagem, conteúdo preservado no armazenamento e ausência de requisições de execução. Não foi acrescentado executor, runtime ou permissão ao código do aluno.
+
+Strict e build passaram. O editor continua sob demanda; o bundle inicial está em 191,73 kB gzip e o mundo em 135,94 kB. A referência dinâmica duplicada ao Monaco desapareceu e seus dois chunks foram reunidos no chunk lazy do editor; isso explica 32 arquivos do manifesto offline em vez de 33, sem retirada de conteúdo. Exigir CI completo do head final, revisões, árvore de integração e fluxo no domínio público antes de declarar a correção publicada. As métricas curriculares continuam 67 atividades em 51 das 137 aulas nesta branch; a produção ainda precisa ser conferida separadamente.
+
 ## Preparação seguinte: caixas CSS com conteúdo adverso
 
 A branch pratica/css-caixas-conteudo parte do head 658e2b5d9f59106b255a41e47e55f490c0a8ce2e da PR #25, cuja integração deve ser conferida antes desta entrega. A aula css-caixas-intrinseco conserva seis seções, exemplos e dois problemas independentes; recebe três pausas onde ainda não havia atividades corrigíveis: prever a borda quando o conteúdo chega a zero, permitir encolhimento sem recortar texto e corrigir a referência de um cabeçalho durante rolagem local.
