@@ -929,6 +929,7 @@ export default {
       "id": "cpp-memoria-posse",
       "title": "C++: memória, posse e segurança de vida",
       "level": "Avançado",
+      "source": "https://eel.is/c++draft/smartptr",
       "summary": "Entenda duração de armazenamento, vida de objetos, ponteiros, referências e categorias de valor para evitar acessos pendentes. Use unique_ptr, shared_ptr, weak_ptr, span, string_view, optional e variant com contratos explícitos de posse, reconhecendo custos e condições de validade.",
       "topics": [
         "storage duration lifetime",
@@ -953,21 +954,24 @@ export default {
           "title": "Posse exclusiva",
           "text": [
             "unique_ptr representa posse exclusiva e libera o objeto ao ser destruído. Ele pode ser movido, mas não copiado. make_unique organiza construção e evita espalhar new e delete manualmente.",
-            "Um ponteiro obtido com get é uma observação; ele não ganha posse. Se o unique_ptr for resetado, movido e destruído pelo novo dono ou sair de escopo, a observação pode deixar de ser válida. Defina quem conserva o recurso vivo durante a operação."
+            "Um ponteiro obtido com get é uma observação; ele não ganha posse. Se o unique_ptr for resetado, movido e destruído pelo novo dono ou sair de escopo, a observação pode deixar de ser válida. Defina quem conserva o recurso vivo durante a operação.",
+            "std::move não modifica o objeto por si só e não retira const. Um unique_ptr constante não pode entregar sua posse pelo construtor de movimento usual: esse construtor precisa receber um dono modificável, porque a origem passa a ficar vazia. Tentar inicializar outro dono com std::move dessa origem constante acaba exigindo uma operação indisponível; a cópia de unique_ptr é excluída. Se a intenção é transferir, declare o dono modificável. Se é apenas ler, use um contrato de observação e conserve a posse no chamador. Mover o int obtido por desreferência produz uma expressão de outro tipo, sem transferir o gerenciador."
           ]
         },
         {
           "title": "Posse compartilhada e ciclos",
           "text": [
             "shared_ptr mantém um controle de referências à posse; cópias compartilham o objeto. Isso tem custo e não torna o próprio objeto seguro para acesso concorrente. Use posse compartilhada quando há realmente vários donos com vida independente.",
-            "Ciclos de shared_ptr podem conservar recursos para sempre. weak_ptr observa sem aumentar a contagem de donos, e lock tenta obter uma posse temporária se o objeto ainda estiver vivo. Não faça uma verificação separada e depois use um endereço cru sem conservar a posse."
+            "Ciclos de shared_ptr podem conservar recursos para sempre. weak_ptr observa sem aumentar a contagem de donos, e lock tenta obter uma posse temporária se o objeto ainda estiver vivo. Não faça uma verificação separada e depois use um endereço cru sem conservar a posse.",
+            "O shared_ptr devolvido por lock também é dono. Se ele foi obtido com sucesso antes de resetar o primeiro dono, o objeto continua vivo enquanto essa posse temporária existir. Ao liberar a última posse, expired passa a indicar ausência de donos e uma nova tentativa de lock devolve um shared_ptr vazio. Conserve o resultado bem-sucedido durante todo o uso. Uma consulta anterior a expired não reserva a vida do objeto; entre verificar e tentar adquirir, outro participante pode liberar a última posse. A aquisição de posse por lock não sincroniza mutações no int nem transforma a demonstração de uma thread em um teste de concorrência."
           ]
         },
         {
           "title": "Views sem posse",
           "text": [
             "span oferece uma visão de uma sequência contígua e string_view uma visão de caracteres. Eles não garantem que a origem continue viva nem que ela não seja alterada ou realocada. Retornar uma view de uma string local cria uma referência pendente.",
-            "Use views para operações cujo período de uso está claramente dentro da vida da origem. Para armazenar dados além desse período, copie para um tipo com posse. Poupar uma cópia não compensa um contrato de vida impossível de cumprir."
+            "Use views para operações cujo período de uso está claramente dentro da vida da origem. Para armazenar dados além desse período, copie para um tipo com posse. Poupar uma cópia não compensa um contrato de vida impossível de cumprir.",
+            "Uma função que constrói texto em uma string local pode devolver std::string por valor. O resultado possui os caracteres necessários ao chamador, independentemente de a implementação elidir uma cópia ou selecionar movimento. Não é necessário prometer uma alocação específica nem escrever std::move no retorno para estabelecer esse contrato. Devolver string_view do local deixa uma observação sem origem viva; std::move não resolve essa relação. Um teste deve conferir o tipo do retorno e usar valores vazios, curtos e longos, sem depender de otimização de string pequena. Não execute um acesso pendente para tentar deduzir uma saída: comportamento indefinido não tem gabarito numérico confiável."
           ]
         },
         {

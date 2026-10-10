@@ -330,3 +330,11 @@ A suíte local completa terminou com 535/543 aprovados: oito timeouts em seis co
 ## Verificação publicada das PRs #28/#29
 
 Deployment dpl_2pHrvaTdUW4kGSZfXdNQYaTjDAqS READY/production com gitSource.sha 336474045445ae383331ce843805f74a7ef14bf9 confirmado pela API da hospedagem. A execução pública dos doze fluxos aprovou onze e falhou na espera de download do laboratório. O teste repetia uma operação com efeito dentro de expect.poll, cujo limite era cinco segundos. Agora cada troca síncrona gera uma única exportação e comparação; o cenário corrigido passou isoladamente (30,3 s, 1,3 min total). A primeira execução pública permanece registrada como 11/12; o conjunto de cenários foi coberto pelas duas execuções. Nenhuma correção no código do laboratório foi necessária neste recorte. Exigir o CI do teste alterado junto ao HTTP.
+
+## Gates HTTP e aprofundamento de posse C++
+
+A PR #30 está aberta no head ed7acb26e6670b82e224a934577a34c66260885a. O run 38085602449 aprovou os 543 testes de unidade em 35 arquivos, os exemplos/compilações e a auditoria; as duas parcelas de navegador continuam em execução. A partição de 129 cenários foi conferida como 68 + 61, sem omissões nem duplicações. A repetição local dos três arquivos lentos terminou com 34/43 aprovados e nove timeouts; não é aprovação local. Os limites foram mantidos. O CI da main 3364740, run 38083869423, terminou com todos os quatro jobs aprovados.
+
+A branch pratica/cpp-vida-posse prepara três novas pausas na aula cpp-memoria-posse, mantendo a atividade anterior cpp-iterador-invalidado no bloco 5. Há 28 testes específicos/de catálogo aprovados após corrigir uma expectativa que omitia essa atividade anterior. As métricas geradas são 73 atividades em 52 aulas; 85 continuam sem pausas. Nenhuma linguagem está encerrada por essa ampliação.
+
+O verificador C++ adiciona oito cenários com g++ C++20. Localmente, a primeira tentativa excedeu tempo na compilação negativa; a segunda confirmou a recusa do dono constante, mas excedeu tempo no caso modificável. Os limites de compilação não foram ampliados. Exigir os oito casos completos no CI e o fluxo de navegador offline antes de integrar; testes conceituais não substituem compilação. O retorno incorreto de string_view é barrado por static_assert de tipo, sem executar acesso pendente.
