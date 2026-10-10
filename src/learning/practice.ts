@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'cs-prever-percurso':{accepted:['0\nTrue\n1|1\nTrue\n2|2\n2'],failure:'A construção não percorre a fonte. Acompanhe cada MoveNext até o próximo yield, sem produzir o terceiro elemento no descarte.',solution:'0\nTrue\n1|1\nTrue\n2|2\n2'},
+ 'cs-descartar-percurso':{accepted:['delimitar'],failure:'Consumir até o fim pode executar trabalho extra e nem ser possível. A liberação precisa acontecer também quando Processar falha; coleta de lixo não estabelece esse contrato.',solution:'using (var percurso = Fonte().GetEnumerator())\n{\n    if (percurso.MoveNext()) Processar(percurso.Current);\n}\nConsole.WriteLine(ativos);'},
+ 'cs-materializar-consulta':{accepted:['ToArray()','ToList()'],failure:'Guardar IEnumerable não armazena necessariamente os valores. A segunda enumeração pode repetir os efeitos; escolha uma materialização adequada à origem finita.',solution:'ToArray()'},
  'html-imagem-destino':{accepted:['destino'],failure:'Neste contexto, a imagem participa do nome do link. Um nome de arquivo não comunica a ação, e alt vazio deixa o link sem o texto necessário.',solution:'<a href="#relatorio"><img src="/exemplos/imagens/fluxo-amplo.svg" alt="Abrir relatório de estudo" width="720" height="240"></a>'},
  'html-completar-sizes':{accepted:['100vw'],failure:'Compare o espaço ocupado até 600 px com o valor declarado. sizes não cria o layout nem recebe o descritor w do arquivo.',solution:'100vw'},
  'html-ordenar-picture':{accepted:[],order:['abrir','compacta','ampla','fallback','fechar'],failure:'Confira qual source aplicável aparece primeiro. Uma fonte sem media também atende a janela estreita e pode impedir o recorte; preserve o img de fallback.',solution:'<picture>\n  <source type="image/svg+xml" media="(max-width: 600px)" srcset="/exemplos/imagens/fluxo-compacto.svg" width="240" height="360">\n  <source type="image/svg+xml" srcset="/exemplos/imagens/fluxo-amplo.svg" width="720" height="240">\n  <img src="/exemplos/imagens/fluxo-amplo.svg" width="720" height="240" alt="Etapas: escrever, executar e revisar">\n</picture>'},
@@ -167,7 +170,8 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    else submitted=normalized(answer).split('\n').map(normalized).filter(Boolean);
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
    passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
-  }else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
+  }else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
+  else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
   else passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer));
   result.passed=passed;
   result.tests=[{label:concept.order?'Todas as linhas respeitam a estrutura solicitada.':'A resposta corresponde ao contrato da atividade.',passed}];

@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'cs-prever-percurso',language:'csharp',lessonIds:['cs-iteradores-descarte'],skillIds:['csharp.iteradores.avanco'],afterBlock:2,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Cada avanço produz só o próximo valor',
+  prompt:'Preveja as seis linhas. A sequência tem três valores, mas o consumidor pede apenas dois. Produzir e devolver um valor são acontecimentos diferentes de construir a sequência.',
+  code:'int produzidos = 0;\nIEnumerable<int> Fonte()\n{\n    for (int valor = 1; valor <= 3; valor++)\n    {\n        produzidos++;\n        yield return valor;\n    }\n}\nvar sequencia = Fonte();\nConsole.WriteLine(produzidos);\nusing (var percurso = sequencia.GetEnumerator())\n{\n    Console.WriteLine(percurso.MoveNext());\n    Console.WriteLine($"{percurso.Current}|{produzidos}");\n    Console.WriteLine(percurso.MoveNext());\n    Console.WriteLine($"{percurso.Current}|{produzidos}");\n}\nConsole.WriteLine(produzidos);',
+  hint:'Marque a posição de suspensão em cada yield. Criar o enumerador não consome os três valores, e descartá-lo não precisa pedir o último.',minutes:4
+ },
+ {
+  id:'cs-descartar-percurso',language:'csharp',lessonIds:['cs-iteradores-descarte'],skillIds:['csharp.iteradores.descarte'],afterBlock:3,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O consumidor abandona um recurso ativo',
+  prompt:'O programa imprime 10 e depois 1: o recurso ainda está ativo. Escolha a correção que processa no máximo o primeiro valor e garante descarte também se Processar lançar. Não percorra o restante só para tentar fechar a origem.',
+  code:'int ativos = 0;\nIEnumerable<int> Fonte()\n{\n    ativos++;\n    try { yield return 10; yield return 20; }\n    finally { ativos--; }\n}\nvoid Processar(int valor) => Console.WriteLine(valor);\nvar percurso = Fonte().GetEnumerator();\nif (percurso.MoveNext()) Processar(percurso.Current);\nConsole.WriteLine(ativos);',
+  options:[{id:'continuar',text:'Avançar até MoveNext retornar false após Processar.'},{id:'delimitar',text:'Envolver a aquisição do enumerador e o processamento em um bloco using, antes de consultar ativos.'},{id:'coletar',text:'Zerar a referência do enumerador e chamar GC.Collect antes de consultar ativos.'}],
+  hint:'O produtor já tem finally. Investigue quem deve encerrar o enumerador manual quando o consumidor sai cedo ou falha.',minutes:4
+ },
+ {
+  id:'cs-materializar-consulta',language:'csharp',lessonIds:['cs-iteradores-descarte'],skillIds:['csharp.iteradores.materializacao'],afterBlock:5,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'Duas leituras, uma produção',
+  prompt:'Complete com uma chamada LINQ sem argumentos. Esta origem finita incrementa um contador; o contrato exige produzi-la uma única vez, guardar os inteiros e ler o mesmo resultado duas vezes. A saída deve ser 2,4; 2,4; 4, uma linha por expressão.',
+  code:'int produzidos = 0;\nIEnumerable<int> Fonte()\n{\n    for (int valor = 1; valor <= 4; valor++)\n    {\n        produzidos++;\n        yield return valor;\n    }\n}\nvar consulta = Fonte().Where(valor => valor % 2 == 0);\nvar guardados = consulta.____;\nConsole.WriteLine(string.Join(",", guardados));\nConsole.WriteLine(string.Join(",", guardados));\nConsole.WriteLine(produzidos);',
+  hint:'Guardar a consulta conserva uma receita. Escolha uma operação que percorra a origem agora e armazene os resultados; não é uma regra para fontes infinitas.',minutes:4
+ },
+ {
   id:'html-imagem-destino',language:'html',lessonIds:['html-midia'],skillIds:['html.imagens.alternativas'],afterBlock:1,kind:'choice',capability:'depuracao',requiresConcept:true,
   title:'O link contém apenas uma imagem',
   prompt:'A imagem é o único conteúdo de um link que abre o relatório de estudo. Não há aria-label nem outro texto no link. Qual alt fornece o nome necessário para essa ação? O gráfico completo continua disponível no relatório. Decisão conceitual offline; não é auditoria automática de toda a acessibilidade.',

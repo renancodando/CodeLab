@@ -35,7 +35,7 @@ it('inserir uma aula conserva conceitos lidos e o plano iniciado antes da expans
  expect(adaptiveCatalog.activities.some(a=>a.id==='conceito-2-py-iteracao-recursos')).toBe(true);
 });
 
-it.each(['ts-variancia-contratos','ts-modulos-configuracao','cpp-templates','js-closures-estado','sql-null-logica','html-midia'])('%s espera seu conceito e leitura não fabrica domínio na família isolada',aula=>{
+it.each(['ts-variancia-contratos','ts-modulos-configuracao','cpp-templates','js-closures-estado','sql-null-logica','html-midia','cs-iteradores-descarte'])('%s espera seu conceito e leitura não fabrica domínio na família isolada',aula=>{
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'};
  const advanced=practiceActivities.filter(atividade=>atividade.lessonIds.includes(aula)&&atividade.requiresConcept).map(atividade=>atividade.id);
  const concept=idPreparacao(aula);
