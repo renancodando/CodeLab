@@ -31,11 +31,22 @@ test('TypeScript: projetos e backup retornam offline sem perder o original',asyn
 });
 
 test('TypeScript: cancelar, limitar execução e invalidar resultado ao editar ou sair',async({page:pagina})=>{
- test.setTimeout(120000);await abrir(pagina);await executar(pagina,'console.log(7);');await expect(pagina.locator('#lab-console')).toHaveText('7');
+ test.setTimeout(120000);
+ await pagina.addInitScript(()=>{
+  const enviar=Worker.prototype.postMessage;
+  const controle=window as typeof window & {compilacaoRetida?:boolean;liberarCompilacao?:()=>void};
+  Worker.prototype.postMessage=function(mensagem:unknown,...opcoes:unknown[]){
+   if(mensagem&&typeof mensagem==='object'&&'codigo' in mensagem&&mensagem.codigo==='console.log(8);'){
+    controle.compilacaoRetida=true;controle.liberarCompilacao=()=>Reflect.apply(enviar,this,[mensagem,...opcoes]);return;
+   }
+   Reflect.apply(enviar,this,[mensagem,...opcoes]);
+  };
+ });
+ await abrir(pagina);await executar(pagina,'console.log(7);');await expect(pagina.locator('#lab-console')).toHaveText('7');
  const iniciado=pagina.waitForEvent('worker',{predicate:worker=>worker.url().includes('typescript-local.worker')});await pagina.locator('#lab-run').click();await iniciado;await pagina.locator('#lab-stop').click();await expect(pagina.locator('#lab-console')).toContainText('Execução encerrada');await expect.poll(()=>pagina.workers().filter(w=>/typescript-local\.worker|runner\.worker/.test(w.url())).length).toBe(0);
  await executar(pagina,'while(true){}');await expect(pagina.locator('#lab-console')).toContainText('levou tempo demais');await expect.poll(()=>pagina.workers().filter(w=>/typescript-local\.worker|runner\.worker/.test(w.url())).length).toBe(0);
  await executar(pagina,'const dados=Array(10000000).fill(1); console.log(dados.length);');await expect(pagina.locator('#lab-console')).toContainText('limite de memória');
- await escrever(pagina,'console.log(8);');const compilando=pagina.waitForEvent('worker',{predicate:worker=>worker.url().includes('typescript-local.worker')});await pagina.locator('#lab-run').click();await compilando;await escrever(pagina,'console.log(9);');await expect(pagina.locator('#lab-console')).toContainText('Código alterado');await expect.poll(()=>pagina.workers().filter(w=>/typescript-local\.worker|runner\.worker/.test(w.url())).length).toBe(0);
+ await escrever(pagina,'console.log(8);');await pagina.locator('#lab-run').click();await expect.poll(()=>pagina.evaluate(()=>(window as typeof window & {compilacaoRetida?:boolean}).compilacaoRetida)).toBe(true);await escrever(pagina,'console.log(9);');await expect(pagina.locator('#lab-console')).toContainText('Código alterado');await expect.poll(()=>pagina.workers().filter(w=>/typescript-local\.worker|runner\.worker/.test(w.url())).length).toBe(0);await pagina.evaluate(()=>(window as typeof window & {liberarCompilacao?:()=>void}).liberarCompilacao?.());await expect(pagina.locator('#lab-console')).toContainText('Código alterado');
  await pagina.locator('#lab-run').click();await aguardarExecucao(pagina);await expect(pagina.locator('#lab-console')).toHaveText('9');await pagina.locator('#lab-language').selectOption('javascript');await executar(pagina,'console.log("JS preservado");');await expect(pagina.locator('#lab-console')).toHaveText('JS preservado');await pagina.locator('#lab-language').selectOption('typescript');expect((await exportar(pagina,'#export')).buffer.toString()).toBe('console.log(9);');
  const saindo=pagina.waitForEvent('worker',{predicate:worker=>worker.url().includes('typescript-local.worker')});await pagina.locator('#lab-run').click();await saindo;await pagina.goto('/#/perfil');await expect.poll(()=>pagina.workers().filter(w=>/typescript-local\.worker|runner\.worker/.test(w.url())).length).toBe(0);
 });
