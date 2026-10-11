@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:"html-prever-controles",language:"html",lessonIds:["html-dados-formulario"],skillIds:["html.formularios.presenca"],afterBlock:3,kind:"predict",capability:"leitura",requiresConcept:true,
+  title:"Campo visível não é uma entrada garantida",
+  prompt:"Preveja as três linhas. disabled é um atributo booleano: o texto false não o remove. O código só constrói os dados, sem enviar uma requisição; esta pausa confere raciocínio, sem executar seu HTML.",
+  code:"<form id=\"inscricao\">\n  <input name=\"fixo\" value=\"A\" readonly>\n  <input name=\"off\" value=\"B\" disabled=\"false\">\n  <input type=\"checkbox\" name=\"linguagem\" value=\"html\" checked>\n  <input type=\"checkbox\" name=\"linguagem\" value=\"css\" checked>\n  <input type=\"checkbox\" name=\"linguagem\" value=\"sql\">\n</form>\n<script>\nconst dados = new FormData(document.querySelector(\"#inscricao\"));\nconsole.log(dados.get(\"fixo\"));\nconsole.log(dados.get(\"off\"));\nconsole.log(dados.getAll(\"linguagem\").join(\",\"));\n</script>",
+  hint:"Separe participação nos dados e possibilidade de edição. Depois percorra as escolhas na ordem do documento, mantendo somente as marcadas.",minutes:4
+ },
+ {
+  id:"html-preservar-selecoes",language:"html",lessonIds:["html-dados-formulario"],skillIds:["html.formularios.multiplicidade"],afterBlock:4,kind:"choice",capability:"depuracao",requiresConcept:true,
+  title:"Uma conversão para objeto perdeu uma escolha",
+  prompt:"O formulário possui checkboxes com name=\"linguagem\". Duas marcadas devem produzir [\"html\",\"css\"], uma marcada só seu valor e nenhuma deve produzir []. Qual substituição conserva esse contrato sem inventar seleções?",
+  code:"const dados = new FormData(formulario);\nconst selecionadas = Object.fromEntries(dados).linguagem;",
+  options:[{"id":"primeiro","text":"Usar dados.get(\"linguagem\") e envolver o resultado em um array."},{"id":"colecao","text":"Usar dados.getAll(\"linguagem\") para manter todas as entradas desse nome."},{"id":"controles","text":"Ler o value de todos os inputs com esse name, inclusive os desmarcados."}],
+  hint:"Compare o contrato de uma propriedade escalar com o de uma coleção. Verifique também o que sua escolha devolve quando a chave não aparece.",minutes:3
+ },
+ {
+  id:"html-limpar-validacao",language:"html",lessonIds:["html-dados-formulario"],skillIds:["html.formularios.validade-personalizada"],afterBlock:6,kind:"fill",capability:"alteracao",requiresConcept:true,
+  title:"A pessoa corrigiu o campo, mas ele continua inválido",
+  prompt:"Complete somente o literal de string que retira o erro personalizado quando o apelido é válido. Nesta atividade os apelidos contêm apenas caracteres ASCII. Preserve required, a regra de três caracteres após trim e a validação nativa; não desabilite o controle nem o formulário.",
+  code:"<label for=\"apelido\">Apelido</label>\n<input id=\"apelido\" name=\"apelido\" required>\n<script>\nconst campo = document.querySelector(\"#apelido\");\ncampo.addEventListener(\"input\", () => {\n  campo.setCustomValidity(campo.value.trim().length < 3\n    ? \"Use pelo menos três caracteres.\"\n    : ____);\n});\n</script>",
+  hint:"Uma mensagem personalizada é estado do controle. Corrigir o valor ou chamar checkValidity não apaga esse estado por conta própria.",minutes:4
+ },
+ {
   id:'cpp-mover-constante',language:'cpp',lessonIds:['cpp-memoria-posse'],skillIds:['cpp.posse.movimento-const'],afterBlock:2,kind:'choice',capability:'depuracao',requiresConcept:true,
   title:'Autorizar movimento não remove const',
   prompt:'O programa deve transferir a posse sem copiar o int. A inicialização de destino não compila. Qual mudança resolve esse contrato mantendo unique_ptr e sem casts? Esta pausa analisa compilação, sem executar C++.',

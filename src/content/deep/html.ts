@@ -428,7 +428,8 @@ export default {
           "title": "Ausência e multiplicidade fazem parte da estrutura",
           "text": [
             "Uma checkbox desmarcada normalmente não cria a entrada correspondente. Quando marcada, usa seu value ou o padrão definido pela plataforma. Um consumidor que precisa de um booleano pode traduzir presença e ausência para esse domínio, mas deve saber que se trata de uma regra do adaptador. Se um nome aparece em várias escolhas marcadas, FormData.get devolve uma entrada, enquanto getAll preserva a multiplicidade.",
-            "Object.fromEntries transforma pares em um objeto, mas nomes repetidos podem sobrescrever valores e perder seleções. Para mostrar o conjunto completo sem esconder dados, o exemplo usa Array.from(formData.entries()). Essa representação também permite visualizar ordem e repetição. Antes de serializar para JSON, defina quais campos são escalares e quais são listas em vez de escolher um formato apenas por conveniência."
+            "Object.fromEntries transforma pares em um objeto, mas nomes repetidos podem sobrescrever valores e perder seleções. Para mostrar o conjunto completo sem esconder dados, o exemplo usa Array.from(formData.entries()). Essa representação também permite visualizar ordem e repetição. Antes de serializar para JSON, defina quais campos são escalares e quais são listas em vez de escolher um formato apenas por conveniência.",
+            "Leia get como a pergunta por uma entrada e getAll como a pergunta pela coleção inteira. Com duas escolhas marcadas de mesmo name, converter diretamente os pares para um objeto comum deixa apenas um valor nessa propriedade. Com nenhuma escolha, get devolve null e getAll devolve uma lista vazia. Não troque essa ausência por todas as opções disponíveis: isso transformaria uma preferência não escolhida em uma decisão inventada pela aplicação. Teste os três estados antes de adotar o formato de saída."
           ]
         },
         {
@@ -442,7 +443,8 @@ export default {
           "title": "Validação nativa ajuda a pessoa, e dados continuam dados",
           "text": [
             "required, min, max, step e pattern expressam regras no navegador. Confira a validade no exemplo e trate estados inválidos com os recursos nativos ou mensagens associadas. Um formulário sem servidor pode interceptar submit e apresentar a prévia, mantendo o comportamento dos controles. Quando o exemplo passa a enviar para uma API, a API precisa reaplicar os contratos de entrada porque o navegador não é uma fronteira de confiança.",
-            "O resultado é inserido com textContent, então um texto digitado com marcação aparece como texto e não como HTML executável. Teste uma entrada que contém sinais de menor e maior para conferir essa propriedade. Transfira o exemplo para uma inscrição de estudo: documente os nomes, os valores repetidos, as ausências e as ações antes de definir o esquema JSON que a aplicação consumirá."
+            "O resultado é inserido com textContent, então um texto digitado com marcação aparece como texto e não como HTML executável. Teste uma entrada que contém sinais de menor e maior para conferir essa propriedade. Transfira o exemplo para uma inscrição de estudo: documente os nomes, os valores repetidos, as ausências e as ações antes de definir o esquema JSON que a aplicação consumirá.",
+            "Uma mensagem criada por setCustomValidity permanece no controle até ser substituída. Digitar um valor correto não limpa automaticamente customError; checkValidity e reportValidity também não corrigem esse estado. Recalcule a condição no evento apropriado e retire explicitamente a mensagem quando o contrato for satisfeito, conservando required e outras restrições nativas. Investigue o caminho completo: valor curto, valor válido, vazio novamente e nova correção. O resultado não deve ficar preso no primeiro erro nem aceitar tudo depois da primeira correção."
           ]
         }
       ],
