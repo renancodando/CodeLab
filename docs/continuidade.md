@@ -360,3 +360,10 @@ Os 58 testes específicos (15 HTML, 17 de catálogo, 21 SQLite e cinco de cache)
 As métricas geradas da preparação HTML são 76 atividades, ainda em 52/137 aulas; 85 aulas continuam sem pausas. Exigir CI do head, revisões e verificação publicada antes de considerar essa ampliação integrada. O laboratório TypeScript, experiências Git/HTTP adicionais e aprofundamentos continuam pendentes.
 
 A PR #31 foi integrada em 06defa49b36a8debcd5aecac4092ce91aa154bf3, árvore 2b93cfa077da522b59c61b327f6d794df83c6cc2 igual ao head 2657a51. Run 38143642894 completo: 560 unidades em 36 arquivos, oito cenários novos C++20 e 130 fluxos (65 + 65), compiladores/PostgreSQL/API/cache/auditoria. Nenhuma revisão aberta. Deployment e fluxos públicos em verificação; SQLite e HTML não estão antecipadamente integrados. Main local foi sincronizada por fast-forward sem trocar a branch de trabalho.
+
+## Persistência imediata de assistência HTTP
+
+A PR #31 foi integrada em 06defa49b36a8debcd5aecac4092ce91aa154bf3, árvore 2b93cfa077da522b59c61b327f6d794df83c6cc2. O run 38143642894 aprovou 560 unidades e 130 fluxos em duas parcelas de 65, além dos compiladores, PostgreSQL, API e auditoria. A hospedagem confirmou esse SHA no deployment dpl_2vmHCMy5dVm7Lo9nErkcVi9BAtdL, READY/production; os quatro fluxos públicos C++/HTTP passaram (2,1 min).
+
+Os runs 38146266563 (#32) e 38146478584 (#33) falharam no registro de assistência ao abrir a solução HTTP e recarregar imediatamente. O evento toggle podia chegar depois da saída. A abertura pelo summary agora registra a consulta no próprio clique, mantendo toggle como fallback para abertura programática. O teste confere o armazenamento no mesmo ciclo do clique, antes de qualquer espera ou reload; ele reproduziu false no build anterior. Esses runs com falha não autorizam integração. Exigir novos heads, CI completo, revisões, árvore e domínio.
+Os três fluxos HTTP passaram no build corrigido (14,9 s), incluindo a verificação síncrona, reload, backup/importação, uso offline e 220/4000 px. Strict e build passaram; os limites de tempo não foram ampliados.
