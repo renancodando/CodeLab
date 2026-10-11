@@ -1,5 +1,17 @@
 # Prontidão de produção
 
+## Entregas verificadas em 11 de outubro
+
+As PRs #31, #32 e #33 estão integradas, com revisões resolvidas e árvores iguais aos respectivos heads aprovados. A #31 passou no run 38143642894 (560 unidades, 130 fluxos), a #32 no 38148827540 (586 unidades, 134 fluxos) e a #33 no 38148866512 (601 unidades, 136 fluxos), além de compiladores, PostgreSQL, API, cache meteorológico e auditoria.
+
+A hospedagem confirmou READY/production e gitSource.sha para cada integração: 06defa49b36a8debcd5aecac4092ce91aa154bf3 em dpl_2vmHCMy5dVm7Lo9nErkcVi9BAtdL; 941c388aba6a4c3db9b583ff33a7725abbd8f7e4 em dpl_AvwMwTo3fYqH4Do8mejG5u2b81ri; 0e54bff8b268a474105bbc2010ae1e29534839ac em dpl_3ZMbTaoRW6hD41akeDAgmSdj3uEM. Os quatro fluxos públicos C++/HTTP passaram (2,1 min). SQL aprovou três dos quatro no primeiro lote; o cenário restante de consultas/backup/offline passou isoladamente (56,1 s), após uma falha de espera de abertura do editor. Não foi um único lote 4/4. Os dois fluxos HTML passaram no domínio (1,0 min), incluindo validade nativa, assistência, offline e larguras extremas.
+
+A edição publicada tem 76 atividades corrigíveis em 52 das 137 aulas principais; 85 aulas ainda não têm pausas. Esta contagem não inclui os experimentos Git/HTTP, nem transforma projetos de revisão manual em atividades corrigidas automaticamente. As linguagens e as frentes curriculares continuam abertas.
+
+## Próxima entrega: laboratório TypeScript
+
+O compilador real está implementado na branch laboratorio/typescript-local, com diagnósticos, JavaScript emitido, execução QuickJS, projetos e cache opcional. Exigir validação do head final, revisão, integração e domínio antes de declarar esta entrega publicada. Detalhes e limites em laboratorio-typescript.md. As seções abaixo são registros históricos.
+
 ## Checkpoint de 11 de outubro: posse C++ integrada; SQLite e formulários em validação
 
 A PR #30 foi integrada em 3b04fe4b8f2a056517983e9261bf86f1139af003 após o run 38085602449 aprovar os quatro jobs: 543 unidades e 129 fluxos de navegador (68 + 61), compiladores, PostgreSQL, API, cache meteorológico e auditoria. A árvore 50c796e94b5d25da07122a8ccdc83885df2b1397 é a do head testado. O deployment dpl_DNWbAZ9exSqN8mRcWaSp2h8SE2wf foi confirmado READY/production com esse SHA e os três fluxos HTTP passaram no domínio público.

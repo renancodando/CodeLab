@@ -45,3 +45,6 @@ O lote local de 13 fluxos aprovou 12 e excedeu a espera antiga de cinco segundos
 
 
 A abertura do Monaco também passa a ter prazo de 20 segundos. Enquanto carrega ou após uma falha, Exportar usa a fonte preservada, mesmo sem editor montado. Uma resposta tardia não cria o editor depois de expirar; recarregar permite tentar novamente. Ao trocar linguagem, os marcadores TypeScript são removidos. A validação de navegador foi dividida em seis histórias, incluindo falha real de carregamento, cancelamento, limite de memória e recuperação. Os resultados finais ainda precisam ser registrados.
+
+
+A validação final contra o build concluído aprovou as seis histórias TypeScript em 5,3 min: diagnósticos/emit/isolamento; projetos/backup/offline/220–4000 px; cancelamento/CPU/memória/edição/saída; primeiro uso offline; prazo do módulo; e prazo do editor com exportação sem Monaco e recuperação após reload. A compilação TypeScript e a execução QuickJS foram reais. Esta prova local não substitui CI completo, revisão, árvore e conferência do domínio.
