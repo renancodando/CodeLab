@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Entrega atual: laços e preparação diária
+
+A PR #36 foi integrada após o CI 38168212787: 658 testes unitários, 146 fluxos de navegador, compiladores, PostgreSQL, API/cache e auditoria. Merge bf1bcca07664e58d66b25727509e103f3ac67038, árvore a31f9b62ea617c2f087b0a61d1cce18bc813546a igual ao head aprovado, sem revisões abertas. Deployment dpl_8zhswjMu8TpFhyJvHbnD8PwLxfhr READY/production com esse SHA; quatro fluxos públicos Edge aprovados em 3,9 min. Publicação conferida: 82 pausas em 54/137 aulas, 83 ainda sem pausas. Valores e decisões em preparação não entram nessa contagem publicada.
+
+As seções seguintes registram a evidência das integrações anteriores e suas contagens da época.
+
 ## Entregas atuais: TypeScript e importação JavaScript
 
 As PRs #34/#35 foram integradas com árvores iguais aos heads aprovados. TypeScript: run 38163020418, 632 unidades e 142 fluxos; merge 147658af86c04c94a1a894e8aa04bc024d237835, deployment dpl_3c5ETa3xqZdb54aXPe7phvhz4PfG READY/production com esse SHA e seis fluxos públicos aprovados em 4,6 min. Importação JavaScript: run 38163600601, 644 unidades e 144 fluxos; merge e0e15e5d18e405cf8f5ab1f6376d36720022a548, deployment dpl_9S2Jqs52jZS4wCNuCZuemiYqfHwE READY/production com esse SHA e dois fluxos públicos aprovados em 1,3 min. Revisões resolvidas. Incluem compiladores, PostgreSQL, API/cache e auditoria; não encerram currículo, módulos TypeScript ou medição em celular físico.
