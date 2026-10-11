@@ -18,6 +18,12 @@ describe('TypeScript real antes da execução isolada',()=>{
  it('checa generics, narrowing e mapped types com a biblioteca ES2022 real',async()=>{
   const resposta=compilar('type Leitura<T> = {readonly [K in keyof T]:T[K]};\nfunction primeiro<T>(valores:readonly T[]):T|undefined{return valores[0];}\nfunction normalizar(valor:unknown):string{return typeof valor === "string" ? valor.trim() : "ausente";}\nconst pedido:Leitura<{valor:number}>={valor:7}; console.log(primeiro([pedido])?.valor); console.log(normalizar(null));');expect(resposta.diagnosticos).toEqual([]);expect((await evaluate(resposta.javascript,'laboratorio')).logs).toEqual(['7','ausente']);
  });
+ it('exporta membros de namespaces internos sem transformar o script em módulo',async()=>{
+  const resposta=compilar('namespace Geometria { export namespace Formas { export function area(lado:number):number{return lado*lado;} } }\nnamespace Geometria { export import Quadrados=Formas; }\nconsole.log(Geometria.Quadrados.area(3));');expect(resposta.erro).toBeUndefined();expect(resposta.diagnosticos).toEqual([]);expect(resposta.javascript).toContain('Geometria');expect((await evaluate(resposta.javascript,'laboratorio')).logs).toEqual(['9']);
+ });
+ it('confere tipos de membros exportados de namespace antes de emitir',()=>{
+  const resposta=compilar('namespace Dados { export const total:number="erro"; }');expect(resposta.erro).toBeUndefined();expect(resposta.diagnosticos).toContainEqual(expect.objectContaining({codigo:2322}));expect(resposta.javascript).toBe('');
+ });
  it('um erro semântico tem código e posição e impede emissão',()=>{
   const resposta=compilar('const certo=1;\nconst errado:number="2";');expect(resposta.javascript).toBe('');expect(resposta.diagnosticos).toContainEqual(expect.objectContaining({codigo:2322,linha:2,coluna:7}));
  });

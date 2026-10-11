@@ -6,13 +6,13 @@ export function compilarTypescript(codigo:string,bibliotecas:ReadonlyMap<string,
  const resposta:CompilacaoTs={javascript:'',diagnosticos:[],versao:ts.version};
  if(typeof codigo!=='string'||codigo.length>30000)return{...resposta,erro:'Limite de 30.000 caracteres. Divida o programa em partes menores.'};
  const entrada=ts.createSourceFile('/entrada.ts',codigo,ts.ScriptTarget.ES2022,true);
- let externo=false;
+ let externo=ts.isExternalModule(entrada);
  function inspecionar(no:ts.Node){
-  if(ts.isImportDeclaration(no)||ts.isImportEqualsDeclaration(no)||ts.isImportTypeNode(no)||ts.isExportDeclaration(no)||ts.isExportAssignment(no)||(ts.isCallExpression(no)&&no.expression.kind===ts.SyntaxKind.ImportKeyword)||(ts.canHaveModifiers(no)&&ts.getModifiers(no)?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword)))externo=true;
+  if(ts.isImportDeclaration(no)||(ts.isImportEqualsDeclaration(no)&&ts.isExternalModuleReference(no.moduleReference))||ts.isImportTypeNode(no)||(ts.isCallExpression(no)&&no.expression.kind===ts.SyntaxKind.ImportKeyword))externo=true;
   ts.forEachChild(no,inspecionar);
  }
  inspecionar(entrada);
- if(externo)return{...resposta,erro:'Esta bancada compila um script TypeScript isolado. Imports, exports e pacotes exigem o ambiente indicado na aula; exporte o arquivo para trabalhar com módulos.'};
+ if(externo)return{...resposta,erro:'Esta bancada compila um script TypeScript isolado. Imports, exports externos e pacotes exigem o ambiente indicado na aula; exporte o arquivo para trabalhar com módulos.'};
  const fontes=new Map(bibliotecas);fontes.set('/entrada.ts',codigo);fontes.set('/ambiente.d.ts','declare const console: { log(...valores: unknown[]): void };');
  const host:ts.CompilerHost={
   getSourceFile:(nome,linguagem)=>nome==='/entrada.ts'?entrada:fontes.has(nome)?ts.createSourceFile(nome,fontes.get(nome)!,linguagem,true):undefined,

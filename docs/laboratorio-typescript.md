@@ -10,7 +10,7 @@ A edição durante uma compilação ou execução cancela a tarefa; resultados d
 
 ## Contrato do ambiente
 
-É um script isolado de até 30.000 caracteres, com console.log. Imports, exports e pacotes dependem do ambiente indicado na aula; a bancada explica isso e permite exportar o .ts. Não representa um projeto Node, navegador com DOM, bundler ou servidor. Não há acesso a DOM, rede, arquivos, temporizadores ou APIs remotas de execução pelo código TypeScript.
+É um script isolado de até 30.000 caracteres, com console.log. Imports, exports externos e pacotes dependem do ambiente indicado na aula; a bancada explica isso e permite exportar o .ts. Não representa um projeto Node, navegador com DOM, bundler ou servidor. Não há acesso a DOM, rede, arquivos, temporizadores ou APIs remotas de execução pelo código TypeScript.
 
 Os tipos não são validação de dados em runtime. any, assertions e declarações podem esconder problemas; o JavaScript resultante ainda pode falhar. As bibliotecas ES2022 descrevem tipos de linguagem, não garantem todos os recursos opcionais de qualquer host no QuickJS. Verifique o ambiente real e os erros de execução quando uma API não estiver disponível. Não se promete equivalência completa com Node ou um navegador.
 
@@ -48,3 +48,8 @@ A abertura do Monaco também passa a ter prazo de 20 segundos. Enquanto carrega 
 
 
 A validação final contra o build concluído aprovou as seis histórias TypeScript em 5,3 min: diagnósticos/emit/isolamento; projetos/backup/offline/220–4000 px; cancelamento/CPU/memória/edição/saída; primeiro uso offline; prazo do módulo; e prazo do editor com exportação sem Monaco e recuperação após reload. A compilação TypeScript e a execução QuickJS foram reais. Esta prova local não substitui CI completo, revisão, árvore e conferência do domínio.
+
+
+A revisão da PR #34 encontrou recusa indevida de export dentro de namespace. Dois testes reproduziram a falha com o compilador real, incluindo membro com tipo incorreto. A detecção passa a usar isExternalModule do TypeScript e conserva a recusa de import externo, import de tipo e import dinâmico. Namespaces internos, inclusive aninhados, mesclados e aliases internos, continuam sendo scripts isolados; seus tipos são conferidos normalmente. Os novos testes e o CI do head corrigido precisam passar antes da integração. A regressão adicional SQL aprovou os quatro fluxos locais (2,9 min).
+
+Os 36 testes específicos do head corrigido passaram: 23 compilador/execução, cinco de ciclo de vida, dois de jornada e seis de cache. Os dois casos de namespace falharam antes da correção e passaram depois, com JavaScript real executado no QuickJS. O CI anterior aprovou 630 unidades e build, mas não valida esta correção posterior; exigir o novo run completo.
