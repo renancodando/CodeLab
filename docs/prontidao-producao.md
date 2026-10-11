@@ -1,5 +1,14 @@
 # Prontidão de produção
 
+## Checkpoint de 11 de outubro: HTTP publicado; posse C++ e SQLite em validação
+
+A PR #30 foi integrada em 3b04fe4b8f2a056517983e9261bf86f1139af003 após o run 38085602449 aprovar os quatro jobs: 543 unidades e 129 fluxos de navegador (68 + 61), compiladores, PostgreSQL, API, cache meteorológico e auditoria. A árvore 50c796e94b5d25da07122a8ccdc83885df2b1397 é a do head testado. O deployment dpl_DNWbAZ9exSqN8mRcWaSp2h8SE2wf foi confirmado READY/production com esse SHA e os três fluxos HTTP passaram no domínio público.
+
+A revisão posterior da PR #31 encontrou a disputa entre chegada e conclusão HTTP. As correções 014e745/2657a51 separam esses instantes e preservam recusas 429/503 independentes; 29 testes específicos passaram. O head final 2657a51 exige o run 38143642894 completo. O run intermediário 38142793678 aprovou validação comum e auditoria, mas não valida o último caso de borda. O run anterior 38086825160 aprovou os quatro jobs do head 5259ae6, incluindo 554 unidades e oito novos cenários C++20, mas não valida a correção posterior. A PR #31 continua aberta até a conferência do novo head, revisões, árvore e domínio.
+
+SQLite está sendo acrescentado ao laboratório em uma branch própria, sem alterar o currículo PostgreSQL. Os 21 testes com o mecanismo real passaram; strict/build passaram. O runtime, worker e WASM são três recursos opcionais carregados somente ao executar, fora do precache inicial. Os três fluxos Edge passaram contra o build concluído e o cancelamento de um Worker já criado passou na repetição ampliada. Offline, importação/exportação, tipos, limites e 220/4000 px foram conferidos. Os cinco testes do cache gerado passaram e a auditoria informou zero vulnerabilidades. A primeira tentativa usou o build anterior enquanto a nova compilação ainda ocorria; não conta como aprovação. O pedido integral e as 17 frentes permanecem abertos. As seções seguintes são registros históricos.
+
+
 ## Gates pendentes: integração, descritores e parcelas do navegador
 
 CSS (#26) e rascunhos (#27) passaram nos CIs 38018467196/38019095799, com 120/122 testes de navegador e 484 unitários. C# (#25) atingiu o limite de duração após 114 testes aprovados; foi reenviado no mesmo head e continua exigindo conclusão completa. Nenhuma dessas evidências substitui a conferência das árvores, revisões e domínio após integração.

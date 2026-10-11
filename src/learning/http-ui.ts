@@ -27,7 +27,10 @@ export function montarBancadaHttp(alvo:HTMLElement):()=>void{
  for(const botao of bancada.querySelectorAll<HTMLButtonElement>('[data-avancar]'))botao.addEventListener('click',()=>aplicar({tipo:'avancar',milissegundos:Number(botao.dataset.avancar)}),opcoes);
  bancada.querySelector('[data-proximo]')!.addEventListener('click',()=>{const proximo=proximoEventoHttp(modelo.estado);if(proximo!==undefined)aplicar({tipo:'avancar',milissegundos:proximo-modelo.estado.agora});},opcoes);
  bancada.querySelector('[data-reiniciar]')!.addEventListener('click',()=>{modelo=reproduzirExperimentoHttp([]);incompativel=false;salvar();exibir();},opcoes);
- const solucao=alvo.closest('[data-stage]')?.querySelector('details');solucao?.addEventListener('toggle',()=>{if(solucao.open&&!incompativel){resposta.assisted=true;salvar();}},opcoes);
+ const solucao=alvo.closest('[data-stage]')?.querySelector('details');
+ function registrarAssistencia(){if(!incompativel&&!resposta.assisted){resposta.assisted=true;salvar();}}
+ solucao?.querySelector('summary')?.addEventListener('click',()=>{if(!solucao.open)registrarAssistencia();},opcoes);
+ solucao?.addEventListener('toggle',()=>{if(solucao.open)registrarAssistencia();},opcoes);
  exibir();aviso.textContent=incompativel?'Rascunho incompatível preservado no backup. Exporte antes de reiniciar só HTTP.':'Experimento local, sem tráfego HTTP real. Avance o relógio para observar cada evento.';
  return()=>controle.abort();
 }

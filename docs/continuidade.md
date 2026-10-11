@@ -342,3 +342,19 @@ O verificador C++ adiciona oito cenários com g++ C++20. Localmente, a primeira 
 ## Correção da chegada HTTP em 11 de outubro
 
 A revisão da PR #31 encontrou uma diferença entre chegada e conclusão: uma tentativa lenta podia perder a identidade para uma tentativa posterior. O motor agora reivindica a chave pela chegada, separa esse instante da conclusão e faz repetições idênticas aguardarem o efeito original. Conflitos de conteúdo recebem 409 mesmo enquanto o primeiro processamento está pendente; 429/503 injetados não reivindicam a chave. Os 28 testes HTTP passaram localmente, incluindo chegadas invertidas, processamento lento, conflitos e equivalência dos passos. Exigir novo CI do head corrigido antes de integrar a PR #31; o run anterior aprovado não valida esta correção.
+
+## SQLite local e revisão HTTP em 11 de outubro
+
+HTTP #30 integrado em 3b04fe4b8f2a056517983e9261bf86f1139af003, árvore 50c796e94b5d25da07122a8ccdc83885df2b1397. Run 38085602449 completo: 543 unidades e 129 fluxos (68 + 61), compiladores/PostgreSQL/API/cache/auditoria. Deployment dpl_DNWbAZ9exSqN8mRcWaSp2h8SE2wf READY/production com esse SHA; três fluxos HTTP passaram no domínio (1,0 min). A revisão tardia de chegada/conclusão foi corrigida em 014e745 e o caso 429/503 em 2657a51; os 29 testes HTTP passaram e a thread foi resolvida. Exigir run final 38143642894 antes de integrar #31; runs anteriores não validam o último commit.
+
+SQLite 1.14.2 por sql.js e tipos 1.4.11 foram fixados. Há 21 testes com mecanismo real e cinco do service worker gerado aprovados; strict/build e audit passaram. Três fluxos Edge passaram (28,0/25,8/9,3 s; 1,1 min), incluindo uso sob demanda, SQL real, tipos/HTML seguro, banco descartável, offline, backup e 220/4000 px. O cancelamento ampliado passou isoladamente em 31,3 s. A tentativa inicial usou o build anterior durante a compilação; não conta como aprovação.
+
+Build inicial: 195,43 kB gzip, mundo 135,94 kB, WASM SQL 658,41 kB (322,99 kB gzip), Worker SQL 41,89 kB, carregador 0,94 kB. Os três recursos SQL estão fora dos 34 essenciais do precache. Consultas offline dependem de primeiro carregamento/cache e podem exigir novo carregamento após atualização. O limite de 8 MiB é do alocador SQLite, não da memória total do navegador. SQL não muda métricas de aulas ou comprova PostgreSQL. Exigir CI do head SQL, revisões, árvore e domínio.
+
+
+## Persistência imediata de assistência HTTP
+
+A PR #31 foi integrada em 06defa49b36a8debcd5aecac4092ce91aa154bf3, árvore 2b93cfa077da522b59c61b327f6d794df83c6cc2. O run 38143642894 aprovou 560 unidades e 130 fluxos em duas parcelas de 65, além dos compiladores, PostgreSQL, API e auditoria. A hospedagem confirmou esse SHA no deployment dpl_2vmHCMy5dVm7Lo9nErkcVi9BAtdL, READY/production; os quatro fluxos públicos C++/HTTP passaram (2,1 min).
+
+Os runs 38146266563 (#32) e 38146478584 (#33) falharam no registro de assistência ao abrir a solução HTTP e recarregar imediatamente. O evento toggle podia chegar depois da saída. A abertura pelo summary agora registra a consulta no próprio clique, mantendo toggle como fallback para abertura programática. O teste confere o armazenamento no mesmo ciclo do clique, antes de qualquer espera ou reload; ele reproduziu false no build anterior. Esses runs com falha não autorizam integração. Exigir novos heads, CI completo, revisões, árvore e domínio.
+Os três fluxos HTTP passaram no build corrigido (14,9 s), incluindo a verificação síncrona, reload, backup/importação, uso offline e 220/4000 px. Strict e build passaram; os limites de tempo não foram ampliados.

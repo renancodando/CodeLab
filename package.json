@@ -16,12 +16,14 @@
     "lucide": "^0.468.0",
     "monaco-editor": "^0.52.2",
     "quickjs-emscripten-core": "0.31.0",
+    "sql.js": "1.14.2",
     "suncalc": "^1.9.0",
     "three": "^0.180.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
+    "@types/sql.js": "1.4.11",
     "@types/suncalc": "^1.9.2",
     "@types/three": "^0.180.0",
     "typescript": "^5.9.0",

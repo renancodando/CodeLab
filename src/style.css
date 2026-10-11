@@ -60,3 +60,10 @@ dialog{width:min(580px,calc(100% - 28px));max-height:85svh;overflow:auto;padding
 .practice-card label span{min-width:0;overflow-wrap:anywhere}
 .reading h1,.reading h2,.reading h3{overflow-wrap:anywhere}
 .practice-card .field{display:flex;flex-direction:column;align-items:stretch;gap:8px}.practice-card .field input{width:100%;min-width:0}
+.lab-sql-results{min-inline-size:0;max-block-size:490px;overflow:auto;padding:0 20px 20px}
+.lab-sql-tabela{max-inline-size:100%;overflow:auto;margin-block:12px}
+.lab-sql-tabela:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.lab-sql-tabela table{border-collapse:collapse;inline-size:max-content;min-inline-size:100%;font-size:12px}
+.lab-sql-tabela caption{text-align:start;padding-block:8px;color:var(--muted)}
+.lab-sql-tabela th,.lab-sql-tabela td{padding:8px;border:1px solid var(--border);text-align:start;white-space:pre-wrap;overflow-wrap:anywhere}
+.lab-sql-tabela [data-tipo="nulo"]{font-style:italic;color:var(--muted)}
