@@ -1,5 +1,13 @@
 # Prontidão de produção
 
+## Entregas atuais: TypeScript e importação JavaScript
+
+As PRs #34/#35 foram integradas com árvores iguais aos heads aprovados. TypeScript: run 38163020418, 632 unidades e 142 fluxos; merge 147658af86c04c94a1a894e8aa04bc024d237835, deployment dpl_3c5ETa3xqZdb54aXPe7phvhz4PfG READY/production com esse SHA e seis fluxos públicos aprovados em 4,6 min. Importação JavaScript: run 38163600601, 644 unidades e 144 fluxos; merge e0e15e5d18e405cf8f5ab1f6376d36720022a548, deployment dpl_9S2Jqs52jZS4wCNuCZuemiYqfHwE READY/production com esse SHA e dois fluxos públicos aprovados em 1,3 min. Revisões resolvidas. Incluem compiladores, PostgreSQL, API/cache e auditoria; não encerram currículo, módulos TypeScript ou medição em celular físico.
+
+A edição publicada tem 79 atividades corrigíveis em 53 das 137 aulas principais; 84 aulas ainda não possuem pausas. Os números novos da branch de fundamentos só serão publicação após seus próprios gates.
+
+A migração de fundamentos está em preparação e ainda exige testes e integração. As seções seguintes registram checkpoints históricos, com seus números e pendências da época.
+
 ## Entregas verificadas em 11 de outubro
 
 As PRs #31, #32 e #33 estão integradas, com revisões resolvidas e árvores iguais aos respectivos heads aprovados. A #31 passou no run 38143642894 (560 unidades, 130 fluxos), a #32 no 38148827540 (586 unidades, 134 fluxos) e a #33 no 38148866512 (601 unidades, 136 fluxos), além de compiladores, PostgreSQL, API, cache meteorológico e auditoria.
