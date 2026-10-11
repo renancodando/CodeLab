@@ -439,3 +439,6 @@ A revisão da PR #37 encontrou o link da preparação de valores apontando para 
 ## Laços publicados e conferidos
 
 A PR #36 foi integrada após o CI 38168212787: 658 testes unitários, 146 fluxos de navegador, compiladores, PostgreSQL, API/cache e auditoria. Merge bf1bcca07664e58d66b25727509e103f3ac67038, árvore a31f9b62ea617c2f087b0a61d1cce18bc813546a igual ao head aprovado, sem revisões abertas. Deployment dpl_8zhswjMu8TpFhyJvHbnD8PwLxfhr READY/production com esse SHA; quatro fluxos públicos Edge aprovados em 3,9 min. Publicação conferida: 82 pausas em 54/137 aulas, 83 ainda sem pausas. Valores e decisões em preparação não entram nessa contagem publicada.
+
+
+A revisão do link passou no Edge com navegação offline, recarga e retorno pelo catálogo, sem domínio atribuído pela leitura (54,6 s isolado). O fluxo principal de valores também passou (58,2 s). A primeira tentativa da regressão nova esperava o indicador offline dentro da sessão diária; o teste foi corrigido para aguardar o indicador na home e só depois abrir a sessão. Foram dois fluxos aprovados em dois lotes. Strict/build aprovados na correção: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 202,36 kB gzip e mundo 135,94 kB gzip. Exigir CI completo do último head, revisão resolvida, árvore e domínio.
