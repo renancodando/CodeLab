@@ -350,3 +350,11 @@ HTTP #30 integrado em 3b04fe4b8f2a056517983e9261bf86f1139af003, árvore 50c796e9
 SQLite 1.14.2 por sql.js e tipos 1.4.11 foram fixados. Há 21 testes com mecanismo real e cinco do service worker gerado aprovados; strict/build e audit passaram. Três fluxos Edge passaram (28,0/25,8/9,3 s; 1,1 min), incluindo uso sob demanda, SQL real, tipos/HTML seguro, banco descartável, offline, backup e 220/4000 px. O cancelamento ampliado passou isoladamente em 31,3 s. A tentativa inicial usou o build anterior durante a compilação; não conta como aprovação.
 
 Build inicial: 195,43 kB gzip, mundo 135,94 kB, WASM SQL 658,41 kB (322,99 kB gzip), Worker SQL 41,89 kB, carregador 0,94 kB. Os três recursos SQL estão fora dos 34 essenciais do precache. Consultas offline dependem de primeiro carregamento/cache e podem exigir novo carregamento após atualização. O limite de 8 MiB é do alocador SQLite, não da memória total do navegador. SQL não muda métricas de aulas ou comprova PostgreSQL. Exigir CI do head SQL, revisões, árvore e domínio.
+
+
+## Persistência imediata de assistência HTTP
+
+A PR #31 foi integrada em 06defa49b36a8debcd5aecac4092ce91aa154bf3, árvore 2b93cfa077da522b59c61b327f6d794df83c6cc2. O run 38143642894 aprovou 560 unidades e 130 fluxos em duas parcelas de 65, além dos compiladores, PostgreSQL, API e auditoria. A hospedagem confirmou esse SHA no deployment dpl_2vmHCMy5dVm7Lo9nErkcVi9BAtdL, READY/production; os quatro fluxos públicos C++/HTTP passaram (2,1 min).
+
+Os runs 38146266563 (#32) e 38146478584 (#33) falharam no registro de assistência ao abrir a solução HTTP e recarregar imediatamente. O evento toggle podia chegar depois da saída. A abertura pelo summary agora registra a consulta no próprio clique, mantendo toggle como fallback para abertura programática. O teste confere o armazenamento no mesmo ciclo do clique, antes de qualquer espera ou reload; ele reproduziu false no build anterior. Esses runs com falha não autorizam integração. Exigir novos heads, CI completo, revisões, árvore e domínio.
+Os três fluxos HTTP passaram no build corrigido (14,9 s), incluindo a verificação síncrona, reload, backup/importação, uso offline e 220/4000 px. Strict e build passaram; os limites de tempo não foram ampliados.
