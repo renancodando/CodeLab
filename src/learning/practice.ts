@@ -97,7 +97,7 @@ const javascript:Record<string,JSSpec>={
   check('Valores dentro de cada faixa chegam ao ramo esperado.','nivel(10)==="baixa"&&nivel(50)==="média"&&nivel(90)==="alta"','Confira os três ramos e o valor devolvido, sem trocar retorno por saída no console.'),
   check('As fronteiras 20 e 80 pertencem às faixas seguintes.','nivel(19.5)==="baixa"&&nivel(20)==="média"&&nivel(79.5)==="média"&&nivel(80)==="alta"','O exemplo comum funciona, mas uma fronteira ainda caiu na faixa anterior. Compare igualdade e o primeiro retorno alcançado.'),
   check('Extremos e intervalos conservam a classificação.','(()=>{for(let energia=0;energia<=100;energia++){const esperado=energia<20?"baixa":energia<80?"média":"alta";if(nivel(energia)!==esperado)return false;}return nivel(0.1)==="baixa"&&nivel(20.1)==="média"&&nivel(80.1)==="alta";})()','O contrato inclui zero, cem e valores entre exemplos. Não resolva somente as entradas mostradas nem arredonde para escolher uma faixa.'),
-  check('Outra chamada não conserva a faixa da anterior.','[90,10,50,80,20,0,100,50].map(nivel).join("|")==="alta|baixa|média|alta|média|baixa|alta|média"','Cada chamada precisa depender da energia recebida agora, sem guardar uma classificação anterior.')
+  check('Outra chamada não conserva a faixa da anterior.','[90,10,50,80,20,0,100,50].map(energia=>nivel(energia)).join("|")==="alta|baixa|média|alta|média|baixa|alta|média"','Cada chamada precisa depender da energia recebida agora, sem guardar uma classificação anterior.')
  ],solution:'function nivel(energia) {\n  if (energia < 20) return "baixa";\n  if (energia < 80) return "média";\n  return "alta";\n}'},
 
  'js-debug-saldo-textual':{checks:[
