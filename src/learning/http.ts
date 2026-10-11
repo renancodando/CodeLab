@@ -1,6 +1,6 @@
 export type PedidoHttp={tipo:'enviar';chave:string;quantidade:number;ida:number;processamento:number;volta:number;prazo:number;falha:'nenhuma'|'perdida'|'429'|'503'};
 export type AcaoHttp=PedidoHttp|{tipo:'avancar';milissegundos:number};
-export type TentativaHttp=PedidoHttp&{id:number;enviadoEm:number;servidorEm:number;respostaEm:number;limiteEm:number;status:number|null;reserva:number|null;repetida:boolean;cliente:'aguardando'|'respondeu'|'timeout'};
+export type TentativaHttp=PedidoHttp&{id:number;enviadoEm:number;chegadaEm:number;servidorEm:number;respostaEm:number;limiteEm:number;status:number|null;reserva:number|null;repetida:boolean;cliente:'aguardando'|'respondeu'|'timeout'};
 export type EstadoHttp={agora:number;tentativas:TentativaHttp[];reservas:{id:number;chave:string;quantidade:number}[]};
 const inteiro=(valor:unknown,minimo:number,maximo:number):valor is number=>Number.isInteger(valor)&&Number(valor)>=minimo&&Number(valor)<=maximo;
 function validarAcao(dado:unknown):AcaoHttp{
@@ -11,14 +11,27 @@ function validarAcao(dado:unknown):AcaoHttp{
  throw new Error('Use chave de até 40 letras, números ou hífens, quantidade de 1 a 100 e tempos dentro dos limites.');
 }
 function avancar(estado:EstadoHttp,ate:number){
+ const primeiras=new Map<string,TentativaHttp>();
+ for(const tentativa of [...estado.tentativas].sort((a,b)=>a.chegadaEm-b.chegadaEm||a.id-b.id)){
+  if(!tentativa.chave||tentativa.falha==='429'||tentativa.falha==='503')continue;
+  if(!primeiras.has(tentativa.chave))primeiras.set(tentativa.chave,tentativa);
+ }
+ for(const tentativa of estado.tentativas){
+  const primeira=primeiras.get(tentativa.chave);
+  tentativa.servidorEm=tentativa.chegadaEm+tentativa.processamento;
+  if(primeira&&primeira.quantidade===tentativa.quantidade)tentativa.servidorEm=Math.max(tentativa.servidorEm,primeira.chegadaEm+primeira.processamento);
+  tentativa.respostaEm=tentativa.servidorEm+tentativa.volta;
+ }
  const eventos=estado.tentativas.flatMap(tentativa=>[
   {em:tentativa.servidorEm,ordem:0,tentativa},
   {em:tentativa.respostaEm,ordem:1,tentativa},
   {em:tentativa.limiteEm,ordem:2,tentativa}
- ]).filter(evento=>evento.em<=ate).sort((a,b)=>a.em-b.em||a.ordem-b.ordem||a.tentativa.id-b.tentativa.id);
+ ]).filter(evento=>evento.em<=ate).sort((a,b)=>a.em-b.em||a.ordem-b.ordem||a.tentativa.chegadaEm-b.tentativa.chegadaEm||a.tentativa.id-b.tentativa.id);
  for(const {ordem,tentativa} of eventos){
   if(ordem===0&&tentativa.status===null){
    if(tentativa.falha==='429'||tentativa.falha==='503'){tentativa.status=Number(tentativa.falha);continue;}
+   const primeira=primeiras.get(tentativa.chave);
+   if(primeira&&primeira.quantidade!==tentativa.quantidade){tentativa.status=409;continue;}
    const anterior=tentativa.chave?estado.reservas.find(reserva=>reserva.chave===tentativa.chave):undefined;
    if(anterior&&anterior.quantidade!==tentativa.quantidade){tentativa.status=409;continue;}
    const reserva=anterior??{id:estado.reservas.length+1,chave:tentativa.chave,quantidade:tentativa.quantidade};
@@ -36,7 +49,7 @@ export function reproduzirExperimentoHttp(entrada:unknown):{acoes:AcaoHttp[];est
   if(acao.tipo==='enviar'){
    if(estado.tentativas.length>=20)throw new Error('Limite de 20 tentativas neste experimento.');
    const servidorEm=estado.agora+acao.ida+acao.processamento;
-   estado.tentativas.push({...acao,id:estado.tentativas.length+1,enviadoEm:estado.agora,servidorEm,respostaEm:servidorEm+acao.volta,limiteEm:estado.agora+acao.prazo,status:null,reserva:null,repetida:false,cliente:'aguardando'});
+   estado.tentativas.push({...acao,id:estado.tentativas.length+1,enviadoEm:estado.agora,chegadaEm:estado.agora+acao.ida,servidorEm,respostaEm:servidorEm+acao.volta,limiteEm:estado.agora+acao.prazo,status:null,reserva:null,repetida:false,cliente:'aguardando'});
    avancar(estado,estado.agora);
   }else{
    if(estado.agora+acao.milissegundos>600000)throw new Error('Limite de dez minutos no relógio didático.');

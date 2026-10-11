@@ -3,6 +3,26 @@ import {reproduzirExperimentoHttp,restaurarExperimentoHttp,proximoEventoHttp,esp
 const pedido=(campos:Partial<PedidoHttp>={}):PedidoHttp=>({tipo:'enviar',chave:'pedido-123',quantidade:2,ida:100,processamento:100,volta:100,prazo:700,falha:'nenhuma',...campos});
 const avancar=(milissegundos:number):AcaoHttp=>({tipo:'avancar',milissegundos});
 describe('HTTP com relógio e identidade da intenção',()=>{
+ it('a primeira chegada reserva a identidade enquanto o processamento está pendente',()=>{
+  const inicio=[pedido({processamento:1500}),pedido({quantidade:3}),avancar(300)];
+  const antes=reproduzirExperimentoHttp(inicio).estado;expect(antes.reservas).toEqual([]);expect(antes.tentativas.map(t=>t.status)).toEqual([null,409]);
+  const depois=reproduzirExperimentoHttp([...inicio,avancar(1400)]).estado;expect(depois.reservas).toEqual([{id:1,chave:'pedido-123',quantidade:2}]);expect(depois.tentativas.map(t=>t.status)).toEqual([201,409]);
+ });
+ it('a repetição idêntica aguarda a conclusão original sem criar outro efeito',()=>{
+  const inicio=[pedido({processamento:1500}),pedido(),avancar(300)];
+  const antes=reproduzirExperimentoHttp(inicio).estado;expect(antes.reservas).toEqual([]);expect(antes.tentativas.map(t=>t.status)).toEqual([null,null]);
+  const depois=reproduzirExperimentoHttp([...inicio,avancar(1400)]).estado;expect(depois.reservas).toHaveLength(1);expect(depois.tentativas.map(t=>t.repetida)).toEqual([false,true]);expect(depois.tentativas.map(t=>t.reserva)).toEqual([1,1]);
+  expect(depois).toEqual(reproduzirExperimentoHttp([pedido({processamento:1500}),pedido(),...Array.from({length:17},()=>avancar(100))]).estado);
+ });
+ it('uma chegada anterior vence mesmo quando foi enviada depois e processa mais devagar',()=>{
+  const estado=reproduzirExperimentoHttp([pedido({ida:1000}),pedido({quantidade:3,processamento:1500}),avancar(2000)]).estado;
+  expect(estado.reservas).toEqual([{id:1,chave:'pedido-123',quantidade:3}]);expect(estado.tentativas.map(t=>t.status)).toEqual([409,201]);
+ });
+ it.each(['429','503'] as const)('falha %s não toma a identidade de uma operação válida',falha=>{
+  const estado=reproduzirExperimentoHttp([pedido({falha,processamento:1500}),pedido({quantidade:3}),avancar(2000)]).estado;
+  expect(estado.reservas).toEqual([{id:1,chave:'pedido-123',quantidade:3}]);expect(estado.tentativas.map(t=>t.status)).toEqual([Number(falha),201]);
+ });
+
  it('resposta perdida não desfaz efeito e repetição com identidade não duplica',()=>{
   const acoes=[pedido({falha:'perdida'}),avancar(700)],primeiro=reproduzirExperimentoHttp(acoes);expect(primeiro.estado.reservas).toHaveLength(1);expect(primeiro.estado.tentativas[0].cliente).toBe('timeout');
   const repetido=reproduzirExperimentoHttp([...acoes,pedido(),avancar(300)]).estado;expect(repetido.reservas).toHaveLength(1);expect(repetido.tentativas[1]).toMatchObject({cliente:'respondeu',status:201,reserva:1,repetida:true});expect(primeiro.estado.tentativas).toHaveLength(1);
