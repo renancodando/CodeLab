@@ -15,7 +15,7 @@ export function montarBancadaHttp(alvo:HTMLElement):()=>void{
   bancada.querySelector('[data-servidor]')!.textContent=estado.reservas.map(r=>'Reserva '+r.id+' · '+r.quantidade+' lugares · '+(r.chave||'sem chave')).join('\n')||'Nenhuma reserva efetiva.';
   const ultima=estado.tentativas.at(-1),espera=ultima?esperaRepeticaoHttp(ultima):null;
   bancada.querySelector('[data-retentativa]')!.textContent=espera!==null?'Retry-After: 2. Cliente recebeu a resposta em '+ultima!.respostaEm+' ms; esperar até '+espera+' ms antes de repetir.':ultima?.cliente==='respondeu'&&ultima.status===503?'503: serviço indisponível neste cenário, sem efeito. Considere backoff limitado e a mesma identidade; uma API real pode ter outro contrato.':'';
-  bancada.querySelector('[data-tempos]')!.textContent=ultima?'Tentativa '+ultima.id+': enviada '+ultima.enviadoEm+' ms → servidor '+ultima.servidorEm+' ms → resposta prevista '+ultima.respostaEm+' ms; prazo do cliente '+ultima.limiteEm+' ms. A resposta perdida nunca é entregue.':'Os tempos aparecerão após enviar.';
+  bancada.querySelector('[data-tempos]')!.textContent=ultima?'Tentativa '+ultima.id+': enviada '+ultima.enviadoEm+' ms → chegada '+ultima.chegadaEm+' ms → conclusão no servidor '+ultima.servidorEm+' ms → resposta prevista '+ultima.respostaEm+' ms; prazo do cliente '+ultima.limiteEm+' ms. A resposta perdida nunca é entregue.':'Os tempos aparecerão após enviar.';
   for(const campo of bancada.querySelectorAll<HTMLInputElement|HTMLSelectElement|HTMLButtonElement>('input,select,button:not([data-reiniciar])'))campo.disabled=incompativel;
   bancada.querySelector<HTMLButtonElement>('[data-proximo]')!.disabled=incompativel||proximoEventoHttp(estado)===undefined;
  }

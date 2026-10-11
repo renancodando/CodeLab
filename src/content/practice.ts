@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'cpp-mover-constante',language:'cpp',lessonIds:['cpp-memoria-posse'],skillIds:['cpp.posse.movimento-const'],afterBlock:2,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Autorizar movimento não remove const',
+  prompt:'O programa deve transferir a posse sem copiar o int. A inicialização de destino não compila. Qual mudança resolve esse contrato mantendo unique_ptr e sem casts? Esta pausa analisa compilação, sem executar C++.',
+  code:'#include <memory>\n#include <utility>\nint main() {\n    const auto origem = std::make_unique<int>(7);\n    auto destino = std::move(origem);\n}',
+  options:[{id:'copiar',text:'Trocar std::move(origem) por origem para selecionar uma cópia.'},{id:'mutavel',text:'Retirar const da declaração de origem, permitindo que a transferência esvazie esse dono.'},{id:'mover-valor',text:'Usar std::move(*origem), conservando const e transferindo assim o unique_ptr.'}],
+  hint:'Identifique o tipo e a categoria da expressão, depois o parâmetro exigido pelo construtor. Transferir a responsabilidade também modifica o dono de origem.',minutes:4
+ },
+ {
+  id:'cpp-prever-posse-temporaria',language:'cpp',lessonIds:['cpp-memoria-posse'],skillIds:['cpp.posse.weak-lock'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'A observação não é dona, mas o resultado de lock pode ser',
+  prompt:'Preveja as duas linhas, respeitando boolalpha e os espaços. O programa tem uma única thread e lock inicialmente encontra um objeto vivo. Acompanhe os donos, sem confundir o weak_ptr com o shared_ptr retornado.',
+  code:'#include <iostream>\n#include <memory>\nint main() {\n    auto dono = std::make_shared<int>(7);\n    std::weak_ptr<int> observador = dono;\n    auto temporario = observador.lock();\n    dono.reset();\n    std::cout << std::boolalpha << observador.expired() << " " << *temporario << "\\n";\n    temporario.reset();\n    std::cout << observador.expired() << " " << bool(observador.lock()) << "\\n";\n}',
+  hint:'Marque quem conserva posse após cada reset. Não confunda a ausência do primeiro dono com a ausência de todos os donos.',minutes:4
+ },
+ {
+  id:'cpp-devolver-texto-dono',language:'cpp',lessonIds:['cpp-memoria-posse'],skillIds:['cpp.posse.retorno-texto'],afterBlock:4,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'O resultado precisa sobreviver ao texto local',
+  prompt:'Complete somente o tipo de retorno, qualificado com std::. O chamador deve receber uma string com posse, que possa guardar e alterar após o retorno. Preserve o corpo e não use referência, ponteiro, view nem armazenamento estático.',
+  code:'#include <string>\n____ nome() {\n    std::string local = "CodeLab";\n    return local;\n}',
+  hint:'A vida do objeto local termina na saída da função. Escolha um resultado que possua seus caracteres; auto não comunica o tipo pedido nesta pausa.',minutes:3
+ },
+ {
   id:'py-prever-atributo',language:'python',lessonIds:['py-objetos-protocolos'],skillIds:['python.descritores.precedencia'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'O dicionário da instância vence toda leitura?',
   prompt:'Preveja as três linhas. As classes usam a busca padrão de atributos, sem sobrescrever __getattribute__. cache tem apenas __get__; total é uma property sem setter. Esta pausa compara raciocínio, sem executar Python.',
