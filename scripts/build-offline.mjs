@@ -4,7 +4,7 @@ async function files(dir){const result=[];for(const e of await readdir(dir,{with
 const paths=(await files('dist')).filter(p=>p==='dist/index.html'||p.startsWith('dist/assets/')||p.startsWith('dist/exemplos/imagens/')||p==='dist/favicon.svg').sort();
 const hash=createHash('sha256');for(const p of paths){hash.update(p);hash.update(await readFile(p));}
 const version=hash.digest('hex').slice(0,20);
-const opcionais=paths.filter(p=>/\/(?:sql-local(?:\.worker)?-|sql-wasm-browser-)/.test(p)).map(p=>'/'+p.slice(5));
+const opcionais=paths.filter(p=>/\/(?:sql-local(?:\.worker)?-|sql-wasm-browser-|typescript-local(?:\.worker)?-)/.test(p)).map(p=>'/'+p.slice(5));
 const urls=paths.map(p=>'/'+p.slice(5)).filter(p=>!opcionais.includes(p));urls.push('/');
 await writeFile('dist/sw.js',`const CACHE='codelab-offline-${version}';
 const URLS=${JSON.stringify(urls)},known=new Set([...URLS,...${JSON.stringify(opcionais)}]);

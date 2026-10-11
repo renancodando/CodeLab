@@ -367,3 +367,21 @@ A PR #31 foi integrada em 06defa49b36a8debcd5aecac4092ce91aa154bf3, árvore 2b93
 
 Os runs 38146266563 (#32) e 38146478584 (#33) falharam no registro de assistência ao abrir a solução HTTP e recarregar imediatamente. O evento toggle podia chegar depois da saída. A abertura pelo summary agora registra a consulta no próprio clique, mantendo toggle como fallback para abertura programática. O teste confere o armazenamento no mesmo ciclo do clique, antes de qualquer espera ou reload; ele reproduziu false no build anterior. Esses runs com falha não autorizam integração. Exigir novos heads, CI completo, revisões, árvore e domínio.
 Os três fluxos HTTP passaram no build corrigido (14,9 s), incluindo a verificação síncrona, reload, backup/importação, uso offline e 220/4000 px. Strict e build passaram; os limites de tempo não foram ampliados.
+
+
+## Entregas verificadas em 11 de outubro
+
+As PRs #31, #32 e #33 estão integradas, com revisões resolvidas e árvores iguais aos respectivos heads aprovados. A #31 passou no run 38143642894 (560 unidades, 130 fluxos), a #32 no 38148827540 (586 unidades, 134 fluxos) e a #33 no 38148866512 (601 unidades, 136 fluxos), além de compiladores, PostgreSQL, API, cache meteorológico e auditoria.
+
+A hospedagem confirmou READY/production e gitSource.sha para cada integração: 06defa49b36a8debcd5aecac4092ce91aa154bf3 em dpl_2vmHCMy5dVm7Lo9nErkcVi9BAtdL; 941c388aba6a4c3db9b583ff33a7725abbd8f7e4 em dpl_AvwMwTo3fYqH4Do8mejG5u2b81ri; 0e54bff8b268a474105bbc2010ae1e29534839ac em dpl_3ZMbTaoRW6hD41akeDAgmSdj3uEM. Os quatro fluxos públicos C++/HTTP passaram (2,1 min). SQL aprovou três dos quatro no primeiro lote; o cenário restante de consultas/backup/offline passou isoladamente (56,1 s), após uma falha de espera de abertura do editor. Não foi um único lote 4/4. Os dois fluxos HTML passaram no domínio (1,0 min), incluindo validade nativa, assistência, offline e larguras extremas.
+
+A edição publicada tem 76 atividades corrigíveis em 52 das 137 aulas principais; 85 aulas ainda não têm pausas. Esta contagem não inclui os experimentos Git/HTTP, nem transforma projetos de revisão manual em atividades corrigidas automaticamente. As linguagens e as frentes curriculares continuam abertas.
+
+## Laboratório TypeScript em validação
+
+O compilador oficial 5.9.3 usa strict/noEmitOnError e bibliotecas ES2022 locais em Worker descartável. O Monaco recebe diagnósticos reais e a interface mostra o JavaScript emitido antes de executar no QuickJS existente. Tipos não concedem DOM/rede nem substituem validação em runtime. São preservados limites, rascunhos separados, projeto.ts, backup e isolamento. Os dois recursos do compilador ficam fora do precache essencial; primeiro uso exige conexão/cache. Não há promessa de limite absoluto do heap do compilador ou medição de celular físico.
+
+Há 34 testes específicos aprovados; a suíte local completa anterior teve 621/629 e oito timeouts herdados, sem aprovação nem ampliação desses limites. O novo fluxo de abertura do editor tem prazo de 20 segundos, exportação da fonte preservada durante falha e recuperação por reload; respostas tardias não montam uma bancada abandonada. A revisão de navegador final e o CI deste head ainda são obrigatórios.
+
+
+A validação final contra o build concluído aprovou as seis histórias TypeScript em 5,3 min: diagnósticos/emit/isolamento; projetos/backup/offline/220–4000 px; cancelamento/CPU/memória/edição/saída; primeiro uso offline; prazo do módulo; e prazo do editor com exportação sem Monaco e recuperação após reload. A compilação TypeScript e a execução QuickJS foram reais. Esta prova local não substitui CI completo, revisão, árvore e conferência do domínio.

@@ -67,3 +67,7 @@ dialog{width:min(580px,calc(100% - 28px));max-height:85svh;overflow:auto;padding
 .lab-sql-tabela caption{text-align:start;padding-block:8px;color:var(--muted)}
 .lab-sql-tabela th,.lab-sql-tabela td{padding:8px;border:1px solid var(--border);text-align:start;white-space:pre-wrap;overflow-wrap:anywhere}
 .lab-sql-tabela [data-tipo="nulo"]{font-style:italic;color:var(--muted)}
+#lab-ts-diagnostics{margin:0;padding:16px 20px 16px 40px;max-block-size:340px;overflow:auto;overflow-wrap:anywhere;font-size:13px;line-height:1.7}
+#lab-ts-code{padding:16px 20px;min-inline-size:0;overflow-wrap:anywhere}
+#lab-ts-code summary{cursor:pointer;color:var(--gold)}
+.preview-panel #lab-ts-code pre{height:auto;max-block-size:340px;overflow:auto;padding:12px 0}

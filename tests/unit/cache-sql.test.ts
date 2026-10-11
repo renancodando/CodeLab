@@ -9,7 +9,7 @@ beforeAll(()=>{
  const raiz=mkdtempSync(join(tmpdir(),'codelab-sql-cache-'));
  try{
   mkdirSync(join(raiz,'dist/assets'),{recursive:true});
-  for(const [arquivo,conteudo] of [['index.html','inicio'],['assets/index-a.js','aplicacao'],['assets/sql-local-a.js','carregador'],['assets/sql-local.worker-a.js','worker'],['assets/sql-wasm-browser-a.wasm','wasm']])writeFileSync(join(raiz,'dist',arquivo),conteudo);
+  for(const [arquivo,conteudo] of [['index.html','inicio'],['assets/index-a.js','aplicacao'],['assets/sql-local-a.js','carregador'],['assets/sql-local.worker-a.js','worker'],['assets/sql-wasm-browser-a.wasm','wasm'],['assets/typescript-local-a.js','carregador TS'],['assets/typescript-local.worker-a.js','compilador TS']])writeFileSync(join(raiz,'dist',arquivo),conteudo);
   execFileSync(process.execPath,[resolve('scripts/build-offline.mjs')],{cwd:raiz,timeout:10000,stdio:'pipe'});
   codigo=readFileSync(join(raiz,'dist/sw.js'),'utf8');
  }finally{if(!resolve(raiz).startsWith(resolve(tmpdir())+sep))throw new Error('Diretório temporário inválido.');rmSync(raiz,{recursive:true,force:true});}
@@ -25,10 +25,13 @@ function ambiente(opcoes:{falharInstalacao?:boolean;semEspaco?:boolean}={}){
 }
 describe('cache opcional do motor SQL',()=>{
  it('prepara a aplicação sem baixar compilador, worker ou WASM de SQL',async()=>{
-  const mundo=ambiente();await mundo.instalar();expect(mundo.incluidos).toContain('/assets/index-a.js');expect(mundo.incluidos).toContain('/');expect(mundo.incluidos.some(url=>/sql-local|sql-wasm/.test(url))).toBe(false);
+  const mundo=ambiente();await mundo.instalar();expect(mundo.incluidos).toContain('/assets/index-a.js');expect(mundo.incluidos).toContain('/');expect(mundo.incluidos.some(url=>/sql-local|sql-wasm|typescript-local/.test(url))).toBe(false);
  });
  it('guarda o recurso solicitado e volta a servir sem rede',async()=>{
   const mundo=ambiente(),caminho='/assets/sql-wasm-browser-a.wasm';await mundo.instalar();expect(await(await mundo.buscar(caminho))!.text()).toBe('SQLite local');mundo.ficarOffline();expect(await(await mundo.buscar(caminho))!.text()).toBe('SQLite local');expect(mundo.requisitados).toHaveLength(1);
+ });
+ it('guarda o compilador TypeScript somente após a solicitação e o serve offline',async()=>{
+  const mundo=ambiente(),caminho='/assets/typescript-local.worker-a.js';await mundo.instalar();expect(mundo.incluidos).not.toContain(caminho);expect(await(await mundo.buscar(caminho))!.text()).toBe('SQLite local');mundo.ficarOffline();expect(await(await mundo.buscar(caminho))!.text()).toBe('SQLite local');expect(mundo.requisitados).toHaveLength(1);
  });
  it('falha de quota no cache não impede a resposta online',async()=>{
   const mundo=ambiente({semEspaco:true});expect(await(await mundo.buscar('/assets/sql-local.worker-a.js'))!.text()).toBe('SQLite local');expect(mundo.salvos.size).toBe(0);
