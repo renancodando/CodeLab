@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'html-prever-controles':{accepted:['A\nnull\nhtml,css'],failure:'Readonly pode participar dos dados; a presença de disabled desativa mesmo com texto false. Uma checkbox desmarcada não cria a entrada. Percorra somente as entradas que foram construídas.',solution:'A\nnull\nhtml,css'},
+ 'html-preservar-selecoes':{accepted:['colecao'],failure:'Uma propriedade única perde multiplicidade; get também devolve somente uma entrada e ausência vira null. Ler todos os controles inclui escolhas desmarcadas. Preserve a coleção de entradas que realmente participaram.',solution:'const selecionadas = dados.getAll("linguagem");'},
+ 'html-limpar-validacao':{accepted:["''",'""'],failure:'A mensagem anterior conserva customError enquanto houver texto, inclusive um espaço. Corrigir o valor não limpa esse estado e desativar a validação elimina uma proteção pedida pelo contrato.',solution:"''"},
  'cpp-mover-constante':{accepted:['mutavel'],failure:'std::move conserva const. O movimento de unique_ptr precisa modificar a origem; copiar é proibido e mover o int observado não transfere o gerenciador.',solution:'auto origem = std::make_unique<int>(7);\nauto destino = std::move(origem);'},
  'cpp-prever-posse-temporaria':{accepted:['false 7\ntrue false'],failure:'O resultado bem-sucedido de lock é outro dono. Confira a vida dessa posse antes de decidir se expired é verdadeiro; weak_ptr sozinho não conserva o objeto.',solution:'false 7\ntrue false'},
  'cpp-devolver-texto-dono':{accepted:['std::string'],failure:'Uma view ou referência não passa a possuir os caracteres quando a função retorna. O resultado deve continuar válido e mutável sem depender da vida do local.',solution:'std::string'},

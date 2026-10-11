@@ -151,3 +151,9 @@ O rascunho armazena ações validadas no backup existente; a restauração repro
 ## Execução SQL local
 
 A bancada SQL agora executa SQLite real em Worker descartável, com resultados em tabelas, tipos preservados, transações dentro do script, cancelamento e limites explícitos. Scripts continuam em projetos e backups; bancos e resultados não persistem entre cliques. PostgreSQL não é simulado por SQLite e conserva o ambiente próprio das aulas e do CI. O runtime só carrega ao executar; offline exige esse carregamento e cache disponível. Detalhes, evidências e gates em [laboratório SQL](laboratorio-sql.md). Executar livremente no laboratório não gera domínio nem substitui correção específica das atividades.
+
+## Presença, multiplicidade e validação de formulários HTML
+
+A aula html-dados-formulario recebe três pausas nos blocos 3, 4 e 6, preservando as duas atividades anteriores, exemplos, dois problemas independentes e projeto. A pessoa prevê readonly/disabled e checkboxes realmente enviadas, depura a perda de seleções ao converter pares para objeto e retira o estado personalizado que mantém um campo inválido após correção. As novas habilidades exigem conceito na sessão diária. São evidências conceituais; não afirmam execução do HTML escrito pelo aluno.
+
+Os gabaritos foram conferidos em navegador nativo: ordem e ausência dos pares, duas/uma/nenhuma escolha, perda por Object.fromEntries/get e transições inválido→válido→vazio→válido em setCustomValidity. A previsão não promete validar qualquer formulário nem substitui validação no servidor. Referências primárias: [construção das entradas](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#constructing-the-entry-list) e [validação de restrições](https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Constraint_validation). As métricas atualizadas vêm do gerador; a aula já possuía pausas, portanto este aprofundamento não reduz sozinho o número de aulas sem prática.
