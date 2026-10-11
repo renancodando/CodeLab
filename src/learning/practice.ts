@@ -13,6 +13,8 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'js-prever-ciclos':{accepted:['1 1\n2 3\n3 6'],failure:'A soma acumula o estado anterior; ela não recomeça em cada passagem. Compare a atualização de total com o avanço de i antes de prever a linha seguinte.',solution:'1 1\n2 3\n3 6'},
+ 'js-parar-contagem':{accepted:['positivo'],failure:'Incluir zero acrescenta uma passagem. Conferir apenas inicio não acompanha o progresso; para uma entrada positiva essa condição não muda. Use o estado que se aproxima da parada.',solution:'restantes > 0'},
  'js-prever-transporte':{accepted:['false true true'],failure:'JSON omite undefined em propriedades de objeto, mas conserva posições de array como null. NaN também vira null; confira os três campos reconstruídos.',solution:'false true true'},
  'js-inserir-texto-dados':{accepted:['texto'],failure:'O nome deve ser texto literal. APIs que interpretam HTML continuam criando marcação mesmo se você remover algumas tags por regex.',solution:'const item = document.createElement("li");\nitem.textContent = nome;\nlista.append(item);'},
  'html-prever-controles':{accepted:['A\nnull\nhtml,css'],failure:'Readonly pode participar dos dados; a presença de disabled desativa mesmo com texto false. Uma checkbox desmarcada não cria a entrada. Percorra somente as entradas que foram construídas.',solution:'A\nnull\nhtml,css'},
@@ -86,6 +88,13 @@ const concepts:Record<string,ConceptSpec>={
 };
 const check=(label:string,expression:string,feedback:string):JSCheck=>({label,expression:'(()=>{try{return ('+expression+');}catch{return false;}})()',expected:true,feedback});
 const javascript:Record<string,JSSpec>={
+ 'js-debug-soma-inclusiva':{checks:[
+  check('A soma até quatro inclui o último número.','somarAte(4)===10','O intervalo pedido inclui seu último valor. Compare a última comparação com o último número que realmente foi somado.'),
+  check('Zero não executa uma passagem fictícia.','somarAte(0)===0','Zero representa um intervalo vazio. O estado inicial deve permitir devolver zero sem inventar um termo.'),
+  check('Um inclui exatamente o primeiro termo.','somarAte(1)===1','A menor entrada positiva expõe a fronteira: o primeiro e o último termo são o mesmo número.'),
+  check('Outros intervalos produzem somas próprias.','somarAte(2)===3&&somarAte(17)===153&&somarAte(1000)===500500','Confira o resultado devolvido e a continuidade do intervalo. Acertar somente o exemplo não atende às outras entradas.'),
+  check('Chamadas intercaladas não conservam a soma anterior.','somarAte(1000)===500500&&somarAte(0)===0&&somarAte(1)===1&&somarAte(4)===10','Uma chamada não deve começar com o total deixado por outra. Investigue onde o acumulador nasce.')
+ ],solution:'function somarAte(n) {\n  let total = 0;\n  for (let i = 1; i <= n; i++) {\n    total += i;\n  }\n  return total;\n}'},
  'js-debug-importacao-atomica':{checks:[
   check("Importação válida substitui, recorta espaços e mantém a identidade.","(()=>{const estado=[\"antigo\"],alias=estado;const quantidade=importarNomes(estado,'[ {\"nome\":\" Lia \",\"extra\":true},{\"nome\":\"Caio\"} ]');return quantidade===2&&estado===alias&&JSON.stringify(estado)==='[\"Lia\",\"Caio\"]';})()","Confira a substituição do conteúdo, o retorno e trim; não apenas acrescente os novos nomes."),
   check("Lista vazia é uma importação válida e limpa o conteúdo.","(()=>{const estado=[\"anterior\"];return importarNomes(estado,\"[]\")===0&&estado.length===0;})()","A coleção vazia não é uma falha de arquivo. Ela precisa substituir a lista anterior por zero nomes."),

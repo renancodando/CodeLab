@@ -171,3 +171,22 @@ A preparação em pratica/js-importacao-atomica liga três pausas a js-modulos-e
 Os 74 testes específicos passaram, incluindo rejeição de soluções frágeis e aceitação de outra implementação válida. Métricas geradas da branch: 79 atividades em 53/137 aulas, com 84 ainda sem pausas. Essas métricas ainda não são publicação. Exigir build, dois fluxos de navegador, CI completo, revisão, árvore e domínio. Não há novo runtime ou permissão de rede. A PR #34 TypeScript precisa concluir seu CI corrigido antes desta integração dependente.
 
 Referências: [JSON.stringify na especificação ECMAScript](https://tc39.es/ecma262/multipage/structured-data.html#sec-json.stringify) e [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent). Os comportamentos usados são conferidos no mecanismo e no navegador; não dependem de novos recursos do draft.
+
+
+## TypeScript e importação verificados no domínio
+
+As PRs #34/#35 foram integradas com árvores iguais aos heads aprovados. TypeScript: run 38163020418, 632 unidades e 142 fluxos; merge 147658af86c04c94a1a894e8aa04bc024d237835, deployment dpl_3c5ETa3xqZdb54aXPe7phvhz4PfG READY/production com esse SHA e seis fluxos públicos aprovados em 4,6 min. Importação JavaScript: run 38163600601, 644 unidades e 144 fluxos; merge e0e15e5d18e405cf8f5ab1f6376d36720022a548, deployment dpl_9S2Jqs52jZS4wCNuCZuemiYqfHwE READY/production com esse SHA e dois fluxos públicos aprovados em 1,3 min. Revisões resolvidas. Incluem compiladores, PostgreSQL, API/cache e auditoria; não encerram currículo, módulos TypeScript ou medição em celular físico.
+
+A edição publicada tem 79 atividades corrigíveis em 53 das 137 aulas principais; 84 aulas ainda não possuem pausas. Os números novos da branch de fundamentos só serão publicação após seus próprios gates.
+
+
+## Fundamentos de laços em preparação
+
+A aula original repeticoes recebe três pausas nos capítulos de raciocínio, previsão e investigação: rastrear condição/corpo/avanço, corrigir a soma inclusiva e escolher uma condição que realmente se aproxima da parada. A entrada do exercício já é um inteiro de 0 a 1000; validação de entradas arbitrárias não faz parte desse contrato. Cinco famílias executadas em QuickJS conferem zero, um, outros intervalos, retorno numérico e independência entre chamadas. Implementações equivalentes são aceitas. Previsão e escolha continuam conceituais; seus gabaritos são executados nos testes.
+
+As doze seções e exercícios anteriores permanecem. As âncoras de pausas usam a mesma posição de capítulo da preparação diária, conservando as posições nas aulas aprofundadas e alcançando as originais. A preparação também mostra os pontos de raciocínio que antes eram omitidos, sem abrir a solução. Ler não gera domínio e consultar solução permanece assistência. Os 78 testes específicos passaram; strict, build, navegador e CI ainda precisam concluir.
+
+Referências oficiais: [for](https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-for-statement) e [while](https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-while-statement). O draft pode incluir recursos futuros; esta entrega usa construções estáveis e confere os programas no interpretador real.
+
+
+Strict/build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais. Inicial 201,13 kB gzip; mundo 135,94 kB gzip preservado. Os quatro fluxos Edge passaram em 3,2 min: aula original com âncoras reais/depuração/offline/assistência/220–4000 px, preparação original sem gabarito/domínio pela leitura e duas regressões SQL de preparação e retomada offline. Métricas da branch: 82 atividades em 54/137 aulas; 83 sem pausas. Exigir CI completo, revisão, árvore e conferência publicada deste head antes de atualizar a contagem de produção.

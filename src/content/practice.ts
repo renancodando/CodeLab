@@ -11,6 +11,28 @@ export type PracticeActivity = {
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
+ {
+  id:'js-prever-ciclos',language:'javascript',lessonIds:['repeticoes'],skillIds:['javascript.lacos.rastreamento'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Quando a condição é conferida?',
+  prompt:'Escreva as três linhas exibidas. A condição é conferida antes de cada passagem e o avanço vem depois do corpo. A pausa confere sua previsão, sem executar sua resposta.',
+  code:'let total = 0;\nfor (let i = 1; i <= 3; i++) {\n  total += i;\n  console.log(i, total);\n}',
+  hint:'Anote i e total antes e depois de cada soma. A próxima comparação usa o i já atualizado.',minutes:3
+ },
+ {
+  id:'js-debug-soma-inclusiva',language:'javascript',lessonIds:['repeticoes'],skillIds:['javascript.lacos.fronteiras'],afterBlock:5,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'O relatório esqueceu o último número',
+  prompt:'Corrija somarAte(n) para retornar a soma de 1 até n, incluindo n. A entrada já é um inteiro entre 0 e 1000; zero deve retornar zero. Cada chamada precisa ser independente e devolver um número, sem depender de console.log. O JavaScript isolado executa os casos de teste da sua correção.',
+  code:'function somarAte(n) {\n  let total = 0;\n  for (let i = 1; i < n; i++) {\n    total += i;\n  }\n  return total;\n}',
+  hint:'Simule n igual a 1 e compare a condição de continuação com o intervalo pedido.',minutes:5
+ },
+ {
+  id:'js-parar-contagem',language:'javascript',lessonIds:['repeticoes'],skillIds:['javascript.lacos.terminacao'],afterBlock:7,kind:'choice',capability:'alteracao',requiresConcept:true,
+  title:'A contagem chegou a zero e continuou',
+  prompt:'inicio já é um inteiro de 0 a 1000. O programa deve contar exatamente inicio passagens e terminar, inclusive com zero. Qual condição substitui a lacuna? Esta escolha é conceitual; não executa sua resposta.',
+  code:'let restantes = inicio;\nlet passagens = 0;\nwhile (____) {\n  passagens += 1;\n  restantes -= 1;\n}\nconsole.log(passagens);',
+  options:[{id:'positivo',text:'restantes > 0'},{id:'inclusivo',text:'restantes >= 0'},{id:'inicio',text:'inicio > 0'}],
+  hint:'Acompanhe restantes quando ele chega a zero. Confira também se a variável da condição muda dentro do corpo.',minutes:3
+ },
 {
   "id": "js-prever-transporte",
   "language": "javascript",

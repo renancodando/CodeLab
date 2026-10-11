@@ -161,7 +161,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "repeticoes": {
     "contexto": "Loops automatizam trabalho repetido, mas introduzem uma responsabilidade: o estado precisa se aproximar de uma condição de parada. Um loop correto deixa claro o que muda a cada iteração e quando termina.",
-    "modelo": "Veja um loop como uma máquina de estados em ciclos. Existe um estado inicial, uma condição verificada, uma transformação e um próximo estado. Se a transformação não aproxima a condição de falso, o ciclo pode nunca terminar.",
+    "modelo": "Veja um loop como uma máquina de estados em ciclos. Existe um estado inicial, uma condição verificada, uma transformação e um próximo estado. Se a transformação não aproxima a condição de falso, o ciclo pode nunca terminar. Em for, a inicialização acontece uma vez; depois vêm condição, corpo, avanço e nova condição. Para somar de 1 até n incluindo n, a última comparação precisa permitir esse termo; com n igual a zero, o intervalo está vazio. Um acumulador declarado dentro da função recomeça em cada chamada. Em while, confira uma variável que realmente muda: testar apenas a entrada inicial pode deixar a condição sempre verdadeira.",
     "passos": [
       "Defina o estado inicial antes do loop.",
       "Escreva a condição de continuação em uma frase.",
