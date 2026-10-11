@@ -12,6 +12,19 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'js-prever-ausencia-zero',language:'javascript',lessonIds:['valores'],skillIds:['javascript.valores.ausencia'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Sem valor não é o mesmo que zero',prompt:'Escreva as duas linhas. === compara sem converter os valores; a variável começa sem valor inicial. A pausa confere sua previsão, sem executar sua resposta.',code:'let energia;\nconsole.log(energia === 0);\nenergia = 0;\nconsole.log(energia === 0);',hint:'Acompanhe o valor antes e depois da atribuição. Zero é um número conhecido; ausência ainda não informa esse número.',minutes:2
+ },
+ {
+  id:'js-debug-saldo-textual',language:'javascript',lessonIds:['valores'],skillIds:['javascript.valores.operacoes'],afterBlock:5,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'O saldo 100 com ajuste 25 virou 10025',prompt:'Corrija somarSaldo(saldo, variacao) para devolver a soma numérica. As duas entradas já são inteiros de -10000 a 10000; zero e ajustes negativos são válidos. Cada chamada deve ser independente. Não precisa ler formulário, converter texto nem validar outros tipos. Os testes executam sua correção no JavaScript isolado.',code:'function somarSaldo(saldo, variacao) {\n  return String(saldo) + variacao;\n}',hint:'Confira o tipo de cada operando no instante do +, antes de mudar valores ou acrescentar conversões.',minutes:4
+ },
+ {
+  id:'js-permitir-reatribuicao',language:'javascript',lessonIds:['valores'],skillIds:['javascript.valores.reatribuicao'],afterBlock:7,kind:'choice',capability:'alteracao',requiresConcept:true,
+  title:'A atualização precisa mudar o valor do nome',prompt:'O restante do programa precisa conservar estas linhas e exibir 50. Qual declaração ocupa a lacuna sem erro de reatribuição? A escolha é conceitual e não executa sua resposta.',code:'____\nenergia = energia + 10;\nconsole.log(energia);',options:[{id:'mutavel',text:'let energia = 40;'},{id:'fixa',text:'const energia = 40;'},{id:'texto',text:'let energia = "40";'}],hint:'Separe a possibilidade de reatribuir o nome do tipo de valor usado pela soma.',minutes:2
+ },
+
+ {
   id:'js-prever-ciclos',language:'javascript',lessonIds:['repeticoes'],skillIds:['javascript.lacos.rastreamento'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Quando a condição é conferida?',
   prompt:'Escreva as três linhas exibidas. A condição é conferida antes de cada passagem e o avanço vem depois do corpo. A pausa confere sua previsão, sem executar sua resposta.',
