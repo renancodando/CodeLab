@@ -8,6 +8,10 @@ describe('HTTP com relógio e identidade da intenção',()=>{
   const antes=reproduzirExperimentoHttp(inicio).estado;expect(antes.reservas).toEqual([]);expect(antes.tentativas.map(t=>t.status)).toEqual([null,409]);
   const depois=reproduzirExperimentoHttp([...inicio,avancar(1400)]).estado;expect(depois.reservas).toEqual([{id:1,chave:'pedido-123',quantidade:2}]);expect(depois.tentativas.map(t=>t.status)).toEqual([201,409]);
  });
+ it('uma falha de transporte injetada não aguarda a intenção original',()=>{
+  const estado=reproduzirExperimentoHttp([pedido({processamento:1500}),pedido({falha:'429'}),avancar(300)]).estado;
+  expect(estado.tentativas.map(t=>t.status)).toEqual([null,429]);expect(estado.tentativas[1].cliente).toBe('respondeu');expect(estado.reservas).toEqual([]);
+ });
  it('a repetição idêntica aguarda a conclusão original sem criar outro efeito',()=>{
   const inicio=[pedido({processamento:1500}),pedido(),avancar(300)];
   const antes=reproduzirExperimentoHttp(inicio).estado;expect(antes.reservas).toEqual([]);expect(antes.tentativas.map(t=>t.status)).toEqual([null,null]);

@@ -19,7 +19,7 @@ function avancar(estado:EstadoHttp,ate:number){
  for(const tentativa of estado.tentativas){
   const primeira=primeiras.get(tentativa.chave);
   tentativa.servidorEm=tentativa.chegadaEm+tentativa.processamento;
-  if(primeira&&primeira.quantidade===tentativa.quantidade)tentativa.servidorEm=Math.max(tentativa.servidorEm,primeira.chegadaEm+primeira.processamento);
+  if(primeira&&tentativa.falha!=='429'&&tentativa.falha!=='503'&&primeira.quantidade===tentativa.quantidade)tentativa.servidorEm=Math.max(tentativa.servidorEm,primeira.chegadaEm+primeira.processamento);
   tentativa.respostaEm=tentativa.servidorEm+tentativa.volta;
  }
  const eventos=estado.tentativas.flatMap(tentativa=>[
