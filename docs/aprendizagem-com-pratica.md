@@ -162,3 +162,12 @@ Os gabaritos foram conferidos em navegador nativo: ordem e ausência dos pares, 
 ## Compilação TypeScript na bancada
 
 TypeScript prepara um fluxo real de diagnósticos → JavaScript emitido → execução isolada, com projetos .ts e backup do original. Os tipos são conferidos com strict, sem equivaler a validação de dados em runtime. O compilador só carrega ao executar e o primeiro uso offline exige cache prévio. O contrato de script único, limites e diferenças dos hosts estão em laboratorio-typescript.md. Exigir CI/integração/domínio próprios; nenhuma atividade ou nota de domínio foi fabricada por essa ferramenta.
+
+
+## Importação JavaScript com prática própria
+
+A preparação em pratica/js-importacao-atomica liga três pausas a js-modulos-engenharia, antes sem atividades corrigíveis: prever perdas no transporte JSON, depurar a confirmação de uma importação e escolher apresentação como texto literal. A depuração executa sete contratos no QuickJS, incluindo falha depois do primeiro registro, lista vazia, 100/101 registros, SyntaxError e nova tentativa. As outras duas pausas continuam conceituais; a referência JSON foi executada e o trecho DOM tem teste nativo próprio. Preserva seis blocos, exercício e projeto anteriores.
+
+Os 74 testes específicos passaram, incluindo rejeição de soluções frágeis e aceitação de outra implementação válida. Métricas geradas da branch: 79 atividades em 53/137 aulas, com 84 ainda sem pausas. Essas métricas ainda não são publicação. Exigir build, dois fluxos de navegador, CI completo, revisão, árvore e domínio. Não há novo runtime ou permissão de rede. A PR #34 TypeScript precisa concluir seu CI corrigido antes desta integração dependente.
+
+Referências: [JSON.stringify na especificação ECMAScript](https://tc39.es/ecma262/multipage/structured-data.html#sec-json.stringify) e [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent). Os comportamentos usados são conferidos no mecanismo e no navegador; não dependem de novos recursos do draft.

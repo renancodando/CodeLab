@@ -385,3 +385,15 @@ Há 34 testes específicos aprovados; a suíte local completa anterior teve 621/
 
 
 A validação final contra o build concluído aprovou as seis histórias TypeScript em 5,3 min: diagnósticos/emit/isolamento; projetos/backup/offline/220–4000 px; cancelamento/CPU/memória/edição/saída; primeiro uso offline; prazo do módulo; e prazo do editor com exportação sem Monaco e recuperação após reload. A compilação TypeScript e a execução QuickJS foram reais. Esta prova local não substitui CI completo, revisão, árvore e conferência do domínio.
+
+
+## Importação JavaScript com prática própria
+
+A preparação em pratica/js-importacao-atomica liga três pausas a js-modulos-engenharia, antes sem atividades corrigíveis: prever perdas no transporte JSON, depurar a confirmação de uma importação e escolher apresentação como texto literal. A depuração executa sete contratos no QuickJS, incluindo falha depois do primeiro registro, lista vazia, 100/101 registros, SyntaxError e nova tentativa. As outras duas pausas continuam conceituais; a referência JSON foi executada e o trecho DOM tem teste nativo próprio. Preserva seis blocos, exercício e projeto anteriores.
+
+Os 74 testes específicos passaram, incluindo rejeição de soluções frágeis e aceitação de outra implementação válida. Métricas geradas da branch: 79 atividades em 53/137 aulas, com 84 ainda sem pausas. Essas métricas ainda não são publicação. Exigir build, dois fluxos de navegador, CI completo, revisão, árvore e domínio. Não há novo runtime ou permissão de rede. A PR #34 TypeScript precisa concluir seu CI corrigido antes desta integração dependente.
+
+Referências: [JSON.stringify na especificação ECMAScript](https://tc39.es/ecma262/multipage/structured-data.html#sec-json.stringify) e [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent). Os comportamentos usados são conferidos no mecanismo e no navegador; não dependem de novos recursos do draft.
+
+
+Strict/build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais sob demanda; inicial 199,82 kB gzip e mundo 135,94 kB. Os dois fluxos Edge passaram (47,0 s), incluindo referência DOM real, depuração executada offline, erro/acerto, assistência, recarga e 220/4000 px. As primeiras validações detectaram uma literal de gabarito e um parêntese extra no caso de borda novo; ambos foram corrigidos antes dos 74 testes e dos fluxos aprovados. Exigir agora CI completo e revisão do head publicado, integração posterior à PR #34 e conferência do domínio.
