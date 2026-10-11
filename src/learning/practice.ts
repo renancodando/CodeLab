@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'js-prever-acesso':{accepted:['entrar\naguardar\naguardar'],failure:'Ingresso não substitui idade mínima, nem idade mínima substitui ingresso. Acompanhe cada chamada até o primeiro retorno; exatamente 18 atende a comparação >=.',solution:'entrar\naguardar\naguardar'},
+ 'js-exigir-duas-condicoes':{accepted:['ambas'],failure:'A regra pede as duas condições juntas. Aceitar só uma libera casos proibidos; usar > também recusa quem tem exatamente a idade mínima.',solution:'idade >= 18 && ingresso'},
+
  'js-prever-ausencia-zero':{accepted:['false\ntrue'],failure:'Uma variável sem valor inicial tem undefined, que não equivale ao número zero. A atribuição posterior muda esse estado; não troque o primeiro valor por zero antecipadamente.',solution:'false\ntrue'},
  'js-permitir-reatribuicao':{accepted:['mutavel'],failure:'Reatribuir um nome const é diferente de alterar uma propriedade de objeto. Permitir a reatribuição ainda não corrige uma soma cujo operando é texto.',solution:'let energia = 40;'},
  'js-prever-ciclos':{accepted:['1 1\n2 3\n3 6'],failure:'A soma acumula o estado anterior; ela não recomeça em cada passagem. Compare a atualização de total com o avanço de i antes de prever a linha seguinte.',solution:'1 1\n2 3\n3 6'},
@@ -90,6 +93,13 @@ const concepts:Record<string,ConceptSpec>={
 };
 const check=(label:string,expression:string,feedback:string):JSCheck=>({label,expression:'(()=>{try{return ('+expression+');}catch{return false;}})()',expected:true,feedback});
 const javascript:Record<string,JSSpec>={
+ 'js-debug-faixas-energia':{checks:[
+  check('Valores dentro de cada faixa chegam ao ramo esperado.','nivel(10)==="baixa"&&nivel(50)==="média"&&nivel(90)==="alta"','Confira os três ramos e o valor devolvido, sem trocar retorno por saída no console.'),
+  check('As fronteiras 20 e 80 pertencem às faixas seguintes.','nivel(19.5)==="baixa"&&nivel(20)==="média"&&nivel(79.5)==="média"&&nivel(80)==="alta"','O exemplo comum funciona, mas uma fronteira ainda caiu na faixa anterior. Compare igualdade e o primeiro retorno alcançado.'),
+  check('Extremos e intervalos conservam a classificação.','(()=>{for(let energia=0;energia<=100;energia++){const esperado=energia<20?"baixa":energia<80?"média":"alta";if(nivel(energia)!==esperado)return false;}return nivel(0.1)==="baixa"&&nivel(20.1)==="média"&&nivel(80.1)==="alta";})()','O contrato inclui zero, cem e valores entre exemplos. Não resolva somente as entradas mostradas nem arredonde para escolher uma faixa.'),
+  check('Outra chamada não conserva a faixa da anterior.','[90,10,50,80,20,0,100,50].map(nivel).join("|")==="alta|baixa|média|alta|média|baixa|alta|média"','Cada chamada precisa depender da energia recebida agora, sem guardar uma classificação anterior.')
+ ],solution:'function nivel(energia) {\n  if (energia < 20) return "baixa";\n  if (energia < 80) return "média";\n  return "alta";\n}'},
+
  'js-debug-saldo-textual':{checks:[
   check('Saldo e ajuste numéricos produzem número somado.','somarSaldo(100,25)===125','O resultado ainda mistura texto e cálculo. Inspecione os operandos no instante da operação e o valor devolvido.'),
   check('Zero é válido em qualquer uma das entradas.','somarSaldo(0,0)===0&&somarSaldo(0,25)===25&&somarSaldo(100,0)===100','Zero não significa entrada ausente. Confira também se outra chamada deixou algum estado acumulado.'),

@@ -12,6 +12,19 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'js-prever-acesso',language:'javascript',lessonIds:['decisoes'],skillIds:['javascript.decisoes.combinacao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Um ingresso sozinho permite entrar?',prompt:'Escreva as três linhas exibidas. A regra exige idade mínima e ingresso ao mesmo tempo. Esta pausa confere sua previsão, sem executar sua resposta.',code:'function acesso(idade, ingresso) {\n  if (idade >= 18 && ingresso) return "entrar";\n  return "aguardar";\n}\nconsole.log(acesso(18, true));\nconsole.log(acesso(18, false));\nconsole.log(acesso(17, true));',hint:'Faça uma coluna para cada condição e só depois combine os resultados. Inclua o valor exatamente na fronteira.',minutes:3
+ },
+ {
+  id:'js-debug-faixas-energia',language:'javascript',lessonIds:['decisoes'],skillIds:['javascript.decisoes.fronteiras'],afterBlock:5,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'A energia 20 caiu na faixa baixa',prompt:'Corrija nivel(energia): abaixo de 20 retorna "baixa"; de 20 até antes de 80 retorna "média"; de 80 em diante retorna "alta". A entrada já é um número finito entre 0 e 100, inclusive; pode conter casas decimais. Cada chamada é independente e deve devolver a string exata, sem depender de console.log. Os testes executam sua correção no JavaScript isolado.',code:'function nivel(energia) {\n  if (energia <= 20) return "baixa";\n  if (energia <= 80) return "média";\n  return "alta";\n}',hint:'Compare cada fronteira com um valor logo abaixo e anote o primeiro ramo alcançado. O retorno encerra a chamada.',minutes:5
+ },
+ {
+  id:'js-exigir-duas-condicoes',language:'javascript',lessonIds:['decisoes'],skillIds:['javascript.decisoes.conjuncao'],afterBlock:7,kind:'choice',capability:'alteracao',requiresConcept:true,
+  title:'A correção precisa valer além deste visitante',prompt:'idade já é um inteiro não negativo e ingresso já é booleano. Escolha a condição que permite entrar somente com idade de pelo menos 18 e ingresso verdadeiro. Deve funcionar para todos esses valores, não só para o exemplo. A escolha é conceitual; não executa sua resposta.',code:'const idade = 17;\nconst ingresso = true;\nif (____) console.log("entrar");\nelse console.log("aguardar");',options:[{id:'ambas',text:'idade >= 18 && ingresso'},{id:'uma',text:'idade >= 18 || ingresso'},{id:'estrita',text:'idade > 18 && ingresso'}],hint:'Um operador aceita só uma condição verdadeira; outro exige ambas. Confira também a pessoa com exatamente 18.',minutes:3
+ },
+
+ {
   id:'js-prever-ausencia-zero',language:'javascript',lessonIds:['valores'],skillIds:['javascript.valores.ausencia'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Sem valor não é o mesmo que zero',prompt:'Escreva as duas linhas. === compara sem converter os valores; a variável começa sem valor inicial. A pausa confere sua previsão, sem executar sua resposta.',code:'let energia;\nconsole.log(energia === 0);\nenergia = 0;\nconsole.log(energia === 0);',hint:'Acompanhe o valor antes e depois da atribuição. Zero é um número conhecido; ausência ainda não informa esse número.',minutes:2
  },
