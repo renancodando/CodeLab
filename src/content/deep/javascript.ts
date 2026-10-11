@@ -1046,21 +1046,24 @@ export default {
           "title": "Fronteiras de dados",
           "text": [
             "JSON preserva um subconjunto de dados e não conserva protótipos, métodos, undefined em todas as posições ou referências circulares. structuredClone atende a outro contrato de cópia e também tem tipos e limites próprios.",
-            "Valide antes de substituir dados existentes, especialmente em importação de backup. Parsing bem-sucedido não garante estrutura nem tamanho aceitável. Uma importação parcialmente aplicada pode perder dados; prepare e valide a substituição inteira antes de confirmá-la."
+            "Valide antes de substituir dados existentes, especialmente em importação de backup. Parsing bem-sucedido não garante estrutura nem tamanho aceitável. Uma importação parcialmente aplicada pode perder dados; prepare e valide a substituição inteira antes de confirmá-la.",
+            "Uma ida e volta por JSON pode mudar o dado antes da validação: uma propriedade de objeto com undefined é omitida, enquanto undefined dentro de array e números não finitos viram null. Isso não certifica a estrutura recebida nem conserva a diferença entre todas as ausências. Preveja o transporte e examine o objeto reconstruído antes de aceitá-lo."
           ]
         },
         {
           "title": "Testes que provam comportamento",
           "text": [
             "Unidade verifica regras, integração verifica fronteiras e E2E percorre uma história de uso. Use resultados independentes como oráculo e teste falhas observáveis. Um teste que espelha a implementação pode conservar o mesmo defeito.",
-            "Injete relógio, aleatoriedade e adaptadores externos para controlar cenários. Não simule exatamente a dependência que você precisa verificar em uma integração. Um build de produção pode ter comportamento diferente do servidor de desenvolvimento."
+            "Injete relógio, aleatoriedade e adaptadores externos para controlar cenários. Não simule exatamente a dependência que você precisa verificar em uma integração. Um build de produção pode ter comportamento diferente do servidor de desenvolvimento.",
+            "Na próxima depuração, importarNomes recebe um array ordinário e modificável de strings e um texto JSON. O JSON deve representar até 100 registros não nulos, que não sejam arrays, com nome textual e não vazio depois de trim. Campos extras são ignorados. Uma importação válida substitui o conteúdo do mesmo array, conserva sua identidade e retorna a nova quantidade; a lista vazia deve esvaziá-lo. Qualquer registro inválido lança TypeError e conserva o conteúdo anterior, inclusive quando só o último registro falha. JSON malformado conserva o SyntaxError do parser. Separe a preparação da escrita e teste uma recusa seguida de nova tentativa válida. Esse contrato pequeno não é uma transação de banco nem cobre arrays congelados, Proxy ou setters."
           ]
         },
         {
           "title": "Segurança e erros",
           "text": [
             "Erro esperado pode virar um resultado de domínio; erro inesperado precisa de diagnóstico. Preserve causa e evite mensagens que exponham segredos. Não absorva todas as falhas para manter uma tela aparentemente normal.",
-            "Escape texto inserido em HTML e use parâmetros em consultas SQL. Não execute conteúdo recebido com eval. Uma fronteira de confiança deve ser explícita; usar uma linguagem dinâmica não justifica tratar dados externos como código."
+            "Escape texto inserido em HTML e use parâmetros em consultas SQL. Não execute conteúdo recebido com eval. Uma fronteira de confiança deve ser explícita; usar uma linguagem dinâmica não justifica tratar dados externos como código.",
+            "Depois de validar nomes, inserir seu texto em HTML ainda exige outra decisão. Para mostrar um nome literal, crie o elemento e atribua textContent: sinais de menor e maior continuam sendo caracteres, não tags. Escolher innerHTML interpreta a string como marcação e pode introduzir elementos ou atributos recebidos. Validação do modelo e escolha da API de apresentação protegem fronteiras diferentes; não improvise um sanitizador removendo algumas tags por regex."
           ]
         },
         {

@@ -11,6 +11,77 @@ export type PracticeActivity = {
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
+{
+  "id": "js-prever-transporte",
+  "language": "javascript",
+  "lessonIds": [
+    "js-modulos-engenharia"
+  ],
+  "skillIds": [
+    "javascript.importacao.transporte"
+  ],
+  "afterBlock": 3,
+  "kind": "predict",
+  "capability": "leitura",
+  "requiresConcept": true,
+  "title": "O que realmente chegou pelo JSON?",
+  "prompt": "Escreva a linha exibida depois da ida e volta. A pausa confere sua previsão; não executa sua resposta.",
+  "code": "const dados = {nome: undefined, itens: [undefined], numero: NaN};\nconst copia = JSON.parse(JSON.stringify(dados));\nconsole.log(Object.hasOwn(copia, \"nome\"), copia.itens[0] === null, copia.numero === null);",
+  "hint": "Compare a ausência em uma propriedade de objeto com a posição de um array; o transporte também precisa representar um número não finito.",
+  "minutes": 2
+},
+{
+  "id": "js-debug-importacao-atomica",
+  "language": "javascript",
+  "lessonIds": [
+    "js-modulos-engenharia"
+  ],
+  "skillIds": [
+    "javascript.importacao.atomicidade"
+  ],
+  "afterBlock": 4,
+  "kind": "debug",
+  "capability": "depuracao",
+  "requiresConcept": true,
+  "title": "O arquivo inválido apagou a lista anterior",
+  "prompt": "Corrija importarNomes(estado, texto) sem mudar seu contrato: JSON com até 100 registros, cada nome textual não vazio após trim, campos extras ignorados. Substitua o conteúdo do mesmo array e retorne a quantidade somente quando tudo for válido. Lista vazia limpa o array. Registro inválido lança TypeError; JSON malformado mantém SyntaxError. Toda falha conserva o estado anterior. O estado recebido é um array ordinário e modificável de strings. Testes executam sua correção no JavaScript isolado.",
+  "code": "function importarNomes(estado, texto) {\n  const dados = JSON.parse(texto);\n  if (!Array.isArray(dados) || dados.length > 100) throw new TypeError(\"lista inválida\");\n  estado.length = 0;\n  for (const item of dados) {\n    if (!item || typeof item !== \"object\" || Array.isArray(item) || typeof item.nome !== \"string\" || !item.nome.trim()) throw new TypeError(\"registro inválido\");\n    estado.push(item.nome.trim());\n  }\n  return estado.length;\n}",
+  "hint": "Compare o instante em que a lista antiga é apagada com o instante em que o último registro foi validado.",
+  "minutes": 6
+},
+{
+  "id": "js-inserir-texto-dados",
+  "language": "javascript",
+  "lessonIds": [
+    "js-modulos-engenharia"
+  ],
+  "skillIds": [
+    "javascript.importacao.apresentacao"
+  ],
+  "afterBlock": 5,
+  "kind": "choice",
+  "capability": "aplicacao",
+  "requiresConcept": true,
+  "title": "O nome contém sinais de HTML",
+  "prompt": "nome já é uma string validada, mas pode conter <img src=x>. Você deve acrescentar um li cujo texto seja exatamente nome. Qual trecho atende ao contrato sem interpretar o nome como HTML? Esta escolha é conceitual e não executa DOM.",
+  "options": [
+    {
+      "id": "texto",
+      "text": "const item = document.createElement(\"li\"); item.textContent = nome; lista.append(item);"
+    },
+    {
+      "id": "html",
+      "text": "lista.insertAdjacentHTML(\"beforeend\", \"<li>\" + nome + \"</li>\");"
+    },
+    {
+      "id": "filtro",
+      "text": "lista.innerHTML += \"<li>\" + nome.replace(/<script.*?>/gi, \"\") + \"</li>\";"
+    }
+  ],
+  "hint": "O contrato pede caracteres literais. Validação de nome não transforma a string em HTML confiável.",
+  "minutes": 2
+},
+
  {
   id:"html-prever-controles",language:"html",lessonIds:["html-dados-formulario"],skillIds:["html.formularios.presenca"],afterBlock:3,kind:"predict",capability:"leitura",requiresConcept:true,
   title:"Campo visível não é uma entrada garantida",
