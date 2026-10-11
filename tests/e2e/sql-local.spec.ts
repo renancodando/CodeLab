@@ -19,6 +19,7 @@ test('SQL local: runtime sob demanda, banco descartável, resultados e jornada o
  const recursos:string[]=[],remotas:string[]=[];
  pagina.on('request',pedido=>{if(/sql-local|sql-wasm-browser/.test(pedido.url()))recursos.push(pedido.url());if(/\/api\/executions/.test(pedido.url()))remotas.push(pedido.url());});
  await pagina.goto('/');await expect(pagina.locator('#offline-status')).toHaveText('Conteúdo preparado para estudar offline.',{timeout:45000});await pagina.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));expect(recursos).toEqual([]);
+ const cacheInicial=await pagina.evaluate(async()=>{const chaves=await caches.keys();return(await Promise.all(chaves.map(async chave=>(await(await caches.open(chave)).keys()).map(pedido=>pedido.url)))).flat();});expect(cacheInicial.some(url=>/sql-local|sql-wasm-browser/.test(url))).toBe(false);
  await abrir(pagina);await expect(pagina.locator('#lab-note')).toContainText('PostgreSQL');expect(recursos).toEqual([]);
  const codigo="CREATE TABLE pedidos(n INTEGER); INSERT INTO pedidos VALUES(3),(5); BEGIN; INSERT INTO pedidos VALUES(100); ROLLBACK; SELECT sum(n) AS total FROM pedidos; SELECT NULL AS nulo, 'NULL' AS texto, 9223372036854775807 AS inteiro, '<img src=x onerror=alert(1)>' AS dado;";
  await executar(pagina,codigo);await expect(pagina.locator('#lab-console')).toContainText('Banco descartado');
@@ -66,4 +67,20 @@ test('SQL local: primeiro carregamento sem rede preserva código e explica o lim
  try{
   await pagina.locator('#lab-run').click();await expect(pagina.locator('#lab-console')).toContainText('Conecte à internet',{timeout:30000});await expect(pagina.locator('#lab-run')).toBeEnabled();expect((await exportar(pagina,'#export')).buffer.toString()).toBe(codigo);
  }finally{await contexto.setOffline(false);}
+});
+
+test.describe('prazo do módulo SQL',()=>{
+ test.use({serviceWorkers:'block'});
+ test('importação interrompida por prazo conserva código e permite nova execução',async({page:pagina})=>{
+  test.setTimeout(120000);await abrir(pagina);const codigo='SELECT 47;';await escrever(pagina,codigo);await pagina.clock.install();
+  let liberar!:()=>void,chegou!:()=>void;const liberado=new Promise<void>(resolver=>liberar=resolver),recebido=new Promise<void>(resolver=>chegou=resolver);
+  await pagina.route(/\/assets\/sql-local-[^/]+\.js$/,async rota=>{chegou();await liberado;await rota.continue();});
+  try{
+   await pagina.locator('#lab-run').click();await recebido;await pagina.clock.fastForward(20001);
+   await expect(pagina.locator('#lab-console')).toContainText('carregar SQLite no prazo');await expect(pagina.locator('#lab-run')).toBeEnabled();expect((await exportar(pagina,'#export')).buffer.toString()).toBe(codigo);
+   await pagina.locator('#lab-run').click();await pagina.locator('#lab-stop').click();await pagina.clock.fastForward(20001);await expect(pagina.locator('#lab-console')).toContainText('Execução encerrada');
+   const resposta=pagina.waitForResponse(/\/assets\/sql-local-[^/]+\.js$/);liberar();await resposta;await pagina.clock.resume();
+   await pagina.locator('#lab-run').click();await expect(pagina.locator('.lab-sql-tabela td')).toHaveText('47');await expect.poll(()=>pagina.workers().filter(w=>w.url().includes('sql-local.worker')).length).toBe(0);
+  }finally{liberar();}
+ });
 });
