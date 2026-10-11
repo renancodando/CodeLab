@@ -1,6 +1,6 @@
 import ts from 'typescript';
 
-export type DiagnosticoTs={codigo:number;mensagem:string;linha?:number;coluna?:number};
+export type DiagnosticoTs={codigo:number;mensagem:string;arquivo?:string;linha?:number;coluna?:number};
 export type CompilacaoTs={javascript:string;diagnosticos:DiagnosticoTs[];erro?:string;versao:string};
 export function compilarTypescript(codigo:string,bibliotecas:ReadonlyMap<string,string>):CompilacaoTs{
  const resposta:CompilacaoTs={javascript:'',diagnosticos:[],versao:ts.version};
@@ -23,8 +23,8 @@ export function compilarTypescript(codigo:string,bibliotecas:ReadonlyMap<string,
  const programa=ts.createProgram(['/entrada.ts','/ambiente.d.ts'],{strict:true,noEmitOnError:true,target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None,lib:['lib.es2022.d.ts'],types:[],skipLibCheck:true},host);
  const diagnosticos=ts.getPreEmitDiagnostics(programa);
  resposta.diagnosticos=diagnosticos.slice(0,50).map(d=>{
-  const posicao=d.file&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start):undefined;
-  return{codigo:d.code,mensagem:ts.flattenDiagnosticMessageText(d.messageText,'\n').slice(0,1000),...(posicao?{linha:posicao.line+1,coluna:posicao.character+1}:{})};
+  const posicao=d.file?.fileName==='/entrada.ts'&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start):undefined;
+  return{codigo:d.code,arquivo:d.file?.fileName.split('/').at(-1),mensagem:ts.flattenDiagnosticMessageText(d.messageText,'\n').slice(0,1000),...(posicao?{linha:posicao.line+1,coluna:posicao.character+1}:{})};
  });
  if(diagnosticos.some(d=>d.category===ts.DiagnosticCategory.Error))return resposta;
  const emitido=programa.emit();

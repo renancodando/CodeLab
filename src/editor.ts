@@ -1,5 +1,6 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution';
+import 'monaco-editor/esm/vs/basic-languages/typescript/typescript.contribution';
 import 'monaco-editor/esm/vs/basic-languages/html/html.contribution';
 import 'monaco-editor/esm/vs/basic-languages/css/css.contribution';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
@@ -14,4 +15,9 @@ export function createEditor(container:HTMLElement,value:string,language='javasc
 export function alterarLinguagem(editor:monaco.editor.IStandaloneCodeEditor,linguagem:string){
  const modelo=editor.getModel();
  if(modelo)monaco.editor.setModelLanguage(modelo,linguagem);
+}
+
+export function atualizarDiagnosticosTs(editor:monaco.editor.IStandaloneCodeEditor,diagnosticos:{codigo:number;mensagem:string;linha?:number;coluna?:number}[]){
+ const modelo=editor.getModel();if(!modelo)return;
+ monaco.editor.setModelMarkers(modelo,'typescript-local',diagnosticos.filter(d=>d.linha!==undefined&&d.coluna!==undefined).map(d=>({severity:monaco.MarkerSeverity.Error,message:d.mensagem,source:'TypeScript',code:String(d.codigo),startLineNumber:d.linha!,endLineNumber:d.linha!,startColumn:d.coluna!,endColumn:d.coluna!+1})));
 }

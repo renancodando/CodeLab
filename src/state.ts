@@ -6,7 +6,7 @@ import {normalizeProjectWorkspaces,prepareProjectWorkspaces} from './learning/pr
 export const MAX_BACKUP_BYTES=16*1024*1024;
 const key = 'codelab.progress.v2';
 const legacyKey = 'codelab.progress.v1';
-const linguagensProjeto = ['html','javascript','python','csharp','cpp','sql','text'];
+const linguagensProjeto = ['html','javascript','typescript','python','csharp','cpp','sql','text'];
 const fresh = (): Progress => ({version:2,learningLanguage:'javascript',adaptive:normalizeAdaptive(undefined),practiceAnswers:{},projectWorkspaces:{},lessonSessions:{},completed:[],lessons:[],projects:[],drafts:{},attempts:{},hints:{},history:{},review:{},activeDays:[],name:'Explorador'});
 const safeKey=(key:unknown):key is string=>typeof key==='string'&&/^[a-z0-9][a-z0-9-]{0,79}$/i.test(key)&&!['constructor','prototype'].includes(key);
 export function normalizeProgress(raw: unknown): Progress {
