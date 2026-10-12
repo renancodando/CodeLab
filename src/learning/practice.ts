@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "py-prever-piso-resto":{"accepted":["-3 2\nTrue"],"failure":"O piso segue para menos infinito; truncar para zero quebra a previsão com negativos. Recalcule o resto pela identidade entre dividendo, divisor e quociente.","solution":"-3 2\nTrue"},
+ "py-conservar-centavos":{"accepted":["resto"],"failure":"Formatar não recupera unidades perdidas. Concentrar o resto em uma única parcela pode violar a diferença máxima e a ordem; confira 17 centavos entre cinco pessoas e zero.","solution":"def distribuir(total, pessoas):\n    if total < 0 or pessoas < 1:\n        raise ValueError(\"distribuição inválida\")\n    cota, resto = divmod(total, pessoas)\n    return [cota + (1 if indice < resto else 0) for indice in range(pessoas)]"},
+ "py-validar-digitos-ascii":{"accepted":["\"0\" <= caractere <= \"9\""],"failure":"A fronteira pede somente os dez dígitos ASCII. isdigit, conversão direta e comparação numérica resolvem outros contratos; preserve zero e valide os caracteres antes de converter.","solution":"\"0\" <= caractere <= \"9\""},
  'js-prever-acesso':{accepted:['entrar\naguardar\naguardar'],failure:'Ingresso não substitui idade mínima, nem idade mínima substitui ingresso. Acompanhe cada chamada até o primeiro retorno; exatamente 18 atende a comparação >=.',solution:'entrar\naguardar\naguardar'},
  'js-exigir-duas-condicoes':{accepted:['ambas'],failure:'A regra pede as duas condições juntas. Aceitar só uma libera casos proibidos; usar > também recusa quem tem exatamente a idade mínima.',solution:'idade >= 18 && ingresso'},
 
@@ -221,6 +224,7 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
    passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
   }else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
+  else if(id==='py-validar-digitos-ascii')passed=typeof answer==='string'&&/^(['"])0\1\s*<=\s*caractere\s*<=\s*(['"])9\2$/.test(normalized(answer));
   else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
   else passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer));
   result.passed=passed;

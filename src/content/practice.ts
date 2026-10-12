@@ -11,6 +11,77 @@ export type PracticeActivity = {
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
+{
+  "id": "py-prever-piso-resto",
+  "language": "python",
+  "lessonIds": [
+    "py-numeros-texto"
+  ],
+  "skillIds": [
+    "python.numeros.piso-resto"
+  ],
+  "afterBlock": 2,
+  "kind": "predict",
+  "capability": "leitura",
+  "requiresConcept": true,
+  "title": "O resto continua conservando o dividendo",
+  "prompt": "Preveja as duas linhas, respeitando os espaços entre valores. O divisor é positivo; // arredonda para menos infinito, inclusive com dividendo negativo. Esta pausa compara sua previsão, sem executar Python.",
+  "code": "dividendo, divisor = -7, 3\nquociente, resto = divmod(dividendo, divisor)\nprint(quociente, resto)\nprint(quociente * divisor + resto == dividendo)",
+  "hint": "Localize o inteiro imediatamente abaixo do quociente real. Depois encontre o resto que mantém a igualdade, sem trocar piso por truncamento.",
+  "minutes": 3
+},
+{
+  "id": "py-conservar-centavos",
+  "language": "python",
+  "lessonIds": [
+    "py-numeros-texto"
+  ],
+  "skillIds": [
+    "python.numeros.conservacao"
+  ],
+  "afterBlock": 3,
+  "kind": "choice",
+  "capability": "depuracao",
+  "requiresConcept": true,
+  "title": "A divisão perdeu um centavo",
+  "prompt": "distribuir(1000, 3) devolve [333, 333, 333]: a soma perdeu um centavo. Escolha a correção que funciona para inteiros não negativos, inclusive zero, sem passar por float. A diferença entre parcelas deve ser no máximo 1; as maiores ficam primeiro. total e pessoas já são int; total negativo ou pessoas menor que 1 devem lançar ValueError. A decisão é conceitual, sem executar sua resposta.",
+  "code": "def distribuir(total, pessoas):\n    if total < 0 or pessoas < 1:\n        raise ValueError(\"distribuição inválida\")\n    return [round(total / pessoas)] * pessoas\n\nprint(distribuir(1000, 3))",
+  "options": [
+    {
+      "id": "resto",
+      "text": "Manter a validação; obter cota e resto com divmod; acrescentar 1 às primeiras resto parcelas e retornar a lista."
+    },
+    {
+      "id": "formato",
+      "text": "Manter a divisão real; formatar cada parcela com duas casas e converter o resultado para int."
+    },
+    {
+      "id": "ultima",
+      "text": "Usar total // pessoas nas parcelas; colocar todo o resto apenas na última parcela."
+    }
+  ],
+  "hint": "Confira duas invariantes: a soma precisa conservar o total e nenhuma parcela pode se afastar mais de 1 das demais. Teste também menos centavos que pessoas.",
+  "minutes": 5
+},
+{
+  "id": "py-validar-digitos-ascii",
+  "language": "python",
+  "lessonIds": [
+    "py-numeros-texto"
+  ],
+  "skillIds": [
+    "python.numeros.entrada-ascii"
+  ],
+  "afterBlock": 5,
+  "kind": "fill",
+  "capability": "alteracao",
+  "requiresConcept": true,
+  "title": "Um dígito Unicode passou pela fronteira",
+  "prompt": "Complete apenas uma comparação encadeada entre os limites ASCII e caractere, sem chamadas de função. Use aspas simples ou duplas nos limites. O contrato aceita de 1 a 3 dígitos ASCII e quantidade de 0 a 500; espaços, sinais e outros alfabetos numéricos são rejeitados com ValueError. Comprimento e limite numérico já estão conferidos. A pausa avalia a expressão conceitualmente, sem executar Python.",
+  "code": "def quantidade(texto):\n    if not 1 <= len(texto) <= 3:\n        raise ValueError(\"comprimento inválido\")\n    if not all(____ for caractere in texto):\n        raise ValueError(\"use dígitos ASCII\")\n    valor = int(texto)\n    if valor > 500:\n        raise ValueError(\"máximo 500\")\n    return valor\n\nprint(quantidade(\"0\"))\nprint(quantidade(\"050\"))",
+  "hint": "isdigit e int reconhecem mais caracteres que os dez permitidos neste contrato. Compare o próprio caractere antes da conversão; zero continua sendo válido.",
+  "minutes": 4
+},
  {
   id:'js-prever-acesso',language:'javascript',lessonIds:['decisoes'],skillIds:['javascript.decisoes.combinacao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Um ingresso sozinho permite entrar?',prompt:'Escreva as três linhas exibidas. A regra exige idade mínima e ingresso ao mesmo tempo. Esta pausa confere sua previsão, sem executar sua resposta.',code:'function acesso(idade, ingresso) {\n  if (idade >= 18 && ingresso) return "entrar";\n  return "aguardar";\n}\nconsole.log(acesso(18, true));\nconsole.log(acesso(18, false));\nconsole.log(acesso(17, true));',hint:'Faça uma coluna para cada condição e só depois combine os resultados. Inclua o valor exatamente na fronteira.',minutes:3

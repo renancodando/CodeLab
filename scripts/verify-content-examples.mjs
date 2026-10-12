@@ -5,6 +5,7 @@ import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {verificarBancadaGit} from '../tests/fixtures/git-bancada.mjs';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
+import {montarCasosNumeros} from '../tests/fixtures/python-numeros.mjs';
 import {montarCasosCsv} from '../tests/fixtures/python-csv.mjs';
 import {montarCasosDescritores} from '../tests/fixtures/python-descritores.mjs';
 import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
@@ -75,6 +76,7 @@ try{
  const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
  const cenariosIteradores=await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution);
  const examples=[
+  ...montarCasosNumeros(practiceActivities,getPracticeSolution),
   ...montarCasosDescritores(practiceActivities,getPracticeSolution),
   ...montarCasosCsv(practiceActivities, getPracticeSolution),
   ...montarCasosCancelamento(practiceActivities, getPracticeSolution),
