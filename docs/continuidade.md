@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Substituição da prévia HTML validada localmente
+
+A execução de outro HTML válido substitui srcdoc diretamente, sem navegar antes para about:blank. Parar, trocar de linguagem, sair da rota e rejeitar HTML acima de 30.000 caracteres continuam limpando a prévia e cancelando a execução. Sandbox, CSP, bloqueio de rede, referrerpolicy e limites permanecem iguais.
+
+Strict e build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 211,02 kB gzip e mundo 135,94 kB gzip. Três testes Edge locais passaram em 1,3 min: isolamento, substituição/reexecução/parada/troca/saída e rejeição acima do limite. Os testes aguardam um sinal do novo documento, conferem sua origem e verificam também o conteúdo efetivo. O diagnóstico de falha tem prazo próprio para preservar o erro original.
+
+A primeira tentativa de sincronizar por framenavigated falhou mesmo com o novo documento visível; isso não foi contado como aprovação. A navegação intermediária foi removida e a sincronização agora observa a execução do documento. A causa exata da intermitência anterior não foi isolada. CI completo, revisão e publicação desta correção ainda serão conferidos antes da integração.
+
 ## Coleções C# publicadas em 12 de outubro
 
 A PR #44 foi integrada em ce8e91de8fa45a8609c64c64f3f0ec227beca36b, árvore 85897ca26f026c82e9ff31df3feb79eb8d264c1b idêntica ao head 6952e24ccd1478848e9200b171ce99b345c52382. CI 38299162632: 798 testes unitários em 53 arquivos, 155 testes de navegador (70/39/46), 194 exemplos externos e dez cenários LINQ .NET adicionais aprovados, além de compiladores, PostgreSQL, API/cache e auditoria. A revisão de entrada não nula foi resolvida; o corretor aceita o tipo explícito compatível sem executar C# do aluno.
