@@ -1,5 +1,16 @@
 # Continuidade do CODELAB
 
+## Python: corrotinas, cancelamento e filas em preparação
+
+py-concorrencia conserva suas seis seções, exemplo TaskGroup/Semaphore, exercício mapear_limitado e projeto de coletor. Três pausas após os blocos 2/3/4 distinguem criação de corrotina e execução; diagnosticam CancelledError transformado em sucesso; completam envio que aguarda vaga em uma Queue limitada. A teoria separa limpeza, propagação, operações ativas e trabalho pendente. Ler não gera domínio; abrir solução é assistência. As respostas continuam conceituais e offline, sem executor Python do aluno.
+
+Passaram 35 testes específicos e dez programas com Python 3.14.6: oito cenários novos, o exemplo preservado e a solução anterior com lista vazia, zero/negativos/repetições e limite inválido. Os cenários usam Events, capacidade da fila e passagens explícitas pelo loop; não usam rede ou atrasos positivos estimados. Conferem o defeito original, propagação e limpeza, pass que suprime cancelamento, QueueFull sem espera, produtor cancelado sem perda do item anterior e falha TaskGroup que cancela a irmã e conclui sua limpeza. Nenhum build free-threaded, paralelismo com processos ou medição de performance foi comprovado por esses casos.
+
+O primeiro verificador local expirou antes de imprimir o primeiro resultado; uma importação isolada de asyncio confirmou inicialização lenta e concluiu. Repetição após isso passou nos dez programas, conservando o limite de 10 s por programa. Não se aumentaram limites de execução do produto ou testes para obter aprovação. Exigir strict/build, navegador, CI e integração após #40. Branch: 94 pausas em 58/137 aulas, 79 sem pausas; produção conferida permanece 88/56/81.
+
+Referências oficiais: [corrotinas e tarefas](https://docs.python.org/3/library/asyncio-task.html), [cancelamento](https://docs.python.org/3/library/asyncio-task.html#task-cancellation) e [filas assíncronas](https://docs.python.org/3/library/asyncio-queue.html). As APIs usadas existem desde Python 3.11 ou antes; a documentação atual também descreve recursos posteriores que não foram introduzidos nesta etapa.
+
+
 ## Python: divisão, conservação e entrada ASCII em preparação
 
 A aula py-numeros-texto mantém suas seis seções, exemplos, exercício de rateio e dois problemas independentes. Recebe três pausas após os blocos 2/3/5: prever piso e resto com dividendo negativo; diagnosticar perda de centavos sem trocar distribuição justa por simples conservação da soma; completar a fronteira de dígitos ASCII antes de converter. A teoria prepara as invariantes e distingue isdigit de um contrato restrito. A preparação diária é obrigatória; leitura não gera domínio, solução é assistência e respostas permanecem locais.
@@ -13,7 +24,7 @@ Referências oficiais: [operações numéricas e piso](https://docs.python.org/3
 
 Valores (#37) e decisões (#38) foram integrados com árvores iguais aos heads aprovados. Valores: CI 38174480235, 671 testes unitários e 148 fluxos de navegador; merge deb99ffae40fcc74c47a2886765735fd1527c927; árvore a787c859ca40cf5320e12d62b286db4594d79ff1; deployment dpl_FxFRYoSCcEFJJwNsta8eJovr5vof READY/production com esse SHA, dois fluxos públicos aprovados em 1 min. Decisões: CI 38175247548, 684 unidades e 149 fluxos; merge 8ae9ebe535e045e0e39c975e861decad540cb70b; árvore ede2d2533d25d8b2149f80cc794f70e3c329509e; deployment dpl_2XYB6FRC693e4ThYsgC4D7XfXVdX READY/production com esse SHA, dois fluxos públicos aprovados em 2,5 min. Revisões resolvidas, incluindo a navegação da preparação para a leitura de valores sem substituir o percurso de 25 passos.
 
-Cobertura publicada: 88 pausas em 56 das 137 aulas principais; 81 ainda sem pausas deste catálogo. Missões, experiências Git/HTTP e os 25 passos próprios de valores ficam fora dessa contagem. A PR #39 ordena conceitos diários pela progressão, preservando planos iniciados e pré-requisitos; aguarda os dois jobs finais de navegador do CI 38255384773 no head 430d0cd27b07057ca85c522f118cd919e1806b08. Seus 42 testes específicos, strict/build e dois fluxos locais passaram. Não está incluída como publicação concluída.
+Cobertura publicada: 88 pausas em 56 das 137 aulas principais; 81 ainda sem pausas deste catálogo. Missões, experiências Git/HTTP e os 25 passos próprios de valores ficam fora dessa contagem. A PR #39 também foi publicada: CI 38255384773 aprovado no head 430d0cd27b07057ca85c522f118cd919e1806b08 com 690 unidades e 150 fluxos; merge 20dd5898765cb5b7a34230fd300e43d130fb915a, árvore 16ce668b8c22f5ddda69370d854b475cd9f65f1a igual. Deployment dpl_8D5VkrUT9FwGehVs1WSFhVrjb26G READY/production com SHA confirmado; dois fluxos públicos aprovados em 1,8 min. Ordena novos conceitos pela progressão sem trocar planos iniciados, IDs, pré-requisitos ou atribuir domínio à leitura.
 
 O CI de main 38170698880 terminou com os quatro jobs aprovados após repetir uma falha anterior ao checkout, causada pelo limite de dados da imagem pública PostgreSQL. Não houve alteração de código para contornar o problema. Esses resultados não encerram o currículo nem medem FPS em celular físico.
 
@@ -488,3 +499,14 @@ Passaram 35 testes específicos de Python/descritores/progressão diária, TypeS
 ## Progressão diária integrada, domínio pendente
 
 A PR #39 passou no CI 38255384773 com 690 testes unitários, 150 fluxos de navegador em duas parcelas de 75 e os 161 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge 20dd5898765cb5b7a34230fd300e43d130fb915a, árvore 16ce668b8c22f5ddda69370d854b475cd9f65f1a igual ao head 430d0cd27b07057ca85c522f118cd919e1806b08. Conferência do deployment/SHA e dos dois fluxos públicos ainda pendente; não presumir que o alias já atualizou. IDs, planos iniciados, pré-requisitos e leitura sem domínio preservados.
+
+
+## Sessão diária conferida no domínio
+
+O deployment dpl_8D5VkrUT9FwGehVs1WSFhVrjb26G ficou READY/production com gitSource.sha 20dd5898765cb5b7a34230fd300e43d130fb915a confirmado. Dois fluxos públicos Edge passaram em 1,8 min: progressão nova, plano anterior offline, preparação de valores na leitura e retorno pelo catálogo, sem substituir os 25 passos. Isso conclui a publicação de #39, mantendo as contagens de atividades. A prática Python #40 aguarda os dois jobs de navegador; 706 testes unitários e 169 exemplos externos passaram no CI 38259821060. Esses resultados não dispensam seus gates finais.
+
+
+Nos cenários de cancelamento, Event sinaliza início e passagem pela limpeza; não representa fechamento real de arquivo, socket ou recurso externo. TaskGroup e Queue são APIs reais executadas em Python, sem simulação do loop. A confirmação do marcador prova o fluxo de finally, não uma integração externa.
+
+
+Concorrência passou em TypeScript strict e build: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 206,54 kB gzip e mundo 135,94 kB gzip. Dois fluxos Edge passaram em 1,8 min: concorrência e regressão de números, com erros/acertos, assistência, progresso salvo, recarga offline e 220/4000 px. Exigir CI completo e publicação próprios após #40. Não houve runtime novo, permissão de rede do aluno ou mudança visual.

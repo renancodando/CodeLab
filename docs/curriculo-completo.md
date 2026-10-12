@@ -160,6 +160,8 @@ Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-obje
 - Conteúdo: concorrência versus paralelismo; async await corrotinas; TaskGroup cancelamento; timeouts semáforos filas; threads locks; ProcessPoolExecutor; GIL builds free-threaded; backpressure; falhas e recursos.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
 
+- Pausas em preparação: previsão de início de corrotina, diagnóstico de propagação de cancelamento e alteração de envio para fila limitada. Referências executadas com Python real; respostas do aluno são conceituais, sem comprovação de compilação/execução ou conclusão do tema.
+
 #### Python: tipagem, testes, pacotes e desempenho
 
 - Nível: Especialização.

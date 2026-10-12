@@ -961,21 +961,24 @@ export default {
           "title": "Corrotinas e pontos de suspensão",
           "text": [
             "Chamar uma função async cria uma corrotina; ela precisa ser aguardada ou agendada. await suspende a corrotina quando a operação ainda não terminou, permitindo que o loop execute outras tarefas. Código comum continua executando sem interrupção cooperativa.",
-            "time.sleep bloqueia a thread do loop; asyncio.sleep suspende a tarefa. Um cálculo longo sem await também impede progresso das demais. Use uma API assíncrona apropriada, asyncio.to_thread para I/O bloqueante ou um executor adequado ao trabalho."
+            "time.sleep bloqueia a thread do loop; asyncio.sleep suspende a tarefa. Um cálculo longo sem await também impede progresso das demais. Use uma API assíncrona apropriada, asyncio.to_thread para I/O bloqueante ou um executor adequado ao trabalho.",
+            "Uma corrotina criada diretamente não começa a executar sozinha. Aguardar essa corrotina entra no corpo; criar uma Task a agenda conforme o loop e sua fábrica. Nos exemplos desta aula, asyncio.run usa a configuração padrão. Não deduza uma ordem geral de tarefas apenas pela ordem em que foram criadas."
           ]
         },
         {
           "title": "Tarefas estruturadas e falhas",
           "text": [
             "TaskGroup delimita tarefas filhas e aguarda sua conclusão ao sair do bloco. Uma falha pode cancelar tarefas irmãs e aparecer em um grupo de exceções. Esse escopo evita deixar tarefas órfãs funcionando depois que a operação já terminou.",
-            "gather reúne resultados, mas sua política de exceções difere. Leia o contrato escolhido e teste falha parcial. O código de limpeza deve usar try/finally e propagar cancelamento; engolir CancelledError pode quebrar encerramentos e timeouts."
+            "gather reúne resultados, mas sua política de exceções difere. Leia o contrato escolhido e teste falha parcial. O código de limpeza deve usar try/finally e propagar cancelamento; engolir CancelledError pode quebrar encerramentos e timeouts.",
+            "Limpar e propagar são obrigações separadas: finally libera o recurso mesmo no cancelamento, mas return dentro de except CancelledError converte o cancelamento em um resultado comum. Se for necessário capturar para limpar, normalmente use raise ao terminar. Um Event permite reproduzir o cancelamento depois do início, sem estimar um atraso de rede."
           ]
         },
         {
           "title": "Limites e pressão de trabalho",
           "text": [
             "Criar uma tarefa para cada item de uma lista enorme pode consumir memória e saturar um serviço. Semáforos limitam operações simultâneas; uma Queue com capacidade limita trabalho pendente e força o produtor a esperar quando o consumidor está lento.",
-            "Timeout limita uma espera, mas não desfaz efeitos externos já concluídos. Defina idempotência, política de repetição e o destino de resultados tardios. Cancelamento é um pedido cooperativo e não substitui uma transação do sistema remoto."
+            "Timeout limita uma espera, mas não desfaz efeitos externos já concluídos. Defina idempotência, política de repetição e o destino de resultados tardios. Cancelamento é um pedido cooperativo e não substitui uma transação do sistema remoto.",
+            "Semaphore limita a região ativa, sem limitar quantas tarefas foram criadas à espera dela. Queue(maxsize=N) faz await put suspender o produtor quando há N itens pendentes; put_nowait lança QueueFull. O consumidor retira com get e chama task_done depois de processar, inclusive ao encerrar por falha conforme sua política. join espera as confirmações; não retira itens nem limita o número de consumidores."
           ]
         },
         {

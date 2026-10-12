@@ -12,6 +12,77 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
 {
+  "id": "py-prever-corrotina",
+  "language": "python",
+  "lessonIds": [
+    "py-concorrencia"
+  ],
+  "skillIds": [
+    "python.concorrencia.inicio"
+  ],
+  "afterBlock": 2,
+  "kind": "predict",
+  "capability": "leitura",
+  "requiresConcept": true,
+  "title": "Criar a corrotina já executou a função?",
+  "prompt": "Preveja as três linhas, incluindo a representação das listas. A corrotina é criada diretamente e depois aguardada, sem create_task nem fábrica personalizada. Esta pausa compara sua previsão, sem executar Python.",
+  "code": "import asyncio\n\nasync def dobrar(eventos):\n    eventos.append(\"executou\")\n    return 4\n\nasync def principal():\n    eventos = []\n    operacao = dobrar(eventos)\n    print(eventos)\n    print(await operacao)\n    print(eventos)\n\nasyncio.run(principal())",
+  "hint": "Separe chamar async def de entrar no corpo da função. Localize o instante em que eventos recebe seu primeiro elemento.",
+  "minutes": 3
+},
+{
+  "id": "py-propagar-cancelamento",
+  "language": "python",
+  "lessonIds": [
+    "py-concorrencia"
+  ],
+  "skillIds": [
+    "python.concorrencia.cancelamento"
+  ],
+  "afterBlock": 3,
+  "kind": "choice",
+  "capability": "depuracao",
+  "requiresConcept": true,
+  "title": "A tarefa cancelada informou sucesso",
+  "prompt": "O programa exibe ok e True. O contrato exige cancelado e True: liberar o recurso e conservar CancelledError para quem aguarda. Qual instrução substitui somente return \"ok\"? A decisão é conceitual, sem executar sua resposta.",
+  "code": "import asyncio\n\nasync def atender(iniciou, fechou):\n    iniciou.set()\n    try:\n        await asyncio.Event().wait()\n    except asyncio.CancelledError:\n        return \"ok\"\n    finally:\n        fechou.set()\n\nasync def principal():\n    iniciou, fechou = asyncio.Event(), asyncio.Event()\n    tarefa = asyncio.create_task(atender(iniciou, fechou))\n    await iniciou.wait()\n    tarefa.cancel()\n    try:\n        print(await tarefa)\n    except asyncio.CancelledError:\n        print(\"cancelado\")\n    print(fechou.is_set())\n\nasyncio.run(principal())",
+  "options": [
+    {
+      "id": "propagar",
+      "text": "raise"
+    },
+    {
+      "id": "falso",
+      "text": "return False"
+    },
+    {
+      "id": "ignorar",
+      "text": "pass"
+    }
+  ],
+  "hint": "Executar finally não garante que o chamador receba o cancelamento. Um retorno comum, inclusive False ou None, ainda encerra a tarefa como resultado normal.",
+  "minutes": 4
+},
+{
+  "id": "py-esperar-vaga-fila",
+  "language": "python",
+  "lessonIds": [
+    "py-concorrencia"
+  ],
+  "skillIds": [
+    "python.concorrencia.pressao"
+  ],
+  "afterBlock": 4,
+  "kind": "fill",
+  "capability": "alteracao",
+  "requiresConcept": true,
+  "title": "A fila cheia precisa suspender o produtor",
+  "prompt": "Complete enviar com uma instrução await que usa fila.put e item. Não descarte itens nem crie outra tarefa. A fila tem uma vaga: o segundo envio deve esperar a retirada do primeiro, produzindo False e depois a b. Escreva somente a linha de envio. Esta pausa avalia a expressão conceitualmente; não executa Python do aluno.",
+  "code": "import asyncio\n\nasync def enviar(fila, item):\n    ____\n\nasync def principal():\n    fila = asyncio.Queue(maxsize=1)\n    await enviar(fila, \"a\")\n    pendente = asyncio.create_task(enviar(fila, \"b\"))\n    await asyncio.sleep(0)\n    print(pendente.done())\n    primeiro = await fila.get()\n    fila.task_done()\n    await pendente\n    segundo = await fila.get()\n    fila.task_done()\n    await fila.join()\n    print(primeiro, segundo)\n\nasyncio.run(principal())",
+  "hint": "put_nowait recusa a fila cheia; apenas criar a corrotina de put também não envia. O produtor precisa aguardar uma vaga antes de continuar.",
+  "minutes": 4
+},
+{
   "id": "py-prever-piso-resto",
   "language": "python",
   "lessonIds": [
