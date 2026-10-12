@@ -179,16 +179,16 @@ const roteiros:Record<string,Roteiro>={
   },
   "funcoes": {
     "contexto": "Funções servem para dar nome a uma transformação e estabelecer uma fronteira. A qualidade de uma função depende menos de ser curta e mais de ter uma responsabilidade compreensível e um contrato previsível.",
-    "modelo": "Pense em uma função como uma pequena máquina: argumentos entram, regras internas operam e um resultado sai. Efeitos externos existem, mas quanto mais explícitos forem, mais fácil fica testar.",
+    "modelo": "Pense em uma função como uma pequena máquina: argumentos entram, regras internas operam e um resultado sai. Um parâmetro numérico recebe o valor daquela chamada; ter o mesmo nome de uma variável externa não a reatribui. return entrega o resultado ao chamador, enquanto console.log apenas o mostra. Efeitos externos existem, mas quanto mais explícitos forem, mais fácil fica testar.",
     "passos": [
       "Defina a responsabilidade da função em uma frase curta.",
       "Liste entradas necessárias e o tipo esperado de cada uma.",
       "Defina o que será retornado e em quais casos especiais.",
       "Evite depender de estado externo quando não for necessário.",
-      "Teste a função isoladamente com entradas normais e limites."
+      "Teste a função isoladamente com entradas normais e limites. Na conversão de minutos, confira zero, frações e duas chamadas somadas; não acumule uma chamada na seguinte."
     ],
     "experimentos": [
-      "Troque console.log por return e use o resultado em outro cálculo.",
+      "Troque console.log por return e use o resultado em outro cálculo. Mantenha a expressão na mesma linha de return ou abra o parêntese nessa linha: uma quebra logo após a palavra pode encerrar a instrução sem valor.",
       "Crie duas chamadas com argumentos diferentes para provar que a função não depende de um valor fixo.",
       "Introduza uma variável externa e compare a dificuldade de testar antes e depois."
     ],
