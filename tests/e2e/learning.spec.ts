@@ -27,14 +27,16 @@ test('laboratório HTML renderiza sem acesso ao documento pai',async({page})=>{
  const erros:string[]=[];
  page.on('pageerror',error=>erros.push(error.message));
  page.on('console',message=>{if(message.type()==='error')erros.push(message.text());});
- await writeCode(page,'<script>try {parent.document.body.innerHTML="invadido"}catch(e){document.body.textContent="isolado"}</script>');
+ await writeCode(page,'<script>try {parent.document.body.innerHTML="invadido"}catch(e){document.body.textContent="isolado";parent.postMessage("codelab-isolamento","*")}</script>');
  await expect(page.locator('.monaco-editor .view-lines')).toContainText('parent.document.body.innerHTML');
+ await page.locator('#preview').evaluate(elemento=>{const previa=elemento as HTMLIFrameElement;previa.dataset.sinalTeste='';const receber=(evento:MessageEvent)=>{if(evento.source===previa.contentWindow&&evento.data==='codelab-isolamento'){previa.dataset.sinalTeste='codelab-isolamento';window.removeEventListener('message',receber);}};window.addEventListener('message',receber);});
  await page.getByRole('button',{name:'Executar',exact:true}).click();
  try{
+  await expect(page.locator('#preview')).toHaveAttribute('data-sinal-teste','codelab-isolamento');
   await expect(page.locator('#preview')).toHaveAttribute('srcdoc',/parent\.document\.body\.innerHTML/);
   await expect(page.frameLocator('#preview').locator('body')).toHaveText('isolado');
  }catch(error){
-  console.log('HTML_PREVIEW_DIAGNOSTICO',JSON.stringify({srcdoc:await page.locator('#preview').getAttribute('srcdoc'),erros}));
+  console.log('HTML_PREVIEW_DIAGNOSTICO',JSON.stringify({srcdoc:await page.locator('#preview').getAttribute('srcdoc',{timeout:1000}).catch(()=>null),erros}));
   throw error;
  }
  await expect(page.getByRole('heading',{name:'Seu laboratório.'})).toBeVisible();
