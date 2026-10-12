@@ -12,6 +12,77 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
 {
+ "id": "cs-prever-igualdade-conjunto",
+ "language": "csharp",
+ "lessonIds": [
+  "cs-colecoes-linq"
+ ],
+ "skillIds": [
+  "csharp.colecoes.igualdade"
+ ],
+ "afterBlock": 1,
+ "kind": "predict",
+ "capability": "leitura",
+ "requiresConcept": true,
+ "title": "Duas grafias entram como duas chaves?",
+ "prompt": "Preveja as três linhas. O conjunto usa comparação ordinal sem diferenciar maiúsculas e minúsculas. Considere somente as strings ASCII mostradas; esta pausa não compila sua resposta.",
+ "code": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\nvar linguagens = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { \"sql\", \"SQL\", \"js\" };\nConsole.WriteLine(linguagens.Count);\nConsole.WriteLine(linguagens.Contains(\"Sql\"));\nConsole.WriteLine(linguagens.Add(\"sQl\"));",
+ "hint": "A política de igualdade também vale para Contains e Add. Add informa se uma entrada nova foi realmente acrescentada, não apenas se a chamada terminou.",
+ "minutes": 3
+},
+{
+ "id": "cs-agrupar-chaves-repetidas",
+ "language": "csharp",
+ "lessonIds": [
+  "cs-colecoes-linq"
+ ],
+ "skillIds": [
+  "csharp.colecoes.agrupamento"
+ ],
+ "afterBlock": 3,
+ "kind": "choice",
+ "capability": "depuracao",
+ "requiresConcept": true,
+ "title": "O relatório falhou na segunda palavra do mesmo tamanho",
+ "prompt": "Agrupar deve conservar todas as palavras não nulas, repetições e ordem dentro de cada comprimento, com listas independentes entre grupos. A implementação lança ArgumentException para chaves repetidas. Qual corpo corrige o contrato, incluindo entrada vazia, sem descartar palavras? A decisão é conceitual, não executa C# do aluno.",
+ "code": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\nstatic Dictionary<int, List<string>> Agrupar(IEnumerable<string> palavras)\n{\n    return palavras.ToDictionary(palavra => palavra.Length, palavra => new List<string> { palavra });\n}\nvar grupos = Agrupar(new[] { \"a\", \"bb\", \"c\", \"bb\" });\nConsole.WriteLine(string.Join(\",\", grupos[1]));",
+ "options": [
+  {
+   "id": "agrupar",
+   "text": "return palavras.GroupBy(palavra => palavra.Length)\n    .ToDictionary(grupo => grupo.Key, grupo => grupo.ToList());"
+  },
+  {
+   "id": "descartar",
+   "text": "return palavras.DistinctBy(palavra => palavra.Length)\n    .ToDictionary(palavra => palavra.Length, palavra => new List<string> { palavra });"
+  },
+  {
+   "id": "reutilizar",
+   "text": "var lista = new List<string>();\nreturn palavras.GroupBy(palavra => palavra.Length)\n    .ToDictionary(grupo => grupo.Key, grupo => { lista.AddRange(grupo); return lista; });"
+  }
+ ],
+ "hint": "Uma chave de dicionário guarda um valor. Quando vários itens têm a mesma chave, esse valor precisa representar o grupo completo; deduplicar a chave perde itens, e uma lista compartilhada mistura os grupos.",
+ "minutes": 5
+},
+{
+ "id": "cs-copiar-linhas-array",
+ "language": "csharp",
+ "lessonIds": [
+  "cs-colecoes-linq"
+ ],
+ "skillIds": [
+  "csharp.colecoes.copia-interna"
+ ],
+ "afterBlock": 4,
+ "kind": "fill",
+ "capability": "alteracao",
+ "requiresConcept": true,
+ "title": "O array externo novo ainda compartilha as linhas",
+ "prompt": "Complete com a chamada LINQ sem argumentos que copia os inteiros de linha para um array. Cada linha é int[] não nulo; origem pode ser vazia e as linhas podem ter tamanhos diferentes. A alteração de um elemento da cópia não deve alcançar origem nem outra linha copiada. Escreva somente a expressão sobre linha, sem Select ou ponto e vírgula. Esta avaliação é conceitual.",
+ "code": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\nint[][] origem = { new[] { 1, 2 }, new[] { 3 } };\nvar copia = origem.Select(linha => ____).ToArray();\ncopia[0][0] = 9;\nConsole.WriteLine(origem[0][0]);\nConsole.WriteLine(copia[0][0]);",
+ "hint": "Materializar só o array externo copia as referências das linhas. Aqui os elementos internos são inteiros; a cópia precisa acontecer dentro da transformação de cada linha.",
+ "minutes": 4
+},
+{
  "id": "js-prever-parametro-local",
  "language": "javascript",
  "lessonIds": [

@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "cs-prever-igualdade-conjunto":{"accepted":["2\nTrue\nFalse"],"failure":"Compare a política do conjunto antes de contar as grafias. Contains e Add usam a mesma igualdade: uma grafia equivalente pode ser encontrada sem criar um elemento novo.","solution":"2\nTrue\nFalse"},
+ "cs-agrupar-chaves-repetidas":{"accepted":["agrupar"],"failure":"Remover chaves repetidas não conserva todas as palavras. Reutilizar a mesma lista também faz um grupo receber conteúdo dos outros. Confira repetição, ordem e independência, além de evitar a exceção.","solution":"return palavras.GroupBy(palavra => palavra.Length)\n    .ToDictionary(grupo => grupo.Key, grupo => grupo.ToList());"},
+ "cs-copiar-linhas-array":{"accepted":["linha.ToArray()"],"failure":"O array externo contém referências para as linhas. Devolver linha conserva esse compartilhamento, enquanto copiar apenas a origem também não separa os inteiros internos. A chamada solicitada precisa materializar cada linha.","solution":"linha.ToArray()"},
  "js-prever-parametro-local":{"accepted":["6\n4\n0"],"failure":"O parâmetro recebe o argumento daquela chamada. Ele não reatribui o número externo de mesmo nome; zero também precisa atravessar a transformação.","solution":"6\n4\n0"},
  "js-manter-expressao-retorno":{"accepted":["mesma-linha"],"failure":"return sem expressão devolve undefined. A quebra de linha logo depois da palavra pode encerrar a instrução; calcular ou mostrar o produto depois não fornece esse resultado ao chamador.","solution":"return minutos * 60;"},
  "py-prever-anotacao":{"accepted":["6\n33"],"failure":"Python não impõe a anotação sozinho. A multiplicação recebe valores de tipos diferentes; não suponha um TypeError automático só pela assinatura. Um verificador estático é outra etapa.","solution":"6\n33"},
@@ -238,7 +241,8 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    else submitted=normalized(answer).split('\n').map(normalized).filter(Boolean);
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
    passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
-  }else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
+  }else if(id==='cs-copiar-linhas-array')passed=typeof answer==='string'&&/^linha\s*\.\s*ToArray\s*\(\s*\)$/.test(normalized(answer));
+  else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='py-esperar-vaga-fila')passed=typeof answer==='string'&&/^await[ \t]+fila[ \t]*\.[ \t]*put[ \t]*\([ \t]*item[ \t]*\)$/.test(normalized(answer));
   else if(id==='py-validar-digitos-ascii')passed=typeof answer==='string'&&/^(['"])0\1\s*<=\s*caractere\s*<=\s*(['"])9\2$/.test(normalized(answer));
   else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
