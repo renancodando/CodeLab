@@ -12,6 +12,77 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
 {
+ "id": "js-prever-parametro-local",
+ "language": "javascript",
+ "lessonIds": [
+  "funcoes"
+ ],
+ "skillIds": [
+  "javascript.funcoes.parametros"
+ ],
+ "afterBlock": 3,
+ "kind": "predict",
+ "capability": "leitura",
+ "requiresConcept": true,
+ "title": "O argumento mudou a variável externa?",
+ "prompt": "Preveja as três linhas. O parâmetro valor tem o mesmo nome de uma variável externa, mas cada chamada recebe seu próprio número. Esta pausa compara a previsão; não executa sua resposta.",
+ "code": "let valor = 4;\nfunction dobro(valor) {\n  return valor * 2;\n}\nconsole.log(dobro(3));\nconsole.log(valor);\nconsole.log(dobro(0));",
+ "hint": "Siga o valor recebido pela chamada, depois confira qual nome está disponível fora da função. O retorno não reatribui a variável externa.",
+ "minutes": 3
+},
+{
+ "id": "js-debug-conversao-retorno",
+ "language": "javascript",
+ "lessonIds": [
+  "funcoes"
+ ],
+ "skillIds": [
+  "javascript.funcoes.composicao"
+ ],
+ "afterBlock": 5,
+ "kind": "debug",
+ "capability": "depuracao",
+ "requiresConcept": true,
+ "title": "A conversão aparece no console, mas não pode ser somada",
+ "prompt": "Corrija segundos(minutos) para devolver o número de segundos. A entrada é um número finito de 0 a 1440, inclusive frações de minuto. O resultado precisa servir em outras contas, sem depender da chamada anterior. Não é necessário validar entradas fora desse contrato. Mostrar um número no console não o entrega ao chamador.",
+ "code": "function segundos(minutos) {\n  const resultado = minutos * 60;\n  console.log(resultado);\n}",
+ "hint": "Observe o valor recebido por quem chamou a função, além do que aparece no console. Teste zero, meio minuto e a soma de duas conversões.",
+ "minutes": 5
+},
+{
+ "id": "js-manter-expressao-retorno",
+ "language": "javascript",
+ "lessonIds": [
+  "funcoes"
+ ],
+ "skillIds": [
+  "javascript.funcoes.retorno-linha"
+ ],
+ "afterBlock": 7,
+ "kind": "choice",
+ "capability": "alteracao",
+ "requiresConcept": true,
+ "title": "A quebra de linha encerrou o retorno",
+ "prompt": "A conversão abaixo devolve undefined. Qual substituição do corpo permite que segundos(3) + 10 resulte em 190? A decisão é conceitual; não executa o código enviado.",
+ "code": "function segundos(minutos) {\n  return\n    minutos * 60;\n}",
+ "options": [
+  {
+   "id": "mesma-linha",
+   "text": "return minutos * 60;"
+  },
+  {
+   "id": "so-console",
+   "text": "console.log(minutos * 60);"
+  },
+  {
+   "id": "expressao-solta",
+   "text": "return;\nminutos * 60;"
+  }
+ ],
+ "hint": "Uma quebra de linha logo após return pode encerrar a instrução. Uma expressão posterior ou uma saída no console não passa a ser o retorno.",
+ "minutes": 3
+},
+{
   "id": "py-prever-anotacao",
   "language": "python",
   "lessonIds": [

@@ -13,6 +13,8 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "js-prever-parametro-local":{"accepted":["6\n4\n0"],"failure":"O parâmetro recebe o argumento daquela chamada. Ele não reatribui o número externo de mesmo nome; zero também precisa atravessar a transformação.","solution":"6\n4\n0"},
+ "js-manter-expressao-retorno":{"accepted":["mesma-linha"],"failure":"return sem expressão devolve undefined. A quebra de linha logo depois da palavra pode encerrar a instrução; calcular ou mostrar o produto depois não fornece esse resultado ao chamador.","solution":"return minutos * 60;"},
  "py-prever-anotacao":{"accepted":["6\n33"],"failure":"Python não impõe a anotação sozinho. A multiplicação recebe valores de tipos diferentes; não suponha um TypeError automático só pela assinatura. Um verificador estático é outra etapa.","solution":"6\n33"},
  "py-testar-excecao-vazia":{"accepted":["contexto"],"failure":"Sem chamar media dentro da verificação, o teste pode passar apesar do defeito. Conferir que a função devolve zero apenas codifica o erro; exija o contrato da entrada vazia.","solution":"with self.assertRaises(ValueError):\n    media([])"},
  "py-preservar-primeira-ordem":{"accepted":["valor not in vistos","not (valor in vistos)","not(valor in vistos)"],"failure":"Use o conjunto vistos solicitado; consultar a lista resultado muda o custo de pertencimento. A saída precisa receber cada valor ainda ausente no índice, uma vez só. Ordenar o conjunto muda a ordem solicitada; aceitar apenas quem já está nele também não inicia a lista.","solution":"valor not in vistos"},
@@ -102,6 +104,13 @@ const concepts:Record<string,ConceptSpec>={
 };
 const check=(label:string,expression:string,feedback:string):JSCheck=>({label,expression:'(()=>{try{return ('+expression+');}catch{return false;}})()',expected:true,feedback});
 const javascript:Record<string,JSSpec>={
+ 'js-debug-conversao-retorno':{checks:[
+  check("Conversões comuns devolvem números utilizáveis.","segundos(3)===180 && segundos(2)===120","O console pode mostrar o produto correto, mas confira o valor recebido pelo chamador. A função deve devolver um número utilizável."),
+  check("Zero, frações e o limite do contrato são preservados.","segundos(0)===0 && segundos(0.5)===30 && segundos(1.25)===75 && segundos(59.5)===3570 && segundos(1440)===86400","O caso comum funciona, mas zero, frações ou o limite ainda falham. A conversão não deve arredondar minutos nem substituir zero por um padrão."),
+  check("Novas entradas seguem a mesma transformação.","Array.from({length:145},(_,indice)=>indice*10).every(minutos=>segundos(minutos)===minutos*60)","Uma resposta fixa ou limitada aos exemplos não acompanha outras entradas do contrato. Observe a relação entre a entrada e o resultado."),
+  check("Chamadas independentes podem ser compostas.","(()=>{const primeira=segundos(2);segundos(0);const segunda=segundos(3);return primeira+segunda===300 && segundos(2)===120 && segundos(0)===0;})()","Converter novamente não deve acumular o resultado anterior. Confira duas chamadas separadas e a soma de seus retornos.")
+ ],solution:"function segundos(minutos) {\n  return minutos * 60;\n}"},
+
  'js-debug-faixas-energia':{checks:[
   check('Valores dentro de cada faixa chegam ao ramo esperado.','nivel(10)==="baixa"&&nivel(50)==="média"&&nivel(90)==="alta"','Confira os três ramos e o valor devolvido, sem trocar retorno por saída no console.'),
   check('As fronteiras 20 e 80 pertencem às faixas seguintes.','nivel(19.5)==="baixa"&&nivel(20)==="média"&&nivel(79.5)==="média"&&nivel(80)==="alta"','O exemplo comum funciona, mas uma fronteira ainda caiu na faixa anterior. Compare igualdade e o primeiro retorno alcançado.'),

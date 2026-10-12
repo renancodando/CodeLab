@@ -1,5 +1,16 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Funções: parâmetros, composição e retorno em preparação
+
+A aula original funcoes mantém os 12 capítulos, exemplo de desconto, exercício de conversão e projeto de biblioteca. Três pausas após os blocos 3/5/7 trabalham o parâmetro numérico separado do nome externo, a correção executada de uma função que mostra sem devolver e a quebra de linha logo após return. A teoria prepara zero, frações, composição, independência e retorno sem expressão. Não tenta ensinar mutação de objetos como se todo argumento fosse um número.
+
+O verificador QuickJS confere quatro famílias: números retornados no caso comum; zero, frações e limite do contrato; novas entradas; composição e chamadas independentes. O contrato é um número finito de 0 a 1440; não exige validação fora dessa faixa nem confunde console com retorno. As pausas de previsão e escolha são conceituais. Ler não gera domínio; solução é assistência; a execução permanece no isolamento existente.
+
+Passaram 36 testes específicos, incluindo regressões de decisões e engenharia Python. Eles rejeitam console sem retorno, truncamento de frações, substituição de zero, texto, respostas fixas e acúmulo entre chamadas; aceitam forma equivalente com parâmetro opcional. Reproduzem a quebra após return e a alternativa com parêntese aberto na mesma linha. Strict e build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 209,10 kB gzip e mundo 135,94 kB gzip. Dois fluxos Edge locais passaram em 1,2 min: funções e engenharia Python, com erro/acerto, assistência, persistência, offline e larguras de 220 e 4000 px. CI e publicação próprios permanecem pendentes. Branch: 100 pausas em 60/137 aulas, 77 sem pausas; produção conferida 94/58/79. Esta etapa depende de #42, cujo head e8196c8 corrigiu a nota Python colocada na seção TypeScript e aguarda o CI completo novamente.
+
+Referências: [return](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/return) e [funções](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Functions). Não conclui funções, JavaScript ou as frentes curriculares.
+
+
 ## Python: contratos, testes e ordem em preparação
 
 py-engenharia conserva suas seis seções, exemplo unicos, exercício media e projeto com pyproject.toml. Recebe pausas após os blocos 3/4/5: prever o que uma anotação não impõe em execução, diagnosticar um teste que passa sem chamar o código quebrado e completar o índice que preserva a primeira ocorrência. As respostas são conceituais e offline; não executam Python do aluno nem representam validação estática ou benchmark.
