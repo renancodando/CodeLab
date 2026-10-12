@@ -54,7 +54,7 @@ O laboratório oferece HTML/CSS/JavaScript em preview isolado, JavaScript em int
 - **Estudo offline após preparação**: no build de produção, o service worker prepara aplicativo, módulos, estilos e o interpretador JavaScript. SQLite e o compilador TypeScript são opcionais: seus carregadores, workers e WASM SQL entram no cache somente após o primeiro uso online, quando houver espaço. Uma atualização pode exigir novo carregamento. Aguarde a mensagem de preparação; conteúdo e atividades locais podem continuar sem conexão. APIs, clima, fontes externas e execução remota dependem de rede.
 - **Persistência informada**: se o navegador recusar a gravação, as alterações continuam em memória e podem ser exportadas antes de sair. Apagar os dados ou fechar uma sessão que não conseguiu salvar pode perder mudanças sem backup.
 
-As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às atividades corrigíveis. A expansão das demais aulas e a autocorreção de exercícios abertos permanecem no mapa de trabalho. Consulte [os mecanismos e limites](docs/aprendizagem-com-pratica.md).
+As pausas a cada um a três blocos são inseridas apenas nas aulas ligadas às atividades corrigíveis. A expansão das demais aulas e a autocorreção de exercícios abertos permanecem no mapa de trabalho. Consulte [os mecanismos e limites](docs/aprendizagem-com-pratica.md). A aula de valores também possui um percurso próprio passo a passo, preservado separadamente da leitura completa. A contagem de pausas não inclui as etapas desse percurso, missões ou experiências dos percursos de engenharia.
 
 ## Ambiente vivo
 
@@ -151,7 +151,7 @@ Ao editar aulas, atividades ou projetos, execute `npm run content:generate` para
 | JavaScript | `js-propriedades-prototipos` | Propriedades, descritores e receiver; dois problemas, três pausas e novo debugging executado |
 
 <!-- metricas:inicio -->
-O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **82 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **54 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
+O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **85 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **55 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
 <!-- metricas:fim -->
 
 O resumo acima é gerado com as [métricas do catálogo](docs/metricas-catalogo.md), também usadas pela interface. JavaScript possui atividades executadas no sandbox; as demais decisões são conceituais e não comprovam compilação. O build rejeita resumos desatualizados.

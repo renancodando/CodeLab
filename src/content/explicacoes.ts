@@ -125,7 +125,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "valores": {
     "contexto": "Variáveis não são apenas 'caixinhas': são nomes que permitem acompanhar estado ao longo do tempo. O tipo do valor determina quais operações fazem sentido e quais resultados podem surgir.",
-    "modelo": "Imagine um quadro de estado. Cada nome aponta para um valor atual; uma instrução pode ler esse valor, produzir outro e eventualmente reatribuir o nome. const protege a associação do nome, enquanto o conteúdo de objetos ainda pode mudar.",
+    "modelo": "Imagine um quadro de estado. Cada nome aponta para um valor atual; uma instrução pode ler esse valor, produzir outro e eventualmente reatribuir o nome. const protege a associação do nome, enquanto o conteúdo de objetos ainda pode mudar. Uma declaração let sem valor inicial começa com undefined; atribuir zero depois muda o estado, e === compara sem converter esses valores. O operador + soma dois números, mas concatena quando um dos valores primitivos envolvidos é uma string. String(100) produz texto, portanto mudar o nome para let não transforma esse texto em número. Para atualizar um valor numérico, confira tanto a declaração quanto os operandos da operação.",
     "passos": [
       "Identifique o tipo de cada dado antes de escolher a operação.",
       "Use nomes que descrevam o papel, não apenas a forma do valor.",

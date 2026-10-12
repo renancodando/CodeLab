@@ -4,8 +4,8 @@
   "aulasOriginais": 60,
   "aulasAprofundadas": 77,
   "problemasIndependentes": 58,
-  "atividadesCorrigiveis": 82,
-  "aulasComPausas": 54,
+  "atividadesCorrigiveis": 85,
+  "aulasComPausas": 55,
   "linguagens": [
     "cpp",
     "csharp",
@@ -29,7 +29,7 @@
     "csharp": 9,
     "css": 9,
     "html": 9,
-    "javascript": 16,
+    "javascript": 19,
     "python": 12,
     "sql": 6,
     "typescript": 9

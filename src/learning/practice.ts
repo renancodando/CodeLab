@@ -13,6 +13,8 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'js-prever-ausencia-zero':{accepted:['false\ntrue'],failure:'Uma variável sem valor inicial tem undefined, que não equivale ao número zero. A atribuição posterior muda esse estado; não troque o primeiro valor por zero antecipadamente.',solution:'false\ntrue'},
+ 'js-permitir-reatribuicao':{accepted:['mutavel'],failure:'Reatribuir um nome const é diferente de alterar uma propriedade de objeto. Permitir a reatribuição ainda não corrige uma soma cujo operando é texto.',solution:'let energia = 40;'},
  'js-prever-ciclos':{accepted:['1 1\n2 3\n3 6'],failure:'A soma acumula o estado anterior; ela não recomeça em cada passagem. Compare a atualização de total com o avanço de i antes de prever a linha seguinte.',solution:'1 1\n2 3\n3 6'},
  'js-parar-contagem':{accepted:['positivo'],failure:'Incluir zero acrescenta uma passagem. Conferir apenas inicio não acompanha o progresso; para uma entrada positiva essa condição não muda. Use o estado que se aproxima da parada.',solution:'restantes > 0'},
  'js-prever-transporte':{accepted:['false true true'],failure:'JSON omite undefined em propriedades de objeto, mas conserva posições de array como null. NaN também vira null; confira os três campos reconstruídos.',solution:'false true true'},
@@ -88,6 +90,12 @@ const concepts:Record<string,ConceptSpec>={
 };
 const check=(label:string,expression:string,feedback:string):JSCheck=>({label,expression:'(()=>{try{return ('+expression+');}catch{return false;}})()',expected:true,feedback});
 const javascript:Record<string,JSSpec>={
+ 'js-debug-saldo-textual':{checks:[
+  check('Saldo e ajuste numéricos produzem número somado.','somarSaldo(100,25)===125','O resultado ainda mistura texto e cálculo. Inspecione os operandos no instante da operação e o valor devolvido.'),
+  check('Zero é válido em qualquer uma das entradas.','somarSaldo(0,0)===0&&somarSaldo(0,25)===25&&somarSaldo(100,0)===100','Zero não significa entrada ausente. Confira também se outra chamada deixou algum estado acumulado.'),
+  check('Ajustes negativos podem reduzir, atravessar zero ou cancelar o saldo.','somarSaldo(100,-125)===-25&&somarSaldo(-50,25)===-25&&somarSaldo(-50,-25)===-75&&somarSaldo(25,-25)===0','O contrato permite resultados negativos e zero; trocar sinais ou limitar o resultado apaga operações válidas.'),
+  check('As fronteiras conservam o cálculo e chamadas independentes.','somarSaldo(10000,10000)===20000&&somarSaldo(-10000,-10000)===-20000&&somarSaldo(0,0)===0&&somarSaldo(100,25)===125','O limite descreve cada entrada, não impõe o mesmo teto ao resultado. O próximo cálculo deve começar somente com suas duas entradas.')
+ ],solution:'function somarSaldo(saldo, variacao) {\n  return saldo + variacao;\n}'},
  'js-debug-soma-inclusiva':{checks:[
   check('A soma até quatro inclui o último número.','somarAte(4)===10','O intervalo pedido inclui seu último valor. Compare a última comparação com o último número que realmente foi somado.'),
   check('Zero não executa uma passagem fictícia.','somarAte(0)===0','Zero representa um intervalo vazio. O estado inicial deve permitir devolver zero sem inventar um termo.'),

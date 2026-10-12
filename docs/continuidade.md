@@ -416,3 +416,29 @@ Referências oficiais: [for](https://tc39.es/ecma262/multipage/ecmascript-langua
 
 
 Strict/build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais. Inicial 201,13 kB gzip; mundo 135,94 kB gzip preservado. Os quatro fluxos Edge passaram em 3,2 min: aula original com âncoras reais/depuração/offline/assistência/220–4000 px, preparação original sem gabarito/domínio pela leitura e duas regressões SQL de preparação e retomada offline. Métricas da branch: 82 atividades em 54/137 aulas; 83 sem pausas. Exigir CI completo, revisão, árvore e conferência publicada deste head antes de atualizar a contagem de produção.
+
+
+## Valores e variáveis originais em preparação
+
+A aula original valores conserva seus doze capítulos e recebe previsão de ausência/zero, depuração de soma que concatenava texto e escolha de declaração para reatribuição numérica. A teoria prepara comparação sem conversão, ordem da operação e diferença entre associação e valor. Quatro famílias executadas no QuickJS conferem resultado numérico, zero, sinais, fronteiras e chamadas independentes; as entradas já são inteiros de -10000 a 10000. Não pretende validar texto de formulário ou implementar contabilidade. As respostas de previsão/escolha são conceituais; suas referências são executadas nos testes. Ler não gera domínio; solução consultada continua assistência.
+
+Os 91 testes específicos passaram, incluindo as regressões de loops e todas as referências de depuração; strict, build e navegador desta preparação ainda precisam concluir. A entrega depende da PR #36 para montar as pausas nos capítulos originais.
+
+Referências oficiais: [adição](https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-addition-operator-plus) e [let/const](https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-let-and-const-declarations). Usa construções estáveis, conferidas no interpretador real; o draft pode conter recursos posteriores.
+
+
+O teste de navegador encontrou a rota prática madura de valores, com 25 passos. As novas pausas complementam a leitura completa em #/leitura/valores e a sessão diária; não substituem esse percurso nem suas evidências. O fluxo passou a navegar pelo link real de leitura e verificar a retomada do passo salvo depois das pausas. A primeira tentativa do teste usava a rota prática esperando capítulos de leitura e não conta como aprovação.
+
+
+Strict e build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 202,33 kB gzip, mundo 135,94 kB gzip. As duas regressões de loops passaram no primeiro lote; o fluxo de valores, corrigido para entrar pelo link real de leitura, passou isoladamente em 49,6 s. Foram três fluxos aprovados em dois lotes, não um lote 3/3. A prova inclui correção equivalente executada, assistência, recarga offline, 220/4000 px e preservação do passo 2 de 25 da prática madura. A branch tem 85 atividades em 55/137 aulas, 82 ainda sem pausas; isso não é publicação. Exigir CI, revisão, integração após #36 e conferência do domínio.
+
+
+A revisão da PR #37 encontrou o link da preparação de valores apontando para a rota prática de 25 passos. O link de leitura completa e o retorno do catálogo passam a usar #/leitura/valores; as demais aulas conservam suas rotas. A nova regressão navega pelo plano antigo offline, confere três pausas sem fabricar domínio e retorna também pelo catálogo. Exigir build, navegador e novo CI do head corrigido.
+
+
+## Laços publicados e conferidos
+
+A PR #36 foi integrada após o CI 38168212787: 658 testes unitários, 146 fluxos de navegador, compiladores, PostgreSQL, API/cache e auditoria. Merge bf1bcca07664e58d66b25727509e103f3ac67038, árvore a31f9b62ea617c2f087b0a61d1cce18bc813546a igual ao head aprovado, sem revisões abertas. Deployment dpl_8zhswjMu8TpFhyJvHbnD8PwLxfhr READY/production com esse SHA; quatro fluxos públicos Edge aprovados em 3,9 min. Publicação conferida: 82 pausas em 54/137 aulas, 83 ainda sem pausas. Valores e decisões em preparação não entram nessa contagem publicada.
+
+
+A revisão do link passou no Edge com navegação offline, recarga e retorno pelo catálogo, sem domínio atribuído pela leitura (54,6 s isolado). O fluxo principal de valores também passou (58,2 s). A primeira tentativa da regressão nova esperava o indicador offline dentro da sessão diária; o teste foi corrigido para aguardar o indicador na home e só depois abrir a sessão. Foram dois fluxos aprovados em dois lotes. Strict/build aprovados na correção: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 202,36 kB gzip e mundo 135,94 kB gzip. Exigir CI completo do último head, revisão resolvida, árvore e domínio.
