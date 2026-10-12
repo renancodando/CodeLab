@@ -143,7 +143,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "decisoes": {
     "contexto": "Uma decisão em código é uma pergunta cujo resultado precisa ser reduzido a verdadeiro ou falso. Bugs aparecem quando fronteiras ficam ambíguas ou quando duas condições são combinadas sem uma regra clara.",
-    "modelo": "Pense em uma árvore de caminhos. Cada condição abre ramos; cada ramo possui um conjunto de entradas que deve chegar até ele. Projetar as fronteiras antes de escrever o if reduz sobreposição e buracos.",
+    "modelo": "Pense em uma árvore de caminhos. Cada condição abre ramos; cada ramo possui um conjunto de entradas que deve chegar até ele. Projetar as fronteiras antes de escrever o if reduz sobreposição e buracos. >= inclui o valor limite; > deixa esse valor de fora. Com entradas booleanas, && exige as duas condições e || aceita uma delas. Em uma sequência de retornos, a primeira condição satisfeita encerra a chamada: depois de recusar energia < 20, o próximo teste energia < 80 já representa a faixa de 20 até antes de 80. Teste cada limite, um valor logo abaixo e outro logo acima, sem arredondar a entrada.",
     "passos": [
       "Escreva a regra em português antes da expressão booleana.",
       "Defina os valores de fronteira, como exatamente 18 ou exatamente 80.",

@@ -442,3 +442,13 @@ A PR #36 foi integrada após o CI 38168212787: 658 testes unitários, 146 fluxos
 
 
 A revisão do link passou no Edge com navegação offline, recarga e retorno pelo catálogo, sem domínio atribuído pela leitura (54,6 s isolado). O fluxo principal de valores também passou (58,2 s). A primeira tentativa da regressão nova esperava o indicador offline dentro da sessão diária; o teste foi corrigido para aguardar o indicador na home e só depois abrir a sessão. Foram dois fluxos aprovados em dois lotes. Strict/build aprovados na correção: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 202,36 kB gzip e mundo 135,94 kB gzip. Exigir CI completo do último head, revisão resolvida, árvore e domínio.
+
+
+## Decisões originais em preparação
+
+A aula decisoes conserva doze capítulos e recebe previsão de acesso com duas condições, depuração de faixas contínuas e escolha da guarda inclusiva. As entradas da classificação já são números finitos de 0 a 100; os testes conferem casos comuns, 20/80, valores decimais, todos os inteiros desse intervalo e chamadas independentes. Aceita ordem alternativa dos ramos. Os testes chamam nivel somente com a energia, sem passar o índice do array como argumento adicional. A previsão e a escolha são conceituais; seus gabaritos são executados no interpretador. Ler não gera domínio e abrir solução continua assistência.
+
+Referências oficiais: [if](https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-if-statement) e [operadores lógicos](https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-binary-logical-operators). Usa construções estáveis conferidas no JavaScript real; o draft pode incluir recursos futuros. Exigir os testes, build, navegador, CI, revisão, árvore e domínio próprios desta entrega dependente de valores.
+
+
+Decisões passou em 104 testes específicos, strict e build: 157 páginas, 35 recursos essenciais e cinco opcionais, inicial 203,81 kB gzip e mundo 135,94 kB gzip. Os dois fluxos Edge passaram em 2,1 min, cobrindo previsão, fronteiras, correção equivalente executada, assistência, recarga offline, 220/4000 px e preservação da prática de valores. Branch: 88 pausas em 56/137 aulas, 81 sem pausas. Produção permanece com 82 em 54/137 até a integração de valores e desta entrega. Exigir CI completo, revisão, árvore e domínio. A próxima correção deve ordenar conceitos diários pela progressão do currículo sem trocar planos iniciados ou IDs.
