@@ -1,5 +1,23 @@
 # Continuidade do CODELAB
 
+## Python: divisão, conservação e entrada ASCII em preparação
+
+A aula py-numeros-texto mantém suas seis seções, exemplos, exercício de rateio e dois problemas independentes. Recebe três pausas após os blocos 2/3/5: prever piso e resto com dividendo negativo; diagnosticar perda de centavos sem trocar distribuição justa por simples conservação da soma; completar a fronteira de dígitos ASCII antes de converter. A teoria prepara as invariantes e distingue isdigit de um contrato restrito. A preparação diária é obrigatória; leitura não gera domínio, solução é assistência e respostas permanecem locais.
+
+As respostas dessas pausas são conceituais e funcionam offline; nenhum Python do aluno é executado. O verificador compartilhado executa oito cenários de referência com Python real: saída prevista, defeito original, conservação/ordem/diferença/independência, resto concentrado incorreto, fronteiras ASCII, aspas equivalentes, Unicode aceito por isdigit e conversão sem validação lexical. Inclui zero, menos centavos que pessoas, inteiros grandes, limites, sinais, espaços e rejeição de entradas inválidas. Localmente passaram esses oito programas e os quatro exemplos/soluções anteriores da aula, com Python 3.14.6. Não comprova produção independente do aluno ou execução no navegador. Exigir suíte, build, navegador, CI e publicação próprios antes de integrar.
+
+Referências oficiais: [operações numéricas e piso](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex), [dígitos Unicode e isdigit](https://docs.python.org/3/library/stdtypes.html#str.isdigit) e [Decimal e construção a partir de texto](https://docs.python.org/3/library/decimal.html). Não encerra números, Unicode, arredondamento financeiro ou a linguagem Python.
+
+
+## Publicação conferida em 12 de outubro
+
+Valores (#37) e decisões (#38) foram integrados com árvores iguais aos heads aprovados. Valores: CI 38174480235, 671 testes unitários e 148 fluxos de navegador; merge deb99ffae40fcc74c47a2886765735fd1527c927; árvore a787c859ca40cf5320e12d62b286db4594d79ff1; deployment dpl_FxFRYoSCcEFJJwNsta8eJovr5vof READY/production com esse SHA, dois fluxos públicos aprovados em 1 min. Decisões: CI 38175247548, 684 unidades e 149 fluxos; merge 8ae9ebe535e045e0e39c975e861decad540cb70b; árvore ede2d2533d25d8b2149f80cc794f70e3c329509e; deployment dpl_2XYB6FRC693e4ThYsgC4D7XfXVdX READY/production com esse SHA, dois fluxos públicos aprovados em 2,5 min. Revisões resolvidas, incluindo a navegação da preparação para a leitura de valores sem substituir o percurso de 25 passos.
+
+Cobertura publicada: 88 pausas em 56 das 137 aulas principais; 81 ainda sem pausas deste catálogo. Missões, experiências Git/HTTP e os 25 passos próprios de valores ficam fora dessa contagem. A PR #39 ordena conceitos diários pela progressão, preservando planos iniciados e pré-requisitos; aguarda os dois jobs finais de navegador do CI 38255384773 no head 430d0cd27b07057ca85c522f118cd919e1806b08. Seus 42 testes específicos, strict/build e dois fluxos locais passaram. Não está incluída como publicação concluída.
+
+O CI de main 38170698880 terminou com os quatro jobs aprovados após repetir uma falha anterior ao checkout, causada pelo limite de dados da imagem pública PostgreSQL. Não houve alteração de código para contornar o problema. Esses resultados não encerram o currículo nem medem FPS em celular físico.
+
+
 ## Preparação seguinte: descritores Python e duração do CI
 
 O primeiro CI #28 (38064749952) encontrou dois critérios que foram acrescentados depois da última suíte local: a estrutura da prática aberta exigia os três critérios originais. Esses critérios originais foram preservados, e o aprofundamento dos descritores continua nos blocos e nas pausas próprios. Repetir a suíte e o CI completo no novo head; não usar o resultado anterior como gate.
@@ -460,3 +478,13 @@ A escolha de novos conceitos passa a usar a posição da aula no currículo, seg
 
 
 A progressão diária passou em 42 testes específicos, strict/build e dois fluxos Edge em 3,5 min: jornada nova começa por valores, sua preparação destrava a prática sem domínio pela leitura, recarga offline conserva o plano anterior e os links de preparação/catálogo continuam corretos. Build: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 203,87 kB gzip e mundo 135,94 kB gzip. Não muda a contagem de atividades. Exigir CI completo, revisão, integração após a PR #38, árvore e domínio.
+
+
+## Validação da prática Python
+
+Passaram 35 testes específicos de Python/descritores/progressão diária, TypeScript strict e build: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 205,32 kB gzip e mundo 135,94 kB gzip. O lote unitário local completo apresentou falhas de tempo em exemplos TypeScript, no caso de memória do executor e no teste de métricas durante execução simultânea com o build; foi interrompido e não é aprovação da suíte completa. Os 35 específicos foram repetidos separadamente e passaram em 9,42 s, sem mudar limites. A suíte completa continua exigida no CI do novo head. Os oito cenários novos e quatro programas anteriores passaram no Python 3.14.6. Dois fluxos Edge passaram em 1,8 min: prática Python e regressão da sessão diária, com assistência, persistência, offline e 220/4000 px. CI completo ainda pendente. Branch: 91 pausas em 57/137 aulas; 80 sem pausas. Produção conferida continua em 88/56/81 até integração própria.
+
+
+## Progressão diária integrada, domínio pendente
+
+A PR #39 passou no CI 38255384773 com 690 testes unitários, 150 fluxos de navegador em duas parcelas de 75 e os 161 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge 20dd5898765cb5b7a34230fd300e43d130fb915a, árvore 16ce668b8c22f5ddda69370d854b475cd9f65f1a igual ao head 430d0cd27b07057ca85c522f118cd919e1806b08. Conferência do deployment/SHA e dos dois fluxos públicos ainda pendente; não presumir que o alias já atualizou. IDs, planos iniciados, pré-requisitos e leitura sem domínio preservados.

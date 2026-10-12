@@ -1,5 +1,14 @@
 # Prontidão de produção
 
+## Publicação conferida em 12 de outubro
+
+Valores (#37) e decisões (#38) foram integrados com árvores iguais aos heads aprovados. Valores: CI 38174480235, 671 testes unitários e 148 fluxos de navegador; merge deb99ffae40fcc74c47a2886765735fd1527c927; árvore a787c859ca40cf5320e12d62b286db4594d79ff1; deployment dpl_FxFRYoSCcEFJJwNsta8eJovr5vof READY/production com esse SHA, dois fluxos públicos aprovados em 1 min. Decisões: CI 38175247548, 684 unidades e 149 fluxos; merge 8ae9ebe535e045e0e39c975e861decad540cb70b; árvore ede2d2533d25d8b2149f80cc794f70e3c329509e; deployment dpl_2XYB6FRC693e4ThYsgC4D7XfXVdX READY/production com esse SHA, dois fluxos públicos aprovados em 2,5 min. Revisões resolvidas, incluindo a navegação da preparação para a leitura de valores sem substituir o percurso de 25 passos.
+
+Cobertura publicada: 88 pausas em 56 das 137 aulas principais; 81 ainda sem pausas deste catálogo. Missões, experiências Git/HTTP e os 25 passos próprios de valores ficam fora dessa contagem. A PR #39 ordena conceitos diários pela progressão, preservando planos iniciados e pré-requisitos; aguarda os dois jobs finais de navegador do CI 38255384773 no head 430d0cd27b07057ca85c522f118cd919e1806b08. Seus 42 testes específicos, strict/build e dois fluxos locais passaram. Não está incluída como publicação concluída.
+
+O CI de main 38170698880 terminou com os quatro jobs aprovados após repetir uma falha anterior ao checkout, causada pelo limite de dados da imagem pública PostgreSQL. Não houve alteração de código para contornar o problema. Esses resultados não encerram o currículo nem medem FPS em celular físico.
+
+
 ## Entrega atual: laços e preparação diária
 
 A PR #36 foi integrada após o CI 38168212787: 658 testes unitários, 146 fluxos de navegador, compiladores, PostgreSQL, API/cache e auditoria. Merge bf1bcca07664e58d66b25727509e103f3ac67038, árvore a31f9b62ea617c2f087b0a61d1cce18bc813546a igual ao head aprovado, sem revisões abertas. Deployment dpl_8zhswjMu8TpFhyJvHbnD8PwLxfhr READY/production com esse SHA; quatro fluxos públicos Edge aprovados em 3,9 min. Publicação conferida: 82 pausas em 54/137 aulas, 83 ainda sem pausas. Valores e decisões em preparação não entram nessa contagem publicada.
@@ -203,3 +212,8 @@ O fluxo público Python foi conferido em um contexto Edge novo: home HTTP 200, a
 ## Portabilidade Windows e propriedades JavaScript integradas
 
 As PRs #9 e #10 foram integradas com árvores idênticas às testadas, registradas em continuidade.md. O run 37707217346 aprovou 275 testes unitários, 142 exemplos externos, 87 testes de navegador, 156 páginas, builds/API, SQL/Git/ZIP e auditoria. Inclui debugging JavaScript executado, feedback sem gabarito automático e persistência offline. O run anterior 37704436528 teve timeout em um teste interativo; duas suítes completas posteriores passaram o cenário sem aumentar o limite. A verificação pública C++ confirmou leitura, correção e persistência online; Python também confirmou reload offline preparado. Os demais fluxos públicos e o currículo integral permanecem abertos.
+
+
+## Progressão diária integrada, domínio pendente
+
+A PR #39 passou no CI 38255384773 com 690 testes unitários, 150 fluxos de navegador em duas parcelas de 75 e os 161 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge 20dd5898765cb5b7a34230fd300e43d130fb915a, árvore 16ce668b8c22f5ddda69370d854b475cd9f65f1a igual ao head 430d0cd27b07057ca85c522f118cd919e1806b08. Conferência do deployment/SHA e dos dois fluxos públicos ainda pendente; não presumir que o alias já atualizou. IDs, planos iniciados, pré-requisitos e leitura sem domínio preservados.

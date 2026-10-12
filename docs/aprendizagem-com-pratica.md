@@ -1,5 +1,14 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Python: divisão, conservação e entrada ASCII em preparação
+
+A aula py-numeros-texto mantém suas seis seções, exemplos, exercício de rateio e dois problemas independentes. Recebe três pausas após os blocos 2/3/5: prever piso e resto com dividendo negativo; diagnosticar perda de centavos sem trocar distribuição justa por simples conservação da soma; completar a fronteira de dígitos ASCII antes de converter. A teoria prepara as invariantes e distingue isdigit de um contrato restrito. A preparação diária é obrigatória; leitura não gera domínio, solução é assistência e respostas permanecem locais.
+
+As respostas dessas pausas são conceituais e funcionam offline; nenhum Python do aluno é executado. O verificador compartilhado executa oito cenários de referência com Python real: saída prevista, defeito original, conservação/ordem/diferença/independência, resto concentrado incorreto, fronteiras ASCII, aspas equivalentes, Unicode aceito por isdigit e conversão sem validação lexical. Inclui zero, menos centavos que pessoas, inteiros grandes, limites, sinais, espaços e rejeição de entradas inválidas. Localmente passaram esses oito programas e os quatro exemplos/soluções anteriores da aula, com Python 3.14.6. Não comprova produção independente do aluno ou execução no navegador. Exigir suíte, build, navegador, CI e publicação próprios antes de integrar.
+
+Referências oficiais: [operações numéricas e piso](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex), [dígitos Unicode e isdigit](https://docs.python.org/3/library/stdtypes.html#str.isdigit) e [Decimal e construção a partir de texto](https://docs.python.org/3/library/decimal.html). Não encerra números, Unicode, arredondamento financeiro ou a linguagem Python.
+
+
 ## C++: transferência, posse temporária e retorno de texto
 
 cpp-memoria-posse recebe três pausas após os blocos 2/3/4, mantendo a pausa anterior de invalidação no bloco 5. A pessoa diagnostica a tentativa de mover um unique_ptr constante, prevê a vida conservada pelo shared_ptr obtido de lock e completa um retorno de string com posse. As novas habilidades exigem preparação na sessão diária. Respostas são conceituais, sem compilação do aluno; assistência, respostas e evidências continuam no progresso local. O exercício de optional e o projeto de árvore foram preservados.
@@ -223,3 +232,8 @@ A escolha de novos conceitos passa a usar a posição da aula no currículo, seg
 
 
 A progressão diária passou em 42 testes específicos, strict/build e dois fluxos Edge em 3,5 min: jornada nova começa por valores, sua preparação destrava a prática sem domínio pela leitura, recarga offline conserva o plano anterior e os links de preparação/catálogo continuam corretos. Build: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 203,87 kB gzip e mundo 135,94 kB gzip. Não muda a contagem de atividades. Exigir CI completo, revisão, integração após a PR #38, árvore e domínio.
+
+
+## Validação da prática Python
+
+Passaram 35 testes específicos de Python/descritores/progressão diária, TypeScript strict e build: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 205,32 kB gzip e mundo 135,94 kB gzip. O lote unitário local completo apresentou falhas de tempo em exemplos TypeScript, no caso de memória do executor e no teste de métricas durante execução simultânea com o build; foi interrompido e não é aprovação da suíte completa. Os 35 específicos foram repetidos separadamente e passaram em 9,42 s, sem mudar limites. A suíte completa continua exigida no CI do novo head. Os oito cenários novos e quatro programas anteriores passaram no Python 3.14.6. Dois fluxos Edge passaram em 1,8 min: prática Python e regressão da sessão diária, com assistência, persistência, offline e 220/4000 px. CI completo ainda pendente. Branch: 91 pausas em 57/137 aulas; 80 sem pausas. Produção conferida continua em 88/56/81 até integração própria.
