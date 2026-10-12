@@ -5,6 +5,7 @@ import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {verificarBancadaGit} from '../tests/fixtures/git-bancada.mjs';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
+import {montarCasosLinq,verificarLinqCsharp} from '../tests/fixtures/csharp-linq.mjs';
 import {montarCasosEngenharia} from '../tests/fixtures/python-engenharia.mjs';
 import {montarCasosConcorrencia} from '../tests/fixtures/python-concorrencia.mjs';
 import {montarCasosNumeros} from '../tests/fixtures/python-numeros.mjs';
@@ -77,6 +78,7 @@ try{
  const cenariosPosse=await verificarPosseCpp(root,practiceActivities,getPracticeSolution);
  const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
  const cenariosIteradores=await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution);
+ const cenariosLinq=await verificarLinqCsharp(root,montarCasosLinq(practiceActivities,getPracticeSolution));
  const examples=[
   ...montarCasosEngenharia(practiceActivities,getPracticeSolution),
   ...montarCasosConcorrencia(practiceActivities,getPracticeSolution),
@@ -122,4 +124,5 @@ try{
  console.log(cenariosPosse+' cenários C++20 de posse conferidos, sem executar acessos pendentes.');
  console.log(cenariosAusencias+' cenários PostgreSQL conferidos para ausência, restrições e correspondência.');
  console.log(cenariosIteradores+' cenários .NET conferidos para suspensão, descarte e materialização.');
+ console.log(cenariosLinq+' cenários .NET conferidos para igualdade, agrupamento e cópia interna.');
 }finally{await rm(root,{recursive:true,force:true});}

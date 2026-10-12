@@ -391,7 +391,7 @@ export default {
         {
           "title": "Coleções pelo padrão de acesso",
           "text": [
-            "List permite acesso sequencial e por índice; Dictionary mapeia chaves e HashSet representa pertencimento. Defina igualdade e política para duplicação. Uma chave cujo hash muda depois de armazenada pode tornar consultas incoerentes.",
+            "List permite acesso sequencial e por índice; Dictionary mapeia chaves e HashSet representa pertencimento. Defina igualdade e política para duplicação. Um HashSet<string> com StringComparer.OrdinalIgnoreCase considera sql e SQL equivalentes; Contains usa essa política e Add devolve false quando a entrada já pertence ao conjunto. Uma chave cujo hash muda depois de armazenada pode tornar consultas incoerentes.",
             "Genéricos relacionam tipos sem depender de casts em cada uso. Constraints declaram capacidades exigidas pela implementação. Não prometa um tipo mais específico no retorno quando você apenas criou um objeto que satisfaz parte de suas restrições."
           ]
         },
@@ -405,14 +405,14 @@ export default {
         {
           "title": "Transformação e agregação",
           "text": [
-            "Where filtra e Select transforma; OrderBy define ordem e ThenBy desempate. GroupBy cria grupos segundo uma chave. A sintaxe de consulta e os métodos podem expressar operações equivalentes, com diferenças conforme o provedor.",
+            "Where filtra e Select transforma; OrderBy define ordem e ThenBy desempate. GroupBy cria grupos segundo uma chave e, no LINQ local, conserva a ordem dos itens dentro de cada grupo. ToDictionary exige chaves únicas: se várias palavras têm o mesmo comprimento, agrupe antes e materialize uma lista por grupo. DistinctBy removeria palavras do relatório; reutilizar uma lista entre grupos mistura seus estados. A sintaxe de consulta e os métodos podem expressar operações equivalentes, com diferenças conforme o provedor.",
             "Any expressa existência sem contar necessariamente todos os elementos. First exige pelo menos um e Single exige exatamente um; variantes OrDefault pedem uma política para ausência. Escolha pela regra do domínio, não só pela chamada que evita uma exceção."
           ]
         },
         {
           "title": "Avaliação adiada",
           "text": [
-            "Muitas consultas LINQ executam ao enumerar, não ao declarar a variável. Se a origem muda, uma nova enumeração pode observar outro estado. ToList e ToArray materializam resultados naquele momento e têm custo de memória.",
+            "Muitas consultas LINQ executam ao enumerar, não ao declarar a variável. Se a origem muda, uma nova enumeração pode observar outro estado. ToList e ToArray materializam resultados naquele momento e têm custo de memória. Essa materialização não é uma cópia profunda: em int[][], o array externo guarda referências para as linhas. Para impedir que a mutação de um inteiro atravesse a cópia, materialize também os inteiros de cada linha. Isso não define uma regra geral de clonagem para objetos ou grafos arbitrários.",
             "Enumerar duas vezes pode duplicar uma chamada cara ou consumir uma fonte que não reinicia. Materialize quando o contrato exige snapshot ou reutilização estável; mantenha streaming quando ele é adequado e a vida da origem está garantida."
           ]
         },
@@ -432,6 +432,7 @@ export default {
         }
       ],
       "code": "using System;\nusing System.Linq;\nvar valores = new[] { 3, 1, 3, 2 };\nvar consulta = valores.Where(x => x >= 2).OrderBy(x => x);\nvar snapshot = consulta.ToArray();\nvalores[0] = 9;\nConsole.WriteLine(string.Join(\",\", snapshot));\nConsole.WriteLine(string.Join(\",\", consulta));",
+      "expectedOutput": ["2,3,3", "2,3,9"],
       "output": "A primeira linha é 2,3,3 e a segunda 2,3,9. O snapshot foi materializado antes da mudança; a consulta adiada observa a origem atual ao enumerar.",
       "trace": [
         "Declarar consulta conserva uma cadeia de operações.",

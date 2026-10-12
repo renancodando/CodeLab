@@ -431,6 +431,8 @@ Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-obje
 - Conteúdo: List Dictionary HashSet; generic constraints variance; IEnumerable IEnumerator; LINQ Where Select OrderBy GroupBy; deferred execution materialization; First Single Any; IQueryable providers; complexity multiple enumeration.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
 
+- Pausas em preparação: igualdade em conjunto, agrupamento sem perda e cópia de arrays internos. Gabaritos compilados/executados em .NET 10; respostas do aluno são conceituais e não comprovam execução, performance ou provedor remoto.
+
 #### C#: objetos, interfaces, records e padrões
 
 - Nível: Avançado.
