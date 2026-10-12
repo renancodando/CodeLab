@@ -20,7 +20,7 @@ export type DailyItem = {id:string;kind:'review'|'concept'|'practice'|'challenge
 export type DailySession = {day:string; items:DailyItem[]; completed:string[]; totalMinutes:number};
 export type AdaptiveState = {version:1;skills:Record<string,SkillProgress>;eventIds:string[];seenConcepts:string[];daily?:DailySession};
 export type SkillDefinition = {id:string;label:string;path:string[];prerequisites?:string[]};
-export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[];requiredConcepts?:string[];preparacaoAteBloco?:number};
+export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[];requiredConcepts?:string[];preparacaoAteBloco?:number;ordem?:number};
 export type AdaptiveCatalog = {skills:SkillDefinition[];activities:LearningActivity[];preferredLanguage?:string};
 export type EvidenceResult = {accepted:boolean;credited:boolean;reason:'recorded'|'duplicate'|'stale'|'invalid'};
 export type SkillMastery = {skillId:string;score:number|null;practiced:number;assisted:number;dueDay:string|null;stage:number};
@@ -187,6 +187,7 @@ function catalogActivities(catalog:AdaptiveCatalog):LearningActivity[] {
  const ids=new Set<string>();
  const concepts=new Set(catalog.activities.filter(a=>a.kind==='concept'&&safeId(a.id)).map(a=>a.id));
  return catalog.activities.filter(activity=>{
+  if(activity.ordem!==undefined&&!count(activity.ordem,0,10000))return false;
   if(activity.requiredConcepts!==undefined&&(!uniqueIds(activity.requiredConcepts,16)||activity.requiredConcepts.some(id=>!concepts.has(id))))return false;
   if(activity.prerequisites!==undefined&&!uniqueIds(activity.prerequisites,16)||!safeId(activity.id)||ids.has(activity.id)||!uniqueIds(activity.skillIds,8)||!activity.skillIds.length||activity.skillIds.some(id=>!skills.has(id))||!count(activity.minutes,1,60)||!['concept','practice','challenge'].includes(activity.kind))return false;
   ids.add(activity.id);return true;
@@ -215,7 +216,7 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
   if(activity)add('review',activity,skillId);
  }
  const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage));
- const concept=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id))[0];
+ const concept=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id)).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(concept)add('concept',concept);
  // A prepared concept may precede its practices in this same session. Reading
  // unlocks the sequence, never adds mastery evidence or bypasses skill prerequisites.

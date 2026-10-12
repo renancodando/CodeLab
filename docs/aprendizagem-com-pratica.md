@@ -215,3 +215,11 @@ Referências oficiais: [if](https://tc39.es/ecma262/multipage/ecmascript-languag
 
 
 Decisões passou em 104 testes específicos, strict e build: 157 páginas, 35 recursos essenciais e cinco opcionais, inicial 203,81 kB gzip e mundo 135,94 kB gzip. Os dois fluxos Edge passaram em 2,1 min, cobrindo previsão, fronteiras, correção equivalente executada, assistência, recarga offline, 220/4000 px e preservação da prática de valores. Branch: 88 pausas em 56/137 aulas, 81 sem pausas. Produção permanece com 82 em 54/137 até a integração de valores e desta entrega. Exigir CI completo, revisão, árvore e domínio. A próxima correção deve ordenar conceitos diários pela progressão do currículo sem trocar planos iniciados ou IDs.
+
+
+## Progressão da sessão diária em preparação
+
+A escolha de novos conceitos passa a usar a posição da aula no currículo, seguida de sua preparação. A ordem lexical dos IDs permanece somente como desempate e fallback para catálogos sem prioridade. IDs, evidências e planos salvos não são renomeados; um plano existente continua o mesmo, inclusive se já começou. A ordem não dispensa leitura necessária ou pré-requisitos por habilidade, nem cria domínio pela leitura. Prioridades inválidas são rejeitadas. Os 42 testes específicos de lógica passaram; strict, build, navegador e CI ainda precisam concluir. As métricas de atividades não mudam.
+
+
+A progressão diária passou em 42 testes específicos, strict/build e dois fluxos Edge em 3,5 min: jornada nova começa por valores, sua preparação destrava a prática sem domínio pela leitura, recarga offline conserva o plano anterior e os links de preparação/catálogo continuam corretos. Build: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 203,87 kB gzip e mundo 135,94 kB gzip. Não muda a contagem de atividades. Exigir CI completo, revisão, integração após a PR #38, árvore e domínio.
