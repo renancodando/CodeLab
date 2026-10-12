@@ -30,7 +30,7 @@ test('Python: testes que detectam defeitos conservam evidência offline',async({
   await indice.getByLabel('Trecho que falta').fill('valor in vistos');
   await indice.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
   await expect(indice.locator('.practice-feedback')).toContainText('ordem solicitada');
-  await indice.getByLabel('Trecho que falta').fill('not (valor in vistos)');
+  await indice.getByLabel('Trecho que falta').fill('not valor in (vistos)');
   await indice.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
   await expect(indice.locator('.practice-feedback')).toContainText('Sua resposta está correta');
   await indice.getByRole('button',{name:'Consultar solução',exact:true}).click();
@@ -38,7 +38,7 @@ test('Python: testes que detectam defeitos conservam evidência offline',async({
   await pagina.reload({waitUntil:'domcontentloaded'});
   await expect(prever.locator('textarea')).toHaveValue('6\n33');
   await expect(verificacao.locator('input[value="contexto"]')).toBeChecked();
-  await expect(indice.locator('input[name="answer"]')).toHaveValue('not (valor in vistos)');
+  await expect(indice.locator('input[name="answer"]')).toHaveValue('not valor in (vistos)');
   const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
   expect(salvo.practiceAnswers['py-preservar-primeira-ordem'].assisted).toBe(true);
   expect(salvo.adaptive.skills['python.engenharia.testes'].evidence['py-testar-excecao-vazia'].firstTry).toBe(false);
