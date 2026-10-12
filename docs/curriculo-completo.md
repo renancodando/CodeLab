@@ -169,6 +169,8 @@ Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-obje
 - Conteúdo: módulos imports __main__; venv pip pyproject.toml; typing Protocol Generic; testes unittest mocks; propriedades casos de borda; profiling timeit tracemalloc; algoritmos complexidade; distribuição wheels; documentação e evolução.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
 
+- Pausas em preparação: anotações versus runtime, teste que detecta uma implementação quebrada e índice de pertencimento com ordem estável. Referências executadas com Python real; respostas conceituais sem verificador estático, execução do aluno ou medição de performance. A solução media agora executa seus testes unittest, incluindo iterável e não finitos.
+
 ### TypeScript · do zero ao avançado
 
 #### TypeScript: tipos, inferência e execução

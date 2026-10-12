@@ -1,5 +1,21 @@
 # Continuidade do CODELAB
 
+## Números Python publicados em 12 de outubro
+
+A PR #40 está publicada após CI 38259821060: 706 testes unitários, 151 fluxos (75/76), 169 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge be777ce404aaa9257eed502d4fa1e0da491f5f66, árvore 94ab7f69ccf88425ca94d0658ae9f6a9ac2d34a5 igual ao head fe30a994bd99bd7cbeda4f06d65ecaeb1e781981. Deployment dpl_5fxMM1Q7tCi8cSn7gRCUUXWPeRp2 READY/production com gitSource.sha e alias confirmados. Dois fluxos públicos Edge passaram em 1,6 min: números Python e sessão diária. Cobertura publicada: 91 pausas em 57/137 aulas; 80 ainda sem pausas deste catálogo. As seções seguintes preservam checkpoints e contagens da época.
+
+
+## Python: contratos, testes e ordem em preparação
+
+py-engenharia conserva suas seis seções, exemplo unicos, exercício media e projeto com pyproject.toml. Recebe pausas após os blocos 3/4/5: prever o que uma anotação não impõe em execução, diagnosticar um teste que passa sem chamar o código quebrado e completar o índice que preserva a primeira ocorrência. As respostas são conceituais e offline; não executam Python do aluno nem representam validação estática ou benchmark.
+
+A solução anterior definia TestMedia sem rodar seus testes quando executada pelo verificador. Agora inclui o ponto de entrada unittest.main e casos de iterável e NaN/infinidades, conservando a função e os testes anteriores. Passaram 32 testes específicos e 11 programas Python reais: nove cenários novos, exemplo com dois testes executados e solução com quatro. Os cenários distinguem teste fraco, contexto não usado, teste que detecta o retorno errado, implementação corrigida e exceção de tipo errado. A ordem estável é conferida em combinações, vazio, strings distintas, preservação da entrada e chamadas independentes. Isso comprova os casos testados, sem provar performance.
+
+Branch: 97 pausas em 59/137 aulas, 78 sem pausas; as dez aulas do percurso Python passam a ter ao menos uma pausa nesta branch. Isso não conclui Python: pacotes, distribuição instalada, ferramentas estáticas, profiling e aprofundamentos dos tópicos agrupados permanecem no mapa. Exigir strict/build, navegador, CI e integração após #41. A publicação conferida é 91/57/80 após os fluxos públicos de #40; #41 e esta etapa ainda exigem gates próprios.
+
+Referências oficiais: [typing](https://docs.python.org/3/library/typing.html), [unittest](https://docs.python.org/3/library/unittest.html) e [assertRaises](https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRaises).
+
+
 ## Python: corrotinas, cancelamento e filas em preparação
 
 py-concorrencia conserva suas seis seções, exemplo TaskGroup/Semaphore, exercício mapear_limitado e projeto de coletor. Três pausas após os blocos 2/3/4 distinguem criação de corrotina e execução; diagnosticam CancelledError transformado em sucesso; completam envio que aguarda vaga em uma Queue limitada. A teoria separa limpeza, propagação, operações ativas e trabalho pendente. Ler não gera domínio; abrir solução é assistência. As respostas continuam conceituais e offline, sem executor Python do aluno.
@@ -510,3 +526,11 @@ Nos cenários de cancelamento, Event sinaliza início e passagem pela limpeza; n
 
 
 Concorrência passou em TypeScript strict e build: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 206,54 kB gzip e mundo 135,94 kB gzip. Dois fluxos Edge passaram em 1,8 min: concorrência e regressão de números, com erros/acertos, assistência, progresso salvo, recarga offline e 220/4000 px. Exigir CI completo e publicação próprios após #40. Não houve runtime novo, permissão de rede do aluno ou mudança visual.
+
+
+## Números Python integrados, domínio pendente
+
+A PR #40 passou no CI 38259821060 com 706 unidades, 151 fluxos em parcelas de 75/76 e 169 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge be777ce404aaa9257eed502d4fa1e0da491f5f66, árvore 94ab7f69ccf88425ca94d0658ae9f6a9ac2d34a5 igual ao head fe30a994bd99bd7cbeda4f06d65ecaeb1e781981. Não declarar publicação até conferir deployment/SHA e os dois fluxos públicos. A PR #41 mantém head 8501af3431f5736aa9d101b7620b4b8ff0681bb2; seu CI 38262798743 está em andamento, sem usar os gates de #40 como substitutos.
+
+
+Engenharia passou em strict/build: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 207,84 kB gzip e mundo 135,94 kB gzip. O teste do marco exige ao menos uma pausa em cada uma das dez aulas Python, sem afirmar domínio por leitura ou conclusão da linguagem. Dois fluxos locais Edge passaram em 1,5 min: engenharia e regressão de concorrência, incluindo assistência, recarga offline, evidência e 220/4000 px. A publicação de #40 já tem deployment dpl_5fxMM1Q7tCi8cSn7gRCUUXWPeRp2 READY/production, gitSource.sha be777ce404aaa9257eed502d4fa1e0da491f5f66 confirmado e domínio atribuído; os fluxos públicos ainda precisam passar.

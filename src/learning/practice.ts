@@ -13,6 +13,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "py-prever-anotacao":{"accepted":["6\n33"],"failure":"Python não impõe a anotação sozinho. A multiplicação recebe valores de tipos diferentes; não suponha um TypeError automático só pela assinatura. Um verificador estático é outra etapa.","solution":"6\n33"},
+ "py-testar-excecao-vazia":{"accepted":["contexto"],"failure":"Sem chamar media dentro da verificação, o teste pode passar apesar do defeito. Conferir que a função devolve zero apenas codifica o erro; exija o contrato da entrada vazia.","solution":"with self.assertRaises(ValueError):\n    media([])"},
+ "py-preservar-primeira-ordem":{"accepted":["valor not in vistos","not (valor in vistos)","not(valor in vistos)"],"failure":"Use o conjunto vistos solicitado; consultar a lista resultado muda o custo de pertencimento. A saída precisa receber cada valor ainda ausente no índice, uma vez só. Ordenar o conjunto muda a ordem solicitada; aceitar apenas quem já está nele também não inicia a lista.","solution":"valor not in vistos"},
  "py-prever-corrotina":{"accepted":["[]\n4\n['executou']"],"failure":"Criar uma corrotina diretamente não agenda sua execução. Acompanhe a lista antes do await e depois de entrar no corpo; o resultado numérico e a lista são saídas distintas.","solution":"[]\n4\n['executou']"},
  "py-propagar-cancelamento":{"accepted":["propagar"],"failure":"finally conserva a limpeza, mas retornar ou ignorar a exceção transforma a tarefa cancelada em término normal. Preserve o sinal de cancelamento recebido pelo chamador.","solution":"raise"},
  "py-esperar-vaga-fila":{"accepted":["await fila.put(item)"],"failure":"A capacidade já está definida na fila. A operação precisa esperar a vaga, sem lançar QueueFull, descartar o item ou deixar uma corrotina sem aguardar.","solution":"await fila.put(item)"},
@@ -198,6 +201,31 @@ check("A leitura conserva a entrada e as permissões.","(()=>{const obj={saldo:8
 export function getPracticeSolution(id:string):string|undefined{
  return concepts[id]?.solution??javascript[id]?.solution;
 }
+function condicaoDeAusencia(resposta:string):boolean{
+ const texto=resposta.trim();
+ if(/[^\S \t\f]/.test(texto))return false;
+ const partes=texto.match(/[A-Za-z_]\w*|[()]|\S/g)??[];
+ if(partes.length>128||partes.some(parte=>!['valor','vistos','not','in','(',')'].includes(parte)))return false;
+ let alterou=true;
+ while(alterou){
+  alterou=false;
+  for(let indice=0;indice<partes.length;indice++){
+   const atual=partes[indice],proxima=partes[indice+1];
+   let tamanho=0,resultado='';
+   if(atual==='('&&['valor','vistos','presente','ausente'].includes(proxima)&&partes[indice+2]===')'){
+    tamanho=3;resultado=proxima;
+   }else if(atual==='valor'&&proxima==='not'&&partes[indice+2]==='in'&&partes[indice+3]==='vistos'){
+    tamanho=4;resultado='ausente';
+   }else if(atual==='valor'&&proxima==='in'&&partes[indice+2]==='vistos'){
+    tamanho=3;resultado='presente';
+   }else if(atual==='not'&&(proxima==='presente'||proxima==='ausente')){
+    tamanho=2;resultado=proxima==='presente'?'ausente':'presente';
+   }
+   if(tamanho){partes.splice(indice,tamanho,resultado);alterou=true;break;}
+  }
+ }
+ return partes.length===1&&partes[0]==='ausente';
+}
 function normalized(value:string):string{return value.replace(/\r\n?/g,'\n').trim();}
 function base(activity?:PracticeActivity):PracticeResult{
  return {passed:false,status:'evaluated',feedback:'',tests:[],evidence:'conceptual',execution:'not-run',skillIds:activity?[...activity.skillIds]:[],capability:activity?.capability??'reconhecimento'};
@@ -226,7 +254,8 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    else submitted=normalized(answer).split('\n').map(normalized).filter(Boolean);
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
    passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
-  }else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
+  }else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
+  else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='py-esperar-vaga-fila')passed=typeof answer==='string'&&/^await[ \t]+fila[ \t]*\.[ \t]*put[ \t]*\([ \t]*item[ \t]*\)$/.test(normalized(answer));
   else if(id==='py-validar-digitos-ascii')passed=typeof answer==='string'&&/^(['"])0\1\s*<=\s*caractere\s*<=\s*(['"])9\2$/.test(normalized(answer));
   else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));

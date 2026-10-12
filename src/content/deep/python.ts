@@ -1056,21 +1056,24 @@ export default {
           "title": "Tipos como contrato de manutenção",
           "text": [
             "Anotações como list[str], T | None e Protocol ajudam ferramentas estáticas a seguir contratos. Any suspende parte da verificação; object exige refinar o valor antes de operações específicas. Tipagem não elimina validação na entrada de dados externos.",
-            "Um tipo genérico expressa relações, como receber T e devolver T. Evite anotações muito amplas que apagam a relação entre entrada e saída. Use um verificador estático e trate avisos como evidência a investigar, sem supor que um programa tipado está livre de erros lógicos."
+            "Um tipo genérico expressa relações, como receber T e devolver T. Evite anotações muito amplas que apagam a relação entre entrada e saída. Use um verificador estático e trate avisos como evidência a investigar, sem supor que um programa tipado está livre de erros lógicos.",
+            "As anotações não impõem tipos durante a execução comum do Python. Uma chamada com str onde se espera int pode continuar e produzir outro resultado, conforme os operadores do corpo. Isso não torna a chamada correta perante o contrato estático: execute também o verificador escolhido e valide entradas quando necessário."
           ]
         },
         {
           "title": "Testes e colaboradores",
           "text": [
             "Testes de unidade verificam regras isoladas; integração verifica fronteiras reais; ponta a ponta verifica um fluxo completo. Um mock deve substituir uma fronteira cara ou externa, não reproduzir a implementação que o teste pretende validar.",
-            "Use unittest e arquivos temporários da biblioteca padrão quando forem suficientes. Teste falha, ausência, duplicação e limites. Uma propriedade, como ordenar não mudar a multiconjuntidade dos dados, pode revelar casos que exemplos fixos não cobrem."
+            "Use unittest e arquivos temporários da biblioteca padrão quando forem suficientes. Teste falha, ausência, duplicação e limites. Uma propriedade, como ordenar não mudar a multiconjuntidade dos dados, pode revelar casos que exemplos fixos não cobrem.",
+            "Um teste deve detectar uma versão deliberadamente quebrada do comportamento. assertTrue(ValueError) só confere o valor lógico de um objeto; não chama a função nem exige uma exceção. Use assertRaises como contexto envolvendo a operação, ou forneça a função e seus argumentos na forma chamável. Um teste que confirma o retorno defeituoso pode fabricar uma aprovação."
           ]
         },
         {
           "title": "Desempenho com evidências",
           "text": [
             "timeit mede trechos curtos controlando repetições; cProfile ajuda a localizar onde o tempo é gasto e tracemalloc acompanha alocações Python. Meça depois de validar correção e mantenha carga e ambiente comparáveis.",
-            "Melhorar a complexidade pode valer mais que uma pequena alteração sintática. Um índice de pertencimento em set pode evitar buscas repetidas em lista. Porém o índice usa memória e tem custo de construção; meça o padrão de uso real."
+            "Melhorar a complexidade pode valer mais que uma pequena alteração sintática. Um índice de pertencimento em set pode evitar buscas repetidas em lista. Porém o índice usa memória e tem custo de construção; meça o padrão de uso real.",
+            "Para remover repetições preservando a primeira ocorrência, combine um set de valores vistos com uma lista de resultado. O índice responde ao pertencimento e a lista conserva a ordem; sorted(set(...)) atende outro contrato. Testar a ordem e preservar a entrada verifica correção, sem comprovar tempo ou memória. Pertencimento em set costuma ter custo médio constante, sujeito ao custo de hash e igualdade."
           ]
         },
         {
@@ -1089,7 +1092,7 @@ export default {
         "O teste vazio verifica a identidade da transformação e o outro verifica ordem e duplicação."
       ],
       "exercise": "Crie uma função media que recebe uma sequência não vazia de números, rejeita sequência vazia com ValueError e tem testes para um valor, vários valores e valores negativos. Defina como seu contrato trata valores não finitos.",
-      "solution": "import math\nimport unittest\n\ndef media(valores):\n    dados = list(valores)\n    if not dados or any(not math.isfinite(x) for x in dados):\n        raise ValueError(\"esperados números finitos em coleção não vazia\")\n    return math.fsum(dados) / len(dados)\n\nclass TestMedia(unittest.TestCase):\n    def test_resultados(self):\n        self.assertEqual(media([4]), 4)\n        self.assertAlmostEqual(media([-2, 4]), 1)\n    def test_vazia(self):\n        with self.assertRaises(ValueError):\n            media([])",
+      "solution": "import math\nimport unittest\n\ndef media(valores):\n    dados = list(valores)\n    if not dados or any(not math.isfinite(x) for x in dados):\n        raise ValueError(\"esperados números finitos em coleção não vazia\")\n    return math.fsum(dados) / len(dados)\n\nclass TestMedia(unittest.TestCase):\n    def test_resultados(self):\n        self.assertEqual(media([4]), 4)\n        self.assertAlmostEqual(media([-2, 4]), 1)\n    def test_vazia(self):\n        with self.assertRaises(ValueError):\n            media([])\n    def test_iteravel(self):\n        self.assertEqual(media(iter([0, 2])), 1)\n    def test_nao_finitos(self):\n        for valor in [math.nan, math.inf, -math.inf]:\n            with self.subTest(valor=valor):\n                with self.assertRaises(ValueError):\n                    media([valor])\n\nif __name__ == \"__main__\":\n    unittest.main()",
       "bug": "Um teste que chama a mesma função para calcular resultado real e esperado pode confirmar qualquer defeito da implementação. O oráculo deve vir de uma regra independente.",
       "bugCode": "resultado = media([2, 4])\nesperado = media([2, 4])\nassert resultado == esperado",
       "repair": "Use um resultado conhecido, 3, e casos de borda definidos pelo contrato. Para números de ponto flutuante, compare com uma tolerância adequada quando a operação não produz um valor exato.",

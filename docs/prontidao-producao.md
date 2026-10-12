@@ -1,5 +1,10 @@
 # Prontidão de produção
 
+## Números Python publicados em 12 de outubro
+
+A PR #40 está publicada após CI 38259821060: 706 testes unitários, 151 fluxos (75/76), 169 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge be777ce404aaa9257eed502d4fa1e0da491f5f66, árvore 94ab7f69ccf88425ca94d0658ae9f6a9ac2d34a5 igual ao head fe30a994bd99bd7cbeda4f06d65ecaeb1e781981. Deployment dpl_5fxMM1Q7tCi8cSn7gRCUUXWPeRp2 READY/production com gitSource.sha e alias confirmados. Dois fluxos públicos Edge passaram em 1,6 min: números Python e sessão diária. Cobertura publicada: 91 pausas em 57/137 aulas; 80 ainda sem pausas deste catálogo. As seções seguintes preservam checkpoints e contagens da época.
+
+
 ## Publicação conferida em 12 de outubro
 
 Valores (#37) e decisões (#38) foram integrados com árvores iguais aos heads aprovados. Valores: CI 38174480235, 671 testes unitários e 148 fluxos de navegador; merge deb99ffae40fcc74c47a2886765735fd1527c927; árvore a787c859ca40cf5320e12d62b286db4594d79ff1; deployment dpl_FxFRYoSCcEFJJwNsta8eJovr5vof READY/production com esse SHA, dois fluxos públicos aprovados em 1 min. Decisões: CI 38175247548, 684 unidades e 149 fluxos; merge 8ae9ebe535e045e0e39c975e861decad540cb70b; árvore ede2d2533d25d8b2149f80cc794f70e3c329509e; deployment dpl_2XYB6FRC693e4ThYsgC4D7XfXVdX READY/production com esse SHA, dois fluxos públicos aprovados em 2,5 min. Revisões resolvidas, incluindo a navegação da preparação para a leitura de valores sem substituir o percurso de 25 passos.
@@ -222,3 +227,8 @@ A PR #39 passou no CI 38255384773 com 690 testes unitários, 150 fluxos de naveg
 ## Sessão diária conferida no domínio
 
 O deployment dpl_8D5VkrUT9FwGehVs1WSFhVrjb26G ficou READY/production com gitSource.sha 20dd5898765cb5b7a34230fd300e43d130fb915a confirmado. Dois fluxos públicos Edge passaram em 1,8 min: progressão nova, plano anterior offline, preparação de valores na leitura e retorno pelo catálogo, sem substituir os 25 passos. Isso conclui a publicação de #39, mantendo as contagens de atividades. A prática Python #40 aguarda os dois jobs de navegador; 706 testes unitários e 169 exemplos externos passaram no CI 38259821060. Esses resultados não dispensam seus gates finais.
+
+
+## Números Python integrados, domínio pendente
+
+A PR #40 passou no CI 38259821060 com 706 unidades, 151 fluxos em parcelas de 75/76 e 169 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge be777ce404aaa9257eed502d4fa1e0da491f5f66, árvore 94ab7f69ccf88425ca94d0658ae9f6a9ac2d34a5 igual ao head fe30a994bd99bd7cbeda4f06d65ecaeb1e781981. Não declarar publicação até conferir deployment/SHA e os dois fluxos públicos. A PR #41 mantém head 8501af3431f5736aa9d101b7620b4b8ff0681bb2; seu CI 38262798743 está em andamento, sem usar os gates de #40 como substitutos.

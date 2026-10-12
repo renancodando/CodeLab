@@ -12,6 +12,77 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
 {
+  "id": "py-prever-anotacao",
+  "language": "python",
+  "lessonIds": [
+    "py-engenharia"
+  ],
+  "skillIds": [
+    "python.engenharia.tipos-runtime"
+  ],
+  "afterBlock": 3,
+  "kind": "predict",
+  "capability": "leitura",
+  "requiresConcept": true,
+  "title": "A anotação bloqueia a entrada textual?",
+  "prompt": "Preveja as duas linhas ao executar com Python comum, sem verificador estático nem biblioteca de validação. A segunda chamada viola a anotação; a pergunta é sobre o comportamento em execução. Esta pausa compara a previsão, sem executar sua resposta.",
+  "code": "def dobrar(valor: int) -> int:\n    return valor * 2\n\nprint(dobrar(3))\nprint(dobrar(\"3\"))",
+  "hint": "Anotar um parâmetro não acrescenta uma conversão nem uma verificação ao corpo. Investigue o significado de * para cada valor recebido.",
+  "minutes": 3
+},
+{
+  "id": "py-testar-excecao-vazia",
+  "language": "python",
+  "lessonIds": [
+    "py-engenharia"
+  ],
+  "skillIds": [
+    "python.engenharia.testes"
+  ],
+  "afterBlock": 4,
+  "kind": "choice",
+  "capability": "depuracao",
+  "requiresConcept": true,
+  "title": "O teste passou sem chamar a função quebrada",
+  "prompt": "media deveria lançar ValueError para lista vazia, mas retorna zero. O teste imprime 1 True e não detecta o defeito. Escolha o corpo de test_vazia que deve falhar enquanto media estiver quebrada e passar quando ela rejeitar a lista vazia. Preserve a função para provar que o teste a detecta. A decisão é conceitual; não executa Python do aluno.",
+  "code": "import unittest\n\ndef media(valores):\n    return 0\n\nclass TestMedia(unittest.TestCase):\n    def test_vazia(self):\n        self.assertTrue(ValueError)\n\nresultado = unittest.TestResult()\nunittest.defaultTestLoader.loadTestsFromTestCase(TestMedia).run(resultado)\nprint(resultado.testsRun, resultado.wasSuccessful())",
+  "options": [
+    {
+      "id": "contexto",
+      "text": "with self.assertRaises(ValueError):\n    media([])"
+    },
+    {
+      "id": "sem-chamada",
+      "text": "self.assertRaises(ValueError)"
+    },
+    {
+      "id": "confirma-bug",
+      "text": "self.assertEqual(media([]), 0)"
+    }
+  ],
+  "hint": "O teste precisa executar a operação e exigir a exceção. Criar um contexto sem usá-lo não verifica nada; afirmar o retorno incorreto transforma o defeito em expectativa.",
+  "minutes": 5
+},
+{
+  "id": "py-preservar-primeira-ordem",
+  "language": "python",
+  "lessonIds": [
+    "py-engenharia"
+  ],
+  "skillIds": [
+    "python.engenharia.indice"
+  ],
+  "afterBlock": 5,
+  "kind": "fill",
+  "capability": "alteracao",
+  "requiresConcept": true,
+  "title": "Remover repetições sem reordenar o relatório",
+  "prompt": "Complete a condição usando valor e vistos: cada string deve entrar apenas na primeira ocorrência. Preserve a ordem, a entrada e a lista de saída; não use sorted nem altere o restante. Escreva a condição, sem if ou dois-pontos. O set serve como índice de pertencimento; esta avaliação é conceitual e não mede performance.",
+  "code": "def unicos(valores):\n    vistos = set()\n    resultado = []\n    for valor in valores:\n        if ____:\n            vistos.add(valor)\n            resultado.append(valor)\n    return resultado\n\nprint(unicos([\"b\", \"a\", \"b\"]))",
+  "hint": "A lista conserva a ordem de chegada; o conjunto registra quem já entrou. Só acrescente à saída quando o índice ainda não contiver o valor.",
+  "minutes": 4
+},
+{
   "id": "py-prever-corrotina",
   "language": "python",
   "lessonIds": [
