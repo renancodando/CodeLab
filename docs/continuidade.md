@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Coleções C# publicadas em 12 de outubro
+
+A PR #44 foi integrada em ce8e91de8fa45a8609c64c64f3f0ec227beca36b, árvore 85897ca26f026c82e9ff31df3feb79eb8d264c1b idêntica ao head 6952e24ccd1478848e9200b171ce99b345c52382. CI 38299162632: 798 testes unitários em 53 arquivos, 155 testes de navegador (70/39/46), 194 exemplos externos e dez cenários LINQ .NET adicionais aprovados, além de compiladores, PostgreSQL, API/cache e auditoria. A revisão de entrada não nula foi resolvida; o corretor aceita o tipo explícito compatível sem executar C# do aluno.
+
+Deployment dpl_76EkVrSkEV3TTxqhr812ESJyaNvp READY/production, gitSource.sha e alias conferidos. Dois fluxos públicos Edge passaram em 1,4 min: C# LINQ e funções, com forma genérica explícita, offline e persistência. O build local do mesmo conteúdo passou: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 211,01 kB gzip e mundo 135,94 kB gzip. O fluxo C# final local passou em 51,4 s; main local foi avançada por fast-forward, sem alterações pendentes naquele checkpoint. Contagens correntes vêm de metricas-catalogo.md; os parágrafos seguintes preservam as validações e contagens de suas etapas.
+
+O CI pós-merge atual 38302219911 passou integralmente. O anterior 38299927723 falhou no teste HTML: o trace registrou corpo vazio e o diagnóstico ocultou o erro original ao esgotar o prazo. A falha anterior permanece registrada; a aprovação do pós-merge atual não apaga a reprodução intermitente. A reprodução no domínio motivou a correção da substituição da prévia descrita em continuidade.md; o isolamento permanece obrigatório.
+
 ## C#: igualdade, agrupamento e cópia em preparação
 
 O CI 38289894018 registrou 153 testes de navegador aprovados, mas foi cancelado pelo prazo global de 35 min em uma parcela. Não é aprovação do CI. A correção isolada divide a mesma suíte em três parcelas, preserva limites e foi incorporada nesta branch a partir de #43. A descoberta local conferiu 155 testes em 70/39/46, sem omissões ou duplicações. A revisão seguinte corrigiu condições Python equivalentes recusadas pelo corretor. Os heads/runs atuais são #42 d396b07 / 38296263616 e #43 78450b4 / 38296297327; os anteriores foram substituídos e não autorizam integração. Esta branch incorpora #43 sem alterar a árvore já compilada. Exigir os gates completos dos heads atuais antes de integrar.

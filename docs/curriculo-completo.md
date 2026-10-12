@@ -160,7 +160,7 @@ Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-obje
 - Conteúdo: concorrência versus paralelismo; async await corrotinas; TaskGroup cancelamento; timeouts semáforos filas; threads locks; ProcessPoolExecutor; GIL builds free-threaded; backpressure; falhas e recursos.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
 
-- Pausas em preparação: previsão de início de corrotina, diagnóstico de propagação de cancelamento e alteração de envio para fila limitada. Referências executadas com Python real; respostas do aluno são conceituais, sem comprovação de compilação/execução ou conclusão do tema.
+- Pausas publicadas: previsão de início de corrotina, diagnóstico de propagação de cancelamento e alteração de envio para fila limitada. Referências executadas com Python real; respostas do aluno são conceituais, sem comprovação de compilação/execução ou conclusão do tema.
 
 #### Python: tipagem, testes, pacotes e desempenho
 
@@ -169,7 +169,7 @@ Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-obje
 - Conteúdo: módulos imports __main__; venv pip pyproject.toml; typing Protocol Generic; testes unittest mocks; propriedades casos de borda; profiling timeit tracemalloc; algoritmos complexidade; distribuição wheels; documentação e evolução.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
 
-- Pausas em preparação: anotações versus runtime, teste que detecta uma implementação quebrada e índice de pertencimento com ordem estável. Referências executadas com Python real; respostas conceituais sem verificador estático, execução do aluno ou medição de performance. A solução media agora executa seus testes unittest, incluindo iterável e não finitos.
+- Pausas publicadas: anotações versus runtime, teste que detecta uma implementação quebrada e índice de pertencimento com ordem estável. Referências executadas com Python real; respostas conceituais sem verificador estático, execução do aluno ou medição de performance. A solução media agora executa seus testes unittest, incluindo iterável e não finitos.
 
 ### TypeScript · do zero ao avançado
 
@@ -431,7 +431,7 @@ Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-obje
 - Conteúdo: List Dictionary HashSet; generic constraints variance; IEnumerable IEnumerator; LINQ Where Select OrderBy GroupBy; deferred execution materialization; First Single Any; IQueryable providers; complexity multiple enumeration.
 - Entrega: teoria, exemplo, erro, exercício, solução e projeto do módulo.
 
-- Pausas em preparação: igualdade em conjunto, agrupamento sem perda e cópia de arrays internos. Gabaritos compilados/executados em .NET 10; respostas do aluno são conceituais e não comprovam execução, performance ou provedor remoto.
+- Pausas publicadas: igualdade em conjunto, agrupamento sem perda e cópia de arrays internos. Gabaritos compilados/executados em .NET 10; respostas do aluno são conceituais e não comprovam execução, performance ou provedor remoto.
 
 #### C#: objetos, interfaces, records e padrões
 
