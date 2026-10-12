@@ -171,6 +171,8 @@ Referências: [Object.hasOwn](https://tc39.es/ecma262/multipage/fundamental-obje
 
 ### TypeScript · do zero ao avançado
 
+- Pausas em preparação: anotações versus runtime, teste que detecta uma implementação quebrada e índice de pertencimento com ordem estável. Referências executadas com Python real; respostas conceituais sem verificador estático, execução do aluno ou medição de performance. A solução media agora executa seus testes unittest, incluindo iterável e não finitos.
+
 #### TypeScript: tipos, inferência e execução
 
 - Nível: Fundamentos.
