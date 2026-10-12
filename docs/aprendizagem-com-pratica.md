@@ -1,5 +1,16 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Python: corrotinas, cancelamento e filas em preparação
+
+py-concorrencia conserva suas seis seções, exemplo TaskGroup/Semaphore, exercício mapear_limitado e projeto de coletor. Três pausas após os blocos 2/3/4 distinguem criação de corrotina e execução; diagnosticam CancelledError transformado em sucesso; completam envio que aguarda vaga em uma Queue limitada. A teoria separa limpeza, propagação, operações ativas e trabalho pendente. Ler não gera domínio; abrir solução é assistência. As respostas continuam conceituais e offline, sem executor Python do aluno.
+
+Passaram 35 testes específicos e dez programas com Python 3.14.6: oito cenários novos, o exemplo preservado e a solução anterior com lista vazia, zero/negativos/repetições e limite inválido. Os cenários usam Events, capacidade da fila e passagens explícitas pelo loop; não usam rede ou atrasos positivos estimados. Conferem o defeito original, propagação e limpeza, pass que suprime cancelamento, QueueFull sem espera, produtor cancelado sem perda do item anterior e falha TaskGroup que cancela a irmã e conclui sua limpeza. Nenhum build free-threaded, paralelismo com processos ou medição de performance foi comprovado por esses casos.
+
+O primeiro verificador local expirou antes de imprimir o primeiro resultado; uma importação isolada de asyncio confirmou inicialização lenta e concluiu. Repetição após isso passou nos dez programas, conservando o limite de 10 s por programa. Não se aumentaram limites de execução do produto ou testes para obter aprovação. Exigir strict/build, navegador, CI e integração após #40. Branch: 94 pausas em 58/137 aulas, 79 sem pausas; produção conferida permanece 88/56/81.
+
+Referências oficiais: [corrotinas e tarefas](https://docs.python.org/3/library/asyncio-task.html), [cancelamento](https://docs.python.org/3/library/asyncio-task.html#task-cancellation) e [filas assíncronas](https://docs.python.org/3/library/asyncio-queue.html). As APIs usadas existem desde Python 3.11 ou antes; a documentação atual também descreve recursos posteriores que não foram introduzidos nesta etapa.
+
+
 ## Python: divisão, conservação e entrada ASCII em preparação
 
 A aula py-numeros-texto mantém suas seis seções, exemplos, exercício de rateio e dois problemas independentes. Recebe três pausas após os blocos 2/3/5: prever piso e resto com dividendo negativo; diagnosticar perda de centavos sem trocar distribuição justa por simples conservação da soma; completar a fronteira de dígitos ASCII antes de converter. A teoria prepara as invariantes e distingue isdigit de um contrato restrito. A preparação diária é obrigatória; leitura não gera domínio, solução é assistência e respostas permanecem locais.
@@ -237,3 +248,9 @@ A progressão diária passou em 42 testes específicos, strict/build e dois flux
 ## Validação da prática Python
 
 Passaram 35 testes específicos de Python/descritores/progressão diária, TypeScript strict e build: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 205,32 kB gzip e mundo 135,94 kB gzip. O lote unitário local completo apresentou falhas de tempo em exemplos TypeScript, no caso de memória do executor e no teste de métricas durante execução simultânea com o build; foi interrompido e não é aprovação da suíte completa. Os 35 específicos foram repetidos separadamente e passaram em 9,42 s, sem mudar limites. A suíte completa continua exigida no CI do novo head. Os oito cenários novos e quatro programas anteriores passaram no Python 3.14.6. Dois fluxos Edge passaram em 1,8 min: prática Python e regressão da sessão diária, com assistência, persistência, offline e 220/4000 px. CI completo ainda pendente. Branch: 91 pausas em 57/137 aulas; 80 sem pausas. Produção conferida continua em 88/56/81 até integração própria.
+
+
+Nos cenários de cancelamento, Event sinaliza início e passagem pela limpeza; não representa fechamento real de arquivo, socket ou recurso externo. TaskGroup e Queue são APIs reais executadas em Python, sem simulação do loop. A confirmação do marcador prova o fluxo de finally, não uma integração externa.
+
+
+Concorrência passou em TypeScript strict e build: 157 páginas, 35 recursos essenciais, cinco opcionais, inicial 206,54 kB gzip e mundo 135,94 kB gzip. Dois fluxos Edge passaram em 1,8 min: concorrência e regressão de números, com erros/acertos, assistência, progresso salvo, recarga offline e 220/4000 px. Exigir CI completo e publicação próprios após #40. Não houve runtime novo, permissão de rede do aluno ou mudança visual.
