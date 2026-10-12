@@ -509,7 +509,7 @@ Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de exp
 
 - Aula: `#/aula/py-numeros-texto`; nível Fundamentos; 17 capítulos.
 - Mecanismos: int e limites de representação; divisão real e divisão pelo piso; resto e distribuição de unidades; float e erro de representação; Decimal construído de texto; str e pontos de código Unicode; normalização NFC; conversão integral estrita.
-- Atividades: Problema 1: quantidade recebida como texto (`quantidade`); Problema 2: comparar nomes canonicamente equivalentes (`unicode`).
+- Atividades: previsão de piso/resto, diagnóstico de conservação/distribuição e alteração da validação ASCII (conceituais e offline; referências executadas com Python real). Problema 1: quantidade recebida como texto (`quantidade`); Problema 2: comparar nomes canonicamente equivalentes (`unicode`). Problemas abertos continuam com revisão por critérios, sem correção automática do código do aluno.
 - Referência principal: [docs.python.org/3/library/stdtypes.html](https://docs.python.org/3/library/stdtypes.html).
 
 #### Python: decisões, laços e prova de término

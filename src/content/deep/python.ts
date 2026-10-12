@@ -120,14 +120,16 @@ export default {
           "title": "Divisão, piso e resto têm contratos diferentes",
           "text": [
             "O operador / produz divisão real; mesmo 6 / 3 resulta em float. O operador // calcula o piso do quociente, arredondando para menos infinito, e % fornece um resto consistente com a identidade a == (a // b) * b + a % b. Para divisor positivo, o resto é não negativo. Assim, -7 // 3 é -3 e -7 % 3 é 2. Essa regra difere de truncar em direção a zero e importa ao portar algoritmos de outras linguagens.",
-            "Use divmod(total, pessoas) para obter simultaneamente a cota inteira e as unidades restantes. Se repartir 10 unidades entre 3 pessoas, cada uma recebe inicialmente 3 e sobra 1; a primeira recebe uma unidade adicional. Exija total não negativo e quantidade de pessoas positiva antes da divisão. Um divisor zero é uma entrada inválida do domínio, e não uma situação para esconder devolvendo zero."
+            "Use divmod(total, pessoas) para obter simultaneamente a cota inteira e as unidades restantes. Se repartir 10 unidades entre 3 pessoas, cada uma recebe inicialmente 3 e sobra 1; a primeira recebe uma unidade adicional. Exija total não negativo e quantidade de pessoas positiva antes da divisão. Um divisor zero é uma entrada inválida do domínio, e não uma situação para esconder devolvendo zero.",
+          "Para rastrear divmod, comece pelo quociente inteiro e reconstrua o dividendo. Com divisor positivo, 0 <= resto < divisor; usar int(a / b) pode produzir outro quociente quando a é negativo. O rateio desta aula tem total não negativo, mas essa identidade explica o operador em um domínio maior."
           ]
         },
         {
           "title": "Aproximação não desaparece na formatação",
           "text": [
             "O float representa números em base binária com precisão finita. Algumas frações decimais, como 0.1, precisam de expansão infinita nessa base. Por isso 0.1 + 0.2 pode não ser exatamente 0.3. Imprimir com duas casas altera a apresentação, sem substituir o valor armazenado por uma representação decimal exata. Evite explicar esse comportamento como um defeito da soma ou recomendar uma tolerância arbitrária para qualquer contexto.",
-            "Para medidas aproximadas, math.isclose permite definir tolerância relativa e absoluta conforme o problema. Perto de zero, uma tolerância absoluta pode ser necessária. Para valores decimais de entrada, Decimal('0.10') começa com o decimal pretendido; Decimal(0.1) começa com a aproximação do float. Decimal também tem contexto de precisão e operações que arredondam. Valores monetários exigem ainda uma política explícita para o ponto e o modo de arredondamento."
+            "Para medidas aproximadas, math.isclose permite definir tolerância relativa e absoluta conforme o problema. Perto de zero, uma tolerância absoluta pode ser necessária. Para valores decimais de entrada, Decimal('0.10') começa com o decimal pretendido; Decimal(0.1) começa com a aproximação do float. Decimal também tem contexto de precisão e operações que arredondam. Valores monetários exigem ainda uma política explícita para o ponto e o modo de arredondamento.",
+          "No rateio de unidades inteiras, confira duas invariantes juntas: a soma das parcelas é o total e a diferença entre maior e menor é no máximo 1. Entregar todo o resto à última pessoa pode conservar a soma e ainda violar a distribuição; divmod permite acrescentar uma unidade às primeiras parcelas, sem float."
           ]
         },
         {
@@ -141,7 +143,8 @@ export default {
           "title": "Converter também é validar uma fronteira",
           "text": [
             "Uma entrada de arquivo ou formulário chega como texto. int('12') converte o conteúdo para um inteiro, mas int('12.5') lança ValueError. O conversor admite formas que seu domínio talvez não queira aceitar, como espaços e certos dígitos Unicode. Para um campo de quantidade decimal sem sinal, verifique explicitamente que ele contém pelo menos um caractere e que todos estão entre '0' e '9', depois converta. Não use uma comparação de string para decidir se a quantidade excede dez.",
-            "Separar validação sintática e semântica facilita mensagens de erro. Primeiro verifique a gramática do campo; depois a faixa permitida, como 0 até 500. Um texto pode ser um inteiro válido e ainda ser uma quantidade proibida. Também limite o tamanho do campo quando os dados vierem de fora: a capacidade de int representar magnitudes grandes não exige aceitar um número com milhões de dígitos."
+            "Separar validação sintática e semântica facilita mensagens de erro. Primeiro verifique a gramática do campo; depois a faixa permitida, como 0 até 500. Um texto pode ser um inteiro válido e ainda ser uma quantidade proibida. Também limite o tamanho do campo quando os dados vierem de fora: a capacidade de int representar magnitudes grandes não exige aceitar um número com milhões de dígitos.",
+          "isdigit() reconhece também dígitos fora de ASCII. Para um protocolo que exige apenas 0 a 9, a comparação encadeada \"0\" <= caractere <= \"9\" verifica cada caractere. Faça essa verificação depois do limite de comprimento e antes de int; o limite 500 continua sendo uma regra numérica separada."
           ]
         },
         {
