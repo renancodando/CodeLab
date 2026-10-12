@@ -32,5 +32,7 @@ print("primeira ocorrência, entrada e chamadas independentes")
   {id:'py-engenharia-ordem-estavel',key:'python',source:correto+conferir,expected:["['b', 'a']",'primeira ocorrência, entrada e chamadas independentes']},
   {id:'py-engenharia-negacao-equivalente',key:'python',source:unicos.replace('____','not (valor in vistos)')+conferir,expected:["['b', 'a']",'primeira ocorrência, entrada e chamadas independentes']},
   {id:'py-engenharia-condicao-invertida',key:'python',source:unicos.replace('____','valor in vistos')+'\nassert unicos(["b", "a", "b"]) == []',expected:['[]']}
+,
+  ...["not valor in vistos","valor  not  in  vistos","valor not in (vistos)","(valor) not in ((vistos))","not ((valor) in (vistos))","((valor not in vistos))","not not not valor in vistos","not(valor) in vistos"].map((condicao,indice)=>({id:'py-engenharia-condicao-equivalente-'+indice,key:'python',source:unicos.replace('____',condicao)+conferir,expected:["['b', 'a']",'primeira ocorrência, entrada e chamadas independentes']}))
  ].map(caso=>{assert(!caso.source.includes('____'),caso.id);return caso;});
 }
