@@ -1,5 +1,16 @@
 # Aprendizagem com prática, revisão e projetos
 
+## C#: igualdade, agrupamento e cópia em preparação
+
+cs-colecoes-linq conserva as seis seções, exemplo de consulta/snapshot, exercício Agrupar e projeto de relatório. Recebe três pausas após os blocos 1/3/4: prever a política de HashSet, diagnosticar chaves repetidas sem perder palavras e separar a cópia dos arrays internos. A teoria prepara comparação, ordem dentro de cada grupo local, listas independentes e o limite da materialização superficial. Não extrapola LINQ local para provedores remotos ou clonagem arbitrária.
+
+Passaram 44 testes específicos e 11 programas compilados/executados com SDK .NET 10.0.401: nove cenários novos e o exemplo/solução preservados. Os casos diferenciam as políticas de igualdade, ArgumentException por chave repetida, GroupBy com ordem/repetição/vazio, deduplicação que perde palavras, lista compartilhada, cópia superficial e interna, linhas irregulares/aliased e chamadas independentes. O verificador de conteúdo recebe os nove cenários, sem pacotes externos; o exemplo também ganha saída esperada explícita. Isso não mede performance e não executa C# do aluno: as pausas são conceituais, offline, com leitura sem domínio e solução como assistência.
+
+Branch: 103 pausas em 61/137 aulas, 76 sem pausas. Strict/build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 210,64 kB gzip e mundo 135,94 kB gzip. Dois fluxos Edge locais passaram em 1,3 min: LINQ e funções, com erro/acerto, assistência, persistência, offline e 220–4000 px. CI e publicação próprios permanecem pendentes. Depende da etapa de funções #43; publicação confirmada permanece 94/58/79 após #41 enquanto #42 termina seus gates.
+
+Referências oficiais: [HashSet](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1.-ctor?view=net-10.0), [GroupBy](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.groupby?view=net-10.0) e [ToArray](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.toarray?view=net-10.0). Não encerra coleções, generics, LINQ ou C#.
+
+
 ## Funções: parâmetros, composição e retorno em preparação
 
 A aula original funcoes mantém os 12 capítulos, exemplo de desconto, exercício de conversão e projeto de biblioteca. Três pausas após os blocos 3/5/7 trabalham o parâmetro numérico separado do nome externo, a correção executada de uma função que mostra sem devolver e a quebra de linha logo após return. A teoria prepara zero, frações, composição, independência e retorno sem expressão. Não tenta ensinar mutação de objetos como se todo argumento fosse um número.

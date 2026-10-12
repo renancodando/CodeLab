@@ -1,5 +1,18 @@
 # Continuidade do CODELAB
 
+## C#: igualdade, agrupamento e cópia em preparação
+
+O CI 38289894018 registrou 153 testes de navegador aprovados, mas foi cancelado pelo prazo global de 35 min em uma parcela. Não é aprovação do CI. A correção isolada divide a mesma suíte em três parcelas, preserva limites e foi incorporada nesta branch a partir de #43. A descoberta local conferiu 155 testes em 70/39/46, sem omissões ou duplicações. Novos heads/runs: #42 9ede9c3 / 38294455830; #43 a36eb2d / 38294468894. Exigir esses gates antes de integrar.
+
+cs-colecoes-linq conserva as seis seções, exemplo de consulta/snapshot, exercício Agrupar e projeto de relatório. Recebe três pausas após os blocos 1/3/4: prever a política de HashSet, diagnosticar chaves repetidas sem perder palavras e separar a cópia dos arrays internos. A teoria prepara comparação, ordem dentro de cada grupo local, listas independentes e o limite da materialização superficial. Não extrapola LINQ local para provedores remotos ou clonagem arbitrária.
+
+Passaram 44 testes específicos e 11 programas compilados/executados com SDK .NET 10.0.401: nove cenários novos e o exemplo/solução preservados. Os casos diferenciam as políticas de igualdade, ArgumentException por chave repetida, GroupBy com ordem/repetição/vazio, deduplicação que perde palavras, lista compartilhada, cópia superficial e interna, linhas irregulares/aliased e chamadas independentes. O verificador de conteúdo recebe os nove cenários, sem pacotes externos; o exemplo também ganha saída esperada explícita. Isso não mede performance e não executa C# do aluno: as pausas são conceituais, offline, com leitura sem domínio e solução como assistência.
+
+Branch: 103 pausas em 61/137 aulas, 76 sem pausas. Strict/build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 210,64 kB gzip e mundo 135,94 kB gzip. Dois fluxos Edge locais passaram em 1,3 min: LINQ e funções, com erro/acerto, assistência, persistência, offline e 220–4000 px. CI e publicação próprios permanecem pendentes. Depende da etapa de funções #43; publicação confirmada permanece 94/58/79 após #41 enquanto #42 termina seus gates.
+
+Referências oficiais: [HashSet](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1.-ctor?view=net-10.0), [GroupBy](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.groupby?view=net-10.0) e [ToArray](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.toarray?view=net-10.0). Não encerra coleções, generics, LINQ ou C#.
+
+
 ## Concorrência Python publicada em 12 de outubro
 
 A PR #41 foi integrada em 030b48e54488d8e1db0342ccb8e73b746754ad74, árvore be1d14327dd06b3a18126def7ef4ca23d2ef01fc igual ao head 8501af3431f5736aa9d101b7620b4b8ff0681bb2. CI 38262798743: 719 testes unitários em 49 arquivos, 152 fluxos de navegador (76/76), 177 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria aprovados; sem revisões abertas. Deployment dpl_D57T4vf9jR1NiP9AgZYS4QFyTdD6 READY/production com gitSource.sha e alias conferidos. Dois fluxos públicos Edge passaram em 2,7 min: concorrência e números Python, com offline e progresso. Cobertura publicada: 94 pausas em 58/137 aulas, 79 ainda sem pausas deste catálogo. As seções anteriores no tempo conservam seus checkpoints.
