@@ -44,7 +44,7 @@ export const practiceActivities:PracticeActivity[]=[
  "capability": "depuracao",
  "requiresConcept": true,
  "title": "O relatório falhou na segunda palavra do mesmo tamanho",
- "prompt": "Agrupar deve conservar todas as palavras não nulas, repetições e ordem dentro de cada comprimento, com listas independentes entre grupos. A implementação lança ArgumentException para chaves repetidas. Qual corpo corrige o contrato, incluindo entrada vazia, sem descartar palavras? A decisão é conceitual, não executa C# do aluno.",
+ "prompt": "A entrada contém somente strings não nulas. Agrupar deve conservar todas as palavras, repetições e ordem dentro de cada comprimento, com listas independentes entre grupos. A implementação lança ArgumentException para chaves repetidas. Qual corpo corrige o contrato, incluindo entrada vazia, sem descartar palavras? A decisão é conceitual, não executa C# do aluno.",
  "code": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\nstatic Dictionary<int, List<string>> Agrupar(IEnumerable<string> palavras)\n{\n    return palavras.ToDictionary(palavra => palavra.Length, palavra => new List<string> { palavra });\n}\nvar grupos = Agrupar(new[] { \"a\", \"bb\", \"c\", \"bb\" });\nConsole.WriteLine(string.Join(\",\", grupos[1]));",
  "options": [
   {

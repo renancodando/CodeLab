@@ -267,7 +267,7 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
    passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
   }else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
-  else if(id==='cs-copiar-linhas-array')passed=typeof answer==='string'&&/^linha\s*\.\s*ToArray\s*\(\s*\)$/.test(normalized(answer));
+  else if(id==='cs-copiar-linhas-array')passed=typeof answer==='string'&&/^linha\s*\.\s*ToArray\s*(?:<\s*(?:int|System\s*\.\s*Int32)\s*>)?\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='py-esperar-vaga-fila')passed=typeof answer==='string'&&/^await[ \t]+fila[ \t]*\.[ \t]*put[ \t]*\([ \t]*item[ \t]*\)$/.test(normalized(answer));
   else if(id==='py-validar-digitos-ascii')passed=typeof answer==='string'&&/^(['"])0\1\s*<=\s*caractere\s*<=\s*(['"])9\2$/.test(normalized(answer));

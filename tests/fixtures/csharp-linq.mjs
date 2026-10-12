@@ -30,6 +30,7 @@ Console.WriteLine("grupos preservados");`,saida:['grupos preservados']},
   {id:'deduplicacao-perde-palavra',codigo:declaracao.replace(retorno,agrupamento.options.find(opcao=>opcao.id==='descartar').text)+'\nvar grupos = Agrupar(new[] { "a", "bb", "c", "bb" });\nConsole.WriteLine(string.Join(",", grupos[1]));\nConsole.WriteLine(grupos[2].Count);',saida:['a','1']},
   {id:'lista-reutilizada-mistura-grupos',codigo:declaracao.replace(retorno,agrupamento.options.find(opcao=>opcao.id==='reutilizar').text)+'\nvar grupos = Agrupar(new[] { "a", "bb", "c", "bb" });\nConsole.WriteLine(ReferenceEquals(grupos[1], grupos[2]));\nConsole.WriteLine(grupos[1].Count);',saida:['True','4']},
   {id:'copia-interna',codigo:preencher.code.replace('____',obterSolucao(preencher.id)),saida:['1','9']},
+  {id:'copia-tipo-explicito',codigo:preencher.code.replace('____','linha.ToArray<int>()'),saida:['1','9']},
   {id:'copia-apenas-externa',codigo:preencher.code.replace('____','linha'),saida:['9','9']},
   {id:'linhas-irregulares-e-alias',codigo:`
 static int[][] Copiar(int[][] origem) => origem.Select(linha => ${obterSolucao(preencher.id)}).ToArray();
