@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Primeiras aulas em validação local
+
+Branch pratica/fundamentos-ativos, dependente da correção SQL #46. A fila gerada em aulas-sem-pratica.md lê as definições reais e prioriza fundamentos comuns, aplicações por linguagem, consolidação e especialização. O build rejeita lista e métricas divergentes, vínculos inválidos e duplicação de ids. Contagens correntes ficam nas métricas; a lista descreve o checkout e não confirma publicação.
+
+programar, entrada-saida e passos preservam os 12 capítulos, exemplos e projetos de cada aula e recebem nove pausas após os blocos 3/6/8. Ordem, texto/identificador, custo fixo, zero, dependências e média são preparados na teoria. Total com frete e média têm quatro famílias executadas em QuickJS; decisões e reconstruções continuam conceituais. O corretor da média aceita diferenças de poucos arredondamentos binários dentro do contrato, sem aceitar arredondamento decimal, texto ou NaN. Referências e contraexemplos foram executados nos testes.
+
+Passaram 129 testes específicos em quatro arquivos; o teste ampliado do gerador passou novamente, e 18 testes do catálogo confirmaram também que suas habilidades cabem nos limites de progresso/backup. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 216,41 kB gzip, mundo 135,93 kB gzip. Quatro fluxos Edge passaram em 45,6 s: as três aulas e regressão de funções, com erro/acerto, equivalência, reconstrução por teclado, assistência, revisão, persistência, offline e 220–4000 px. Axe não registrou violações no conteúdo da primeira aula após corrigir somente duas cores de números de capítulos. A tentativa anterior detectou contraste insuficiente e permanece registrada. CI, integração e produção deste grupo ainda são pendentes.
+
+Referências: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/const, https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/return e https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON.
+
 ## Escopo de conclusão definido em 12 de outubro
 
 A orientação humana atual fixa esta edição no catálogo existente: aprofundar e distribuir prática nas 137 aulas, nos seis percursos e nos oito projetos, sem aumentar o catálogo por quantidade. O trabalho começa pela integração das entregas pendentes, depois reduz as aulas sem pausas por prioridade pedagógica. Uma pausa não encerra uma aula nem uma linguagem. Leitura não gera domínio; assistência, evidência conceitual, execução real e revisão continuam distintas.

@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Escopo e estado corrente
+
+Esta edição prioriza aprendizagem ativa nas aulas, percursos e projetos existentes. A [fila gerada](aulas-sem-pratica.md) ordena as aulas sem pausas, e as [métricas geradas](metricas-catalogo.md) mantêm as contagens. Uma pausa ou leitura não encerra o domínio; previsão, diagnóstico, produção, assistência e revisão precisam de evidência adequada. A confirmação de cada entrega está em [continuidade](continuidade.md). Os registros seguintes são históricos e conservam os números e gates de cada etapa.
+
 ## Coleções C# publicadas em 12 de outubro
 
 A PR #44 foi integrada em ce8e91de8fa45a8609c64c64f3f0ec227beca36b, árvore 85897ca26f026c82e9ff31df3feb79eb8d264c1b idêntica ao head 6952e24ccd1478848e9200b171ce99b345c52382. CI 38299162632: 798 testes unitários em 53 arquivos, 155 testes de navegador (70/39/46), 194 exemplos externos e dez cenários LINQ .NET adicionais aprovados, além de compiladores, PostgreSQL, API/cache e auditoria. A revisão de entrada não nula foi resolvida; o corretor aceita o tipo explícito compatível sem executar C# do aluno.

@@ -14,6 +14,13 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+"inicio-prever-ordem":{"accepted": ["Preparar\nTestar\nPreparar"], "failure": "O programa percorre todas as chamadas na ordem escrita, inclusive repetições. Não reorganize as saídas pela intenção.", "solution": "Preparar\nTestar\nPreparar"},
+"inicio-diagnosticar-texto":{"accepted": ["texto"], "failure": "Um nome sem definição não representa automaticamente o texto desejado. Confira também se as aspas foram fechadas.", "solution": "console.log(\"Café\");"},
+"inicio-reconstruir-roteiro":{"accepted": [], "order": ["abrir", "testar", "fechar"], "failure": "A sequência precisa produzir as três saídas na ordem pedida, sem remover nem repetir chamadas.", "solution": "console.log(\"Abrir\");\nconsole.log(\"Testar\");\nconsole.log(\"Fechar\");"},
+"entrada-prever-zero":{"accepted": ["0\n7"], "failure": "Quantidade zero zera o subtotal; a regra ainda acrescenta o frete fixo uma vez.", "solution": "0\n7"},
+"entrada-diagnosticar-unidade":{"accepted": ["separar"], "failure": "Quantidade multiplica o custo por unidade, mas não o custo fixo. Não some uma contagem de itens diretamente a um valor em centavos.", "solution": "quantidade * precoUnitario + frete"},
+"passos-prever-media":{"accepted": ["21\n7"], "failure": "Acompanhe soma e divisão separadamente; a terceira nota participa da soma e da quantidade.", "solution": "21\n7"},
+"passos-ordenar-dependencias":{"accepted": [], "order": ["entradas", "somar", "dividir", "mostrar"], "failure": "Uma linha lê nomes definidos por etapas anteriores. Nem código sintaticamente válido pode ler const antes da inicialização.", "solution": "const primeira = 7, segunda = 9, terceira = 5;\nconst soma = primeira + segunda + terceira;\nconst media = soma / 3;\nconsole.log(media);"},
  "cs-prever-igualdade-conjunto":{"accepted":["2\nTrue\nFalse"],"failure":"Compare a política do conjunto antes de contar as grafias. Contains e Add usam a mesma igualdade: uma grafia equivalente pode ser encontrada sem criar um elemento novo.","solution":"2\nTrue\nFalse"},
  "cs-agrupar-chaves-repetidas":{"accepted":["agrupar"],"failure":"Remover chaves repetidas não conserva todas as palavras. Reutilizar a mesma lista também faz um grupo receber conteúdo dos outros. Confira repetição, ordem e independência, além de evitar a exceção.","solution":"return palavras.GroupBy(palavra => palavra.Length)\n    .ToDictionary(grupo => grupo.Key, grupo => grupo.ToList());"},
  "cs-copiar-linhas-array":{"accepted":["linha.ToArray()"],"failure":"O array externo contém referências para as linhas. Devolver linha conserva esse compartilhamento, enquanto copiar apenas a origem também não separa os inteiros internos. A chamada solicitada precisa materializar cada linha.","solution":"linha.ToArray()"},
@@ -107,7 +114,21 @@ const concepts:Record<string,ConceptSpec>={
  'sql-ordenar-transacao':{accepted:[],order:['iniciar','debito','credito','confirmar'],failure:'A fronteira da transação precisa envolver as duas alterações e respeitar o cronograma solicitado.',solution:'BEGIN;\nUPDATE contas SET saldo = saldo - 10 WHERE id = 1;\nUPDATE contas SET saldo = saldo + 10 WHERE id = 2;\nCOMMIT;'}
 };
 const check=(label:string,expression:string,feedback:string):JSCheck=>({label,expression:'(()=>{try{return ('+expression+');}catch{return false;}})()',expected:true,feedback});
+const conferirMedias=(casos:string)=>'('+casos+').every(([a,b,c])=>{const obtido=mediaTres(a,b,c),esperado=(a+b+c)/3;return typeof obtido==="number"&&Number.isFinite(obtido)&&Math.abs(obtido-esperado)<=Number.EPSILON*4*Math.max(1,Math.abs(esperado));})';
 const javascript:Record<string,JSSpec>={
+ 'entrada-corrigir-total':{checks:[
+  check('Preço por unidade e frete fixo são combinados.', 'calcularTotal(3,1200,700)===4300 && calcularTotal(2,250,100)===600', 'Separe o subtotal por unidades do custo fixo. Um frete aplicado a cada item altera a regra.'),
+  check('Zero e os limites do contrato permanecem numéricos.', 'calcularTotal(0,1200,700)===700 && calcularTotal(4,0,700)===700 && calcularTotal(4,250,0)===1000 && calcularTotal(0,0,0)===0 && calcularTotal(100,100000,50000)===10050000', 'O caso comum funciona, mas zero ou uma fronteira ainda falha. Zero não deve ser substituído e a saída não deve ser texto.'),
+  check('Entradas variadas seguem a mesma transformação.', 'Array.from({length:101},(_,q)=>[q,(q*193)%100001,(q*71)%50001]).every(([q,p,f])=>calcularTotal(q,p,f)===q*p+f)', 'A regra precisa funcionar com outras quantidades, preços e fretes. Não fixe o exemplo nem descarte um dos parâmetros.'),
+  check('Uma chamada não modifica o cálculo da próxima.', '(()=>{const a=calcularTotal(2,500,30);calcularTotal(0,99,7);const b=calcularTotal(2,500,30);return a===1030 && b===1030 && calcularTotal(1,10,0)+calcularTotal(1,20,5)===35;})()', 'O resultado depende das entradas desta chamada, sem acumular totais entre pedidos.')
+ ],solution:'function calcularTotal(quantidade, precoUnitario, frete) { return quantidade * precoUnitario + frete; }'},
+ 'passos-corrigir-media':{checks:[
+  check('As três notas participam da média.', conferirMedias('[[7,9,5],[3,4,9]]'), 'A soma pode estar correta enquanto o divisor permanece ligado à versão com duas notas. Confira as duas etapas.'),
+  check('Zero, frações e fronteiras não são descartados.', conferirMedias('[[0,0,0],[0,0,9],[10,10,10],[2.5,5,7.5],[0,0,0.75]]'), 'O exemplo passou, mas um caso mínimo ou fracionário ainda falha. Não arredonde nem use zero como ausência.'),
+  check('Outras combinações conservam soma e quantidade.', conferirMedias('Array.from({length:41},(_,i)=>[i/4,(40-i)/4,(i%7)/2])'), 'O resultado precisa combinar as três entradas, sem depender da ordem ou das notas do exemplo.'),
+  check('Médias são utilizáveis e independentes entre chamadas.', '(()=>{const antes=mediaTres(1,2,3);mediaTres(10,10,10);return antes===2 && mediaTres(1,2,3)===2 && mediaTres(3,3,3)+mediaTres(6,6,6)===9;})()', 'Mostrar um número não o devolve; acumular estado de outra chamada também altera o contrato.')
+ ],solution:'function mediaTres(primeira, segunda, terceira) { const soma = primeira + segunda + terceira; return soma / 3; }'},
+
  'js-debug-conversao-retorno':{checks:[
   check("Conversões comuns devolvem números utilizáveis.","segundos(3)===180 && segundos(2)===120","O console pode mostrar o produto correto, mas confira o valor recebido pelo chamador. A função deve devolver um número utilizável."),
   check("Zero, frações e o limite do contrato são preservados.","segundos(0)===0 && segundos(0.5)===30 && segundos(1.25)===75 && segundos(59.5)===3570 && segundos(1440)===86400","O caso comum funciona, mas zero, frações ou o limite ainda falham. A conversão não deve arredondar minutos nem substituir zero por um padrão."),

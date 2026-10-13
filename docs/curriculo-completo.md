@@ -1,5 +1,13 @@
 # Currículo do zero à especialização
 
+## Escopo desta edição
+
+Concluir o catálogo existente por profundidade e prática, conforme a orientação de 12 de outubro. A [fila pedagógica gerada](aulas-sem-pratica.md) identifica as aulas ainda sem pausas; as [métricas geradas](metricas-catalogo.md) fornecem as contagens atuais. Os recortes abaixo registram aprofundamentos e seus limites, não conclusão das linguagens. O estado de integração e publicação é mantido em [continuidade](continuidade.md).
+
+## Fundamentos comuns em validação
+
+As aulas originais programar, entrada-saida e passos preservam seus capítulos, exemplos, projetos e exercícios. Recebem previsão, diagnóstico e reconstrução/alteração; total com frete e média de três notas têm correção executada em QuickJS com bordas e chamadas independentes. A teoria prepara os moldes de função sem antecipar toda a aula de funções. As decisões conceituais continuam distintas da execução e a solução continua sendo assistência. A lista de lacunas descreve o checkout; integração exige CI e produção próprios.
+
 ## Aprofundamento incremental: caixas CSS praticadas
 
 A aula css-caixas-intrinseco passa de explicações e problemas abertos para três pausas próprias com decisões corrigíveis. Os seis blocos e dois problemas continuam disponíveis. Cálculo da borda, encolhimento de conteúdo sem espaços e referência de sticky são habilidades distintas, preparadas pela teoria e conferidas com referências nativas. O exemplo de Flexbox usa ID como rótulo curto: palavras maiores também participam do mínimo automático e exigem decisão de layout. A expansão não cria uma aula nova nem conclui dimensões intrínsecas, CSS ou a distribuição integral da prática.
@@ -14,7 +22,7 @@ A aula existente `html-midia` passa a praticar três mecanismos diferentes: alte
 
 ## Aprofundamento incremental: NULL com contratos explícitos
 
-`sql-null-logica` aprofunda a diferença entre comparar, filtrar e restringir; três pausas novas preparam previsão, depuração e alteração. O exercício de exclusão exige decidir como tratar duas chaves ausentes sem convertê-las em zero. A pausa existente e os problemas independentes permanecem. Cenários externos PostgreSQL verificam os gabaritos e reproduzem falhas, com conjuntos vazios, duplicatas e violações específicas. A entrega está sujeita ao CI próprio; decisões conceituais do aluno não são execução SQL. Transações concorrentes, deadlocks, Serializable, administração, laboratório local e distribuição da interatividade continuam abertos. Métricas atuais são geradas em [metricas-catalogo.md](metricas-catalogo.md).
+`sql-null-logica` aprofunda a diferença entre comparar, filtrar e restringir; três pausas novas preparam previsão, depuração e alteração. O exercício de exclusão exige decidir como tratar duas chaves ausentes sem convertê-las em zero. A pausa existente e os problemas independentes permanecem. Cenários externos PostgreSQL verificam os gabaritos e reproduzem falhas, com conjuntos vazios, duplicatas e violações específicas. A entrega está sujeita ao CI próprio; decisões conceituais do aluno não são execução SQL. Transações concorrentes, deadlocks, Serializable, administração e distribuição da correção executada continuam abertos. O laboratório SQLite local foi entregue; recursos PostgreSQL exigem seu próprio mecanismo. Métricas atuais são geradas em [metricas-catalogo.md](metricas-catalogo.md).
 
 ## Aprofundamento incremental: closures praticadas
 

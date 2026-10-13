@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Estado corrente e critério de conclusão
+
+As contagens atuais vêm das [métricas geradas](metricas-catalogo.md); as lacunas pedagógicas estão na [fila de aulas](aulas-sem-pratica.md). O [checkpoint de continuidade](continuidade.md) registra o head, a árvore, CI, revisões, deployment, SHA, alias e fluxos públicos conferidos de cada entrega. Build ou CI aprovado sozinho não confirma produção. A auditoria final desta edição ocorre depois da cobertura ativa, projetos/percursos utilizáveis e validações de dados locais, offline, acessibilidade, responsividade e ausência de regressões graves. Os registros abaixo são históricos de suas etapas, não a fotografia atual da publicação.
+
 ## Coleções C# publicadas em 12 de outubro
 
 A PR #44 foi integrada em ce8e91de8fa45a8609c64c64f3f0ec227beca36b, árvore 85897ca26f026c82e9ff31df3feb79eb8d264c1b idêntica ao head 6952e24ccd1478848e9200b171ce99b345c52382. CI 38299162632: 798 testes unitários em 53 arquivos, 155 testes de navegador (70/39/46), 194 exemplos externos e dez cenários LINQ .NET adicionais aprovados, além de compiladores, PostgreSQL, API/cache e auditoria. A revisão de entrada não nula foi resolvida; o corretor aceita o tipo explícito compatível sem executar C# do aluno.
