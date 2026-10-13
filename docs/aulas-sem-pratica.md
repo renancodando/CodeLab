@@ -2,14 +2,14 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **70 de 137 aulas sem pausas deste catálogo**. As outras 67 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **67 de 137 aulas sem pausas deste catálogo**. As outras 70 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 8 | 2 |
 | C# | 14 | 6 | 8 |
 | CSS | 15 | 7 | 8 |
-| HTML | 19 | 5 | 14 |
+| HTML | 19 | 8 | 11 |
 | JavaScript | 30 | 18 | 12 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 6 | 8 |
@@ -35,9 +35,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 | `objetos-modulos` — Objetos, destructuring e módulos | JavaScript | JavaScript | Original |
 | `erros-json` — Exceções, JSON e contratos | JavaScript | JavaScript | Original |
 | `async` — Promises, async/await e fetch | JavaScript | JavaScript | Original |
-| `documento` — A estrutura de um documento | HTML | HTML | Original |
-| `semantica` — Semântica, navegação e links | HTML | HTML | Original |
-| `formularios` — Formulários, labels e validação | HTML | HTML | Original |
 | `imagens-tabelas` — Imagens e tabelas de dados | HTML | HTML | Original |
 | `html-acessivel` — Verificar a acessibilidade | HTML | HTML | Original |
 | `cascata` — Seletores, cascata e custom properties | CSS | CSS | Original |

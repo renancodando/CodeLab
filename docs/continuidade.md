@@ -1,5 +1,27 @@
 # Continuidade do CODELAB
 
+## Revisão dos fragmentos HTML da PR #49
+
+A revisão encontrou um doctype duplicado na montagem aceita da atividade de documento. O teste de reprodução falhou com duas declarações antes da correção. O fragmento de abertura agora contém somente a raiz html, e os testes de navegador montam documento, hierarquia e formulário com os fragmentos reais da atividade, em vez de validar apenas uma solução escrita separadamente.
+
+Passaram 51 testes específicos em quatro arquivos, strict/build e seis fluxos Edge (23,9 s). O build manteve 157 páginas, 38 recursos essenciais e seis opcionais; inicial 224,76 kB gzip e mundo 135,93 kB gzip. O CI anterior do head d446401 passou, mas não aprova esta correção: o novo head exige CI completo, revisão resolvida, árvore conferida e publicação própria. O CI pós-merge de main 9666277 também passou nos cinco jobs (38419181894).
+
+## Fundamentos integrados e publicados em 13 de outubro
+
+A PR #47 foi integrada em bf5dcc2889e8839cd80fe05c904f130e52afde0e, com árvore 6d53a666cb062236475409fd7c5c736db1d303b7 idêntica ao head e059021 e ao merge previsto, com pais conferidos. CI 38411814213 completo: 876 unitários, 163 testes de navegador (70/42/51), 194 exemplos externos e cenários adicionais; revisões sem pendências. Deployment dpl_GWZUVDU8oebS2BK9sjjCrHJmxmoA READY/production, gitSource.sha e alias conferidos. Os seis fluxos públicos passaram em 30,6 s, incluindo as primeiras aulas, a sessão diária, retomada antiga e preparação de Valores sem domínio pela leitura.
+
+A PR #48 foi integrada depois dessa publicação, em 9666277cf02c6b6d9769be6ad5a141568ec9b3a5. Árvore 1c265074208599e0900c60908c0269ad84e2ee5a idêntica ao head 996b219; pais do merge previsto e real conferidos sobre main bf5dcc2. CI 38413387005 completo: 921 unitários, 166 testes de navegador (73/42/51), 194 exemplos externos e cenários adicionais; revisões sem pendências. Deployment dpl_F4E5X4q7uWcb8jxTcLV5gZeViqFo READY/production, gitSource.sha e alias conferidos. Cinco fluxos públicos passaram em 26,5 s: diagnóstico, coleções, equivalências, mutação recusada, offline, assistência, persistência e retomada. Main local foi sincronizada por fast-forward. Começando e Lógica agora possuem pausas em todas as suas aulas; isso não encerra sua profundidade nem a edição curricular.
+
+O lote HTML abaixo incorporou a main publicada sem mudar seu conteúdo local já validado. Suas pausas ainda exigem CI e publicação próprios. Os registros anteriores preservam as falhas e os gates existentes em cada etapa.
+
+## Documento, semântica e formulários em validação local
+
+Branch pratica/html-fundamentos-ativos, dependente da entrega de diagnóstico #48. documento, semantica e formularios preservam os 12 capítulos e projetos e recebem nove pausas após os blocos 3/6/8. A teoria prepara título/idioma/estrutura, ação nativa de teclado, região principal e artigos, associação de rótulo, validade e chave do campo. As previsões, decisões e reconstruções registram evidência conceitual. A produção aberta dos documentos continua nos exercícios e projetos com revisão manual.
+
+Passaram 50 testes específicos em quatro arquivos, strict/build e seis fluxos Edge (22,8 s). O navegador executou os programas de referência e conferiu título e modo de padrões, Enter/Espaço, árvore semântica, validade, foco e FormData, incluindo contraprovas de div/link, associação quebrada e campo sem name. Os fluxos do produto conferiram erro/acerto, reconstrução, assistência, revisão, persistência, leitura sem domínio, offline, axe e 220–4000 px. A primeira tentativa passou nas referências e falhou nos três fluxos por presumir um registro local antes da primeira interação; o teste agora aceita a ausência de registro inicial, preservando o comportamento local. O build manteve 157 páginas, 38 recursos essenciais e seis opcionais; inicial 224,76 kB gzip e mundo 135,93 kB gzip. CI, revisão, integração e produção deste lote ainda são pendentes; contagens correntes vêm das métricas geradas.
+
+Referências: [título do documento](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/title), [idioma](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang) e [estrutura de formulário](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Your_first_form).
+
 ## Diagnóstico e coleções em validação local
 
 Branch pratica/diagnostico-colecoes, dependente do lote de fundamentos. tipos-erros, investigar e colecoes recebem nove pausas após os blocos 3/6/8, preservando capítulos, exemplos e projetos. As previsões e escolhas são conceituais. Área, dobro e total de estoque executam o código do aluno em QuickJS, com quatro famílias por atividade: casos comuns, fronteiras, entradas variadas e chamadas independentes. O estoque exige conservar a lista e seus objetos; nomes e quantidades repetidos continuam contribuindo. A teoria prepara a distinção entre exceção e erro lógico, o contraexemplo mínimo, o padrão que substitui zero, os limites de índice e a acumulação.
