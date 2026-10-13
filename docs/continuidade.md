@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Revisão da sessão diária na PR #50
+
+Dois apontamentos foram reproduzidos antes da correção. O plano preparado de cpp-memoria-posse omitia cpp-devolver-texto-dono porque a pausa antiga de invalidação, sem preparação, vinha depois. O desafio agora usa somente a última pausa que exige preparação; a atividade antiga permanece disponível. Em planos antigos só de prática, concluir a preparação deixava o seletor habilitado. A ação agora registra o início da sessão sem alterar seus itens, concluir exercícios ou criar domínio.
+
+O indicador iniciada é opcional, mantém a versão do progresso e atravessa normalização, exportação e importação. Backups anteriores sem esse campo continuam válidos; valores de tipo incorreto são recusados na importação. Passaram 108 testes específicos em oito arquivos, incluindo backup completo, migração, posse, domínio e planos publicados. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 225,07 kB gzip e mundo 135,92 kB gzip. A reprodução nativa do seletor falhou como esperado antes da correção. O navegador revisado, a resolução dos tópicos e o CI completo do novo head ainda são pendentes; o CI do head anterior bf6a6e3 não aprova estas mudanças.
+
+Os oito fluxos Edge revisados passaram em 55,6 s, mantendo seus prazos: a preparação bloqueia a troca de linguagem sem completar exercícios, resiste a um evento de alteração tardio e continua iniciada após recarregar e exportar/importar a jornada. A recuperação foi conferida após apagar o registro no contexto descartável do teste. Laços e Valores mantêm a sequência antiga e continuam offline; domínio permanece vazio pela leitura. Os demais fluxos conferem axe, estilo, sessão completa, correção na aula, assistência e responsividade. A regressão local completa do novo conteúdo foi iniciada separadamente, sem build ou navegador simultâneo.
+
+A regressão local completa terminou com 957/957 testes em 58 arquivos (63,7 s), incluindo os seis casos que haviam expirado anteriormente. Nenhum prazo ou cenário foi removido. Os logs anteriores continuam preservados; não atribuímos uma causa à variação de tempo. As correções agora exigem push, resolução dos tópicos, CI completo do novo head, árvore, integração e publicação próprias.
+
 ## HTML integrado e publicado em 13 de outubro
 
 A PR #49 está publicada: merge ecd7818192a7cf6402be2e8fe5d6271df73992a8 e árvore 6044a3ccc3b11cf24a71db988451681dd1e91639 idêntica ao head 2b61a3d e ao merge previsto, com pais conferidos. CI 38463452916 completo: 946 unitários, 172 fluxos de navegador (79/42/51), 194 exemplos externos e cenários adicionais; revisão resolvida. Deployment dpl_BYhvcvm4tF9pz6azm3EiVdPpkJye READY/production, gitSource.sha igual ao merge e alias do domínio apontando para o mesmo deployment. Os seis fluxos Edge públicos passaram em 2,6 min, incluindo referências montadas com os fragmentos reais, teclado, axe, responsividade, assistência, persistência e offline. Métricas correntes continuam geradas; esta entrega não encerra a edição curricular.
