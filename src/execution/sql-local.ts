@@ -1,6 +1,6 @@
 import type {ResultadoSql} from './motor-sql';
 
-export function executarSqlLocal(codigo:string,prazoCarregamento=20000){
+export function executarSqlLocal(codigo:string,prazoCarregamento=20000,preparacao?:string){
  const trabalhador=new Worker(new URL('./sql-local.worker.ts',import.meta.url),{type:'module'});
  let cancelar=()=>{};
  const resultado=new Promise<ResultadoSql>(resolver=>{
@@ -18,7 +18,7 @@ export function executarSqlLocal(codigo:string,prazoCarregamento=20000){
    }else if(evento.data.tipo==='resultado'&&evento.data.resultado)encerrar(evento.data.resultado);
   };
   trabalhador.onerror=()=>falhar('Não foi possível iniciar SQLite. Seu SQL continua salvo; recarregue com conexão e tente novamente.');
-  trabalhador.postMessage({codigo});
+  trabalhador.postMessage({codigo,preparacao});
  });
  return{resultado,cancelar:()=>cancelar()};
 }
