@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Fundamentos integrados e publicados em 13 de outubro
+
+A PR #47 foi integrada em bf5dcc2889e8839cd80fe05c904f130e52afde0e, com árvore 6d53a666cb062236475409fd7c5c736db1d303b7 idêntica ao head e059021 e ao merge previsto, com pais conferidos. CI 38411814213 completo: 876 unitários, 163 testes de navegador (70/42/51), 194 exemplos externos e cenários adicionais; revisões sem pendências. Deployment dpl_GWZUVDU8oebS2BK9sjjCrHJmxmoA READY/production, gitSource.sha e alias conferidos. Os seis fluxos públicos passaram em 30,6 s, incluindo as primeiras aulas, a sessão diária, retomada antiga e preparação de Valores sem domínio pela leitura.
+
+A PR #48 foi integrada depois dessa publicação, em 9666277cf02c6b6d9769be6ad5a141568ec9b3a5. Árvore 1c265074208599e0900c60908c0269ad84e2ee5a idêntica ao head 996b219; pais do merge previsto e real conferidos sobre main bf5dcc2. CI 38413387005 completo: 921 unitários, 166 testes de navegador (73/42/51), 194 exemplos externos e cenários adicionais; revisões sem pendências. Deployment dpl_F4E5X4q7uWcb8jxTcLV5gZeViqFo READY/production, gitSource.sha e alias conferidos. Cinco fluxos públicos passaram em 26,5 s: diagnóstico, coleções, equivalências, mutação recusada, offline, assistência, persistência e retomada. Main local foi sincronizada por fast-forward. Começando e Lógica agora possuem pausas em todas as suas aulas; isso não encerra sua profundidade nem a edição curricular.
+
+O lote HTML abaixo incorporou a main publicada sem mudar seu conteúdo local já validado. Suas pausas ainda exigem CI e publicação próprios. Os registros anteriores preservam as falhas e os gates existentes em cada etapa.
+
 ## Documento, semântica e formulários em validação local
 
 Branch pratica/html-fundamentos-ativos, dependente da entrega de diagnóstico #48. documento, semantica e formularios preservam os 12 capítulos e projetos e recebem nove pausas após os blocos 3/6/8. A teoria prepara título/idioma/estrutura, ação nativa de teclado, região principal e artigos, associação de rótulo, validade e chave do campo. As previsões, decisões e reconstruções registram evidência conceitual. A produção aberta dos documentos continua nos exercícios e projetos com revisão manual.
