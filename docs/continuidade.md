@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Ordem diária dos fundamentos em conferência
+
+O primeiro CI da PR #47 (38398882591, head 95745b5) executou 875 testes: 873 passaram e dois esperavam que Valores fosse a primeira aula disponível. As novas pausas tornam Programar, Entrada/saída e Decomposição anteriores na fila, seguindo o catálogo. Os testes agora exigem a sequência pedagógica, os conceitos fundamentais obrigatórios, a preparação de cada assunto e ausência de domínio pela leitura. Acrescentam a preservação explícita de um plano anterior iniciado em Valores. O comportamento da sessão e seus limites permanecem; os testes de navegador também verificam a preparação de Valores sem desviar de sua leitura completa.
+
+Sete testes de ordem diária e seis fluxos Edge afetados passaram, estes em 44,7 s. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 216,41 kB gzip e mundo 135,93 kB gzip. A regressão local completa ficou em 874/876: memória QuickJS (25 s) e geração de métricas (10 s) expiraram também na execução isolada. Os logs com falhas foram preservados e nenhum prazo foi ampliado. O CI pós-merge de main 38397508622 passou nos cinco jobs, mas não aprova este novo head: a PR ainda exige seu próprio CI completo, revisão, árvore e publicação.
+
 ## Correção SQL integrada e publicada em 13 de outubro
 
 A PR #46 foi integrada em 449b0b89137cfafc3c21380dd9db3b2de97dc884. A árvore a3a4d2653269740a064a1f2f396cd0ac7e08253b é idêntica ao head 040c88d27ff2e4e7e6b2b030b9fa46d471a4625a e ao merge previsto, com pais conferidos. O CI 38333281146 passou nos cinco jobs: 839 testes unitários em 55 arquivos, 160 testes de navegador (70/39/51), 194 exemplos externos, oito bases PostgreSQL dos gabaritos SQL e os cenários anteriores de compiladores, sessões, Git e API/cache. A revisão sobre alterações da base foi corrigida e resolvida neste head. Main local foi sincronizada por fast-forward.
