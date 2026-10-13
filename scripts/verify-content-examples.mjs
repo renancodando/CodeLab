@@ -27,6 +27,11 @@ const run=(command,args,options={})=>{
  return result.stdout;
 };
 const lines=output=>output.replace(/\r\n/g,'\n').replace(/\n$/,'').split('\n');
+function conferirSaidaSql(saida,esperado,nome){
+ const linhas=saida.trim()?saida.trim().split(/\r?\n/):[];
+ if(JSON.stringify(linhas)!==JSON.stringify(esperado))throw new Error(nome+': resultado SQL diferente do contrato');
+}
+
 try{
  for(const key of ['python','cpp','csharp','sql','typescript']){
   const output=ts.transpileModule(await readFile('src/content/deep/'+key+'.ts','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
@@ -71,7 +76,8 @@ try{
  const asUrl=source=>'data:text/javascript;base64,'+Buffer.from(source).toString('base64');
  const metadataUrl=asUrl(compileContent(await readFile('src/content/practice.ts','utf8')));
  const {practiceActivities}=await import(metadataUrl);
- const practiceSource=compileContent(await readFile('src/learning/practice.ts','utf8')).replace(/from ['"]\.\.\/content\/practice['"]/g,'from '+JSON.stringify(metadataUrl));
+ const solucoesSqlUrl=asUrl(compileContent(await readFile('src/content/solucoes-sql.ts','utf8')));
+ const practiceSource=compileContent(await readFile('src/learning/practice.ts','utf8')).replace(/from ['"]\.\.\/content\/practice['"]/g,'from '+JSON.stringify(metadataUrl)).replace(/from ['"]\.\.\/content\/solucoes-sql['"]/g,'from '+JSON.stringify(solucoesSqlUrl));
  const {getPracticeSolution}=await import(asUrl(practiceSource));
  const cenariosModulos=await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution);
  const cenariosConceitos=await verificarConceitosCpp(root,practiceActivities,getPracticeSolution);
@@ -79,6 +85,20 @@ try{
  const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
  const cenariosIteradores=await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution);
  const cenariosLinq=await verificarLinqCsharp(root,montarCasosLinq(practiceActivities,getPracticeSolution));
+ const clienteSqlUrl=asUrl(compileContent(await readFile('src/execution/sql-local.ts','utf8')));
+ const fontePraticaSql=compileContent(await readFile('src/learning/pratica-sql.ts','utf8')).replace(/from ['"]\.\.\/execution\/sql-local['"]/g,'from '+JSON.stringify(clienteSqlUrl));
+ const {cenariosSql}=await import(asUrl(fontePraticaSql));
+ let cenariosPraticaSql=0;
+ for(const [id,cenarios] of Object.entries(cenariosSql)){
+  for(const [indice,cenario] of cenarios.entries()){
+   const fonte=join(root,id+'-'+indice+'.sql');
+   await writeFile(fonte,"BEGIN;\nSET LOCAL statement_timeout='5s';\nSET LOCAL lock_timeout='1s';\n"+cenario.preparacao.replaceAll('CREATE TABLE','CREATE TEMP TABLE')+'\n'+getPracticeSolution(id)+'\nROLLBACK;\n');
+   const saida=run('psql',['--no-psqlrc','--set','ON_ERROR_STOP=1','--no-align','--tuples-only','--quiet','--file',fonte]);
+   conferirSaidaSql(saida,cenario.linhas.map(linha=>linha.join('|')),id+'-'+indice);
+   cenariosPraticaSql++;
+  }
+ }
+
  const examples=[
   ...montarCasosEngenharia(practiceActivities,getPracticeSolution),
   ...montarCasosConcorrencia(practiceActivities,getPracticeSolution),
@@ -125,4 +145,5 @@ try{
  console.log(cenariosAusencias+' cenários PostgreSQL conferidos para ausência, restrições e correspondência.');
  console.log(cenariosIteradores+' cenários .NET conferidos para suspensão, descarte e materialização.');
  console.log(cenariosLinq+' cenários .NET conferidos para igualdade, agrupamento e cópia interna.');
+ console.log(cenariosPraticaSql+' bases PostgreSQL conferidas para os novos gabaritos SQL executados em SQLite no navegador.');
 }finally{await rm(root,{recursive:true,force:true});}

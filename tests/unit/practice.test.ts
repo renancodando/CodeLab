@@ -25,7 +25,7 @@ describe('prática distribuída e verificação de comportamento',()=>{
   it(activity.id+': a implementação de referência passa todos os contratos',async()=>{
    const result=await evaluatePractice(activity.id,getPracticeSolution(activity.id)!);
    expect(result.status).toBe('evaluated');expect(result.passed).toBe(true);
-   expect(result.evidence).toBe('executed');expect(result.execution).toBe('quickjs');
+   expect(result.evidence).toBe('executed');expect(result.execution).toBe(activity.language==='sql'?'sqlite':'quickjs');
    expect(result.tests.length).toBeGreaterThanOrEqual(4);
   });
   it(activity.id+': o programa quebrado não passa',async()=>{

@@ -1,13 +1,14 @@
 import {practiceActivities,type PracticeActivity} from '../content/practice';
 import type {CodeCheck} from './types';
 import type {RunResult} from '../types';
+import {solucoesSql} from '../content/solucoes-sql';
 
 export type PracticeAnswer = string|string[];
 export type PracticeTest = {label:string;passed:boolean};
 export type PracticeResult = {
  passed:boolean; status:'evaluated'|'cancelled'|'unavailable';
  feedback:string; tests:PracticeTest[]; evidence:'conceptual'|'executed';
- execution:'quickjs'|'not-run'; skillIds:string[]; capability:PracticeActivity['capability'];
+ execution:'quickjs'|'sqlite'|'not-run'; skillIds:string[]; capability:PracticeActivity['capability'];
 };
 type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string[]};
 type JSCheck=CodeCheck&{feedback:string};
@@ -211,7 +212,7 @@ check("A leitura conserva a entrada e as permissões.","(()=>{const obj={saldo:8
  }
 };
 export function getPracticeSolution(id:string):string|undefined{
- return concepts[id]?.solution??javascript[id]?.solution;
+ return concepts[id]?.solution??javascript[id]?.solution??solucoesSql[id];
 }
 function condicaoDeAusencia(resposta:string):boolean{
  const texto=resposta.trim();
@@ -245,9 +246,6 @@ function base(activity?:PracticeActivity):PracticeResult{
 function cancelled(activity?:PracticeActivity):PracticeResult{
  return {...base(activity),status:'cancelled',feedback:'Verificação cancelada. Seu trabalho continua preservado.'};
 }
-/** JS is executed in the existing bounded QuickJS worker. Other languages here are
- * conceptual practice, not proof of compilation/execution and never sent to Judge0.
- * Reserved cases are withheld during an attempt, but remain inspectable locally. */
 export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:AbortSignal):Promise<PracticeResult>{
  const activity=practiceActivities.find(item=>item.id===id);
  if(signal?.aborted)return cancelled(activity);
@@ -256,6 +254,20 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
  if(typeof answer!=='string'&&(!Array.isArray(answer)||answer.some(line=>typeof line!=='string')))return {...result,status:'unavailable',feedback:'O formato da resposta não pôde ser lido. Seu trabalho está preservado; isso não conta como erro de aprendizagem.'};
  if((typeof answer==='string'&&answer.length>30000)||(Array.isArray(answer)&&(answer.length>100||answer.some(line=>typeof line!=='string'||line.length>30000)))){
   return {...result,feedback:'A resposta ultrapassou o limite da atividade. Reduza o texto antes de conferir.',tests:[{label:'Resposta dentro do limite.',passed:false}]};
+ }
+ if(Object.hasOwn(solucoesSql,id)){
+  if(typeof answer!=='string')return {...result,feedback:'Envie a consulta SQL completa como texto.',tests:[{label:'Consulta completa recebida.',passed:false}]};
+  const inicioCarga=performance.now();let prazo:ReturnType<typeof setTimeout>|undefined;
+  let cancelarCarga:(()=>void)|undefined;
+  try{
+   const limite=new Promise<never>((_,rejeitar)=>{cancelarCarga=()=>rejeitar(new Error('Carga cancelada.'));signal?.addEventListener('abort',cancelarCarga,{once:true});prazo=setTimeout(()=>rejeitar(new Error('Carga expirada.')),20000);});
+   const modulo=await Promise.race([import('./pratica-sql'),limite]);
+   if(signal?.aborted)return cancelled(activity);
+   return await modulo.avaliarPraticaSql(id,answer,result,signal,Math.max(1,20000-(performance.now()-inicioCarga)));
+  }catch{
+   if(signal?.aborted)return cancelled(activity);
+   return {...result,status:'unavailable',feedback:'Não foi possível carregar a conferência SQL no prazo. Sua consulta foi preservada; isso não conta como erro de aprendizagem. Conecte à internet para o primeiro carregamento e tente novamente.'};
+  }finally{clearTimeout(prazo);if(cancelarCarga)signal?.removeEventListener('abort',cancelarCarga);}
  }
  const concept=concepts[id];
  if(concept){

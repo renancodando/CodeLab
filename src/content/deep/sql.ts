@@ -359,7 +359,8 @@ export default {
           "title": "A posição do filtro muda a preservação",
           "text": [
             "Um filtro na condição ON participa da decisão sobre quais registros da direita se relacionam à esquerda. Um filtro em WHERE é aplicado ao resultado da junção e pode remover a linha estendida. Assim LEFT JOIN pedidos p ON p.cliente_id=c.id AND p.status='pago' preserva clientes sem pedido pago. Mover status='pago' para WHERE normalmente exclui esses clientes porque a comparação com o NULL estendido não é true.",
-            "Não memorize sempre coloque tudo em ON. Um filtro de cliente pode pertencer a WHERE, e uma pergunta que exige somente clientes com pedido pago pode usar um join ou EXISTS apropriado. A escolha depende do conjunto que o relatório deve manter. Escreva a regra em palavras e teste um cliente sem pedido, um com pedido não pago e um com pedido pago para diferenciar as consultas."
+            "Não memorize sempre coloque tudo em ON. Um filtro de cliente pode pertencer a WHERE, e uma pergunta que exige somente clientes com pedido pago pode usar um join ou EXISTS apropriado. A escolha depende do conjunto que o relatório deve manter. Escreva a regra em palavras e teste um cliente sem pedido, um com pedido não pago e um com pedido pago para diferenciar as consultas.",
+            "Na pausa corrigível, as tabelas já estão preparadas e a resposta é uma consulta com cliente_id e pagos, ordenada pelo id. A conferência executa sua resposta em SQLite descartável com bases diferentes, incluindo nenhum pedido e nenhum cliente. A regra de preservação e count vale nesse recorte, mas o executor não aceita os blocos DO nem os casts PostgreSQL dos exemplos completos. Não recrie a base dentro da resposta; investigue o conjunto de linhas que a consulta conserva."
           ]
         },
         {
@@ -373,7 +374,8 @@ export default {
           "title": "Presença e dados detalhados são perguntas diferentes",
           "text": [
             "Se você só quer saber quais clientes têm pelo menos um pedido, EXISTS expressa a presença sem multiplicar linhas de clientes para cada pedido. Uma junção seguida de DISTINCT pode produzir o mesmo conjunto em certos casos, mas exige compreender quais colunas participam da deduplicação. Escolha a forma que deixa clara a pergunta e confira a cardinalidade observável.",
-            "Para retornar detalhes de pedidos, o join continua adequado. Para contagem por cliente, a agregação precisa conservar a chave e tratar a linha sem correspondência. A consulta pode combinar várias etapas com CTEs, cada uma com sua granularidade descrita. Nomear uma etapa como totais_por_pedido ajuda a revisar a promessa de uma linha por pedido antes da junção seguinte."
+            "Para retornar detalhes de pedidos, o join continua adequado. Para contagem por cliente, a agregação precisa conservar a chave e tratar a linha sem correspondência. A consulta pode combinar várias etapas com CTEs, cada uma com sua granularidade descrita. Nomear uma etapa como totais_por_pedido ajuda a revisar a promessa de uma linha por pedido antes da junção seguinte.",
+            "A pausa seguinte usa inteiros de centavos e exige uma linha por pedido, com itens e pagamentos separados. A base pode ter só uma coleção, nenhuma ou valores iguais em registros distintos. Uma ausência de contribuições deve aparecer como zero. CTEs agregadas e subconsultas correlacionadas são possibilidades; a conferência compara cabeçalhos e linhas, sem exigir uma única grafia da consulta. Os casos testados não são uma prova formal para toda entrada nem uma medição de performance."
           ]
         },
         {
