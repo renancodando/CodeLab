@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Conversões originais em preparação
+
+Branch pratica/strings-conversoes, dependente da publicação verificada da PR #50. A aula existente strings-numbers mantém seus 12 capítulos, exemplos, exercício dobroTexto e projeto. Três pausas após os blocos 3/6/8 trabalham operadores e conversão, retorno de trim e correção executada da entrada. O contrato distingue vazio de zero, texto completo de prefixo, finitude e resultado numérico sem arredondar. Quatro famílias QuickJS cobrem casos comuns, rejeição com Error, formatos de Number, frações e chamadas independentes. As duas decisões continuam conceituais; seus programas de referência foram executados.
+
+Passaram 58 testes de conversões, catálogo e ordem, incluindo gabarito original, alternativas, mutantes e evidência independente compartilhada com a habilidade de conversão do carrinho. A primeira tentativa detectou 129 habilidades para um limite de 128. A correção associa a conversão aplicada à competência existente, preservando os dois identificadores de avaliação; duas habilidades novas distinguem operadores e imutabilidade de textos. O limite permanece e a repetição do mesmo exercício não cria uma terceira demonstração. O teste isolado do gerador expirou em 10 s; logs preservados. O gerador do catálogo executou e atualizou as métricas, mas strict/build, três fluxos novos, CI e produção ainda são pendentes. As métricas da branch descrevem o checkout, não uma publicação.
+
+Referências: [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), [trim](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim) e [Number.isFinite](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite).
+
 ## Revisão da sessão diária na PR #50
 
 Dois apontamentos foram reproduzidos antes da correção. O plano preparado de cpp-memoria-posse omitia cpp-devolver-texto-dono porque a pausa antiga de invalidação, sem preparação, vinha depois. O desafio agora usa somente a última pausa que exige preparação; a atividade antiga permanece disponível. Em planos antigos só de prática, concluir a preparação deixava o seletor habilitado. A ação agora registra o início da sessão sem alterar seus itens, concluir exercícios ou criar domínio.
