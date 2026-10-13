@@ -12,6 +12,44 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
 {
+ "id": "sql-depurar-clientes-pagos",
+ "language": "sql",
+ "lessonIds": [
+  "sql-joins-cardinalidade"
+ ],
+ "skillIds": [
+  "sql.joins.preservacao"
+ ],
+ "afterBlock": 3,
+ "kind": "debug",
+ "capability": "depuracao",
+ "requiresConcept": true,
+ "title": "O relatório apagou clientes sem pedido pago",
+ "prompt": "Corrija a consulta para retornar uma linha por cliente, ordenada por id, com colunas cliente_id e pagos. clientes(id INTEGER PRIMARY KEY) e pedidos(id INTEGER PRIMARY KEY, cliente_id INTEGER NOT NULL, status TEXT NOT NULL) já existem. Na base visível, clientes 1/2/3 têm respectivamente pedidos [pago, aberto], [aberto] e nenhum: o resultado deve ser 1|1, 2|0, 3|0. Outras bases verificam vários pagos, chaves diferentes e tabelas vazias. Envie somente sua consulta; não recrie tabelas nem fixe os resultados. Execução real em SQLite local, não PostgreSQL; após o primeiro carregamento pode funcionar offline.",
+ "code": "SELECT c.id AS cliente_id,count(p.id) AS pagos\nFROM clientes c LEFT JOIN pedidos p ON p.cliente_id=c.id\nWHERE p.status='pago'\nGROUP BY c.id ORDER BY c.id;",
+ "hint": "Compare quais linhas existem antes e depois de WHERE. Um cliente sem correspondência não possui um pedido pago com id nulo; conte a chave de um pedido existente.",
+ "minutes": 6
+},
+{
+ "id": "sql-depurar-totais-colecoes",
+ "language": "sql",
+ "lessonIds": [
+  "sql-joins-cardinalidade"
+ ],
+ "skillIds": [
+  "sql.joins.granularidade"
+ ],
+ "afterBlock": 5,
+ "kind": "debug",
+ "capability": "aplicacao",
+ "requiresConcept": true,
+ "title": "Duas coleções duplicaram os valores do pedido",
+ "prompt": "Retorne uma linha por pedido, ordenada por id, com colunas pedido_id, itens e pagamentos. pedidos(id INTEGER PRIMARY KEY), itens(pedido_id INTEGER NOT NULL, centavos INTEGER NOT NULL) e pagamentos(pedido_id INTEGER NOT NULL, centavos INTEGER NOT NULL) já existem; centavos é inteiro não negativo. O pedido 7 tem itens de 10 e 10, e pagamentos de 5 e 7: precisa produzir 7|20|12. Preserve pedidos sem itens, sem pagamentos ou sem ambas as coleções, usando zero para a contribuição ausente. Registros distintos com o mesmo valor contam separadamente. Envie a consulta, sem recriar tabelas. Bases variadas são executadas em SQLite local; isso não valida extensões de PostgreSQL nem mede performance.",
+ "code": "SELECT p.id AS pedido_id,coalesce(sum(i.centavos),0) AS itens,\n       coalesce(sum(pg.centavos),0) AS pagamentos\nFROM pedidos p LEFT JOIN itens i ON i.pedido_id=p.id\nLEFT JOIN pagamentos pg ON pg.pedido_id=p.id\nGROUP BY p.id ORDER BY p.id;",
+ "hint": "Descreva o que uma linha representa ao combinar cada coleção. Itens iguais podem ser legítimos; eliminar duplicatas por valor pode apagar contribuições. Você pode consultar cada coleção separadamente antes de combinar os resultados.",
+ "minutes": 9
+},
+{
  "id": "cs-prever-igualdade-conjunto",
  "language": "csharp",
  "lessonIds": [

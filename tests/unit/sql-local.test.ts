@@ -8,6 +8,13 @@ const consultar=(codigo:string)=>executarConsultaSql(SQL,codigo);
 const linhas=(codigo:string)=>consultar(codigo).tabelas.at(-1)!.linhas;
 
 describe('SQLite real em banco descartável',()=>{
+ it('uma base de exercício permite leitura e CTE, sem modificar tabelas',()=>{
+  const preparacao='CREATE TABLE valores(n INTEGER); INSERT INTO valores VALUES(1),(2);';
+  expect(executarConsultaSql(SQL,'WITH x AS(SELECT n FROM valores) SELECT sum(n) AS total FROM x;',preparacao).tabelas[0].linhas).toEqual([[3n]]);
+  expect(()=>executarConsultaSql(SQL,'WITH x AS(SELECT 1) DELETE FROM valores RETURNING n;',preparacao)).toThrow(/readonly/i);
+  expect(()=>executarConsultaSql(SQL,'SELECT n FROM valores; PRAGMA query_only=OFF;',preparacao)).toThrow('uma única consulta');
+  expect(()=>executarConsultaSql(SQL,'-- sem consulta',preparacao)).toThrow('uma única consulta');
+ });
  it('cria dados, faz join e agrega depois de alterar e apagar',()=>{
   expect(linhas(`CREATE TABLE clientes(id INTEGER PRIMARY KEY,nome TEXT); CREATE TABLE pedidos(cliente INTEGER REFERENCES clientes(id),centavos INTEGER CHECK(centavos>=0));
    INSERT INTO clientes VALUES(1,'Ana'),(2,'Bia'); INSERT INTO pedidos VALUES(1,2995),(1,3000),(2,500);

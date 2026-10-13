@@ -1,5 +1,33 @@
 # Continuidade do CODELAB
 
+## Revisão da correção SQL: consultas não alteram a base
+
+A revisão #46 demonstrou que DELETE seguido de um relatório podia passar ao modificar a entrada. O preparo agora chega separado do SQL do aluno. O motor prepara a base, ativa query_only e usa o parser SQLite para exigir uma única consulta SELECT/WITH antes de percorrer o resultado. Comentários e ponto e vírgula em literais continuam válidos; transações, PRAGMAs, comandos extras e alterações de dados são recusados. WITH seguido de DELETE também encontra a guarda nativa de escrita. O laboratório livre preserva seus scripts, transações e alterações: esse recorte só é ativado pela base de um exercício.
+
+Passaram 134 testes específicos em quatro arquivos, incluindo a reprodução da revisão, mutações antes/depois da consulta, comentários/CTE, a proteção nativa e o laboratório anterior. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 212,55 kB gzip, mundo 135,92 kB gzip. O primeiro CI do head 55565d5 passou nos testes/compilação e nas oito bases PostgreSQL, mas não aprova o head revisado. Os sete fluxos Edge locais passaram em 1,6 min, incluindo a tentativa de alterar a base e a regressão do laboratório. Revisão e CI completo do novo commit devem ser conferidos antes de integrar.
+
+Referências: [parser sql.js](https://sql.js.org/documentation/Database.html#iterateStatements) e [query_only](https://www.sqlite.org/pragma.html#pragma_query_only). A guarda limita o contrato dos exercícios; os casos e a implementação continuam inspecionáveis no cliente.
+
+## Escopo de conclusão definido em 12 de outubro
+
+A orientação humana atual fixa esta edição no catálogo existente: aprofundar e distribuir prática nas 137 aulas, nos seis percursos e nos oito projetos, sem aumentar o catálogo por quantidade. O trabalho começa pela integração das entregas pendentes, depois reduz as aulas sem pausas por prioridade pedagógica. Uma pausa não encerra uma aula nem uma linguagem. Leitura não gera domínio; assistência, evidência conceitual, execução real e revisão continuam distintas.
+
+A conferência inicial encontrou main em 34f4b20021d834c7e707faae539fd3bb7aea975b, nenhuma PR aberta e #42–#45 integradas, sem revisões pendentes. O CI pós-merge 38308942394 passou. O deployment dpl_f4P9i2Brgco2c7sWyN1FNgajgimP está READY/production com gitSource.sha igual a main e alias code-lab-omega.vercel.app conferido. As novas consultas SQL ainda são locais neste registro. Contagens correntes devem ser lidas em metricas-catalogo.md; números e gates abaixo são históricos de cada entrega.
+
+## Prévia HTML integrada e publicada em 12 de outubro
+
+A PR #45 foi integrada em 34f4b20021d834c7e707faae539fd3bb7aea975b. Árvore 7faa897393a61849a80202c569cb6b7de3278fe9 idêntica ao head d1f049c403c02ce104a2b9e2e0e943df0b597a19 e ao merge previsto, com pais conferidos. O CI 38306042949 passou: 798 testes unitários em 53 arquivos, 157 testes de navegador (70/39/48), 194 exemplos externos e os cenários adicionais de compiladores, PostgreSQL, Git e API/cache. Não havia revisão aberta. Main local foi sincronizada por fast-forward.
+
+Deployment dpl_f4P9i2Brgco2c7sWyN1FNgajgimP READY/production, gitSource.sha e alias conferidos. Os três fluxos HTML passaram no domínio em 2,0 min: isolamento, substituição/reexecução/parada/troca/saída e rejeição acima do limite. Falhas anteriores continuam registradas; os parágrafos seguintes preservam o histórico, inclusive seus gates então pendentes. O currículo e as fontes ambientais restantes não foram declarados concluídos.
+
+## Correção SQL por execução em preparação
+
+Dois desafios da aula sql-joins-cardinalidade passam a executar consultas do aluno em SQLite descartável: preservar clientes sem pedido pago e combinar totais sem multiplicar coleções. Cada um possui quatro bases, com chaves diferentes, repetições legítimas, ausência de coleções e conjunto vazio. O verificador compara uma única tabela, cabeçalhos, ordem e valores, aceitando soluções alternativas por comportamento. Dez consultas incorretas são diferenciadas por testes reais, sem entregar o gabarito no feedback.
+
+Carregamento e execução mantêm fases separadas. Falta de runtime/rede não registra tentativa nem domínio; sintaxe, resultado, tempo e limites são erros da consulta. Alterar a resposta ou sair cancela o worker, e mensagens tardias não recriam temporizadores. Carregamento sob demanda, limites de SQLite/saída/CPU, progresso local e assistência permanecem. Não há execução remota ou rede fornecida ao SQL do aluno. Os casos reservados são inspecionáveis no cliente; isso não é correção inviolável nem prova formal.
+
+O lote específico aprovou 126 testes em quatro arquivos, incluindo os corretores existentes, SQLite real e classificação das falhas. A regressão completa executou 831 testes: 828 passaram e três casos existentes expiraram (compilação strict, limite de memória QuickJS e geração de métricas). Os três passaram isoladamente, com os mesmos limites, em 16,4 s; a tentativa completa com falhas permanece registrada e o CI do head ainda é obrigatório. Um protótipo externo anterior conferiu 22 combinações/controles e 12 contratos do corretor; não foi contado como recurso publicado. O verificador externo recebe oito bases PostgreSQL temporárias para conferir os gabaritos compartilhados; no navegador a execução é SQLite, sem alegar suporte a extensões PostgreSQL. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 212,55 kB gzip e mundo 135,93 kB gzip. A conferência SQL fica em módulo sob demanda (2,80 kB gzip); SQLite/Worker/WASM continuam opcionais. Sete fluxos Edge locais passaram em 1,1 min: laboratório anterior e novos desafios, alternativas, erro/acerto, offline preparado, assistência sem apagar evidência independente, persistência, 220–4000 px, limites, cancelamento e módulo indisponível com retomada. A primeira execução teve uma expectativa incorreta sobre assistência; o teste foi ajustado ao contrato existente, sem alterar o domínio. CI e publicação próprios continuam pendentes.
+
 ## Substituição da prévia HTML validada localmente
 
 A execução de outro HTML válido substitui srcdoc diretamente, sem navegar antes para about:blank. Parar, trocar de linguagem, sair da rota e rejeitar HTML acima de 30.000 caracteres continuam limpando a prévia e cancelando a execução. Sandbox, CSP, bloqueio de rede, referrerpolicy e limites permanecem iguais.
