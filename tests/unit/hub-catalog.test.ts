@@ -3,7 +3,10 @@ import {lessons} from '../../src/content/curriculum';
 import {practiceActivities} from '../../src/content/practice';
 import {capstoneProjects} from '../../src/content/project-paths';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
-import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen} from '../../src/learning/adaptive';
+import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen,ADAPTIVE_LIMITS} from '../../src/learning/adaptive';
+it('o catálogo de habilidades cabe no progresso e no backup suportados',()=>{
+ expect(adaptiveCatalog.skills.length).toBeLessThanOrEqual(ADAPTIVE_LIMITS.skills);
+});
 it('todas as ligações de práticas e projetos apontam para aulas existentes',()=>{
  const ids=new Set(lessons.map(l=>l.id));const missing:string[]=[];
  for(const a of practiceActivities)for(const id of a.lessonIds)if(!ids.has(id))missing.push(a.id+':'+id);

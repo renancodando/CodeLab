@@ -3,8 +3,30 @@ import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
 import {buildDailySession,ensureDailySession,freshAdaptive,markConceptSeen,type AdaptiveCatalog} from '../../src/learning/adaptive';
 const relogio={now:Date.parse('2026-10-11T12:00:00Z'),timeZone:'UTC'};
 const catalogo={...adaptiveCatalog,preferredLanguage:'javascript'};
-it('uma jornada nova começa por valores antes de decisões e laços',()=>{const plano=buildDailySession(freshAdaptive(),catalogo,relogio);const conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId);expect(conceito?.lessonId).toBe('valores');expect(conceito?.preparacaoAteBloco).toBeUndefined();});
-it('a preparação antecede o próximo assunto sem dar domínio pela leitura',()=>{const estado=freshAdaptive();for(const id of ['valores','decisoes','repeticoes']){const conceito=adaptiveCatalog.activities.find(a=>a.kind==='concept'&&a.lessonId===id&&a.preparacaoAteBloco===undefined)!;expect(buildDailySession(estado,catalogo,relogio).items.find(i=>i.kind==='concept')?.activityId).toBe(conceito.id);markConceptSeen(estado,conceito.id,relogio);expect(buildDailySession(estado,catalogo,relogio).items.find(i=>i.kind==='concept')?.activityId).toBe(idPreparacao(id));markConceptSeen(estado,idPreparacao(id),relogio);}expect(estado.skills).toEqual({});});
+it('uma jornada nova começa pelas instruções antes de valores, decisões e laços',()=>{
+ const plano=buildDailySession(freshAdaptive(),catalogo,relogio);
+ const conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId);
+ expect(conceito?.lessonId).toBe('programar');expect(conceito?.preparacaoAteBloco).toBeUndefined();
+});
+it('a preparação acompanha cada assunto na ordem pedagógica sem gerar domínio pela leitura',()=>{
+ const estado=freshAdaptive();
+ const obrigatorios=['programar','entrada-saida','passos','valores','decisoes','repeticoes','funcoes'];
+ expect(adaptiveCatalog.activities.filter(a=>a.kind==='concept'&&a.preparacaoAteBloco===undefined).map(a=>a.lessonId)).toEqual(expect.arrayContaining(obrigatorios));
+ for(const id of ['programar','entrada-saida','passos','tipos-erros','investigar','valores','decisoes','repeticoes','funcoes','colecoes']){
+  const conceito=adaptiveCatalog.activities.find(a=>a.kind==='concept'&&a.lessonId===id&&a.preparacaoAteBloco===undefined);
+  if(!conceito)continue;
+  expect(buildDailySession(estado,catalogo,relogio).items.find(i=>i.kind==='concept')?.activityId).toBe(conceito.id);
+  markConceptSeen(estado,conceito.id,relogio);
+  expect(buildDailySession(estado,catalogo,relogio).items.find(i=>i.kind==='concept')?.activityId).toBe(idPreparacao(id));
+  markConceptSeen(estado,idPreparacao(id),relogio);expect(estado.skills).toEqual({});
+ }
+});
+it('o plano iniciado em valores antes das novas pausas continua válido',()=>{
+ const estado=freshAdaptive(),anterior={...catalogo,activities:catalogo.activities.filter(a=>!['programar','entrada-saida','passos','tipos-erros','investigar'].includes(a.lessonId??''))};
+ const plano=ensureDailySession(estado,anterior,relogio),conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId);
+ expect(conceito?.lessonId).toBe('valores');const antes=JSON.stringify(plano);
+ expect(ensureDailySession(estado,catalogo,relogio)).toBe(plano);expect(JSON.stringify(plano)).toBe(antes);expect(estado.skills).toEqual({});
+});
 it('mudar a ordem do catálogo não troca o plano já iniciado',()=>{const estado=freshAdaptive(),antigo={...catalogo,activities:catalogo.activities.map(({ordem,...a})=>a)};const plano=ensureDailySession(estado,antigo,relogio);const antes=JSON.stringify(plano);expect(ensureDailySession(estado,catalogo,relogio)).toBe(plano);expect(JSON.stringify(plano)).toBe(antes);});
 it('a ordem pode vencer o nome e o desempate continua determinístico',()=>{const catalogo:AdaptiveCatalog={skills:[{id:'javascript.teste',label:'Teste',path:['JavaScript']}],activities:[{id:'a-avancado',title:'Avançado',kind:'concept',skillIds:['javascript.teste'],minutes:2,ordem:4},{id:'z-inicial',title:'Inicial',kind:'concept',skillIds:['javascript.teste'],minutes:2,ordem:0}]};expect(buildDailySession(freshAdaptive(),catalogo,relogio).items[0].activityId).toBe('z-inicial');catalogo.activities[0].ordem=0;expect(buildDailySession(freshAdaptive(),catalogo,relogio).items[0].activityId).toBe('a-avancado');delete catalogo.activities[0].ordem;delete catalogo.activities[1].ordem;expect(buildDailySession(freshAdaptive(),catalogo,relogio).items[0].activityId).toBe('a-avancado');});
 it('uma ordem inválida não força prioridade sobre o catálogo válido',()=>{for(const ordem of [NaN,Infinity,-1,0.5,10001]){const catalogo:AdaptiveCatalog={skills:[{id:'javascript.teste',label:'Teste',path:['JavaScript']}],activities:[{id:'a-invalido',title:'Inválido',kind:'concept',skillIds:['javascript.teste'],minutes:2,ordem},{id:'z-valido',title:'Válido',kind:'concept',skillIds:['javascript.teste'],minutes:2,ordem:0}]};expect(buildDailySession(freshAdaptive(),catalogo,relogio).items.map(a=>a.activityId)).toEqual(['z-valido']);}});

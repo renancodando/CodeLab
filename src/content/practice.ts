@@ -12,6 +12,237 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
 {
+ "id": "inicio-prever-ordem",
+ "language": "javascript",
+ "lessonIds": [
+  "programar"
+ ],
+ "skillIds": [
+  "javascript.instrucoes.ordem"
+ ],
+ "afterBlock": 3,
+ "kind": "predict",
+ "capability": "leitura",
+ "requiresConcept": true,
+ "title": "A ordem também é parte do programa",
+ "prompt": "Preveja as três linhas, sem aspas. Não execute antes de registrar: uma instrução repetida continua sendo executada; o computador não elimina etapas por parecerem iguais.",
+ "code": "console.log(\"Preparar\");\nconsole.log(\"Testar\");\nconsole.log(\"Preparar\");",
+ "hint": "Percorra de cima para baixo e registre cada chamada, incluindo a repetida.",
+ "minutes": 2
+},
+{
+ "id": "inicio-diagnosticar-texto",
+ "language": "javascript",
+ "lessonIds": [
+  "programar"
+ ],
+ "skillIds": [
+  "javascript.instrucoes.texto"
+ ],
+ "afterBlock": 6,
+ "kind": "choice",
+ "capability": "depuracao",
+ "requiresConcept": true,
+ "title": "Texto ou nome que o programa deveria procurar?",
+ "prompt": "O objetivo é mostrar Café. Não existe variável chamada cafe. Escolha a alteração que expressa diretamente esse texto e mantém uma instrução válida. Esta escolha é conceitual; não executa o programa do aluno.",
+ "code": "console.log(cafe);",
+ "hint": "Aspas delimitam o texto. Sem elas, o programa tenta resolver um nome; dizer a intenção no console não cria esse nome.",
+ "minutes": 3,
+ "options": [
+  {
+   "id": "texto",
+   "text": "console.log(\"Café\");"
+  },
+  {
+   "id": "nome",
+   "text": "console.log(Café);"
+  },
+  {
+   "id": "incompleto",
+   "text": "console.log(\"Café);"
+  }
+ ]
+},
+{
+ "id": "inicio-reconstruir-roteiro",
+ "language": "javascript",
+ "lessonIds": [
+  "programar"
+ ],
+ "skillIds": [
+  "javascript.instrucoes.sequencia"
+ ],
+ "afterBlock": 8,
+ "kind": "order",
+ "capability": "alteracao",
+ "requiresConcept": true,
+ "title": "Reconstrua a sequência observável",
+ "prompt": "Organize as três instruções para registrar Abrir, Testar e Fechar, nessa ordem. O contrato exige uma linha para cada ação. Isto registra texto: não abre nem fecha um arquivo real.",
+ "code": "",
+ "hint": "Compare a primeira saída desejada com a primeira chamada; uma linha válida no lugar errado ainda quebra o roteiro.",
+ "minutes": 3,
+ "lines": [
+  {
+   "id": "fechar",
+   "code": "console.log(\"Fechar\");"
+  },
+  {
+   "id": "abrir",
+   "code": "console.log(\"Abrir\");"
+  },
+  {
+   "id": "testar",
+   "code": "console.log(\"Testar\");"
+  }
+ ]
+},
+{
+ "id": "entrada-prever-zero",
+ "language": "javascript",
+ "lessonIds": [
+  "entrada-saida"
+ ],
+ "skillIds": [
+  "javascript.fluxo.zero"
+ ],
+ "afterBlock": 3,
+ "kind": "predict",
+ "capability": "leitura",
+ "requiresConcept": true,
+ "title": "Quantidade zero não apaga o frete",
+ "prompt": "Preveja as duas linhas de saída, sem unidade. Neste contrato o frete é fixo e é cobrado mesmo quando a quantidade vale zero; o programa não implementa a política comercial de nenhuma loja.",
+ "code": "const quantidade = 0;\nconst precoUnitario = 12;\nconst frete = 7;\nconst subtotal = quantidade * precoUnitario;\nconsole.log(subtotal);\nconsole.log(subtotal + frete);",
+ "hint": "Separe subtotal e total. Zero é uma entrada numérica válida; a regra ainda soma o frete uma vez.",
+ "minutes": 3
+},
+{
+ "id": "entrada-diagnosticar-unidade",
+ "language": "javascript",
+ "lessonIds": [
+  "entrada-saida"
+ ],
+ "skillIds": [
+  "javascript.fluxo.unidades"
+ ],
+ "afterBlock": 6,
+ "kind": "choice",
+ "capability": "depuracao",
+ "requiresConcept": true,
+ "title": "O frete foi cobrado uma vez por item",
+ "prompt": "São três unidades de 1200 centavos e frete fixo de 700 centavos. O esperado é 4300, mas o código produz 5700. Escolha a expressão que mantém as unidades e aplica o frete exatamente uma vez.",
+ "code": "const total = quantidade * (precoUnitario + frete);",
+ "hint": "Multiplicar o grupo inteiro pela quantidade também multiplica o frete. Desenhe primeiro o subtotal e depois o custo fixo.",
+ "minutes": 4,
+ "options": [
+  {
+   "id": "separar",
+   "text": "quantidade * precoUnitario + frete"
+  },
+  {
+   "id": "somar",
+   "text": "quantidade + precoUnitario + frete"
+  },
+  {
+   "id": "ignorar",
+   "text": "quantidade * precoUnitario"
+  }
+ ]
+},
+{
+ "id": "entrada-corrigir-total",
+ "language": "javascript",
+ "lessonIds": [
+  "entrada-saida"
+ ],
+ "skillIds": [
+  "javascript.fluxo.transformacao"
+ ],
+ "afterBlock": 8,
+ "kind": "debug",
+ "capability": "producao",
+ "requiresConcept": true,
+ "title": "Faça a transformação funcionar com outras entradas",
+ "prompt": "Corrija calcularTotal(quantidade, precoUnitario, frete). Receba números inteiros: quantidade de 0 a 100; preço unitário de 0 a 100000 centavos; frete de 0 a 50000 centavos. Devolva um número de centavos, com o frete fixo somado uma única vez, inclusive para quantidade zero. Não arredonde nem converta em texto. O molde da função já está dado: altere a transformação após return. A verificação executa entradas variadas; não exige validação fora dessas faixas.",
+ "code": "function calcularTotal(quantidade, precoUnitario, frete) {\n  return quantidade * (precoUnitario + frete);\n}",
+ "hint": "Comece pelo resultado da multiplicação em centavos. Depois combine o custo que não depende da quantidade. Confira zero e chamadas consecutivas.",
+ "minutes": 5
+},
+{
+ "id": "passos-prever-media",
+ "language": "javascript",
+ "lessonIds": [
+  "passos"
+ ],
+ "skillIds": [
+  "javascript.decomposicao.rastreamento"
+ ],
+ "afterBlock": 3,
+ "kind": "predict",
+ "capability": "leitura",
+ "requiresConcept": true,
+ "title": "A terceira entrada muda duas etapas",
+ "prompt": "Preveja as duas linhas. A soma inclui três notas; a quantidade do divisor precisa corresponder ao mesmo conjunto.",
+ "code": "const primeira = 7, segunda = 9, terceira = 5;\nconst soma = primeira + segunda + terceira;\nconst media = soma / 3;\nconsole.log(soma);\nconsole.log(media);",
+ "hint": "Registre a soma primeiro e depois conte quantas notas contribuíram para ela.",
+ "minutes": 3
+},
+{
+ "id": "passos-ordenar-dependencias",
+ "language": "javascript",
+ "lessonIds": [
+  "passos"
+ ],
+ "skillIds": [
+  "javascript.decomposicao.dependencias"
+ ],
+ "afterBlock": 6,
+ "kind": "order",
+ "capability": "leitura",
+ "requiresConcept": true,
+ "title": "Uma etapa precisa receber o resultado anterior",
+ "prompt": "Ordene todas as linhas para calcular e mostrar a média das três notas. As declarações const não podem ser lidas antes de serem inicializadas. Cada linha do conjunto deve aparecer uma vez.",
+ "code": "",
+ "hint": "Identifique o que cada linha lê e o que ela define. A saída depende da média; a média depende da soma.",
+ "minutes": 4,
+ "lines": [
+  {
+   "id": "mostrar",
+   "code": "console.log(media);"
+  },
+  {
+   "id": "dividir",
+   "code": "const media = soma / 3;"
+  },
+  {
+   "id": "entradas",
+   "code": "const primeira = 7, segunda = 9, terceira = 5;"
+  },
+  {
+   "id": "somar",
+   "code": "const soma = primeira + segunda + terceira;"
+  }
+ ]
+},
+{
+ "id": "passos-corrigir-media",
+ "language": "javascript",
+ "lessonIds": [
+  "passos"
+ ],
+ "skillIds": [
+  "javascript.decomposicao.conservacao"
+ ],
+ "afterBlock": 8,
+ "kind": "debug",
+ "capability": "depuracao",
+ "requiresConcept": true,
+ "title": "A soma cresceu, mas o divisor ficou antigo",
+ "prompt": "Corrija mediaTres(primeira, segunda, terceira) para devolver a média aritmética das três entradas. As notas são números finitos de 0 a 10, inclusive frações. Preserve zero, não arredonde e não dependa das notas do exemplo. O molde está dado: acompanhe soma e quantidade. Várias chamadas devem ser independentes; a verificação executa JavaScript real.",
+ "code": "function mediaTres(primeira, segunda, terceira) {\n  const soma = primeira + segunda + terceira;\n  return soma / 2;\n}",
+ "hint": "Uma etapa intermediária pode estar correta e o resultado final continuar errado. Compare o conjunto somado com a quantidade usada na divisão.",
+ "minutes": 5
+},
+{
  "id": "sql-depurar-clientes-pagos",
  "language": "sql",
  "lessonIds": [

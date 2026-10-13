@@ -35,7 +35,7 @@ type Roteiro={
 const roteiros:Record<string,Roteiro>={
   "programar": {
     "contexto": "Programar começa muito antes de escolher uma linguagem: começa quando você transforma uma intenção vaga em instruções observáveis. Nesta aula, o objetivo é perceber por que o computador executa exatamente o que foi escrito, sem completar mentalmente aquilo que ficou implícito.",
-    "modelo": "Imagine o programa como uma sequência de mudanças de estado. Cada instrução recebe um estado anterior, faz uma ação permitida pela linguagem e deixa um novo estado para a próxima instrução. Ler código bem é acompanhar essa transformação, e não apenas reconhecer palavras.",
+    "modelo": "Imagine o programa como uma sequência de mudanças de estado. Cada instrução recebe um estado anterior, faz uma ação permitida pela linguagem e deixa um novo estado para a próxima instrução. Ler código bem é acompanhar essa transformação, e não apenas reconhecer palavras. Uma chamada console.log registra uma saída; repetir a chamada repete a saída. As aspas delimitam o texto, enquanto um nome sem aspas precisa ter sido definido. Registrar Aquecer água não aquece água nem controla um aparelho: o efeito implementado aqui é apresentar texto.",
     "passos": [
       "Defina em uma frase o resultado que deve existir no final.",
       "Liste as ações mínimas necessárias para chegar ao resultado.",
@@ -53,7 +53,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "entrada-saida": {
     "contexto": "Quase todo software pode ser entendido como um fluxo de dados: alguma informação entra, regras transformam essa informação e um resultado aparece. Separar essas três etapas evita misturar leitura, cálculo e apresentação no mesmo raciocínio.",
-    "modelo": "Pense em uma caixa com três lados visíveis. À esquerda estão as entradas; dentro da caixa estão as regras; à direita estão as saídas. Quando um resultado está errado, essa imagem ajuda a perguntar se o dado entrou errado, se a transformação está errada ou se apenas a apresentação está errada.",
+    "modelo": "Pense em uma caixa com três lados visíveis. À esquerda estão as entradas; dentro da caixa estão as regras; à direita estão as saídas. Quando um resultado está errado, essa imagem ajuda a perguntar se o dado entrou errado, se a transformação está errada ou se apenas a apresentação está errada. No mini caixa, quantidade multiplica preço por unidade; frete é custo fixo e entra depois, uma única vez. Quantidade zero zera o subtotal, mas não elimina esse custo no contrato da atividade. Na correção usamos centavos inteiros: 1200 representa 12 reais, sem conversão de moeda ou arredondamento. O molde function calcularTotal(quantidade, precoUnitario, frete) já recebe as entradas; return devolve o resultado do cálculo para a verificação. Por enquanto concentre a alteração nessa transformação; a aula de funções retoma o mecanismo com profundidade.",
     "passos": [
       "Nomeie todas as entradas antes de calcular.",
       "Confirme o tipo e a unidade de cada entrada.",
@@ -71,7 +71,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "passos": {
     "contexto": "Problemas parecem difíceis quando várias decisões são tratadas como uma única coisa. Decompor significa transformar um objetivo grande em resultados menores que podem ser compreendidos, testados e combinados.",
-    "modelo": "Visualize o problema como um mapa de dependências. O resultado final depende de resultados intermediários; cada resultado intermediário depende de dados menores. Quando você consegue desenhar essas dependências, a implementação deixa de ser um salto e vira uma sequência.",
+    "modelo": "Visualize o problema como um mapa de dependências. O resultado final depende de resultados intermediários; cada resultado intermediário depende de dados menores. Quando você consegue desenhar essas dependências, a implementação deixa de ser um salto e vira uma sequência. As notas precisam existir antes de calcular a soma, e a soma antes de calcular a média: ler uma const antes de sua inicialização falha durante a execução. Acrescentar uma nota muda tanto a soma quanto a quantidade usada na divisão. Na atividade de correção, mediaTres já recebe três notas; acompanhe soma e return sem trocar a média por uma resposta fixa. Zero participa da média, frações não devem ser arredondadas e cada chamada começa com suas próprias entradas.",
     "passos": [
       "Escreva qual é a pergunta final que o programa precisa responder.",
       "Liste os dados indispensáveis para responder a essa pergunta.",

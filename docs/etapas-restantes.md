@@ -2,15 +2,15 @@
 
 ## Como ler a contagem
 
-Há **17 frentes abertas** no pedido integral: oito linguagens, seis percursos de engenharia, interatividade, correção automática, e implantação. A sincronização local foi concluída nesta entrega. Uma frente pode exigir várias aulas, problemas e entregas. Esta contagem não é uma estimativa de horas nem de aulas restantes; entradas introduzidas da matriz também não representam assuntos únicos.
+A edição a concluir usa o catálogo existente, os seis percursos de engenharia e os oito projetos. A orientação de 12 de outubro substitui a expansão sem limite: aprofundar aprendizagem, prática, correção e estabilidade sem aumentar aulas por quantidade. A [fila gerada de aulas sem pausas](aulas-sem-pratica.md) identifica cada lacuna e sua prioridade; as [métricas geradas](metricas-catalogo.md) são a fonte das contagens atuais.
 
-A edição atual já entrega conteúdo e mecanismos funcionais. Para declarar uma próxima edição pronta, delimite sua cobertura, transforme os mecanismos em aulas e prática próprias, execute os gabaritos e fluxos, revise os resultados e confira a integração. O pedido de todos os ecossistemas e especializações ainda não tem uma lista finita auditada que permita afirmar "faltam exatamente N aulas".
+Encerrar uma lacuna exige habilidade concreta, teoria que prepare a tentativa, previsão/diagnóstico/alteração quando adequados, casos de borda, feedback, assistência, revisão e aplicação. Ter uma pausa não encerra uma aula. Concluir esta edição exige cobertura ativa próxima de completa, fundamentos densos, projetos utilizáveis e percursos consistentes, exemplos comprovados, nenhuma inconsistência grave conhecida, documentação sincronizada e validação de CI, produção, offline, dados locais, acessibilidade e responsividade. A auditoria final acontece depois da implementação; não há meta de cobrir tudo que existe em programação.
 
 ## Mapa de trabalho
 
-| # | Frente aberta | Próximo aprofundamento | Evidência para encerrar uma entrega |
+| # | Área da edição | Aprofundamento nas aulas existentes | Evidência para encerrar uma entrega |
 | --- | --- | --- | --- |
-| 1 | HTML | Arquivos e legendas reais; componentes acessíveis além do diálogo; integração de formulários. | Aulas próprias com documentos, testes de teclado/validade e exercícios aplicados. |
+| 1 | HTML | Arquivos e legendas reais; componentes acessíveis além do diálogo; integração de formulários. | Aulas existentes aprofundadas com documentos, testes de teclado/validade e exercícios aplicados. |
 | 2 | CSS | Consultas de estilo e scroll-state; contenção intrínseca; outros eixos de escrita; compatibilidade e layouts complexos. | Consultas de tamanho foram integradas e verificadas no domínio. Ampliar medidas computadas, navegação e práticas próprias por mecanismo. |
 | 3 | JavaScript | Descritores e protótipos; internacionalização; workers/cancelamento; módulos por host. | Programas executados, bordas e erros reais, depuração específica e projetos progressivos. |
 | 4 | TypeScript | Ampliar módulos para CommonJS, pacotes/exports e outros hosts; bibliotecas reais; tipos aninhados e contratos avançados. | Node ESM/extensões/alias/import type já têm prática e artefatos conferidos. Ampliar strict, casos negativos e consumidores reais; a bancada local foi integrada na PR #34 e verificada no domínio; projetos de múltiplos arquivos continuam abertos. |
@@ -30,10 +30,12 @@ A edição atual já entrega conteúdo e mecanismos funcionais. Para declarar um
 
 ## Ordem imediata
 
-1. Conferir o CI do checkpoint e a main atual antes de editar.
-2. Priorizar o motor meteorológico solicitado: evidência, continuidade, fontes viáveis, testes e verificação publicada. Esta frente ambiental é adicional às 17 frentes curriculares/de implantação acima; seus limites estão em docs/meteorologia.md.
-3. As expansões até a PR #33 permanecem integradas. C# de iteradores, CSS de caixas, descritores Python e correção dos rascunhos foram integrados pela PR #28; a bancada Git pela #29. CI completo e SHA de produção foram conferidos. Onze fluxos públicos passaram no lote e o cenário restante de exportação passou isoladamente após corrigir a espera com downloads repetidos. O registro detalhado está em continuidade.md. Essas entregas não encerram linguagens ou todos os percursos.
-4. A bancada HTTP da PR #30 está integrada com árvore e deployment/SHA conferidos e três fluxos públicos aprovados. A revisão de chegada/conclusão e as pausas C++ foram integradas na PR #31, com CI e domínio conferidos. SQLite local foi integrado na #32 e formulários HTML na #33, também com CI e fluxos publicados. O laboratório TypeScript foi integrado na #34 com seis fluxos públicos aprovados; a importação JavaScript foi integrada na #35 com dois fluxos públicos aprovados. Laços originais e preparação diária foram integrados na #36, com CI completo, árvore, SHA/READY e quatro fluxos públicos conferidos. Seguir distribuindo prática, demais experiências Git/HTTP, diagnóstico e projetos. A aula de memória C++ já tinha uma pausa; os novos recortes aprofundam sua prática sem reduzir a quantidade de aulas ainda sem pausas.
+1. Conferir main, PRs, revisões, workflows e deployment reais antes de editar. Resolver entregas pendentes pelo head atual; manter testes e limites.
+2. Integrar somente árvore verificada, confirmar deployment READY, SHA e alias e executar os fluxos públicos relevantes. O CI não substitui essa conferência.
+3. Seguir a fila gerada: fundamentos comuns, fundamentos/aplicações de cada linguagem, consolidação e engenharia/especialização. Agrupar por aula ou assunto; preferir previsão, diagnóstico e produção sem forçar perguntas superficiais.
+4. Fortalecer os corretores e as referências executadas dentro de cada grupo. Preservar as bancadas TypeScript, SQLite, Git e HTTP já entregues; desenvolver os percursos e projetos existentes quando a aplicação das aulas exigir.
+5. Manter clima e mundo funcionais, corrigindo regressões concretas. A expansão ambiental deixa de ser a prioridade de conclusão; as limitações honestas das fontes continuam em meteorologia.md.
+6. Depois da cobertura e das validações incrementais, realizar a auditoria final pelos critérios desta edição. Histórico de integrações, falhas e evidências permanece em continuidade.md e no Git.
 
 ## Limites que continuam explícitos
 

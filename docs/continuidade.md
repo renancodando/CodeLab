@@ -1,5 +1,29 @@
 # Continuidade do CODELAB
 
+## Ordem diária dos fundamentos em conferência
+
+O primeiro CI da PR #47 (38398882591, head 95745b5) executou 875 testes: 873 passaram e dois esperavam que Valores fosse a primeira aula disponível. As novas pausas tornam Programar, Entrada/saída e Decomposição anteriores na fila, seguindo o catálogo. Os testes agora exigem a sequência pedagógica, os conceitos fundamentais obrigatórios, a preparação de cada assunto e ausência de domínio pela leitura. Acrescentam a preservação explícita de um plano anterior iniciado em Valores. O comportamento da sessão e seus limites permanecem; os testes de navegador também verificam a preparação de Valores sem desviar de sua leitura completa.
+
+Sete testes de ordem diária e seis fluxos Edge afetados passaram, estes em 44,7 s. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 216,41 kB gzip e mundo 135,93 kB gzip. A regressão local completa ficou em 874/876: memória QuickJS (25 s) e geração de métricas (10 s) expiraram também na execução isolada. Os logs com falhas foram preservados e nenhum prazo foi ampliado. O CI pós-merge de main 38397508622 passou nos cinco jobs, mas não aprova este novo head: a PR ainda exige seu próprio CI completo, revisão, árvore e publicação.
+
+## Correção SQL integrada e publicada em 13 de outubro
+
+A PR #46 foi integrada em 449b0b89137cfafc3c21380dd9db3b2de97dc884. A árvore a3a4d2653269740a064a1f2f396cd0ac7e08253b é idêntica ao head 040c88d27ff2e4e7e6b2b030b9fa46d471a4625a e ao merge previsto, com pais conferidos. O CI 38333281146 passou nos cinco jobs: 839 testes unitários em 55 arquivos, 160 testes de navegador (70/39/51), 194 exemplos externos, oito bases PostgreSQL dos gabaritos SQL e os cenários anteriores de compiladores, sessões, Git e API/cache. A revisão sobre alterações da base foi corrigida e resolvida neste head. Main local foi sincronizada por fast-forward.
+
+Deployment dpl_CMx7G5raNEuFUWQKbeWFSVubDY54 READY/production, gitSource.sha igual ao merge e alias code-lab-omega.vercel.app conferidos. Os sete fluxos Edge públicos passaram em 4,0 min: laboratório, correção real, alternativas, mutações recusadas, limites, cancelamento, falha de carga, retomada, assistência, persistência e offline preparado. O grupo de fundamentos ainda não está publicado: sua branch foi atualizada com main sem mudar a árvore de conteúdo já validada (f597e0126150e6c58dae80646978de1962d17387). Os registros abaixo preservam as pendências existentes no momento de cada validação, não a situação atual da publicação.
+
+## Primeiras aulas em validação local
+
+Branch pratica/fundamentos-ativos, dependente da correção SQL #46. A fila gerada em aulas-sem-pratica.md lê as definições reais e prioriza fundamentos comuns, aplicações por linguagem, consolidação e especialização. O build rejeita lista e métricas divergentes, vínculos inválidos e duplicação de ids. Contagens correntes ficam nas métricas; a lista descreve o checkout e não confirma publicação.
+
+programar, entrada-saida e passos preservam os 12 capítulos, exemplos e projetos de cada aula e recebem nove pausas após os blocos 3/6/8. Ordem, texto/identificador, custo fixo, zero, dependências e média são preparados na teoria. Total com frete e média têm quatro famílias executadas em QuickJS; decisões e reconstruções continuam conceituais. O corretor da média aceita diferenças de poucos arredondamentos binários dentro do contrato, sem aceitar arredondamento decimal, texto ou NaN. Referências e contraexemplos foram executados nos testes.
+
+Passaram 129 testes específicos em quatro arquivos; o teste ampliado do gerador passou novamente, e 18 testes do catálogo confirmaram também que suas habilidades cabem nos limites de progresso/backup. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 216,41 kB gzip, mundo 135,93 kB gzip. Quatro fluxos Edge passaram em 45,6 s: as três aulas e regressão de funções, com erro/acerto, equivalência, reconstrução por teclado, assistência, revisão, persistência, offline e 220–4000 px. Axe não registrou violações no conteúdo da primeira aula após corrigir somente duas cores de números de capítulos. A tentativa anterior detectou contraste insuficiente e permanece registrada. CI, integração e produção deste grupo ainda são pendentes.
+
+Referências: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/const, https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/return e https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON.
+
+A proteção SQL do head 040c88d foi incorporada sem perder as primeiras aulas. A validação conjunta passou em 188 testes de sete arquivos, strict/build e 11 fluxos Edge (1,7 min), com o mesmo orçamento inicial de 216,41 kB gzip. O conflito de continuidade preservou os registros das duas entregas. A dependência #46 ainda exige sua integração e produção; esta branch também precisa de CI, revisão e publicação próprios.
+
 ## Revisão da correção SQL: consultas não alteram a base
 
 A revisão #46 demonstrou que DELETE seguido de um relatório podia passar ao modificar a entrada. O preparo agora chega separado do SQL do aluno. O motor prepara a base, ativa query_only e usa o parser SQLite para exigir uma única consulta SELECT/WITH antes de percorrer o resultado. Comentários e ponto e vírgula em literais continuam válidos; transações, PRAGMAs, comandos extras e alterações de dados são recusados. WITH seguido de DELETE também encontra a guarda nativa de escrita. O laboratório livre preserva seus scripts, transações e alterações: esse recorte só é ativado pela base de um exercício.

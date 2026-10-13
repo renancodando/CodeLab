@@ -4,8 +4,56 @@
   "aulasOriginais": 60,
   "aulasAprofundadas": 77,
   "problemasIndependentes": 58,
-  "atividadesCorrigiveis": 105,
-  "aulasComPausas": 61,
+  "atividadesCorrigiveis": 114,
+  "aulasComPausas": 64,
+  "aulasSemPausas": 73,
+  "coberturaPorLinguagem": {
+    "cpp": {
+      "aulas": 10,
+      "comPausas": 8,
+      "semPausas": 2
+    },
+    "csharp": {
+      "aulas": 14,
+      "comPausas": 6,
+      "semPausas": 8
+    },
+    "css": {
+      "aulas": 15,
+      "comPausas": 7,
+      "semPausas": 8
+    },
+    "html": {
+      "aulas": 19,
+      "comPausas": 5,
+      "semPausas": 14
+    },
+    "javascript": {
+      "aulas": 30,
+      "comPausas": 15,
+      "semPausas": 15
+    },
+    "python": {
+      "aulas": 10,
+      "comPausas": 10,
+      "semPausas": 0
+    },
+    "sql": {
+      "aulas": 14,
+      "comPausas": 6,
+      "semPausas": 8
+    },
+    "text": {
+      "aulas": 15,
+      "comPausas": 0,
+      "semPausas": 15
+    },
+    "typescript": {
+      "aulas": 10,
+      "comPausas": 7,
+      "semPausas": 3
+    }
+  },
   "linguagens": [
     "cpp",
     "csharp",
@@ -29,7 +77,7 @@
     "csharp": 12,
     "css": 9,
     "html": 9,
-    "javascript": 25,
+    "javascript": 34,
     "python": 21,
     "sql": 8,
     "typescript": 9
