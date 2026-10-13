@@ -32,6 +32,21 @@ describe('consultas do aluno executadas em SQLite real',()=>{
   const alternativa='SELECT p.id AS pedido_id,coalesce((SELECT sum(i.centavos) FROM itens i WHERE i.pedido_id=p.id),0) AS itens,coalesce((SELECT sum(pg.centavos) FROM pagamentos pg WHERE pg.pedido_id=p.id),0) AS pagamentos FROM pedidos p ORDER BY p.id;';
   expect((await evaluatePractice('sql-depurar-totais-colecoes',alternativa)).passed).toBe(true);
  });
+ it.each([
+  "DELETE FROM pedidos WHERE status <> 'pago';"+contar.replace(" AND p.status='pago'",''),
+  "UPDATE pedidos SET status='pago';"+contar,
+  'CREATE TABLE outra(n);'+contar,
+  'PRAGMA query_only=OFF;'+contar,
+  'BEGIN;'+contar+'COMMIT;',
+  contar+' DELETE FROM pedidos;'
+ ])('recusa mudar a base ou configurar o banco antes/depois do relatório: %s',async codigo=>{
+  const resultado=await evaluatePractice('sql-depurar-clientes-pagos',codigo);expect(resultado.passed).toBe(false);expect(resultado.status).toBe('evaluated');expect(resultado.execution).toBe('sqlite');expect(resultado.feedback).toContain('uma única consulta');
+  expect((await evaluatePractice('sql-depurar-clientes-pagos',contar)).passed).toBe(true);
+ });
+ it('comentários, ponto e vírgula em literal e CTE de leitura não são comandos extras',async()=>{
+  const codigo="-- comentário ; DELETE FROM pedidos;\n/* ; PRAGMA query_only=OFF */ WITH exemplo AS(SELECT 'a;b' AS texto) "+contar;
+  expect((await evaluatePractice('sql-depurar-clientes-pagos',codigo)).passed).toBe(true);
+ });
  it('aceita aliases em maiúsculas e números inteiros sem perder a comparação BigInt',async()=>{
   expect((await evaluatePractice('sql-depurar-clientes-pagos',contar.replace('AS cliente_id','AS CLIENTE_ID').replace('AS pagos','AS PAGOS'))).passed).toBe(true);
  });

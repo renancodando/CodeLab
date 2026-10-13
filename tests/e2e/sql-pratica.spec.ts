@@ -10,6 +10,7 @@ test('SQL corrigível: resultados reais, solução alternativa, offline, assist�
  await pagina.goto('/');await expect(pagina.locator('#offline-status')).toHaveText('Conteúdo preparado para estudar offline.',{timeout:45000});await pagina.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));await abrir(pagina);
  await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);const contagem=await conferir(pagina,idContagem);await expect(contagem.locator('.practice-feedback')).toContainText('desapareceu');await expect(contagem.locator('[data-help] pre')).toHaveCount(0);
  await conferir(pagina,idContagem,'SELECT FROM;');await expect(contagem.locator('.practice-feedback')).toContainText('syntax error');await expect(contagem.locator('.practice-feedback')).not.toContainText('não carregou');
+ await conferir(pagina,idContagem,"DELETE FROM pedidos WHERE status <> 'pago';"+solucoesSql[idContagem].replace(" AND p.status='pago'",''));await expect(contagem.locator('.practice-feedback')).toContainText('uma única consulta');
  await conferir(pagina,idContagem,solucoesSql[idContagem]);await expect(contagem.locator('.practice-feedback')).toContainText('Comportamento avaliado em SQLite local isolado');await expect(contagem.locator('.practice-feedback')).not.toContainText('executor JavaScript');
  await contexto.setOffline(true);
  try{

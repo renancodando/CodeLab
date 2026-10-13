@@ -28,12 +28,12 @@ export const cenariosSql:Record<string,CenarioSql[]>={
 function mesmoValor(valor:CelulaSql,esperado:number|string|null){
  return valor===esperado||(typeof valor==='bigint'&&typeof esperado==='number'&&Number.isSafeInteger(esperado)&&valor===BigInt(esperado));
 }
-export async function conferirConsultaSql(id:string,codigo:string,consultar:(codigo:string)=>Promise<ResultadoSql>,sinal?:AbortSignal):Promise<ConferenciaSql>{
+export async function conferirConsultaSql(id:string,codigo:string,consultar:(codigo:string,preparacao:string)=>Promise<ResultadoSql>,sinal?:AbortSignal):Promise<ConferenciaSql>{
  if(!Object.hasOwn(cenariosSql,id))throw new Error('Atividade SQL indisponível.');
  const verificacoes:{label:string;passed:boolean}[]=[];
  for(const cenario of cenariosSql[id]??[]){
   if(sinal?.aborted)throw new Error('Consulta cancelada.');
-  const resposta=await consultar(cenario.preparacao+'\n'+codigo);
+  const resposta=await consultar(codigo,cenario.preparacao);
   if(sinal?.aborted)throw new Error('Consulta cancelada.');
   if(resposta.erro)throw new Error(resposta.erro);
   const tabela=resposta.tabelas[0];
@@ -49,16 +49,16 @@ export async function avaliarPraticaSql(id:string,codigo:string,base:PracticeRes
  const cancelar=()=>cancelarConsulta?.();
  sinal?.addEventListener('abort',cancelar,{once:true});
  try{
-  let consultar:(codigo:string)=>Promise<ResultadoSql>;
+  let consultar:(codigo:string,preparacao:string)=>Promise<ResultadoSql>;
   if(typeof window==='undefined'){
    const [{default:iniciarSql},{executarConsultaSql}]=await Promise.all([import('sql.js'),import('../execution/motor-sql')]);
    const SQL=await iniciarSql();carregamentoFalhou=false;
-   consultar=async codigo=>executarConsultaSql(SQL,codigo);
+   consultar=async(codigo,preparacao)=>executarConsultaSql(SQL,codigo,preparacao);
   }else{
    if(typeof Worker==='undefined')throw new Error('O navegador não oferece o isolamento necessário para SQLite.');
-   consultar=async codigo=>{
+   consultar=async(codigo,preparacao)=>{
     carregamentoFalhou=true;
-    const consulta=executarSqlLocal(codigo,prazoCarregamento);cancelarConsulta=consulta.cancelar;
+    const consulta=executarSqlLocal(codigo,prazoCarregamento,preparacao);cancelarConsulta=consulta.cancelar;
     try{const resposta=await consulta.resultado;carregamentoFalhou=resposta.faseErro==='carregamento';return resposta;}
     finally{cancelarConsulta=undefined;}
    };

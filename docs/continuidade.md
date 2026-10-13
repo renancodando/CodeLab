@@ -10,6 +10,14 @@ Passaram 129 testes específicos em quatro arquivos; o teste ampliado do gerador
 
 Referências: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/const, https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/return e https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON.
 
+## Revisão da correção SQL: consultas não alteram a base
+
+A revisão #46 demonstrou que DELETE seguido de um relatório podia passar ao modificar a entrada. O preparo agora chega separado do SQL do aluno. O motor prepara a base, ativa query_only e usa o parser SQLite para exigir uma única consulta SELECT/WITH antes de percorrer o resultado. Comentários e ponto e vírgula em literais continuam válidos; transações, PRAGMAs, comandos extras e alterações de dados são recusados. WITH seguido de DELETE também encontra a guarda nativa de escrita. O laboratório livre preserva seus scripts, transações e alterações: esse recorte só é ativado pela base de um exercício.
+
+Passaram 134 testes específicos em quatro arquivos, incluindo a reprodução da revisão, mutações antes/depois da consulta, comentários/CTE, a proteção nativa e o laboratório anterior. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 212,55 kB gzip, mundo 135,92 kB gzip. O primeiro CI do head 55565d5 passou nos testes/compilação e nas oito bases PostgreSQL, mas não aprova o head revisado. Os sete fluxos Edge locais passaram em 1,6 min, incluindo a tentativa de alterar a base e a regressão do laboratório. Revisão e CI completo do novo commit devem ser conferidos antes de integrar.
+
+Referências: [parser sql.js](https://sql.js.org/documentation/Database.html#iterateStatements) e [query_only](https://www.sqlite.org/pragma.html#pragma_query_only). A guarda limita o contrato dos exercícios; os casos e a implementação continuam inspecionáveis no cliente.
+
 ## Escopo de conclusão definido em 12 de outubro
 
 A orientação humana atual fixa esta edição no catálogo existente: aprofundar e distribuir prática nas 137 aulas, nos seis percursos e nos oito projetos, sem aumentar o catálogo por quantidade. O trabalho começa pela integração das entregas pendentes, depois reduz as aulas sem pausas por prioridade pedagógica. Uma pausa não encerra uma aula nem uma linguagem. Leitura não gera domínio; assistência, evidência conceitual, execução real e revisão continuam distintas.
