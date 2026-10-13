@@ -17,7 +17,7 @@ export type AssessmentEvidence = {
 export type ReviewSchedule = {stage:number; dueDay:string; lastDay:string; lastOutcome:'passed'|'failed'|'assisted'};
 export type SkillProgress = {evidence:Record<string,AssessmentEvidence>; review:ReviewSchedule};
 export type DailyItem = {id:string;kind:'review'|'concept'|'practice'|'challenge';activityId:string;skillId?:string;minutes:number};
-export type DailySession = {day:string; items:DailyItem[]; completed:string[]; totalMinutes:number};
+export type DailySession = {day:string; items:DailyItem[]; completed:string[]; totalMinutes:number;iniciada?:boolean};
 export type AdaptiveState = {version:1;skills:Record<string,SkillProgress>;eventIds:string[];seenConcepts:string[];daily?:DailySession};
 export type SkillDefinition = {id:string;label:string;path:string[];prerequisites?:string[]};
 export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[];requiredConcepts?:string[];incluiConceitos?:string[];preparacaoAteBloco?:number;ordem?:number};
@@ -63,6 +63,7 @@ function parseSchedule(value:unknown,strict:boolean):ReviewSchedule|undefined {
 }
 function parseDaily(value:unknown,strict:boolean):DailySession|undefined {
  if(!ownRecord(value)||!dayValid(value.day)||!Array.isArray(value.items)||value.items.length>6||!uniqueIds(value.completed,6))return;
+ if(strict&&value.iniciada!==undefined&&typeof value.iniciada!=='boolean')return;
  const items:DailyItem[]=[];
  for(const item of value.items){
   if(!ownRecord(item)||!safeId(item.id)||!safeId(item.activityId)||typeof item.kind!=='string'||!['review','concept','practice','challenge'].includes(item.kind)||!count(item.minutes,1,60)||item.kind==='review'&&!safeId(item.skillId)||item.kind!=='review'&&item.skillId!==undefined||strict&&!known(item,['id','kind','activityId','skillId','minutes']))return;
@@ -73,8 +74,8 @@ function parseDaily(value:unknown,strict:boolean):DailySession|undefined {
  const kinds=items.map(item=>item.kind);const rank={review:0,concept:1,practice:2,challenge:3};
  if(kinds.some((kind,i)=>i>0&&rank[kind]<rank[kinds[i-1]])||kinds.filter(kind=>kind==='review').length>2||kinds.filter(kind=>kind==='concept').length>1||kinds.filter(kind=>kind==='practice').length>2||kinds.filter(kind=>kind==='challenge').length>1)return;
  const totalMinutes=items.reduce((sum,item)=>sum+item.minutes,0);
- if(strict&&(!known(value,['day','items','completed','totalMinutes'])||value.totalMinutes!==totalMinutes))return;
- return {day:value.day,items,completed:[...value.completed],totalMinutes};
+ if(strict&&(!known(value,['day','items','completed','totalMinutes','iniciada'])||value.totalMinutes!==totalMinutes))return;
+ return {day:value.day,items,completed:[...value.completed],totalMinutes,...(typeof value.iniciada==='boolean'?{iniciada:value.iniciada}:{})};
 }
 function readAdaptive(raw:unknown,strict:boolean):AdaptiveState {
  const result=freshAdaptive();if(raw===undefined)return result;

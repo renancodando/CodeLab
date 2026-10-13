@@ -25,14 +25,26 @@ test('SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou 
  await expect(leitura.locator('[data-practice]')).toHaveCount(0);
  await expect(leitura.getByRole('heading',{name:'Solução de referência',exact:true})).toHaveCount(0);
  await pagina.getByRole('button',{name:'Concluir leitura e praticar',exact:true}).click();
+ await expect(pagina.locator('[data-language]')).toBeDisabled();
+ await pagina.locator('[data-language]').evaluate(elemento=>{(elemento as HTMLSelectElement).value='javascript';elemento.dispatchEvent(new Event('change',{bubbles:true}));});
+ await expect(pagina.locator('[data-language]')).toHaveValue('sql');
  await expect(pagina.locator('[data-practice="sql-corrigir-obrigatoriedade"]')).toBeVisible();
  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
- expect(salvo.adaptive.daily).toEqual(estado.daily);
+ expect(salvo.adaptive.daily).toEqual({...estado.daily,iniciada:true});
  expect(salvo.adaptive.seenConcepts).toEqual([antigo,preparacao.id]);
  expect(salvo.adaptive.skills).toEqual({});
  await pagina.reload();
+ await expect(pagina.locator('[data-language]')).toBeDisabled();
  await expect(pagina.locator('[data-practice="sql-corrigir-obrigatoriedade"]')).toBeVisible();
  await expect(pagina.locator('[data-seen]')).toHaveCount(0);
+ await pagina.goto('/#/perfil');const baixando=pagina.waitForEvent('download');await pagina.locator('#export-progress').click();
+ const download=await baixando,fluxo=await download.createReadStream(),partes:Buffer[]=[];for await(const parte of fluxo!)partes.push(Buffer.from(parte));const copia=Buffer.concat(partes);
+ expect(JSON.parse(copia.toString()).adaptive.daily).toEqual({...estado.daily,iniciada:true});
+ await pagina.evaluate(()=>localStorage.removeItem('codelab.progress.v2'));await pagina.reload();
+ expect(await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')??'null')?.adaptive?.daily?.iniciada)).not.toBe(true);
+ await pagina.locator('#import-progress').setInputFiles({name:'sessao-antiga.json',mimeType:'application/json',buffer:copia});await pagina.getByRole('button',{name:'Restaurar jornada',exact:true}).click();await expect(pagina.getByRole('button',{name:'Restaurar jornada',exact:true})).toHaveCount(0);
+ await pagina.goto('/#/diaria');await expect(pagina.locator('[data-language]')).toBeDisabled();await expect(pagina.locator('[data-practice="sql-corrigir-obrigatoriedade"]')).toBeVisible();
+ const recuperado=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).adaptive);expect(recuperado.daily).toEqual({...estado.daily,iniciada:true});expect(recuperado.skills).toEqual({});
 });
 
 test('SQL: ausência e contratos retomam offline sem fingir execução de consultas',async({page:pagina,context:contexto})=>{

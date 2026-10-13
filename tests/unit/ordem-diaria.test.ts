@@ -1,6 +1,6 @@
 import {it,expect} from 'vitest';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
-import {buildDailySession,ensureDailySession,freshAdaptive,markConceptSeen,recordEvidence,prepareAdaptiveBackup,type AdaptiveCatalog} from '../../src/learning/adaptive';
+import {buildDailySession,ensureDailySession,freshAdaptive,markConceptSeen,recordEvidence,prepareAdaptiveBackup,normalizeAdaptive,type AdaptiveCatalog} from '../../src/learning/adaptive';
 import {planoValoresAnterior} from '../fixtures/plano-valores-anterior';
 import {planoSqlAnterior,planoLacosAnterior,planoValoresPreparadoAnterior} from '../fixtures/planos-preparacao-anteriores';
 const relogio={now:Date.parse('2026-10-11T12:00:00Z'),timeZone:'UTC'};
@@ -36,6 +36,16 @@ it('o plano iniciado em valores antes das novas pausas continua válido',()=>{
  const plano=estado.daily,conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId);
  expect(conceito?.lessonId).toBe('valores');const antes=JSON.stringify(plano);
  expect(ensureDailySession(estado,catalogo,relogio)).toBe(plano);expect(JSON.stringify(plano)).toBe(antes);expect(estado.skills).toEqual({});
+});
+it('o indicador opcional de início sobrevive ao backup sem alterar a sequência antiga',()=>{
+ const estado=freshAdaptive();estado.daily={...planoSqlAnterior('2026-10-11'),iniciada:true};
+ expect(prepareAdaptiveBackup(estado).daily).toEqual(estado.daily);expect(normalizeAdaptive(estado).daily).toEqual(estado.daily);
+ expect(prepareAdaptiveBackup({...estado,daily:{...estado.daily,iniciada:false}}).daily?.iniciada).toBe(false);
+ expect(prepareAdaptiveBackup({...estado,daily:planoSqlAnterior('2026-10-11')}).daily).toEqual(planoSqlAnterior('2026-10-11'));
+ for(const iniciada of ['true',1,{}]){
+  expect(()=>prepareAdaptiveBackup({...estado,daily:{...estado.daily,iniciada}})).toThrow();
+  expect(normalizeAdaptive({...estado,daily:{...estado.daily,iniciada}}).daily).toEqual(planoSqlAnterior('2026-10-11'));
+ }
 });
 it.each([{aula:'sql-null-logica',plano:planoSqlAnterior},{aula:'repeticoes',plano:planoLacosAnterior},{aula:'valores',plano:planoValoresPreparadoAnterior}])('conserva a sequência publicada de $aula mesmo com a nova ordem pedagógica',({aula,plano})=>{
  const estado=freshAdaptive(),preparacao=adaptiveCatalog.activities.find(a=>a.id===idPreparacao(aula))!;

@@ -8,7 +8,7 @@ Esta edição prioriza aprendizagem ativa nas aulas, percursos e projetos existe
 
 O plano novo combina a preparação dos capítulos com as práticas daquele assunto. A preparação também registra a introdução que efetivamente contém, sem evidência de domínio; a leitura antiga isolada continua sem equivaler aos capítulos posteriores. As revisões vencidas permanecem globais e anteriores ao assunto novo. Vagas não são preenchidas com exercícios de habilidades não apresentadas. Em aulas preparadas, a última pausa ocupa o desafio final; as anteriores seguem sua posição pedagógica.
 
-Os planos já iniciados conservam sequência, tipos e tempos, inclusive quando uma atividade passa de prática a desafio ou no sentido inverso. Uma conferência correta da mesma atividade na aula pode concluir a etapa antiga; falha e resposta em modo revisão não concluem uma prática pendente. O progresso e a importação/exportação mantêm o formato existente. Validação e publicação desta correção são registradas em continuidade.md.
+Os planos já iniciados conservam sequência, tipos e tempos, inclusive quando uma atividade passa de prática a desafio ou no sentido inverso. Uma conferência correta da mesma atividade na aula pode concluir a etapa antiga; falha e resposta em modo revisão não concluem uma prática pendente. A preparação também inicia um plano antigo sem concluir seus exercícios nem atribuir domínio. A sessão ganha um indicador opcional de início, preservado no backup; a versão do progresso permanece e dados anteriores sem o indicador continuam válidos. Validação e publicação desta correção são registradas em continuidade.md.
 
 ## Coleções C# publicadas em 12 de outubro
 
