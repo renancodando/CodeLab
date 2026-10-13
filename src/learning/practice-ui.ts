@@ -1,4 +1,4 @@
-import {practiceActivities} from '../content/practice';
+import {practiceActivities,tipoNaSessao} from '../content/practice';
 import {evaluatePractice,getPracticeSolution} from './practice';
 import {recordEvidence,learningDay} from './adaptive';
 import {emptyPracticeAnswer} from './activity-state';
@@ -43,7 +43,7 @@ export function mountPractice(container:HTMLElement,id:string,options:Options={}
  container.querySelector('[data-hint]')!.addEventListener('click',()=>{a.hints=Math.max(a.hints,1);persist();showHelp();});
  container.querySelector('[data-solution]')!.addEventListener('click',()=>{
   const attempted=a.attempts>0||activity.skillIds.some(skill=>Boolean(progress.adaptive.skills[skill]?.evidence[id]));a.assisted=true;persist();showHelp();
-  if(attempted){const current=learningClock();recordEvidence(progress.adaptive,{id:id+'-solucao-'+current.now,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:a.passed,assisted:true,attempts:Math.max(1,a.attempts),hints:a.hints,kind:options.mode??(activity.afterBlock===5?'challenge':'practice')},current);persisted=saveProgress()&&persisted;}
+  if(attempted){const current=learningClock();recordEvidence(progress.adaptive,{id:id+'-solucao-'+current.now,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:a.passed,assisted:true,attempts:Math.max(1,a.attempts),hints:a.hints,kind:options.mode??tipoNaSessao(activity)},current);persisted=saveProgress()&&persisted;}
   feedback.textContent=attempted?'A consulta foi registrada como assistência. A revisão retorna em um dia; reconstrua sem consultar.':'Esta tentativa será assistida. Reconstrua sem consultar em uma revisão futura.';if(!persisted)feedback.textContent+=' A alteração está em memória; exporte a jornada antes de sair.';
  });
  form.addEventListener('submit',async event=>{
@@ -52,7 +52,7 @@ export function mountPractice(container:HTMLElement,id:string,options:Options={}
    const result=await evaluatePractice(id,submitted,controller.signal);if(disposed)return;
    if(result.status!=='evaluated'){feedback.textContent=result.feedback;return;}
    if(JSON.stringify(a.value)!==JSON.stringify(submitted)){feedback.textContent='Sua resposta mudou. Confira a versão atual.';return;}
-   a.attempts++;a.passed=result.passed;persist();const current=learningClock(),mode=options.mode??(activity.afterBlock===5?'challenge':'practice');
+   a.attempts++;a.passed=result.passed;persist();const current=learningClock(),mode=options.mode??tipoNaSessao(activity);
    const evidence=recordEvidence(progress.adaptive,{id:id+'-'+current.now+'-'+a.attempts,assessmentId:id,activityId:id,skillIds:activity.skillIds,revision:1,passed:result.passed,assisted:a.assisted,attempts:a.attempts,hints:a.hints,kind:mode},current);persisted=saveProgress()&&persisted;
    feedback.textContent=result.feedback+'\n'+result.tests.map(t=>(t.passed?'✓ ':'↻ ')+t.label).join('\n')+'\n'+(result.execution==='sqlite'?'Comportamento avaliado em SQLite local isolado; não é execução PostgreSQL.':result.evidence==='executed'?'Comportamento avaliado no executor JavaScript isolado.':'Evidência conceitual; sem execução de compilador.');if(!evidence.accepted)feedback.textContent+='\nA resposta foi conferida, mas não alterou o mapa de domínio. Confira a data do dispositivo e os dados da jornada.';if(!persisted)feedback.textContent+='\nO navegador não conseguiu salvar. A resposta e as evidências estão em memória; exporte a jornada antes de sair.';options.onEvaluated?.(result.passed);
   }catch{if(!disposed)feedback.textContent='Não foi possível conferir. Sua resposta continua nesta tela; tente novamente ou exporte a jornada antes de sair.';}

@@ -20,7 +20,7 @@ export type DailyItem = {id:string;kind:'review'|'concept'|'practice'|'challenge
 export type DailySession = {day:string; items:DailyItem[]; completed:string[]; totalMinutes:number};
 export type AdaptiveState = {version:1;skills:Record<string,SkillProgress>;eventIds:string[];seenConcepts:string[];daily?:DailySession};
 export type SkillDefinition = {id:string;label:string;path:string[];prerequisites?:string[]};
-export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[];requiredConcepts?:string[];preparacaoAteBloco?:number;ordem?:number};
+export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[];requiredConcepts?:string[];incluiConceitos?:string[];preparacaoAteBloco?:number;ordem?:number};
 export type AdaptiveCatalog = {skills:SkillDefinition[];activities:LearningActivity[];preferredLanguage?:string};
 export type EvidenceResult = {accepted:boolean;credited:boolean;reason:'recorded'|'duplicate'|'stale'|'invalid'};
 export type SkillMastery = {skillId:string;score:number|null;practiced:number;assisted:number;dueDay:string|null;stage:number};
@@ -170,17 +170,18 @@ export function recordEvidence(state:AdaptiveState,event:EvidenceEvent,clock:Lea
  state.eventIds.push(event.id);state.eventIds=state.eventIds.slice(-ADAPTIVE_LIMITS.events);
  if(state.daily?.day===day)for(const item of state.daily.items){
   const complete=item.kind==='review'?event.kind==='review'&&event.skillIds.includes(item.skillId??'')&&item.activityId===event.activityId:
-   item.kind===event.kind&&item.activityId===event.activityId&&event.passed;
+   item.kind!=='concept'&&event.kind!=='review'&&item.activityId===event.activityId&&event.passed;
   if(complete&&!state.daily.completed.includes(item.id))state.daily.completed.push(item.id);
  }
  return {accepted:true,credited,reason:'recorded'};
 }
-export function markConceptSeen(state:AdaptiveState,activityId:string,clock:LearningClock):void {
+export function markConceptSeen(state:AdaptiveState,activityId:string,clock:LearningClock,incluidos:string[]=[]):void {
  if(!safeId(activityId))return;
  const day=learningDay(clock);
- if(!state.seenConcepts.includes(activityId))state.seenConcepts.push(activityId);
+ const leituras=[activityId,...incluidos.filter(safeId).slice(0,16)];
+ for(const id of leituras)if(!state.seenConcepts.includes(id))state.seenConcepts.push(id);
  state.seenConcepts=state.seenConcepts.slice(-ADAPTIVE_LIMITS.concepts);
- if(state.daily?.day===day)for(const item of state.daily.items)if(item.kind==='concept'&&item.activityId===activityId&&!state.daily.completed.includes(item.id))state.daily.completed.push(item.id);
+ if(state.daily?.day===day)for(const item of state.daily.items)if(item.kind==='concept'&&leituras.includes(item.activityId)&&!state.daily.completed.includes(item.id))state.daily.completed.push(item.id);
 }
 function catalogActivities(catalog:AdaptiveCatalog):LearningActivity[] {
  const skills=new Set(catalog.skills.filter(skill=>safeId(skill.id)).map(skill=>skill.id));
@@ -189,13 +190,14 @@ function catalogActivities(catalog:AdaptiveCatalog):LearningActivity[] {
  return catalog.activities.filter(activity=>{
   if(activity.ordem!==undefined&&!count(activity.ordem,0,10000))return false;
   if(activity.requiredConcepts!==undefined&&(!uniqueIds(activity.requiredConcepts,16)||activity.requiredConcepts.some(id=>!concepts.has(id))))return false;
+  if(activity.incluiConceitos!==undefined&&(activity.kind!=='concept'||!uniqueIds(activity.incluiConceitos,16)||activity.incluiConceitos.some(id=>id===activity.id||!concepts.has(id))))return false;
   if(activity.prerequisites!==undefined&&!uniqueIds(activity.prerequisites,16)||!safeId(activity.id)||ids.has(activity.id)||!uniqueIds(activity.skillIds,8)||!activity.skillIds.length||activity.skillIds.some(id=>!skills.has(id))||!count(activity.minutes,1,60)||!['concept','practice','challenge'].includes(activity.kind))return false;
   ids.add(activity.id);return true;
  }).sort((a,b)=>compare(a.id,b.id));
 }
 const hasPassed=(state:AdaptiveState,activityId:string)=>Object.values(state.skills).some(skill=>Object.values(skill.evidence).some(record=>record.activityId===activityId&&record.passed&&!record.assisted));
-function prerequisitesMet(state:AdaptiveState,activity:LearningActivity,catalog:AdaptiveCatalog,currentConcept?:string):boolean {
- if(activity.requiredConcepts?.some(id=>!state.seenConcepts.includes(id)&&id!==currentConcept))return false;
+function prerequisitesMet(state:AdaptiveState,activity:LearningActivity,catalog:AdaptiveCatalog,conceitoAtual?:LearningActivity):boolean {
+ if(activity.requiredConcepts?.some(id=>!state.seenConcepts.includes(id)&&id!==conceitoAtual?.id&&!conceitoAtual?.incluiConceitos?.includes(id)))return false;
  const required=new Set([...(activity.prerequisites??[]),...activity.skillIds.flatMap(id=>catalog.skills.find(skill=>skill.id===id)?.prerequisites??[])]);
  return [...required].every(id=>{const mastery=skillMastery(state,id);return mastery.practiced>=2&&(mastery.score??0)>=60;});
 }
@@ -216,24 +218,26 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
   if(activity)add('review',activity,skillId);
  }
  const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage));
- const concept=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id)).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
+ const novosConceitos=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id));
+ const concept=novosConceitos.filter(activity=>!novosConceitos.some(outro=>outro.incluiConceitos?.includes(activity.id))).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(concept)add('concept',concept);
  // A prepared concept may precede its practices in this same session. Reading
  // unlocks the sequence, never adds mastery evidence or bypasses skill prerequisites.
- const eligible=candidates.filter(activity=>prerequisitesMet(state,activity,catalog,concept?.id));
+ const eligible=candidates.filter(activity=>prerequisitesMet(state,activity,catalog,concept));
  const focus=new Set([...(concept?.skillIds??[]),...items.flatMap(item=>item.skillId?[item.skillId]:[])]);
  const relevant=(activity:LearningActivity)=>activity.skillIds.some(id=>focus.has(id));
- const practices=eligible.filter(activity=>activity.kind==='practice'&&!used.has(activity.id))
-  .sort((a,b)=>Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||compare(a.id,b.id));
+ const assuntoApresentado=(activity:LearningActivity)=>!concept||activity.skillIds.some(id=>concept.skillIds.includes(id));
+ const practices=eligible.filter(activity=>activity.kind==='practice'&&!used.has(activity.id)&&assuntoApresentado(activity))
+  .sort((a,b)=>Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id));
  for(const activity of practices.slice(0,2))add('practice',activity);
- const challenge=eligible.filter(activity=>activity.kind==='challenge'&&!used.has(activity.id))
-  .sort((a,b)=>Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||compare(a.id,b.id))[0];
+ const challenge=eligible.filter(activity=>activity.kind==='challenge'&&!used.has(activity.id)&&assuntoApresentado(activity))
+  .sort((a,b)=>Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(challenge)add('challenge',challenge);
  return {day,items,completed:[],totalMinutes:items.reduce((sum,item)=>sum+item.minutes,0)};
 }
 /** Keeps today's sequence stable while its evidence changes. Rebuilds after local midnight. */
 export function ensureDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,clock:LearningClock):DailySession {
  const day=learningDay(clock);const activities=catalogActivities(catalog);
- if(state.daily?.day===day&&(state.daily.items.length>0||activities.length===0)&&state.daily.items.every(item=>activities.some(activity=>activity.id===item.activityId&&activity.skillIds.includes(item.skillId??activity.skillIds[0])&&(item.kind==='review'||activity.kind===item.kind))))return state.daily;
+ if(state.daily?.day===day&&(state.daily.items.length>0||activities.length===0)&&state.daily.items.every(item=>activities.some(activity=>activity.id===item.activityId&&activity.skillIds.includes(item.skillId??activity.skillIds[0])&&(item.kind==='concept'?activity.kind==='concept':activity.kind!=='concept'))))return state.daily;
  state.daily=buildDailySession(state,catalog,clock);return state.daily;
 }

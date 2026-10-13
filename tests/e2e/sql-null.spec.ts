@@ -7,7 +7,7 @@ test('SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou 
  await expect(pagina.locator('[data-seen]')).toBeVisible();
  const clock=await pagina.evaluate(()=>({now:Date.now(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone}));
  const preparacao=adaptiveCatalog.activities.find(atividade=>atividade.id===idPreparacao('sql-null-logica'))!;
- const antigo=preparacao.requiredConcepts![0];
+ const antigo=preparacao.incluiConceitos![0];
  const estado=freshAdaptive();estado.seenConcepts=[antigo];
  const ids=['sql-prever-desconhecido','sql-corrigir-obrigatoriedade','sql-correlacionar-ausentes'];
  const catalogoAntigo={...adaptiveCatalog,preferredLanguage:'sql',activities:adaptiveCatalog.activities.filter(atividade=>atividade.id===antigo||ids.includes(atividade.id)).map(atividade=>ids.includes(atividade.id)?{...atividade,requiredConcepts:[antigo]}:atividade)};

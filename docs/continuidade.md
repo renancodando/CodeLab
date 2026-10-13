@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Sessão diária coerente em validação
+
+A reprodução local mostrou Programar seguido de carrinho, maior negativo e filtro com mutação, sem relação com o conceito apresentado. A preparação agora abrange a introdução que contém; o plano seleciona práticas das habilidades apresentadas e deixa vagas livres quando não há atividade preparada. A última pausa das aulas preparadas ocupa o desafio. Planos iniciados conservam sequência, tempos e tipos; a mesma atividade corrigida na aula pode concluir uma etapa antiga de prática/desafio sem confundir o modo revisão.
+
+Passaram 70 testes específicos, incluindo as oito linguagens, pré-requisitos, ausência de domínio pela leitura, preparação, revisões, plano real antigo, importação e mudança de tipo da etapa. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 224,96 kB gzip e mundo 135,93 kB gzip. A regressão completa local aprovou 946/952; seis testes expiraram em memória (25 s), quatro exemplos TypeScript (30 s) e geração de métricas (10 s). A repetição isolada dos três arquivos também expirou nos mesmos seis casos (37/43), sem alterar os limites. Esses logs não aprovam a suíte completa. Os 25 fluxos Edge locais, CI completo e publicação desta correção ainda são pendentes.
+
+A PR #49 foi integrada em ecd7818192a7cf6402be2e8fe5d6271df73992a8, com árvore 6044a3ccc3b11cf24a71db988451681dd1e91639 idêntica ao head 2b61a3d e ao merge previsto. CI 38463452916 completo: 946 unitários, 172 fluxos de navegador (79/42/51), 194 exemplos externos e cenários adicionais; revisão resolvida. Deployment dpl_BYhvcvm4tF9pz6azm3EiVdPpkJye READY/production, gitSource.sha e alias do domínio conferidos. Os fluxos públicos do HTML ainda são necessários para encerrar sua publicação.
+
 ## Revisão dos fragmentos HTML da PR #49
 
 A revisão encontrou um doctype duplicado na montagem aceita da atividade de documento. O teste de reprodução falhou com duas declarações antes da correção. O fragmento de abertura agora contém somente a raiz html, e os testes de navegador montam documento, hierarquia e formulário com os fragmentos reais da atividade, em vez de validar apenas uma solução escrita separadamente.
