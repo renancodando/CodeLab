@@ -89,7 +89,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "tipos-erros": {
     "contexto": "Nem todo erro significa a mesma coisa. Um programa pode nem ser entendido pela linguagem, pode falhar durante a execução ou pode executar perfeitamente e ainda responder algo errado. Misturar essas categorias faz a investigação ficar lenta.",
-    "modelo": "Pense em três portas: leitura, execução e significado. O código precisa atravessar a sintaxe para ser entendido; precisa sobreviver às condições de execução; e finalmente precisa produzir um resultado coerente com o problema real.",
+    "modelo": "Pense em três portas: leitura, execução e significado. O código precisa atravessar a sintaxe para ser entendido; precisa sobreviver às condições de execução; e finalmente precisa produzir um resultado coerente com o problema real. Uma aspa sem fechamento impede analisar o trecho. Ler um nome que nunca foi definido causa ReferenceError quando aquela instrução é alcançada: saídas anteriores podem existir, mas as seguintes não são executadas. Somar base e altura de um retângulo é sintaticamente válido e pode terminar normalmente; a área, porém, depende do produto. Conferir o resultado é uma etapa diferente de procurar uma exceção. Testar uma dimensão zero, frações e dimensões distintas ajuda a distinguir operações que coincidem por acaso em um exemplo.",
     "passos": [
       "Reproduza o problema antes de alterar qualquer linha.",
       "Pergunte se o código sequer consegue ser analisado pela linguagem.",
@@ -107,7 +107,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "investigar": {
     "contexto": "Depurar não é tentar mudanças até funcionar. É formular hipóteses pequenas, observar evidências e reduzir o espaço do problema até localizar a primeira divergência entre o esperado e o real.",
-    "modelo": "Trate cada bug como um experimento científico. Você tem uma hipótese, uma observação, uma alteração controlada e um novo resultado. Quanto menos coisas você muda de uma vez, mais informação cada tentativa produz.",
+    "modelo": "Trate cada bug como um experimento científico. Você tem uma hipótese, uma observação, uma alteração controlada e um novo resultado. Quanto menos coisas você muda de uma vez, mais informação cada tentativa produz. Por exemplo, valor || 1 escolhe o primeiro operando quando ele é truthy e escolhe 1 quando valor é zero. Isso não converte zero em texto: substitui uma entrada numérica válida por outro número. Se dobro(4) produz 8, dobro(-3) produz -6 e dobro(0) produz 2, o último caso é um contraexemplo suficiente para investigar essa escolha. Observe entrada e valor intermediário; altere somente a causa e repita também os casos que já funcionavam. Esse teste de regressão impede que uma correção especial para zero quebre negativos ou frações.",
     "passos": [
       "Defina exatamente o comportamento esperado e o observado.",
       "Crie o menor caso que ainda reproduz a falha.",
@@ -197,7 +197,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "colecoes": {
     "contexto": "Coleções aparecem quando um programa deixa de trabalhar com um único valor e precisa lidar com muitos itens relacionados. Arrays representam ordem; objetos representam propriedades nomeadas; combiná-los permite modelar dados reais.",
-    "modelo": "Imagine um inventário físico: a prateleira é o array e cada ficha de produto é um objeto. Algoritmos percorrem a prateleira e leem ou transformam propriedades das fichas.",
+    "modelo": "Imagine um inventário físico: a prateleira é o array e cada ficha de produto é um objeto. Algoritmos percorrem a prateleira e leem ou transformam propriedades das fichas. length conta fichas; somar item.quantidade conta unidades. Duas fichas com a mesma quantidade continuam contribuindo separadamente. O último índice de uma lista não vazia é length - 1; a condição indice < length também evita entrar em uma lista vazia. Uma acumulação começa em zero e incorpora cada contribuição, enquanto total = item.quantidade substitui a soma pela última ficha. Produzir um resumo não exige alterar, consumir ou ordenar a entrada. Confira o estoque antes e depois, além de repetir a função com listas diferentes.",
     "passos": [
       "Decida se a ordem dos itens importa.",
       "Defina quais propriedades pertencem a cada item.",

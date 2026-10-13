@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Diagnóstico e coleções em validação local
+
+Branch pratica/diagnostico-colecoes, dependente do lote de fundamentos. tipos-erros, investigar e colecoes recebem nove pausas após os blocos 3/6/8, preservando capítulos, exemplos e projetos. As previsões e escolhas são conceituais. Área, dobro e total de estoque executam o código do aluno em QuickJS, com quatro famílias por atividade: casos comuns, fronteiras, entradas variadas e chamadas independentes. O estoque exige conservar a lista e seus objetos; nomes e quantidades repetidos continuam contribuindo. A teoria prepara a distinção entre exceção e erro lógico, o contraexemplo mínimo, o padrão que substitui zero, os limites de índice e a acumulação.
+
+O teste de mutação encontrou um defeito no corretor em preparação: conferir apenas após duas chamadas permitia inverter a lista duas vezes e restaurar sua ordem. A comparação agora ocorre imediatamente após cada chamada. A tentativa com falha permanece nos logs; os 175 testes específicos finais passaram em cinco arquivos, incluindo soluções equivalentes, contraexemplos, referências executadas e capacidade do progresso/backup. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 220,72 kB gzip, mundo 135,92 kB gzip. Sete fluxos Edge passaram em 1,1 min, incluindo as três novas aulas, regressão dos fundamentos/funções, execução, erro/acerto, mutação recusada, teclado, axe sem violações, assistência, revisão, persistência, offline preparado e 220–4000 px. CI, revisão, integração e produção deste lote ainda são pendentes. Contagens do checkout vêm das métricas geradas e não comprovam publicação ou profundidade concluída.
+
 ## Primeiras aulas em validação local
 
 Branch pratica/fundamentos-ativos, dependente da correção SQL #46. A fila gerada em aulas-sem-pratica.md lê as definições reais e prioriza fundamentos comuns, aplicações por linguagem, consolidação e especialização. O build rejeita lista e métricas divergentes, vínculos inválidos e duplicação de ids. Contagens correntes ficam nas métricas; a lista descreve o checkout e não confirma publicação.

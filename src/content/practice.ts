@@ -11,6 +11,54 @@ export type PracticeActivity = {
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
+ {
+  id:'erros-prever-area',language:'javascript',lessonIds:['tipos-erros'],skillIds:['javascript.erros.contrato'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Terminar não comprova o cálculo',prompt:'Preveja as duas linhas. O programa termina normalmente; depois compare qual operação corresponde à área de um retângulo de base 4 e altura 3.',
+  code:'const base = 4, altura = 3;\nconsole.log(base + altura);\nconsole.log(base * altura);',hint:'A saída é o que a instrução calcula, mesmo quando a intenção escrita pede outra operação.',minutes:2
+ },
+ {
+  id:'erros-localizar-interrupcao',language:'javascript',lessonIds:['tipos-erros'],skillIds:['javascript.erros.interrupcao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Em qual etapa a execução para?',prompt:'Não existe uma definição de altura neste programa. Escolha a descrição do comportamento. A escolha é conceitual; ela não executa seu código.',
+  code:'console.log("Antes");\nconsole.log(altura);\nconsole.log("Depois");',hint:'Um identificador válido na sintaxe ainda precisa encontrar uma definição quando é lido. Acompanhe a primeira chamada antes dessa leitura.',minutes:3,
+  options:[{id:'execucao',text:'Mostra Antes e lança ReferenceError ao ler altura; não chega a Depois.'},{id:'sintaxe',text:'O nome altura torna o programa sintaticamente inválido, antes de qualquer saída.'},{id:'logica',text:'Mostra Antes, undefined e Depois, sem interromper a execução.'}]
+ },
+ {
+  id:'erros-corrigir-area',language:'javascript',lessonIds:['tipos-erros'],skillIds:['javascript.erros.correcao'],afterBlock:8,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Corrija a regra e prove com outras dimensões',prompt:'Corrija area(base, altura) para devolver a área numérica do retângulo. As dimensões são números finitos entre 0 e 100, inclusive frações; zero produz área zero. Não arredonde, não devolva texto e não acumule chamadas. Mantenha os dois parâmetros. O corretor executa seu código em JavaScript isolado; validar entradas fora desse contrato não é parte desta atividade.',
+  code:'function area(base, altura) {\n  return base + altura;\n}',hint:'Uma operação pode ser válida para a linguagem e errada para o domínio. Compare dimensões diferentes, uma dimensão zero e um quadrado.',minutes:5
+ },
+ {
+  id:'investigar-prever-padrao',language:'javascript',lessonIds:['investigar'],skillIds:['javascript.investigacao.rastreamento'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O caso comum esconde a fronteira',prompt:'Preveja as três linhas. Neste trecho, valor || 1 escolhe 1 quando valor é zero. Registre o comportamento escrito antes de decidir como corrigi-lo.',
+  code:'function dobro(valor) {\n  return (valor || 1) * 2;\n}\nconsole.log(dobro(4));\nconsole.log(dobro(-3));\nconsole.log(dobro(0));',hint:'Positivo e negativo não zero passam pela multiplicação com o próprio valor; acompanhe separadamente a escolha feita para zero.',minutes:3
+ },
+ {
+  id:'investigar-isolar-fronteira',language:'javascript',lessonIds:['investigar'],skillIds:['javascript.investigacao.hipoteses'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Qual evidência sustenta uma hipótese?',prompt:'O contrato exige o dobro de qualquer número entre −100 e 100. Os testes de 4 e −3 passaram, mas 0 produziu 2. Escolha o próximo diagnóstico útil, sem mudar várias partes ao mesmo tempo. Esta decisão é conceitual.',
+  code:'function dobro(valor) {\n  return (valor || 1) * 2;\n}',hint:'Diferencie o que foi observado de uma causa ainda não demonstrada. Um caso aprovado não elimina a fronteira que já falhou.',minutes:3,
+  options:[{id:'isolar',text:'Reproduzir somente dobro(0), comparar 0 com o valor escolhido por (valor || 1), alterar essa escolha e repetir os três casos.'},{id:'tipo',text:'Concluir que 0 virou string e adicionar Number em todas as operações, sem observar os valores.'},{id:'ignorar',text:'Ignorar zero: dois testes aprovados bastam para cumprir o contrato inteiro.'}]
+ },
+ {
+  id:'investigar-corrigir-dobro',language:'javascript',lessonIds:['investigar'],skillIds:['javascript.investigacao.regressao'],afterBlock:8,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Corrigir a fronteira sem quebrar os casos anteriores',prompt:'Altere dobro(valor) para devolver numericamente o dobro de cada número finito entre −100 e 100, inclusive zero e frações. Não arredonde nem use estado de chamadas anteriores. O corretor executa o código e repete casos comuns e de fronteira. Entradas fora desse intervalo não fazem parte do contrato.',
+  code:'function dobro(valor) {\n  return (valor || 1) * 2;\n}',hint:'Zero é uma entrada válida. Remover seu valor com um padrão muda a entrada antes mesmo da multiplicação; depois da correção, confira também positivo e negativo.',minutes:5
+ },
+ {
+  id:'colecoes-prever-unidades',language:'javascript',lessonIds:['colecoes'],skillIds:['javascript.colecoes.quantidade'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Quantidade de registros ou quantidade de unidades?',prompt:'Preveja as duas linhas: primeiro o total de unidades, depois o número de fichas. Fichas distintas podem ter o mesmo nome e a mesma quantidade; cada uma continua contribuindo.',
+  code:'const itens = [{nome:"Lápis",quantidade:2},{nome:"Caderno",quantidade:0},{nome:"Lápis",quantidade:2}];\nlet total = 0;\nfor (const item of itens) total += item.quantidade;\nconsole.log(total);\nconsole.log(itens.length);',hint:'length conta fichas; a acumulação soma a propriedade quantidade, inclusive de registros repetidos.',minutes:3
+ },
+ {
+  id:'colecoes-diagnosticar-limite',language:'javascript',lessonIds:['colecoes'],skillIds:['javascript.lacos.fronteiras'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'A posição depois do último item',prompt:'A lista possui dois itens, nas posições 0 e 1. O laço falha quando tenta ler quantidade da posição 2. Qual condição visita todos os itens e também não entra no corpo para uma lista vazia? Escolha conceitual, sem executar código do aluno.',
+  code:'let total = 0;\nfor (let indice = 0; indice <= itens.length; indice++) {\n  total += itens[indice].quantidade;\n}',hint:'Compare o último índice válido com a quantidade de itens. Teste mentalmente também length igual a zero.',minutes:3,
+  options:[{id:'menor',text:'indice < itens.length'},{id:'ultimo-fora',text:'indice < itens.length - 1'},{id:'igual',text:'indice <= itens.length'}]
+ },
+ {
+  id:'colecoes-corrigir-acumulacao',language:'javascript',lessonIds:['colecoes'],skillIds:['javascript.colecoes.acumulacao'],afterBlock:8,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Conserve cada contribuição do estoque',prompt:'Corrija totalEstoque(itens): devolva um número com a soma de todas as quantidades; lista vazia devolve 0. Cada item tem nome textual e quantidade inteira de 0 a 1000; a lista tem até 100 itens. Nomes e quantidades podem repetir e todos contribuem. Preserve a lista, a ordem e os objetos recebidos. Chamadas são independentes. O corretor executa JavaScript isolado; não é preciso validar dados fora deste contrato.',
+  code:'function totalEstoque(itens) {\n  let total = 0;\n  for (const item of itens) {\n    total = item.quantidade;\n  }\n  return total;\n}',hint:'A atribuição atual substitui o que já havia sido acumulado. Acompanhe o total após cada ficha e confira se os dados originais continuam iguais.',minutes:6
+ },
 {
  "id": "inicio-prever-ordem",
  "language": "javascript",
