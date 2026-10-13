@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **73 de 137 aulas sem pausas deste catálogo**. As outras 64 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **70 de 137 aulas sem pausas deste catálogo**. As outras 67 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -10,7 +10,7 @@ Há **73 de 137 aulas sem pausas deste catálogo**. As outras 64 têm ao menos u
 | C# | 14 | 6 | 8 |
 | CSS | 15 | 7 | 8 |
 | HTML | 19 | 5 | 14 |
-| JavaScript | 30 | 15 | 15 |
+| JavaScript | 30 | 18 | 12 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 6 | 8 |
 | Integração (transversal) | 15 | 0 | 15 |
@@ -22,11 +22,7 @@ Trabalhar de cima para baixo dentro das dependências de cada trilha. Em cada au
 
 Ordem, dados, decisões, repetição, funções e coleções sustentam os percursos seguintes.
 
-| Aula | Trilha | Linguagem | Nível |
-| --- | --- | --- | --- |
-| `tipos-erros` — Sintaxe, execução e lógica | Começando | JavaScript | Original |
-| `investigar` — Ler mensagens e investigar | Começando | JavaScript | Original |
-| `colecoes` — Arrays, objetos e algoritmos | Lógica | JavaScript | Original |
+Nenhuma aula sem pausa neste grupo. A profundidade das atividades continua sujeita à revisão pedagógica.
 
 ## 2. Fundamentos e aplicações por linguagem
 
