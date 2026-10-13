@@ -10,6 +10,8 @@ Passaram 129 testes específicos em quatro arquivos; o teste ampliado do gerador
 
 Referências: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/const, https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/return e https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON.
 
+A proteção SQL do head 040c88d foi incorporada sem perder as primeiras aulas. A validação conjunta passou em 188 testes de sete arquivos, strict/build e 11 fluxos Edge (1,7 min), com o mesmo orçamento inicial de 216,41 kB gzip. O conflito de continuidade preservou os registros das duas entregas. A dependência #46 ainda exige sua integração e produção; esta branch também precisa de CI, revisão e publicação próprios.
+
 ## Revisão da correção SQL: consultas não alteram a base
 
 A revisão #46 demonstrou que DELETE seguido de um relatório podia passar ao modificar a entrada. O preparo agora chega separado do SQL do aluno. O motor prepara a base, ativa query_only e usa o parser SQLite para exigir uma única consulta SELECT/WITH antes de percorrer o resultado. Comentários e ponto e vírgula em literais continuam válidos; transações, PRAGMAs, comandos extras e alterações de dados são recusados. WITH seguido de DELETE também encontra a guarda nativa de escrita. O laboratório livre preserva seus scripts, transações e alterações: esse recorte só é ativado pela base de um exercício.
