@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Correção SQL integrada e publicada em 13 de outubro
+
+A PR #46 foi integrada em 449b0b89137cfafc3c21380dd9db3b2de97dc884. A árvore a3a4d2653269740a064a1f2f396cd0ac7e08253b é idêntica ao head 040c88d27ff2e4e7e6b2b030b9fa46d471a4625a e ao merge previsto, com pais conferidos. O CI 38333281146 passou nos cinco jobs: 839 testes unitários em 55 arquivos, 160 testes de navegador (70/39/51), 194 exemplos externos, oito bases PostgreSQL dos gabaritos SQL e os cenários anteriores de compiladores, sessões, Git e API/cache. A revisão sobre alterações da base foi corrigida e resolvida neste head. Main local foi sincronizada por fast-forward.
+
+Deployment dpl_CMx7G5raNEuFUWQKbeWFSVubDY54 READY/production, gitSource.sha igual ao merge e alias code-lab-omega.vercel.app conferidos. Os sete fluxos Edge públicos passaram em 4,0 min: laboratório, correção real, alternativas, mutações recusadas, limites, cancelamento, falha de carga, retomada, assistência, persistência e offline preparado. O grupo de fundamentos ainda não está publicado: sua branch foi atualizada com main sem mudar a árvore de conteúdo já validada (f597e0126150e6c58dae80646978de1962d17387). Os registros abaixo preservam as pendências existentes no momento de cada validação, não a situação atual da publicação.
+
 ## Primeiras aulas em validação local
 
 Branch pratica/fundamentos-ativos, dependente da correção SQL #46. A fila gerada em aulas-sem-pratica.md lê as definições reais e prioriza fundamentos comuns, aplicações por linguagem, consolidação e especialização. O build rejeita lista e métricas divergentes, vínculos inválidos e duplicação de ids. Contagens correntes ficam nas métricas; a lista descreve o checkout e não confirma publicação.
