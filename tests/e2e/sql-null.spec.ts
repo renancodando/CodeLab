@@ -1,6 +1,7 @@
 import {test,expect} from '@playwright/test';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
-import {buildDailySession,freshAdaptive} from '../../src/learning/adaptive';
+import {learningDay,freshAdaptive} from '../../src/learning/adaptive';
+import {planoSqlAnterior} from '../fixtures/planos-preparacao-anteriores';
 
 test('SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio',async({page:pagina})=>{
  await pagina.goto('/#/diaria');
@@ -9,9 +10,7 @@ test('SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou 
  const preparacao=adaptiveCatalog.activities.find(atividade=>atividade.id===idPreparacao('sql-null-logica'))!;
  const antigo=preparacao.incluiConceitos![0];
  const estado=freshAdaptive();estado.seenConcepts=[antigo];
- const ids=['sql-prever-desconhecido','sql-corrigir-obrigatoriedade','sql-correlacionar-ausentes'];
- const catalogoAntigo={...adaptiveCatalog,preferredLanguage:'sql',activities:adaptiveCatalog.activities.filter(atividade=>atividade.id===antigo||ids.includes(atividade.id)).map(atividade=>ids.includes(atividade.id)?{...atividade,requiredConcepts:[antigo]}:atividade)};
- estado.daily=buildDailySession(estado,catalogoAntigo,clock);
+ estado.daily=planoSqlAnterior(learningDay(clock));
  expect(estado.daily.items.map(item=>item.kind)).toEqual(['practice','practice','challenge']);
  await pagina.evaluate(estado=>{
   const salvo=JSON.parse(localStorage.getItem('codelab.progress.v2')!);

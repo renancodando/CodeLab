@@ -2,6 +2,7 @@ import {it,expect} from 'vitest';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
 import {buildDailySession,ensureDailySession,freshAdaptive,markConceptSeen,recordEvidence,prepareAdaptiveBackup,type AdaptiveCatalog} from '../../src/learning/adaptive';
 import {planoValoresAnterior} from '../fixtures/plano-valores-anterior';
+import {planoSqlAnterior,planoLacosAnterior,planoValoresPreparadoAnterior} from '../fixtures/planos-preparacao-anteriores';
 const relogio={now:Date.parse('2026-10-11T12:00:00Z'),timeZone:'UTC'};
 const catalogo={...adaptiveCatalog,preferredLanguage:'javascript'};
 it('a primeira sessão prepara e pratica somente o assunto apresentado',()=>{
@@ -35,6 +36,12 @@ it('o plano iniciado em valores antes das novas pausas continua válido',()=>{
  const plano=estado.daily,conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId);
  expect(conceito?.lessonId).toBe('valores');const antes=JSON.stringify(plano);
  expect(ensureDailySession(estado,catalogo,relogio)).toBe(plano);expect(JSON.stringify(plano)).toBe(antes);expect(estado.skills).toEqual({});
+});
+it.each([{aula:'sql-null-logica',plano:planoSqlAnterior},{aula:'repeticoes',plano:planoLacosAnterior},{aula:'valores',plano:planoValoresPreparadoAnterior}])('conserva a sequência publicada de $aula mesmo com a nova ordem pedagógica',({aula,plano})=>{
+ const estado=freshAdaptive(),preparacao=adaptiveCatalog.activities.find(a=>a.id===idPreparacao(aula))!;
+ estado.seenConcepts=[preparacao.incluiConceitos![0]];estado.daily=plano('2026-10-11');const anterior=JSON.stringify(estado.daily);
+ expect(ensureDailySession(estado,adaptiveCatalog,relogio)).toBe(estado.daily);expect(JSON.stringify(estado.daily)).toBe(anterior);
+ expect(prepareAdaptiveBackup(estado).daily).toEqual(estado.daily);expect(estado.skills).toEqual({});
 });
 it.each([{anterior:'practice',atual:'challenge'},{anterior:'challenge',atual:'practice'}] as const)('retoma $anterior como $atual sem perder a etapa e aceita a conferência fora da sessão',({anterior,atual})=>{
  const estado=freshAdaptive(),catalogo:AdaptiveCatalog={skills:[{id:'javascript.teste',label:'Teste',path:['JavaScript']}],activities:[{id:'etapa-antiga',title:'Etapa',kind:atual,skillIds:['javascript.teste'],minutes:3}]};
