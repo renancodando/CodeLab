@@ -12,6 +12,55 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'html-prever-titulos-documento',language:'html',lessonIds:['documento'],skillIds:['html.documento.metadados'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O título da aba e o título do conteúdo',prompt:'Registre duas linhas: primeiro o texto da aba, depois o texto do h1 visível. Esta previsão é conceitual; não executa nem renderiza um documento enviado por você.',
+  code:'<!doctype html>\n<html lang="pt-BR"><head><meta charset="UTF-8"><title>Guia da biblioteca</title></head><body><main><h1>Catálogo</h1></main></body></html>',hint:'title descreve o documento na aba; h1 pertence ao conteúdo do body. Eles podem ter textos diferentes.',minutes:3
+ },
+ {
+  id:'html-diagnosticar-idioma',language:'html',lessonIds:['documento'],skillIds:['html.documento.idioma'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O idioma não é a codificação',prompt:'O conteúdo principal foi escrito em português brasileiro, mas a raiz declara inglês. Corrija a declaração de idioma na raiz, preservando UTF-8. A escolha é conceitual; não é uma auditoria completa de acessibilidade.',
+  code:'<!doctype html>\n<html lang="en">\n<head><meta charset="UTF-8"><title>Meu caderno</title></head>\n<body><h1>Descobertas de hoje</h1></body>\n</html>',hint:'lang informa o idioma; charset informa a codificação. Trocar o título ou o tamanho do texto não corrige essa declaração.',minutes:3,
+  options:[{id:'raiz',text:'Usar <html lang="pt-BR"> e manter <meta charset="UTF-8">.'},{id:'codificacao',text:'Manter lang="en" e trocar charset por "pt-BR".'},{id:'titulo',text:'Manter lang="en" e escrever Português brasileiro dentro de title.'}]
+ },
+ {
+  id:'html-reconstruir-documento',language:'html',lessonIds:['documento'],skillIds:['html.documento.estrutura'],afterBlock:8,kind:'order',capability:'alteracao',requiresConcept:true,
+  title:'Organize metadados e conteúdo',prompt:'Organize todos os fragmentos: doctype primeiro; raiz html; head com os metadados antes do body; fechamento da raiz por último. O exercício confere essa sequência de fragmentos, sem validar um documento livre do aluno.',
+  lines:[{id:'corpo',code:'<body><main><h1>Minha biblioteca</h1></main></body>'},{id:'cabecalho',code:'<head><meta charset="UTF-8"><title>Minha biblioteca</title></head>'},{id:'inicio',code:'<!doctype html>\n<html lang="pt-BR">'},{id:'tipo',code:'<!doctype html>'},{id:'fim',code:'</html>'}],hint:'head e body ficam dentro de html. O cabeçalho de metadados e a região header do conteúdo têm papéis diferentes.',minutes:4
+ },
+ {
+  id:'html-escolher-acao-teclado',language:'html',lessonIds:['semantica'],skillIds:['html.semantica.teclado'],afterBlock:3,kind:'choice',capability:'leitura',requiresConcept:true,
+  title:'Escolha o comportamento nativo da ação',prompt:'Salvar é uma ação. Qual controle oferece ativação nativa por Enter e Espaço, sem implementar manualmente esses eventos? A persistência ainda precisa ser programada; aqui a decisão é sobre o controle HTML.',
+  code:'<div role="button" tabindex="0">Salvar</div>',hint:'ARIA descreve um papel, mas não instala o comportamento de teclado. Compare também uma ação com um link que navega.',minutes:3,
+  options:[{id:'botao',text:'<button type="button">Salvar</button>'},{id:'div',text:'<div role="button" tabindex="0">Salvar</div>'},{id:'link',text:'<a href="#salvo">Salvar</a>'}]
+ },
+ {
+  id:'html-diagnosticar-regiao-principal',language:'html',lessonIds:['semantica'],skillIds:['html.semantica.principal'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Dois artigos, uma região principal',prompt:'Os dois main estão visíveis ao mesmo tempo. O catálogo precisa de uma região principal com dois artigos, cada qual com seu título. Qual alteração conserva esse conteúdo e expressa a estrutura? Escolha conceitual.',
+  code:'<main><h1>Livro A</h1><p>Primeira descrição.</p></main>\n<main><h1>Livro B</h1><p>Segunda descrição.</p></main>',hint:'Um artigo é uma unidade de conteúdo dentro do catálogo. Dar nomes diferentes a duas regiões principais não as transforma em uma região única.',minutes:3,
+  options:[{id:'agrupar',text:'Um main com h1 Catálogo e dois article, cada um com h2 e sua descrição.'},{id:'nomear',text:'Manter os dois main e acrescentar um title diferente a cada um.'},{id:'apagar-titulos',text:'Trocar os dois h1 por p, mantendo os dois main visíveis.'}]
+ },
+ {
+  id:'html-reconstruir-hierarquia',language:'html',lessonIds:['semantica'],skillIds:['html.semantica.hierarquia'],afterBlock:8,kind:'order',capability:'alteracao',requiresConcept:true,
+  title:'Expresse a árvore do catálogo',prompt:'Reconstrua a sequência: um main contém o h1 Catálogo e depois um article; dentro do article ficam h2 Livro e a descrição. Use todos os fragmentos, fechando o artigo antes de fechar a região principal. A conferência é conceitual.',
+  lines:[{id:'descricao',code:'<h2>Livro</h2><p>Uma descrição.</p>'},{id:'fechar-principal',code:'</main>'},{id:'principal',code:'<main id="conteudo">'},{id:'artigo',code:'<h1>Catálogo</h1><article>'},{id:'fechar-artigo',code:'</article>'}],hint:'A ordem dos fechamentos determina qual elemento contém qual conteúdo. Tamanho de fonte não muda essa árvore.',minutes:4
+ },
+ {
+  id:'html-prever-validade-email',language:'html',lessonIds:['formularios'],skillIds:['html.formularios'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Vazio, endereço válido e texto sem formato',prompt:'Preveja as três saídas true/false de checkValidity. required recusa o vazio e type="email" verifica o formato básico. Esta previsão é conceitual; não executa seu código e não comprova que um endereço existe.',
+  code:'<label for="email">E-mail</label><input id="email" name="email" type="email" required>\n<script>\nconst campo = document.querySelector("input");\nconsole.log(campo.checkValidity());\ncampo.value = "ana@example.com";\nconsole.log(campo.checkValidity());\ncampo.value = "texto";\nconsole.log(campo.checkValidity());\n</script>',hint:'Avalie cada valor no momento da chamada: vazio, endereço com formato e texto sem @. Validação de navegador não substitui a do servidor.',minutes:3
+ },
+ {
+  id:'html-corrigir-associacao-label',language:'html',lessonIds:['formularios'],skillIds:['html.formularios'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O rótulo aponta para outro identificador',prompt:'Ao clicar no rótulo, o foco deveria chegar ao campo email. Mantenha id="email" e name="email" e escolha a correção da associação explícita. A escolha é conceitual; alternativas fora desse contrato não são avaliadas aqui.',
+  code:'<label for="pessoa">E-mail</label>\n<input id="email" name="email" type="email" required>',hint:'for corresponde ao id, enquanto name define a chave dos dados. Placeholder e ARIA não corrigem um for que aponta para outro identificador.',minutes:3,
+  options:[{id:'associar',text:'Trocar apenas o label para <label for="email">E-mail</label>.'},{id:'nomear',text:'Trocar name="email" por name="pessoa", mantendo for="pessoa" e id="email".'},{id:'placeholder',text:'Acrescentar placeholder="E-mail", mantendo for="pessoa" e id="email".'}]
+ },
+ {
+  id:'html-reconstruir-envio-campo',language:'html',lessonIds:['formularios'],skillIds:['html.formularios.presenca'],afterBlock:8,kind:'order',capability:'alteracao',requiresConcept:true,
+  title:'Rótulo, controle e envio no mesmo formulário',prompt:'Organize um form com rótulo, campo e botão, nessa ordem, usando todos os fragmentos. O campo deve ser associado ao rótulo e fornecer a chave email para os dados. Nenhuma requisição é enviada por esta atividade conceitual; envio e resposta precisam ser implementados no projeto.',
+  lines:[{id:'enviar',code:'<button type="submit">Enviar</button>'},{id:'campo',code:'<input id="email" name="email" type="email" required>'},{id:'fim',code:'</form>'},{id:'formulario',code:'<form>'},{id:'rotulo',code:'<label for="email">E-mail</label>'}],hint:'O rótulo e o controle compartilham o identificador, e name define a chave dos dados. O fechamento do formulário vem depois dos seus controles.',minutes:4
+ },
+ {
   id:'erros-prever-area',language:'javascript',lessonIds:['tipos-erros'],skillIds:['javascript.erros.contrato'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Terminar não comprova o cálculo',prompt:'Preveja as duas linhas. O programa termina normalmente; depois compare qual operação corresponde à área de um retângulo de base 4 e altura 3.',
   code:'const base = 4, altura = 3;\nconsole.log(base + altura);\nconsole.log(base * altura);',hint:'A saída é o que a instrução calcula, mesmo quando a intenção escrita pede outra operação.',minutes:2

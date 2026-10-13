@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Documento, semântica e formulários em validação local
+
+Branch pratica/html-fundamentos-ativos, dependente da entrega de diagnóstico #48. documento, semantica e formularios preservam os 12 capítulos e projetos e recebem nove pausas após os blocos 3/6/8. A teoria prepara título/idioma/estrutura, ação nativa de teclado, região principal e artigos, associação de rótulo, validade e chave do campo. As previsões, decisões e reconstruções registram evidência conceitual. A produção aberta dos documentos continua nos exercícios e projetos com revisão manual.
+
+Passaram 50 testes específicos em quatro arquivos, strict/build e seis fluxos Edge (22,8 s). O navegador executou os programas de referência e conferiu título e modo de padrões, Enter/Espaço, árvore semântica, validade, foco e FormData, incluindo contraprovas de div/link, associação quebrada e campo sem name. Os fluxos do produto conferiram erro/acerto, reconstrução, assistência, revisão, persistência, leitura sem domínio, offline, axe e 220–4000 px. A primeira tentativa passou nas referências e falhou nos três fluxos por presumir um registro local antes da primeira interação; o teste agora aceita a ausência de registro inicial, preservando o comportamento local. O build manteve 157 páginas, 38 recursos essenciais e seis opcionais; inicial 224,76 kB gzip e mundo 135,93 kB gzip. CI, revisão, integração e produção deste lote ainda são pendentes; contagens correntes vêm das métricas geradas.
+
+Referências: [título do documento](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/title), [idioma](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang) e [estrutura de formulário](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Your_first_form).
+
 ## Diagnóstico e coleções em validação local
 
 Branch pratica/diagnostico-colecoes, dependente do lote de fundamentos. tipos-erros, investigar e colecoes recebem nove pausas após os blocos 3/6/8, preservando capítulos, exemplos e projetos. As previsões e escolhas são conceituais. Área, dobro e total de estoque executam o código do aluno em QuickJS, com quatro famílias por atividade: casos comuns, fronteiras, entradas variadas e chamadas independentes. O estoque exige conservar a lista e seus objetos; nomes e quantidades repetidos continuam contribuindo. A teoria prepara a distinção entre exceção e erro lógico, o contraexemplo mínimo, o padrão que substitui zero, os limites de índice e a acumulação.

@@ -305,7 +305,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "documento": {
     "contexto": "Um documento HTML não é apenas uma coleção de tags. Ele fornece idioma, metadados, hierarquia e uma árvore que navegadores, mecanismos de busca e tecnologias assistivas interpretam antes de qualquer CSS.",
-    "modelo": "Pense no HTML como a planta sem acabamento de uma construção. head descreve o documento; body contém a experiência visível; títulos criam hierarquia; elementos semânticos definem regiões e relações.",
+    "modelo": "Pense no HTML como a planta sem acabamento de uma construção. head descreve o documento; body contém a experiência visível; títulos criam hierarquia; elementos semânticos definem regiões e relações. title fornece o texto da aba e pode ser diferente do h1 apresentado no conteúdo. lang na raiz declara o idioma principal; pt-BR identifica português brasileiro, enquanto charset UTF-8 informa a codificação e não o idioma. Na estrutura escrita nesta aula, o doctype vem primeiro, html envolve head e body, e os metadados antecedem o conteúdo. O navegador pode recuperar marcação inadequada e ainda mostrar algo; aparecer na tela não prova que a organização pretendida foi expressa corretamente.",
     "passos": [
       "Declare o doctype e o idioma corretamente.",
       "Configure charset e viewport antes do conteúdo.",
@@ -323,7 +323,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "semantica": {
     "contexto": "Semântica descreve o papel de um conteúdo, não sua aparência. Um button e um link podem parecer iguais, mas carregam comportamentos, expectativas de teclado e significado completamente diferentes.",
-    "modelo": "Imagine que o CSS foi desligado. A página ainda deve contar uma história coerente pela ordem e pelos elementos escolhidos. Se o significado depende apenas de cor ou posição, a estrutura está frágil.",
+    "modelo": "Imagine que o CSS foi desligado. A página ainda deve contar uma história coerente pela ordem e pelos elementos escolhidos. Se o significado depende apenas de cor ou posição, a estrutura está frágil. Um catálogo pode ter uma região principal visível e vários artigos dentro dela; cada artigo não precisa virar outro main. O h1 identifica o catálogo e h2 pode identificar cada artigo, conforme a hierarquia desse documento. Para a ação Salvar, button oferece ativação nativa por Enter e Espaço; div com role=button e tabindex apenas descreve o papel e permite foco, sem instalar essa ativação. Um link navega para um destino. O botão ainda precisa da lógica de salvar, e type=button evita que uma ação auxiliar envie um formulário por padrão.",
     "passos": [
       "Identifique a região principal e mantenha um único main.",
       "Use nav para grupos reais de navegação, não para qualquer conjunto de links.",
@@ -341,7 +341,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "formularios": {
     "contexto": "Formulários conectam intenção humana a dados que o programa recebe. Um campo visualmente óbvio pode ser ambíguo para teclado, leitor de tela ou servidor se label, name, tipo e regras não estiverem definidos.",
-    "modelo": "Pense em cada controle como parte de um contrato: label explica a pergunta, value contém a resposta, name define a chave enviada e as restrições descrevem o formato aceitável. O servidor ainda precisa validar novamente.",
+    "modelo": "Pense em cada controle como parte de um contrato: label explica a pergunta, value contém a resposta, name define a chave enviada e as restrições descrevem o formato aceitável. O servidor ainda precisa validar novamente. Na associação explícita, for do label corresponde ao id do campo, não ao name. Clicar nesse rótulo deve focar o controle associado; acrescentar placeholder não corrige um for apontando para outro identificador. Em um campo habilitado com type=email e required, checkValidity devolve false para vazio, true para ana@example.com e false para texto sem formato de e-mail. Isso não verifica a existência do endereço. Um formulário precisa conter os controles e o botão de envio; id permite identificar o campo, enquanto name fornece a chave dos dados, inclusive ao construir FormData sem enviar nenhuma requisição.",
     "passos": [
       "Associe cada controle a um label persistente.",
       "Escolha type conforme o dado e o teclado esperado.",
