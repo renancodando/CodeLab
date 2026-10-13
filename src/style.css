@@ -29,6 +29,7 @@ dialog{width:min(580px,calc(100% - 28px));max-height:85svh;overflow:auto;padding
 /* Novos controles usam as superfícies e a tipografia existentes. */
 #main{container-type:inline-size}body{min-width:220px}
 .practice-card{margin-block:28px;scroll-margin-top:100px}.practice-card h3{margin-top:0}
+.practice-card h2{font-size:1.17em;margin:0 0 1em}
 .practice-card textarea,.project-workspace textarea{display:block;width:100%;min-height:150px;resize:vertical;font:13px/1.7 monospace;background:#101913;color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:14px}
 .practice-card .practice-input{display:flex;flex-direction:column;gap:8px;border:0;padding:0}.practice-card .practice-input input{min-width:0;width:100%;padding:12px;background:#101913;color:var(--ink);border:1px solid var(--border);border-radius:8px}
 .practice-actions,.project-actions{display:flex;flex-wrap:wrap;gap:10px}.practice-card [role=status]{white-space:pre-wrap;overflow-wrap:anywhere}

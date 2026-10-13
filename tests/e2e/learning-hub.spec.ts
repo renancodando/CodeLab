@@ -6,12 +6,24 @@ import {createProjectWorkspace,markMilestoneEvidence} from '../../src/learning/p
 import {freshAdaptive,recordEvidence,learningDay} from '../../src/learning/adaptive';
 test.use({timezoneId:'America/Sao_Paulo'});
 const feedback=(page:Page)=>page.locator('.practice-feedback');
+async function conferirTitulo(pagina:Page){
+ await expect(pagina.locator('[data-practice]').getByRole('heading',{level:2})).toHaveCount(1);
+ const medidas=await pagina.locator('[data-practice] h2').evaluate(titulo=>{
+  const anterior=document.createElement('h3');anterior.textContent=titulo.textContent;titulo.parentElement!.append(anterior);
+  const propriedades=['fontSize','fontFamily','fontWeight','lineHeight','marginTop','marginBottom','color'] as const;
+  const ler=(elemento:Element)=>propriedades.map(propriedade=>getComputedStyle(elemento)[propriedade]);
+  const medidas={atual:ler(titulo),anterior:ler(anterior)};anterior.remove();return medidas;
+ });
+ expect(medidas.atual).toEqual(medidas.anterior);
+ expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
+}
 async function checkCode(page:Page,id:string,code:string){
  await page.goto('/#/pratica/'+id);await page.getByLabel('Seu código corrigido').fill(code);await page.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
  await expect(page.getByRole('button',{name:'Conferir comportamento',exact:true})).toBeEnabled();return feedback(page);
 }
 test('depuração confere bordas, preserva solução oculta e mantém domínio por habilidade',async({page})=>{
  await checkCode(page,'js-debug-soma-vazia','function somaLista(v){return v.reduce((a,b)=>a+b);}');
+ await conferirTitulo(page);
  await expect(feedback(page)).toContainText('lista vazia ainda falha');await expect(page.locator('[data-help] pre')).toHaveCount(0);
  await page.getByLabel('Seu código corrigido').fill(getPracticeSolution('js-debug-soma-vazia')!);await page.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
  await expect(feedback(page)).toContainText('A correção passou');const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
@@ -23,7 +35,7 @@ test('leitura não pontua domínio, sessão progride e retoma sem duplicar ativi
  await page.goto('/');await page.getByRole('link',{name:'Continuar aprendendo',exact:true}).click();await expect(page.locator('[data-seen]')).toBeVisible();
  const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(Object.keys(before.adaptive.skills)).toHaveLength(0);expect(before.adaptive.daily.items.map((x:{kind:string})=>x.kind)).toEqual(['concept','practice','practice','challenge']);
  await page.locator('[data-seen]').focus();await page.keyboard.press('Enter');await expect(page.locator('[data-language]')).toBeDisabled();
- expect((await new AxeBuilder({page}).include('main').analyze()).violations).toEqual([]);
+ await conferirTitulo(page);
  for(const largura of [220,4000]){await page.setViewportSize({width:largura,height:812});await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);}
  const prever=page.locator('[data-current] [data-practice="inicio-prever-ordem"]');await expect(prever).toBeVisible();
  expect((await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).adaptive)).skills).toEqual({});
