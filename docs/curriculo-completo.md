@@ -633,6 +633,7 @@ Cada aula abaixo tem seis seções de teoria com mais de 4.500 caracteres de exp
 #### SQL: cardinalidade de joins e agregação sem duplicar totais
 
 - Aula: `#/aula/sql-joins-cardinalidade`; nível Intermediário; 17 capítulos.
+- Em preparação: depuração de preservação e totais com quatro bases por atividade, execução SQLite local e gabaritos também previstos para PostgreSQL no CI. Mantém a previsão de fanout e os dois problemas independentes; não encerra joins, consultas ou SQL.
 - Mecanismos: granularidade antes da consulta; cardinalidade um para muitos; LEFT JOIN e linha estendida; filtro em ON versus WHERE; count da chave relacionada; agregação antes do join; fanout entre duas coleções; EXISTS para testar presença.
 - Atividades: Problema 1: preservar clientes sem pedido pago (`filtro`); Problema 2: somar coleções antes de combinar (`fanout`).
 - Referência principal: [www.postgresql.org/docs/current/queries-table-expressions.html](https://www.postgresql.org/docs/current/queries-table-expressions.html).
