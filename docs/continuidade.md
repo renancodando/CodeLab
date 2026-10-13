@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Revisão dos fragmentos HTML da PR #49
+
+A revisão encontrou um doctype duplicado na montagem aceita da atividade de documento. O teste de reprodução falhou com duas declarações antes da correção. O fragmento de abertura agora contém somente a raiz html, e os testes de navegador montam documento, hierarquia e formulário com os fragmentos reais da atividade, em vez de validar apenas uma solução escrita separadamente.
+
+Passaram 51 testes específicos em quatro arquivos, strict/build e seis fluxos Edge (23,9 s). O build manteve 157 páginas, 38 recursos essenciais e seis opcionais; inicial 224,76 kB gzip e mundo 135,93 kB gzip. O CI anterior do head d446401 passou, mas não aprova esta correção: o novo head exige CI completo, revisão resolvida, árvore conferida e publicação própria. O CI pós-merge de main 9666277 também passou nos cinco jobs (38419181894).
+
 ## Fundamentos integrados e publicados em 13 de outubro
 
 A PR #47 foi integrada em bf5dcc2889e8839cd80fe05c904f130e52afde0e, com árvore 6d53a666cb062236475409fd7c5c736db1d303b7 idêntica ao head e059021 e ao merge previsto, com pais conferidos. CI 38411814213 completo: 876 unitários, 163 testes de navegador (70/42/51), 194 exemplos externos e cenários adicionais; revisões sem pendências. Deployment dpl_GWZUVDU8oebS2BK9sjjCrHJmxmoA READY/production, gitSource.sha e alias conferidos. Os seis fluxos públicos passaram em 30,6 s, incluindo as primeiras aulas, a sessão diária, retomada antiga e preparação de Valores sem domínio pela leitura.

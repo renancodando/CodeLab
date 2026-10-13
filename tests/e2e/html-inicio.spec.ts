@@ -4,6 +4,7 @@ import {practiceActivities} from '../../src/content/practice';
 import {getPracticeSolution} from '../../src/learning/practice';
 
 const atividade=(id:string)=>practiceActivities.find(a=>a.id===id)!;
+const montar=(id:string,ordem:string[])=>ordem.map(linha=>atividade(id).lines!.find(l=>l.id===linha)!.code).join('\n');
 const documento=(corpo:string)=>'<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Referência HTML</title></head><body>'+corpo+'</body></html>';
 async function conferir(pausa:Locator){await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();}
 async function prever(pausa:Locator,errada:string,certa:string){
@@ -48,7 +49,7 @@ test('formulário HTML: validade, associação e reconstrução continuam offlin
 test('referências de documento HTML: navegador confere título, idioma e modo de padrões',async({page:pagina})=>{
  await pagina.setContent(atividade('html-prever-titulos-documento').code!);expect(await pagina.title()).toBe('Guia da biblioteca');await expect(pagina.locator('body h1')).toHaveText('Catálogo');
  await pagina.setContent(atividade('html-diagnosticar-idioma').code!);await expect(pagina.locator('html')).toHaveAttribute('lang','en');await pagina.setContent(getPracticeSolution('html-diagnosticar-idioma')!);await expect(pagina.locator('html')).toHaveAttribute('lang','pt-BR');await expect(pagina.locator('meta[charset]')).toHaveAttribute('charset','UTF-8');
- await pagina.setContent(getPracticeSolution('html-reconstruir-documento')!);expect(await pagina.evaluate(()=>document.compatMode)).toBe('CSS1Compat');expect(await pagina.title()).toBe('Minha biblioteca');await expect(pagina.locator('body > main > h1')).toHaveText('Minha biblioteca');
+ await pagina.setContent(montar('html-reconstruir-documento',['tipo','inicio','cabecalho','corpo','fim']));expect(await pagina.evaluate(()=>document.compatMode)).toBe('CSS1Compat');expect(await pagina.title()).toBe('Minha biblioteca');await expect(pagina.locator('body > main > h1')).toHaveText('Minha biblioteca');
 });
 
 test('referências semânticas: botão nativo e artigos têm comportamentos verificáveis',async({page:pagina})=>{
@@ -58,12 +59,12 @@ test('referências semânticas: botão nativo e artigos têm comportamentos veri
   await pagina.locator('main > *').focus();await pagina.keyboard.press('Enter');await pagina.keyboard.press('Space');expect(await pagina.locator('main > *').getAttribute('data-cliques')).toBe(esperado?String(esperado):null);
  }
  await pagina.setContent(documento(atividade('html-diagnosticar-regiao-principal').code!));await expect(pagina.locator('main')).toHaveCount(2);await pagina.setContent(documento(getPracticeSolution('html-diagnosticar-regiao-principal')!));await expect(pagina.locator('main')).toHaveCount(1);await expect(pagina.locator('main > article > h2')).toHaveText(['Livro A','Livro B']);expect((await new AxeBuilder({page:pagina}).analyze()).violations).toEqual([]);
- await pagina.setContent(documento(getPracticeSolution('html-reconstruir-hierarquia')!));await expect(pagina.locator('main > h1')).toHaveText('Catálogo');await expect(pagina.locator('main > article > h2')).toHaveText('Livro');
+ await pagina.setContent(documento(montar('html-reconstruir-hierarquia',['principal','artigo','descricao','fechar-artigo','fechar-principal'])));await expect(pagina.locator('main > h1')).toHaveText('Catálogo');await expect(pagina.locator('main > article > h2')).toHaveText('Livro');
 });
 
 test('referências de formulário: validação, foco e chave são conferidos no navegador',async({page:pagina})=>{
  const saidas:string[]=[];pagina.on('console',mensagem=>{if(mensagem.type()==='log')saidas.push(mensagem.text());});await pagina.setContent(documento(atividade('html-prever-validade-email').code!));expect(saidas).toEqual(['false','true','false']);
  await pagina.setContent(documento(atividade('html-corrigir-associacao-label').code!));await pagina.locator('label').click();await expect(pagina.locator('input')).not.toBeFocused();await pagina.setContent(documento(getPracticeSolution('html-corrigir-associacao-label')!));await pagina.locator('label').click();await expect(pagina.locator('input')).toBeFocused();
- await pagina.setContent(documento(getPracticeSolution('html-reconstruir-envio-campo')!));await pagina.locator('input').fill('ana@example.com');expect(await pagina.locator('input').evaluate(elemento=>(elemento as HTMLInputElement).checkValidity())).toBe(true);
+ await pagina.setContent(documento(montar('html-reconstruir-envio-campo',['formulario','rotulo','campo','enviar','fim'])));await pagina.locator('input').fill('ana@example.com');expect(await pagina.locator('input').evaluate(elemento=>(elemento as HTMLInputElement).checkValidity())).toBe(true);
  expect(await pagina.evaluate(()=>Array.from(new FormData(document.querySelector('form')!)))).toEqual([['email','ana@example.com']]);await pagina.locator('input').evaluate(elemento=>elemento.removeAttribute('name'));expect(await pagina.evaluate(()=>Array.from(new FormData(document.querySelector('form')!)))).toEqual([]);
 });

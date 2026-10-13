@@ -34,3 +34,9 @@ for(const aula of ['documento','semantica','formularios'])for(const pausa of pra
 it('previsão de validade distingue falta de valor, formato aceito e formato recusado',async()=>{
  for(const incorreta of ['true\ntrue\nfalse','false\ntrue\ntrue','false\nfalse\nfalse'])expect((await evaluatePractice('html-prever-validade-email',incorreta)).passed).toBe(false);
 });
+it('a montagem real dos fragmentos contém um único doctype antes da raiz',()=>{
+ const pausa=practicesForLesson('documento').find(p=>p.id==='html-reconstruir-documento')!;
+ const codigo=(respostas[pausa.id] as string[]).map(id=>pausa.lines!.find(l=>l.id===id)!.code).join('\n');
+ expect(codigo.match(/<!doctype\s+html\s*>/gi)).toHaveLength(1);
+ expect(codigo).toMatch(/^<!doctype\s+html\s*>\s*<html\s/i);
+});

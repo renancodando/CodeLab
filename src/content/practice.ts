@@ -25,7 +25,7 @@ export const practiceActivities:PracticeActivity[]=[
  {
   id:'html-reconstruir-documento',language:'html',lessonIds:['documento'],skillIds:['html.documento.estrutura'],afterBlock:8,kind:'order',capability:'alteracao',requiresConcept:true,
   title:'Organize metadados e conteúdo',prompt:'Organize todos os fragmentos: doctype primeiro; raiz html; head com os metadados antes do body; fechamento da raiz por último. O exercício confere essa sequência de fragmentos, sem validar um documento livre do aluno.',
-  lines:[{id:'corpo',code:'<body><main><h1>Minha biblioteca</h1></main></body>'},{id:'cabecalho',code:'<head><meta charset="UTF-8"><title>Minha biblioteca</title></head>'},{id:'inicio',code:'<!doctype html>\n<html lang="pt-BR">'},{id:'tipo',code:'<!doctype html>'},{id:'fim',code:'</html>'}],hint:'head e body ficam dentro de html. O cabeçalho de metadados e a região header do conteúdo têm papéis diferentes.',minutes:4
+  lines:[{id:'corpo',code:'<body><main><h1>Minha biblioteca</h1></main></body>'},{id:'cabecalho',code:'<head><meta charset="UTF-8"><title>Minha biblioteca</title></head>'},{id:'inicio',code:'<html lang="pt-BR">'},{id:'tipo',code:'<!doctype html>'},{id:'fim',code:'</html>'}],hint:'head e body ficam dentro de html. O cabeçalho de metadados e a região header do conteúdo têm papéis diferentes.',minutes:4
  },
  {
   id:'html-escolher-acao-teclado',language:'html',lessonIds:['semantica'],skillIds:['html.semantica.teclado'],afterBlock:3,kind:'choice',capability:'leitura',requiresConcept:true,
