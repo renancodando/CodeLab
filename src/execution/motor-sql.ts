@@ -2,7 +2,7 @@ import type {SqlJsStatic,Statement} from 'sql.js';
 
 export type CelulaSql=string|number|bigint|null|{bytes:number};
 export type TabelaSql={comando:number;colunas:string[];linhas:CelulaSql[][]};
-export type ResultadoSql={comandos:number;tabelas:TabelaSql[];erro?:string};
+export type ResultadoSql={comandos:number;tabelas:TabelaSql[];erro?:string;faseErro?:'carregamento'|'consulta'};
 
 export function executarConsultaSql(SQL:SqlJsStatic,codigo:string):ResultadoSql{
  if(typeof codigo!=='string'||codigo.length>30000)throw new Error('Limite de 30.000 caracteres de SQL.');
