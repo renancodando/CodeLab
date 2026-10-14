@@ -12,6 +12,21 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'textos-prever-conversoes',language:'javascript',lessonIds:['strings-numbers'],skillIds:['javascript.conversao.operadores'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O mesmo sinal, tipos diferentes',prompt:'Preveja as quatro linhas, na ordem. A conversão pode produzir um número sem decidir se aquela entrada é aceitável para o formulário.',
+  code:'console.log("2" + 3);\nconsole.log(Number("2") + 3);\nconsole.log(Number(""));\nconsole.log(Number.isFinite(Number("abc")));',hint:'Confira os tipos dos operandos antes de interpretar +. Separar conversão e validação evita tratar ausência como um zero informado.',minutes:3
+ },
+ {
+  id:'textos-guardar-normalizacao',language:'javascript',lessonIds:['strings-numbers'],skillIds:['javascript.textos.imutabilidade'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O nome continuou com espaços nas pontas',prompt:'O objetivo é mostrar [Ana Maria], preservando o espaço entre os nomes. Escolha a substituição da chamada isolada que conserva a normalização em nome. A decisão é conceitual; não executa código enviado por você.',
+  code:'let nome = "  Ana Maria  ";\nnome.trim();\nconsole.log("[" + nome + "]");',options:[{id:'repetir',text:'nome.trim(); nome.trim();'},{id:'guardar',text:'nome = nome.trim();'},{id:'remover',text:'nome = nome.replaceAll(" ", "");'}],hint:'A string não é alterada por trim. Diferencie o retorno do método da variável que continua guardando o texto anterior.',minutes:3
+ },
+ {
+  id:'textos-corrigir-entrada',language:'javascript',lessonIds:['strings-numbers'],skillIds:['javascript.conversao'],afterBlock:8,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Rejeitar ausência sem perder zero',prompt:'Corrija dobroTexto(texto), do exercício desta aula. A entrada é sempre uma string. Se ela ficar vazia após trim, ou se Number(texto) produzir NaN ou infinito, lance um Error (subclasses também valem; a mensagem é livre). Caso contrário, devolva o dobro como number, sem arredondar. Zero e negativos são válidos. Formatos aceitos por Number, como 1e2 e 0x10, também pertencem ao contrato; não aceite apenas um prefixo como 3px. Os valores finitos dos casos estão entre -1.000.000 e 1.000.000. Não é preciso validar outros tipos de entrada.',
+  code:'function dobroTexto(texto) {\n  return parseFloat(texto) * 2;\n}',hint:'Investigue separadamente ausência, conversão completa e valor finito. Devolver uma mensagem ou NaN não equivale a sinalizar a rejeição pedida.',minutes:5
+ },
+ {
   id:'html-prever-titulos-documento',language:'html',lessonIds:['documento'],skillIds:['html.documento.metadados'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'O título da aba e o título do conteúdo',prompt:'Registre duas linhas: primeiro o texto da aba, depois o texto do h1 visível. Esta previsão é conceitual; não executa nem renderiza um documento enviado por você.',
   code:'<!doctype html>\n<html lang="pt-BR"><head><meta charset="UTF-8"><title>Guia da biblioteca</title></head><body><main><h1>Catálogo</h1></main></body></html>',hint:'title descreve o documento na aba; h1 pertence ao conteúdo do body. Eles podem ter textos diferentes.',minutes:3

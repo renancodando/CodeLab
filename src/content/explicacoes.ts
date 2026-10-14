@@ -215,11 +215,11 @@ const roteiros:Record<string,Roteiro>={
   },
   "strings-numbers": {
     "contexto": "Interfaces recebem muitos dados como texto, mesmo quando parecem números. A fronteira entre string e number é uma fonte clássica de bugs porque algumas operações convertem implicitamente e outras não.",
-    "modelo": "Pense na entrada como dado ainda não confiável. Antes de calcular, normalize o texto, converta conscientemente, valide o resultado e só então permita que ele entre no restante da aplicação.",
+    "modelo": "Pense na entrada como texto ainda não validado. O sinal + pode concatenar quando recebe uma string: '2' + 3 produz texto; Number('2') + 3 calcula com números. Number('') e Number('   ') produzem zero, mas ausência e o texto '0' continuam sendo entradas diferentes para a regra do formulário. Number('abc') produz NaN, que não passa por Number.isFinite. Primeiro decida o que fazer com ausência, depois converta e confira finitude. Métodos de string devolvem outro texto: nome.trim() não reatribui nome. Guarde o retorno quando precisar da versão normalizada; trim conserva o espaço interno de Ana Maria. Number exige uma conversão completa: '3px' é inválido, enquanto parseFloat lê o prefixo 3. Notação científica, como '1e2', e hexadecimal, como '0x10', são aceitas por Number; uma vírgula decimal pede outro contrato, não uma troca silenciosa de caracteres. No exercício dobroTexto, uma rejeição lança Error e interrompe a chamada; o retorno válido é um número utilizável. Não confunda devolver uma mensagem com sinalizar essa rejeição.",
     "passos": [
       "Preserve o texto original enquanto valida.",
       "Remova apenas espaços que não carregam significado.",
-      "Rejeite entrada vazia quando zero não for uma resposta válida.",
+      "Decida a política de ausência antes da conversão: rejeitar vazio não impede aceitar o texto '0'.",
       "Converta com Number e confirme Number.isFinite.",
       "Somente depois faça operações matemáticas."
     ],

@@ -222,12 +222,12 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
  const novosConceitos=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id));
  const concept=novosConceitos.filter(activity=>!novosConceitos.some(outro=>outro.incluiConceitos?.includes(activity.id))).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(concept)add('concept',concept);
- // A prepared concept may precede its practices in this same session. Reading
- // unlocks the sequence, never adds mastery evidence or bypasses skill prerequisites.
  const eligible=candidates.filter(activity=>prerequisitesMet(state,activity,catalog,concept));
  const focus=new Set([...(concept?.skillIds??[]),...items.flatMap(item=>item.skillId?[item.skillId]:[])]);
  const relevant=(activity:LearningActivity)=>activity.skillIds.some(id=>focus.has(id));
- const assuntoApresentado=(activity:LearningActivity)=>!concept||activity.skillIds.some(id=>concept.skillIds.includes(id));
+ const assuntoApresentado=(atividade:LearningActivity)=>!concept||(concept.preparacaoAteBloco!==undefined
+  ? atividade.requiredConcepts?.includes(concept.id)===true
+  : atividade.skillIds.some(id=>concept.skillIds.includes(id)));
  const practices=eligible.filter(activity=>activity.kind==='practice'&&!used.has(activity.id)&&assuntoApresentado(activity))
   .sort((a,b)=>Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id));
  for(const activity of practices.slice(0,2))add('practice',activity);
