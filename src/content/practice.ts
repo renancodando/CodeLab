@@ -5,12 +5,57 @@ export type PracticeKind = 'debug'|'predict'|'order'|'fill'|'choice';
 export type PracticeActivity = {
  id:string; language:PracticeLanguage; lessonIds:string[]; skillIds:string[];
  afterBlock:number; kind:PracticeKind; capability:Capability; requiresConcept?:boolean;
- title:string; prompt:string; code?:string; options?:{id:string;text:string}[];
+ title:string; prompt:string; code?:string; assinaturaVazia?:boolean; options?:{id:string;text:string}[];
  lines?:{id:string;code:string}[]; hint:string; minutes:number;
 };
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
+ {
+  id:'metodos-prever-transformacao',language:'javascript',lessonIds:['array-metodos'],skillIds:['javascript.arrays.filter','javascript.arrays.reduce'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Seleção, transformação e acumulação',prompt:'Preveja as três linhas. join torna explícito o texto exibido; diferencie a lista selecionada, a lista transformada e o total.',
+  code:'const pares = [1,2,3,4].filter(n => n % 2 === 0);\nconsole.log(pares.join(","));\nconsole.log(pares.map(n => n * 2).join(","));\nconsole.log(pares.reduce((soma,n) => soma + n,0));',hint:'map não reatribui pares. O reduce começa em zero e visita os dois números selecionados.',minutes:3
+ },
+ {
+  id:'metodos-devolver-predicado',language:'javascript',lessonIds:['array-metodos'],skillIds:['javascript.arrays.filter'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'A comparação existe, mas o filtro veio vazio',prompt:'A intenção é conservar os pares. Qual substituição da callback devolve ao filter a decisão calculada? Escolha conceitual.',
+  code:'const pares = [1,2,3,4].filter(n => { n % 2 === 0; });\nconsole.log(pares.length);',options:[{id:'devolver',text:'n => { return n % 2 === 0; }'},{id:'mapear',text:'Trocar filter por map, mantendo a callback sem retorno.'},{id:'indice',text:'(n,indice) => { indice % 2 === 0; }'}],hint:'Com chaves, uma expressão solta não se torna o retorno da função. filter usa o valor devolvido, não o que foi apenas calculado.',minutes:3
+ },
+ {
+  id:'metodos-somar-pares',language:'javascript',lessonIds:['array-metodos'],skillIds:['javascript.arrays.reduce'],afterBlock:8,kind:'debug',capability:'producao',requiresConcept:true,assinaturaVazia:true,
+  title:'Da expressão fixa para uma função reutilizável',prompt:'Implemente somarPares(valores). Recebe um array denso de até 200 inteiros entre -1000 e 1000; devolve como number a soma de todos os pares, inclusive negativos e repetidos. Vazio ou nenhum par devolvem zero. Preserve a entrada e mantenha chamadas independentes. Pode usar métodos ou loop. Não precisa validar entradas fora desse contrato.',
+  code:'function somarPares(valores) {\n\n}',hint:'Teste a função depois da seleção, quando podem restar zero itens. Escolha um acumulador inicial que continue correto nesse caso.',minutes:5
+ },
+ {
+  id:'objetos-prever-compartilhamento',language:'javascript',lessonIds:['objetos-modulos'],skillIds:['javascript.objetos.propriedades'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Outra ficha, o mesmo endereço',prompt:'Preveja as quatro linhas. Diferencie a identidade do objeto externo da identidade do endereço interno.',
+  code:'const pessoa = {nome:"Lia",endereco:{cidade:"Recife"}};\nconst copia = {...pessoa,nome:"Bia"};\ncopia.endereco.cidade = "Natal";\nconsole.log(pessoa.nome);\nconsole.log(pessoa.endereco.cidade);\nconsole.log(pessoa === copia);\nconsole.log(pessoa.endereco === copia.endereco);',hint:'Spread copia as propriedades do primeiro nível. Uma propriedade cujo valor é outro objeto continua apontando para esse objeto.',minutes:3
+ },
+ {
+  id:'objetos-diagnosticar-padrao',language:'javascript',lessonIds:['objetos-modulos'],skillIds:['javascript.objetos.validacao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O padrão não substituiu null',prompt:'O padrão deve ser 5 somente para null ou undefined; zero informado precisa continuar zero. Qual expressão calcula efetivos sem mudar essa regra? Decisão conceitual.',
+  code:'const {pontos = 5} = {pontos:null};\nconst efetivos = pontos;\nconsole.log(efetivos);',options:[{id:'ausencia',text:'const efetivos = pontos ?? 5;'},{id:'falso',text:'const efetivos = pontos || 5;'},{id:'repetir',text:'Repetir const {pontos = 5} = {pontos:null};'}],hint:'O padrão de destructuring trata undefined. Diferencie ausência de valores válidos que também são falsy.',minutes:3
+ },
+ {
+  id:'objetos-atualizar-endereco',language:'javascript',lessonIds:['objetos-modulos'],skillIds:['javascript.objetos.propriedades'],afterBlock:8,kind:'debug',capability:'alteracao',requiresConcept:true,
+  title:'Atualizar uma cidade sem alterar o cadastro anterior',prompt:'Implemente mudarCidade(pessoa,cidade). pessoa é um objeto JSON com nome e endereco (objeto com cidade e outros campos); cidade é uma string, inclusive vazia. Devolva outro objeto externo e outro endereco, substituindo somente endereco.cidade. Preserve os outros campos e o cadastro original; o resultado pode ter cidade e nome alterados depois sem modificar o original. Não se exige cópia profunda de outros campos nem validação de outras entradas.',
+  code:'function mudarCidade(pessoa,cidade) {\n  const copia = {...pessoa};\n  copia.endereco.cidade = cidade;\n  return copia;\n}',hint:'Copiar a ficha externa não copia o endereço. Reconstrua o caminho que será alterado e conserve as demais propriedades.',minutes:5
+ },
+ {
+  id:'json-prever-falha',language:'javascript',lessonIds:['erros-json'],skillIds:['javascript.erros.interrupcao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'O que continua depois de um parse inválido?',prompt:'Preveja as três linhas exibidas. A tentativa não modifica o texto, e o catch só envolve as instruções dentro do try.',
+  code:'console.log("Antes");\ntry {\n  JSON.parse("{nome:1}");\n  console.log("Dentro");\n} catch(erro) {\n  console.log(erro.name);\n}\nconsole.log("Depois");',hint:'JSON exige aspas na chave. Uma exceção abandona o restante do try; o programa pode continuar depois do catch.',minutes:3
+ },
+ {
+  id:'json-identificar-contrato',language:'javascript',lessonIds:['erros-json'],skillIds:['javascript.objetos.validacao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O parse passou; o contrato não',prompt:'O consumidor exige um objeto com nome do tipo string. Qual diagnóstico explica por que este texto não atende ao contrato? Escolha conceitual.',
+  code:'const dado = JSON.parse("null");\nconsole.log(typeof dado);',options:[{id:'estrutura',text:'null é JSON válido e typeof null é object; ainda é preciso rejeitar null e validar nome.'},{id:'sintaxe',text:'JSON.parse sempre lança SyntaxError quando o texto é null.'},{id:'garantia',text:'typeof devolveu object, então nome necessariamente existe e é string.'}],hint:'A gramática JSON aceita mais do que objetos. O sucesso do parse não comprova a forma exigida pelo consumidor.',minutes:3
+ },
+ {
+  id:'json-validar-nome',language:'javascript',lessonIds:['erros-json'],skillIds:['javascript.objetos.validacao'],afterBlock:8,kind:'debug',capability:'producao',requiresConcept:true,assinaturaVazia:true,
+  title:'Conferir o dado antes de devolver nome',prompt:'Complete lerNome(texto). A entrada é sempre uma string. Faça o parse e devolva exatamente nome quando o resultado for um objeto não nulo, não um array, e nome for string. Campos extras são permitidos; nomes vazios ou com espaços também são strings e devem ser preservados. Para JSON inválido ou estrutura fora do contrato, lance Error (subclasses valem; mensagem livre). Não use uma sentinela nem converta outros tipos para texto.',
+  code:'function lerNome(texto) {\n\n}',hint:'Separe a falha do parse da validação do valor produzido. Verifique o próprio dado antes de acessar suas propriedades.',minutes:5
+ },
  {
   id:'textos-prever-conversoes',language:'javascript',lessonIds:['strings-numbers'],skillIds:['javascript.conversao.operadores'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'O mesmo sinal, tipos diferentes',prompt:'Preveja as quatro linhas, na ordem. A conversão pode produzir um número sem decidir se aquela entrada é aceitável para o formulário.',
