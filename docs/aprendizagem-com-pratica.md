@@ -4,6 +4,8 @@
 
 Esta edição prioriza aprendizagem ativa nas aulas, percursos e projetos existentes. A [fila gerada](aulas-sem-pratica.md) ordena as aulas sem pausas, e as [métricas geradas](metricas-catalogo.md) mantêm as contagens. Uma pausa ou leitura não encerra o domínio; previsão, diagnóstico, produção, assistência e revisão precisam de evidência adequada. A confirmação de cada entrega está em [continuidade](continuidade.md). Os registros seguintes são históricos e conservam os números e gates de cada etapa.
 
+As aulas originais de tabelas e acessibilidade trabalham relações entre cabeçalhos, alternativas de imagens no contexto, nomes de controles, foco e mensagens. A reconstrução de fragmentos não equivale a produzir HTML livre. Os exemplos de referência têm verificação nativa de DOM e teclado; a revisão com tecnologia assistiva e a aplicação a outros dados permanecem nos projetos.
+
 ## Coerência entre preparação e prática diária
 
 Na aula original de Promises, a correção usa funções de teste locais com espera e rejeição reais no QuickJS. A previsão e a escolha HTTP continuam conceituais. Acertar esse recorte não comprova rede, CORS, cancelamento nativo ou integração de interface; o projeto mantém essas exigências. Falhas são separadas por obtenção, status e corpo, sem transformar erro em lista vazia. A verificação aceita then ou async/await e confere chamadas independentes.

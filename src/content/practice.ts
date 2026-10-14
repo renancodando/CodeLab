@@ -12,6 +12,36 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'html-prever-cabecalhos',language:'html',lessonIds:['imagens-tabelas'],skillIds:['html.tabelas.cabecalhos'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Zero de qual produto e de qual medida?',prompt:'Para a célula com 0, escreva duas linhas: primeiro o cabeçalho da coluna, depois o da linha. É uma previsão das relações desta tabela simples, não uma transcrição da fala de um leitor de tela.',
+  code:'<table><caption>Estoque</caption>\n<thead><tr><th scope="col">Produto</th><th scope="col">Unidades</th></tr></thead>\n<tbody><tr><th scope="row">Cabo USB</th><td>0</td></tr>\n<tr><th scope="row">Adaptador</th><td>3</td></tr></tbody></table>',hint:'caption nomeia a tabela inteira. scope="col" e scope="row" indicam direções diferentes; zero continua sendo um dado.',minutes:3
+ },
+ {
+  id:'html-diagnosticar-imagem-link',language:'html',lessonIds:['imagens-tabelas'],skillIds:['html.imagens.alternativas'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O único conteúdo do link ficou sem nome',prompt:'A imagem é o único conteúdo do link para o mapa do campus. Sem acrescentar texto visível ou ARIA, qual alteração comunica o destino? A escolha é conceitual e depende deste contexto; nem toda imagem precisa de alt não vazio.',
+  code:'<a href="/mapa"><img src="mapa.svg" width="160" height="90" alt=""></a>',options:[{id:'destino',text:'Usar alt="Mapa do campus".'},{id:'arquivo',text:'Usar alt="mapa.svg", descrevendo somente o nome do arquivo.'},{id:'decoracao',text:'Manter alt="" e acrescentar loading="lazy".'}],hint:'Uma imagem pode nomear a ação de seu link. Otimizar o carregamento ou repetir o arquivo não explica para onde ele leva.',minutes:3
+ },
+ {
+  id:'html-reconstruir-tabela-dados',language:'html',lessonIds:['imagens-tabelas'],skillIds:['html.tabelas.estrutura','html.tabelas.cabecalhos'],afterBlock:8,kind:'order',capability:'alteracao',requiresConcept:true,
+  title:'Reconstrua a relação entre cabeçalhos e dados',prompt:'Use todos os fragmentos uma vez: abra table com caption, coloque thead, abra tbody com as duas linhas, feche tbody e feche table. Preserve zero, três unidades e ambos os cabeçalhos de linha. A correção confere essa reconstrução delimitada; não valida HTML livre enviado por você.',
+  lines:[{id:'linhas',code:'<tbody><tr><th scope="row">Cabo USB</th><td>0</td></tr><tr><th scope="row">Adaptador</th><td>3</td></tr>'},{id:'fim-tabela',code:'</table>'},{id:'cabecalho',code:'<thead><tr><th scope="col">Produto</th><th scope="col">Unidades</th></tr></thead>'},{id:'abertura',code:'<table><caption>Estoque</caption>'},{id:'fim-corpo',code:'</tbody>'}],hint:'As linhas de dados pertencem a tbody. A recuperação automática do navegador pode mostrar uma tabela mesmo quando o código não expressa a estrutura solicitada.',minutes:4
+ },
+ {
+  id:'html-prever-tabulacao',language:'html',lessonIds:['html-acessivel'],skillIds:['html.acessibilidade.tabulacao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Quais controles recebem os dois próximos Tabs?',prompt:'Considere apenas este fragmento, com foco inicialmente antes dele e navegação sequencial usual por teclado. Escreva o texto dos dois elementos que recebem Tab, uma linha por elemento. Não há tabindex positivo nem outros controles. Previsão conceitual.',
+  code:'<a href="#ajuda">Ajuda</a>\n<button type="button" disabled>Salvar</button>\n<button type="button">Testar</button>\n<div tabindex="-1">Resumo</div>',hint:'disabled retira o botão da interação usual. tabindex="-1" permite foco programático, mas não insere o resumo na sequência de Tab.',minutes:3
+ },
+ {
+  id:'html-diagnosticar-nome-acao',language:'html',lessonIds:['html-acessivel'],skillIds:['html.acessibilidade.nomes'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O texto diz Excluir, mas o nome diz Salvar',prompt:'O botão executa a ação Excluir e já tem esse texto visível. Qual alteração mínima faz seu nome acessível corresponder à ação, preservando o botão nativo e o texto? Escolha conceitual; não realiza nenhuma exclusão.',
+  code:'<button type="button" aria-label="Salvar">Excluir</button>',options:[{id:'visivel',text:'Remover aria-label="Salvar", permitindo que o texto Excluir forneça o nome.'},{id:'papel',text:'Acrescentar role="button", mantendo aria-label="Salvar".'},{id:'cor',text:'Mudar a cor do botão para vermelho, mantendo aria-label="Salvar".'}],hint:'Um aria-label pode substituir o nome vindo do texto. Papel e cor não corrigem esse desacordo.',minutes:3
+ },
+ {
+  id:'html-reconstruir-status',language:'html',lessonIds:['html-acessivel'],skillIds:['html.acessibilidade.mensagens'],afterBlock:8,kind:'order',capability:'alteracao',requiresConcept:true,
+  title:'Prepare o controle e a mensagem antes de registrar a ação',prompt:'Reconstrua este documento delimitado: primeiro o botão e a região de resultado; depois abra script, selecione os elementos e inicialize o contador, registre o listener e feche script. O output já deve existir com aria-live antes das atualizações. O aluno reorganiza fragmentos, sem execução de código livre. Testes nativos conferem teclado e DOM; isso não comprova a fala de todos os leitores de tela.',
+  lines:[{id:'reagir',code:'botao.addEventListener("click",()=>{verificacoes++;resultado.textContent="Verificações: "+verificacoes;});'},{id:'controles',code:'<button id="verificar" type="button">Verificar</button><output id="resultado" aria-live="polite"></output>'},{id:'fim',code:'</script>'},{id:'selecionar',code:'const botao=document.querySelector("#verificar");const resultado=document.querySelector("#resultado");let verificacoes=0;'},{id:'inicio',code:'<script>'}],hint:'querySelector precisa encontrar os controles. A região live é preparada antes do evento; a atualização de texto não precisa deslocar o foco do botão.',minutes:4
+ },
+ {
   id:'async-prever-espera',language:'javascript',lessonIds:['async'],skillIds:['javascript.assincrono.espera'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'A função começou, mas ainda não terminou',prompt:'Preveja as quatro linhas. As Promises são locais, sem rede ou temporizadores. Sua previsão é uma decisão conceitual; o programa de referência é executado nos testes.',
   code:'async function carregar() {\n  console.log("Início");\n  const valor = await Promise.resolve(7);\n  console.log(valor);\n}\nconsole.log("Antes");\ncarregar();\nconsole.log("Depois");',hint:'O corpo começa ao chamar carregar. A continuação depois de await fica para uma microtarefa, mesmo com uma Promise já resolvida.',minutes:3
