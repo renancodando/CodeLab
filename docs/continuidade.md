@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Sessão diária publicada e conversões em verificação
+
+Após a correção, passaram 982 testes em 59 arquivos, sem aumentar prazos ou retirar cenários. Strict/build passaram novamente: inicial 227,13 kB gzip, mundo 135,92 kB, 157 páginas e versão offline b9eb20cba45ff1da4b3f. Os 12 fluxos Edge passaram em 1,6 min: três novos e nove de regressão, incluindo a preparação de conversões com suas três atividades, execução QuickJS offline, alternativas, assistência, revisão, rascunho, projeto, axe e larguras 220/4000. O catálogo da branch tem 135 atividades em 71 aulas; 66 continuam sem pausas. Publicação exige CI e revisão do seu próprio head, integração e domínio conferido.
+
+A PR #50 foi integrada em 8c649bfbe4166d944dd8d22cb9b5882037dedccb, árvore 08d939998527671189901ea846ec5883f7433c00 idêntica ao head 30a5850ef13aa295e65073d1f8ca6da6d39d1196. Os cinco jobs do CI 38494188105 passaram no head atual; os dois tópicos de revisão foram resolvidos e os pais da integração conferidos. Deployment dpl_9KhyBgQ2auhFYraUg5oM3q8m1PRW READY/production, gitSource.sha correto e alias público conferido. Nove fluxos públicos Edge passaram em 1,1 min, incluindo sessão TypeScript, planos antigos, assistência, leitura, exportação/importação após apagar o registro, offline e retomada. O CI pós-merge 38497769646 segue sua própria execução. Main local foi sincronizada por fast-forward.
+
+Na branch de conversões, strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais, inicial 227,10 kB gzip e mundo 135,93 kB. Dois dos três novos fluxos Edge passaram; o terceiro detectou que o carrinho, com habilidade compartilhada, ocupava a vaga da normalização de texto. O teste unitário reproduziu a seleção antes da correção. Uma preparação agora seleciona suas atividades vinculadas; revisões anteriores e planos iniciados continuam preservados. Passaram 95 testes específicos em quatro arquivos. Regressão completa, novo build, navegador, CI e publicação da branch ainda são pendentes. Logs de falha e correção permanecem preservados.
+
 ## Sessão inicial TypeScript conferida
 
 O CI 38478087626 do head 363dfd3 aprovou testes/compilação, auditoria e duas parcelas de navegador; a terceira falhou na expectativa antiga de quatro etapas em typescript-variance. A sessão inicial tem conceito, ts-zero-ausencia e ts-tipo-apagado: inserir uma segunda prática de outro assunto contrariaria a preparação definida. O teste agora exige esses identificadores, sua relação com as habilidades apresentadas e ausência de domínio inicial, mantendo integralmente os cenários de variância, persistência e offline.
