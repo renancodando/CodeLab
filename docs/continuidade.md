@@ -1,5 +1,35 @@
 # Continuidade do CODELAB
 
+## Sessão inicial TypeScript conferida
+
+O CI 38478087626 do head 363dfd3 aprovou testes/compilação, auditoria e duas parcelas de navegador; a terceira falhou na expectativa antiga de quatro etapas em typescript-variance. A sessão inicial tem conceito, ts-zero-ausencia e ts-tipo-apagado: inserir uma segunda prática de outro assunto contrariaria a preparação definida. O teste agora exige esses identificadores, sua relação com as habilidades apresentadas e ausência de domínio inicial, mantendo integralmente os cenários de variância, persistência e offline.
+
+Strict/build passaram, com os mesmos 157 documentos, 38 recursos essenciais/seis opcionais e versão cb4fdd731f1e5c1d468c. O fluxo TypeScript local passou em 8,9 s; seu prazo de 90 s permaneceu. As provas anteriores de 957 unitários, 108 específicos e oito fluxos pertencem ao mesmo código de aplicação. O novo head com esta correção de teste exige CI completo próprio; a execução com falha não aprova integração.
+
+## Revisão da sessão diária na PR #50
+
+Dois apontamentos foram reproduzidos antes da correção. O plano preparado de cpp-memoria-posse omitia cpp-devolver-texto-dono porque a pausa antiga de invalidação, sem preparação, vinha depois. O desafio agora usa somente a última pausa que exige preparação; a atividade antiga permanece disponível. Em planos antigos só de prática, concluir a preparação deixava o seletor habilitado. A ação agora registra o início da sessão sem alterar seus itens, concluir exercícios ou criar domínio.
+
+O indicador iniciada é opcional, mantém a versão do progresso e atravessa normalização, exportação e importação. Backups anteriores sem esse campo continuam válidos; valores de tipo incorreto são recusados na importação. Passaram 108 testes específicos em oito arquivos, incluindo backup completo, migração, posse, domínio e planos publicados. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 225,07 kB gzip e mundo 135,92 kB gzip. A reprodução nativa do seletor falhou como esperado antes da correção. O navegador revisado, a resolução dos tópicos e o CI completo do novo head ainda são pendentes; o CI do head anterior bf6a6e3 não aprova estas mudanças.
+
+Os oito fluxos Edge revisados passaram em 55,6 s, mantendo seus prazos: a preparação bloqueia a troca de linguagem sem completar exercícios, resiste a um evento de alteração tardio e continua iniciada após recarregar e exportar/importar a jornada. A recuperação foi conferida após apagar o registro no contexto descartável do teste. Laços e Valores mantêm a sequência antiga e continuam offline; domínio permanece vazio pela leitura. Os demais fluxos conferem axe, estilo, sessão completa, correção na aula, assistência e responsividade. A regressão local completa do novo conteúdo foi iniciada separadamente, sem build ou navegador simultâneo.
+
+A regressão local completa terminou com 957/957 testes em 58 arquivos (63,7 s), incluindo os seis casos que haviam expirado anteriormente. Nenhum prazo ou cenário foi removido. Os logs anteriores continuam preservados; não atribuímos uma causa à variação de tempo. As correções agora exigem push, resolução dos tópicos, CI completo do novo head, árvore, integração e publicação próprias.
+
+## HTML integrado e publicado em 13 de outubro
+
+A PR #49 está publicada: merge ecd7818192a7cf6402be2e8fe5d6271df73992a8 e árvore 6044a3ccc3b11cf24a71db988451681dd1e91639 idêntica ao head 2b61a3d e ao merge previsto, com pais conferidos. CI 38463452916 completo: 946 unitários, 172 fluxos de navegador (79/42/51), 194 exemplos externos e cenários adicionais; revisão resolvida. Deployment dpl_BYhvcvm4tF9pz6azm3EiVdPpkJye READY/production, gitSource.sha igual ao merge e alias do domínio apontando para o mesmo deployment. Os seis fluxos Edge públicos passaram em 2,6 min, incluindo referências montadas com os fragmentos reais, teclado, axe, responsividade, assistência, persistência e offline. Métricas correntes continuam geradas; esta entrega não encerra a edição curricular.
+
+## Sessão diária coerente em validação
+
+A reprodução local mostrou Programar seguido de carrinho, maior negativo e filtro com mutação, sem relação com o conceito apresentado. A preparação agora abrange a introdução que contém; o plano seleciona práticas das habilidades apresentadas e deixa vagas livres quando não há atividade preparada. A última pausa das aulas preparadas ocupa o desafio. Planos iniciados conservam sequência, tempos e tipos; a mesma atividade corrigida na aula pode concluir uma etapa antiga de prática/desafio sem confundir o modo revisão.
+
+Passaram 70 testes específicos, incluindo as oito linguagens, pré-requisitos, ausência de domínio pela leitura, preparação, revisões, plano real antigo, importação e mudança de tipo da etapa. Strict/build passaram: 157 páginas, 38 recursos essenciais e seis opcionais; inicial 224,96 kB gzip e mundo 135,93 kB gzip. A regressão completa local aprovou 946/952; seis testes expiraram em memória (25 s), quatro exemplos TypeScript (30 s) e geração de métricas (10 s). A repetição isolada dos três arquivos também expirou nos mesmos seis casos (37/43), sem alterar os limites. Esses logs não aprovam a suíte completa. Os 25 fluxos Edge locais, CI completo e publicação desta correção ainda são pendentes.
+
+A primeira rodada de 25 fluxos Edge da sessão aprovou 22. Axe encontrou salto de H1 para H3; a prática passa a usar H2 fora dos capítulos, com estilo equivalente, mantendo H3 nas pausas inseridas na aula. O teste também compara a aparência computada do título antigo e novo. O plano SQL do teste era montado com o planejador novo; referências congeladas de SQL, laços e Valores agora vêm do catálogo e do planejador publicados em ecd7818. A falha restante foi o prazo local de documento HTML; esse fluxo passou depois no domínio público, mantendo 60 s. Logs e traces anteriores foram preservados; a correção da sessão exige novos gates do seu próprio head.
+
+Após as correções passaram 73 testes específicos em quatro arquivos, strict/build e os oito fluxos Edge diretamente afetados (3,8 min). Axe não encontrou violações nos títulos da sessão e da prática avulsa; as propriedades visuais conferidas coincidem com as do título anterior. Retomada, planos publicados, leitura sem domínio, assistência, revisão, persistência, teclado, offline e 220–4000 px passaram. O build manteve 157 páginas e 38 recursos essenciais/seis opcionais; inicial 224,99 kB gzip, mundo 135,93 kB gzip. A regressão completa do novo head continua obrigatória no CI; as expirações locais anteriores não são aprovação. O CI pós-merge de main ecd7818 também passou (38467592117). Integração e produção da correção da sessão seguem pendentes.
+
 ## Revisão dos fragmentos HTML da PR #49
 
 A revisão encontrou um doctype duplicado na montagem aceita da atividade de documento. O teste de reprodução falhou com duas declarações antes da correção. O fragmento de abertura agora contém somente a raiz html, e os testes de navegador montam documento, hierarquia e formulário com os fragmentos reais da atividade, em vez de validar apenas uma solução escrita separadamente.

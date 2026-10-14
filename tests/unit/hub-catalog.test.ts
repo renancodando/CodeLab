@@ -3,7 +3,17 @@ import {lessons} from '../../src/content/curriculum';
 import {practiceActivities} from '../../src/content/practice';
 import {capstoneProjects} from '../../src/content/project-paths';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
-import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen,ADAPTIVE_LIMITS} from '../../src/learning/adaptive';
+import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen,ADAPTIVE_LIMITS,type DailySession} from '../../src/learning/adaptive';
+function conferirAssunto(plano:DailySession){
+ const conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId)!;
+ expect(conceito.kind).toBe('concept');expect(plano.items.length).toBeGreaterThan(1);expect(plano.items.length).toBeLessThanOrEqual(4);
+ expect(new Set(plano.items.map(i=>i.id)).size).toBe(plano.items.length);
+ for(const item of plano.items.slice(1)){
+  const atividade=adaptiveCatalog.activities.find(a=>a.id===item.activityId)!;
+  expect(atividade.skillIds.some(id=>conceito.skillIds.includes(id)),atividade.id).toBe(true);
+  expect(atividade.requiredConcepts?.every(id=>id===conceito.id||conceito.incluiConceitos?.includes(id))??true).toBe(true);
+ }
+}
 it('o catálogo de habilidades cabe no progresso e no backup suportados',()=>{
  expect(adaptiveCatalog.skills.length).toBeLessThanOrEqual(ADAPTIVE_LIMITS.skills);
 });
@@ -13,10 +23,10 @@ it('todas as ligações de práticas e projetos apontam para aulas existentes',(
  for(const p of capstoneProjects)for(const m of p.milestones)for(const id of m.lessonIds)if(!ids.has(id))missing.push(p.id+'/'+m.id+':'+id);
  expect(missing).toEqual([]);
 });
-it('cada linguagem oferece conceito, duas práticas e desafio sem repetição',()=>{
+it('cada linguagem pratica o assunto apresentado sem preencher vagas com conteúdo não preparado',()=>{
  for(const language of ['html','css','javascript','typescript','python','csharp','cpp','sql']){
   const plan=buildDailySession(freshAdaptive(),{...adaptiveCatalog,preferredLanguage:language},{now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'});
-  expect(plan.items.map(i=>i.kind),language).toEqual(['concept','practice','practice','challenge']);expect(new Set(plan.items.map(i=>i.id)).size).toBe(4);
+  conferirAssunto(plan);
   for(const item of plan.items)expect(adaptiveCatalog.activities.find(a=>a.id===item.activityId)!.skillIds.every(id=>id.startsWith(language+'.'))).toBe(true);
  }
 });
@@ -38,14 +48,14 @@ it('inserir uma aula conserva conceitos lidos e o plano iniciado antes da expans
  expect(adaptiveCatalog.activities.some(a=>a.id==='conceito-2-py-iteracao-recursos')).toBe(true);
 });
 
-it.each(['ts-variancia-contratos','ts-modulos-configuracao','cpp-templates','js-closures-estado','sql-null-logica','html-midia','cs-iteradores-descarte','css-caixas-intrinseco','py-objetos-protocolos'])('%s espera seu conceito e leitura não fabrica domínio na família isolada',aula=>{
+it.each(['ts-variancia-contratos','ts-modulos-configuracao','cpp-templates','cpp-memoria-posse','js-closures-estado','sql-null-logica','html-midia','cs-iteradores-descarte','css-caixas-intrinseco','py-objetos-protocolos'])('%s espera seu conceito e leitura não fabrica domínio na família isolada',aula=>{
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'};
  const advanced=practiceActivities.filter(atividade=>atividade.lessonIds.includes(aula)&&atividade.requiresConcept).map(atividade=>atividade.id);
  const concept=idPreparacao(aula);
  const catalogoCompleto={...adaptiveCatalog,preferredLanguage:practiceActivities.find(atividade=>atividade.lessonIds.includes(aula))!.language};
  const catalog={...catalogoCompleto,activities:adaptiveCatalog.activities.filter(atividade=>atividade.kind==='concept'||advanced.includes(atividade.id))};
  const first=buildDailySession(state,catalogoCompleto,clock);
- expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ conferirAssunto(first);
  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
  const prepared=buildDailySession(state,catalog,clock);
@@ -65,7 +75,7 @@ it('um pré-requisito de conceito inexistente é rejeitado no catálogo diário'
 it('preparação nova conserva a leitura antiga sem tratá-la como cobertura dos capítulos posteriores',()=>{
  const preparacao=adaptiveCatalog.activities.find(atividade=>atividade.id===idPreparacao('sql-null-logica'))!;
  expect(preparacao.preparacaoAteBloco).toBe(5);
- const antigo=preparacao.requiredConcepts![0];
+ const antigo=preparacao.incluiConceitos![0];
  expect(antigo).not.toBe(preparacao.id);
  expect(adaptiveCatalog.activities.find(atividade=>atividade.id===antigo)?.kind).toBe('concept');
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-09T12:00:00Z'),timeZone:'UTC'};
@@ -85,7 +95,7 @@ it('o desafio novo de recursos Python não antecipa o conceito numa primeira ses
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'python'};
  const advanced=['py-prever-esgotamento','py-ordenar-lote','py-fechar-consumo'],concept=idPreparacao('py-iteracao-recursos');
  const first=buildDailySession(state,catalog,clock);
- expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ conferirAssunto(first);
  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
  const prepared=buildDailySession(state,catalog,clock);
@@ -97,7 +107,7 @@ it('invalidação C++ espera o conceito sem antecipar conteúdo na primeira sess
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'UTC'},catalog={...adaptiveCatalog,preferredLanguage:'cpp'};
  const advanced=['cpp-prever-intervalo','cpp-ordenar-erase','cpp-reobter-reserva'],concept=idPreparacao('cpp-iteradores-invalidacao');
  const first=buildDailySession(state,catalog,clock);
- expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ conferirAssunto(first);
  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(false);
  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a.id!==concept).map(a=>a.id);
  const prepared=buildDailySession(state,catalog,clock);

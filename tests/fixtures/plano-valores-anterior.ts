@@ -1,0 +1,11 @@
+import type {DailySession} from '../../src/learning/adaptive';
+export const planoValoresAnterior=(dia:string):DailySession=>({
+ day:dia,
+ items:[
+  {id:'conceito-0-valores',kind:'concept',activityId:'conceito-0-valores',minutes:3},
+  {id:'js-debug-carrinho',kind:'practice',activityId:'js-debug-carrinho',minutes:5},
+  {id:'js-debug-maior-negativo',kind:'practice',activityId:'js-debug-maior-negativo',minutes:4},
+  {id:'js-debug-filtro-mutacao',kind:'challenge',activityId:'js-debug-filtro-mutacao',minutes:4}
+ ],
+ completed:[],totalMinutes:16
+});

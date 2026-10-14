@@ -1,4 +1,4 @@
-import {practiceActivities} from '../content/practice';
+import {practiceActivities,tipoNaSessao} from '../content/practice';
 import {lessons} from '../content/curriculum';
 import {legacyConceptIds} from './legacy-concept-ids';
 import type {AdaptiveCatalog,LearningActivity,SkillDefinition} from './adaptive';
@@ -11,7 +11,7 @@ function lessonConceptId(id:string):string{
  return legacyConceptIds[id]??'conceito-'+rank+'-'+id;
 }
 export const idPreparacao=(aula:string)=>lessonConceptId(aula)+'-pratica-v1';
-const activities:LearningActivity[]=practiceActivities.map(a=>({id:a.id,title:a.title,kind:a.afterBlock===5?'challenge':'practice',skillIds:a.skillIds,minutes:a.minutes,lessonId:a.lessonIds[0],...(a.requiresConcept?{requiredConcepts:[idPreparacao(a.lessonIds[0])]}:{})}));
+const activities:LearningActivity[]=practiceActivities.map(a=>({id:a.id,title:a.title,kind:tipoNaSessao(a),skillIds:a.skillIds,minutes:a.minutes,lessonId:a.lessonIds[0],ordem:a.afterBlock,...(a.requiresConcept?{requiredConcepts:[idPreparacao(a.lessonIds[0])]}:{})}));
 for(const id of [...new Set(practiceActivities.flatMap(a=>a.lessonIds))]){
  const l=lessons.find(l=>l.id===id);if(!l)continue;const related=practiceActivities.filter(a=>a.lessonIds.includes(id));
  const ordem=lessons.findIndex(aula=>aula.id===id)*2;
@@ -19,7 +19,7 @@ for(const id of [...new Set(practiceActivities.flatMap(a=>a.lessonIds))]){
  const preparadas=related.filter(atividade=>atividade.requiresConcept);
  if(preparadas.length){
   const ateBloco=Math.max(...preparadas.map(atividade=>atividade.afterBlock));
-  activities.push({ordem:ordem+1,id:idPreparacao(id),title:'Preparação: '+l.title,kind:'concept',skillIds:[...new Set(preparadas.flatMap(atividade=>atividade.skillIds))],minutes:Math.max(3,ateBloco*2),lessonId:id,requiredConcepts:[lessonConceptId(id)],preparacaoAteBloco:ateBloco});
+  activities.push({ordem:ordem+1,id:idPreparacao(id),title:'Preparação: '+l.title,kind:'concept',skillIds:[...new Set(preparadas.flatMap(atividade=>atividade.skillIds))],minutes:Math.max(3,ateBloco*2),lessonId:id,incluiConceitos:[lessonConceptId(id)],preparacaoAteBloco:ateBloco});
  }
 }
 export const adaptiveCatalog:AdaptiveCatalog={skills,activities};

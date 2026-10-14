@@ -21,7 +21,7 @@ export function mountInlinePractice(container:HTMLElement,lessonId:string):()=>v
  return()=>stops.forEach(stop=>stop());
 }
 const languageLockMessage='O plano de hoje já começou. A linguagem poderá mudar amanhã; outras atividades continuam disponíveis no catálogo.';
-const sessionStarted=(plan:{day:string;completed:string[];items:{activityId:string}[]})=>plan.completed.length>0||plan.items.some(item=>{const answer=progress.practiceAnswers[item.activityId];return Boolean(answer?.attempts&&answer.updatedAt&&learningDay({...learningClock(),now:Date.parse(answer.updatedAt)})===plan.day);});
+const sessionStarted=(plan:{day:string;completed:string[];items:{activityId:string}[];iniciada?:boolean})=>plan.iniciada===true||plan.completed.length>0||plan.items.some(item=>{const answer=progress.practiceAnswers[item.activityId];return Boolean(answer?.attempts&&answer.updatedAt&&learningDay({...learningClock(),now:Date.parse(answer.updatedAt)})===plan.day);});
 export function mountDaily(container:HTMLElement):()=>void{
  let disposed=false,token=0,release=()=>{};
  async function render(){
@@ -38,7 +38,7 @@ export function mountDaily(container:HTMLElement):()=>void{
    try{l=await resolveLesson(id);}catch{if(!disposed&&current===token){target.innerHTML='<p role="status">A aula ainda não está disponível neste navegador. Conecte para preparar o conteúdo offline e tente novamente.</p><button class="button primary" data-retry>Tentar novamente</button>';target.querySelector('[data-retry]')!.addEventListener('click',()=>void render());}return;}
    if(disposed||current!==token)return;l??=lessons.find(l=>l.id===id)!;
    target.innerHTML='<section class="lesson-chapter"><h2>'+esc(leitura.title)+'</h2><p>'+esc(l.body)+'</p>'+l.capitulos.slice(0,(leitura.preparacaoAteBloco??1)+1).map(cap=>'<h3>'+esc(cap.titulo)+'</h3>'+cap.paragrafos.map(p=>'<p>'+esc(p)+'</p>').join('')+(cap.pontos?.length?'<ol class="lesson-points">'+cap.pontos.map(p=>'<li>'+esc(p)+'</li>').join('')+'</ol>':'')+(cap.codigo?'<pre class="example-code"><code>'+esc(cap.codigo)+'</code></pre>':'')).join('')+'<p><a href="'+rotaLeitura(id)+'">Ler e experimentar a aula completa</a></p><button class="button primary" data-seen>Concluir leitura e praticar</button><p class="small">A leitura orienta o exercício e não atribui nota de domínio.</p></section>';
-   target.querySelector('[data-seen]')!.addEventListener('click',()=>{markConceptSeen(progress.adaptive,leitura.id,learningClock());saveProgress();void render();});
+   target.querySelector('[data-seen]')!.addEventListener('click',()=>{const relogio=learningClock();markConceptSeen(progress.adaptive,leitura.id,relogio,leitura.incluiConceitos);if(progress.adaptive.daily===plan&&plan.day===learningDay(relogio))plan.iniciada=true;saveProgress();void render();});
   }else release=mountPractice(target,activity.id,{mode:pending.kind,onEvaluated:()=>{const updated=ensureDailySession(progress.adaptive,catalog(),learningClock());next.hidden=!updated.completed.includes(pending.id);lock();}});
  }
  void render();return()=>{disposed=true;token++;release();};

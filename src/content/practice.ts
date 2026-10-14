@@ -1764,3 +1764,7 @@ export const practiceActivities:PracticeActivity[]=[
 export function practicesForLesson(id:string):PracticeActivity[]{
  return practiceActivities.filter(activity=>activity.lessonIds.includes(id));
 }
+export function tipoNaSessao(atividade:PracticeActivity):'practice'|'challenge'{
+ const ultimo=atividade.requiresConcept?Math.max(...practicesForLesson(atividade.lessonIds[0]).filter(pausa=>pausa.requiresConcept).map(pausa=>pausa.afterBlock)):5;
+ return atividade.afterBlock===ultimo?'challenge':'practice';
+}
