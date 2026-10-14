@@ -12,6 +12,21 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'async-prever-espera',language:'javascript',lessonIds:['async'],skillIds:['javascript.assincrono.espera'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'A função começou, mas ainda não terminou',prompt:'Preveja as quatro linhas. As Promises são locais, sem rede ou temporizadores. Sua previsão é uma decisão conceitual; o programa de referência é executado nos testes.',
+  code:'async function carregar() {\n  console.log("Início");\n  const valor = await Promise.resolve(7);\n  console.log(valor);\n}\nconsole.log("Antes");\ncarregar();\nconsole.log("Depois");',hint:'O corpo começa ao chamar carregar. A continuação depois de await fica para uma microtarefa, mesmo com uma Promise já resolvida.',minutes:3
+ },
+ {
+  id:'async-diagnosticar-http',language:'javascript',lessonIds:['async'],skillIds:['javascript.assincrono.http'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O servidor respondeu 404, mas o catch não rodou',prompt:'Neste caso, o servidor respondeu 404 com um corpo JSON válido. O contrato deve rejeitar respostas HTTP fora de 200–299 antes de ler o corpo. Qual alteração atende a essa regra? Escolha conceitual; não envia uma requisição.',
+  code:'async function carregar() {\n  const resposta = await fetch("/api/licoes");\n  return resposta.json();\n}',options:[{id:'status',text:'Após aguardar fetch, conferir resposta.ok e lançar Error se for false, antes de chamar json.'},{id:'catch',text:'Acrescentar catch que devolve [], sem verificar o status HTTP.'},{id:'segundo-await',text:'Só acrescentar await antes de resposta.json(), sem verificar resposta.ok.'}],hint:'Distingua falha de transporte, status HTTP e falha de leitura do corpo. A rejeição não é automática só porque o status foi 404.',minutes:3
+ },
+ {
+  id:'async-corrigir-resposta',language:'javascript',lessonIds:['async'],skillIds:['javascript.assincrono.espera','javascript.assincrono.http','javascript.assincrono.propagacao'],afterBlock:8,kind:'debug',capability:'depuracao',requiresConcept:true,
+  title:'Aguardar, conferir e devolver sem engolir erros',prompt:'Corrija lerResposta(obter). obter é uma função de teste sem argumentos que devolve uma Promise de um objeto com ok (boolean), status (number) e json() (Promise do dado). Chame obter uma única vez. Se ok for false, rejeite com Error sem chamar json. Se for true, chame json uma vez e devolva exatamente o dado resolvido, inclusive null, vazio ou zero. Preserve a identidade de erros de obter ou json, inclusive cancelamento. Cada chamada deve ser independente. Pode usar async/await ou then. O código roda em QuickJS com funções de teste locais: não executa fetch nem uma conexão HTTP real.',
+  code:'async function lerResposta(obter) {\n  const resposta = obter();\n  if (!resposta.ok) throw new Error("HTTP " + resposta.status);\n  resposta.json();\n}',hint:'A função recebida devolve uma Promise, não a resposta imediata. Depois da checagem HTTP, o chamador ainda precisa receber o resultado do corpo; uma sentinela em catch pode apagar a falha original.',minutes:6
+ },
+ {
   id:'metodos-prever-transformacao',language:'javascript',lessonIds:['array-metodos'],skillIds:['javascript.arrays.filter','javascript.arrays.reduce'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Seleção, transformação e acumulação',prompt:'Preveja as três linhas. join torna explícito o texto exibido; diferencie a lista selecionada, a lista transformada e o total.',
   code:'const pares = [1,2,3,4].filter(n => n % 2 === 0);\nconsole.log(pares.join(","));\nconsole.log(pares.map(n => n * 2).join(","));\nconsole.log(pares.reduce((soma,n) => soma + n,0));',hint:'map não reatribui pares. O reduce começa em zero e visita os dois números selecionados.',minutes:3
