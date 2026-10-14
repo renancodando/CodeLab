@@ -14,6 +14,13 @@ it('a primeira sessão prepara e pratica somente o assunto apresentado',()=>{
   {id:'inicio-reconstruir-roteiro',kind:'challenge'}
  ]);
 });
+it('a preparação conserva suas pausas quando outra aula compartilha a habilidade',()=>{
+ const estado=freshAdaptive(),preparacao=idPreparacao('strings-numbers');
+ estado.seenConcepts=adaptiveCatalog.activities.filter(a=>a.kind==='concept'&&a.id!==preparacao).map(a=>a.id);
+ const plano=buildDailySession(estado,catalogo,relogio);
+ expect(plano.items.map(i=>i.activityId)).toEqual([preparacao,'textos-prever-conversoes','textos-guardar-normalizacao','textos-corrigir-entrada']);
+ expect(estado.skills).toEqual({});
+});
 it('uma jornada nova começa pelas instruções antes de valores, decisões e laços',()=>{
  const plano=buildDailySession(freshAdaptive(),catalogo,relogio);
  const conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId);
