@@ -25,16 +25,33 @@ export async function evaluate(code:string, missionId:string, checks:CodeCheck[]
  const consoleObject = vm.newObject();
  const log = vm.newFunction('log',(...args) => { if (recording && response.logs.length < 50) response.logs.push(args.slice(0,10).map(arg => { const value = vm.typeof(arg)==='undefined'?'undefined':boundedValue(arg); return typeof value === 'string' ? value : JSON.stringify(value); }).join(' ').slice(0,1000)); });
  vm.setProp(consoleObject,'log',log); vm.setProp(vm.global,'console',consoleObject); log.dispose(); consoleObject.dispose();
- const run = (source:string):unknown => { const result = vm.evalCode(source,'missao.js'); if (result.error) { const error = vm.dump(result.error); result.error.dispose(); throw new Error(`${error.name || 'Error'}: ${error.message || error}`); } const value = boundedValue(result.value); result.value.dispose(); return value; };
+ let microtarefas=0;
+ const processarMicrotarefas=()=>{
+  while(runtime.hasPendingJob()){
+   if(microtarefas++>=1000||performance.now()>deadline)throw new Error('interrupted');
+   const pendente=runtime.executePendingJobs(1);
+   if(pendente.error){const erro=vm.dump(pendente.error);pendente.error.dispose();throw new Error(erro?.message||String(erro));}
+  }
+ };
+ const run = (source:string,aguardar=false):unknown => {
+  const result=vm.evalCode(source,'missao.js');
+  if(result.error){const erro=vm.dump(result.error);result.error.dispose();throw new Error(`${erro?.name||'Error'}: ${erro?.message||erro}`);}
+  try{
+   if(!aguardar)return boundedValue(result.value);
+   processarMicrotarefas();
+   const estado=vm.getPromiseState(result.value);
+   if(estado.type==='pending')throw new Error('A Promise ficou pendente. O executor não fornece rede nem temporizadores; confira se a operação local chega a resolver ou rejeitar.');
+   if(estado.type==='rejected'){
+    try{const erro=vm.dump(estado.error);throw new Error(`${erro?.name||'Error'}: ${erro?.message||erro}`);}finally{estado.error.dispose();}
+   }
+   try{return boundedValue(estado.value);}finally{if(!estado.notAPromise)estado.value.dispose();}
+  }finally{result.value.dispose();}
+ };
  const check = (label:string,passed:boolean) => response.tests.push({label,passed});
  const callActions = (source:string,type:string) => { actions = []; run(source); return actions.filter(x => x.type === type).length; };
  try {
   run(code);
-  for(let jobs=0;runtime.hasPendingJob();jobs++){
-   if(jobs>=1000||performance.now()>deadline)throw new Error('interrupted');
-   const pending=runtime.executePendingJobs(1);
-   if(pending.error){const error=vm.dump(pending.error);pending.error.dispose();throw new Error(error.message||'Falha em Promise');}
-  }
+  processarMicrotarefas();
   response.actions = [...actions]; recording = false;
   switch (missionId) {
    case 'primeira-luz': check('A lanterna foi acesa.',actions.some(x => x.type === 'light')); check('A ação foi chamada uma única vez.',actions.filter(x=>x.type==='light').length===1); break;
@@ -44,7 +61,7 @@ export async function evaluate(code:string, missionId:string, checks:CodeCheck[]
    case 'jardim': case 'debug': { const n = missionId==='debug'?3:5; check(`${n===3?'Três':'Cinco'} árvores para quantidade ${n}.`,callActions(`cultivar(${n})`,'tree')===n); check('Zero árvores para quantidade 0.',callActions('cultivar(0)','tree')===0); check('Outras quantidades também funcionam.',[1,2,7,11].every(n=>callActions(`cultivar(${n})`,'tree')===n)); break; }
    case 'inventario': check('A lista de exemplo resulta em [12, 20].',JSON.stringify(run('selecionar([4,12,7,20])'))==='[12,20]'); check('Uma lista vazia continua vazia.',JSON.stringify(run('selecionar([])'))==='[]'); check('Valores diferentes e o limite 10 são tratados.',JSON.stringify(run('selecionar([-3,10,9,30,10])'))==='[10,30,10]'); break;
    case 'farol': check('O farol recebe energia 100.',response.actions.some(x=>x.type==='beacon' && x.value===100)); check('A soma funciona com outros números.',run('somar(7,8)')===15 && run('somar(2,5)')===7); check('Zero e números negativos funcionam.',run('somar(0,0)')===0 && run('somar(-7,2)')===-5); break;
-   case 'aula': for(const item of checks)check(item.label,JSON.stringify(run(item.expression))===JSON.stringify(item.expected)); break;
+   case 'aula': for(const item of checks)check(item.label,JSON.stringify(run(item.expression,item.aguardar))===JSON.stringify(item.expected)); break;
    case 'laboratorio': check('O programa terminou sem erros.',true); break;
    default: throw new Error('Missão desconhecida.');
   }

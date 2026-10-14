@@ -6,6 +6,8 @@ Esta edição prioriza aprendizagem ativa nas aulas, percursos e projetos existe
 
 ## Coerência entre preparação e prática diária
 
+Na aula original de Promises, a correção usa funções de teste locais com espera e rejeição reais no QuickJS. A previsão e a escolha HTTP continuam conceituais. Acertar esse recorte não comprova rede, CORS, cancelamento nativo ou integração de interface; o projeto mantém essas exigências. Falhas são separadas por obtenção, status e corpo, sem transformar erro em lista vazia. A verificação aceita then ou async/await e confere chamadas independentes.
+
 Quando a preparação cobre capítulos específicos, as atividades novas da sessão precisam apontar para ela. Compartilhar uma habilidade com outra aula permite revisão e demonstrações independentes, mas não deve deslocar as pausas daquela preparação. Os planos antigos continuam estáveis. Em exercícios de produção, uma assinatura vazia pode definir a interface sem entregar o algoritmo; eles aparecem como implementação. Uma correção com código quebrado permanece alteração/depuração. A execução e os casos de borda precisam sustentar essa distinção; escolhas conceituais não equivalem a programas executados pelo aluno.
 
 O plano novo combina a preparação dos capítulos com as práticas daquele assunto. A preparação também registra a introdução que efetivamente contém, sem evidência de domínio; a leitura antiga isolada continua sem equivaler aos capítulos posteriores. As revisões vencidas permanecem globais e anteriores ao assunto novo. Vagas não são preenchidas com exercícios de habilidades não apresentadas. Em aulas preparadas, a última pausa ocupa o desafio final; as anteriores seguem sua posição pedagógica.
