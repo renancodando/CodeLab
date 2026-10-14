@@ -4,7 +4,7 @@
  * Percentages summarize distinct assessments; they are not a probability.
  */
 export const REVIEW_DAYS = [1, 3, 7, 14, 30, 60] as const;
-export const ADAPTIVE_LIMITS = {skills:128, assessments:24, events:128, concepts:512, bytes:2_000_000} as const;
+export const ADAPTIVE_LIMITS = {skills:512, assessments:24, events:128, concepts:512, bytes:2_000_000} as const;
 export type LearningClock = {now:number; timeZone:string};
 export type EvidenceEvent = {
  id:string; assessmentId:string; activityId:string; skillIds:string[]; revision:number;
@@ -146,6 +146,7 @@ export function recordEvidence(state:AdaptiveState,event:EvidenceEvent,clock:Lea
  if(event.skillIds.some(id=>{
   const previous=state.skills[id];return previous&&(previous.review.lastDay>day||Object.values(previous.evidence).some(record=>record.lastAt>at));
  }))return {accepted:false,credited:false,reason:'stale'};
+ const seguinte={...state,skills:{...state.skills},eventIds:[...state.eventIds],...(state.daily?{daily:{...state.daily,completed:[...state.daily.completed]}}:{})};
  let credited=false;
  for(const skill of event.skillIds){
   const previous=state.skills[skill];const old=previous?.evidence[event.assessmentId];
@@ -165,15 +166,18 @@ export function recordEvidence(state:AdaptiveState,event:EvidenceEvent,clock:Lea
    const oldest=Object.keys(evidence).filter(id=>id!==event.assessmentId).sort((a,b)=>compare(evidence[a].lastAt,evidence[b].lastAt)||compare(a,b))[0];
    delete evidence[oldest];
   }
-  state.skills[skill]={evidence,review:nextReview(previous?.review,event,day,assisted)};
+  seguinte.skills[skill]={evidence,review:nextReview(previous?.review,event,day,assisted)};
   if(!assisted&&event.passed&&(!sameRevision||!old?.passed||old.assisted))credited=true;
  }
- state.eventIds.push(event.id);state.eventIds=state.eventIds.slice(-ADAPTIVE_LIMITS.events);
- if(state.daily?.day===day)for(const item of state.daily.items){
+ seguinte.eventIds.push(event.id);seguinte.eventIds=seguinte.eventIds.slice(-ADAPTIVE_LIMITS.events);
+ if(seguinte.daily?.day===day)for(const item of seguinte.daily.items){
   const complete=item.kind==='review'?event.kind==='review'&&event.skillIds.includes(item.skillId??'')&&item.activityId===event.activityId:
    item.kind!=='concept'&&event.kind!=='review'&&item.activityId===event.activityId&&event.passed;
-  if(complete&&!state.daily.completed.includes(item.id))state.daily.completed.push(item.id);
+  if(complete&&!seguinte.daily.completed.includes(item.id))seguinte.daily.completed.push(item.id);
  }
+ if(JSON.stringify(seguinte).length>ADAPTIVE_LIMITS.bytes)return {accepted:false,credited:false,reason:'invalid'};
+ Object.assign(state.skills,seguinte.skills);state.eventIds=seguinte.eventIds;
+ if(state.daily&&seguinte.daily)for(const id of seguinte.daily.completed)if(!state.daily.completed.includes(id))state.daily.completed.push(id);
  return {accepted:true,credited,reason:'recorded'};
 }
 export function markConceptSeen(state:AdaptiveState,activityId:string,clock:LearningClock,incluidos:string[]=[]):void {
