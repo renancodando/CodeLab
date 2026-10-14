@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Sessão inicial TypeScript conferida
+
+O CI 38478087626 do head 363dfd3 aprovou testes/compilação, auditoria e duas parcelas de navegador; a terceira falhou na expectativa antiga de quatro etapas em typescript-variance. A sessão inicial tem conceito, ts-zero-ausencia e ts-tipo-apagado: inserir uma segunda prática de outro assunto contrariaria a preparação definida. O teste agora exige esses identificadores, sua relação com as habilidades apresentadas e ausência de domínio inicial, mantendo integralmente os cenários de variância, persistência e offline.
+
+Strict/build passaram, com os mesmos 157 documentos, 38 recursos essenciais/seis opcionais e versão cb4fdd731f1e5c1d468c. O fluxo TypeScript local passou em 8,9 s; seu prazo de 90 s permaneceu. As provas anteriores de 957 unitários, 108 específicos e oito fluxos pertencem ao mesmo código de aplicação. O novo head com esta correção de teste exige CI completo próprio; a execução com falha não aprova integração.
+
 ## Conversões originais em preparação
 
 Branch pratica/strings-conversoes, dependente da publicação verificada da PR #50. A aula existente strings-numbers mantém seus 12 capítulos, exemplos, exercício dobroTexto e projeto. Três pausas após os blocos 3/6/8 trabalham operadores e conversão, retorno de trim e correção executada da entrada. O contrato distingue vazio de zero, texto completo de prefixo, finitude e resultado numérico sem arredondar. Quatro famílias QuickJS cobrem casos comuns, rejeição com Error, formatos de Number, frações e chamadas independentes. As duas decisões continuam conceituais; seus programas de referência foram executados.
