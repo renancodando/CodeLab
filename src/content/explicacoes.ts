@@ -233,7 +233,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "array-metodos": {
     "contexto": "map, filter e reduce expressam intenções diferentes sobre coleções. Usá-los bem depende de saber se você quer transformar cada item, selecionar alguns ou condensar muitos valores em um resultado.",
-    "modelo": "Imagine uma linha de produção: filter decide quem entra, map transforma cada item aprovado e reduce combina o fluxo em uma medida final. Não escolha o método pelo tamanho do código; escolha pela operação conceitual.",
+    "modelo": "Imagine uma linha de produção: filter decide quem entra, map transforma cada item aprovado e reduce combina o fluxo em uma medida final. Com [1,2,3,4], selecionar pares produz [2,4]; dobrar essa seleção produz outra lista, [4,8]; somar a seleção original ainda produz 6. map não substitui a variável que guardava a entrada. A callback n => { n % 2 === 0; } calcula uma comparação e termina devolvendo undefined: com chaves, escreva return para fornecer a decisão ao filter. A lista filtrada pode ficar vazia mesmo quando a entrada não estava vazia. reduce sem valor inicial lança TypeError nesse caso; para soma, zero é o ponto inicial que também descreve nenhum item. Pares negativos continuam pares, repetições continuam contribuindo e a posição do item não decide seu valor. Não escolha o método pelo tamanho do código; escolha pela operação conceitual. Um loop correto também pode expressar o mesmo contrato.",
     "passos": [
       "Defina a forma da coleção antes e depois da operação.",
       "Use filter quando a quantidade de itens pode diminuir.",
@@ -251,7 +251,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "objetos-modulos": {
     "contexto": "Objetos agrupam dados relacionados; módulos agrupam responsabilidades relacionadas. Os dois recursos combatem o mesmo problema em escalas diferentes: código que perde estrutura à medida que cresce.",
-    "modelo": "Pense no objeto como uma ficha com campos nomeados e no módulo como uma gaveta com recursos públicos e detalhes internos. export define o que outras partes podem usar; import declara uma dependência.",
+    "modelo": "Pense no objeto como uma ficha com campos nomeados e no módulo como uma gaveta com recursos públicos e detalhes internos. export define o que outras partes podem usar; import declara uma dependência. {...pessoa} cria outra ficha externa, mas copia o valor de cada propriedade: se endereco aponta para um objeto, ambas as fichas ainda apontam para ele. Para mudar somente a cidade sem atingir o cadastro anterior, reconstrua também endereco e conserve seus outros campos. Não é obrigatório copiar profundamente propriedades que esse contrato não altera. Teste a independência alterando o resultado depois de recebê-lo; conferir apenas o nome inicial pode esconder o compartilhamento. Em const {pontos = 5} = dado, o padrão vale para undefined, não para null. Quando a regra aceita zero e trata null e undefined como ausência, pontos ?? 5 expressa essa distinção; pontos || 5 substituiria também zero. Contrato e regra de negócio decidem quais valores são permitidos.",
     "passos": [
       "Defina as propriedades que realmente pertencem ao mesmo conceito.",
       "Use destructuring quando nomes importantes precisam ficar explícitos.",
@@ -269,7 +269,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "erros-json": {
     "contexto": "JSON é apenas uma representação textual de dados. Um texto pode ser JSON válido e ainda violar completamente o contrato que sua aplicação espera. Parsear e validar são etapas diferentes.",
-    "modelo": "Imagine duas barreiras: a primeira pergunta 'isto é JSON sintaticamente válido?'; a segunda pergunta 'este dado possui a estrutura e os tipos necessários para o meu domínio?'. try/catch cuida da primeira falha; validação explícita cuida da segunda.",
+    "modelo": "Imagine duas barreiras: a primeira pergunta 'isto é JSON sintaticamente válido?'; a segunda pergunta 'este dado possui a estrutura e os tipos necessários para o meu domínio?'. JSON.parse('null') passa pela primeira e produz null; typeof null é object, mas acessar null.nome falha. Arrays e primitivos também são valores JSON válidos. Para o contrato de lerNome, confira um objeto não nulo, exclua arrays e exija nome do tipo string antes de devolvê-lo. Uma string vazia continua sendo string: rejeitá-la seria uma regra adicional que precisa estar no contrato. Não transforme 3 em '3' nem apare espaços sem autorização do consumidor. JSON inválido lança SyntaxError; uma validação pode lançar outro Error. A exceção abandona o restante do try, o catch pode tratá-la e o código posterior continua. Capturar e devolver null muda o contrato de falha e pode esconder a causa. Preserve o dado como texto ao exibi-lo; um nome com marcação não autoriza executar HTML.",
     "passos": [
       "Receba o texto sem assumir que ele é confiável.",
       "Faça JSON.parse dentro de um ponto onde a falha possa ser tratada.",

@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **66 de 137 aulas sem pausas deste catálogo**. As outras 71 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **63 de 137 aulas sem pausas deste catálogo**. As outras 74 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -10,7 +10,7 @@ Há **66 de 137 aulas sem pausas deste catálogo**. As outras 71 têm ao menos u
 | C# | 14 | 6 | 8 |
 | CSS | 15 | 7 | 8 |
 | HTML | 19 | 8 | 11 |
-| JavaScript | 30 | 19 | 11 |
+| JavaScript | 30 | 22 | 8 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 6 | 8 |
 | Integração (transversal) | 15 | 0 | 15 |
@@ -30,9 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `array-metodos` — Arrays, callbacks e transformação | JavaScript | JavaScript | Original |
-| `objetos-modulos` — Objetos, destructuring e módulos | JavaScript | JavaScript | Original |
-| `erros-json` — Exceções, JSON e contratos | JavaScript | JavaScript | Original |
 | `async` — Promises, async/await e fetch | JavaScript | JavaScript | Original |
 | `imagens-tabelas` — Imagens e tabelas de dados | HTML | HTML | Original |
 | `html-acessivel` — Verificar a acessibilidade | HTML | HTML | Original |
