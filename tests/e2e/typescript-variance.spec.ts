@@ -1,10 +1,15 @@
 import {test,expect} from '@playwright/test';
+import {adaptiveCatalog} from '../../src/learning/hub-catalog';
 test('TypeScript: pausas de contratos funcionam offline e guardam decisões conceituais',async({page,context})=>{
  test.setTimeout(90000);const external:string[]=[];
  page.on('request',request=>{if(/\/api\/(execute|run|submissions)/.test(request.url()))external.push(request.url());});
  await page.goto('/#/diaria');await page.locator('[data-language]').selectOption('typescript');
  const initial=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
- expect(initial.adaptive.daily.items.map((i:{kind:string})=>i.kind)).toEqual(['concept','practice','practice','challenge']);
+ expect(initial.adaptive.daily.items.map((i:{kind:string})=>i.kind)).toEqual(['concept','practice','challenge']);
+ expect(initial.adaptive.daily.items.map((i:{activityId:string})=>i.activityId)).toEqual(['conceito-0-069-ts-fundamentos','ts-zero-ausencia','ts-tipo-apagado']);
+ const conceito=adaptiveCatalog.activities.find(a=>a.id==='conceito-0-069-ts-fundamentos')!;
+ for(const item of initial.adaptive.daily.items.slice(1))expect(adaptiveCatalog.activities.find(a=>a.id===item.activityId)!.skillIds.some(id=>conceito.skillIds.includes(id))).toBe(true);
+ expect(initial.adaptive.skills).toEqual({});
  expect(initial.adaptive.daily.items.some((i:{activityId:string})=>['ts-fonte-covariancia','ts-callback-entrada','ts-propriedade-funcao'].includes(i.activityId))).toBe(false);
  await page.goto('/');await expect(page.locator('#offline-status')).toHaveText('Conteúdo preparado para estudar offline.',{timeout:45000});
  await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));

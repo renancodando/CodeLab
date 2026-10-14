@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Sessão inicial TypeScript conferida
+
+O CI 38478087626 do head 363dfd3 aprovou testes/compilação, auditoria e duas parcelas de navegador; a terceira falhou na expectativa antiga de quatro etapas em typescript-variance. A sessão inicial tem conceito, ts-zero-ausencia e ts-tipo-apagado: inserir uma segunda prática de outro assunto contrariaria a preparação definida. O teste agora exige esses identificadores, sua relação com as habilidades apresentadas e ausência de domínio inicial, mantendo integralmente os cenários de variância, persistência e offline.
+
+Strict/build passaram, com os mesmos 157 documentos, 38 recursos essenciais/seis opcionais e versão cb4fdd731f1e5c1d468c. O fluxo TypeScript local passou em 8,9 s; seu prazo de 90 s permaneceu. As provas anteriores de 957 unitários, 108 específicos e oito fluxos pertencem ao mesmo código de aplicação. O novo head com esta correção de teste exige CI completo próprio; a execução com falha não aprova integração.
+
 ## Revisão da sessão diária na PR #50
 
 Dois apontamentos foram reproduzidos antes da correção. O plano preparado de cpp-memoria-posse omitia cpp-devolver-texto-dono porque a pausa antiga de invalidação, sem preparação, vinha depois. O desafio agora usa somente a última pausa que exige preparação; a atividade antiga permanece disponível. Em planos antigos só de prática, concluir a preparação deixava o seletor habilitado. A ação agora registra o início da sessão sem alterar seus itens, concluir exercícios ou criar domínio.
