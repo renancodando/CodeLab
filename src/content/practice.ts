@@ -5,7 +5,7 @@ export type PracticeKind = 'debug'|'predict'|'order'|'fill'|'choice';
 export type PracticeActivity = {
  id:string; language:PracticeLanguage; lessonIds:string[]; skillIds:string[];
  afterBlock:number; kind:PracticeKind; capability:Capability; requiresConcept?:boolean;
- title:string; prompt:string; code?:string; options?:{id:string;text:string}[];
+ title:string; prompt:string; code?:string; assinaturaVazia?:boolean; options?:{id:string;text:string}[];
  lines?:{id:string;code:string}[]; hint:string; minutes:number;
 };
 /** Display metadata only. Local verification data are inspectable in the downloaded bundle;
@@ -22,7 +22,7 @@ export const practiceActivities:PracticeActivity[]=[
   code:'const pares = [1,2,3,4].filter(n => { n % 2 === 0; });\nconsole.log(pares.length);',options:[{id:'devolver',text:'n => { return n % 2 === 0; }'},{id:'mapear',text:'Trocar filter por map, mantendo a callback sem retorno.'},{id:'indice',text:'(n,indice) => { indice % 2 === 0; }'}],hint:'Com chaves, uma expressão solta não se torna o retorno da função. filter usa o valor devolvido, não o que foi apenas calculado.',minutes:3
  },
  {
-  id:'metodos-somar-pares',language:'javascript',lessonIds:['array-metodos'],skillIds:['javascript.arrays.reduce'],afterBlock:8,kind:'debug',capability:'producao',requiresConcept:true,
+  id:'metodos-somar-pares',language:'javascript',lessonIds:['array-metodos'],skillIds:['javascript.arrays.reduce'],afterBlock:8,kind:'debug',capability:'producao',requiresConcept:true,assinaturaVazia:true,
   title:'Da expressão fixa para uma função reutilizável',prompt:'Implemente somarPares(valores). Recebe um array denso de até 200 inteiros entre -1000 e 1000; devolve como number a soma de todos os pares, inclusive negativos e repetidos. Vazio ou nenhum par devolvem zero. Preserve a entrada e mantenha chamadas independentes. Pode usar métodos ou loop. Não precisa validar entradas fora desse contrato.',
   code:'function somarPares(valores) {\n\n}',hint:'Teste a função depois da seleção, quando podem restar zero itens. Escolha um acumulador inicial que continue correto nesse caso.',minutes:5
  },
@@ -52,7 +52,7 @@ export const practiceActivities:PracticeActivity[]=[
   code:'const dado = JSON.parse("null");\nconsole.log(typeof dado);',options:[{id:'estrutura',text:'null é JSON válido e typeof null é object; ainda é preciso rejeitar null e validar nome.'},{id:'sintaxe',text:'JSON.parse sempre lança SyntaxError quando o texto é null.'},{id:'garantia',text:'typeof devolveu object, então nome necessariamente existe e é string.'}],hint:'A gramática JSON aceita mais do que objetos. O sucesso do parse não comprova a forma exigida pelo consumidor.',minutes:3
  },
  {
-  id:'json-validar-nome',language:'javascript',lessonIds:['erros-json'],skillIds:['javascript.objetos.validacao'],afterBlock:8,kind:'debug',capability:'producao',requiresConcept:true,
+  id:'json-validar-nome',language:'javascript',lessonIds:['erros-json'],skillIds:['javascript.objetos.validacao'],afterBlock:8,kind:'debug',capability:'producao',requiresConcept:true,assinaturaVazia:true,
   title:'Conferir o dado antes de devolver nome',prompt:'Complete lerNome(texto). A entrada é sempre uma string. Faça o parse e devolva exatamente nome quando o resultado for um objeto não nulo, não um array, e nome for string. Campos extras são permitidos; nomes vazios ou com espaços também são strings e devem ser preservados. Para JSON inválido ou estrutura fora do contrato, lance Error (subclasses valem; mensagem livre). Não use uma sentinela nem converta outros tipos para texto.',
   code:'function lerNome(texto) {\n\n}',hint:'Separe a falha do parse da validação do valor produzido. Verifique o próprio dado antes de acessar suas propriedades.',minutes:5
  },

@@ -18,7 +18,7 @@ export function mountPractice(container:HTMLElement,id:string,options:Options={}
  if(activity.kind==='order'&&!Array.isArray(a.value))a.value=(activity.lines??[]).map(l=>l.id);
  const text=()=>Array.isArray(a.value)?a.value.join('\n'):a.value;
  const titulo=container.hasAttribute('data-inline-practice')?'h3':'h2';
- const producaoIndependente=activity.kind==='debug'&&activity.capability==='producao';
+ const producaoIndependente=activity.kind==='debug'&&activity.assinaturaVazia===true;
  const nomeCampo=producaoIndependente?'Seu código':'Seu código corrigido';
  const rotulo=producaoIndependente?'Implementar a função':labels[activity.kind];
  const input=activity.kind==='choice'?'<fieldset><legend>Escolha um trecho</legend>'+activity.options!.map(o=>'<label><input type="radio" name="answer" value="'+esc(o.id)+'" '+(a.value===o.id?'checked':'')+'><span>'+esc(o.text)+'</span></label>').join('')+'</fieldset>':activity.kind==='order'?'<ol class="practice-order" aria-label="Linhas do programa"></ol>':activity.kind==='debug'?'<label class="practice-input">'+esc(nomeCampo)+'<textarea name="answer" spellcheck="false" maxlength="30000">'+esc(text())+'</textarea></label>':activity.kind==='predict'?'<label class="practice-input">Saída prevista, uma linha por saída<textarea name="answer" rows="3" maxlength="30000">'+esc(text())+'</textarea></label>':'<label class="practice-input">Trecho que falta<input name="answer" autocomplete="off" maxlength="30000" value="'+esc(text())+'"></label>';

@@ -9,7 +9,7 @@ import {freshAdaptive,buildDailySession} from '../../src/learning/adaptive';
 const aulas=['array-metodos','objetos-modulos','erros-json'];
 it.each(['metodos-somar-pares','json-validar-nome'])('%s exige produção a partir da assinatura vazia, sem algoritmo entregue',async id=>{
  const pausa=aulas.flatMap(practicesForLesson).find(p=>p.id===id)!;
- expect(pausa.capability).toBe('producao');expect(pausa.code).toMatch(/^function \w+\(\w+\) \{\s*\}$/);
+ expect(pausa.capability).toBe('producao');expect(pausa.assinaturaVazia).toBe(true);expect(pausa.code).toMatch(/^function \w+\(\w+\) \{\s*\}$/);
  expect((await evaluatePractice(id,pausa.code!)).passed).toBe(false);
 });
 it.each(aulas)('%s conserva seus capítulos, projeto e três pausas ligadas à preparação',aula=>{

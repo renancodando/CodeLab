@@ -31,3 +31,10 @@ test('as três produções funcionam offline e preservam tentativas sem execuç�
   await pagina.reload();const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));for(const caso of casos){expect(salvo.practiceAnswers[caso.producao].passed).toBe(true);expect(salvo.practiceAnswers[caso.producao].assisted).toBe(false);}expect(remotas).toEqual([]);
  }finally{if(!pagina.isClosed())await contexto.setOffline(false);}
 });
+
+test('a correção de frete mantém o campo antigo mesmo com habilidade de produção',async({page:pagina})=>{
+ await abrir(pagina,'entrada-saida');
+ const pausa=pagina.locator('[data-practice="entrada-corrigir-total"]');
+ await expect(pausa.getByRole('textbox',{name:'Seu código corrigido',exact:true})).toBeVisible();
+ await expect(pausa.locator('.eyebrow')).toContainText('Encontrar e corrigir o bug');
+});
