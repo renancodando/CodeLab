@@ -14,6 +14,11 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'css-prever-seletores':{accepted:['18px\n24px'],failure:'O ID corresponde somente ao primeiro parágrafo e tem maior especificidade neste mesmo nível da cascata. No segundo, as duas classes empatam e a última fornece o tamanho.',solution:'18px\n24px'},
+ 'css-diagnosticar-token':{accepted:['comprimento'],failure:'O token red está presente; ele é substituído antes de padding ficar inválido. Trocar o fallback ou adicionar uma declaração anterior não transforma esse token em comprimento.',solution:'<style>\n:root { --espaco: 12px; }\n.cartao { padding: var(--espaco, 12px); }\n</style>\n<section class="cartao">Conteúdo</section>'},
+ 'css-prever-unidades':{accepted:['40px\n60px'],failure:'A raiz e a caixa têm fontes diferentes. Multiplique cada largura pela referência de sua unidade; em numa largura não consulta a mesma fonte que rem.',solution:'40px\n60px'},
+ 'css-diagnosticar-entrelinha':{accepted:['fator'],failure:'em e percentual no pai produzem um comprimento calculado que o título herda. Fixar esse comprimento também não acompanha a fonte do título; diferencie medida e fator herdado.',solution:'<style>\n.painel { font-size: 16px; line-height: 1.5; }\n.titulo { font-size: 32px; }\n</style>\n<section class="painel"><h2 class="titulo">Um título maior</h2></section>'},
+ 'css-herdar-caixa':{accepted:['inherit'],failure:'Fixar border-box ou content-box não acompanha mudanças do pai. initial e unset também não pedem herança explícita de uma propriedade que normalmente não é herdada.',solution:'inherit'},
  'html-prever-cabecalhos':{accepted:['Unidades\nCabo USB'],failure:'O título Estoque identifica a tabela inteira. Localize a coluna do valor e o cabeçalho de sua própria linha; não troque zero por ausência nem pelo produto da linha seguinte.',solution:'Unidades\nCabo USB'},
  'html-diagnosticar-imagem-link':{accepted:['destino'],failure:'A imagem é o único conteúdo que pode nomear este link. O nome do arquivo não informa seu destino e lazy não fornece alternativa textual.',solution:'<a href="/mapa"><img src="mapa.svg" width="160" height="90" alt="Mapa do campus"></a>'},
  'html-reconstruir-tabela-dados':{accepted:[],order:['abertura','cabecalho','linhas','fim-corpo','fim-tabela'],failure:'Confira a abertura externa, o cabeçalho e o corpo com as duas linhas. Fechar table antes do corpo ou retirar uma linha perde a estrutura solicitada.',solution:'<table><caption>Estoque</caption>\n<thead><tr><th scope="col">Produto</th><th scope="col">Unidades</th></tr></thead>\n<tbody><tr><th scope="row">Cabo USB</th><td>0</td></tr><tr><th scope="row">Adaptador</th><td>3</td></tr>\n</tbody>\n</table>'},
@@ -386,6 +391,7 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
   else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='py-esperar-vaga-fila')passed=typeof answer==='string'&&/^await[ \t]+fila[ \t]*\.[ \t]*put[ \t]*\([ \t]*item[ \t]*\)$/.test(normalized(answer));
   else if(id==='py-validar-digitos-ascii')passed=typeof answer==='string'&&/^(['"])0\1\s*<=\s*caractere\s*<=\s*(['"])9\2$/.test(normalized(answer));
+  else if(id==='css-herdar-caixa')passed=typeof answer==='string'&&/^inherit$/i.test(normalized(answer));
   else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
   else passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer));
   result.passed=passed;
