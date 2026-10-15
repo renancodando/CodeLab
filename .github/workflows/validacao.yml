@@ -103,14 +103,14 @@ jobs:
           retention-days: 1
 
   navegador:
-    name: Navegador (${{ matrix.parcela }}/3)
+    name: Navegador (${{ matrix.parcela }}/4)
     needs: validar
     runs-on: ubuntu-latest
     timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
-        parcela: [1, 2, 3]
+        parcela: [1, 2, 3, 4]
     steps:
       - name: Baixar o código
         uses: actions/checkout@v4
@@ -133,7 +133,7 @@ jobs:
       - name: Instalar Chromium para os testes de navegador
         run: npx playwright install --with-deps chromium
       - name: Validar os fluxos no navegador
-        run: npm run test:e2e -- --shard=${{ matrix.parcela }}/3
+        run: npm run test:e2e -- --shard=${{ matrix.parcela }}/4
 
       - name: Guardar relatório e cenários atmosféricos
         if: always()
