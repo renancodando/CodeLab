@@ -2,14 +2,14 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **62 de 137 aulas sem pausas deste catálogo**. As outras 75 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **60 de 137 aulas sem pausas deste catálogo**. As outras 77 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 8 | 2 |
 | C# | 14 | 6 | 8 |
 | CSS | 15 | 7 | 8 |
-| HTML | 19 | 8 | 11 |
+| HTML | 19 | 10 | 9 |
 | JavaScript | 30 | 23 | 7 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 6 | 8 |
@@ -30,8 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `imagens-tabelas` — Imagens e tabelas de dados | HTML | HTML | Original |
-| `html-acessivel` — Verificar a acessibilidade | HTML | HTML | Original |
 | `cascata` — Seletores, cascata e custom properties | CSS | CSS | Original |
 | `box-model` — Box model, unidades e tipografia | CSS | CSS | Original |
 | `flex-position` — Flexbox e posicionamento | CSS | CSS | Original |
