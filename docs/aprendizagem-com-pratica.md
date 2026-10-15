@@ -4,6 +4,8 @@
 
 Esta edição prioriza aprendizagem ativa nas aulas, percursos e projetos existentes. A [fila gerada](aulas-sem-pratica.md) ordena as aulas sem pausas, e as [métricas geradas](metricas-catalogo.md) mantêm as contagens. Uma pausa ou leitura não encerra o domínio; previsão, diagnóstico, produção, assistência e revisão precisam de evidência adequada. A confirmação de cada entrega está em [continuidade](continuidade.md). Os registros seguintes são históricos e conservam os números e gates de cada etapa.
 
+Nas aulas originais de CSS, medidas e valores do aluno são decisões conceituais delimitadas. Referências nativas verificam especificidade, ordem, tokens inválidos após substituição, unidades, entrelinha e herança sob mudanças independentes; não há alegação de executar folhas CSS livres. Os projetos de tokens e cartão editorial continuam exigindo construção e revisão visual.
+
 As aulas originais de tabelas e acessibilidade trabalham relações entre cabeçalhos, alternativas de imagens no contexto, nomes de controles, foco e mensagens. A reconstrução de fragmentos não equivale a produzir HTML livre. Os exemplos de referência têm verificação nativa de DOM e teclado; a revisão com tecnologia assistiva e a aplicação a outros dados permanecem nos projetos.
 
 ## Coerência entre preparação e prática diária
