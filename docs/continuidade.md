@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Fluxo, camadas e movimento reduzido, em preparação
+
+O lote pratica/css-animacoes-fluxo parte de main 917e9d11fd2aeca579ef4370817b0c01cbcf0862. Reaproveita a prática de animações preservada em f63ed91 e acrescenta colapso de margens e contextos de empilhamento em css-caixas. As duas aulas conservam teoria, capítulos, exemplos, exercícios e projetos. Quatro pausas ligadas à teoria trabalham interpolação linear, redução de movimento, fluxo normal versus Flexbox e ordem entre contextos. As respostas são conceituais; documentos CSS nativos conferem os comportamentos. A conferência das duas distâncias aceita representações numéricas equivalentes em px sem aceitar declarações arbitrárias.
+
+Passaram 1112 unitários em 68 arquivos, build com 157 páginas, compilação da API e cache meteorológico, auditoria sem vulnerabilidades e 17 fluxos Chromium. As referências variam tempo, destino, dimensões, margens zero/negativas e contextos independentes, com alternativas defeituosas. Teclado, assistência, revisão, axe, 220/4000 px, offline e exportação/exclusão/restauração das novas habilidades passaram. Também passaram 194 exemplos e soluções externos, os verificadores adicionais de TypeScript/C++/.NET/Git/SQL e três cronogramas com conexões PostgreSQL 18 reais. A base de estudo descartável foi encerrada após a validação. Métricas da branch: 137 aulas, 167 atividades, 83 aulas com pausas e 54 sem. A suíte local relevante não substitui o CI do HEAD da PR.
+
+Main foi sincronizada e suas métricas regeneradas sem diff: 137/163/81/56. A PR #56 está integrada, e seu pós-merge 38897974575 terminou com sucesso na tentativa 2. A página da PR registra deployment dpl_G3VgE1DMT5DdLxVKfHneWmabJp4S READY/production, SHA, alias e onze fluxos públicos aprovados; repetir essa verificação está bloqueado pelo proxy nesta instância. A API GitHub também recusa CONNECT com 403, apesar dos domínios no rascunho de configuração. Abertura da próxima PR, CI próprio, revisão, integração e conferência pública deste lote continuam pendentes.
+
+As branches anteriores de animações, seleção DOM (1457130) e eventos (423f06a) permanecem preservadas. Depois dos gates completos deste lote, reaproveitar seleção e eventos em uma entrega baseada na nova main, regenerando as métricas. Não iniciar o lote seguinte enquanto a PR atual não tiver integração e publicação verificadas.
+
 ## Flexbox e Grid nas aulas originais, em preparação
 
 As aulas flex-position e grid-responsivo mantêm doze capítulos e seus projetos. Cinco pausas trabalham eixos, referência de posicionamento, quebra sem inversão, trilhas vazias e consulta de tamanho pelo ancestral. Coordenadas aceitam espaçamento equivalente; a palavra-chave de quebra aceita diferenças de maiúsculas/minúsculas. As respostas continuam conceituais. As referências nativas variam eixo, tamanho, posição, número de cartões, fronteira de quebra e instâncias simultâneas; o projeto continua exigindo construir e revisar a barra e a área de projetos.

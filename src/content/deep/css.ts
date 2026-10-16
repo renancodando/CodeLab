@@ -259,7 +259,8 @@ export default {
           "title": "Margens e fluxo normal",
           "text": [
             "Margens verticais de blocos podem colapsar em certos contextos; somá-las mentalmente pode produzir uma previsão errada. Gap em layouts apropriados evita alguns usos de margem para espaço entre itens.",
-            "Criar um novo contexto de formatação, por exemplo com flow-root, muda relações do fluxo e pode conter floats. Use o mecanismo cujo contrato atende ao layout, em vez de adicionar elementos vazios para empurrar conteúdo."
+            "Criar um novo contexto de formatação, por exemplo com flow-root, muda relações do fluxo e pode conter floats. Use o mecanismo cujo contrato atende ao layout, em vez de adicionar elementos vazios para empurrar conteúdo.",
+            "No recorte de dois blocos irmãos no fluxo normal, margens verticais positivas adjacentes colapsam na maior, não na soma. Um contêiner flow-root evita colapso com seus filhos, mas não impede esse colapso entre os irmãos. Em uma coluna flex, as margens dos itens não colapsam entre si e continuam somando seus efeitos, além de eventual gap. Ao comparar bordas, uma distância negativa representa sobreposição: no colapso misto, some a maior margem positiva com a mais negativa; se todas forem negativas, use a mais negativa. Essas regras dependem do contexto; não extrapole a previsão para qualquer layout."
           ]
         },
         {
@@ -273,7 +274,8 @@ export default {
           "title": "Empilhamento e direção",
           "text": [
             "z-index opera dentro de contextos de empilhamento, que podem ser criados por várias propriedades. Um número enorme não permite escapar automaticamente do contexto do ancestral. Investigue a árvore de contextos ao depurar sobreposição.",
-            "Propriedades lógicas como margin-inline e padding-block acompanham modos de escrita e direção. Elas expressam intenção melhor que assumir esquerda e direita para todo idioma. Teste direção, zoom e rolagem quando esses contextos são suportados."
+            "Propriedades lógicas como margin-inline e padding-block acompanham modos de escrita e direção. Elas expressam intenção melhor que assumir esquerda e direita para todo idioma. Teste direção, zoom e rolagem quando esses contextos são suportados.",
+            "Um elemento posicionado com z-index diferente de auto cria um contexto de empilhamento. Se o painel está no nível 0 e seu irmão no nível 1, o filho com z-index:99 continua limitado pelo contexto do painel. Aumentar somente o número do filho ou torná-lo fixed não o promove acima do contexto irmão. Compare primeiro os ancestrais que competem no mesmo contexto; só depois compare a ordem interna. Essa investigação é diferente de aumentar números até uma geometria inicial parecer correta."
           ]
         }
       ],
@@ -294,7 +296,7 @@ export default {
         "A caixa cabe em viewport estreito sem overflow do documento.",
         "A ordem de leitura permanece coerente quando o posicionamento é removido."
       ],
-      "project": "Diagnostique três caixas de uma página: um texto longo, um bloco de código e uma região sticky. Registre dimensões e o contêiner de referência de cada uma.",
+      "project": "Diagnostique três caixas de uma página: um texto longo, um bloco de código e uma região sticky. Registre dimensões e o contêiner de referência de cada uma. Compare também duas caixas irmãs no fluxo normal e em coluna flex, medindo a distância entre suas bordas. Se houver sobreposição, desenhe a hierarquia de empilhamento e justifique uma alteração no contexto correto, sem cortar conteúdo para esconder o problema.",
       "question": "z-index muito grande permite escapar de qualquer contexto de empilhamento ancestral?",
       "answer": "Não; a posição continua limitada pelas relações dos contextos de empilhamento.",
       "distractors": [

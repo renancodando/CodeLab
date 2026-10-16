@@ -14,6 +14,10 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'css-fluxo-prever-margens':{accepted:['30px\n50px'],failure:'Neste fluxo normal, as margens positivas dos irmãos colapsam na maior delas. Os itens flex mantêm suas margens separadas; não aplique a mesma conta aos dois grupos.',solution:'30px\n50px'},
+ 'css-fluxo-diagnosticar-camadas':{accepted:['painel'],failure:'O selo continua dentro do contexto do painel. Um número interno maior ou position:fixed não o faz escapar da ordem desse contexto em relação à cobertura.',solution:'<style>\n.palco { position:relative; width:220px; height:120px; }\n.painel { position:absolute; inset:0; z-index:2; }\n.selo { position:absolute; inset:0; z-index:99; background:white; }\n.cobertura { position:absolute; inset:0; z-index:1; background:white; }\n</style>\n<div class="palco"><div class="painel"><div class="selo">Selo</div></div><div class="cobertura">Cobertura</div></div>'},
+ 'css-prever-transicao':{accepted:['20px\n80px'],failure:'A classe define o destino, mas o navegador interpola a transformação durante os 400ms. Use a fração do tempo linear antes de considerar o estado final.',solution:'20px\n80px'},
+ 'css-diagnosticar-movimento':{accepted:['remover'],failure:'transition:none não remove uma animação por keyframes. Pausar pode conservar uma escala intermediária; ocultar também retira o feedback visual. O contrato pede o selo visível na escala base.',solution:'<style>\n.selo { display:inline-block; transform:scale(1); animation:pulsar 1s linear infinite; transition:transform 200ms; }\n@keyframes pulsar { from { transform:scale(1); } to { transform:scale(1.2); } }\n@media (prefers-reduced-motion:reduce) { .selo { transition:none; animation:none; } }\n</style>\n<button type="button">Salvar</button><span class="selo" role="status">Salvo</span>'},
  'css-prever-eixos':{accepted:['80 30\n80 50'],failure:'Com column, a centralização distribui o espaço livre na vertical. O alinhamento flex-end usa o outro eixo; ele não coloca os itens no fundo do painel.',solution:'80 30\n80 50'},
  'css-diagnosticar-selo':{accepted:['cartao'],failure:'O ancestral posicionado atual é a página. Um deslocamento fixo só compensa esta geometria; fixed muda a referência para fora do cartão neste recorte.',solution:'<style>\n.pagina { position:relative; width:300px; }\n.cartao { position:relative; width:100px; height:80px; }\n.selo { position:absolute; top:0; right:0; width:20px; height:20px; }\n</style>\n<div class="pagina"><article class="cartao"><span class="selo">1</span></article></div>'},
  'css-flex-quebrar':{accepted:['wrap'],failure:'nowrap conserva a linha mesmo sem espaço. wrap-reverse inverte o empilhamento e viola a ordem visual pedida; mantenha ações visíveis em linhas normais.',solution:'wrap'},
@@ -396,6 +400,10 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
   else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='py-esperar-vaga-fila')passed=typeof answer==='string'&&/^await[ \t]+fila[ \t]*\.[ \t]*put[ \t]*\([ \t]*item[ \t]*\)$/.test(normalized(answer));
   else if(id==='py-validar-digitos-ascii')passed=typeof answer==='string'&&/^(['"])0\1\s*<=\s*caractere\s*<=\s*(['"])9\2$/.test(normalized(answer));
+  else if(['css-fluxo-prever-margens','css-prever-transicao'].includes(id)&&typeof answer==='string'){
+   const linhas=normalized(answer).split('\n').map(linha=>linha.trim()),esperadas=concept.accepted[0].split('\n').map(valor=>parseFloat(valor));
+   passed=linhas.length===esperadas.length&&linhas.every((linha,indice)=>/^[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?px$/i.test(linha)&&Number(linha.slice(0,-2))===esperadas[indice]);
+  }
   else if(id==='css-prever-eixos')passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().replace(/[ \t]+/g,' ')).join('\n')===concept.accepted[0];
   else if(id==='css-flex-quebrar')passed=typeof answer==='string'&&/^wrap$/i.test(normalized(answer));
   else if(id==='css-herdar-caixa')passed=typeof answer==='string'&&/^inherit$/i.test(normalized(answer));
