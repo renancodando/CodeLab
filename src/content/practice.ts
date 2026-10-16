@@ -12,6 +12,21 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'css-prever-transicao',language:'css',lessonIds:['animacoes'],skillIds:['css.movimento.transicao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'A mudança de estado já começou, mas ainda não terminou',
+  prompt:'O indicador começa em translateX(0). Depois da primeira renderização, a classe ativa é adicionada à faixa e permanece nela. A transição tem 400ms, sem atraso, com avanço linear. Escreva o deslocamento horizontal em 100ms e em 400ms após o início, uma linha por instante com px. Não houve interrupção nem outra regra. A previsão é conceitual; a referência é medida no navegador.',
+  code:'<style>\n.faixa { display:flex; }\n.indicador { display:inline-block; width:100px; transform:translateX(0); transition:transform 400ms linear; }\n.ativa .indicador { transform:translateX(80px); }\n</style>\n<div class="faixa"><span class="indicador">Etapa</span><span class="vizinho">Próxima</span></div>',
+  hint:'Separe valor de destino e valor interpolado. Em um quarto do tempo linear, foi percorrido um quarto da distância; transform não reorganiza a posição de layout do vizinho.',minutes:4
+ },
+ {
+  id:'css-diagnosticar-movimento',language:'css',lessonIds:['animacoes'],skillIds:['css.movimento.reducao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'A transição parou, mas o selo continua pulsando',
+  prompt:'A preferência pode mudar enquanto a animação já está em andamento. Com reduce, o selo deve ficar estático na escala base 1, continuar mostrando Salvo e preservar o botão no teclado. Qual mudança na regra de reduce satisfaz isso inclusive se a preferência chegar no meio de um pulso? Escolha conceitual, sem executar CSS livre do aluno.',
+  code:'<style>\n.selo { display:inline-block; transform:scale(1); animation:pulsar 1s linear infinite; transition:transform 200ms; }\n@keyframes pulsar { from { transform:scale(1); } to { transform:scale(1.2); } }\n@media (prefers-reduced-motion:reduce) { .selo { transition:none; } }\n</style>\n<button type="button">Salvar</button><span class="selo" role="status">Salvo</span>',
+  options:[{id:'remover',text:'Manter transition:none e acrescentar animation:none na regra de reduce.'},{id:'pausar',text:'Manter transition:none e acrescentar animation-play-state:paused na regra de reduce.'},{id:'ocultar',text:'Manter transition:none e acrescentar visibility:hidden ao selo na regra de reduce.'}],
+  hint:'Transições e animações por keyframes têm controles diferentes. Pausar conserva a posição temporal atual; esconder o selo também esconde a informação.',minutes:4
+ },
+ {
   id:'css-prever-eixos',language:'css',lessonIds:['flex-position'],skillIds:['css.flex.eixos'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Qual eixo centraliza os dois itens?',
   prompt:'O painel mede 100 por 100px e cada item 20 por 20px, sem borda, padding, margem ou gap. A escrita é horizontal e da esquerda para a direita. Preveja a posição de cada item em relação ao canto superior esquerdo do painel: duas linhas com esquerda e topo separados por espaço, em pixels, sem unidade. A previsão é conceitual.',

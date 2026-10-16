@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir das definições e da matriz do currículo. O build rejeita divergências. A interface usa o mesmo resumo JSON, sem carregar capítulos adicionais.
 
-O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **163 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **81 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
+O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **165 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **82 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
 
 | Medida | Quantidade |
 | --- | ---: |
@@ -19,7 +19,7 @@ O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **
 | --- | ---: |
 | C++ | 12 |
 | C# | 12 |
-| CSS | 19 |
+| CSS | 21 |
 | HTML | 24 |
 | JavaScript | 58 |
 | Python | 21 |
@@ -32,7 +32,7 @@ O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 8 | 2 |
 | C# | 14 | 6 | 8 |
-| CSS | 15 | 11 | 4 |
+| CSS | 15 | 12 | 3 |
 | HTML | 19 | 10 | 9 |
 | JavaScript | 30 | 23 | 7 |
 | Python | 10 | 10 | 0 |
@@ -40,6 +40,6 @@ O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **
 | Integração (transversal) | 15 | 0 | 15 |
 | TypeScript | 10 | 7 | 3 |
 
-Restam 56 aulas sem pausas deste catálogo. A [fila pedagógica gerada](aulas-sem-pratica.md) lista cada uma e se atualiza junto das métricas.
+Restam 55 aulas sem pausas deste catálogo. A [fila pedagógica gerada](aulas-sem-pratica.md) lista cada uma e se atualiza junto das métricas.
 
 A aula de valores também possui um percurso próprio passo a passo, preservado separadamente da leitura completa. A contagem de pausas não inclui as etapas desse percurso, missões ou experiências dos percursos de engenharia. Contagem não mede domínio nem esgota os ecossistemas. Um tópico pode aparecer em mais de um contexto; entradas da matriz não são conceitos únicos. Problemas independentes têm critérios e soluções, mas não recebem correção automática universal. Atividades conceituais não comprovam compilação; projetos abertos usam revisão manual. Consulte [o mapa de cobertura](curriculo-completo.md) e [as etapas restantes](etapas-restantes.md).

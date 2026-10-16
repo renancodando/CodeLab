@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Movimento reduzido na aula original, em preparação
+
+A branch pratica/css-movimento-reduzido parte do head 76941a3619ce02b9b8272f7aa3cd020a6af9672f da PR #56. A aula animacoes conserva doze capítulos, exemplo e projeto de lista de tarefas. Duas pausas após os blocos 3/6 distinguem interpolação linear e remoção de keyframes sob movimento reduzido. O projeto exige estado legível, teclado e preferência alterada durante o uso. As respostas são conceituais; referências nativas conferem instantes controlados, durações e destinos independentes, layout dos vizinhos e as alternativas de pausar ou esconder o selo.
+
+Passaram 1109 unitários em 67 arquivos, build com 157 páginas e 15 fluxos Chromium: quatro novos e onze regressões de Flexbox/Grid e cascata/unidades, incluindo assistência, revisão, axe, 220/4000 px e offline. Métricas geradas: 137 aulas, 165 atividades, 82 aulas com pausas e 55 sem; isso não encerra sua profundidade. CI, revisão, integração e publicação desta branch permanecem pendentes. A próxima lacuna na fila é selecionar, antes de eventos e estado-formulario.
+
+Na retomada, o CI 38838046596 da PR #56 terminou com sucesso no head 76941a3619ce02b9b8272f7aa3cd020a6af9672f. A árvore fbe4cabd06fc4b5afd80a6314dffbd2e3bbcafad coincide com a integração virtual 5e353e358f16eb3a831d9dce19c00e8d5b5459ae, cujos pais são main e o head esperado. Isso não é merge. A API GitHub e o domínio público estavam bloqueados pela rede do ambiente; integração, revisão atual e publicação ainda exigem conferência. Não reaproveitar o CI de #56 como aprovação da entrega de animações.
+
 ## Flexbox e Grid nas aulas originais, em preparação
 
 As aulas flex-position e grid-responsivo mantêm doze capítulos e seus projetos. Cinco pausas trabalham eixos, referência de posicionamento, quebra sem inversão, trilhas vazias e consulta de tamanho pelo ancestral. Coordenadas aceitam espaçamento equivalente; a palavra-chave de quebra aceita diferenças de maiúsculas/minúsculas. As respostas continuam conceituais. As referências nativas variam eixo, tamanho, posição, número de cartões, fronteira de quebra e instâncias simultâneas; o projeto continua exigindo construir e revisar a barra e a área de projetos.
