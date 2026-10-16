@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Seleção e atualização do DOM, em preparação
+
+A branch pratica/dom-selecao parte de f63ed9142462c45f3fbb8b54ef6d1896c70836c3, preservando a entrega anterior de animações. A aula selecionar mantém doze capítulos, exemplo e projeto do contador. Duas pausas após os blocos 3/6 distinguem escopo da busca, composição estática de querySelectorAll e atualização local sem interpretar marcação nem substituir controles ou classes. O projeto pede dois contadores independentes, foco preservado e tratamento de regiões ausentes. As respostas permanecem conceituais; referências HTML/JavaScript são executadas no navegador, sem executar código livre do aluno.
+
+Passaram 1112 unitários em 68 arquivos, build com 157 páginas e 13 fluxos Chromium: quatro novos e nove regressões de animações, tabelas e acessibilidade. As referências conferem nós removidos e valores alterados, nova consulta, texto vazio/zero/marcação, painel ou mensagem ausentes, instâncias independentes, identidade do botão, listener e foco. Assistência, revisão, axe, 220/4000 px e offline passaram. Métricas geradas: 137 aulas, 167 atividades, 83 aulas com pausas e 54 sem. PR, CI próprio, integração e publicação permanecem pendentes; a API GitHub continua bloqueada pela rede, embora o envio de branches por Git funcione. Próxima aula da fila: eventos.
+
 ## Movimento reduzido na aula original, em preparação
 
 A branch pratica/css-movimento-reduzido parte do head 76941a3619ce02b9b8272f7aa3cd020a6af9672f da PR #56. A aula animacoes conserva doze capítulos, exemplo e projeto de lista de tarefas. Duas pausas após os blocos 3/6 distinguem interpolação linear e remoção de keyframes sob movimento reduzido. O projeto exige estado legível, teclado e preferência alterada durante o uso. As respostas são conceituais; referências nativas conferem instantes controlados, durações e destinos independentes, layout dos vizinhos e as alternativas de pausar ou esconder o selo.

@@ -12,6 +12,21 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'html-dom-prever-selecao',language:'html',lessonIds:['selecionar'],skillIds:['html.dom.selecao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Uma lista de nós acompanha a árvore para sempre?',
+  prompt:'O script está depois dos dois cartões. Escreva as três saídas de console.log, uma por linha. Compare a busca no documento com a busca dentro do cartão alvo e acompanhe quando a lista nomes foi obtida. A previsão é conceitual; o documento de referência é executado no navegador.',
+  code:'<section class="cartao"><span class="nome">Ana</span></section>\n<section class="cartao" id="alvo"><span class="nome">Bia</span></section>\n<script>\nconst alvo = document.querySelector("#alvo");\nconst nomes = alvo.querySelectorAll(".nome");\nconst novo = document.createElement("span");\nnovo.className = "nome";\nnovo.textContent = "Caio";\nalvo.append(novo);\nconsole.log(document.querySelector(".nome").textContent);\nconsole.log(nomes.length);\nconsole.log(alvo.querySelectorAll(".nome").length);\n</script>',
+  hint:'querySelector retorna o primeiro correspondente no seu escopo. querySelectorAll produz uma lista estática: a busca pode ser repetida depois de mudar a árvore.',minutes:4
+ },
+ {
+  id:'html-dom-atualizar-texto',language:'html',lessonIds:['selecionar'],skillIds:['html.dom.atualizacao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Mudar a mensagem sem substituir o botão',
+  prompt:'atualizar recebe um painel ou null e um texto, que pode conter caracteres de marcação. A mensagem deve mostrar esse texto literalmente, preservando o mesmo botão, seu foco e as classes anteriores do painel. Se painel ou mensagem não existir, nada deve mudar. Qual substituição do corpo da função satisfaz o contrato? Escolha conceitual; não executa HTML ou JavaScript livre do aluno.',
+  code:'<section id="painel" class="painel compacto">\n  <span class="mensagem">Antes</span>\n  <button type="button">Confirmar</button>\n</section>\n<script>\nfunction atualizar(painel, texto) {\n  if (!painel) return;\n  painel.innerHTML = texto;\n  painel.className = "atualizado";\n}\natualizar(document.querySelector("#painel"), "<strong>Pronto</strong>");\n</script>',
+  options:[{id:'local',text:'if (!painel) return; const mensagem = painel.querySelector(".mensagem"); if (!mensagem) return; mensagem.textContent = texto; painel.classList.add("atualizado");'},{id:'painel',text:'if (!painel) return; painel.textContent = texto; painel.classList.add("atualizado");'},{id:'marcacao',text:'if (!painel) return; const mensagem = painel.querySelector(".mensagem"); if (!mensagem) return; mensagem.innerHTML = texto; painel.classList.add("atualizado");'},{id:'classes',text:'if (!painel) return; const mensagem = painel.querySelector(".mensagem"); if (!mensagem) return; mensagem.textContent = texto; painel.className = "atualizado";'}],
+  hint:'Inserir texto com segurança e escolher o nó correto são decisões diferentes. textContent também substitui os filhos do nó que o recebe; className substitui a lista completa de classes.',minutes:5
+ },
+ {
   id:'css-prever-transicao',language:'css',lessonIds:['animacoes'],skillIds:['css.movimento.transicao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'A mudança de estado já começou, mas ainda não terminou',
   prompt:'O indicador começa em translateX(0). Depois da primeira renderização, a classe ativa é adicionada à faixa e permanece nela. A transição tem 400ms, sem atraso, com avanço linear. Escreva o deslocamento horizontal em 100ms e em 400ms após o início, uma linha por instante com px. Não houve interrupção nem outra regra. A previsão é conceitual; a referência é medida no navegador.',

@@ -485,20 +485,20 @@ const roteiros:Record<string,Roteiro>={
   },
   "selecionar": {
     "contexto": "Manipular o DOM começa por identificar exatamente qual elemento representa a informação ou ação desejada. Seletores frágeis acoplam JavaScript ao visual e tornam pequenas mudanças de HTML capazes de quebrar comportamento.",
-    "modelo": "Veja o DOM como uma árvore de nós com relações. querySelector localiza um ponto dessa árvore; propriedades como textContent, classList e atributos alteram uma parte específica sem exigir reconstruir tudo.",
+    "modelo": "Veja o DOM como uma árvore de nós com relações. document.querySelector devolve o primeiro correspondente no documento ou null; painel.querySelector limita a busca aos descendentes daquele painel. Dois cartões com a mesma classe não são a mesma instância. querySelectorAll devolve uma NodeList estática: inserir outro correspondente depois não aumenta a lista já obtida, mas repetir a busca observa a árvore atual. Estática descreve a composição da lista, não uma cópia congelada dos elementos; uma referência ainda permite observar mudanças no próprio nó. textContent insere texto sem interpretar marcação, mas substitui todos os filhos do nó que o recebe. Por isso, atualizar o texto no painel inteiro pode remover o botão e seu foco; selecione a mensagem dentro do painel. innerHTML interpreta marcação e também reconstrói descendentes. classList.add acrescenta uma classe sem apagar as anteriores; atribuir className substitui a lista completa. Faça as buscas depois de o HTML existir e trate a ausência do painel ou da mensagem antes de modificar o estado.",
     "passos": [
       "Escolha seletores baseados em significado ou papéis estáveis.",
       "Confirme se a busca pode retornar null.",
       "Prefira textContent para texto não confiável.",
-      "Faça a menor alteração necessária no nó correto.",
+      "Faça a menor alteração necessária no nó correto: preserve controles e use classList quando quiser acrescentar um estado visual.",
       "Evite consultar repetidamente a árvore quando a referência já pode ser mantida."
     ],
     "experimentos": [
       "Selecione por id, classe e atributo data-* e compare acoplamento.",
       "Tente selecionar algo inexistente e trate null conscientemente.",
-      "Compare textContent e innerHTML com uma entrada contendo tags."
+      "Compare textContent e innerHTML com uma entrada contendo tags. Aplique depois textContent ao painel inteiro e observe o botão removido; repita somente na mensagem e confira o mesmo botão e seu foco."
     ],
-    "projeto": "Construa um contador com valor, mensagem de estado e classes visuais, mantendo referências claras aos elementos que realmente mudam.",
+    "projeto": "Construa um contador com valor, mensagem de estado e classes visuais, mantendo referências claras aos elementos que realmente mudam. Coloque dois contadores na mesma página e atualize cada um sem mudar o outro. Preserve os botões, o foco do teclado e as classes de apresentação; trate a ausência da região consultada. Teste mensagem vazia, zero e um texto que contenha marcação literal.",
     "conexao": "A próxima aula faz essas mudanças acontecerem em resposta a eventos do usuário e do navegador."
   },
   "eventos": {
