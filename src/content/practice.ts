@@ -12,6 +12,43 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'css-prever-eixos',language:'css',lessonIds:['flex-position'],skillIds:['css.flex.eixos'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Qual eixo centraliza os dois itens?',
+  prompt:'O painel mede 100 por 100px e cada item 20 por 20px, sem borda, padding, margem ou gap. A escrita é horizontal e da esquerda para a direita. Preveja a posição de cada item em relação ao canto superior esquerdo do painel: duas linhas com esquerda e topo separados por espaço, em pixels, sem unidade. A previsão é conceitual.',
+  code:'<style>\n.painel { display:flex; flex-direction:column; justify-content:center; align-items:flex-end; width:100px; height:100px; writing-mode:horizontal-tb; direction:ltr; }\n.item { width:20px; height:20px; flex:none; }\n</style>\n<div class="painel"><div class="item">A</div><div class="item">B</div></div>',
+  hint:'column coloca o eixo principal na vertical neste modo de escrita. Distribua primeiro o espaço livre; o outro alinhamento atua horizontalmente.',minutes:4
+ },
+ {
+  id:'css-diagnosticar-selo',language:'css',lessonIds:['flex-position'],skillIds:['css.posicionamento.referencia'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O selo se prendeu à página, não ao cartão',
+  prompt:'O selo absoluto deve acompanhar o canto superior direito do cartão de 100px, preservando o cartão no fluxo. Agora ele usa a página de 300px como referência. Não há transform, contain ou outros criadores de bloco de referência neste documento. Qual alteração corrige a relação local? Escolha conceitual.',
+  code:'<style>\n.pagina { position:relative; width:300px; }\n.cartao { width:100px; height:80px; }\n.selo { position:absolute; top:0; right:0; width:20px; height:20px; }\n</style>\n<div class="pagina"><article class="cartao"><span class="selo">1</span></article></div>',
+  options:[{id:'cartao',text:'Adicionar position:relative ao cartão, mantendo o selo absoluto.'},{id:'fixo',text:'Trocar o selo para position:fixed, mantendo o cartão estático.'},{id:'distancia',text:'Fixar right:200px no selo para compensar a página atual.'}],
+  hint:'Uma compensação pode coincidir nesta largura e falhar quando o cartão se mover. Identifique qual ancestral deve fornecer a referência.',minutes:4
+ },
+ {
+  id:'css-flex-quebrar',language:'css',lessonIds:['flex-position'],skillIds:['css.flex.quebra'],afterBlock:8,kind:'fill',capability:'alteracao',requiresConcept:true,
+  title:'As ações precisam continuar visíveis em linhas novas',
+  prompt:'Complete somente a palavra-chave de flex-wrap. Cada ação conserva 120px e o gap é 12px. Em 220px, a segunda ação deve ir para uma linha abaixo da primeira; em 300px, ambas devem compartilhar a linha. Preserve a ordem de cima para baixo, sem ocultar nem encolher ações. Este recorte considera larguras a partir de 120px e é uma alteração conceitual delimitada.',
+  code:'<style>\n.barra { display:flex; flex-wrap:____; gap:12px; width:220px; writing-mode:horizontal-tb; direction:ltr; }\n.acao { box-sizing:border-box; flex:0 0 120px; min-width:0; }\n</style>\n<div class="barra"><button class="acao" type="button">Salvar</button><button class="acao" type="button">Testar</button></div>',
+  hint:'Duas bases de 120px mais o intervalo não cabem em 220px. Permitir novas linhas e inverter a direção de empilhamento são decisões diferentes.',minutes:4
+ },
+ {
+  id:'css-grid-prever-vazias',language:'css',lessonIds:['grid-responsivo'],skillIds:['css.grid.trilhas-vazias'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Cabe uma terceira coluna, mas só existem dois projetos',
+  prompt:'A grade tem largura interna de 350px, gap de 10px e somente estes dois projetos, sem spans, padding, borda ou margem. Preveja a largura computada de cada projeto, uma por linha com px. Diferencie espaço para uma trilha de uma trilha ocupada. Previsão conceitual, com referência conferida no navegador.',
+  code:'<style>\n.grade { display:grid; width:350px; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:10px; }\n.projeto { min-width:0; }\n</style>\n<div class="grade"><article class="projeto">A</article><article class="projeto">B</article></div>',
+  hint:'auto-fit pode colapsar uma trilha vazia e seus intervalos associados. Só depois distribua o espaço entre as trilhas que continuam ocupadas.',minutes:4
+ },
+ {
+  id:'css-grid-diagnosticar-conteiner',language:'css',lessonIds:['grid-responsivo'],skillIds:['css.responsividade.conteineres'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O componente está tentando consultar a si mesmo',
+  prompt:'A mesma viewport contém espaços de 220px e 400px. O cartão deve ter duas colunas somente quando seu próprio espaço tiver pelo menos 300px. A regra não reage porque o cartão não pode usar a si mesmo como seu contêiner de consulta de tamanho. Qual alteração mantém a decisão local sem forçar largura mínima? Escolha conceitual; requer suporte a consultas de tamanho.',
+  code:'<style>\n.espaco { width:400px; }\n.cartao { display:grid; container-type:inline-size; grid-template-columns:1fr; }\n.cartao p { margin:0; min-width:0; }\n@container (min-width:300px) { .cartao { grid-template-columns:1fr 1fr; } }\n</style>\n<div class="espaco"><section class="cartao"><p>A</p><p>B</p></section></div>',
+  options:[{id:'ancestral',text:'Mover container-type:inline-size do cartão para .espaco, preservando a consulta e a largura automática do cartão.'},{id:'viewport',text:'Trocar @container por @media, mantendo o limiar de 300px.'},{id:'forcar',text:'Adicionar min-width:300px ao cartão para obrigar a consulta a funcionar.'}],
+  hint:'A consulta procura um contêiner elegível entre os ancestrais. A largura da viewport não distingue os dois espaços, e impor mínimo pode introduzir overflow.',minutes:4
+ },
+ {
   id:'css-prever-seletores', language:'css', lessonIds:['cascata'],
   skillIds:['css.cascata.seletores'], afterBlock:3, kind:'predict', capability:'leitura', requiresConcept:true,
   title:'A última regra vence os dois parágrafos?',
