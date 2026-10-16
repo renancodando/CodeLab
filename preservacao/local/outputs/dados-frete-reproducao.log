@@ -1,0 +1,46 @@
+
+Running 1 test using 1 worker
+
+(node:8420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\dados-contratos.spec.ts:35:1 › a correção de frete mantém o campo antigo mesmo com habilidade de produção (36.7s)
+
+
+  1) tests\e2e\dados-contratos.spec.ts:35:1 › a correção de frete mantém o campo antigo mesmo com habilidade de produção 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-practice="entrada-corrigir-total"]').getByRole('textbox', { name: 'Seu código corrigido', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-practice="entrada-corrigir-total"]').getByRole('textbox', { name: 'Seu código corrigido', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-practice="entrada-corrigir-total"]').getByRole('textbox', { name: 'Seu código corrigido', exact: true })
+
+
+      36 |  await abrir(pagina,'entrada-saida');
+      37 |  const pausa=pagina.locator('[data-practice="entrada-corrigir-total"]');
+    > 38 |  await expect(pausa.getByRole('textbox',{name:'Seu código corrigido',exact:true})).toBeVisible();
+         |                                                                                    ^
+      39 |  await expect(pausa.locator('.eyebrow')).toContainText('Encontrar e corrigir o bug');
+      40 | });
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\dados-contratos.spec.ts:38:84
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-frete-reproducao\dados-contratos-a-correção-39c09--com-habilidade-de-produção\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-dados-frete-reproducao\dados-contratos-a-correção-39c09--com-habilidade-de-produção\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-frete-reproducao\dados-contratos-a-correção-39c09--com-habilidade-de-produção\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-dados-frete-reproducao\dados-contratos-a-correção-39c09--com-habilidade-de-produção\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\dados-contratos.spec.ts:35:1 › a correção de frete mantém o campo antigo mesmo com habilidade de produção 

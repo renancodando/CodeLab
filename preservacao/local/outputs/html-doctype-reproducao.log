@@ -1,0 +1,33 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/html-inicio.test.ts (25 tests | 1 failed | 24 skipped) 11ms
+   × a montagem real dos fragmentos contém um único doctype antes da raiz 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/html-inicio.test.ts > a montagem real dos fragmentos contém um único doctype antes da raiz
+AssertionError: expected [ Array(2) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/unit/html-inicio.test.ts:40:49
+     38|  const pausa=practicesForLesson('documento').find(p=>p.id==='html-reco…
+     39|  const codigo=(respostas[pausa.id] as string[]).map(id=>pausa.lines!.f…
+     40|  expect(codigo.match(/<!doctype\s+html\s*>/gi)).toHaveLength(1);
+       |                                                 ^
+     41|  expect(codigo).toMatch(/^<!doctype\s+html\s*>\s*<html\s/i);
+     42| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 24 skipped (25)
+   Start at  12:25:36
+   Duration  531ms (transform 80%, import 15%, tests 3%, worker 2%)
+

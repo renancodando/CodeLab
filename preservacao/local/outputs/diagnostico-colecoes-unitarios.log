@@ -1,0 +1,31 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/diagnostico-colecoes.test.ts (39 tests | 1 failed) 163ms
+   × estoque aceita reduce e uma cópia ordenada, mas detecta a mutação mesmo com totais corretos 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/diagnostico-colecoes.test.ts > estoque aceita reduce e uma cópia ordenada, mas detecta a mutação mesmo com totais corretos
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/unit/diagnostico-colecoes.test.ts:85:278
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 174 passed (175)
+   Start at  22:51:33
+   Duration  4.82s (tests 82%, transform 11%, import 6%, worker 1%)
+
+    Isolate  5 workers spawned · ~154ms startup each (spawn + environment, per file)
+             at least ~614ms faster with isolate: false — reuses workers across files instead of one per file
+

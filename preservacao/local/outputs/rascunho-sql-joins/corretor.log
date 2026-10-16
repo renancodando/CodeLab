@@ -1,0 +1,2 @@
+22 verificações SQLite reais: oito bases, dez consultas incorretas detectadas e alternativa correlacionada aceita. Rascunho isolado; ainda não integrado ao produto.
+12 contratos do corretor conferidos com motor e SQLite reais, incluindo BigInt, cabeçalhos, múltiplos resultados, erro, cancelamento e sucesso parcial. Rascunho fora do produto.

@@ -1,0 +1,59 @@
+npm notice run codelab@0.1.0 build
+npm notice run node scripts/generate-curriculum-index.mjs --check && node scripts/gerar-metricas.mjs --check && tsc --noEmit && node scripts/verificar-funcao-meteorologica.mjs && vite build --configLoader runner && node scripts/prerender.mjs && node scripts/build-offline.mjs
+Índice e matriz conferidos: 8 percursos adicionais, 77 aulas.
+Métricas conferidas: 137 aulas, 135 atividades.
+Função meteorológica conferida em Node.js com módulos ESM emitidos e 30 consultas concorrentes.
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 2221 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/src/execution/runner.ts is dynamically imported by C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/src/learning/practice.ts but also statically imported by C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/src/laboratory.ts, C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/src/learning/engine.ts, C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/src/main.ts, dynamic import will not move module into another chunk.
+
+computing gzip size...
+dist/index.html                                        0.72 kB │ gzip:   0.48 kB
+dist/assets/runner.worker-DwfjjsBo.js                 39.50 kB
+dist/assets/sql-local.worker-D0ZVaNjw.js              42.46 kB
+dist/assets/editor.worker-DERb3WoQ.js                231.25 kB
+dist/assets/emscripten-module-NWak2PoB.wasm          518.88 kB │ gzip: 242.69 kB
+dist/assets/sql-wasm-browser-DfANybxk.wasm           658.41 kB │ gzip: 322.99 kB
+dist/assets/typescript-local.worker-CekGibzM.js    4,066.86 kB
+dist/assets/index-BHU2ZgAx.css                        45.11 kB │ gzip:  10.63 kB
+dist/assets/editor-CP2cXDiA.css                       66.41 kB │ gzip:  11.11 kB
+dist/assets/_commonjsHelpers-CqkleIqs.js               0.12 kB │ gzip:   0.13 kB
+dist/assets/javascript-DtBDzpGI.js                     0.83 kB │ gzip:   0.46 kB
+dist/assets/sql-local-ZsayyEk5.js                      1.01 kB │ gzip:   0.61 kB
+dist/assets/typescript-local-Cko6og1T.js               1.04 kB │ gzip:   0.59 kB
+dist/assets/motor-sql-BHOXWj_7.js                      1.90 kB │ gzip:   0.98 kB
+dist/assets/css-DQU6DXDx.js                            4.37 kB │ gzip:   1.34 kB
+dist/assets/html-CoQPCFDN.js                           4.92 kB │ gzip:   1.38 kB
+dist/assets/typescript-XebnkNot.js                     5.31 kB │ gzip:   2.15 kB
+dist/assets/pratica-sql-BU5cL37T.js                    5.94 kB │ gzip:   2.80 kB
+dist/assets/ffi-DlhRHxHv.js                            6.14 kB │ gzip:   0.98 kB
+dist/assets/engine-DdQAK8Me.js                         6.71 kB │ gzip:   3.00 kB
+dist/assets/git-ui-DCP9BH1x.js                         7.52 kB │ gzip:   3.00 kB
+dist/assets/http-ui-COITPCtL.js                        9.13 kB │ gzip:   3.69 kB
+dist/assets/emscripten-module.browser-DcFZLAUx.js     12.71 kB │ gzip:   5.10 kB
+dist/assets/project-ui-DFqH_LJD.js                    13.50 kB │ gzip:   5.37 kB
+dist/assets/valores-CgdlXdGN.js                       13.72 kB │ gzip:   3.69 kB
+dist/assets/evaluate-B5swg2BY.js                      39.40 kB │ gzip:  11.52 kB
+dist/assets/sql-wasm-browser-CTkAOh3n.js              40.49 kB │ gzip:  14.60 kB
+dist/assets/csharp-C4QAW4FR.js                        81.44 kB │ gzip:  27.05 kB
+dist/assets/html-AUhcA8Iu.js                          85.02 kB │ gzip:  26.76 kB
+dist/assets/sql-Dkmxdp58.js                           85.83 kB │ gzip:  26.00 kB
+dist/assets/css-D17eHfC-.js                           94.33 kB │ gzip:  29.47 kB
+dist/assets/typescript-BNlA_smc.js                    99.31 kB │ gzip:  31.60 kB
+dist/assets/cpp-DhHt8t85.js                           99.45 kB │ gzip:  31.95 kB
+dist/assets/javascript-BNKf71Of.js                    99.76 kB │ gzip:  32.27 kB
+dist/assets/python-CRzQSn2s.js                       103.50 kB │ gzip:  34.47 kB
+dist/assets/world-C2DbLX3V.js                        524.41 kB │ gzip: 135.92 kB
+dist/assets/index-S6-cnoIV.js                        698.56 kB │ gzip: 227.13 kB
+dist/assets/editor-CYu1GEZf.js                     2,285.97 kB │ gzip: 590.61 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 53.62s
+Pré-renderização concluída: 157 páginas educacionais. Indexação desativada até definir CODELAB_PUBLIC_URL.
+Aplicação e conteúdo offline preparados: 38 recursos locais e 6 opcionais sob demanda; versão b9eb20cba45ff1da4b3f.

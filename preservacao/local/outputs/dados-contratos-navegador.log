@@ -1,0 +1,152 @@
+
+Running 7 tests using 1 worker
+
+(node:10544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: array-metodos conserva teoria, projeto e demonstração independente (1.0m)
+(node:11072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: objetos-modulos conserva teoria, projeto e demonstração independente (1.0m)
+(node:14220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: erros-json conserva teoria, projeto e demonstração independente (1.0m)
+(node:9772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 tests\e2e\dados-contratos.spec.ts:25:1 › as três produções funcionam offline e preservam tentativas sem execução remota (1.0m)
+(node:8324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 tests\e2e\textos-conversoes.spec.ts:13:1 › textos: previsão, retorno ignorado e correção real mantêm assistência e projeto (9.1s)
+  ok 6 tests\e2e\textos-conversoes.spec.ts:24:1 › conversão de texto executa offline, rejeita prefixo e retoma o código sem submissão remota (4.4s)
+  ok 7 tests\e2e\textos-conversoes.spec.ts:35:1 › a preparação de conversões orienta três atividades sem domínio pela leitura (2.7s)
+
+
+  1) tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: array-metodos conserva teoria, projeto e demonstração independente 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-practice="metodos-somar-pares"]').getByLabel('Seu código', { exact: true })
+
+
+      15 |  const previsao=pagina.locator('[data-practice="'+caso.previsao+'"]');await previsao.getByLabel('Saída prevista, uma linha por saída').fill(caso.errada);await conferir(previsao);await expect(previsao.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await previsao.getByLabel('Saída prevista, uma linha por saída').fill(caso.certa);await conferir(previsao);await expect(previsao.locator('.practice-feedback')).toContainText('decisão conceitual');
+      16 |  const diagnostico=pagina.locator('[data-practice="'+caso.diagnostico+'"]');await diagnostico.locator('input[value="'+caso.opcaoErrada+'"]').check();await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await diagnostico.locator('input[value="'+caso.opcaoCerta+'"]').check();await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+    > 17 |  const producao=pagina.locator('[data-practice="'+caso.producao+'"]');await conferir(producao);await expect(producao.locator('.practice-feedback')).not.toContainText('A correção passou');await expect(producao.locator('[data-help] pre')).toHaveCount(0);await producao.getByLabel(caso.aula==='objetos-modulos'?'Seu código corrigido':'Seu código',{exact:true}).fill(caso.alternativa);await conferir(producao);await expect(producao.locator('.practice-feedback')).toContainText('A correção passou');await expect(producao.locator('.practice-feedback')).toContainText('executor JavaScript isolado');
+         |                                                                                                                                                                                                                                                                                                                                                                       ^
+      18 |  const independente=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(independente.practiceAnswers[caso.producao].passed).toBe(true);expect(independente.practiceAnswers[caso.producao].assisted).toBe(false);expect(independente.adaptive.skills[caso.habilidade].evidence[caso.producao].firstTry).toBe(false);
+      19 |  await producao.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(producao.locator('.practice-feedback')).toContainText('registrada como assistência');await pagina.reload();await expect(producao.locator('textarea')).toHaveValue(caso.alternativa);
+      20 |  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[caso.producao].assisted).toBe(true);expect(salvo.adaptive.skills[caso.habilidade].review.lastOutcome).toBe('assisted');
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\dados-contratos.spec.ts:17:359
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-0a3bf-e-demonstração-independente\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-0a3bf-e-demonstração-independente\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-0a3bf-e-demonstração-independente\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-0a3bf-e-demonstração-independente\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: objetos-modulos conserva teoria, projeto e demonstração independente 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-practice="objetos-atualizar-endereco"]').getByLabel('Seu código corrigido', { exact: true })
+
+
+      15 |  const previsao=pagina.locator('[data-practice="'+caso.previsao+'"]');await previsao.getByLabel('Saída prevista, uma linha por saída').fill(caso.errada);await conferir(previsao);await expect(previsao.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await previsao.getByLabel('Saída prevista, uma linha por saída').fill(caso.certa);await conferir(previsao);await expect(previsao.locator('.practice-feedback')).toContainText('decisão conceitual');
+      16 |  const diagnostico=pagina.locator('[data-practice="'+caso.diagnostico+'"]');await diagnostico.locator('input[value="'+caso.opcaoErrada+'"]').check();await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await diagnostico.locator('input[value="'+caso.opcaoCerta+'"]').check();await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+    > 17 |  const producao=pagina.locator('[data-practice="'+caso.producao+'"]');await conferir(producao);await expect(producao.locator('.practice-feedback')).not.toContainText('A correção passou');await expect(producao.locator('[data-help] pre')).toHaveCount(0);await producao.getByLabel(caso.aula==='objetos-modulos'?'Seu código corrigido':'Seu código',{exact:true}).fill(caso.alternativa);await conferir(producao);await expect(producao.locator('.practice-feedback')).toContainText('A correção passou');await expect(producao.locator('.practice-feedback')).toContainText('executor JavaScript isolado');
+         |                                                                                                                                                                                                                                                                                                                                                                       ^
+      18 |  const independente=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(independente.practiceAnswers[caso.producao].passed).toBe(true);expect(independente.practiceAnswers[caso.producao].assisted).toBe(false);expect(independente.adaptive.skills[caso.habilidade].evidence[caso.producao].firstTry).toBe(false);
+      19 |  await producao.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(producao.locator('.practice-feedback')).toContainText('registrada como assistência');await pagina.reload();await expect(producao.locator('textarea')).toHaveValue(caso.alternativa);
+      20 |  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[caso.producao].assisted).toBe(true);expect(salvo.adaptive.skills[caso.habilidade].review.lastOutcome).toBe('assisted');
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\dados-contratos.spec.ts:17:359
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-38b69-e-demonstração-independente\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-38b69-e-demonstração-independente\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-38b69-e-demonstração-independente\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-38b69-e-demonstração-independente\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: erros-json conserva teoria, projeto e demonstração independente 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.fill: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-practice="json-validar-nome"]').getByLabel('Seu código', { exact: true })
+
+
+      15 |  const previsao=pagina.locator('[data-practice="'+caso.previsao+'"]');await previsao.getByLabel('Saída prevista, uma linha por saída').fill(caso.errada);await conferir(previsao);await expect(previsao.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await previsao.getByLabel('Saída prevista, uma linha por saída').fill(caso.certa);await conferir(previsao);await expect(previsao.locator('.practice-feedback')).toContainText('decisão conceitual');
+      16 |  const diagnostico=pagina.locator('[data-practice="'+caso.diagnostico+'"]');await diagnostico.locator('input[value="'+caso.opcaoErrada+'"]').check();await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await diagnostico.locator('input[value="'+caso.opcaoCerta+'"]').check();await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+    > 17 |  const producao=pagina.locator('[data-practice="'+caso.producao+'"]');await conferir(producao);await expect(producao.locator('.practice-feedback')).not.toContainText('A correção passou');await expect(producao.locator('[data-help] pre')).toHaveCount(0);await producao.getByLabel(caso.aula==='objetos-modulos'?'Seu código corrigido':'Seu código',{exact:true}).fill(caso.alternativa);await conferir(producao);await expect(producao.locator('.practice-feedback')).toContainText('A correção passou');await expect(producao.locator('.practice-feedback')).toContainText('executor JavaScript isolado');
+         |                                                                                                                                                                                                                                                                                                                                                                       ^
+      18 |  const independente=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(independente.practiceAnswers[caso.producao].passed).toBe(true);expect(independente.practiceAnswers[caso.producao].assisted).toBe(false);expect(independente.adaptive.skills[caso.habilidade].evidence[caso.producao].firstTry).toBe(false);
+      19 |  await producao.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(producao.locator('.practice-feedback')).toContainText('registrada como assistência');await pagina.reload();await expect(producao.locator('textarea')).toHaveValue(caso.alternativa);
+      20 |  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[caso.producao].assisted).toBe(true);expect(salvo.adaptive.skills[caso.habilidade].review.lastOutcome).toBe('assisted');
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\dados-contratos.spec.ts:17:359
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-70d8d-e-demonstração-independente\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-70d8d-e-demonstração-independente\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-70d8d-e-demonstração-independente\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-dados-contratos-local\dados-contratos-dados-e-co-70d8d-e-demonstração-independente\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) tests\e2e\dados-contratos.spec.ts:25:1 › as três produções funcionam offline e preservam tentativas sem execução remota 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: browserContext.setOffline: Target page, context or browser has been closed
+
+      30 |   for(const caso of casos){await abrir(pagina,caso.aula);const pausa=pagina.locator('[data-practice="'+caso.producao+'"]');await pausa.getByLabel(caso.aula==='objetos-modulos'?'Seu código corrigido':'Seu código',{exact:true}).fill(getPracticeSolution(caso.producao)!);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('A correção passou');}
+      31 |   await pagina.reload();const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));for(const caso of casos){expect(salvo.practiceAnswers[caso.producao].passed).toBe(true);expect(salvo.practiceAnswers[caso.producao].assisted).toBe(false);}expect(remotas).toEqual([]);
+    > 32 |  }finally{await contexto.setOffline(false);}
+         |                          ^
+      33 | });
+      34 |
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\dados-contratos.spec.ts:32:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-as-três-pr-6fa31-tativas-sem-execução-remota\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-dados-contratos-local\dados-contratos-as-três-pr-6fa31-tativas-sem-execução-remota\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dados-contratos-local\dados-contratos-as-três-pr-6fa31-tativas-sem-execução-remota\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-dados-contratos-local\dados-contratos-as-três-pr-6fa31-tativas-sem-execução-remota\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: array-metodos conserva teoria, projeto e demonstração independente 
+    tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: objetos-modulos conserva teoria, projeto e demonstração independente 
+    tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: erros-json conserva teoria, projeto e demonstração independente 
+    tests\e2e\dados-contratos.spec.ts:25:1 › as três produções funcionam offline e preservam tentativas sem execução remota 
+  3 passed (4.6m)

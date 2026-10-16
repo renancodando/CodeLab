@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:20244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\inicio-pratica.spec.ts:12:1 › primeiras instruções: ordem, texto, teclado e assistência persistem (7.5s)
+  ok 2 tests\e2e\inicio-pratica.spec.ts:22:1 › entrada e saída: corrige frete com entradas variadas, offline e retomada (4.7s)
+  ok 3 tests\e2e\inicio-pratica.spec.ts:33:1 › decomposição: dependências, média equivalente, revisão e conteúdo preservado (4.4s)
+  ok 4 tests\e2e\learning-hub.spec.ts:21:1 › leitura não pontua domínio, sessão progride e retoma sem duplicar atividades (3.6s)
+  ok 5 tests\e2e\ordem-diaria.spec.ts:5:1 › a sessão nova começa pelas instruções e conserva o plano antigo de valores offline (3.8s)
+  ok 6 tests\e2e\valores-preparacao.spec.ts:5:1 › preparação de valores abre a leitura completa sem desviar para os 25 passos (4.3s)
+
+  6 passed (30.6s)

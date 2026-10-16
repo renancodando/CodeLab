@@ -1,0 +1,20 @@
+OK Python py-engenharia-anotacao-runtime
+OK Python py-engenharia-teste-vazio-fraco
+OK Python py-engenharia-teste-detecta-mutante
+OK Python py-engenharia-implementacao-corrigida
+OK Python py-engenharia-contexto-nao-usado
+OK Python py-engenharia-excecao-errada
+OK Python py-engenharia-ordem-estavel
+OK Python py-engenharia-negacao-equivalente
+OK Python py-engenharia-condicao-invertida
+OK Python py-engenharia-condicao-equivalente-0
+OK Python py-engenharia-condicao-equivalente-1
+OK Python py-engenharia-condicao-equivalente-2
+OK Python py-engenharia-condicao-equivalente-3
+OK Python py-engenharia-condicao-equivalente-4
+OK Python py-engenharia-condicao-equivalente-5
+OK Python py-engenharia-condicao-equivalente-6
+OK Python py-engenharia-condicao-equivalente-7
+OK Python exemplo-preservado
+OK Python solucao-preservada
+19 programas Python reais aprovados.

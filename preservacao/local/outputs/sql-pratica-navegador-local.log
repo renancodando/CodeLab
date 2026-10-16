@@ -1,0 +1,49 @@
+
+Running 7 tests using 1 worker
+
+(node:19416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\sql-local.spec.ts:17:1 › SQL local: runtime sob demanda, banco descartável, resultados e jornada offline (11.8s)
+  ok 2 tests\e2e\sql-local.spec.ts:47:1 › SQL local: cancelar, limitar CPU e descartar workers nas trocas de tela (20.6s)
+  ok 3 tests\e2e\sql-local.spec.ts:64:1 › SQL local: primeiro carregamento sem rede preserva código e explica o limite offline (4.7s)
+  ok 4 tests\e2e\sql-local.spec.ts:74:2 › prazo do módulo SQL › importação interrompida por prazo conserva código e permite nova execução (4.9s)
+  x  5 tests\e2e\sql-pratica.spec.ts:8:1 › SQL corrigível: resultados reais, solução alternativa, offline, assistência e persistência (8.2s)
+(node:10900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 6 tests\e2e\sql-pratica.spec.ts:26:1 › SQL corrigível: tempo limite, alteração e saída encerram workers sem registrar tentativas canceladas (16.4s)
+  ok 7 tests\e2e\sql-pratica.spec.ts:39:2 › carregamento da conferência SQL › módulo indisponível preserva resposta e nota e permite retomar (4.4s)
+
+
+  1) tests\e2e\sql-pratica.spec.ts:8:1 › SQL corrigível: resultados reais, solução alternativa, offline, assistência e persistência 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      18 |   await conferir(pagina,idTotais,alternativa);await expect(totais.locator('.practice-feedback')).toContainText('passou nas bases e bordas');await expect(totais.locator('.practice-feedback')).toContainText('não é execução PostgreSQL');
+      19 |   await totais.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(totais.locator('.practice-feedback')).toContainText('registrada como assistência');await pagina.reload();await expect(totais.locator('textarea')).toHaveValue(alternativa);await expect(contagem.locator('textarea')).toHaveValue(solucoesSql[idContagem]);
+    > 20 |   const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[idContagem].passed).toBe(true);expect(salvo.practiceAnswers[idTotais].assisted).toBe(true);expect(salvo.adaptive.skills['sql.joins.preservacao'].evidence[idContagem].firstTry).toBe(false);expect(salvo.adaptive.skills['sql.joins.granularidade'].evidence[idTotais].assisted).toBe(true);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+      21 |   for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(contagem).toBeVisible();await expect(totais).toBeVisible();}
+      22 |   expect(remotas).toEqual([]);
+      23 |  }finally{await contexto.setOffline(false);}
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\sql-pratica.spec.ts:20:401
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sql-pratica-local\sql-pratica-SQL-corrigível-eb0ea--assistência-e-persistência\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-sql-pratica-local\sql-pratica-SQL-corrigível-eb0ea--assistência-e-persistência\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sql-pratica-local\sql-pratica-SQL-corrigível-eb0ea--assistência-e-persistência\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-sql-pratica-local\sql-pratica-SQL-corrigível-eb0ea--assistência-e-persistência\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\sql-pratica.spec.ts:8:1 › SQL corrigível: resultados reais, solução alternativa, offline, assistência e persistência 
+  6 passed (1.3m)

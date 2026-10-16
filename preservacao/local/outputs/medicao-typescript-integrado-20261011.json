@@ -1,0 +1,26 @@
+{
+  "capturadoEm": "2026-10-11T15:40:51.762Z",
+  "arquivos": [
+    {
+      "nome": "index-pt2I-TiX.js",
+      "bytes": 601597,
+      "gzip": 197625
+    },
+    {
+      "nome": "typescript-local-B3IW1a9m.js",
+      "bytes": 1044,
+      "gzip": 587
+    },
+    {
+      "nome": "typescript-local.worker-DjYJZQRA.js",
+      "bytes": 4066931,
+      "gzip": 1080575
+    },
+    {
+      "nome": "world-Hy88c8vG.js",
+      "bytes": 524461,
+      "gzip": 135941
+    }
+  ],
+  "limite": "Tamanhos de artefato; não medem RAM/FPS em celular."
+}

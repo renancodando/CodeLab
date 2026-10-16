@@ -1,0 +1,1156 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--list",
+      "--reporter=json",
+      "--shard=2/4"
+    ],
+    "configFile": "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\playwright.config.ts",
+    "rootDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": {
+      "current": 2,
+      "total": 4
+    },
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "funcoes-fundamentos.spec.ts",
+      "file": "funcoes-fundamentos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "funções originais: retorno, escopo e composição persistem offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "171a37f0ffbd8cb97094-3fba7271cb1ce751e3bf",
+          "file": "funcoes-fundamentos.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "git-bancada.spec.ts",
+      "file": "git-bancada.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Git conserva os três estados, assistência, backup e retomada offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "23ae0b24029f7837fdc7-8ee61c5f244bf70ec887",
+          "file": "git-bancada.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "Git preserva rascunho incompatível até exportar e reiniciar explicitamente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "23ae0b24029f7837fdc7-80fcf8a4f008fd2924bd",
+          "file": "git-bancada.spec.ts",
+          "line": 23,
+          "column": 1
+        },
+        {
+          "title": "Git exporta estado em memória depois de uma falha real de quota",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "23ae0b24029f7837fdc7-04fb7134fe1673b0101e",
+          "file": "git-bancada.spec.ts",
+          "line": 27,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "html-dados-acessibilidade.spec.ts",
+      "file": "html-dados-acessibilidade.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "referências HTML: cabeçalhos, linhas e nome do link com imagem são conferidos no navegador",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8bd2ca457d6fd5dfce15-1c362bd3d1a93793ab83",
+          "file": "html-dados-acessibilidade.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "referências acessíveis: Tab, nome visível, Enter e Espaço mantêm o foco e atualizam a região existente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8bd2ca457d6fd5dfce15-9e5bcba742c2c3f841c5",
+          "file": "html-dados-acessibilidade.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "HTML praticado: imagens-tabelas preserva conteúdo, assistência e revisão",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8bd2ca457d6fd5dfce15-c92a33b2e21bdbf2db2c",
+          "file": "html-dados-acessibilidade.spec.ts",
+          "line": 37,
+          "column": 25
+        },
+        {
+          "title": "HTML praticado: html-acessivel preserva conteúdo, assistência e revisão",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8bd2ca457d6fd5dfce15-658bf5860be35bf65486",
+          "file": "html-dados-acessibilidade.spec.ts",
+          "line": 37,
+          "column": 25
+        },
+        {
+          "title": "tabelas e acessibilidade conservam as reconstruções offline sem compilar código do aluno",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8bd2ca457d6fd5dfce15-b581be69e1df32fbf2e7",
+          "file": "html-dados-acessibilidade.spec.ts",
+          "line": 46,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "html-formularios.spec.ts",
+      "file": "html-formularios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "HTML: o navegador confirma presença, multiplicidade e recuperação da validade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "688caed1ad8dea1ba131-d0f5fbd70a7c9cf2a7e6",
+          "file": "html-formularios.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "HTML: novas pausas conservam tentativas, assistência e revisão offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "688caed1ad8dea1ba131-bd10f8418f10351705c8",
+          "file": "html-formularios.spec.ts",
+          "line": 18,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "html-imagens.spec.ts",
+      "file": "html-imagens.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "HTML: referências reais conferem nome, tamanho CSS, fontes e fallback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "112454717abeac88fe24-f07eea5b1c2b13267f91",
+          "file": "html-imagens.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "HTML: mídia conserva respostas, assistência e arquivos reais offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "112454717abeac88fe24-527154160654a7a18403",
+          "file": "html-imagens.spec.ts",
+          "line": 39,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "html-inicio.spec.ts",
+      "file": "html-inicio.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "documento HTML: títulos, idioma e estrutura com assistência persistida",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e86ffd1dc16658d21700-25b02da136edea9774b9",
+          "file": "html-inicio.spec.ts",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "title": "semântica HTML: teclado, região principal e árvore sem perder o projeto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e86ffd1dc16658d21700-498599f28b0541a74e68",
+          "file": "html-inicio.spec.ts",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "formulário HTML: validade, associação e reconstrução continuam offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e86ffd1dc16658d21700-765f30188ade5319f7dc",
+          "file": "html-inicio.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "referências de documento HTML: navegador confere título, idioma e modo de padrões",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e86ffd1dc16658d21700-506e925ce2eeef2fbdf9",
+          "file": "html-inicio.spec.ts",
+          "line": 49,
+          "column": 1
+        },
+        {
+          "title": "referências semânticas: botão nativo e artigos têm comportamentos verificáveis",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e86ffd1dc16658d21700-073d2b7dfe6fe13accf6",
+          "file": "html-inicio.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "referências de formulário: validação, foco e chave são conferidos no navegador",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e86ffd1dc16658d21700-2842d5580f310f61ab13",
+          "file": "html-inicio.spec.ts",
+          "line": 65,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "http-bancada.spec.ts",
+      "file": "http-bancada.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "HTTP offline distingue timeout de efeito, repete intenção e retoma o relógio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b798e6f8c559a6973aab-738fae33ffbf8ac46e02",
+          "file": "http-bancada.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "HTTP revela Retry-After, servidor lento e 503 sem confundir conhecimento do cliente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b798e6f8c559a6973aab-9d23093702753a34407f",
+          "file": "http-bancada.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "HTTP preserva ações incompatíveis para backup sem inventar efeitos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b798e6f8c559a6973aab-83a95795ea41d29772f6",
+          "file": "http-bancada.spec.ts",
+          "line": 24,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "independent-practice.spec.ts",
+      "file": "independent-practice.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "aula js-propriedades-prototipos: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-a828e5ff2b2e3e1a7185",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula cpp-iteradores-invalidacao: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-548d4f3ddd97ef4b9d70",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula ts-variancia-contratos: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-dbc7ab4001b48a5f64b7",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula py-iteracao-recursos: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-81befb856eeb788e284c",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula py-numeros-texto: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-c801dbe0fd31176eacc2",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula ts-validacao-aninhada: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-4b96cd5cc3079533d92b",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula cpp-funcoes-referencias: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-f91baae42fdc9d6692b9",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula js-closures-estado: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-f41235053ee4b30f459c",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula html-dados-formulario: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-1dfc45e52578cac17162",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula css-cascata-camadas: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-d274d5594cf866511145",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula cs-decimal-limites: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-52c2644cf7a801aa98d6",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula sql-joins-cardinalidade: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-9b449a92a53bd5cd3233",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula py-funcoes-contratos: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-d00008a8d3cebb47f48c",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula ts-genericos-relacoes: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-29b924bc344124f9eee2",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula cpp-raii-posse-unica: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-1ada72afaf87b6d63c67",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula js-promessas-contratos: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-f239caa481f3f1594e6c",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula html-dialogo-foco: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-5453d2bc04ffb365ac92",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula css-grid-trilhas: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-c729d0f03704bd4fd691",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula cs-iteradores-descarte: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-ba5b6234718aaac1f442",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula sql-isolamento-sessoes: leitura, mapa, referências e abertura das soluções",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-0cb86b90d5198fc33863",
+          "file": "independent-practice.spec.ts",
+          "line": 8,
+          "column": 2
+        },
+        {
+          "title": "aula aprofundada conserva a conclusão após recarregar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-4600d6b9e4b8c770be2e",
+          "file": "independent-practice.spec.ts",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "páginas aprofundadas entregam também os problemas sem JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-9d551cd609242575274e",
+          "file": "independent-practice.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "HTML: documentos e tabela produzem relações semânticas verificáveis",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-3df9908b894c4c7f78a5",
+          "file": "independent-practice.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "HTML: recuperação do parser fecha parágrafo antes de um bloco",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-dce18727b3f6fdada811",
+          "file": "independent-practice.spec.ts",
+          "line": 69,
+          "column": 1
+        },
+        {
+          "title": "HTML: dados enviados preservam multiplicidade, submitter e texto literal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-43da04382c2d3b53e02e",
+          "file": "independent-practice.spec.ts",
+          "line": 78,
+          "column": 1
+        },
+        {
+          "title": "HTML: soluções distinguem seleção vazia, ação e presença dos controles",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-e015360cb4354aa9d40e",
+          "file": "independent-practice.spec.ts",
+          "line": 95,
+          "column": 1
+        },
+        {
+          "title": "CSS: estilos computados conferem camadas, important e fallback",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-a87b7b48a6aa7b6aeeee",
+          "file": "independent-practice.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "CSS: caixas medidas e textos longos respeitam o espaço disponível",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-a932a1d8cb113f027a33",
+          "file": "independent-practice.spec.ts",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "CSS: sticky acompanha a rolagem local e conserva o fluxo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "01e3d78634cfccd0d90c-dfa9981395cead100c01",
+          "file": "independent-practice.spec.ts",
+          "line": 145,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T21:08:41.424Z",
+    "duration": 5149.862999999999,
+    "expected": 0,
+    "skipped": 51,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

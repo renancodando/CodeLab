@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const caminho='tests/e2e/typescript-local.spec.ts';let texto=readFileSync(caminho,'utf8');const ponto=" await escrever(pagina,'console.log(8);');";if(!texto.includes(ponto))throw Error('Trecho TS ausente');texto=texto.replace(ponto," await executar(pagina,'const dados=Array(10000000).fill(1); console.log(dados.length);');await expect(pagina.locator('#lab-console')).toContainText('limite de memória');\n"+ponto);writeFileSync(caminho,texto);

@@ -1,0 +1,3 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const caminho='src/execution/typescript-local.ts';let texto=readFileSync(caminho,'utf8').replace('let terminou=false;','let terminou=false,pronto=false;').replace("if(evento.data.tipo==='pronto'){clearTimeout(prazo);","if(evento.data.tipo==='pronto'&&!pronto){pronto=true;clearTimeout(prazo);");writeFileSync(caminho,texto);
+const teste='tests/unit/typescript-worker.test.ts';texto=readFileSync(teste,'utf8').replace("trabalhador.responder({tipo:'pronto'});await vi.advanceTimersByTimeAsync(8001);","trabalhador.responder({tipo:'pronto'});await vi.advanceTimersByTimeAsync(4000);trabalhador.responder({tipo:'pronto'});await vi.advanceTimersByTimeAsync(4001);");writeFileSync(teste,texto);

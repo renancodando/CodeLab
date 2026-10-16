@@ -1,0 +1,48 @@
+
+Running 3 tests using 1 worker
+
+(node:4892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\learning.spec.ts:24:1 › laboratório HTML renderiza sem acesso ao documento pai (16.0s)
+  x  2 tests\e2e\previa-html.spec.ts:11:1 › prévia substitui documentos HTML e conserva limpeza ao parar e trocar linguagem (2.4m)
+(node:4340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 tests\e2e\previa-html.spec.ts:33:1 › HTML acima do limite interrompe a prévia anterior antes de mostrar o aviso (19.4s)
+
+
+  1) tests\e2e\previa-html.spec.ts:11:1 › prévia substitui documentos HTML e conserva limpeza ao parar e trocar linguagem 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: page.waitForEvent: Test timeout of 120000ms exceeded.
+    =========================== logs ===========================
+    waiting for event "framenavigated"
+    ============================================================
+
+       6 | }
+       7 | async function executarHtml(pagina:Page){
+    >  8 |  const [quadro]=await Promise.all([pagina.waitForEvent('framenavigated',{predicate:quadro=>quadro.parentFrame()===pagina.mainFrame()&&quadro.url()==='about:srcdoc'}),pagina.locator('#lab-run').click()]);
+         |                                           ^
+       9 |  await quadro.waitForLoadState('domcontentloaded');
+      10 | }
+      11 | test('prévia substitui documentos HTML e conserva limpeza ao parar e trocar linguagem',async({page:pagina})=>{
+        at executarHtml (C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\previa-html.spec.ts:8:43)
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\previa-html.spec.ts:27:8
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-csharp-linq\previa-html-prévia-substit-434c3-ao-parar-e-trocar-linguagem\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-csharp-linq\previa-html-prévia-substit-434c3-ao-parar-e-trocar-linguagem\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-csharp-linq\previa-html-prévia-substit-434c3-ao-parar-e-trocar-linguagem\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-csharp-linq\previa-html-prévia-substit-434c3-ao-parar-e-trocar-linguagem\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\previa-html.spec.ts:11:1 › prévia substitui documentos HTML e conserva limpeza ao parar e trocar linguagem 
+  2 passed (3.6m)

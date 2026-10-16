@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const caminho='tests/unit/sql-local.test.ts';let texto=readFileSync(caminho,'utf8').replace("['SELECT de onde;', 'syntax error']","['SELECT FROM;', 'syntax error']").replace("['SELECT 1;'.repeat(101),'100 comandos']","['CREATE TABLE t(n);'+'INSERT INTO t VALUES(1);'.repeat(100),'100 comandos']").replace("'limita saída ou entrada explicitamente: %s'","'recusa entrada ou saída acima do limite'");writeFileSync(caminho,texto);

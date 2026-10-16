@@ -1,0 +1,2 @@
+import {appendFileSync} from 'node:fs';
+appendFileSync('docs/laboratorio-sql.md',`\nO novo cenário reproduziu a falha no build anterior: mesmo após avançar 20 segundos, permanecia Executando. Após corrigir e recompilar, os seis fluxos locais SQL/HTML passaram (3,9 min), incluindo prazo, cancelamento durante importação retida, resposta tardia e nova execução. A verificação ampliada do CacheStorage real passou isoladamente (1,4 min): nenhum dos três recursos SQL estava no cache inicial e a consulta posterior continuou funcionando offline. Os limites não foram ampliados.\n`);

@@ -1,0 +1,27 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/geracao-metricas.test.ts (1 test | 1 failed) 15543ms
+   × rejeita métricas antigas e distingue problemas de mesmo id em aulas diferentes 15519ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/geracao-metricas.test.ts > rejeita métricas antigas e distingue problemas de mesmo id em aulas diferentes
+Error: Test timed out in 10000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/geracao-metricas.test.ts:7:1
+      5| import {expect, it} from 'vitest';
+      6|
+      7| it('rejeita métricas antigas e distingue problemas de mesmo id em aula…
+       | ^
+      8|  const temporario = await mkdtemp(join(tmpdir(), 'codelab-metricas-'));
+      9|  try {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  20:01:05
+   Duration  23.58s (tests 98%, transform 1%, import 1%)
+

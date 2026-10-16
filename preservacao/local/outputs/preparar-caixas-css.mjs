@@ -1,0 +1,12 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const caminho=new URL('../work/CodeLab/src/content/deep/css.ts',import.meta.url);
+const fonte=await readFile(caminho,'utf8');
+const curso=JSON.parse(fonte.slice(fonte.indexOf('export default ')+15,fonte.lastIndexOf(' satisfies DeepCourse;')));
+const aula=curso.lessons.find(aula=>aula.id==='css-caixas-intrinseco');
+aula.sections[0].text.push('A primeira pausa inclui uma borda declarada de 20px com padding e bordas somando 30px. O cálculo border-box não cria conteúdo negativo para fazer os extras desaparecerem: o conteúdo para em zero e a borda ocupa pelo menos esses extras. Estamos medindo a borda em escrita horizontal, sem transformações nem restrições adicionais; margem não participa desse retângulo.');
+aula.sections[2].text.push('Na pausa de encolhimento, overflow-wrap: break-word permite quebrar a sequência quando falta espaço, mas não usa essas quebras para reduzir a contribuição min-content. Assim, o mínimo automático do item ainda pode impedir o encolhimento. min-inline-size: 0 libera o item e a política de quebra já definida torna o texto legível no espaço restante. Anywhere trata a contribuição intrínseca de outra forma; não é necessário usar as duas regras em todos os layouts.');
+aula.sections[4].text.push('Compare as referências com um contêiner afastado 60px do topo da janela. Um cabeçalho fixed com inset zero fica no topo da janela neste exemplo; relative apenas conserva sua posição no conteúdo, que sai da área ao rolar. Sticky com inset zero conserva o lugar no fluxo e adere ao topo da região de rolagem enquanto houver espaço dentro dos seus limites. Meça antes e depois de scrollTop = 80, mantendo o texto e a região rolável.');
+await writeFile(caminho,"import type {DeepCourse} from './types';\nexport default "+JSON.stringify(curso,null,2)+' satisfies DeepCourse;\n');
+const catalogo=new URL('../work/CodeLab/src/learning/hub-catalog.ts',import.meta.url);
+const anterior=await readFile(catalogo,'utf8');
+await writeFile(catalogo,anterior.replace('const terms:Record<string,string>={',"const terms:Record<string,string>={caixas:'Caixas',dimensao:'Dimensão',encolhimento:'Encolhimento',rolagem:'Rolagem',"));

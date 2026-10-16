@@ -1,0 +1,7 @@
+npm notice run codelab@0.1.0 build
+npm notice run node scripts/generate-curriculum-index.mjs --check && node scripts/gerar-metricas.mjs --check && tsc --noEmit && node scripts/verificar-funcao-meteorologica.mjs && vite build --configLoader runner && node scripts/prerender.mjs && node scripts/build-offline.mjs
+Índice e matriz conferidos: 8 percursos adicionais, 77 aulas.
+Métricas conferidas: 137 aulas, 158 atividades.
+Função meteorológica conferida em Node.js com módulos ESM emitidos e 30 consultas concorrentes.
+vite v7.3.6 building client environment for production...
+transforming...

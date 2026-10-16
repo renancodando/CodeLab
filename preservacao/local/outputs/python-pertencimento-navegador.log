@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:7640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\csharp-linq.spec.ts:3:1 › C#: grupos e cópias internas conservam decisões offline (42.5s)
+  ok 2 tests\e2e\funcoes-fundamentos.spec.ts:3:1 › funções originais: retorno, escopo e composição persistem offline (34.1s)
+  ok 3 tests\e2e\python-engenharia.spec.ts:3:1 › Python: testes que detectam defeitos conservam evidência offline (29.8s)
+
+  3 passed (2.0m)

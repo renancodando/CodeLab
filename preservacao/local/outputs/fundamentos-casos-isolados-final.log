@@ -1,0 +1,38 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/execution.test.ts (18 tests | 1 failed | 17 skipped) 28231ms
+   ❯ missões executam lógica real (17)
+     × limita alocação de memória sem derrubar o host 28203ms
+ ❯ tests/unit/geracao-metricas.test.ts (1 test | 1 failed) 12232ms
+   × rejeita métricas antigas e distingue problemas de mesmo id em aulas diferentes 12227ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/execution.test.ts > missões executam lógica real > limita alocação de memória sem derrubar o host
+Error: Test timed out in 25000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/execution.test.ts:12:2
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/geracao-metricas.test.ts > rejeita métricas antigas e distingue problemas de mesmo id em aulas diferentes
+Error: Test timed out in 10000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/geracao-metricas.test.ts:7:1
+      5| import {expect, it} from 'vitest';
+      6|
+      7| it('rejeita métricas antigas e distingue problemas de mesmo id em aula…
+       | ^
+      8|  const temporario = await mkdtemp(join(tmpdir(), 'codelab-metricas-'));
+      9|  try {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 17 skipped (19)
+   Start at  09:55:54
+   Duration  45.81s (tests 98%, transform 1%, import 1%)
+

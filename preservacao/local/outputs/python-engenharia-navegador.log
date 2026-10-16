@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:18436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\python-concorrencia.spec.ts:3:1 › Python: cancelamento e filas conservam progresso offline (40.0s)
+  ok 2 tests\e2e\python-engenharia.spec.ts:3:1 › Python: testes que detectam defeitos conservam evidência offline (31.9s)
+
+  2 passed (1.5m)

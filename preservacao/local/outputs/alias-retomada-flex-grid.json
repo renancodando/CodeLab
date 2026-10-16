@@ -1,0 +1,64 @@
+{
+  "id": "dpl_HGgGXDb9zaX3LPFPr98NNHcedhHu",
+  "name": "code-lab",
+  "url": "code-hp6a1dy1y-renancodandos-projects.vercel.app",
+  "target": "production",
+  "readyState": "READY",
+  "createdAt": 1792082969144,
+  "aliases": [
+    "code-lab-omega.vercel.app",
+    "code-lab-renancodandos-projects.vercel.app",
+    "code-lab-git-main-renancodandos-projects.vercel.app"
+  ],
+  "builds": [
+    {
+      "id": "bld_o7grwupsi",
+      "deploymentId": "dpl_HGgGXDb9zaX3LPFPr98NNHcedhHu",
+      "entrypoint": ".",
+      "readyState": "READY",
+      "readyStateAt": 1792082969050,
+      "createdAt": 1792082969050,
+      "createdIn": "sfo1",
+      "use": "@vercel/vc-build",
+      "config": {
+        "framework": "vite",
+        "nodeVersion": "24.x",
+        "projectCreatedAt": 1790028916167,
+        "vercelConfig": {
+          "$schema": "https://openapi.vercel.sh/vercel.json",
+          "functions": {
+            "api/meteorologia/observacao.ts": {
+              "maxDuration": 10
+            }
+          }
+        }
+      },
+      "middleware": [],
+      "output": [
+        {
+          "prerender": null,
+          "type": "lambda",
+          "path": "api/meteorologia/observacao",
+          "digest": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn/06d02227a56541327cbc981f7a4f21b8dc194487f6182937e5d251f7058d6e47",
+          "mode": 49590,
+          "size": 6752,
+          "lambda": {
+            "functionName": "team_oBWGamnhGs2KA1JPArJZPJ5s-922437554aa0e996a4f3afae6819ca5a76",
+            "deployedTo": [
+              "iad1"
+            ],
+            "runtime": "nodejs24.x",
+            "memorySize": 2048,
+            "timeout": 10,
+            "layers": [
+              "arn:aws:lambda:AWS_REGION_PLACEHOLDER:977805900156:layer:vercel-rusty-runtime-nodejs-1_51_11-production-851b7ac1bb-AWS_ARCH_PLACEHOLDER:1"
+            ]
+          },
+          "edge": null
+        }
+      ],
+      "fingerprint": null
+    }
+  ],
+  "contextName": "renancodandos-projects"
+}

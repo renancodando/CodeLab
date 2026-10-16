@@ -1,0 +1,18 @@
+{
+  "OriginalHead": "80be23df03897f55be5122b27cf36fa9006e3ab2",
+  "PreservedBranch": "local-preservado-20261007",
+  "Files": [
+    {
+      "File": "src/learning/session.ts",
+      "SHA256": "788F9DAB5024459490460D56C1506BAD27C04258387C29B6F44DD8A18438F57C"
+    },
+    {
+      "File": "src/learning/types.ts",
+      "SHA256": "A08E04EE7EB92EC7918CA71D258568E01C4265E8317379F1F19A9631FE2EFF28"
+    },
+    {
+      "File": "src/learning/valores.ts",
+      "SHA256": "DDE1C6EF76FE2DEA6D3E7CB4422C7F01E6179AE10A7D8FB52233BE5845B1DCE0"
+    }
+  ]
+}

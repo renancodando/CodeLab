@@ -1,0 +1,165 @@
+
+Running 25 tests using 1 worker
+
+(node:248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 tests\e2e\html-inicio.spec.ts:29:1 › documento HTML: títulos, idioma e estrutura com assistência persistida (1.5m)
+(node:8164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 tests\e2e\html-inicio.spec.ts:36:1 › semântica HTML: teclado, região principal e árvore sem perder o projeto (26.3s)
+  ok  3 tests\e2e\html-inicio.spec.ts:41:1 › formulário HTML: validade, associação e reconstrução continuam offline (35.7s)
+  ok  4 tests\e2e\html-inicio.spec.ts:49:1 › referências de documento HTML: navegador confere título, idioma e modo de padrões (8.0s)
+  ok  5 tests\e2e\html-inicio.spec.ts:55:1 › referências semânticas: botão nativo e artigos têm comportamentos verificáveis (8.8s)
+  ok  6 tests\e2e\html-inicio.spec.ts:65:1 › referências de formulário: validação, foco e chave são conferidos no navegador (3.6s)
+  ok  7 tests\e2e\lacos-fundamentos.spec.ts:6:1 › laços originais: pausas nos capítulos, depuração real e retomada offline (28.2s)
+  ok  8 tests\e2e\lacos-fundamentos.spec.ts:17:1 › preparação original inclui passos e investigação sem gabarito ou domínio por leitura (55.0s)
+  ok  9 tests\e2e\learning-hub.spec.ts:13:1 › depuração confere bordas, preserva solução oculta e mantém domínio por habilidade (17.4s)
+  x  10 tests\e2e\learning-hub.spec.ts:22:1 › leitura não pontua domínio, sessão progride e retoma sem duplicar atividades (28.1s)
+(node:7204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 tests\e2e\learning-hub.spec.ts:36:1 › Python, C# e C++ continuam offline após preparação, sem submissões externas (43.0s)
+  ok 12 tests\e2e\learning-hub.spec.ts:47:1 › assistência não fabrica domínio e pausas aparecem junto à teoria (14.0s)
+  ok 13 tests\e2e\learning-hub.spec.ts:53:1 › projeto retoma vários arquivos, exporta ZIP e invalida evidência após editar (56.6s)
+  ok 14 tests\e2e\learning-hub.spec.ts:63:1 › seis percursos têm prática conceitual corrigida sem aprovar a implementação aberta (22.3s)
+  ok 15 tests\e2e\learning-hub.spec.ts:68:1 › duas revisões antigas vêm primeiro e um erro agenda retorno mais curto (9.7s)
+  ok 16 tests\e2e\learning-hub.spec.ts:79:1 › falha ao instalar recursos offline informa indisponibilidade sem bloquear estudo (8.6s)
+  ok 17 tests\e2e\learning-hub.spec.ts:85:1 › quota indisponível preserva arquivos em memória e permite recuperar pela exportação (13.3s)
+  ok 18 tests\e2e\learning-hub.spec.ts:93:1 › consultar solução após acertar revisão encurta o intervalo imediatamente (9.9s)
+  ok 19 tests\e2e\learning-hub.spec.ts:103:1 › backup válido acima de 2 MB recupera todos os projetos e evidências (41.6s)
+  ok 20 tests\e2e\learning-hub.spec.ts:114:1 › restauração com falha de gravação mantém a jornada anterior (13.6s)
+  ok 21 tests\e2e\ordem-diaria.spec.ts:6:1 › a sessão nova começa pelas instruções e conserva o plano antigo de valores offline (50.3s)
+  ok 22 tests\e2e\ordem-diaria.spec.ts:26:1 › a reconstrução na aula conclui a prática de um plano antigo sem substituir sua sequência (41.6s)
+  x  23 tests\e2e\sql-null.spec.ts:5:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio (31.4s)
+(node:6600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 24 tests\e2e\sql-null.spec.ts:39:1 › SQL: ausência e contratos retomam offline sem fingir execução de consultas (49.0s)
+  ok 25 tests\e2e\valores-preparacao.spec.ts:5:1 › preparação de valores abre a leitura completa sem desviar para os 25 passos (48.4s)
+
+
+  1) tests\e2e\html-inicio.spec.ts:29:1 › documento HTML: títulos, idioma e estrutura com assistência persistida 
+
+    Test timeout of 60000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sessao-local\html-inicio-documento-HTML-30e29--com-assistência-persistida\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-sessao-local\html-inicio-documento-HTML-30e29--com-assistência-persistida\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sessao-local\html-inicio-documento-HTML-30e29--com-assistência-persistida\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-sessao-local\html-inicio-documento-HTML-30e29--com-assistência-persistida\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\e2e\learning-hub.spec.ts:22:1 › leitura não pontua domínio, sessão progride e retoma sem duplicar atividades 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 35
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "description": "Ensure the order of headings is semantically correct",
+    +     "help": "Heading levels should only increase by one",
+    +     "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/heading-order?application=playwright",
+    +     "id": "heading-order",
+    +     "impact": "moderate",
+    +     "nodes": Array [
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": null,
+    +             "id": "heading-order",
+    +             "impact": "moderate",
+    +             "message": "Heading order invalid",
+    +             "relatedNodes": Array [],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Heading order invalid",
+    +         "html": "<h3>A ordem também é parte do programa</h3>",
+    +         "impact": "moderate",
+    +         "none": Array [],
+    +         "target": Array [
+    +           "h3",
+    +         ],
+    +       },
+    +     ],
+    +     "tags": Array [
+    +       "cat.semantics",
+    +       "best-practice",
+    +     ],
+    +   },
+    + ]
+
+      24 |  const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(Object.keys(before.adaptive.skills)).toHaveLength(0);expect(before.adaptive.daily.items.map((x:{kind:string})=>x.kind)).toEqual(['concept','practice','practice','challenge']);
+      25 |  await page.locator('[data-seen]').focus();await page.keyboard.press('Enter');await expect(page.locator('[data-language]')).toBeDisabled();
+    > 26 |  expect((await new AxeBuilder({page}).include('main').analyze()).violations).toEqual([]);
+         |                                                                              ^
+      27 |  for(const largura of [220,4000]){await page.setViewportSize({width:largura,height:812});await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);}
+      28 |  const prever=page.locator('[data-current] [data-practice="inicio-prever-ordem"]');await expect(prever).toBeVisible();
+      29 |  expect((await page.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).adaptive)).skills).toEqual({});
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\learning-hub.spec.ts:26:78
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sessao-local\learning-hub-leitura-não-p-9ce17-oma-sem-duplicar-atividades\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-sessao-local\learning-hub-leitura-não-p-9ce17-oma-sem-duplicar-atividades\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sessao-local\learning-hub-leitura-não-p-9ce17-oma-sem-duplicar-atividades\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-sessao-local\learning-hub-leitura-não-p-9ce17-oma-sem-duplicar-atividades\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\e2e\sql-null.spec.ts:5:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-practice="sql-corrigir-obrigatoriedade"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-practice="sql-corrigir-obrigatoriedade"]') with timeout 5000ms
+      - waiting for locator('[data-practice="sql-corrigir-obrigatoriedade"]')
+
+
+      27 |  await expect(leitura.getByRole('heading',{name:'Solução de referência',exact:true})).toHaveCount(0);
+      28 |  await pagina.getByRole('button',{name:'Concluir leitura e praticar',exact:true}).click();
+    > 29 |  await expect(pagina.locator('[data-practice="sql-corrigir-obrigatoriedade"]')).toBeVisible();
+         |                                                                                 ^
+      30 |  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
+      31 |  expect(salvo.adaptive.daily).toEqual(estado.daily);
+      32 |  expect(salvo.adaptive.seenConcepts).toEqual([antigo,preparacao.id]);
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\sql-null.spec.ts:29:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sessao-local\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-sessao-local\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-sessao-local\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-sessao-local\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    tests\e2e\html-inicio.spec.ts:29:1 › documento HTML: títulos, idioma e estrutura com assistência persistida 
+    tests\e2e\learning-hub.spec.ts:22:1 › leitura não pontua domínio, sessão progride e retoma sem duplicar atividades 
+    tests\e2e\sql-null.spec.ts:5:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio 
+  22 passed (15.2m)

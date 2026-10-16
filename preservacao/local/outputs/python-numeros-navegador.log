@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:3004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\ordem-diaria.spec.ts:5:1 › a sessão nova começa pelos valores e conserva um plano antigo offline (39.2s)
+  ok 2 tests\e2e\python-numeros.spec.ts:3:1 › Python: unidades e entrada ASCII funcionam offline sem fingir execução (43.5s)
+
+  2 passed (1.8m)

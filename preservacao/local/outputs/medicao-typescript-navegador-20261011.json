@@ -1,0 +1,77 @@
+{
+  "capturadoEm": "2026-10-11T14:52:53.803Z",
+  "tipo": "protótipo externo ao produto, sem execução do JS emitido",
+  "navegador": "155.0.4283.45",
+  "csp": "somente origem local, sem unsafe-eval",
+  "arquivos": [
+    {
+      "nome": "compilador-DFjNpfIJ.js",
+      "bytes": 4063109,
+      "gzip": 1079874
+    },
+    {
+      "nome": "index-CZ7ojLxJ.js",
+      "bytes": 826,
+      "gzip": 475
+    }
+  ],
+  "resultados": [
+    {
+      "nome": "contrato válido e emissão",
+      "versao": "5.9.3",
+      "milissegundos": 406,
+      "erros": [],
+      "emitiu": true,
+      "saida": [
+        {
+          "nome": "/entrada.js",
+          "texto": "\"use strict\";\nconst pedidos = [{ valor: 10, valido: true }, { valor: 20, valido: false }];\nconsole.log(pedidos.filter(p => p.valido).reduce((total, p) => total + p.valor, 0));\n"
+        }
+      ],
+      "totalMs": 902
+    },
+    {
+      "nome": "tipo incompatível",
+      "versao": "5.9.3",
+      "milissegundos": 185,
+      "erros": [
+        {
+          "codigo": 2322,
+          "mensagem": "Type 'string' is not assignable to type 'number'."
+        }
+      ],
+      "emitiu": false,
+      "saida": [],
+      "totalMs": 405
+    },
+    {
+      "nome": "API de rede ausente",
+      "versao": "5.9.3",
+      "milissegundos": 170,
+      "erros": [
+        {
+          "codigo": 2304,
+          "mensagem": "Cannot find name 'fetch'."
+        }
+      ],
+      "emitiu": false,
+      "saida": [],
+      "totalMs": 374
+    },
+    {
+      "nome": "importação indisponível",
+      "versao": "5.9.3",
+      "milissegundos": 175,
+      "erros": [
+        {
+          "codigo": 2792,
+          "mensagem": "Cannot find module 'node:fs'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?"
+        }
+      ],
+      "emitiu": false,
+      "saida": [],
+      "totalMs": 394
+    }
+  ],
+  "limites": "Viewport estreita em Edge desktop. Não mede RAM ou FPS de celular físico. Compilador não está no produto."
+}

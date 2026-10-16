@@ -1,0 +1,56 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/hub-catalog.test.ts (19 tests | 1 failed) 762ms
+   × cpp-memoria-posse espera seu conceito e leitura não fabrica domínio na família isolada 47ms
+ ❯ tests/unit/ordem-diaria.test.ts (17 tests | 1 failed) 406ms
+   × o indicador opcional de início sobrevive ao backup sem alterar a sequência antiga 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > cpp-memoria-posse espera seu conceito e leitura não fabrica domínio na família isolada
+AssertionError: expected Set{ 'cpp-mover-constante', …(1) } to deeply equal Set{ 'cpp-mover-constante', …(2) }
+
+- Expected
++ Received
+
+  Set {
+-   "cpp-devolver-texto-dono",
+    "cpp-mover-constante",
+    "cpp-prever-posse-temporaria",
+  }
+
+ ❯ tests/unit/hub-catalog.test.ts:63:64
+     61|  const prepared=buildDailySession(state,catalog,clock);
+     62|  expect(prepared.items[0].activityId).toBe(concept);
+     63|  expect(new Set(prepared.items.slice(1).map(i=>i.activityId))).toEqual…
+       |                                                                ^
+     64|  state.daily=prepared;markConceptSeen(state,concept,clock);
+     65|  expect(Object.keys(state.skills)).toEqual([]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/ordem-diaria.test.ts > o indicador opcional de início sobrevive ao backup sem alterar a sequência antiga
+Error: Os dados de habilidades ou revisão são inválidos. A jornada atual foi preservada.
+ ❯ invalid src/learning/adaptive.ts:81:33
+     79| function readAdaptive(raw:unknown,strict:boolean):AdaptiveState {
+     80|  const result=freshAdaptive();if(raw===undefined)return result;
+     81|  const invalid=():never=>{throw new Error('Os dados de habilidades ou …
+       |                                 ^
+     82|  if(!ownRecord(raw)||raw.version!==1){if(strict)invalid();return resul…
+     83|  if(strict&&(!known(raw,['version','skills','eventIds','seenConcepts',…
+ ❯ readAdaptive src/learning/adaptive.ts:102:87
+ ❯ prepareAdaptiveBackup src/learning/adaptive.ts:108:65
+ ❯ tests/unit/ordem-diaria.test.ts:42:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 34 passed (36)
+   Start at  19:06:17
+   Duration  5.36s (transform 51%, tests 31%, import 16%, worker 2%)
+
+    Isolate  2 workers spawned · ~698ms startup each (spawn + environment, per file)
+             at least ~698ms faster with isolate: false — reuses workers across files instead of one per file
+

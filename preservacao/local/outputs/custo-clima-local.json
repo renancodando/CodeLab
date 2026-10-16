@@ -1,0 +1,126 @@
+{
+  "contexto": "Edge headless local; viewport emulada; intervalos de submissão, sem comprovar FPS de celular físico",
+  "resultados": [
+    {
+      "largura": 375,
+      "cenario": "limpo",
+      "amostras": 66,
+      "intervaloMedianoMs": 48,
+      "intervaloP95Ms": 49,
+      "qualidade": "medium",
+      "chamadasDesenho": "130",
+      "geometrias": "115",
+      "massas": "42",
+      "chuva": "0"
+    },
+    {
+      "largura": 375,
+      "cenario": "encoberto",
+      "amostras": 66,
+      "intervaloMedianoMs": 48,
+      "intervaloP95Ms": 49,
+      "qualidade": "medium",
+      "chamadasDesenho": "132",
+      "geometrias": "115",
+      "massas": "42",
+      "chuva": "0"
+    },
+    {
+      "largura": 375,
+      "cenario": "chuva-forte",
+      "amostras": 67,
+      "intervaloMedianoMs": 48,
+      "intervaloP95Ms": 50,
+      "qualidade": "medium",
+      "chamadasDesenho": "132",
+      "geometrias": "115",
+      "massas": "42",
+      "chuva": "0.9251099238782841"
+    },
+    {
+      "largura": 375,
+      "cenario": "neblina",
+      "amostras": 69,
+      "intervaloMedianoMs": 47,
+      "intervaloP95Ms": 49,
+      "qualidade": "medium",
+      "chamadasDesenho": "129",
+      "geometrias": "115",
+      "massas": "42",
+      "chuva": "0"
+    },
+    {
+      "largura": 375,
+      "cenario": "noite-nublada",
+      "amostras": 67,
+      "intervaloMedianoMs": 47,
+      "intervaloP95Ms": 50,
+      "qualidade": "medium",
+      "chamadasDesenho": "122",
+      "geometrias": "115",
+      "massas": "42",
+      "chuva": "0"
+    },
+    {
+      "largura": 1440,
+      "cenario": "limpo",
+      "amostras": 65,
+      "intervaloMedianoMs": 48,
+      "intervaloP95Ms": 50,
+      "qualidade": "medium",
+      "chamadasDesenho": "167",
+      "geometrias": "120",
+      "massas": "42",
+      "chuva": "0"
+    },
+    {
+      "largura": 1440,
+      "cenario": "encoberto",
+      "amostras": 66,
+      "intervaloMedianoMs": 48,
+      "intervaloP95Ms": 49,
+      "qualidade": "medium",
+      "chamadasDesenho": "166",
+      "geometrias": "120",
+      "massas": "42",
+      "chuva": "0"
+    },
+    {
+      "largura": 1440,
+      "cenario": "chuva-forte",
+      "amostras": 65,
+      "intervaloMedianoMs": 48,
+      "intervaloP95Ms": 49,
+      "qualidade": "medium",
+      "chamadasDesenho": "159",
+      "geometrias": "120",
+      "massas": "42",
+      "chuva": "0.9251099238782841"
+    },
+    {
+      "largura": 1440,
+      "cenario": "neblina",
+      "amostras": 67,
+      "intervaloMedianoMs": 47,
+      "intervaloP95Ms": 50,
+      "qualidade": "medium",
+      "chamadasDesenho": "166",
+      "geometrias": "120",
+      "massas": "42",
+      "chuva": "0"
+    },
+    {
+      "largura": 1440,
+      "cenario": "noite-nublada",
+      "amostras": 67,
+      "intervaloMedianoMs": 48,
+      "intervaloP95Ms": 49,
+      "qualidade": "medium",
+      "chamadasDesenho": "151",
+      "geometrias": "120",
+      "massas": "42",
+      "chuva": "0"
+    }
+  ],
+  "erros": []
+}

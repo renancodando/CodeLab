@@ -1,0 +1,18 @@
+
+Running 11 tests using 1 worker
+
+(node:3040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\css-cascata-unidades.spec.ts:15:1 › CSS nativo: especificidade, ordem e token inválido têm efeitos diferentes (2.2s)
+  ok  2 tests\e2e\css-cascata-unidades.spec.ts:35:1 › CSS nativo: referências de unidade, entrelinha e herança reagem a mudanças independentes (1.6s)
+  ok  3 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: cascata conserva tentativas, assistência e projeto (7.7s)
+  ok  4 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: box-model conserva tentativas, assistência e projeto (7.0s)
+  ok  5 tests\e2e\css-cascata-unidades.spec.ts:113:1 › CSS offline conserva uma alteração conceitual sem executar código livre (3.9s)
+  ok  6 tests\e2e\css-flex-grid.spec.ts:15:1 › Flexbox nativo: trocar o eixo muda as coordenadas e o selo acompanha o cartão (1.7s)
+  ok  7 tests\e2e\css-flex-grid.spec.ts:42:1 › Flexbox nativo: a fronteira de quebra conserva tamanho, conteúdo e ordem do teclado (1.3s)
+  ok  8 tests\e2e\css-flex-grid.spec.ts:62:1 › Grid nativo: conteúdo ocupa trilhas e cada instância consulta seu ancestral (1.9s)
+  ok  9 tests\e2e\css-flex-grid.spec.ts:99:25 › Layout praticado: flex-position preserva projeto, assistência e revisão (9.5s)
+  ok 10 tests\e2e\css-flex-grid.spec.ts:99:25 › Layout praticado: grid-responsivo preserva projeto, assistência e revisão (6.5s)
+  ok 11 tests\e2e\css-flex-grid.spec.ts:135:1 › Layouts offline conservam previsão e alteração sem executar folhas CSS livres (3.9s)
+
+  11 passed (50.2s)

@@ -1,0 +1,5 @@
+import {readFileSync,writeFileSync,appendFileSync} from 'node:fs';
+const c='src/learning/practice.ts';writeFileSync(c,readFileSync(c,'utf8').trimEnd()+'\n');
+const nota='\n\nStrict/build passaram: 157 páginas, 35 recursos essenciais e cinco opcionais sob demanda; inicial 199,82 kB gzip e mundo 135,94 kB. Os dois fluxos Edge passaram (47,0 s), incluindo referência DOM real, depuração executada offline, erro/acerto, assistência, recarga e 220/4000 px. As primeiras validações detectaram uma literal de gabarito e um parêntese extra no caso de borda novo; ambos foram corrigidos antes dos 74 testes e dos fluxos aprovados. Exigir agora CI completo e revisão do head publicado, integração posterior à PR #34 e conferência do domínio.\n';
+appendFileSync('docs/continuidade.md',nota);
+const caminho='../../outputs/checkpoint-codelab-20261009.json',p=JSON.parse(readFileSync(caminho,'utf8'));p.emPreparacao.estado='74 testes específicos, strict/build e dois fluxos Edge aprovados (47,0 s). Exigindo commit/PR/CI, revisão, árvore e domínio após PR34.';writeFileSync(caminho,JSON.stringify(p,null,2)+'\n');

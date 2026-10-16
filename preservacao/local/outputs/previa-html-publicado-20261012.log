@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:10864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\learning.spec.ts:24:1 › laboratório HTML renderiza sem acesso ao documento pai (27.2s)
+  ok 2 tests\e2e\previa-html.spec.ts:13:1 › prévia substitui documentos HTML e conserva limpeza ao parar e trocar linguagem (42.1s)
+  ok 3 tests\e2e\previa-html.spec.ts:36:1 › HTML acima do limite interrompe a prévia anterior antes de mostrar o aviso (14.6s)
+
+  3 passed (2.0m)

@@ -1,0 +1,53 @@
+
+Running 2 tests using 1 worker
+
+(node:11336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\sql-null.spec.ts:6:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio (35.0s)
+(node:16968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\e2e\sql-null.spec.ts:39:1 › SQL: ausência e contratos retomam offline sem fingir execução de consultas (37.7s)
+
+
+  1) tests\e2e\sql-null.spec.ts:6:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator:  locator('[data-language]')
+    Expected: disabled
+    Received: enabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeDisabled" locator('[data-language]') with timeout 5000ms
+      - waiting for locator('[data-language]')
+        12 × locator resolved to <select data-language="">…</select>
+           - unexpected value "enabled"
+
+
+      26 |  await expect(leitura.getByRole('heading',{name:'Solução de referência',exact:true})).toHaveCount(0);
+      27 |  await pagina.getByRole('button',{name:'Concluir leitura e praticar',exact:true}).click();
+    > 28 |  await expect(pagina.locator('[data-language]')).toBeDisabled();
+         |                                                  ^
+      29 |  await expect(pagina.locator('[data-practice="sql-corrigir-obrigatoriedade"]')).toBeVisible();
+      30 |  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
+      31 |  expect(salvo.adaptive.daily).toEqual(estado.daily);
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\sql-null.spec.ts:28:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-inicio-reproducao\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-inicio-reproducao\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-inicio-reproducao\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-inicio-reproducao\sql-null-SQL-plano-antigo--1bcdc-leitura-ou-fabricar-domínio\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\sql-null.spec.ts:6:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio 
+  1 passed (1.8m)

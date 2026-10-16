@@ -1,0 +1,43 @@
+
+Running 1 test using 1 worker
+
+(node:12840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+HTML_PREVIEW_DIAGNOSTICO {"srcdoc":null,"erros":[]}
+  x  1 tests\e2e\learning.spec.ts:24:1 › laboratório HTML renderiza sem acesso ao documento pai (1.3m)
+
+
+  1) tests\e2e\learning.spec.ts:24:1 › laboratório HTML renderiza sem acesso ao documento pai ──────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForEvent: Test timeout of 60000ms exceeded.
+    =========================== logs ===========================
+    waiting for event "framenavigated"
+    ============================================================
+
+      30 |  await writeCode(page,'<script>try {parent.document.body.innerHTML="invadido"}catch(e){document.body.textContent="isolado"}</script>');
+      31 |  await expect(page.locator('.monaco-editor .view-lines')).toContainText('parent.document.body.innerHTML');
+    > 32 |  const navegacaoPrevia=page.waitForEvent('framenavigated',{predicate:quadro=>quadro.parentFrame()===page.mainFrame()&&quadro.url()==='about:srcdoc'});
+         |                             ^
+      33 |  await page.getByRole('button',{name:'Executar',exact:true}).click();
+      34 |  try{
+      35 |   const quadroPrevia=await navegacaoPrevia;await quadroPrevia.waitForLoadState('domcontentloaded');
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\learning.spec.ts:32:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-csharp-linq-publicado\learning-laboratório-HTML--4769c-sem-acesso-ao-documento-pai\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-csharp-linq-publicado\learning-laboratório-HTML--4769c-sem-acesso-ao-documento-pai\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-csharp-linq-publicado\learning-laboratório-HTML--4769c-sem-acesso-ao-documento-pai\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-csharp-linq-publicado\learning-laboratório-HTML--4769c-sem-acesso-ao-documento-pai\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\learning.spec.ts:24:1 › laboratório HTML renderiza sem acesso ao documento pai ───────

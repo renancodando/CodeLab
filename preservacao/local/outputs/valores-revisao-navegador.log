@@ -1,0 +1,49 @@
+
+Running 2 tests using 1 worker
+
+(node:17324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\valores-fundamentos.spec.ts:3:1 › valores originais: tipos, retorno numérico e reatribuição persistem offline (58.2s)
+  x  2 tests\e2e\valores-preparacao.spec.ts:5:1 › preparação de valores abre a leitura completa sem desviar para os 25 passos (1.3m)
+
+
+  1) tests\e2e\valores-preparacao.spec.ts:5:1 › preparação de valores abre a leitura completa sem desviar para os 25 passos 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('#offline-status')
+    Expected: "Conteúdo preparado para estudar offline."
+    Timeout: 45000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" locator('#offline-status') with timeout 45000ms
+      - waiting for locator('#offline-status')
+
+
+      4 |
+      5 | test('preparação de valores abre a leitura completa sem desviar para os 25 passos',async({page:pagina,context:contexto})=>{
+    > 6 |  await pagina.goto('/#/diaria');await expect(pagina.locator('[data-seen]')).toBeVisible();await expect(pagina.locator('#offline-status')).toHaveText('Conteúdo preparado para estudar offline.',{timeout:45000});await pagina.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));const relogio=await pagina.evaluate(()=>({now:Date.now(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone}));const preparacao=adaptiveCatalog.activities.find(a=>a.id===idPreparacao('valores'))!,antigo=preparacao.requiredConcepts![0],ids=['js-prever-ausencia-zero','js-debug-saldo-textual','js-permitir-reatribuicao'];const estado=freshAdaptive();estado.seenConcepts=[antigo];const anterior={...adaptiveCatalog,preferredLanguage:'javascript',activities:adaptiveCatalog.activities.filter(a=>a.id===antigo||ids.includes(a.id)).map(a=>ids.includes(a.id)?{...a,requiredConcepts:[antigo]}:a)};estado.daily=buildDailySession(estado,anterior,relogio);expect(estado.daily.items).toHaveLength(3);
+        |                                                                                                                                           ^
+      7 |  await pagina.evaluate(estado=>{const salvo=JSON.parse(localStorage.getItem('codelab.progress.v2')!);salvo.learningLanguage='javascript';salvo.adaptive=estado;localStorage.setItem('codelab.progress.v2',JSON.stringify(salvo));},estado);await contexto.setOffline(true);
+      8 |  try{await pagina.goto('/?preparacao-valores=1#/diaria');const leitura=pagina.locator('[data-current]');await expect(leitura.getByRole('heading',{name:'Quando dá errado',exact:true})).toBeVisible();await expect(leitura.locator('[data-practice],.lesson-solution')).toHaveCount(0);const link=leitura.getByRole('link',{name:'Ler e experimentar a aula completa',exact:true});await expect(link).toHaveAttribute('href','#/leitura/valores');await link.click();await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);await expect(pagina.locator('.lesson-chapter')).toHaveCount(12);await expect(pagina.getByText('AULA PRÁTICA · PASSO 1 DE 25',{exact:true})).toHaveCount(0);await pagina.reload();await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.adaptive.daily).toEqual(estado.daily);expect(salvo.adaptive.skills).toEqual({});expect(salvo.adaptive.seenConcepts).toEqual([antigo]);
+      9 |  await pagina.goto('/#/pratica/js-debug-saldo-textual');const conceito=pagina.getByRole('link',{name:'Estudar o conceito desta atividade',exact:true});await expect(conceito).toHaveAttribute('href','#/leitura/valores');await conceito.click();await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\valores-preparacao.spec.ts:6:139
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-valores-revisao-fundamentos\valores-preparacao-prepara-5c1bd-m-desviar-para-os-25-passos\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-valores-revisao-fundamentos\valores-preparacao-prepara-5c1bd-m-desviar-para-os-25-passos\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-valores-revisao-fundamentos\valores-preparacao-prepara-5c1bd-m-desviar-para-os-25-passos\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-valores-revisao-fundamentos\valores-preparacao-prepara-5c1bd-m-desviar-para-os-25-passos\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\valores-preparacao.spec.ts:5:1 › preparação de valores abre a leitura completa sem desviar para os 25 passos 
+  1 passed (2.8m)

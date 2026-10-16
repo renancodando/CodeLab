@@ -1,0 +1,12 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const arquivo=new URL('./checkpoint-codelab-20261009.json',import.meta.url);
+const dado=JSON.parse(await readFile(arquivo,'utf8'));
+dado.atualizadoEm=new Date().toISOString();
+dado.ciMain=38083869423;
+dado.fluxoPublicado='Main 3364740: READY/SHA confirmados; 11/12 cenários no lote público e restante aprovado isoladamente após corrigir espera de download. HTTP ainda não publicado.';
+dado.pendente={pr:30,branch:'pratica/http-tempo-idempotencia',head:'ed7acb26e6670b82e224a934577a34c66260885a',run:38085602449,estado:'543 unidades e job comum/auditoria aprovados; duas parcelas de navegador em execução. Três fluxos HTTP locais aprovados. Exigir revisões, árvore e domínio após integração.',particao:'129 = 68 + 61, sem omissões/duplicações',local:'535/543 no lote; repetição 34/43 com nove timeouts. Nenhum limite ampliado.'};
+dado.emPreparacao={branch:'pratica/cpp-vida-posse',atividades:73,aulasComPausas:52,aulasSemPausas:85,unitarios:'28 específicos/catálogo aprovados',compilacao:'duas tentativas interrompidas por timeout local; recusa const confirmada na segunda. Oito casos exigem CI.',navegador:'pendente de build'};
+dado.proximaBranch='pratica/cpp-vida-posse';dado.proximaValidacao='Concluir CI/revisão #30, comparar árvores, integrar e conferir SHA/fluxos HTTP publicados. Validar e publicar posse C++, depois continuar frentes de aprendizagem.';
+dado.rascunhos.estado='Integrada pela PR #28 e verificada no domínio; correção do teste de exportação na #30.';
+dado.duracaoNavegadorCI='Duas parcelas independentes; 129 testes HTTP particionados 68 + 61. Monitorar os jobs sem ampliar timeout.';
+await writeFile(arquivo,JSON.stringify(dado,null,2)+'\n');

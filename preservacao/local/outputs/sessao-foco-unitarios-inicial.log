@@ -1,0 +1,182 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/hub-catalog.test.ts (18 tests | 11 failed) 830ms
+   × cada linguagem oferece conceito, duas práticas e desafio sem repetição 268ms
+   × ts-variancia-contratos espera seu conceito e leitura não fabrica domínio na família isolada 27ms
+   × ts-modulos-configuracao espera seu conceito e leitura não fabrica domínio na família isolada 39ms
+   × cpp-templates espera seu conceito e leitura não fabrica domínio na família isolada 40ms
+   × sql-null-logica espera seu conceito e leitura não fabrica domínio na família isolada 15ms
+   × cs-iteradores-descarte espera seu conceito e leitura não fabrica domínio na família isolada 17ms
+   × css-caixas-intrinseco espera seu conceito e leitura não fabrica domínio na família isolada 29ms
+   × py-objetos-protocolos espera seu conceito e leitura não fabrica domínio na família isolada 46ms
+   × preparação nova conserva a leitura antiga sem tratá-la como cobertura dos capítulos posteriores 11ms
+   × o desafio novo de recursos Python não antecipa o conceito numa primeira sessão 21ms
+   × invalidação C++ espera o conceito sem antecipar conteúdo na primeira sessão 23ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > cada linguagem oferece conceito, duas práticas e desafio sem repetição
+AssertionError: css: expected [ 'concept', 'challenge' ] to deeply equal [ 'concept', 'practice', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "concept",
+-   "practice",
+-   "practice",
+    "challenge",
+  ]
+
+ ❯ tests/unit/hub-catalog.test.ts:19:46
+     17|  for(const language of ['html','css','javascript','typescript','python…
+     18|   const plan=buildDailySession(freshAdaptive(),{...adaptiveCatalog,pre…
+     19|   expect(plan.items.map(i=>i.kind),language).toEqual(['concept','pract…
+       |                                              ^
+     20|   for(const item of plan.items)expect(adaptiveCatalog.activities.find(…
+     21|  }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > ts-variancia-contratos espera seu conceito e leitura não fabrica domínio na família isolada
+ FAIL  tests/unit/hub-catalog.test.ts > ts-modulos-configuracao espera seu conceito e leitura não fabrica domínio na família isolada
+ FAIL  tests/unit/hub-catalog.test.ts > cs-iteradores-descarte espera seu conceito e leitura não fabrica domínio na família isolada
+AssertionError: expected [ 'concept', 'practice', 'challenge' ] to deeply equal [ 'concept', 'practice', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "concept",
+    "practice",
+-   "practice",
+    "challenge",
+  ]
+
+ ❯ tests/unit/hub-catalog.test.ts:48:37
+     46|  const catalog={...catalogoCompleto,activities:adaptiveCatalog.activit…
+     47|  const first=buildDailySession(state,catalogoCompleto,clock);
+     48|  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','pra…
+       |                                     ^
+     49|  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(fal…
+     50|  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > cpp-templates espera seu conceito e leitura não fabrica domínio na família isolada
+ FAIL  tests/unit/hub-catalog.test.ts > sql-null-logica espera seu conceito e leitura não fabrica domínio na família isolada
+ FAIL  tests/unit/hub-catalog.test.ts > py-objetos-protocolos espera seu conceito e leitura não fabrica domínio na família isolada
+AssertionError: expected [ 'concept', 'practice' ] to deeply equal [ 'concept', 'practice', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "concept",
+    "practice",
+-   "practice",
+-   "challenge",
+  ]
+
+ ❯ tests/unit/hub-catalog.test.ts:48:37
+     46|  const catalog={...catalogoCompleto,activities:adaptiveCatalog.activit…
+     47|  const first=buildDailySession(state,catalogoCompleto,clock);
+     48|  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','pra…
+       |                                     ^
+     49|  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(fal…
+     50|  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > css-caixas-intrinseco espera seu conceito e leitura não fabrica domínio na família isolada
+AssertionError: expected [ 'concept', 'challenge' ] to deeply equal [ 'concept', 'practice', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "concept",
+-   "practice",
+-   "practice",
+    "challenge",
+  ]
+
+ ❯ tests/unit/hub-catalog.test.ts:48:37
+     46|  const catalog={...catalogoCompleto,activities:adaptiveCatalog.activit…
+     47|  const first=buildDailySession(state,catalogoCompleto,clock);
+     48|  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','pra…
+       |                                     ^
+     49|  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(fal…
+     50|  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > preparação nova conserva a leitura antiga sem tratá-la como cobertura dos capítulos posteriores
+TypeError: Cannot read properties of undefined (reading '0')
+ ❯ tests/unit/hub-catalog.test.ts:68:26
+     66|  const preparacao=adaptiveCatalog.activities.find(atividade=>atividade…
+     67|  expect(preparacao.preparacaoAteBloco).toBe(5);
+     68|  const antigo=preparacao.requiredConcepts![0];
+       |                          ^
+     69|  expect(antigo).not.toBe(preparacao.id);
+     70|  expect(adaptiveCatalog.activities.find(atividade=>atividade.id===anti…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > o desafio novo de recursos Python não antecipa o conceito numa primeira sessão
+AssertionError: expected [ 'concept', 'practice' ] to deeply equal [ 'concept', 'practice', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "concept",
+    "practice",
+-   "practice",
+-   "challenge",
+  ]
+
+ ❯ tests/unit/hub-catalog.test.ts:88:37
+     86|  const advanced=['py-prever-esgotamento','py-ordenar-lote','py-fechar-…
+     87|  const first=buildDailySession(state,catalog,clock);
+     88|  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','pra…
+       |                                     ^
+     89|  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(fal…
+     90|  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  tests/unit/hub-catalog.test.ts > invalidação C++ espera o conceito sem antecipar conteúdo na primeira sessão
+AssertionError: expected [ 'concept', 'practice' ] to deeply equal [ 'concept', 'practice', …(2) ]
+
+- Expected
++ Received
+
+  [
+    "concept",
+    "practice",
+-   "practice",
+-   "challenge",
+  ]
+
+ ❯ tests/unit/hub-catalog.test.ts:100:37
+     98|  const advanced=['cpp-prever-intervalo','cpp-ordenar-erase','cpp-reobt…
+     99|  const first=buildDailySession(state,catalog,clock);
+    100|  expect(first.items.map(i=>i.kind)).toEqual(['concept','practice','pra…
+       |                                     ^
+    101|  expect(first.items.some(i=>advanced.includes(i.activityId))).toBe(fal…
+    102|  state.seenConcepts=catalog.activities.filter(a=>a.kind==='concept'&&a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  11 failed | 51 passed (62)
+   Start at  17:42:52
+   Duration  10.01s (tests 44%, transform 42%, import 13%, worker 2%)
+
+  Transform  transforming modules took 2.71s · 42% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+

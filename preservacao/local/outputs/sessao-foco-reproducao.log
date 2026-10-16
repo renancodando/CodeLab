@@ -1,0 +1,57 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/ordem-diaria.test.ts (8 tests | 1 failed) 1353ms
+   × a primeira sessão prepara e pratica somente o assunto apresentado 795ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/ordem-diaria.test.ts > a primeira sessão prepara e pratica somente o assunto apresentado
+AssertionError: expected [ { …(2) }, …(3) ] to deeply equal [ { …(2) }, { …(2) }, { …(2) }, …(1) ]
+
+- Expected
++ Received
+
+  [
+    {
+-     "id": "conceito-0-programar-pratica-v1",
++     "id": "conceito-0-programar",
+      "kind": "concept",
+    },
+    {
+-     "id": "inicio-prever-ordem",
++     "id": "js-debug-carrinho",
+      "kind": "practice",
+    },
+    {
+-     "id": "inicio-identificar-texto",
++     "id": "js-debug-maior-negativo",
+      "kind": "practice",
+    },
+    {
+-     "id": "inicio-reconstruir-sequencia",
++     "id": "js-debug-filtro-mutacao",
+      "kind": "challenge",
+    },
+  ]
+
+ ❯ tests/unit/ordem-diaria.test.ts:8:71
+      6| it('a primeira sessão prepara e pratica somente o assunto apresentado'…
+      7|  const plano=buildDailySession(freshAdaptive(),catalogo,relogio);
+      8|  expect(plano.items.map(item=>({id:item.activityId,kind:item.kind}))).…
+       |                                                                       ^
+      9|   {id:idPreparacao('programar'),kind:'concept'},
+     10|   {id:'inicio-prever-ordem',kind:'practice'},
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  17:37:03
+   Duration  7.55s (transform 66%, tests 25%, import 7%, worker 2%)
+
+  Transform  transforming modules took 3.61s · 66% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+

@@ -1,0 +1,34 @@
+import {chromium, expect} from '../work/CodeLab/node_modules/@playwright/test/index.mjs';
+const origem = 'https://code-lab-omega.vercel.app';
+const navegador = await chromium.launch({channel:'msedge',headless:true});
+try {
+ const contexto = await navegador.newContext({viewport:{width:375,height:812}});
+ const pagina = await contexto.newPage(), erros = [];
+ pagina.on('pageerror',erro=>erros.push(erro.message));
+ pagina.on('console',mensagem=>{if(mensagem.type()==='error'&&/WebGL|shader|THREE/i.test(mensagem.text()))erros.push(mensagem.text());});
+ const rota = origem+'/api/meteorologia/observacao?estacao=SBSP';
+ const primeira = await contexto.request.get(rota);
+ expect(primeira.status()).toBe(200);
+ const boletim = await primeira.json();
+ expect(boletim.dados[0].icaoId).toBe('SBSP');
+ expect(boletim.recebidoEm).toBeGreaterThan(0);
+ const segunda = await contexto.request.get(rota);
+ expect((await segunda.json()).recebidoEm).toBe(boletim.recebidoEm);
+ expect((await contexto.request.get(rota+'&latitude=0')).status()).toBe(400);
+ expect((await contexto.request.post(rota)).status()).toBe(405);
+ await pagina.goto(origem,{waitUntil:'domcontentloaded',timeout:45000});
+ await pagina.getByRole('button',{name:'Configurar ambiente',exact:true}).click();
+ const respostaPendente = pagina.waitForResponse(r=>r.url().includes('/api/meteorologia/observacao?'),{timeout:20000});
+ await pagina.locator('#apply-city').click();
+ const resposta = await respostaPendente;
+ expect(resposta.status()).toBe(200);
+ await pagina.getByText('Detalhes do clima',{exact:true}).click();
+ await expect(pagina.locator('#weather-details')).toContainText('NOAA/AWC METAR SBSP');
+ const detalhes = await pagina.locator('#weather-details').textContent();
+ const resumo = await pagina.locator('#weather-message').textContent();
+ await pagina.getByRole('button',{name:'Fechar',exact:true}).click();
+ await expect(pagina.locator('#world')).toHaveAttribute('data-massas','42');
+ await pagina.screenshot({path:new URL('./clima-publicado-375.png',import.meta.url).pathname.replace(/^\/([A-Za-z]:)/,'$1'),fullPage:true});
+ console.log(JSON.stringify({status:resposta.status(),estacao:boletim.dados[0].icaoId,capturadoEm:boletim.dados[0].obsTime,recebidoEm:boletim.recebidoEm,cache:segunda.headers()['x-vercel-cache'],resumo,detalhes,chuva:await pagina.locator('#world').getAttribute('data-chuva'),erros}));
+ expect(erros).toEqual([]);
+} finally {await navegador.close();}

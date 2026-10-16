@@ -1,0 +1,18 @@
+
+Running 11 tests using 1 worker
+
+(node:4268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\funcoes-fundamentos.spec.ts:3:1 › funções originais: retorno, escopo e composição persistem offline (8.8s)
+  ok  2 tests\e2e\inicio-pratica.spec.ts:12:1 › primeiras instruções: ordem, texto, teclado e assistência persistem (8.1s)
+  ok  3 tests\e2e\inicio-pratica.spec.ts:22:1 › entrada e saída: corrige frete com entradas variadas, offline e retomada (5.7s)
+  ok  4 tests\e2e\inicio-pratica.spec.ts:33:1 › decomposição: dependências, média equivalente, revisão e conteúdo preservado (7.8s)
+  ok  5 tests\e2e\sql-local.spec.ts:17:1 › SQL local: runtime sob demanda, banco descartável, resultados e jornada offline (11.0s)
+  ok  6 tests\e2e\sql-local.spec.ts:47:1 › SQL local: cancelar, limitar CPU e descartar workers nas trocas de tela (21.9s)
+  ok  7 tests\e2e\sql-local.spec.ts:64:1 › SQL local: primeiro carregamento sem rede preserva código e explica o limite offline (4.7s)
+  ok  8 tests\e2e\sql-local.spec.ts:74:2 › prazo do módulo SQL › importação interrompida por prazo conserva código e permite nova execução (4.0s)
+  ok  9 tests\e2e\sql-pratica.spec.ts:8:1 › SQL corrigível: resultados reais, solução alternativa, offline, assistência e persistência (7.7s)
+  ok 10 tests\e2e\sql-pratica.spec.ts:28:1 › SQL corrigível: tempo limite, alteração e saída encerram workers sem registrar tentativas canceladas (14.5s)
+  ok 11 tests\e2e\sql-pratica.spec.ts:41:2 › carregamento da conferência SQL › módulo indisponível preserva resposta e nota e permite retomar (3.1s)
+
+  11 passed (1.7m)

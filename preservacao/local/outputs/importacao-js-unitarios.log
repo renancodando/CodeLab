@@ -1,0 +1,40 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/practice.test.ts (0 test)
+ ❯ tests/unit/javascript-importacao.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/javascript-importacao.test.ts [ tests/unit/javascript-importacao.test.ts ]
+ FAIL  tests/unit/practice.test.ts [ tests/unit/practice.test.ts ]
+Error: Transform failed with 1 error:
+C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/src/learning/practice.ts:17:241: ERROR: Unterminated string literal
+  Plugin: vite:esbuild
+  File: C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/src/learning/practice.ts:17:241
+  
+  Unterminated string literal
+  16 |   'js-prever-transporte':{accepted:['false true true'],failure:'JSON omite undefined em propriedades de objeto, mas co...
+  17 |   'js-inserir-texto-dados':{accepted:['texto'],failure:'O nome deve ser texto literal. APIs que interpretam HTML conti...
+  18 |  item.textContent = nome;
+     |    ^
+  19 |  lista.append(item);'},
+  20 |   'html-prever-controles':{accepted:['A\nnull\nhtml,css'],failure:'Readonly pode participar dos dados; a presença de d...
+  
+ ❯ failureErrorWithLog node_modules/esbuild/lib/main.js:1752:15
+ ❯ node_modules/esbuild/lib/main.js:1019:50
+ ❯ responseCallbacks.<computed> node_modules/esbuild/lib/main.js:886:9
+ ❯ handleIncomingPacket node_modules/esbuild/lib/main.js:941:12
+ ❯ Socket.readFromStdout node_modules/esbuild/lib/main.js:864:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  no tests
+   Start at  13:35:15
+   Duration  4.98s (worker 97%, environment 3%)
+
+    Isolate  2 workers spawned · ~1.74s startup each (spawn + environment, per file)
+             at least ~1.74s faster with isolate: false — reuses workers across files instead of one per file
+

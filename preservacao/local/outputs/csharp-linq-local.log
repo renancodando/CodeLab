@@ -1,0 +1,12 @@
+OK LINQ C# igualdade-definida
+OK LINQ C# igualdade-sensivel
+OK LINQ C# chave-repetida
+OK LINQ C# grupos-ordenados-independentes
+OK LINQ C# deduplicacao-perde-palavra
+OK LINQ C# lista-reutilizada-mistura-grupos
+OK LINQ C# copia-interna
+OK LINQ C# copia-apenas-externa
+OK LINQ C# linhas-irregulares-e-alias
+OK LINQ C# exemplo-preservado
+OK LINQ C# solucao-preservada
+11 programas C# compilados e executados com .NET 10; artefatos em C:\Users\perei\Documents\Codex\2026-10-03\nao-m\outputs\linq-local-QMP9FM

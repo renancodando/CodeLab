@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+const origem='https://public.ecr.aws';
+const autorizacao=await fetch(origem+'/token/?service=public.ecr.aws&scope=repository:docker/library/postgres:pull',{signal:AbortSignal.timeout(15000)});
+assert.equal(autorizacao.status,200,'autorização pública indisponível');
+const {token}=await autorizacao.json();
+assert.ok(typeof token==='string');
+const resposta=await fetch(origem+'/v2/docker/library/postgres/manifests/18',{headers:{Authorization:'Bearer '+token,Accept:'application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json'},signal:AbortSignal.timeout(15000)});
+assert.equal(resposta.status,200,'tag PostgreSQL 18 indisponível');
+const manifesto=await resposta.json();
+const imagem=manifesto.manifests.find(imagem=>imagem.platform?.os==='linux'&&imagem.platform?.architecture==='amd64');
+assert.ok(imagem,'imagem linux/amd64 ausente');
+console.log(JSON.stringify({repositorio:'public.ecr.aws/docker/library/postgres:18',digest:resposta.headers.get('docker-content-digest'),amd64:imagem.digest}));

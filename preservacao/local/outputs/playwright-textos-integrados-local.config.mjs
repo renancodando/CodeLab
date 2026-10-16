@@ -1,0 +1,6 @@
+export default {
+ testDir:new URL('../work/CodeLab/tests/e2e/',import.meta.url).pathname.replace(/^\/([A-Za-z]:)/,'$1'),
+ grep:/documento HTML: títulos|depuração confere|leitura não pontua|a sessão nova|a reconstrução na aula|SQL: plano antigo|preparação original|preparação de valores|TypeScript: pausas|textos: previsão|conversão de texto executa|a preparação de conversões/,testMatch:['learning-hub.spec.ts','ordem-diaria.spec.ts','valores-preparacao.spec.ts','sql-null.spec.ts','lacos-fundamentos.spec.ts','html-inicio.spec.ts','typescript-variance.spec.ts','textos-conversoes.spec.ts'],timeout:60000,workers:1,reporter:'list',
+ outputDir:new URL('./resultados-textos-integrados-local/',import.meta.url).pathname.replace(/^\/([A-Za-z]:)/,'$1'),
+ use:{baseURL:'http://127.0.0.1:5173',channel:'msedge',headless:true,viewport:{width:375,height:812},trace:'retain-on-failure',screenshot:'only-on-failure'}
+};

@@ -1,0 +1,66 @@
+{
+  "typescript": "5.9.3",
+  "compiladorBytes": 9112572,
+  "compiladorGzip": 1644166,
+  "bibliotecas": 57,
+  "bibliotecasBytes": 484734,
+  "bibliotecasGzip": 51517,
+  "memoria": {
+    "rss": 178532352,
+    "heapTotal": 108904448,
+    "heapUsed": 56596728,
+    "external": 42640841,
+    "arrayBuffers": 22255140
+  },
+  "resultados": [
+    {
+      "cenario": "correto",
+      "milissegundos": 1896,
+      "erros": [],
+      "emitiu": true,
+      "saida": [
+        {
+          "nome": "/entrada.js",
+          "texto": "\"use strict\";\nconst pedidos = [{ valor: 3 }, { valor: 5 }];\nconsole.log(pedidos.reduce((soma, pedido) => soma + pedido.valor, 0));\n"
+        }
+      ]
+    },
+    {
+      "cenario": "tipo-invalido",
+      "milissegundos": 538,
+      "erros": [
+        {
+          "codigo": 2322,
+          "mensagem": "Type 'string' is not assignable to type 'number'."
+        }
+      ],
+      "emitiu": false,
+      "saida": []
+    },
+    {
+      "cenario": "rede-indisponivel",
+      "milissegundos": 411,
+      "erros": [
+        {
+          "codigo": 2304,
+          "mensagem": "Cannot find name 'fetch'."
+        }
+      ],
+      "emitiu": false,
+      "saida": []
+    },
+    {
+      "cenario": "modulo-ausente",
+      "milissegundos": 388,
+      "erros": [
+        {
+          "codigo": 2792,
+          "mensagem": "Cannot find module './calculo.js'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?"
+        }
+      ],
+      "emitiu": false,
+      "saida": []
+    }
+  ],
+  "limites": "Protótipo Node, não mede memória/FPS de celular. Não integrado ao produto."
+}

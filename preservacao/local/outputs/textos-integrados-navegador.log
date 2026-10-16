@@ -1,0 +1,19 @@
+
+Running 12 tests using 1 worker
+
+(node:8700) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\html-inicio.spec.ts:29:1 › documento HTML: títulos, idioma e estrutura com assistência persistida (11.9s)
+  ok  2 tests\e2e\lacos-fundamentos.spec.ts:18:1 › preparação original inclui passos e investigação sem gabarito ou domínio por leitura (4.3s)
+  ok  3 tests\e2e\learning-hub.spec.ts:24:1 › depuração confere bordas, preserva solução oculta e mantém domínio por habilidade (6.4s)
+  ok  4 tests\e2e\learning-hub.spec.ts:34:1 › leitura não pontua domínio, sessão progride e retoma sem duplicar atividades (9.2s)
+  ok  5 tests\e2e\ordem-diaria.spec.ts:6:1 › a sessão nova começa pelas instruções e conserva o plano antigo de valores offline (7.4s)
+  ok  6 tests\e2e\ordem-diaria.spec.ts:26:1 › a reconstrução na aula conclui a prática de um plano antigo sem substituir sua sequência (6.3s)
+  ok  7 tests\e2e\sql-null.spec.ts:6:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio (8.5s)
+  ok  8 tests\e2e\textos-conversoes.spec.ts:13:1 › textos: previsão, retorno ignorado e correção real mantêm assistência e projeto (10.8s)
+  ok  9 tests\e2e\textos-conversoes.spec.ts:24:1 › conversão de texto executa offline, rejeita prefixo e retoma o código sem submissão remota (6.1s)
+  ok 10 tests\e2e\textos-conversoes.spec.ts:35:1 › a preparação de conversões orienta três atividades sem domínio pela leitura (4.3s)
+  ok 11 tests\e2e\typescript-variance.spec.ts:3:1 › TypeScript: pausas de contratos funcionam offline e guardam decisões conceituais (7.7s)
+  ok 12 tests\e2e\valores-preparacao.spec.ts:6:1 › preparação de valores abre a leitura completa sem desviar para os 25 passos (8.2s)
+
+  12 passed (1.6m)

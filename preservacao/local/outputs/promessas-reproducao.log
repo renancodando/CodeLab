@@ -1,0 +1,111 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/promessas-execucao.test.ts (5 tests | 4 failed) 89ms
+   × confere o valor resolvido depois das microtarefas de cada caso 55ms
+   × não confunde uma Promise rejeitada com término correto 4ms
+   × encerra uma Promise que depende de um evento ausente sem bloquear o host 3ms
+   × o limite de microtarefas é compartilhado entre os casos 22ms
+ ❯ tests/unit/capacidade-habilidades.test.ts (2 tests | 1 failed) 95ms
+   × conserva todas as habilidades atuais ao registrar a espera assíncrona e restaurar o backup 80ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/capacidade-habilidades.test.ts > conserva todas as habilidades atuais ao registrar a espera assíncrona e restaurar o backup
+AssertionError: javascript.assincrono.espera: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/capacidade-habilidades.test.ts:12:41
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/unit/promessas-execucao.test.ts > confere o valor resolvido depois das microtarefas de cada caso
+AssertionError: expected [ false, false ] to deeply equal [ true, true ]
+
+- Expected
++ Received
+
+  [
+-   true,
+-   true,
++   false,
++   false,
+  ]
+
+ ❯ tests/unit/promessas-execucao.test.ts:9:83
+      7|   {label:'chamada independente',expression:'dobro(-4)',expected:-8,agu…
+      8|  ]);
+      9|  expect(resultado.error).toBeUndefined();expect(resultado.tests.map(t=…
+       |                                                                                   ^
+     10|  const errado=await evaluate('async function dobro(n){return n;}','aul…
+     11|  expect(errado.passed).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/unit/promessas-execucao.test.ts > não confunde uma Promise rejeitada com término correto
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/promessas-execucao.test.ts:15:63
+     13| it('não confunde uma Promise rejeitada com término correto',async()=>{
+     14|  const resultado=await evaluate('async function falhar(){await Promise…
+     15|  expect(resultado.passed).toBe(false);expect(resultado.error).toContai…
+       |                                                               ^
+     16| });
+     17| it('encerra uma Promise que depende de um evento ausente sem bloquear …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/unit/promessas-execucao.test.ts > encerra uma Promise que depende de um evento ausente sem bloquear o host
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/promessas-execucao.test.ts:20:64
+     18|  for(let indice=0;indice<3;indice++){
+     19|   const resultado=await evaluate('function esperar(){return new Promis…
+     20|   expect(resultado.passed).toBe(false);expect(resultado.error).toConta…
+       |                                                                ^
+     21|  }
+     22|  expect((await evaluate('console.log(typeof fetch, typeof setTimeout, …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/unit/promessas-execucao.test.ts > o limite de microtarefas é compartilhado entre os casos
+AssertionError: expected [ { label: 'primeiro', …(1) }, …(1) ] to deeply equal [ { label: 'primeiro', passed: true } ]
+
+- Expected
++ Received
+
+  [
+    {
+      "label": "primeiro",
+-     "passed": true,
++     "passed": false,
++   },
++   {
++     "label": "segundo",
++     "passed": false,
+    },
+  ]
+
+ ❯ tests/unit/promessas-execucao.test.ts:29:26
+     27|   {label:'segundo',expression:'percorrer()',expected:600,aguardar:true}
+     28|  ]);
+     29|  expect(resultado.tests).toEqual([{label:'primeiro',passed:true}]);exp…
+       |                          ^
+     30| });
+     31| it('mantém casos síncronos e não executa microtarefas extras sem solic…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  5 failed | 2 passed (7)
+   Start at  12:47:31
+   Duration  2.07s (transform 55%, import 20%, tests 19%, worker 7%)
+
+    Isolate  2 workers spawned · ~503ms startup each (spawn + environment, per file)
+             at least ~503ms faster with isolate: false — reuses workers across files instead of one per file
+

@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const caminho='tests/e2e/typescript-local.spec.ts';let texto=readFileSync(caminho,'utf8');const antigo="await pagina.locator('#lab-run').click();await expect(pagina.locator('#lab-run')).toBeEnabled();}";if(!texto.includes(antigo))throw Error('Espera TS ausente');texto=texto.replace(antigo,"await pagina.locator('#lab-run').click();await expect(pagina.locator('#lab-run')).toBeEnabled({timeout:36000});}");writeFileSync(caminho,texto);

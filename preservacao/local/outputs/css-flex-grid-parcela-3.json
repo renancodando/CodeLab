@@ -1,0 +1,1177 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--list",
+      "--reporter=json",
+      "--shard=3/4"
+    ],
+    "configFile": "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\playwright.config.ts",
+    "rootDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": {
+      "current": 3,
+      "total": 4
+    },
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "inicio-pratica.spec.ts",
+      "file": "inicio-pratica.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "primeiras instruções: ordem, texto, teclado e assistência persistem",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a0a570e7991979f321cd-46e0a41d4003a56241d4",
+          "file": "inicio-pratica.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "entrada e saída: corrige frete com entradas variadas, offline e retomada",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a0a570e7991979f321cd-f9592fed2772cd49c139",
+          "file": "inicio-pratica.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "decomposição: dependências, média equivalente, revisão e conteúdo preservado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a0a570e7991979f321cd-e1e01dccbca70e8c1c7e",
+          "file": "inicio-pratica.spec.ts",
+          "line": 33,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "interactive-lesson.spec.ts",
+      "file": "interactive-lesson.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "consultar solução não libera avaliação e leitura completa mantém a rota",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "68d159dc2bd2d02eec9c-0f85cc87f9b655363362",
+          "file": "interactive-lesson.spec.ts",
+          "line": 73,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "jornada real dos 25 passos com checkpoints entre contextos",
+          "file": "interactive-lesson.spec.ts",
+          "line": 36,
+          "column": 15,
+          "specs": [
+            {
+              "title": "resolve os primeiros doze passos e conserva respostas após recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\tests\\e2e\\interactive-lesson.spec.ts",
+                        "line": 36,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68d159dc2bd2d02eec9c-543b0a99cdc97fe3c7a0",
+              "file": "interactive-lesson.spec.ts",
+              "line": 38,
+              "column": 2
+            },
+            {
+              "title": "retoma o checkpoint real e conclui todos os passos restantes com avaliação",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\tests\\e2e\\interactive-lesson.spec.ts",
+                        "line": 36,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68d159dc2bd2d02eec9c-ebea0732fe5c32aecc3f",
+              "file": "interactive-lesson.spec.ts",
+              "line": 47,
+              "column": 2
+            },
+            {
+              "title": "alteração invalida conclusão, assistência encurta revisão e recomeço limpa a sessão",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\tests\\e2e\\interactive-lesson.spec.ts",
+                        "line": 36,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68d159dc2bd2d02eec9c-8357706c31418ddc1886",
+              "file": "interactive-lesson.spec.ts",
+              "line": 57,
+              "column": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "javascript-closures.spec.ts",
+      "file": "javascript-closures.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "closures: depuração executada conserva respostas e assistência offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d04270a378b7740830e8-824ea5d8633c0deae60a",
+          "file": "javascript-closures.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "javascript-importacao.spec.ts",
+      "file": "javascript-importacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "apresentação literal preserva sinais de HTML sem criar elementos recebidos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "eb64dd0ef3ce5dd3a9de-7eef7e4eba04b98d5b92",
+          "file": "javascript-importacao.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "importação: depuração executável, previsão e apresentação persistem offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "eb64dd0ef3ce5dd3a9de-17b495be157771b777a7",
+          "file": "javascript-importacao.spec.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "javascript-properties.spec.ts",
+      "file": "javascript-properties.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "JavaScript: propriedades e depuração executada retomam offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "792730abdaf92b8178af-5222d0e8fbf832f4018f",
+          "file": "javascript-properties.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "lacos-fundamentos.spec.ts",
+      "file": "lacos-fundamentos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "laços originais: pausas nos capítulos, depuração real e retomada offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e68da33dcaa9caa8143d-e94490b63be6887b3669",
+          "file": "lacos-fundamentos.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "preparação original inclui passos e investigação sem gabarito ou domínio por leitura",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e68da33dcaa9caa8143d-c66b421e8c4e66a741d6",
+          "file": "lacos-fundamentos.spec.ts",
+          "line": 18,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "learning-hub.spec.ts",
+      "file": "learning-hub.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "depuração confere bordas, preserva solução oculta e mantém domínio por habilidade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-6e089ed38eba21c91320",
+          "file": "learning-hub.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "leitura não pontua domínio, sessão progride e retoma sem duplicar atividades",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-de2a3c9041d725ac8a9d",
+          "file": "learning-hub.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "Python, C# e C++ continuam offline após preparação, sem submissões externas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-16e38c4cd32a5a0fb9c4",
+          "file": "learning-hub.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "assistência não fabrica domínio e pausas aparecem junto à teoria",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-e0748915b0d53232ac31",
+          "file": "learning-hub.spec.ts",
+          "line": 59,
+          "column": 1
+        },
+        {
+          "title": "projeto retoma vários arquivos, exporta ZIP e invalida evidência após editar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-752b593bc580791942c8",
+          "file": "learning-hub.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "seis percursos têm prática conceitual corrigida sem aprovar a implementação aberta",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-123159c4e3c3c3f57e7c",
+          "file": "learning-hub.spec.ts",
+          "line": 75,
+          "column": 1
+        },
+        {
+          "title": "duas revisões antigas vêm primeiro e um erro agenda retorno mais curto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-f6549bf3fc0a1ac7c257",
+          "file": "learning-hub.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "falha ao instalar recursos offline informa indisponibilidade sem bloquear estudo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-2848a344bf1513ff7c86",
+          "file": "learning-hub.spec.ts",
+          "line": 91,
+          "column": 1
+        },
+        {
+          "title": "quota indisponível preserva arquivos em memória e permite recuperar pela exportação",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-fe575bb23cdf63982992",
+          "file": "learning-hub.spec.ts",
+          "line": 97,
+          "column": 1
+        },
+        {
+          "title": "consultar solução após acertar revisão encurta o intervalo imediatamente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-65bb1be12536082440c7",
+          "file": "learning-hub.spec.ts",
+          "line": 105,
+          "column": 1
+        },
+        {
+          "title": "backup válido acima de 2 MB recupera todos os projetos e evidências",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-7563cbf0f7ed84bdc3c1",
+          "file": "learning-hub.spec.ts",
+          "line": 115,
+          "column": 1
+        },
+        {
+          "title": "restauração com falha de gravação mantém a jornada anterior",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e73d310002eabaea34a-cff61fab323b59b68a7a",
+          "file": "learning-hub.spec.ts",
+          "line": 126,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "learning.spec.ts",
+      "file": "learning.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "primeira missão, pistas, execução e persistência",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-958bf35a11bce58a2111",
+          "file": "learning.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "erros e execução infinita não travam a interface",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-f7a88fe5a310f6e26f40",
+          "file": "learning.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "busca encontra erro e abre conteúdo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-0cd262fe6f506720d2d6",
+          "file": "learning.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "laboratório HTML renderiza sem acesso ao documento pai",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-4b1ccccca213c8ff0c19",
+          "file": "learning.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "clima: previsão não confirma observação e falha em outra cidade indica dados insuficientes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-5243bf28eec48ab3206b",
+          "file": "learning.spec.ts",
+          "line": 44,
+          "column": 1
+        },
+        {
+          "title": "larguras contínuas sem overflow da página",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-5e44d04657868c6b5e2f",
+          "file": "learning.spec.ts",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "acessibilidade da home e dos fluxos principais",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-d8dbc59530046081a172",
+          "file": "learning.spec.ts",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "páginas públicas entregam conteúdo sem JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-2c937629af6c0065e6e3",
+          "file": "learning.spec.ts",
+          "line": 57,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "local-platform.spec.ts",
+      "file": "local-platform.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Catálogo de aulas acessíveis, resposta correta persiste e resposta errada não conclui",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-865a94e7eb60cbff84f0",
+          "file": "local-platform.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "projetos separados persistem, podem ser renomeados, exportados e removidos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-89e76ef2088c71c3edea",
+          "file": "local-platform.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "exportação e importação preservam jornada local",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-d800378798ad2cbab0d0",
+          "file": "local-platform.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "cancelamento, limite de memória e recuperação do executor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-cd949ff666191b6daa25",
+          "file": "local-platform.spec.ts",
+          "line": 27,
+          "column": 1
+        },
+        {
+          "title": "trocas de tela descartam editores visíveis e não acumulam workers ou geometria",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-3b78f0f786832520e1fe",
+          "file": "local-platform.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "geolocalização negada e som opt-in respeitam preferências",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-832fbe0b64ed1b7357ae",
+          "file": "local-platform.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "renderização 3D sem erros e progresso sem chamadas de conta",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-73a079004106b9bb92be",
+          "file": "local-platform.spec.ts",
+          "line": 44,
+          "column": 1
+        },
+        {
+          "title": "build de produção executa a missão com WebAssembly e CSP do servidor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-1716b41e7a00c63c0a6e",
+          "file": "local-platform.spec.ts",
+          "line": 46,
+          "column": 1
+        },
+        {
+          "title": "a comunidade foi removida da navegação",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0fd8ffde51de0d57db81-6e83298ba6c4ad988b1e",
+          "file": "local-platform.spec.ts",
+          "line": 50,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "meteorologia-visual.spec.ts",
+      "file": "meteorologia-visual.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "treze cenários atmosféricos renderizam sem erros em desktop e celular",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b73d007025179f7e3125-a773a7e071a1ad656e74",
+          "file": "meteorologia-visual.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "meteorologia.spec.ts",
+      "file": "meteorologia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "modelo prevê tempestade, interface informa estimativa e o mundo permanece sem chuva local",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "efb3bd9dab73b320ed3c-e5fbba18199ccd35a22a",
+          "file": "meteorologia.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "observação próxima é apresentada sem afirmar chuva no ponto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "efb3bd9dab73b320ed3c-9bcb9273d9fe8e87b7bf",
+          "file": "meteorologia.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "observação expirada não reativa chuva e informa a idade real do boletim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "efb3bd9dab73b320ed3c-92e7ba72fce6d195097e",
+          "file": "meteorologia.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "rede indisponível preserva navegação, detalhes e a jornada em telas estreitas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "efb3bd9dab73b320ed3c-5165a8364d8669248ef2",
+          "file": "meteorologia.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "METAR SN recente ativa partículas sólidas sem chuva líquida",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "efb3bd9dab73b320ed3c-0c3a8d08b0cbc1b2451a",
+          "file": "meteorologia.spec.ts",
+          "line": 45,
+          "column": 2
+        },
+        {
+          "title": "METAR GR recente ativa partículas sólidas sem chuva líquida",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "efb3bd9dab73b320ed3c-f7fbe1a9565b3c9886c8",
+          "file": "meteorologia.spec.ts",
+          "line": 45,
+          "column": 2
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T21:08:52.586Z",
+    "duration": 3915.486999999999,
+    "expected": 0,
+    "skipped": 49,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

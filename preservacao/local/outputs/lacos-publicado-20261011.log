@@ -1,0 +1,11 @@
+
+Running 4 tests using 1 worker
+
+(node:2228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\lacos-fundamentos.spec.ts:6:1 › laços originais: pausas nos capítulos, depuração real e retomada offline (60.0s)
+  ok 2 tests\e2e\lacos-fundamentos.spec.ts:17:1 › preparação original inclui passos e investigação sem gabarito ou domínio por leitura (1.5m)
+  ok 3 tests\e2e\sql-null.spec.ts:5:1 › SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio (16.2s)
+  ok 4 tests\e2e\sql-null.spec.ts:39:1 › SQL: ausência e contratos retomam offline sem fingir execução de consultas (28.3s)
+
+  4 passed (3.9m)

@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const texto=readFileSync('../../outputs/playwright-html-sql-local.config.mjs','utf8').replace("testMatch:['html-formularios.spec.ts','sql-local.spec.ts']","testMatch:'html-formularios.spec.ts'").replace('http://127.0.0.1:5173','https://code-lab-omega.vercel.app').replace('resultados-html-sql/','resultados-html-publicado/');writeFileSync('../../outputs/playwright-html-publicado.config.mjs',texto);

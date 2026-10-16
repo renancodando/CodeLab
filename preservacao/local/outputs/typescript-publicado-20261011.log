@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:5904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\typescript-local.spec.ts:10:1 › TypeScript: diagnósticos reais, JavaScript emitido e isolamento sem carga antecipada (1.3m)
+  ok 2 tests\e2e\typescript-local.spec.ts:24:1 › TypeScript: projetos e backup retornam offline sem perder o original (1.2m)
+  ok 3 tests\e2e\typescript-local.spec.ts:33:1 › TypeScript: cancelar, limitar execução e invalidar resultado ao editar ou sair (48.8s)
+  ok 4 tests\e2e\typescript-local.spec.ts:54:1 › TypeScript: primeiro uso offline mantém fonte exportável e erro recuperável (8.1s)
+  ok 5 tests\e2e\typescript-local.spec.ts:61:2 › prazo do módulo TypeScript › expira a importação, cancela espera e ignora resposta atrasada (13.1s)
+  ok 6 tests\e2e\typescript-local.spec.ts:73:2 › prazo de abertura do editor › conserva exportação sem editor, encerra espera e recupera após recarregar (24.9s)
+
+  6 passed (4.6m)

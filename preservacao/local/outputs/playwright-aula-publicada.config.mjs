@@ -1,0 +1,2 @@
+import configuracao from './playwright-publicado.config.mjs';
+export default {...configuracao,testMatch:['interactive-lesson.spec.ts'],reporter:'list',outputDir:new URL('./aula-publicada-artefatos/',import.meta.url).pathname.replace(/^\/([A-Za-z]:)/,'$1')};

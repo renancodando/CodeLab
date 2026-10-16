@@ -1,0 +1,17 @@
+import {readFile,mkdtemp} from 'node:fs/promises';
+import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import ts from '../work/CodeLab/node_modules/typescript/lib/typescript.js';
+import {montarCasosLinq,verificarLinqCsharp} from '../work/CodeLab/tests/fixtures/csharp-linq.mjs';
+const compilar=fonte=>ts.transpileModule(fonte,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+const url=fonte=>'data:text/javascript;base64,'+Buffer.from(fonte).toString('base64');
+const atividadesUrl=url(compilar(await readFile(new URL('../work/CodeLab/src/content/practice.ts',import.meta.url),'utf8')));
+const {practiceActivities}=await import(atividadesUrl);
+const fonteAvaliador=compilar(await readFile(new URL('../work/CodeLab/src/learning/practice.ts',import.meta.url),'utf8')).replace(/from ['"]\.\.\/content\/practice['"]/g,'from '+JSON.stringify(atividadesUrl));
+const {getPracticeSolution}=await import(url(fonteAvaliador));
+const {default:curso}=await import(url(compilar(await readFile(new URL('../work/CodeLab/src/content/deep/csharp.ts',import.meta.url),'utf8'))));
+const aula=curso.lessons.find(aula=>aula.id==='cs-colecoes-linq');
+const casos=montarCasosLinq(practiceActivities,getPracticeSolution);
+casos.push({id:'exemplo-preservado',codigo:aula.code,saida:aula.expectedOutput},{id:'solucao-preservada',codigo:aula.solution,saida:aula.solutionOutput??[]});
+const raiz=await mkdtemp(join(fileURLToPath(new URL('.',import.meta.url)),'linq-genericos-'));
+console.log(await verificarLinqCsharp(raiz,casos)+' programas .NET conferidos; artefatos em '+raiz);

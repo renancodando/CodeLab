@@ -1,0 +1,42 @@
+
+Running 8 tests using 1 worker
+
+(node:19532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\assincrono-pratica.spec.ts:11:1 › async: espera, diagnóstico HTTP e correção real conservam assistência, revisão e projeto (1.3m)
+(node:17396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\e2e\assincrono-pratica.spec.ts:24:1 › Promises reais funcionam offline e uma Promise pendente não impede a tentativa seguinte (33.4s)
+  ok 3 tests\e2e\assincrono-pratica.spec.ts:34:1 › uma jornada com 128 habilidades conserva novas evidências na exportação e restauração (28.0s)
+  ok 4 tests\e2e\html-dados-acessibilidade.spec.ts:10:1 › referências HTML: cabeçalhos, linhas e nome do link com imagem são conferidos no navegador (10.1s)
+  ok 5 tests\e2e\html-dados-acessibilidade.spec.ts:19:1 › referências acessíveis: Tab, nome visível, Enter e Espaço mantêm o foco e atualizam a região existente (8.2s)
+  ok 6 tests\e2e\html-dados-acessibilidade.spec.ts:37:25 › HTML praticado: imagens-tabelas preserva conteúdo, assistência e revisão (37.0s)
+  ok 7 tests\e2e\html-dados-acessibilidade.spec.ts:37:25 › HTML praticado: html-acessivel preserva conteúdo, assistência e revisão (33.9s)
+  ok 8 tests\e2e\html-dados-acessibilidade.spec.ts:46:1 › tabelas e acessibilidade conservam as reconstruções offline sem compilar código do aluno (21.1s)
+
+
+  1) tests\e2e\assincrono-pratica.spec.ts:11:1 › async: espera, diagnóstico HTTP e correção real conservam assistência, revisão e projeto 
+
+    Test timeout of 60000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-html-dados-publico-54\assincrono-pratica-async-e-1f20e-sistência-revisão-e-projeto\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-html-dados-publico-54\assincrono-pratica-async-e-1f20e-sistência-revisão-e-projeto\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-html-dados-publico-54\assincrono-pratica-async-e-1f20e-sistência-revisão-e-projeto\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-html-dados-publico-54\assincrono-pratica-async-e-1f20e-sistência-revisão-e-projeto\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-html-dados-publico-54\assincrono-pratica-async-e-1f20e-sistência-revisão-e-projeto\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\assincrono-pratica.spec.ts:11:1 › async: espera, diagnóstico HTTP e correção real conservam assistência, revisão e projeto 
+  7 passed (4.8m)

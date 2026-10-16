@@ -1,0 +1,599 @@
+{
+  "capturadoEm": "2026-10-11T18:37:51.003Z",
+  "branch": "pratica/js-importacao-atomica",
+  "head": "67ed7a75ef3e36309e315467325d6a54b663bac0",
+  "publicado": false,
+  "totalAulas": 137,
+  "totalSemPausas": 84,
+  "limite": "Ausência de pausa corrigível não significa ausência de exercícios. Uma pausa não certifica profundidade ou domínio de todos os temas da aula. Tópicos da matriz cobrem somente percursos aprofundados; null indica que não há essa contagem para a aula original. Missões e conferências antigas continuam separadas.",
+  "aulasSemPausas": [
+    {
+      "trilha": "comecando",
+      "aula": "programar",
+      "titulo": "Programas, código e instruções",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "comecando",
+      "aula": "entrada-saida",
+      "titulo": "Entrada, processamento e saída",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "comecando",
+      "aula": "passos",
+      "titulo": "Decompor um problema",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "comecando",
+      "aula": "tipos-erros",
+      "titulo": "Sintaxe, execução e lógica",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "comecando",
+      "aula": "investigar",
+      "titulo": "Ler mensagens e investigar",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "logica",
+      "aula": "valores",
+      "titulo": "Valores, tipos e variáveis",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "logica",
+      "aula": "decisoes",
+      "titulo": "Operadores, comparações e decisões",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "logica",
+      "aula": "repeticoes",
+      "titulo": "Loops e condições de parada",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "logica",
+      "aula": "funcoes",
+      "titulo": "Funções, parâmetros, retorno e escopo",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "logica",
+      "aula": "colecoes",
+      "titulo": "Arrays, objetos e algoritmos",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "javascript",
+      "aula": "strings-numbers",
+      "titulo": "Strings, números e conversões",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "javascript",
+      "aula": "array-metodos",
+      "titulo": "Arrays, callbacks e transformação",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "javascript",
+      "aula": "objetos-modulos",
+      "titulo": "Objetos, destructuring e módulos",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "javascript",
+      "aula": "erros-json",
+      "titulo": "Exceções, JSON e contratos",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "javascript",
+      "aula": "async",
+      "titulo": "Promises, async/await e fetch",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "html",
+      "aula": "documento",
+      "titulo": "A estrutura de um documento",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "html",
+      "aula": "semantica",
+      "titulo": "Semântica, navegação e links",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "html",
+      "aula": "formularios",
+      "titulo": "Formulários, labels e validação",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "html",
+      "aula": "imagens-tabelas",
+      "titulo": "Imagens e tabelas de dados",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "html",
+      "aula": "html-acessivel",
+      "titulo": "Verificar a acessibilidade",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "css",
+      "aula": "cascata",
+      "titulo": "Seletores, cascata e custom properties",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "css",
+      "aula": "box-model",
+      "titulo": "Box model, unidades e tipografia",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "css",
+      "aula": "flex-position",
+      "titulo": "Flexbox e posicionamento",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "css",
+      "aula": "grid-responsivo",
+      "titulo": "Grid, responsividade e container queries",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "css",
+      "aula": "animacoes",
+      "titulo": "Animações com movimento reduzido",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "dom",
+      "aula": "selecionar",
+      "titulo": "Selecionar e alterar elementos",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "dom",
+      "aula": "eventos",
+      "titulo": "Eventos e delegação",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "dom",
+      "aula": "estado-formulario",
+      "titulo": "Formulário, validação e estado",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "dom",
+      "aula": "componentes",
+      "titulo": "Componentes e ciclo de vida",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "dom",
+      "aula": "armazenamento",
+      "titulo": "Armazenamento local e recuperação",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "apis",
+      "aula": "http",
+      "titulo": "HTTP, rotas e códigos de status",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "apis",
+      "aula": "metodos",
+      "titulo": "GET, POST, PUT, PATCH e DELETE",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "apis",
+      "aula": "fetch-estados",
+      "titulo": "Fetch, headers e cancelamento",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "apis",
+      "aula": "identidade-api",
+      "titulo": "Autenticação e autorização: conceitos",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "apis",
+      "aula": "limites-cache",
+      "titulo": "Rate limits, cache e recuperação",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "csharp",
+      "aula": "dotnet",
+      "titulo": "SDK, tipos e primeiro programa",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "csharp",
+      "aula": "csharp-controle",
+      "titulo": "Condições, loops e métodos",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "csharp",
+      "aula": "csharp-objetos",
+      "titulo": "Classes, objetos, herança e interfaces",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "csharp",
+      "aula": "csharp-colecoes",
+      "titulo": "Generics, coleções e LINQ",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "csharp",
+      "aula": "csharp-async",
+      "titulo": "Exceções, arquivos, async e testes",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "aspnet",
+      "aula": "aspnet-projeto",
+      "titulo": "Projeto, Program.cs e rotas",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "aspnet",
+      "aula": "aspnet-di",
+      "titulo": "Injeção de dependência e serviços",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "aspnet",
+      "aula": "aspnet-dto",
+      "titulo": "DTOs, validação e respostas REST",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "aspnet",
+      "aula": "aspnet-pipeline",
+      "titulo": "Middleware, logging e configuração",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "aspnet",
+      "aula": "aspnet-protecao",
+      "titulo": "Autenticação, autorização e limites",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "banco",
+      "aula": "sql-modelagem",
+      "titulo": "Tabelas, tipos e chaves",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "banco",
+      "aula": "sql-crud",
+      "titulo": "SELECT, INSERT, UPDATE e DELETE",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "banco",
+      "aula": "sql-join",
+      "titulo": "JOIN, agrupamento e agregações",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "banco",
+      "aula": "sql-transacao",
+      "titulo": "Transações e consistência",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "banco",
+      "aula": "sql-indices",
+      "titulo": "Índices, parâmetros e SQL Injection",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "fullstack",
+      "aula": "fullstack-arquitetura",
+      "titulo": "As responsabilidades de cada parte",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "fullstack",
+      "aula": "fullstack-integracao",
+      "titulo": "Integração e estados da interface",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "fullstack",
+      "aula": "fullstack-testes",
+      "titulo": "Testes de unidade, integração e jornada",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "fullstack",
+      "aula": "fullstack-config",
+      "titulo": "Configuração, deploy e observação",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "fullstack",
+      "aula": "fullstack-memoria",
+      "titulo": "Memória, desempenho e ciclo de vida",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "projetos",
+      "aula": "projeto-diario",
+      "titulo": "Diário de ideias",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "projetos",
+      "aula": "projeto-tarefas",
+      "titulo": "Organizador de pequenos passos",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "projetos",
+      "aula": "projeto-clima",
+      "titulo": "Painel de clima com cache",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "projetos",
+      "aula": "projeto-api",
+      "titulo": "Catálogo com ASP.NET e SQLite",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "projetos",
+      "aula": "projeto-entrega",
+      "titulo": "Revisar, documentar e entregar",
+      "entradasIntroduzidas": null,
+      "origem": "original"
+    },
+    {
+      "trilha": "python-completo",
+      "aula": "py-numeros-texto",
+      "titulo": "Python: números exatos, texto e conversão de entrada",
+      "entradasIntroduzidas": 5,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "python-completo",
+      "aula": "py-concorrencia",
+      "titulo": "Python: concorrência, async e paralelismo",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "python-completo",
+      "aula": "py-engenharia",
+      "titulo": "Python: tipagem, testes, pacotes e desempenho",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "typescript-completo",
+      "aula": "ts-genericos",
+      "titulo": "TypeScript: genéricos, coleções e variância",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "typescript-completo",
+      "aula": "ts-genericos-relacoes",
+      "titulo": "TypeScript: genéricos que preservam relações entre dados",
+      "entradasIntroduzidas": 1,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "typescript-completo",
+      "aula": "ts-tipos-avancados",
+      "titulo": "TypeScript: transformação e programação de tipos",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "cpp-completo",
+      "aula": "cpp-texto-conversao",
+      "titulo": "C++: entrada textual, conversão completa e estados de erro",
+      "entradasIntroduzidas": 2,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "cpp-completo",
+      "aula": "cpp-concorrencia-engenharia",
+      "titulo": "C++: concorrência, build e desempenho",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "javascript-completo",
+      "aula": "js-assincrono",
+      "titulo": "JavaScript: promises, concorrência e cancelamento",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "javascript-completo",
+      "aula": "js-promessas-contratos",
+      "titulo": "JavaScript: promises, propagação de falhas e concorrência limitada",
+      "entradasIntroduzidas": 2,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "html-completo",
+      "aula": "html-documentos",
+      "titulo": "HTML: documento, árvore e semântica",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "html-completo",
+      "aula": "html-arvore-semantica",
+      "titulo": "HTML: parser, árvore do documento e estrutura semântica",
+      "entradasIntroduzidas": 3,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "html-completo",
+      "aula": "html-texto-links",
+      "titulo": "HTML: texto, links, listas e tabelas",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "html-completo",
+      "aula": "html-plataforma",
+      "titulo": "HTML: DOM, componentes e integração da plataforma",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "css-completo",
+      "aula": "css-caixas",
+      "titulo": "CSS: caixas, fluxo e posicionamento",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "css-completo",
+      "aula": "css-visual-movimento",
+      "titulo": "CSS: tipografia, cor e movimento",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "css-completo",
+      "aula": "css-arquitetura",
+      "titulo": "CSS: arquitetura, compatibilidade e depuração",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "csharp-completo",
+      "aula": "cs-colecoes-linq",
+      "titulo": "C#: genéricos, coleções e LINQ",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "csharp-completo",
+      "aula": "cs-objetos-contratos",
+      "titulo": "C#: objetos, interfaces, records e padrões",
+      "entradasIntroduzidas": 8,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "csharp-completo",
+      "aula": "cs-runtime-avancado",
+      "titulo": "C#: runtime, memória e recursos avançados",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "csharp-completo",
+      "aula": "cs-engenharia",
+      "titulo": "C#: testes, pacotes e arquitetura .NET",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "sql-completo",
+      "aula": "sql-agregacoes-janelas",
+      "titulo": "SQL: agregações, janelas e análise",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "sql-completo",
+      "aula": "sql-indices-planos",
+      "titulo": "SQL: índices, planos e otimização",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    },
+    {
+      "trilha": "sql-completo",
+      "aula": "sql-esquema-avancado",
+      "titulo": "SQL: views, recursão, JSON e evolução",
+      "entradasIntroduzidas": 9,
+      "origem": "aprofundada"
+    }
+  ]
+}

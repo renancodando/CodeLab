@@ -1,0 +1,12 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+
+ Test Files  4 passed (4)
+      Tests  50 passed (50)
+   Start at  11:44:35
+   Duration  7.59s (tests 77%, transform 15%, import 8%, worker 1%)
+
+    Isolate  4 workers spawned · ~410ms startup each (spawn + environment, per file)
+             at least ~1.23s faster with isolate: false — reuses workers across files instead of one per file
+

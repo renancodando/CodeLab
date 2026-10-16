@@ -1,0 +1,17 @@
+
+Running 10 tests using 1 worker
+
+(node:9172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\assincrono-pratica.spec.ts:11:1 › async: espera, diagnóstico HTTP e correção real conservam assistência, revisão e projeto (11.5s)
+  ok  2 tests\e2e\assincrono-pratica.spec.ts:24:1 › Promises reais funcionam offline e uma Promise pendente não impede a tentativa seguinte (5.8s)
+  ok  3 tests\e2e\assincrono-pratica.spec.ts:34:1 › uma jornada com 128 habilidades conserva novas evidências na exportação e restauração (8.0s)
+  ok  4 tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: array-metodos conserva teoria, projeto e demonstração independente (8.7s)
+  ok  5 tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: objetos-modulos conserva teoria, projeto e demonstração independente (8.2s)
+  ok  6 tests\e2e\dados-contratos.spec.ts:13:25 › dados e contratos: erros-json conserva teoria, projeto e demonstração independente (10.8s)
+  ok  7 tests\e2e\dados-contratos.spec.ts:25:1 › as três produções funcionam offline e preservam tentativas sem execução remota (5.4s)
+  ok  8 tests\e2e\dados-contratos.spec.ts:35:1 › a correção de frete mantém o campo antigo mesmo com habilidade de produção (2.1s)
+  ok  9 tests\e2e\ordem-diaria.spec.ts:6:1 › a sessão nova começa pelas instruções e conserva o plano antigo de valores offline (4.9s)
+  ok 10 tests\e2e\ordem-diaria.spec.ts:26:1 › a reconstrução na aula conclui a prática de um plano antigo sem substituir sua sequência (5.5s)
+
+  10 passed (1.2m)

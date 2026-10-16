@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const caminho='tests/unit/html-formularios.test.ts';let texto=readFileSync(caminho,'utf8').replace("buildDailySession(freshAdaptive(),{now:new Date('2026-10-11T12:00:00Z'),completedLessons:{},completedMissions:[]})","buildDailySession(freshAdaptive(),{...adaptiveCatalog,preferredLanguage:'html'},{now:Date.parse('2026-10-11T12:00:00Z'),timeZone:'UTC'})");writeFileSync(caminho,texto);

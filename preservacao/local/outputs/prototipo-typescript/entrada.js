@@ -1,0 +1,1 @@
+window.iniciarCompilador=()=>new Worker(new URL('./compilador.js',import.meta.url),{type:'module'});

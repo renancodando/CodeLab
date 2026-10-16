@@ -1,0 +1,1256 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--list",
+      "--reporter=json",
+      "--shard=1/4"
+    ],
+    "configFile": "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\playwright.config.ts",
+    "rootDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": {
+      "current": 1,
+      "total": 4
+    },
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "api.spec.ts",
+      "file": "api.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "API sem contas e sem progresso remoto, catálogo completo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "1ea1b1599cbc08f16936-3f5f4370f1b9280d3ed6",
+          "file": "api.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "armazenamento-real.spec.ts",
+      "file": "armazenamento-real.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "quota real preserva checkpoint, exporta trabalho em memória e volta a salvar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "52209151acbe91c20000-47a12ffecc6b0c7c4682",
+          "file": "armazenamento-real.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "assincrono-pratica.spec.ts",
+      "file": "assincrono-pratica.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "async: espera, diagnóstico HTTP e correção real conservam assistência, revisão e projeto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d4916502d0db170a9143-16a266203110d24d115d",
+          "file": "assincrono-pratica.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "Promises reais funcionam offline e uma Promise pendente não impede a tentativa seguinte",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d4916502d0db170a9143-98ffa855fec19c07079a",
+          "file": "assincrono-pratica.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "uma jornada com 128 habilidades conserva novas evidências na exportação e restauração",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d4916502d0db170a9143-7f92b27736591ff58ae1",
+          "file": "assincrono-pratica.spec.ts",
+          "line": 34,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "cpp-conceitos.spec.ts",
+      "file": "cpp-conceitos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C++20: requisitos, instanciação e sobrecargas retomam offline com assistência",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "55ab5a63b210ade7e2a4-e9f51de5cd261d1956e3",
+          "file": "cpp-conceitos.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "cpp-iterators.spec.ts",
+      "file": "cpp-iterators.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C++: previsão, reconstrução e depuração retomam offline sem compilador",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "fccc6d5f6406614c75de-106bb1f06be323856b39",
+          "file": "cpp-iterators.spec.ts",
+          "line": 2,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "cpp-posse.spec.ts",
+      "file": "cpp-posse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C++: posse e vida conservam decisões offline sem afirmar compilação",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5e47247f7bec4d956d37-7ab8f74c93f6428b7ec8",
+          "file": "cpp-posse.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "csharp-cancelamento.spec.ts",
+      "file": "csharp-cancelamento.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C#: cancelamento, vaga e token vinculado retomam offline sem executor externo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "bd21f41d4f38c7fe5b74-2dfa7624fda632843f12",
+          "file": "csharp-cancelamento.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "csharp-iteradores.spec.ts",
+      "file": "csharp-iteradores.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C#: iteradores conservam tentativas, assistência e decisões offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "1e552bfeaf24e3a139a3-48a09675c9e39cf9ffd6",
+          "file": "csharp-iteradores.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "csharp-linq.spec.ts",
+      "file": "csharp-linq.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C#: grupos e cópias internas conservam decisões offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "52764824fdde449a798a-106aee351298e62ade13",
+          "file": "csharp-linq.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "css-caixas.spec.ts",
+      "file": "css-caixas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "CSS: referências medem bordas, encolhimento e adesão após rolagem real",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db55e1036dc8769b7a01-f7508616fdb71766d54d",
+          "file": "css-caixas.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "CSS: caixas retomam offline com respostas, assistência e texto preservados",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db55e1036dc8769b7a01-52a6ad581bc3e7c299bd",
+          "file": "css-caixas.spec.ts",
+          "line": 43,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "css-cascata-unidades.spec.ts",
+      "file": "css-cascata-unidades.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "CSS nativo: especificidade, ordem e token inválido têm efeitos diferentes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "fd4d43b13782eef06f1b-057dd08838bb0e1c98ba",
+          "file": "css-cascata-unidades.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "CSS nativo: referências de unidade, entrelinha e herança reagem a mudanças independentes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "fd4d43b13782eef06f1b-bd3f71a1f8923cbeb56a",
+          "file": "css-cascata-unidades.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "CSS praticado: cascata conserva tentativas, assistência e projeto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "fd4d43b13782eef06f1b-bd2d75d55e8c08de05f1",
+          "file": "css-cascata-unidades.spec.ts",
+          "line": 69,
+          "column": 4
+        },
+        {
+          "title": "CSS praticado: box-model conserva tentativas, assistência e projeto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "fd4d43b13782eef06f1b-c65743b0f0ad458bb544",
+          "file": "css-cascata-unidades.spec.ts",
+          "line": 69,
+          "column": 4
+        },
+        {
+          "title": "CSS offline conserva uma alteração conceitual sem executar código livre",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "fd4d43b13782eef06f1b-2608bcb06d747e11662b",
+          "file": "css-cascata-unidades.spec.ts",
+          "line": 113,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "css-containers.spec.ts",
+      "file": "css-containers.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "CSS: instâncias respondem ao contexto e ao conteúdo da caixa",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5cbe5f37da89066e513c-c6d885c6c3616bb0811a",
+          "file": "css-containers.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "CSS: o bug de autoconsulta falha e o invólucro corrige o limite inclusivo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5cbe5f37da89066e513c-fa3c839296ea3b479d1b",
+          "file": "css-containers.spec.ts",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "CSS: nome da condição e referência cqi usam contextos independentes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5cbe5f37da89066e513c-78ac6eea596ee7411dc1",
+          "file": "css-containers.spec.ts",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "title": "CSS: base, conteúdo longo e ordem de foco sobrevivem ao contexto estreito",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5cbe5f37da89066e513c-d517ec7367e9e155c987",
+          "file": "css-containers.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "CSS: pausas conservam correção, assistência e retomada offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5cbe5f37da89066e513c-0b8bf2daecefe3fd23ba",
+          "file": "css-containers.spec.ts",
+          "line": 60,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "css-flex-grid.spec.ts",
+      "file": "css-flex-grid.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Flexbox nativo: trocar o eixo muda as coordenadas e o selo acompanha o cartão",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5b218dc63d6820970354-a8625bf2563bb9503db3",
+          "file": "css-flex-grid.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "Flexbox nativo: a fronteira de quebra conserva tamanho, conteúdo e ordem do teclado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5b218dc63d6820970354-31b721abc860a5f0a40b",
+          "file": "css-flex-grid.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "Grid nativo: conteúdo ocupa trilhas e cada instância consulta seu ancestral",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5b218dc63d6820970354-21bce0709724362932af",
+          "file": "css-flex-grid.spec.ts",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "Layout praticado: flex-position preserva projeto, assistência e revisão",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5b218dc63d6820970354-cbc46f6577d4fb69b535",
+          "file": "css-flex-grid.spec.ts",
+          "line": 100,
+          "column": 25
+        },
+        {
+          "title": "Layout praticado: grid-responsivo preserva projeto, assistência e revisão",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5b218dc63d6820970354-dbfd6916f614b1f7854a",
+          "file": "css-flex-grid.spec.ts",
+          "line": 100,
+          "column": 25
+        },
+        {
+          "title": "Layouts offline conservam previsão e alteração sem executar folhas CSS livres",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5b218dc63d6820970354-31a389f8521b291563cf",
+          "file": "css-flex-grid.spec.ts",
+          "line": 136,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "dados-contratos.spec.ts",
+      "file": "dados-contratos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dados e contratos: array-metodos conserva teoria, projeto e demonstração independente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b718c967e88ee10c2caa-0f12ae943cb92d000f64",
+          "file": "dados-contratos.spec.ts",
+          "line": 13,
+          "column": 25
+        },
+        {
+          "title": "dados e contratos: objetos-modulos conserva teoria, projeto e demonstração independente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b718c967e88ee10c2caa-8390f6d0f12b5942f222",
+          "file": "dados-contratos.spec.ts",
+          "line": 13,
+          "column": 25
+        },
+        {
+          "title": "dados e contratos: erros-json conserva teoria, projeto e demonstração independente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b718c967e88ee10c2caa-f8115983e908d7b3ab24",
+          "file": "dados-contratos.spec.ts",
+          "line": 13,
+          "column": 25
+        },
+        {
+          "title": "as três produções funcionam offline e preservam tentativas sem execução remota",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b718c967e88ee10c2caa-a158910c06bf60c31c52",
+          "file": "dados-contratos.spec.ts",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "a correção de frete mantém o campo antigo mesmo com habilidade de produção",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b718c967e88ee10c2caa-66dac7792fac34d383f0",
+          "file": "dados-contratos.spec.ts",
+          "line": 35,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "decisoes-fundamentos.spec.ts",
+      "file": "decisoes-fundamentos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "decisões originais: tabela de acesso e fronteiras persistem offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0a5a43bbeb7d6a5bd041-c8a5230c77b67267842a",
+          "file": "decisoes-fundamentos.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "diagnostico-colecoes.spec.ts",
+      "file": "diagnostico-colecoes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "erros: previsão, interrupção e correção de área com retorno persistido",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a054d9c43732c2111b2c-f717c99e0e43ba288195",
+          "file": "diagnostico-colecoes.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "investigação: caso mínimo, regressão, assistência e revisão funcionam offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a054d9c43732c2111b2c-52241b48d72225f55555",
+          "file": "diagnostico-colecoes.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "coleções: quantidade, limite e mutação antes de aceitar solução equivalente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a054d9c43732c2111b2c-cc8ebafbd8c6f6833085",
+          "file": "diagnostico-colecoes.spec.ts",
+          "line": 30,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "dialog-grid.spec.ts",
+      "file": "dialog-grid.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "HTML: modalidade, Escape, resultado e retorno do foco",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b518152567adb246a8bf-268cea7bf4cc2a10fd2b",
+          "file": "dialog-grid.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "HTML: exercício conserva validação e saída com campo vazio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b518152567adb246a8bf-3c9ee46fb7a6e2f94c8d",
+          "file": "dialog-grid.spec.ts",
+          "line": 32,
+          "column": 2
+        },
+        {
+          "title": "HTML: problema independente conserva validação e saída com campo vazio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b518152567adb246a8bf-6795498708b9ee9b0db8",
+          "file": "dialog-grid.spec.ts",
+          "line": 32,
+          "column": 2
+        },
+        {
+          "title": "HTML: rascunho bloqueia Escape e conserva descarte explícito",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b518152567adb246a8bf-71a08d79e6993c7b972d",
+          "file": "dialog-grid.spec.ts",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "CSS: auto-fill e auto-fit conferem sobra e trilha vazia",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b518152567adb246a8bf-1133d4b46b26a0019c7b",
+          "file": "dialog-grid.spec.ts",
+          "line": 67,
+          "column": 1
+        },
+        {
+          "title": "CSS: razão de trilhas e texto longo funcionam em contexto estreito",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b518152567adb246a8bf-d70aeefb1729f860c6bc",
+          "file": "dialog-grid.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "CSS: dense muda a posição sem mudar a ordem dos links e do foco",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b518152567adb246a8bf-bd64f5572092782ea2d9",
+          "file": "dialog-grid.spec.ts",
+          "line": 103,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "expanded-content.spec.ts",
+      "file": "expanded-content.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "novas trilhas abrem conteúdo completo e guardam progresso local",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ba19b9a1c8ce022f0991-d35744c0d5f23608b185",
+          "file": "expanded-content.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "busca encontra conceitos antes de carregar os capítulos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ba19b9a1c8ce022f0991-662d5d170de2cbe82306",
+          "file": "expanded-content.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "navegar durante carregamento não mostra uma aula antiga",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ba19b9a1c8ce022f0991-e9dabb445d91464197e5",
+          "file": "expanded-content.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "novas páginas entregam os capítulos sem JavaScript",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ba19b9a1c8ce022f0991-924ab61dd000ae61772d",
+          "file": "expanded-content.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "falha de download comunica o problema e permite tentar novamente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ba19b9a1c8ce022f0991-1f91828724025dc14f08",
+          "file": "expanded-content.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "exemplos HTML funcionam e inserem entradas como texto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ba19b9a1c8ce022f0991-12804f08e8e783bb0713",
+          "file": "expanded-content.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "exemplos CSS conservam caixas e mudam o layout pelo contêiner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ba19b9a1c8ce022f0991-a80ea531b698c7579a8b",
+          "file": "expanded-content.spec.ts",
+          "line": 66,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T21:08:26.063Z",
+    "duration": 6346.476000000001,
+    "expected": 0,
+    "skipped": 52,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

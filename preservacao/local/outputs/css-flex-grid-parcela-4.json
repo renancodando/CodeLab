@@ -1,0 +1,1238 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--list",
+      "--reporter=json",
+      "--shard=4/4"
+    ],
+    "configFile": "C:\\Users\\perei\\Documents\\Codex\\2026-10-03\\nao-m\\work\\CodeLab\\playwright.config.ts",
+    "rootDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": {
+      "current": 4,
+      "total": 4
+    },
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "ordem-diaria.spec.ts",
+      "file": "ordem-diaria.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a sessão nova começa pelas instruções e conserva o plano antigo de valores offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "60f0a3c11c3ffe7f8804-d4d40d08af00e2487526",
+          "file": "ordem-diaria.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "a reconstrução na aula conclui a prática de um plano antigo sem substituir sua sequência",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "60f0a3c11c3ffe7f8804-1956a8956c3e805fd06e",
+          "file": "ordem-diaria.spec.ts",
+          "line": 26,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "previa-html.spec.ts",
+      "file": "previa-html.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "prévia substitui documentos HTML e conserva limpeza ao parar e trocar linguagem",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "9360180b42e7b94ed1be-00a76d39a09bfa2584b9",
+          "file": "previa-html.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "HTML acima do limite interrompe a prévia anterior antes de mostrar o aviso",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "9360180b42e7b94ed1be-fb64eebebe60ed5a3859",
+          "file": "previa-html.spec.ts",
+          "line": 36,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "python-concorrencia.spec.ts",
+      "file": "python-concorrencia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Python: cancelamento e filas conservam progresso offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "7588b6c872422c67f78f-9c14c1b4db29485f7898",
+          "file": "python-concorrencia.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "python-csv.spec.ts",
+      "file": "python-csv.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Python CSV: previsão, cabeçalho e lote retomam offline sem execução remota",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "7811ef3352d518281949-19487739d8d8bfa6d517",
+          "file": "python-csv.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "python-descritores.spec.ts",
+      "file": "python-descritores.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Python: descritores conservam decisões, assistência e respostas offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2f27089a25a754cee900-1def49de75e22b959873",
+          "file": "python-descritores.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "python-engenharia.spec.ts",
+      "file": "python-engenharia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Python: testes que detectam defeitos conservam evidência offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "56d10211d166fc4617f8-91f39f04707d22749611",
+          "file": "python-engenharia.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "python-iterators.spec.ts",
+      "file": "python-iterators.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Python: três pausas offline conferem consumo, ordem e posse sem executar o aluno",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6e9d0c364d16bd069477-da9f989cf494d55f6cd7",
+          "file": "python-iterators.spec.ts",
+          "line": 2,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "python-numeros.spec.ts",
+      "file": "python-numeros.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Python: unidades e entrada ASCII funcionam offline sem fingir execução",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "78104d474a173fa1959b-0731fa09e58b3ad773d4",
+          "file": "python-numeros.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "qualidade-ambiente.spec.ts",
+      "file": "qualidade-ambiente.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "hardware limitado mantém chuva e nuvens com canvas dentro do orçamento",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8488bb9ef7ffea1cfaf4-a01c6a9f693ae76f6702",
+          "file": "qualidade-ambiente.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "rascunhos-laboratorio.spec.ts",
+      "file": "rascunhos-laboratorio.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "trocas consecutivas de linguagem conservam os rascunhos com anotações",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "57164baa709f3129347a-a46033ea02f55f673f86",
+          "file": "rascunhos-laboratorio.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "trocas consecutivas de linguagem conservam os rascunhos com anotações vazias",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "57164baa709f3129347a-79dcaca3823bf5c53ef0",
+          "file": "rascunhos-laboratorio.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "laboratório restaura cada rascunho e conserva HTML e JavaScript vazios",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "57164baa709f3129347a-04b16c3d0d2228056bb0",
+          "file": "rascunhos-laboratorio.spec.ts",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "laboratório retoma edição Python depois de sair e recarregar sem executar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "57164baa709f3129347a-7329d525cebdd7b41089",
+          "file": "rascunhos-laboratorio.spec.ts",
+          "line": 63,
+          "column": 1
+        },
+        {
+          "title": "projeto de anotações sobrevive ao reload e à exportação e importação da jornada",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "57164baa709f3129347a-97e19488a0bac3ec2601",
+          "file": "rascunhos-laboratorio.spec.ts",
+          "line": 79,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "responsive-hub.spec.ts",
+      "file": "responsive-hub.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "navegação e estudo sem transbordamento em 220px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-f5eb410d3ce40782d850",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        },
+        {
+          "title": "navegação e estudo sem transbordamento em 320px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-dfdc887c57d964f011be",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        },
+        {
+          "title": "navegação e estudo sem transbordamento em 480px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-20cf2daf347a72076a74",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        },
+        {
+          "title": "navegação e estudo sem transbordamento em 768px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-bc823afca163e727e1c5",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        },
+        {
+          "title": "navegação e estudo sem transbordamento em 1440px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-037d7c6577a0b916d21f",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        },
+        {
+          "title": "navegação e estudo sem transbordamento em 1920px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-d59d4846127f5ef9352b",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        },
+        {
+          "title": "navegação e estudo sem transbordamento em 2560px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-6f907d91a91c1c25e5b6",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        },
+        {
+          "title": "navegação e estudo sem transbordamento em 4000px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ef8bd8963b100b7fb4bd-2e3549babe1425e5b37d",
+          "file": "responsive-hub.spec.ts",
+          "line": 3,
+          "column": 2
+        }
+      ]
+    },
+    {
+      "title": "sql-local.spec.ts",
+      "file": "sql-local.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "SQL local: runtime sob demanda, banco descartável, resultados e jornada offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "06e64d336654e7c9234a-0d72e3a5655807e44136",
+          "file": "sql-local.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "SQL local: cancelar, limitar CPU e descartar workers nas trocas de tela",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "06e64d336654e7c9234a-a5a6473c780f83c2b7d4",
+          "file": "sql-local.spec.ts",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "SQL local: primeiro carregamento sem rede preserva código e explica o limite offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "06e64d336654e7c9234a-a129e3f7c2fc03a8b287",
+          "file": "sql-local.spec.ts",
+          "line": 64,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "prazo do módulo SQL",
+          "file": "sql-local.spec.ts",
+          "line": 72,
+          "column": 6,
+          "specs": [
+            {
+              "title": "importação interrompida por prazo conserva código e permite nova execução",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "06e64d336654e7c9234a-849842111b58a817dead",
+              "file": "sql-local.spec.ts",
+              "line": 74,
+              "column": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "sql-null.spec.ts",
+      "file": "sql-null.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "SQL: plano antigo mostra os capítulos necessários sem apagar leitura ou fabricar domínio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "217fc5ef28c42b135c26-bfe4876d82496723e5ee",
+          "file": "sql-null.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "SQL: ausência e contratos retomam offline sem fingir execução de consultas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "217fc5ef28c42b135c26-16eb7e2df326e2314155",
+          "file": "sql-null.spec.ts",
+          "line": 50,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "sql-pratica.spec.ts",
+      "file": "sql-pratica.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "SQL corrigível: resultados reais, solução alternativa, offline, assistência e persistência",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c69843548c5349fccc3-a135538106532ba32b04",
+          "file": "sql-pratica.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "SQL corrigível: tempo limite, alteração e saída encerram workers sem registrar tentativas canceladas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5c69843548c5349fccc3-97309fccf9a0aaeeaf48",
+          "file": "sql-pratica.spec.ts",
+          "line": 28,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "carregamento da conferência SQL",
+          "file": "sql-pratica.spec.ts",
+          "line": 39,
+          "column": 6,
+          "specs": [
+            {
+              "title": "módulo indisponível preserva resposta e nota e permite retomar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5c69843548c5349fccc3-72d0bd38c9ad554f2f03",
+              "file": "sql-pratica.spec.ts",
+              "line": 41,
+              "column": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "textos-conversoes.spec.ts",
+      "file": "textos-conversoes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "textos: previsão, retorno ignorado e correção real mantêm assistência e projeto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2224747a6e066b8a8712-979dde4244ae1249f188",
+          "file": "textos-conversoes.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "conversão de texto executa offline, rejeita prefixo e retoma o código sem submissão remota",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2224747a6e066b8a8712-5055cc8ebe22376b344f",
+          "file": "textos-conversoes.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "a preparação de conversões orienta três atividades sem domínio pela leitura",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2224747a6e066b8a8712-7b0ef467b15b29c00b08",
+          "file": "textos-conversoes.spec.ts",
+          "line": 35,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "typescript-local.spec.ts",
+      "file": "typescript-local.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TypeScript: diagnósticos reais, JavaScript emitido e isolamento sem carga antecipada",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "610ff874038c81d2c4ad-51ab867abd0a2610779a",
+          "file": "typescript-local.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "TypeScript: projetos e backup retornam offline sem perder o original",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "610ff874038c81d2c4ad-1444f9c814acb9f8eb6c",
+          "file": "typescript-local.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "TypeScript: cancelar, limitar execução e invalidar resultado ao editar ou sair",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "610ff874038c81d2c4ad-10cef7c8196ac3f4e81f",
+          "file": "typescript-local.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "TypeScript: primeiro uso offline mantém fonte exportável e erro recuperável",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "610ff874038c81d2c4ad-0c4eb29eb8d74dcd0d55",
+          "file": "typescript-local.spec.ts",
+          "line": 54,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "prazo do módulo TypeScript",
+          "file": "typescript-local.spec.ts",
+          "line": 59,
+          "column": 6,
+          "specs": [
+            {
+              "title": "expira a importação, cancela espera e ignora resposta atrasada",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "610ff874038c81d2c4ad-4a9f6f0a131664ea487e",
+              "file": "typescript-local.spec.ts",
+              "line": 61,
+              "column": 2
+            }
+          ]
+        },
+        {
+          "title": "prazo de abertura do editor",
+          "file": "typescript-local.spec.ts",
+          "line": 71,
+          "column": 6,
+          "specs": [
+            {
+              "title": "conserva exportação sem editor, encerra espera e recupera após recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "610ff874038c81d2c4ad-e8b526e9e80045d973f4",
+              "file": "typescript-local.spec.ts",
+              "line": 73,
+              "column": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "typescript-modulos.spec.ts",
+      "file": "typescript-modulos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "módulos TypeScript: resolução e efeitos retomam offline sem fingir compilação",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e6d4f15e34bc4cf8a9b7-07b42c2e7e9dffea20d8",
+          "file": "typescript-modulos.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "typescript-variance.spec.ts",
+      "file": "typescript-variance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TypeScript: pausas de contratos funcionam offline e guardam decisões conceituais",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "86108e0d959ba78e83ae-7e70e02eaa2b99f3e618",
+          "file": "typescript-variance.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "valores-fundamentos.spec.ts",
+      "file": "valores-fundamentos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "valores originais: tipos, retorno numérico e reatribuição persistem offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "cd4f9636557f06fe2003-edc6be3d198fececc923",
+          "file": "valores-fundamentos.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "valores-preparacao.spec.ts",
+      "file": "valores-preparacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "preparação de valores abre a leitura completa sem desviar para os 25 passos",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "c9bed845242f8bcc3dd6-e764e53568323866e2ab",
+          "file": "valores-preparacao.spec.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "vidros.spec.ts",
+      "file": "vidros.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "condensação aparece no vidro sem cobrir a arte da sala",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "bfea912a4da4c1f768c9-befd8e3a147bfff6aa22",
+          "file": "vidros.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "vidros acompanham neblina em qualidade baixa e reduzida sem novos buffers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "bfea912a4da4c1f768c9-ecf9d3c4342eae07a093",
+          "file": "vidros.spec.ts",
+          "line": 35,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T21:09:00.504Z",
+    "duration": 2543.775,
+    "expected": 0,
+    "skipped": 48,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

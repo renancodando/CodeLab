@@ -1,0 +1,12 @@
+
+Running 5 tests using 1 worker
+
+(node:14924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\diagnostico-colecoes.spec.ts:12:1 › erros: previsão, interrupção e correção de área com retorno persistido (6.6s)
+  ok 2 tests\e2e\diagnostico-colecoes.spec.ts:20:1 › investigação: caso mínimo, regressão, assistência e revisão funcionam offline (6.7s)
+  ok 3 tests\e2e\diagnostico-colecoes.spec.ts:30:1 › coleções: quantidade, limite e mutação antes de aceitar solução equivalente (7.2s)
+  ok 4 tests\e2e\ordem-diaria.spec.ts:5:1 › a sessão nova começa pelas instruções e conserva o plano antigo de valores offline (4.6s)
+  ok 5 tests\e2e\valores-preparacao.spec.ts:5:1 › preparação de valores abre a leitura completa sem desviar para os 25 passos (5.1s)
+
+  5 passed (32.8s)

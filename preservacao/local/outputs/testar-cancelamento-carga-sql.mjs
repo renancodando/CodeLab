@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const caminho='tests/e2e/sql-local.spec.ts';let texto=readFileSync(caminho,'utf8').replace("const resposta=pagina.waitForResponse(/\\/assets\\/sql-local-[^/]+\\.js$/);liberar();", "await pagina.locator('#lab-run').click();await pagina.locator('#lab-stop').click();await pagina.clock.fastForward(20001);await expect(pagina.locator('#lab-console')).toContainText('Execução encerrada');\n   const resposta=pagina.waitForResponse(/\\/assets\\/sql-local-[^/]+\\.js$/);liberar();");writeFileSync(caminho,texto);

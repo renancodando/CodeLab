@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const caminho='tests/e2e/sql-local.spec.ts';let texto=readFileSync(caminho,'utf8').replace("expect(recursos).toEqual([]);\n await abrir(pagina);", "expect(recursos).toEqual([]);\n const cacheInicial=await pagina.evaluate(async()=>{const chaves=await caches.keys();return(await Promise.all(chaves.map(async chave=>(await(await caches.open(chave)).keys()).map(pedido=>pedido.url)))).flat();});expect(cacheInicial.some(url=>/sql-local|sql-wasm-browser/.test(url))).toBe(false);\n await abrir(pagina);");writeFileSync(caminho,texto);

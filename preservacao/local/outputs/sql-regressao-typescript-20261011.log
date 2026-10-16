@@ -1,0 +1,11 @@
+
+Running 4 tests using 1 worker
+
+(node:15416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\sql-local.spec.ts:17:1 › SQL local: runtime sob demanda, banco descartável, resultados e jornada offline (1.0m)
+  ok 2 tests\e2e\sql-local.spec.ts:47:1 › SQL local: cancelar, limitar CPU e descartar workers nas trocas de tela (53.5s)
+  ok 3 tests\e2e\sql-local.spec.ts:64:1 › SQL local: primeiro carregamento sem rede preserva código e explica o limite offline (26.6s)
+  ok 4 tests\e2e\sql-local.spec.ts:74:2 › prazo do módulo SQL › importação interrompida por prazo conserva código e permite nova execução (19.8s)
+
+  4 passed (2.9m)

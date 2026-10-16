@@ -1,0 +1,17 @@
+
+Running 10 tests using 1 worker
+
+(node:2688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\assincrono-pratica.spec.ts:11:1 › async: espera, diagnóstico HTTP e correção real conservam assistência, revisão e projeto (30.7s)
+  ok  2 tests\e2e\assincrono-pratica.spec.ts:24:1 › Promises reais funcionam offline e uma Promise pendente não impede a tentativa seguinte (19.8s)
+  ok  3 tests\e2e\assincrono-pratica.spec.ts:34:1 › uma jornada com 128 habilidades conserva novas evidências na exportação e restauração (21.6s)
+  ok  4 tests\e2e\css-caixas.spec.ts:7:1 › CSS: referências medem bordas, encolhimento e adesão após rolagem real (7.6s)
+  ok  5 tests\e2e\css-caixas.spec.ts:43:1 › CSS: caixas retomam offline com respostas, assistência e texto preservados (17.6s)
+  ok  6 tests\e2e\css-cascata-unidades.spec.ts:15:1 › CSS nativo: especificidade, ordem e token inválido têm efeitos diferentes (6.2s)
+  ok  7 tests\e2e\css-cascata-unidades.spec.ts:35:1 › CSS nativo: referências de unidade, entrelinha e herança reagem a mudanças independentes (5.9s)
+  ok  8 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: cascata conserva tentativas, assistência e projeto (24.9s)
+  ok  9 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: box-model conserva tentativas, assistência e projeto (29.9s)
+  ok 10 tests\e2e\css-cascata-unidades.spec.ts:113:1 › CSS offline conserva uma alteração conceitual sem executar código livre (23.0s)
+
+  10 passed (3.6m)

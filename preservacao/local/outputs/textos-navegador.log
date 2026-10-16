@@ -1,0 +1,51 @@
+
+Running 3 tests using 1 worker
+
+(node:13548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\textos-conversoes.spec.ts:13:1 › textos: previsão, retorno ignorado e correção real mantêm assistência e projeto (12.2s)
+  ok 2 tests\e2e\textos-conversoes.spec.ts:24:1 › conversão de texto executa offline, rejeita prefixo e retoma o código sem submissão remota (5.2s)
+  x  3 tests\e2e\textos-conversoes.spec.ts:35:1 › a preparação de conversões orienta três atividades sem domínio pela leitura (444ms)
+
+
+  1) tests\e2e\textos-conversoes.spec.ts:35:1 › a preparação de conversões orienta três atividades sem domínio pela leitura 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        "conceito-0-strings-numbers-pratica-v1",
+    +   "js-debug-carrinho",
+        "textos-prever-conversoes",
+    -   "textos-guardar-normalizacao",
+        "textos-corrigir-entrada",
+      ]
+
+      36 |  const estado=freshAdaptive(),preparacao=idPreparacao('strings-numbers'),relogio={now:Date.now(),timeZone:'America/Sao_Paulo'};
+      37 |  estado.seenConcepts=adaptiveCatalog.activities.filter(a=>a.kind==='concept'&&a.id!==preparacao).map(a=>a.id);estado.daily=buildDailySession(estado,{...adaptiveCatalog,preferredLanguage:'javascript'},relogio);
+    > 38 |  expect(estado.daily.items.map(i=>i.activityId)).toEqual([preparacao,'textos-prever-conversoes','textos-guardar-normalizacao',id]);
+         |                                                  ^
+      39 |  await pagina.addInitScript(dados=>{if(!localStorage.getItem('codelab.progress.v2'))localStorage.setItem('codelab.progress.v2',JSON.stringify(dados));},{version:2,learningLanguage:'javascript',adaptive:estado});
+      40 |  await pagina.goto('/#/diaria');await expect(pagina.locator('[data-current] h2')).toHaveText('Preparação: Strings, números e conversões');await pagina.getByRole('button',{name:'Concluir leitura e praticar',exact:true}).click();await expect(pagina.locator('[data-practice="textos-prever-conversoes"]')).toBeVisible();await expect(pagina.locator('[data-language]')).toBeDisabled();
+      41 |  const depois=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).adaptive);expect(depois.skills).toEqual({});expect(depois.daily.iniciada).toBe(true);expect(depois.daily.completed).toEqual([preparacao]);
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\textos-conversoes.spec.ts:38:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-textos-local\textos-conversoes-a-prepar-c0fd0-es-sem-domínio-pela-leitura\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-textos-local\textos-conversoes-a-prepar-c0fd0-es-sem-domínio-pela-leitura\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-textos-local\textos-conversoes-a-prepar-c0fd0-es-sem-domínio-pela-leitura\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-textos-local\textos-conversoes-a-prepar-c0fd0-es-sem-domínio-pela-leitura\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\textos-conversoes.spec.ts:35:1 › a preparação de conversões orienta três atividades sem domínio pela leitura 
+  2 passed (22.7s)

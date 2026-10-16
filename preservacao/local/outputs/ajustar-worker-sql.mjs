@@ -1,0 +1,2 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const arquivo='tests/e2e/sql-local.spec.ts';let texto=readFileSync(arquivo,'utf8');texto=texto.replace("await escrever(pagina,infinito);await pagina.locator('#lab-run').click();await pagina.waitForEvent('worker', {predicate:w=>w.url().includes('sql-local.worker')}).catch(()=>{});","await escrever(pagina,infinito);const trabalhador=pagina.waitForEvent('worker',{predicate:w=>w.url().includes('sql-local.worker')});await pagina.locator('#lab-run').click();await trabalhador;");writeFileSync(arquivo,texto);

@@ -1,0 +1,33 @@
+
+> codelab@0.1.0 test:e2e
+> playwright test
+
+[WebServer] (node:2492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+(node:12188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\api.spec.ts:2:1 › API sem contas e sem progresso remoto, catálogo completo (535ms)
+  ok  2 tests\e2e\learning.spec.ts:4:1 › primeira missão, pistas, execução e persistência (12.6s)
+  ok  3 tests\e2e\learning.spec.ts:15:1 › erros e execução infinita não travam a interface (7.6s)
+  ok  4 tests\e2e\learning.spec.ts:21:1 › busca encontra erro e abre conteúdo (3.7s)
+  ok  5 tests\e2e\learning.spec.ts:24:1 › laboratório HTML renderiza sem acesso ao documento pai (5.9s)
+  ok  6 tests\e2e\learning.spec.ts:29:1 › clima: dados normalizados, falha e geolocalização negada (5.1s)
+  ok  7 tests\e2e\learning.spec.ts:34:1 › larguras contínuas sem overflow da página (18.2s)
+  ok  8 tests\e2e\learning.spec.ts:38:1 › acessibilidade da home e dos fluxos principais (26.2s)
+  ok  9 tests\e2e\learning.spec.ts:41:1 › páginas públicas entregam conteúdo sem JavaScript (1.8s)
+  x  10 tests\e2e\local-platform.spec.ts:3:1 › 60 aulas acessíveis, resposta correta persiste e resposta errada não conclui (4.0s)
+(node:3092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 tests\e2e\local-platform.spec.ts:13:1 › projetos separados persistem, podem ser renomeados, exportados e removidos (9.8s)
+  ok 12 tests\e2e\local-platform.spec.ts:21:1 › exportação e importação preservam jornada local (5.4s)
+  ok 13 tests\e2e\local-platform.spec.ts:26:1 › cancelamento, limite de memória e recuperação do executor (7.8s)
+  x  14 tests\e2e\local-platform.spec.ts:31:1 › trocas de tela descartam modelos e não acumulam workers ou geometria (4.8s)
+(node:8476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 tests\e2e\local-platform.spec.ts:40:1 › geolocalização negada e som opt-in respeitam preferências (7.2s)
+  ok 16 tests\e2e\local-platform.spec.ts:44:1 › renderização 3D sem erros e progresso sem chamadas de conta (3.3s)
+  ok 17 tests\e2e\local-platform.spec.ts:46:1 › build de produção executa a missão com WebAssembly e CSP do servidor (5.4s)
+  ok 18 tests\e2e\local-platform.spec.ts:50:1 › a comunidade foi removida da navegação (4.6s)

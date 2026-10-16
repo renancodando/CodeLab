@@ -1,0 +1,44 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/typescript-local.test.ts (23 tests | 2 failed | 21 skipped) 438ms
+   ❯ TypeScript real antes da execução isolada (23)
+     × exporta membros de namespaces internos sem transformar o script em módulo 156ms
+     × confere tipos de membros exportados de namespace antes de emitir 18ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/typescript-local.test.ts > TypeScript real antes da execução isolada > exporta membros de namespaces internos sem transformar o script em módulo
+AssertionError: expected 'Esta bancada compila um script TypeSc…' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"Esta bancada compila um script TypeScript isolado. Imports, exports e pacotes exigem o ambiente indicado na aula; exporte o arquivo para trabalhar com módulos."
+
+ ❯ tests/unit/typescript-local.test.ts:22:264
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/unit/typescript-local.test.ts > TypeScript real antes da execução isolada > confere tipos de membros exportados de namespace antes de emitir
+AssertionError: expected 'Esta bancada compila um script TypeSc…' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"Esta bancada compila um script TypeScript isolado. Imports, exports e pacotes exigem o ambiente indicado na aula; exporte o arquivo para trabalhar com módulos."
+
+ ❯ tests/unit/typescript-local.test.ts:25:106
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 21 skipped (23)
+   Start at  13:21:38
+   Duration  6.23s (import 62%, transform 27%, tests 10%, worker 1%)
+

@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:5892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\html-inicio.spec.ts:29:1 › documento HTML: títulos, idioma e estrutura com assistência persistida (8.9s)
+  ok 2 tests\e2e\html-inicio.spec.ts:36:1 › semântica HTML: teclado, região principal e árvore sem perder o projeto (4.4s)
+  ok 3 tests\e2e\html-inicio.spec.ts:41:1 › formulário HTML: validade, associação e reconstrução continuam offline (5.2s)
+  ok 4 tests\e2e\html-inicio.spec.ts:49:1 › referências de documento HTML: navegador confere título, idioma e modo de padrões (443ms)
+  ok 5 tests\e2e\html-inicio.spec.ts:55:1 › referências semânticas: botão nativo e artigos têm comportamentos verificáveis (1.7s)
+  ok 6 tests\e2e\html-inicio.spec.ts:65:1 › referências de formulário: validação, foco e chave são conferidos no navegador (607ms)
+
+  6 passed (23.9s)

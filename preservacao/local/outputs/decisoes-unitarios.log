@@ -1,0 +1,13 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+
+ Test Files  4 passed (4)
+      Tests  103 passed (103)
+   Start at  17:03:19
+   Duration  12.34s (tests 51%, transform 38%, import 10%, worker 1%)
+
+  Transform  transforming modules took 3.19s · 38% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
