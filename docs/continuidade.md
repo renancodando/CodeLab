@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Eventos e fronteiras da delegação, em preparação
+
+A branch pratica/dom-eventos parte de 1457130d2671f2c90998d6ab9e090b4a18899aa3. A aula eventos mantém doze capítulos, exemplo e projeto da lista dinâmica. Duas pausas após os blocos 3/6 distinguem target/currentTarget, cancelamento da ação padrão e propagação, além da fronteira de closest na delegação. A resposta do aluno é conceitual; os documentos HTML/JavaScript de referência são executados no navegador. O projeto mantém aplicação independente, incluindo teclado, novos itens, registro único e recuperação do foco.
+
+Passaram 1115 unitários em 69 arquivos, build com 157 páginas e oito fluxos Chromium: quatro novos e quatro regressões de seleção. Os casos verificam navegação cancelada versus propagação interrompida, texto interno, ancestrais externos, novas ações, Enter/Espaço, alvo que não é Element e outro contêiner. Assistência, revisão, axe, 220/4000 px e offline passaram. Métricas geradas: 137 aulas, 169 atividades, 84 aulas com pausas e 53 sem. PR e CI próprio desta branch, revisão, integração e publicação seguem pendentes; a API GitHub ainda retorna 403. Próxima aula: estado-formulario.
+
+Na retomada, main avançou para 917e9d11fd2aeca579ef4370817b0c01cbcf0862, integrando a PR #56. Pais e árvore fbe4cabd06fc4b5afd80a6314dffbd2e3bbcafad conferidos; essa árvore coincide com o head 76941a3 da entrega de Flexbox/Grid. Isso confirma a integração, mas não comprova implantação pública. As entregas posteriores de animações e seleção permanecem preservadas nas branches enviadas.
+
 ## Seleção e atualização do DOM, em preparação
 
 A branch pratica/dom-selecao parte de f63ed9142462c45f3fbb8b54ef6d1896c70836c3, preservando a entrega anterior de animações. A aula selecionar mantém doze capítulos, exemplo e projeto do contador. Duas pausas após os blocos 3/6 distinguem escopo da busca, composição estática de querySelectorAll e atualização local sem interpretar marcação nem substituir controles ou classes. O projeto pede dois contadores independentes, foco preservado e tratamento de regiões ausentes. As respostas permanecem conceituais; referências HTML/JavaScript são executadas no navegador, sem executar código livre do aluno.

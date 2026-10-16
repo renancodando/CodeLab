@@ -503,20 +503,20 @@ const roteiros:Record<string,Roteiro>={
   },
   "eventos": {
     "contexto": "Eventos descrevem coisas que aconteceram: clique, digitação, envio, mudança, foco. O código não deve perguntar continuamente se algo aconteceu; ele registra uma reação e recebe o evento quando necessário.",
-    "modelo": "Pense em eventos como mensagens que percorrem a árvore do DOM. Captura e bubbling definem o caminho; delegação usa esse percurso para tratar muitos elementos por meio de um ancestral estável.",
+    "modelo": "Pense em eventos como mensagens que percorrem a árvore do DOM. Captura e bubbling definem o caminho; delegação usa esse percurso para tratar muitos elementos por meio de um ancestral estável. No DOM comum deste exemplo, target identifica o alvo do click; clicar no span de um botão pode produzir um alvo diferente de acionar o próprio botão pelo teclado. Durante cada callback, currentTarget identifica o elemento onde aquele listener foi registrado. preventDefault cancela o comportamento padrão de um evento cancelável, como a navegação de um link, mas não interrompe a propagação. stopPropagation impede continuar o percurso, mas não cancela por si só a ação padrão. Nem todo evento pode ser cancelado ou sobe pelos ancestrais. Para delegar click, confirme que o alvo é um Element, procure a ação com closest e trate a ausência. closest também pode encontrar um ancestral externo ao componente; contains confere a fronteira antes de agir. Testar só target.matches perde conteúdo interno. Um listener no contêiner continua atendendo descendentes criados depois, sem registrar um handler para cada botão. Isso não dispensa remover listeners quando o componente é descartado nem justifica duplicar o registro a cada renderização.",
     "passos": [
       "Escolha o evento que representa a intenção real, como submit em vez de click no botão.",
       "Registre o listener no elemento com responsabilidade pelo comportamento.",
-      "Use event.target e closest com validação quando delegar.",
+      "Use event.target e closest com validação quando delegar; confirme que a ação encontrada pertence ao contêiner e ignore cliques neutros.",
       "Remova listeners globais quando o componente deixa de existir.",
       "Evite criar um listener novo a cada render sem necessidade."
     ],
     "experimentos": [
       "Escute click no item e no contêiner para observar bubbling.",
       "Adicione itens depois do carregamento e compare listener individual com delegação.",
-      "Use preventDefault em submit e explique exatamente qual comportamento padrão foi impedido."
+      "Use preventDefault em um link e confira que a navegação é cancelada, mas o listener ancestral ainda recebe o click. Compare com stopPropagation e teste também a ativação pelo teclado."
     ],
-    "projeto": "Crie uma lista dinâmica em que um único listener no contêiner trata concluir, editar e remover itens identificados por data-*.",
+    "projeto": "Crie uma lista dinâmica em que um único listener no contêiner trata concluir, editar e remover itens identificados por data-*. Teste botões com texto interno, itens acrescentados depois e ativação por Enter e Espaço. Cliques sem ação ou em outro componente não devem mudar a lista. Cada ativação deve executar a intenção uma única vez, inclusive após várias renderizações; preserve o teclado e defina a recuperação do foco ao remover o item ativo.",
     "conexao": "A próxima aula organiza eventos de formulário em um estado consistente antes de renderizar."
   },
   "estado-formulario": {

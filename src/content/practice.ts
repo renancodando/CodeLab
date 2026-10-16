@@ -12,6 +12,21 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'html-eventos-prever-propagacao',language:'html',lessonIds:['eventos'],skillIds:['html.dom.propagacao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Cancelar a navegação também impede o listener do painel?',
+  prompt:'Neste DOM comum, sem Shadow DOM, o script aciona o span dentro do link. Escreva as três saídas de console.log, uma por linha. O listener do link roda antes do listener do painel e o click pode ser cancelado. Diferencie origem, local do listener e comportamento padrão. Previsão conceitual; a referência é executada no navegador.',
+  code:'<div id="painel"><a id="acao" href="#destino"><span id="rotulo">Ir ao destino</span></a></div>\n<script>\nconst painel = document.querySelector("#painel");\npainel.addEventListener("click", evento => {\n  console.log(evento.target.id);\n  console.log(evento.currentTarget.id);\n  console.log(evento.defaultPrevented);\n});\ndocument.querySelector("#acao").addEventListener("click", evento => evento.preventDefault());\ndocument.querySelector("#rotulo").click();\n</script>',
+  hint:'O alvo não muda para o painel enquanto o evento sobe. preventDefault cancela a ação padrão de um evento cancelável, mas não interrompe sua propagação.',minutes:4
+ },
+ {
+  id:'html-eventos-limitar-delegacao',language:'html',lessonIds:['eventos'],skillIds:['html.dom.delegacao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O clique neutro encontrou uma ação fora da lista',
+  prompt:'O listener deve registrar somente ações descendentes de lista, inclusive ao clicar no span do botão ou em botões inseridos depois. A seção externa usa data-acao em outro contexto. Clicar no parágrafo neutro não deve registrar essa ação externa. Qual corpo de listener respeita a fronteira do componente? Escolha conceitual, sem executar código livre do aluno.',
+  code:'<section data-acao="externa">\n  <div id="lista">\n    <button type="button" data-acao="concluir"><span>Concluir tarefa</span></button>\n    <p id="neutro">Área sem ação</p>\n  </div>\n</section>\n<script>\nconst lista = document.querySelector("#lista");\nconst acoes = [];\nlista.addEventListener("click", evento => {\n  if (!(evento.target instanceof Element)) return;\n  const acao = evento.target.closest("[data-acao]");\n  if (acao) acoes.push(acao.dataset.acao);\n});\n</script>',
+  options:[{id:'fronteira',text:'if (!(evento.target instanceof Element)) return; const acao = evento.target.closest("[data-acao]"); if (!acao || !lista.contains(acao)) return; acoes.push(acao.dataset.acao);'},{id:'direto',text:'if (!(evento.target instanceof Element) || !evento.target.matches("[data-acao]")) return; acoes.push(evento.target.dataset.acao);'},{id:'ancestral',text:'if (!(evento.target instanceof Element)) return; const acao = evento.target.closest("[data-acao]"); if (acao) acoes.push(acao.dataset.acao);'}],
+  hint:'closest pode sair do contêiner ao subir pelos ancestrais. Testar apenas o alvo perde cliques em conteúdo interno; encontrar uma ação ainda exige conferir a quem ela pertence.',minutes:5
+ },
+ {
   id:'html-dom-prever-selecao',language:'html',lessonIds:['selecionar'],skillIds:['html.dom.selecao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Uma lista de nós acompanha a árvore para sempre?',
   prompt:'O script está depois dos dois cartões. Escreva as três saídas de console.log, uma por linha. Compare a busca no documento com a busca dentro do cartão alvo e acompanhe quando a lista nomes foi obtida. A previsão é conceitual; o documento de referência é executado no navegador.',
