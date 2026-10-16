@@ -14,6 +14,11 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ 'css-prever-eixos':{accepted:['80 30\n80 50'],failure:'Com column, a centralização distribui o espaço livre na vertical. O alinhamento flex-end usa o outro eixo; ele não coloca os itens no fundo do painel.',solution:'80 30\n80 50'},
+ 'css-diagnosticar-selo':{accepted:['cartao'],failure:'O ancestral posicionado atual é a página. Um deslocamento fixo só compensa esta geometria; fixed muda a referência para fora do cartão neste recorte.',solution:'<style>\n.pagina { position:relative; width:300px; }\n.cartao { position:relative; width:100px; height:80px; }\n.selo { position:absolute; top:0; right:0; width:20px; height:20px; }\n</style>\n<div class="pagina"><article class="cartao"><span class="selo">1</span></article></div>'},
+ 'css-flex-quebrar':{accepted:['wrap'],failure:'nowrap conserva a linha mesmo sem espaço. wrap-reverse inverte o empilhamento e viola a ordem visual pedida; mantenha ações visíveis em linhas normais.',solution:'wrap'},
+ 'css-grid-prever-vazias':{accepted:['170px\n170px'],failure:'A terceira trilha possível está vazia e auto-fit a colapsa. O intervalo entre os dois projetos continua existindo; não confunda esse comportamento com auto-fill.',solution:'170px\n170px'},
+ 'css-grid-diagnosticar-conteiner':{accepted:['ancestral'],failure:'O cartão precisa de um ancestral elegível para a consulta de tamanho. Uma media query observa a viewport compartilhada; impor mínimo não cria a referência que está faltando.',solution:'<style>\n.espaco { width:400px; container-type:inline-size; }\n.cartao { display:grid; grid-template-columns:1fr; }\n.cartao p { margin:0; min-width:0; }\n@container (min-width:300px) { .cartao { grid-template-columns:1fr 1fr; } }\n</style>\n<div class="espaco"><section class="cartao"><p>A</p><p>B</p></section></div>'},
  'css-prever-seletores':{accepted:['18px\n24px'],failure:'O ID corresponde somente ao primeiro parágrafo e tem maior especificidade neste mesmo nível da cascata. No segundo, as duas classes empatam e a última fornece o tamanho.',solution:'18px\n24px'},
  'css-diagnosticar-token':{accepted:['comprimento'],failure:'O token red está presente; ele é substituído antes de padding ficar inválido. Trocar o fallback ou adicionar uma declaração anterior não transforma esse token em comprimento.',solution:'<style>\n:root { --espaco: 12px; }\n.cartao { padding: var(--espaco, 12px); }\n</style>\n<section class="cartao">Conteúdo</section>'},
  'css-prever-unidades':{accepted:['40px\n60px'],failure:'A raiz e a caixa têm fontes diferentes. Multiplique cada largura pela referência de sua unidade; em numa largura não consulta a mesma fonte que rem.',solution:'40px\n60px'},
@@ -391,6 +396,8 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
   else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='py-esperar-vaga-fila')passed=typeof answer==='string'&&/^await[ \t]+fila[ \t]*\.[ \t]*put[ \t]*\([ \t]*item[ \t]*\)$/.test(normalized(answer));
   else if(id==='py-validar-digitos-ascii')passed=typeof answer==='string'&&/^(['"])0\1\s*<=\s*caractere\s*<=\s*(['"])9\2$/.test(normalized(answer));
+  else if(id==='css-prever-eixos')passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().replace(/[ \t]+/g,' ')).join('\n')===concept.accepted[0];
+  else if(id==='css-flex-quebrar')passed=typeof answer==='string'&&/^wrap$/i.test(normalized(answer));
   else if(id==='css-herdar-caixa')passed=typeof answer==='string'&&/^inherit$/i.test(normalized(answer));
   else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
   else passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer));
