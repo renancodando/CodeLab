@@ -31,19 +31,6 @@ jobs:
     name: Testes e compilação
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    services:
-      postgres:
-        image: public.ecr.aws/docker/library/postgres:18
-        env:
-          POSTGRES_USER: codelab
-          POSTGRES_PASSWORD: codelab
-          POSTGRES_DB: codelab
-        ports: ['5432:5432']
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     steps:
       - name: Baixar o código
         uses: actions/checkout@v4
@@ -58,6 +45,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
+
+      - name: Preparar PostgreSQL 18 com fontes oficiais
+        run: node scripts/preparar-postgres-ci.mjs
 
       - name: Instalar dependências
         run: npm ci
@@ -101,6 +91,13 @@ jobs:
             server/Content/curriculum.json
           if-no-files-found: error
           retention-days: 1
+
+      - name: Encerrar o banco descartável
+        if: always()
+        run: |
+          if docker container inspect codelab-postgres-ci > /dev/null 2>&1; then
+            docker rm --force --volumes codelab-postgres-ci
+          fi
 
   navegador:
     name: Navegador (${{ matrix.parcela }}/4)
