@@ -1,0 +1,41 @@
+{
+  "head": "8e96d1903242ed7199956ae0e88d6bb08771cd66",
+  "arquivos": [
+    {
+      "arquivo": "dom-especificos-20261018.log",
+      "bytes": 492,
+      "sha256": "27e54041af833c2bd74afc8fd5aa6fca3b05423eec40ac52e5e5be3a6944082e",
+      "blob": "b4c11473dd8e12c193f7d08c42097af2e40d662e"
+    },
+    {
+      "arquivo": "dom-unitarios-20261018.log",
+      "bytes": 4348,
+      "sha256": "8f278661c10836052aa956c7a0127a6b35529f2fdb61abc1fc196e405da358c4",
+      "blob": "6b2e4d2db2b4723d0cfbfe9fd92b5e77d58fa8c8"
+    },
+    {
+      "arquivo": "dom-build-20261018.log",
+      "bytes": 4944,
+      "sha256": "8d1850d80bfd86246e74d2f65292c118471fda646d4c8c4c48cfd6a56a3fa19d",
+      "blob": "336fe9c912ce0cd024128c38d035ba55436ec4b6"
+    },
+    {
+      "arquivo": "dom-navegador-20261018.log",
+      "bytes": 2659,
+      "sha256": "576297978c7ba8ad35c1865af559d75ad54a440333f5f152eea91fd0191d8290",
+      "blob": "ccdf745d68897f20019e5430324e5c2060f0169b"
+    },
+    {
+      "arquivo": "playwright-dom-local-20261018.config.mjs",
+      "bytes": 541,
+      "sha256": "d1932e8242bd4cac58423f537a06e025181db199e18f3837398c43e641cffd9d",
+      "blob": "c933cfe8c328494c0dd631a42ed86d6aec70091a"
+    },
+    {
+      "arquivo": "playwright-dom-publico-59.config.mjs",
+      "bytes": 549,
+      "sha256": "88f644c90ab23b520ce524719fcc3e5778b4b6955012281f77e910ea93b0c5b4",
+      "blob": "6286ba9ffa1f23d7cac84ab6bf364ba57000d232"
+    }
+  ]
+}
