@@ -1,0 +1,56 @@
+{
+  "pr": 57,
+  "merge": "46947703b5442a8ecf77be8ab64db276e7ec2445",
+  "nota": "Logs completos, inclusive falhas e repetições. Credenciais e traces binários não incluídos.",
+  "arquivos": [
+    {
+      "nome": "css-fluxo-unitarios-20261018.log",
+      "bytes": 4135,
+      "sha256": "afc148a5bb53537ec494e76c7ab26941c3c60b9fc37f2d2b75efcc750a38a59f",
+      "objetoGit": "3a3b57c096313298103eac534cef86f7f33a48ef",
+      "commit": "b0648659f99645d9b72f7af8724194f363b85507"
+    },
+    {
+      "nome": "css-fluxo-reproducao-20261018.log",
+      "bytes": 3478,
+      "sha256": "621a50394e3f4f8f7c4e41dc1d53a9db07ae636affca69599100967ed4388a3d",
+      "objetoGit": "bd57a27f3f6577a2e3f692286ed4584685d3fe7c",
+      "commit": "f2057fd51c88c209336f8e6d482d49388c386afc"
+    },
+    {
+      "nome": "css-fluxo-build-20261018.log",
+      "bytes": 4944,
+      "sha256": "8ac38104510dfce6d156ca5b1e124cffb0aa771043e771270271221d2b3eb86e",
+      "objetoGit": "438e0acb2e88dff412af4b7270bd105cb7d338b7",
+      "commit": "b99131e5d7f8ac332967ceb3184aadacbfb69be7"
+    },
+    {
+      "nome": "css-fluxo-navegador-20261018.log",
+      "bytes": 5051,
+      "sha256": "c7a35cac0f7ba13b93a9242655f88612f625e9bce25d051bcbba582ca63c6b09",
+      "objetoGit": "5872931213fbde563f366206a4f47df43efc8b57",
+      "commit": "a6c7f4b3bfa7c6b2883b4c9b6e07d9123e61811d"
+    },
+    {
+      "nome": "css-fluxo-cascata-repeticao-20261018.log",
+      "bytes": 354,
+      "sha256": "ead1cb49d5ecba04934ed716c827d7cac0d86243b8a26795a9e5f43395ab2127",
+      "objetoGit": "ca79aa6eb8150c72c8a4fc0f5cc1c086299999d2",
+      "commit": "99d8cc0ca7e60507617921075a440f41954fcd19"
+    },
+    {
+      "nome": "css-fluxo-publico-57.log",
+      "bytes": 2921,
+      "sha256": "aa21b43bce0825f226d5eddf6d221babd2f767fdc9c006fe8290cbf55a789b35",
+      "objetoGit": "a584536829d0913e5296eec455866f7a9ea567e5",
+      "commit": "496f1056795060269c3b14721471dc0755683b14"
+    },
+    {
+      "nome": "postgres-ci-especificos-final-20261018.log",
+      "bytes": 246,
+      "sha256": "cb57d67d9a2bf911746a67ad080336833618b28aa0ee597d9ce4dc6b8a386f19",
+      "objetoGit": "1921e4286dd1ed04920aeec9db4cadbcfc97215d",
+      "commit": "eba25151ec7c55b689375aa9e54f7a1c1fcce500"
+    }
+  ]
+}
