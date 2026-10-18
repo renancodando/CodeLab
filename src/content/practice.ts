@@ -42,6 +42,21 @@ export const practiceActivities:PracticeActivity[]=[
   hint:'Inserir texto com segurança e escolher o nó correto são decisões diferentes. textContent também substitui os filhos do nó que o recebe; className substitui a lista completa de classes.',minutes:5
  },
  {
+  id:'css-fluxo-prever-margens',language:'css',lessonIds:['css-caixas'],skillIds:['css.caixas.colapso'],afterBlock:4,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'As duas margens viram sempre uma soma?',
+  prompt:'Cada grupo tem dois blocos de 20px de altura, sem borda, padding, floats ou posicionamento especial. O primeiro grupo usa fluxo normal e o segundo usa Flexbox em coluna, sem gap. Escreva a distância entre a borda inferior do primeiro bloco e a borda superior do segundo, primeiro no grupo normal e depois no flexível, uma por linha com px. Previsão conceitual; a referência é medida no navegador.',
+  code:'<style>\n.grupo { display:flow-root; }\n.grupo.flex { display:flex; flex-direction:column; }\n.bloco { height:20px; margin:0; }\n.primeiro { margin-bottom:30px; }\n.segundo { margin-top:20px; }\n</style>\n<div class="grupo"><div class="bloco primeiro">A</div><div class="bloco segundo">B</div></div>\n<div class="grupo flex"><div class="bloco primeiro">C</div><div class="bloco segundo">D</div></div>',
+  hint:'O flow-root evita misturar as margens dos filhos com as do contêiner, mas não elimina o colapso entre estes blocos irmãos. Margens de itens flex não colapsam entre si.',minutes:4
+ },
+ {
+  id:'css-fluxo-diagnosticar-camadas',language:'css',lessonIds:['css-caixas'],skillIds:['css.caixas.empilhamento'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O selo tem z-index maior e mesmo assim fica atrás',
+  prompt:'O selo deve aparecer acima da cobertura na área de sobreposição. Painel e cobertura são irmãos posicionados; o painel cria um contexto de empilhamento com z-index:0. Sem outras regras, qual alteração corrige a ordem sem esconder conteúdo? Escolha conceitual; não executa CSS livre do aluno.',
+  code:'<style>\n.palco { position:relative; width:220px; height:120px; }\n.painel { position:absolute; inset:0; z-index:0; }\n.selo { position:absolute; inset:0; z-index:99; background:white; }\n.cobertura { position:absolute; inset:0; z-index:1; background:white; }\n</style>\n<div class="palco"><div class="painel"><div class="selo">Selo</div></div><div class="cobertura">Cobertura</div></div>',
+  options:[{id:'painel',text:'Trocar somente o z-index do painel para 2, preservando o selo no seu contexto.'},{id:'numero',text:'Trocar somente o z-index do selo para 999999, mantendo o painel em 0.'},{id:'fixo',text:'Trocar somente a posição do selo para fixed, mantendo os z-index atuais.'}],
+  hint:'Compare primeiro os contextos irmãos. A ordem interna do selo não substitui a ordem do painel em relação à cobertura.',minutes:4
+ },
+ {
   id:'css-prever-transicao',language:'css',lessonIds:['animacoes'],skillIds:['css.movimento.transicao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'A mudança de estado já começou, mas ainda não terminou',
   prompt:'O indicador começa em translateX(0). Depois da primeira renderização, a classe ativa é adicionada à faixa e permanece nela. A transição tem 400ms, sem atraso, com avanço linear. Escreva o deslocamento horizontal em 100ms e em 400ms após o início, uma linha por instante com px. Não houve interrupção nem outra regra. A previsão é conceitual; a referência é medida no navegador.',

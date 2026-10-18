@@ -2,13 +2,13 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **53 de 137 aulas sem pausas deste catálogo**. As outras 84 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **52 de 137 aulas sem pausas deste catálogo**. As outras 85 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 8 | 2 |
 | C# | 14 | 6 | 8 |
-| CSS | 15 | 12 | 3 |
+| CSS | 15 | 13 | 2 |
 | HTML | 19 | 12 | 7 |
 | JavaScript | 30 | 23 | 7 |
 | Python | 10 | 10 | 0 |
@@ -57,7 +57,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 | `html-documentos` — HTML: documento, árvore e semântica | HTML · do zero à plataforma web | HTML | Fundamentos |
 | `html-arvore-semantica` — HTML: parser, árvore do documento e estrutura semântica | HTML · do zero à plataforma web | HTML | Fundamentos |
 | `html-texto-links` — HTML: texto, links, listas e tabelas | HTML · do zero à plataforma web | HTML | Fundamentos |
-| `css-caixas` — CSS: caixas, fluxo e posicionamento | CSS · do zero ao avançado | CSS | Fundamentos |
 
 ## 3. Integração e consolidação
 

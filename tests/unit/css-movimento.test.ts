@@ -17,7 +17,7 @@ it('animações conserva capítulos e projeto, com preparação das duas habilid
  expect(adaptiveCatalog.skills.find(item=>item.id==='css.movimento.reducao')?.path).toEqual(['CSS','Movimento','Redução de movimento']);
 });
 it('a previsão exige instantes distintos e confere o contrato sem alegar execução',async()=>{
- for(const resposta of ['20px\n80px',' 20px\r\n80px '])expect(await evaluatePractice('css-prever-transicao',resposta)).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});
+ for(const resposta of ['20px\n80px',' 20px\r\n80px ','2e1px\n80.00PX'])expect(await evaluatePractice('css-prever-transicao',resposta)).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});
  for(const resposta of ['80px\n80px','20px','80px\n20px','20px 80px','20px\n80px\n80px'])expect((await evaluatePractice('css-prever-transicao',resposta)).passed).toBe(false);
 });
 it('o diagnóstico distingue remover a animação de congelar ou ocultar o selo',async()=>{
