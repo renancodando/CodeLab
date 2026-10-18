@@ -1,0 +1,25 @@
+
+Running 18 tests using 1 worker
+
+(node:916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\css-fluxo.spec.ts:13:1 › margens nativas distinguem colapso e soma, incluindo zero e sobreposição (7.3s)
+  ok  2 tests\e2e\css-fluxo.spec.ts:25:1 › empilhamento nativo limita o selo ao contexto e reage à alteração do ancestral (5.3s)
+  ok  3 tests\e2e\css-fluxo.spec.ts:43:1 › caixas praticadas conservam capítulos, projeto, assistência e revisão (36.0s)
+  ok  4 tests\e2e\css-fluxo.spec.ts:65:1 › caixas offline retomam a previsão conceitual sem execução livre (12.3s)
+  ok  5 tests\e2e\css-fluxo.spec.ts:77:1 › backup CSS restaura as novas habilidades e conserva assistência nas duas aulas (20.7s)
+  ok  6 tests\e2e\css-movimento.spec.ts:12:1 › transição nativa interpola pelo tempo e não redistribui os vizinhos (1.9s)
+  ok  7 tests\e2e\css-movimento.spec.ts:34:1 › movimento reduzido remove keyframes, conserva texto e foco e não congela um pulso (5.8s)
+  ok  8 tests\e2e\css-movimento.spec.ts:63:1 › animações praticadas preservam assistência, revisão, teclado e projeto (19.9s)
+  ok  9 tests\e2e\css-movimento.spec.ts:95:1 › animações offline retomam respostas sem inventar execução de CSS (13.2s)
+  ok 10 tests\e2e\dom-eventos.spec.ts:12:1 › eventos nativos: cancelar navegação não interrompe bubbling, nem muda o alvo para o painel (3.5s)
+  ok 11 tests\e2e\dom-eventos.spec.ts:27:1 › delegação nativa aceita conteúdo interno e novas ações sem capturar o ancestral externo (6.0s)
+  ok 12 tests\e2e\dom-eventos.spec.ts:47:1 › eventos praticados preservam projeto, assistência, revisão e navegação acessível (23.6s)
+  ok 13 tests\e2e\dom-eventos.spec.ts:69:1 › eventos offline retomam previsão e diagnóstico sem executar código livre do aluno (9.9s)
+  ok 14 tests\e2e\dom-selecao.spec.ts:13:1 › DOM nativo: a lista conserva os nós, sem congelar seus valores ou ampliar o escopo (2.1s)
+  ok 15 tests\e2e\dom-selecao.spec.ts:30:1 › DOM nativo: atualizar texto preserva identidade, foco, classes e instâncias independentes (2.5s)
+  ok 16 tests\e2e\dom-selecao.spec.ts:58:1 › seleção praticada conserva tentativas, assistência, revisão e o projeto (23.5s)
+  ok 17 tests\e2e\dom-selecao.spec.ts:80:1 › seleção offline conserva a decisão e seu rascunho sem executar código livre (11.7s)
+  ok 18 tests\e2e\dom-selecao.spec.ts:92:1 › backup DOM restaura as habilidades de seleção e eventos com assistência (18.3s)
+
+  18 passed (4.0m)
