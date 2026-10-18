@@ -467,20 +467,20 @@ const roteiros:Record<string,Roteiro>={
   },
   "animacoes": {
     "contexto": "Animação deve explicar mudança, continuidade ou resposta — não competir com o conteúdo. Movimentos pequenos e consistentes podem aumentar sensação de qualidade justamente porque não chamam atenção para si.",
-    "modelo": "Pense em animação como diferença de estado ao longo do tempo. Escolha o que muda, por que muda, quanto muda e por quanto tempo. Transform e opacity geralmente custam menos que propriedades que obrigam novo layout.",
+    "modelo": "Pense em animação como diferença de estado ao longo do tempo. Escolha o que muda, por que muda, quanto muda e por quanto tempo. Uma transição precisa de dois valores computados distintos: adicionar uma classe depois da primeira renderização pode mudar o destino, enquanto a transição interpola o valor apresentado. Com avanço linear, sem atraso nem interrupção, metade da duração percorre metade da diferença; outras curvas não seguem essa proporção. Transform e opacity geralmente custam menos que propriedades que obrigam novo layout, mas isso não garante aceleração ou bom desempenho. Uma transformação muda a apresentação sem reorganizar o espaço de layout dos vizinhos; deslocamentos podem sobrepor conteúdo. Transições e animações por keyframes são mecanismos diferentes: transition:none não cancela animation. Ao mudar prefers-reduced-motion para reduce, animation:none remove os keyframes e permite usar o transform da regra base. animation-play-state:paused conserva o instante atual, inclusive uma escala intermediária. A preferência pode mudar durante o uso; texto, estado final e foco devem continuar compreensíveis sem depender do movimento ou esconder informação.",
     "passos": [
       "Defina a função da animação antes de escolher duração.",
       "Prefira amplitudes pequenas para estados frequentes.",
       "Use transform e opacity quando possível.",
       "Evite iniciar muitas animações independentes sem coordenação.",
-      "Respeite prefers-reduced-motion e mantenha a informação mesmo sem movimento."
+      "Respeite prefers-reduced-motion e mantenha a informação mesmo sem movimento; confira separadamente transition e animation e preserve o indicador estático."
     ],
     "experimentos": [
       "Reduza pela metade a distância de uma animação e compare qual versão parece mais natural.",
       "Anime width e depois transform:scaleX, observando impacto de layout no DevTools.",
-      "Ative reduced motion e confirme que a interface continua compreensível."
+      "Ative reduced motion antes do carregamento e no meio de uma animação. Compare remover a animação com pausá-la: o selo deve voltar à escala base sem perder o texto nem o foco do botão."
     ],
-    "projeto": "Adicione microinterações discretas a uma lista de tarefas: foco, inclusão, conclusão e remoção, com versão reduzida sem perder feedback.",
+    "projeto": "Adicione microinterações discretas a uma lista de tarefas: foco, inclusão, conclusão e remoção, com versão reduzida sem perder feedback. A conclusão deve permanecer identificável por texto, não apenas por deslocamento ou cor. Verifique o foco pelo teclado, a preferência ativada antes e durante o uso e a ausência de sobreposição em telas estreitas. Compare a transição normal com o estado estático; não condicione a mudança dos dados ao término da animação.",
     "conexao": "A trilha de DOM usa essa base visual para reagir a eventos e transformar a página em uma interface viva."
   },
   "selecionar": {
