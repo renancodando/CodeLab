@@ -1,0 +1,27 @@
+
+Running 20 tests using 1 worker
+
+(node:12236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\css-cascata-unidades.spec.ts:15:1 › CSS nativo: especificidade, ordem e token inválido têm efeitos diferentes (7.4s)
+  ok  2 tests\e2e\css-cascata-unidades.spec.ts:35:1 › CSS nativo: referências de unidade, entrelinha e herança reagem a mudanças independentes (5.1s)
+  ok  3 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: cascata conserva tentativas, assistência e projeto (25.0s)
+  ok  4 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: box-model conserva tentativas, assistência e projeto (26.3s)
+  ok  5 tests\e2e\css-cascata-unidades.spec.ts:113:1 › CSS offline conserva uma alteração conceitual sem executar código livre (13.9s)
+  ok  6 tests\e2e\css-flex-grid.spec.ts:15:1 › Flexbox nativo: trocar o eixo muda as coordenadas e o selo acompanha o cartão (4.9s)
+  ok  7 tests\e2e\css-flex-grid.spec.ts:42:1 › Flexbox nativo: a fronteira de quebra conserva tamanho, conteúdo e ordem do teclado (4.5s)
+  ok  8 tests\e2e\css-flex-grid.spec.ts:62:1 › Grid nativo: conteúdo ocupa trilhas e cada instância consulta seu ancestral (6.9s)
+  ok  9 tests\e2e\css-flex-grid.spec.ts:99:25 › Layout praticado: flex-position preserva projeto, assistência e revisão (31.7s)
+  ok 10 tests\e2e\css-flex-grid.spec.ts:99:25 › Layout praticado: grid-responsivo preserva projeto, assistência e revisão (27.9s)
+  ok 11 tests\e2e\css-flex-grid.spec.ts:135:1 › Layouts offline conservam previsão e alteração sem executar folhas CSS livres (13.3s)
+  ok 12 tests\e2e\css-fluxo.spec.ts:13:1 › margens nativas distinguem colapso e soma, incluindo zero e sobreposição (3.0s)
+  ok 13 tests\e2e\css-fluxo.spec.ts:25:1 › empilhamento nativo limita o selo ao contexto e reage à alteração do ancestral (4.0s)
+  ok 14 tests\e2e\css-fluxo.spec.ts:43:1 › caixas praticadas conservam capítulos, projeto, assistência e revisão (26.2s)
+  ok 15 tests\e2e\css-fluxo.spec.ts:65:1 › caixas offline retomam a previsão conceitual sem execução livre (9.1s)
+  ok 16 tests\e2e\css-fluxo.spec.ts:77:1 › backup CSS restaura as novas habilidades e conserva assistência nas duas aulas (17.6s)
+  ok 17 tests\e2e\css-movimento.spec.ts:12:1 › transição nativa interpola pelo tempo e não redistribui os vizinhos (1.9s)
+  ok 18 tests\e2e\css-movimento.spec.ts:34:1 › movimento reduzido remove keyframes, conserva texto e foco e não congela um pulso (3.7s)
+  ok 19 tests\e2e\css-movimento.spec.ts:63:1 › animações praticadas preservam assistência, revisão, teclado e projeto (22.9s)
+  ok 20 tests\e2e\css-movimento.spec.ts:95:1 › animações offline retomam respostas sem inventar execução de CSS (11.3s)
+
+  20 passed (4.7m)
