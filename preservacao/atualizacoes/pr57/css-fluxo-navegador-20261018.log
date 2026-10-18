@@ -1,0 +1,59 @@
+
+Running 20 tests using 1 worker
+
+(node:23168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\css-cascata-unidades.spec.ts:15:1 › CSS nativo: especificidade, ordem e token inválido têm efeitos diferentes (13.3s)
+  ok  2 tests\e2e\css-cascata-unidades.spec.ts:35:1 › CSS nativo: referências de unidade, entrelinha e herança reagem a mudanças independentes (14.6s)
+  x   3 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: cascata conserva tentativas, assistência e projeto (2.0m)
+(node:22620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: box-model conserva tentativas, assistência e projeto (44.5s)
+  ok  5 tests\e2e\css-cascata-unidades.spec.ts:113:1 › CSS offline conserva uma alteração conceitual sem executar código livre (9.6s)
+  ok  6 tests\e2e\css-flex-grid.spec.ts:15:1 › Flexbox nativo: trocar o eixo muda as coordenadas e o selo acompanha o cartão (4.4s)
+  ok  7 tests\e2e\css-flex-grid.spec.ts:42:1 › Flexbox nativo: a fronteira de quebra conserva tamanho, conteúdo e ordem do teclado (2.4s)
+  ok  8 tests\e2e\css-flex-grid.spec.ts:62:1 › Grid nativo: conteúdo ocupa trilhas e cada instância consulta seu ancestral (4.2s)
+  ok  9 tests\e2e\css-flex-grid.spec.ts:99:25 › Layout praticado: flex-position preserva projeto, assistência e revisão (15.7s)
+  ok 10 tests\e2e\css-flex-grid.spec.ts:99:25 › Layout praticado: grid-responsivo preserva projeto, assistência e revisão (27.5s)
+  ok 11 tests\e2e\css-flex-grid.spec.ts:135:1 › Layouts offline conservam previsão e alteração sem executar folhas CSS livres (8.3s)
+  ok 12 tests\e2e\css-fluxo.spec.ts:13:1 › margens nativas distinguem colapso e soma, incluindo zero e sobreposição (2.1s)
+  ok 13 tests\e2e\css-fluxo.spec.ts:25:1 › empilhamento nativo limita o selo ao contexto e reage à alteração do ancestral (3.1s)
+  ok 14 tests\e2e\css-fluxo.spec.ts:43:1 › caixas praticadas conservam capítulos, projeto, assistência e revisão (53.4s)
+  ok 15 tests\e2e\css-fluxo.spec.ts:65:1 › caixas offline retomam a previsão conceitual sem execução livre (19.3s)
+  ok 16 tests\e2e\css-fluxo.spec.ts:77:1 › backup CSS restaura as novas habilidades e conserva assistência nas duas aulas (34.4s)
+  ok 17 tests\e2e\css-movimento.spec.ts:12:1 › transição nativa interpola pelo tempo e não redistribui os vizinhos (2.1s)
+  ok 18 tests\e2e\css-movimento.spec.ts:34:1 › movimento reduzido remove keyframes, conserva texto e foco e não congela um pulso (4.6s)
+  ok 19 tests\e2e\css-movimento.spec.ts:63:1 › animações praticadas preservam assistência, revisão, teclado e projeto (17.7s)
+  ok 20 tests\e2e\css-movimento.spec.ts:95:1 › animações offline retomam respostas sem inventar execução de CSS (8.4s)
+
+
+  1) tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: cascata conserva tentativas, assistência e projeto 
+
+    Error: Test timeout of 60000ms exceeded
+
+      107 |  for (const largura of [220,4000]) {
+      108 |   await pagina.setViewportSize({width:largura, height:812});
+    > 109 |   await expect.poll(() => pagina.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+          |                                                                                                     ^
+      110 |  }
+      111 | });
+      112 |
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\css-cascata-unidades.spec.ts:109:101
+
+    Tearing down "context" exceeded the test timeout of 60000ms.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+    Error Context: ..\..\outputs\resultados-css-fluxo-local-20261018\css-cascata-unidades-CSS-p-30c23-tivas-assistência-e-projeto\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-css-fluxo-local-20261018\css-cascata-unidades-CSS-p-30c23-tivas-assistência-e-projeto\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-css-fluxo-local-20261018\css-cascata-unidades-CSS-p-30c23-tivas-assistência-e-projeto\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\css-cascata-unidades.spec.ts:69:4 › CSS praticado: cascata conserva tentativas, assistência e projeto 
+  19 passed (7.9m)
