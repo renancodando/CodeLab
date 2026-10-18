@@ -2,6 +2,8 @@
 
 ## Escopo e estado corrente
 
+As aulas originais de seleção e eventos do DOM praticam lista estática, consulta local, texto literal sem destruir controles, propagação e fronteiras de delegação. As pausas são conceituais; os documentos de referência usam DOM real e incluem alternativas defeituosas, alterações independentes e teclado. Os projetos preservados exigem contadores e lista dinâmica construídos pelo aluno. O head combinado ainda precisa dos gates próprios registrados em continuidade.
+
 Esta edição prioriza aprendizagem ativa nas aulas, percursos e projetos existentes. A [fila gerada](aulas-sem-pratica.md) ordena as aulas sem pausas, e as [métricas geradas](metricas-catalogo.md) mantêm as contagens. Uma pausa ou leitura não encerra o domínio; previsão, diagnóstico, produção, assistência e revisão precisam de evidência adequada. A confirmação de cada entrega está em [continuidade](continuidade.md). Os registros seguintes são históricos e conservam os números e gates de cada etapa.
 
 As aulas originais de Flexbox e Grid distinguem posição visual, ordem semântica, tamanho disponível e referência local. Os exemplos variam conteúdo e dimensões para rejeitar compensações que só funcionam na geometria inicial. Previsões e alterações delimitadas não executam CSS livre do aluno; os projetos preservados cobram aplicação independente.

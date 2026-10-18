@@ -1,5 +1,33 @@
 # Continuidade do CODELAB
 
+## Retomada de seleção e eventos em 18 de outubro
+
+Main fa94605b500a26298c5ce42080a24417ac50cc7c encerrou o pós-merge 39156279465 com seis jobs aprovados, incluindo PostgreSQL real. Deployment dpl_8argu5aCdnEThry4xzfdiKCJAeHz READY/production, SHA e alias code-lab-omega.vercel.app conferidos novamente nesta retomada. A PR #58 já está integrada; os quatro fluxos públicos registrados nela passaram. A falha antiga por quota permanece no histórico, sem enfraquecer gates nem ampliar prazos.
+
+As práticas preservadas em 1457130 e 423f06a foram conciliadas com main, mantendo as melhorias posteriores de caixas CSS, respostas numéricas equivalentes, testes e preparação PostgreSQL. As evidências antigas abaixo pertencem aos respectivos commits de origem. O head combinado exige validação própria, revisão, CI e publicação; não herda a aprovação de #57 ou #58. Próxima lacuna, depois desta entrega: estado-formulario. A revisão atual também explicita :scope em seletores compostos e inclui exportação, exclusão e restauração das habilidades DOM. Referências conferidas: [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelectorAll), [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent), [preventDefault](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) e [closest](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest).
+
+## Eventos e fronteiras da delegação, em preparação
+
+A branch pratica/dom-eventos parte de 1457130d2671f2c90998d6ab9e090b4a18899aa3. A aula eventos mantém doze capítulos, exemplo e projeto da lista dinâmica. Duas pausas após os blocos 3/6 distinguem target/currentTarget, cancelamento da ação padrão e propagação, além da fronteira de closest na delegação. A resposta do aluno é conceitual; os documentos HTML/JavaScript de referência são executados no navegador. O projeto mantém aplicação independente, incluindo teclado, novos itens, registro único e recuperação do foco.
+
+Passaram 1115 unitários em 69 arquivos, build com 157 páginas e oito fluxos Chromium: quatro novos e quatro regressões de seleção. Os casos verificam navegação cancelada versus propagação interrompida, texto interno, ancestrais externos, novas ações, Enter/Espaço, alvo que não é Element e outro contêiner. Assistência, revisão, axe, 220/4000 px e offline passaram. Métricas geradas: 137 aulas, 169 atividades, 84 aulas com pausas e 53 sem. PR e CI próprio desta branch, revisão, integração e publicação seguem pendentes; a API GitHub ainda retorna 403. Próxima aula: estado-formulario.
+
+Na retomada, main avançou para 917e9d11fd2aeca579ef4370817b0c01cbcf0862, integrando a PR #56. Pais e árvore fbe4cabd06fc4b5afd80a6314dffbd2e3bbcafad conferidos; essa árvore coincide com o head 76941a3 da entrega de Flexbox/Grid. Isso confirma a integração, mas não comprova implantação pública. As entregas posteriores de animações e seleção permanecem preservadas nas branches enviadas.
+
+## Seleção e atualização do DOM, em preparação
+
+A branch pratica/dom-selecao parte de f63ed9142462c45f3fbb8b54ef6d1896c70836c3, preservando a entrega anterior de animações. A aula selecionar mantém doze capítulos, exemplo e projeto do contador. Duas pausas após os blocos 3/6 distinguem escopo da busca, composição estática de querySelectorAll e atualização local sem interpretar marcação nem substituir controles ou classes. O projeto pede dois contadores independentes, foco preservado e tratamento de regiões ausentes. As respostas permanecem conceituais; referências HTML/JavaScript são executadas no navegador, sem executar código livre do aluno.
+
+Passaram 1112 unitários em 68 arquivos, build com 157 páginas e 13 fluxos Chromium: quatro novos e nove regressões de animações, tabelas e acessibilidade. As referências conferem nós removidos e valores alterados, nova consulta, texto vazio/zero/marcação, painel ou mensagem ausentes, instâncias independentes, identidade do botão, listener e foco. Assistência, revisão, axe, 220/4000 px e offline passaram. Métricas geradas: 137 aulas, 167 atividades, 83 aulas com pausas e 54 sem. PR, CI próprio, integração e publicação permanecem pendentes; a API GitHub continua bloqueada pela rede, embora o envio de branches por Git funcione. Próxima aula da fila: eventos.
+
+## Movimento reduzido na aula original, em preparação
+
+A branch pratica/css-movimento-reduzido parte do head 76941a3619ce02b9b8272f7aa3cd020a6af9672f da PR #56. A aula animacoes conserva doze capítulos, exemplo e projeto de lista de tarefas. Duas pausas após os blocos 3/6 distinguem interpolação linear e remoção de keyframes sob movimento reduzido. O projeto exige estado legível, teclado e preferência alterada durante o uso. As respostas são conceituais; referências nativas conferem instantes controlados, durações e destinos independentes, layout dos vizinhos e as alternativas de pausar ou esconder o selo.
+
+Passaram 1109 unitários em 67 arquivos, build com 157 páginas e 15 fluxos Chromium: quatro novos e onze regressões de Flexbox/Grid e cascata/unidades, incluindo assistência, revisão, axe, 220/4000 px e offline. Métricas geradas: 137 aulas, 165 atividades, 82 aulas com pausas e 55 sem; isso não encerra sua profundidade. CI, revisão, integração e publicação desta branch permanecem pendentes. A próxima lacuna na fila é selecionar, antes de eventos e estado-formulario.
+
+Na retomada, o CI 38838046596 da PR #56 terminou com sucesso no head 76941a3619ce02b9b8272f7aa3cd020a6af9672f. A árvore fbe4cabd06fc4b5afd80a6314dffbd2e3bbcafad coincide com a integração virtual 5e353e358f16eb3a831d9dce19c00e8d5b5459ae, cujos pais são main e o head esperado. Isso não é merge. A API GitHub e o domínio público estavam bloqueados pela rede do ambiente; integração, revisão atual e publicação ainda exigem conferência. Não reaproveitar o CI de #56 como aprovação da entrega de animações.
+
 ## Obtenção do PostgreSQL no CI, em correção
 
 A PR #57 foi integrada em 46947703b5442a8ecf77be8ab64db276e7ec2445, árvore 93e1ac0aad77f3fa8c72118ac69e6f22bef5ff2d igual ao head d3085bf50f98a57538620ec85c991bc78ab9fe89, com pais e revisões conferidos. O CI 39149674756, tentativa 2, aprovou seis jobs: 1112 unitários/68 arquivos, 194 exemplos externos e 209 cenários de navegador. Deployment dpl_2WpzRNZNFSg4qq8oTy6TE2c98HjN READY/production, SHA e alias conferidos; vinte fluxos públicos Edge passaram em 4,7 min, incluindo as quatro práticas, referências nativas, teclado, assistência/revisão, axe, 220/4000 px, offline e backup. A publicação ainda deixa 54 aulas sem pausas, conforme a fila gerada.

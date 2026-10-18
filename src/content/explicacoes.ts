@@ -485,38 +485,38 @@ const roteiros:Record<string,Roteiro>={
   },
   "selecionar": {
     "contexto": "Manipular o DOM começa por identificar exatamente qual elemento representa a informação ou ação desejada. Seletores frágeis acoplam JavaScript ao visual e tornam pequenas mudanças de HTML capazes de quebrar comportamento.",
-    "modelo": "Veja o DOM como uma árvore de nós com relações. querySelector localiza um ponto dessa árvore; propriedades como textContent, classList e atributos alteram uma parte específica sem exigir reconstruir tudo.",
+    "modelo": "Veja o DOM como uma árvore de nós com relações. document.querySelector devolve o primeiro correspondente no documento ou null; painel.querySelector retorna um descendente correspondente daquele painel. Um seletor composto ainda pode mencionar ancestrais externos; :scope fixa a referência local quando isso for necessário. Dois cartões com a mesma classe não são a mesma instância. querySelectorAll devolve uma NodeList estática: inserir outro correspondente depois não aumenta a lista já obtida, mas repetir a busca observa a árvore atual. Estática descreve a composição da lista, não uma cópia congelada dos elementos; uma referência ainda permite observar mudanças no próprio nó. textContent insere texto sem interpretar marcação, mas substitui todos os filhos do nó que o recebe. Por isso, atualizar o texto no painel inteiro pode remover o botão e seu foco; selecione a mensagem dentro do painel. innerHTML interpreta marcação e também reconstrói descendentes. classList.add acrescenta uma classe sem apagar as anteriores; atribuir className substitui a lista completa. Faça as buscas depois de o HTML existir e trate a ausência do painel ou da mensagem antes de modificar o estado.",
     "passos": [
       "Escolha seletores baseados em significado ou papéis estáveis.",
       "Confirme se a busca pode retornar null.",
       "Prefira textContent para texto não confiável.",
-      "Faça a menor alteração necessária no nó correto.",
+      "Faça a menor alteração necessária no nó correto: preserve controles e use classList quando quiser acrescentar um estado visual.",
       "Evite consultar repetidamente a árvore quando a referência já pode ser mantida."
     ],
     "experimentos": [
       "Selecione por id, classe e atributo data-* e compare acoplamento.",
       "Tente selecionar algo inexistente e trate null conscientemente.",
-      "Compare textContent e innerHTML com uma entrada contendo tags."
+      "Compare textContent e innerHTML com uma entrada contendo tags. Aplique depois textContent ao painel inteiro e observe o botão removido; repita somente na mensagem e confira o mesmo botão e seu foco."
     ],
-    "projeto": "Construa um contador com valor, mensagem de estado e classes visuais, mantendo referências claras aos elementos que realmente mudam.",
+    "projeto": "Construa um contador com valor, mensagem de estado e classes visuais, mantendo referências claras aos elementos que realmente mudam. Coloque dois contadores na mesma página e atualize cada um sem mudar o outro. Preserve os botões, o foco do teclado e as classes de apresentação; trate a ausência da região consultada. Teste mensagem vazia, zero e um texto que contenha marcação literal.",
     "conexao": "A próxima aula faz essas mudanças acontecerem em resposta a eventos do usuário e do navegador."
   },
   "eventos": {
     "contexto": "Eventos descrevem coisas que aconteceram: clique, digitação, envio, mudança, foco. O código não deve perguntar continuamente se algo aconteceu; ele registra uma reação e recebe o evento quando necessário.",
-    "modelo": "Pense em eventos como mensagens que percorrem a árvore do DOM. Captura e bubbling definem o caminho; delegação usa esse percurso para tratar muitos elementos por meio de um ancestral estável.",
+    "modelo": "Pense em eventos como mensagens que percorrem a árvore do DOM. Captura e bubbling definem o caminho; delegação usa esse percurso para tratar muitos elementos por meio de um ancestral estável. No DOM comum deste exemplo, target identifica o alvo do click; clicar no span de um botão pode produzir um alvo diferente de acionar o próprio botão pelo teclado. Durante cada callback, currentTarget identifica o elemento onde aquele listener foi registrado. preventDefault cancela o comportamento padrão de um evento cancelável, como a navegação de um link, mas não interrompe a propagação. stopPropagation impede continuar o percurso, mas não cancela por si só a ação padrão. Nem todo evento pode ser cancelado ou sobe pelos ancestrais. Para delegar click, confirme que o alvo é um Element, procure a ação com closest e trate a ausência. closest também pode encontrar um ancestral externo ao componente; contains confere a fronteira antes de agir. Testar só target.matches perde conteúdo interno. Um listener no contêiner continua atendendo descendentes criados depois, sem registrar um handler para cada botão. Isso não dispensa remover listeners quando o componente é descartado nem justifica duplicar o registro a cada renderização.",
     "passos": [
       "Escolha o evento que representa a intenção real, como submit em vez de click no botão.",
       "Registre o listener no elemento com responsabilidade pelo comportamento.",
-      "Use event.target e closest com validação quando delegar.",
+      "Use event.target e closest com validação quando delegar; confirme que a ação encontrada pertence ao contêiner e ignore cliques neutros.",
       "Remova listeners globais quando o componente deixa de existir.",
       "Evite criar um listener novo a cada render sem necessidade."
     ],
     "experimentos": [
       "Escute click no item e no contêiner para observar bubbling.",
       "Adicione itens depois do carregamento e compare listener individual com delegação.",
-      "Use preventDefault em submit e explique exatamente qual comportamento padrão foi impedido."
+      "Use preventDefault em um link e confira que a navegação é cancelada, mas o listener ancestral ainda recebe o click. Compare com stopPropagation e teste também a ativação pelo teclado."
     ],
-    "projeto": "Crie uma lista dinâmica em que um único listener no contêiner trata concluir, editar e remover itens identificados por data-*.",
+    "projeto": "Crie uma lista dinâmica em que um único listener no contêiner trata concluir, editar e remover itens identificados por data-*. Teste botões com texto interno, itens acrescentados depois e ativação por Enter e Espaço. Cliques sem ação ou em outro componente não devem mudar a lista. Cada ativação deve executar a intenção uma única vez, inclusive após várias renderizações; preserve o teclado e defina a recuperação do foco ao remover o item ativo.",
     "conexao": "A próxima aula organiza eventos de formulário em um estado consistente antes de renderizar."
   },
   "estado-formulario": {

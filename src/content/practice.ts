@@ -12,6 +12,36 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:'html-eventos-prever-propagacao',language:'html',lessonIds:['eventos'],skillIds:['html.dom.propagacao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Cancelar a navegação também impede o listener do painel?',
+  prompt:'Neste DOM comum, sem Shadow DOM, o script aciona o span dentro do link. Escreva as três saídas de console.log, uma por linha. O listener do link roda antes do listener do painel e o click pode ser cancelado. Diferencie origem, local do listener e comportamento padrão. Previsão conceitual; a referência é executada no navegador.',
+  code:'<div id="painel"><a id="acao" href="#destino"><span id="rotulo">Ir ao destino</span></a></div>\n<script>\nconst painel = document.querySelector("#painel");\npainel.addEventListener("click", evento => {\n  console.log(evento.target.id);\n  console.log(evento.currentTarget.id);\n  console.log(evento.defaultPrevented);\n});\ndocument.querySelector("#acao").addEventListener("click", evento => evento.preventDefault());\ndocument.querySelector("#rotulo").click();\n</script>',
+  hint:'O alvo não muda para o painel enquanto o evento sobe. preventDefault cancela a ação padrão de um evento cancelável, mas não interrompe sua propagação.',minutes:4
+ },
+ {
+  id:'html-eventos-limitar-delegacao',language:'html',lessonIds:['eventos'],skillIds:['html.dom.delegacao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'O clique neutro encontrou uma ação fora da lista',
+  prompt:'O listener deve registrar somente ações descendentes de lista, inclusive ao clicar no span do botão ou em botões inseridos depois. A seção externa usa data-acao em outro contexto. Clicar no parágrafo neutro não deve registrar essa ação externa. Qual corpo de listener respeita a fronteira do componente? Escolha conceitual, sem executar código livre do aluno.',
+  code:'<section data-acao="externa">\n  <div id="lista">\n    <button type="button" data-acao="concluir"><span>Concluir tarefa</span></button>\n    <p id="neutro">Área sem ação</p>\n  </div>\n</section>\n<script>\nconst lista = document.querySelector("#lista");\nconst acoes = [];\nlista.addEventListener("click", evento => {\n  if (!(evento.target instanceof Element)) return;\n  const acao = evento.target.closest("[data-acao]");\n  if (acao) acoes.push(acao.dataset.acao);\n});\n</script>',
+  options:[{id:'fronteira',text:'if (!(evento.target instanceof Element)) return; const acao = evento.target.closest("[data-acao]"); if (!acao || !lista.contains(acao)) return; acoes.push(acao.dataset.acao);'},{id:'direto',text:'if (!(evento.target instanceof Element) || !evento.target.matches("[data-acao]")) return; acoes.push(evento.target.dataset.acao);'},{id:'ancestral',text:'if (!(evento.target instanceof Element)) return; const acao = evento.target.closest("[data-acao]"); if (acao) acoes.push(acao.dataset.acao);'}],
+  hint:'closest pode sair do contêiner ao subir pelos ancestrais. Testar apenas o alvo perde cliques em conteúdo interno; encontrar uma ação ainda exige conferir a quem ela pertence.',minutes:5
+ },
+ {
+  id:'html-dom-prever-selecao',language:'html',lessonIds:['selecionar'],skillIds:['html.dom.selecao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
+  title:'Uma lista de nós acompanha a árvore para sempre?',
+  prompt:'O script está depois dos dois cartões. Escreva as três saídas de console.log, uma por linha. Compare a busca no documento com a busca dentro do cartão alvo e acompanhe quando a lista nomes foi obtida. A previsão é conceitual; o documento de referência é executado no navegador.',
+  code:'<section class="cartao"><span class="nome">Ana</span></section>\n<section class="cartao" id="alvo"><span class="nome">Bia</span></section>\n<script>\nconst alvo = document.querySelector("#alvo");\nconst nomes = alvo.querySelectorAll(".nome");\nconst novo = document.createElement("span");\nnovo.className = "nome";\nnovo.textContent = "Caio";\nalvo.append(novo);\nconsole.log(document.querySelector(".nome").textContent);\nconsole.log(nomes.length);\nconsole.log(alvo.querySelectorAll(".nome").length);\n</script>',
+  hint:'querySelector retorna o primeiro correspondente no seu escopo. querySelectorAll produz uma lista estática: a busca pode ser repetida depois de mudar a árvore.',minutes:4
+ },
+ {
+  id:'html-dom-atualizar-texto',language:'html',lessonIds:['selecionar'],skillIds:['html.dom.atualizacao'],afterBlock:6,kind:'choice',capability:'depuracao',requiresConcept:true,
+  title:'Mudar a mensagem sem substituir o botão',
+  prompt:'atualizar recebe um painel ou null e um texto, que pode conter caracteres de marcação. A mensagem deve mostrar esse texto literalmente, preservando o mesmo botão, seu foco e as classes anteriores do painel. Se painel ou mensagem não existir, nada deve mudar. Qual substituição do corpo da função satisfaz o contrato? Escolha conceitual; não executa HTML ou JavaScript livre do aluno.',
+  code:'<section id="painel" class="painel compacto">\n  <span class="mensagem">Antes</span>\n  <button type="button">Confirmar</button>\n</section>\n<script>\nfunction atualizar(painel, texto) {\n  if (!painel) return;\n  painel.innerHTML = texto;\n  painel.className = "atualizado";\n}\natualizar(document.querySelector("#painel"), "<strong>Pronto</strong>");\n</script>',
+  options:[{id:'local',text:'if (!painel) return; const mensagem = painel.querySelector(".mensagem"); if (!mensagem) return; mensagem.textContent = texto; painel.classList.add("atualizado");'},{id:'painel',text:'if (!painel) return; painel.textContent = texto; painel.classList.add("atualizado");'},{id:'marcacao',text:'if (!painel) return; const mensagem = painel.querySelector(".mensagem"); if (!mensagem) return; mensagem.innerHTML = texto; painel.classList.add("atualizado");'},{id:'classes',text:'if (!painel) return; const mensagem = painel.querySelector(".mensagem"); if (!mensagem) return; mensagem.textContent = texto; painel.className = "atualizado";'}],
+  hint:'Inserir texto com segurança e escolher o nó correto são decisões diferentes. textContent também substitui os filhos do nó que o recebe; className substitui a lista completa de classes.',minutes:5
+ },
+ {
   id:'css-fluxo-prever-margens',language:'css',lessonIds:['css-caixas'],skillIds:['css.caixas.colapso'],afterBlock:4,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'As duas margens viram sempre uma soma?',
   prompt:'Cada grupo tem dois blocos de 20px de altura, sem borda, padding, floats ou posicionamento especial. O primeiro grupo usa fluxo normal e o segundo usa Flexbox em coluna, sem gap. Escreva a distância entre a borda inferior do primeiro bloco e a borda superior do segundo, primeiro no grupo normal e depois no flexível, uma por linha com px. Previsão conceitual; a referência é medida no navegador.',
