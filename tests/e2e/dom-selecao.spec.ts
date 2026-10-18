@@ -1,3 +1,4 @@
+import {readFile} from 'node:fs/promises';
 import {test,expect,type Page} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import {practiceActivities} from '../../src/content/practice';
@@ -22,6 +23,8 @@ test('DOM nativo: a lista conserva os nós, sem congelar seus valores ou ampliar
  saidas.length=0;
  await documento(pagina,fonte.replace('>Ana<','>Lia<').replace('alvo.append(novo);','alvo.append(novo, novo.cloneNode(true));'));
  expect(saidas).toEqual(['Lia','1','3']);
+ await documento(pagina,'<section id="externo"><div id="local"><span class="nome">Dentro</span></div></section>');
+ expect(await pagina.locator('#local').evaluate(local=>({composto:local.querySelectorAll('#externo .nome').length,ancorado:local.querySelectorAll(':scope #externo .nome').length,filho:local.querySelectorAll(':scope > .nome').length}))).toEqual({composto:1,ancorado:0,filho:1});
 });
 
 test('DOM nativo: atualizar texto preserva identidade, foco, classes e instâncias independentes',async({page:pagina})=>{
@@ -84,4 +87,24 @@ test('seleção offline conserva a decisão e seu rascunho sem executar código 
   await expect(pausa.locator('.practice-feedback')).toContainText('decisão conceitual');await pagina.reload();
   const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers['html-dom-atualizar-texto']).toMatchObject({passed:true,assisted:false,value:'local'});
  }finally{if(!pagina.isClosed())await contexto.setOffline(false);}
+});
+
+test('backup DOM restaura as habilidades de seleção e eventos com assistência',async({page:pagina})=>{
+ await pagina.emulateMedia({reducedMotion:'reduce'});
+ for(const [aula,id,resposta] of [['selecionar','html-dom-atualizar-texto','local'],['eventos','html-eventos-limitar-delegacao','fronteira']]){
+  await pagina.goto('/#/aula/'+aula);const pausa=pagina.locator('[data-practice="'+id+'"]');
+  await pausa.locator('input[value="'+resposta+'"]').check();await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+  await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+  await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('assistência');
+ }
+ await pagina.goto('/#/perfil');
+ const esperar=pagina.waitForEvent('download');await pagina.getByRole('button',{name:'Exportar jornada',exact:true}).click();
+ const arquivo=await readFile((await(await esperar).path())!);
+ await pagina.evaluate(()=>localStorage.removeItem('codelab.progress.v2'));await pagina.reload();
+ expect(await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')??'null')?.adaptive?.skills??{})).toEqual({});
+ await pagina.locator('#import-progress').setInputFiles({name:'jornada.json',mimeType:'application/json',buffer:arquivo});await pagina.getByRole('button',{name:'Restaurar jornada',exact:true}).click();await pagina.reload();
+ const restaurado=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
+ for(const [id,habilidade] of [['html-dom-atualizar-texto','html.dom.atualizacao'],['html-eventos-limitar-delegacao','html.dom.delegacao']]){
+  expect(restaurado.practiceAnswers[id]).toMatchObject({passed:true,assisted:true});expect(restaurado.adaptive.skills[habilidade].review.lastOutcome).toBe('assisted');
+ }
 });
