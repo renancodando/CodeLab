@@ -1,0 +1,4 @@
+npm notice run codelab@0.1.0 content:generate
+npm notice run node scripts/generate-curriculum-index.mjs && node scripts/gerar-metricas.mjs
+Índice e matriz atualizados: 8 percursos adicionais, 77 aulas.
+Métricas geradas: 137 aulas, 177 atividades.
