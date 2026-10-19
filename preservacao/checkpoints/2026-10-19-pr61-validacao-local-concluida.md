@@ -1,0 +1,13 @@
+# PR #61: validação local concluída, CI de navegador em andamento
+
+Branch pratica/componentes-ciclo-vida, head c6cbc623eec1b5088204a60c44daa4ad65fa229c; PR https://github.com/renancodando/CodeLab/pull/61. Base main 427860579d068a6916bb74f26f1aa990434208b8 já publicada e pós-merge 39329972200 integralmente aprovado.
+
+Passaram 107 testes específicos em cinco arquivos, build local Vite 3m48/157 páginas/38 recursos essenciais/seis opcionais (offline f37d964d9f0d8e658bfd) e todos os doze fluxos locais em 2,9 min. O cenário de código inicial que falhava no navegador passou depois de limitar a reentrada provocada pelo verificador. As duas falhas anteriores e seus traces foram preservados; não houve aumento de prazo ou remoção de cenário. Sandbox e gabarito mantidos. Os oito defeitos continuam rejeitados e três soluções equivalentes aceitas.
+
+CI atual 39333632493: compilação, auditoria, 1163 unitários/73 arquivos, 194 exemplos externos, PostgreSQL e build aprovados; quatro parcelas de navegador ainda em andamento no registro. Revisão do mesmo c6cbc62 concluída sem achados. Não usar o CI/revisão de 7ec055d para aprovar esse head. Antes de merge conferir novamente seis jobs, run completo/success, review/tópicos, base/head e árvore. Árvore do head ef6150d7b437972b187124ea6350913b67f2e5dc, igual ao virtual 8baeb955febee38b90d91958e72897b067e9e5e3, com pais 427860579d068a6916bb74f26f1aa990434208b8 e c6cbc623eec1b5088204a60c44daa4ad65fa229c. Ainda não integrada nem publicada.
+
+Após merge esperado por SHA, conferir árvore/pais reais, avançar main local sem descartar alterações, esperar Vercel READY no projeto prj_XgncY54wYGiSgPH0n1JOol3UFWCn, gitSource.sha do merge e alias code-lab-omega.vercel.app. Executar os doze fluxos públicos com playwright-componentes-publico.config.mjs; usar log novo componentes-publico-61.log e preservar falhas. Só então declarar publicação. Arquivos brutos da API Vercel contêm metadados privados e não devem ser enviados.
+
+Logs finais locais e hashes: atualizacoes/pr61/manifesto-validacao-c6cbc62.json. Os dois blobs foram comparados com a árvore remota e estão byte a byte iguais. Manifestos inicial e de investigação também foram conferidos. Fonte, testes, configuração e checkpoints estão no GitHub. Dependências/builds/caches, segredos e traces binários locais são intencionalmente excluídos.
+
+Métricas da branch: 137 aulas/177 atividades/87 com pausas/50 sem. Produção #60 mantém 174/86/51 até esta entrega própria. Próxima lacuna após publicação verificada: armazenamento. Não expandir escopo, aulas ou clima. Atualizar a documentação da publicação na próxima alteração coerente, preservando a história de falhas e gates. A edição ainda não está finalizada.
