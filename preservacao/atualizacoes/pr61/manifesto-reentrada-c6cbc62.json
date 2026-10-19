@@ -1,0 +1,45 @@
+{
+  "head": "c6cbc623eec1b5088204a60c44daa4ad65fa229c",
+  "arquivos": [
+    {
+      "nome": "componentes-build-20261019.log",
+      "sha256": "0857a96a7f7f385e0c5529b65862579bc1fcf37a8074ac8813c614ac6faf93e5",
+      "blob": "eb3054b6cfadeef5b9325ebd5d8990d2ff93c3fb"
+    },
+    {
+      "nome": "componentes-navegador-20261019.log",
+      "sha256": "6aa5ba677a4aba5cc94c1ff196172317833e40478f5b9c9f3dfa7ffaa0a44383",
+      "blob": "707315e498b716e4125c8b13fe195b601ec440bb"
+    },
+    {
+      "nome": "componentes-navegador-repeticao-20261019.log",
+      "sha256": "6d5604b4ff1c0fde46e1531d29731da6cd9a6b82e36118a279a331316d91b38b",
+      "blob": "02364d3873ce9789bad8248f0b442066346eea09"
+    },
+    {
+      "nome": "componentes-reentrada-reproducao-20261019.log",
+      "sha256": "fc77dfa9239ac46013ebecf1c3fd3d50a2ed0b32153b21dcbf4807e7687d8ec0",
+      "blob": "a47afbf407b61496ebf57904be5e80cfebb692c2"
+    },
+    {
+      "nome": "componentes-reentrada-corrigida-20261019.log",
+      "sha256": "7b15b16781f4bdfd7ea41a2c16e1f80f82ed9eb5d162033c81303170bed914bd",
+      "blob": "507ec07be93c334c94fb3ac6f4281e1f1e6dd9cb"
+    },
+    {
+      "nome": "componentes-trace-reentrada-20261019.json",
+      "sha256": "d1241d3a9f9c34d77e650411cad522ab202eca7754a4f7bf2f562df8cd46ca64",
+      "blob": "e4abf3afde5eb3cc52c2d2e0469fe3715b747d7b"
+    },
+    {
+      "nome": "playwright-componentes-repeticao-20261019.config.mjs",
+      "sha256": "04236542b649cb1701f8c58aa45c8882bb7bd15e42bbf6d261bb97b8c8d749da",
+      "blob": "d7db5518c5d51ffc16e20fbede7f016b2c5f1f9d"
+    },
+    {
+      "nome": "playwright-componentes-local-corrigido-20261019.config.mjs",
+      "sha256": "539991ff2bf50871af383d0366c36b99d83840ce5f7046047d95c2d481662c08",
+      "blob": "51f9a5a20a6f6b0f15c530b53ebfccf2a8ec8dcd"
+    }
+  ]
+}
