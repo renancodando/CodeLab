@@ -1,0 +1,40 @@
+{
+  "head": "0954802acecf11320b212dd550dabfe8f8ac24cc",
+  "arquivos": [
+    {
+      "nome": "formulario-build-revisado-20261019.log",
+      "sha256": "7d2a92631fab4b1ae34965fd357252e7b1c061ceb309b2ae76b1bdeed0595a15",
+      "blob": "71941572107d2aff5449b3633939658ccbc69350"
+    },
+    {
+      "nome": "formulario-navegador-20261019.log",
+      "sha256": "aa9e94b162f54682fd4c818a4e395d1cbbe5a28e94be390baf2a50d30f709db9",
+      "blob": "489e0c32a1bd38241bd05c9d20542eed038c2d17"
+    },
+    {
+      "nome": "formulario-retomada-proximo-20261019.log",
+      "sha256": "2d1ffdca9b8426cf0c79bc2d6aca7091b995332230398bc00234f0da373763d7",
+      "blob": "41a06c77bd6fdb1924adbff19d65bb27b7559757"
+    },
+    {
+      "nome": "formulario-retomada-catalogo-20261019.log",
+      "sha256": "8535baecd5525b2a20993a141b9754b3da03e73b5818e1cb232a6fbeec7019ee",
+      "blob": "c178c3b9910c8be90cf90b1fc1f39cf67cbf6bd7"
+    },
+    {
+      "nome": "formulario-retomada-catalogo-final-20261019.log",
+      "sha256": "43722cab11f49645967ea84e07d5ed4754473ab6313dbb223a636efb6693ab74",
+      "blob": "8022d59fdd0db83b7149635a9ba1d645cdad07a8"
+    },
+    {
+      "nome": "formulario-limite-habilidades-20261019.log",
+      "sha256": "e72c413029880e101337246e5146de54a8d91c52a6f4586ec9af295798c12df4",
+      "blob": "860382535f2db2a945ac211ba1b6886ea689c0fa"
+    },
+    {
+      "nome": "playwright-formulario-local-retomada-20261019.config.mjs",
+      "sha256": "4e5808fecb58134820e13868b323c63966f1605a1e88a5d28b1c21365a391293",
+      "blob": "b40cd545d37c7100f34f1017d2b494b588fcaab6"
+    }
+  ]
+}
