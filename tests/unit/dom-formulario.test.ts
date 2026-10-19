@@ -57,6 +57,21 @@ it('uma preparação nova lida durante a retomada conserva suas práticas para o
  expect(terceiro.items.filter(item=>item.kind==='practice'||item.kind==='challenge').every(item=>novas.includes(item.activityId))).toBe(true);
  expect(new Set(terceiro.items.map(item=>item.activityId)).size).toBe(terceiro.items.length);
 });
+it('a preparação conserva práticas mesmo depois de desaparecer dos itens do plano anterior',()=>{
+ const antigas=['semantica','selecionar'];
+ const conceitoSeguinte={id:'conceito-html-seguinte',title:'Próximo assunto',kind:'concept' as const,skillIds:['html.dom.contagem'],minutes:3};
+ const catalogo={...adaptiveCatalog,preferredLanguage:'html',activities:[...adaptiveCatalog.activities.filter(atividade=>[...antigas,'estado-formulario'].includes(atividade.lessonId??'')),conceitoSeguinte]};
+ const estado=freshAdaptive(),relogio={now:Date.parse('2026-10-20T12:00:00Z'),timeZone:'UTC'};
+ estado.seenConcepts=catalogo.activities.filter(atividade=>atividade.kind==='concept'&&atividade.id!==conceitoSeguinte.id).map(atividade=>atividade.id);
+ const anterior={...catalogo,activities:catalogo.activities.filter(atividade=>antigas.includes(atividade.lessonId??''))};
+ estado.daily=buildDailySession(estado,anterior,relogio);
+ expect(estado.daily.items).not.toHaveLength(0);
+ expect(estado.daily.items.every(item=>!practicesForLesson('estado-formulario').some(pausa=>pausa.id===item.activityId))).toBe(true);
+ for(const aula of antigas)for(const pausa of practicesForLesson(aula))expect(recordEvidence(estado,{id:'acerto-'+pausa.id,activityId:pausa.id,assessmentId:pausa.id,skillIds:pausa.skillIds,revision:1,passed:true,assisted:false,attempts:1,hints:0,kind:'practice'},relogio).accepted).toBe(true);
+ const retomada=ensureDailySession(estado,catalogo,{...relogio,now:Date.parse('2026-10-21T12:00:00Z')});
+ expect(retomada.items.find(item=>item.kind==='concept')?.activityId).toBe(conceitoSeguinte.id);
+ expect(new Set(retomada.items.filter(item=>item.kind==='practice'||item.kind==='challenge').map(item=>item.activityId))).toEqual(new Set(practicesForLesson('estado-formulario').map(item=>item.id)));
+});
 it('a preparação vista não contorna requisitos ausentes nem libera outro idioma escolhido',()=>{
  const atividades=adaptiveCatalog.activities.filter(atividade=>atividade.lessonId==='estado-formulario');
  const desafio=atividades.find(atividade=>atividade.id==='js-formulario-preservar-estado')!;
