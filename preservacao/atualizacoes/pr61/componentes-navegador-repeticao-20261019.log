@@ -1,0 +1,51 @@
+
+Running 1 test using 1 worker
+
+(node:24308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\e2e\dom-componentes.spec.ts:64:1 › o descarte executa JavaScript real e conserva a assistência após recarregar (31.4s)
+
+
+  1) tests\e2e\dom-componentes.spec.ts:64:1 › o descarte executa JavaScript real e conserva a assistência após recarregar 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('[data-practice="js-componentes-descarte-unico"]').locator('.practice-feedback')
+    Expected substring: "ordem inversa"
+    Received string:    "O ambiente de execução não iniciou. Seu código foi preservado; este problema não conta como erro de aprendizagem."
+    Timeout: 20000ms
+
+    Call log:
+      - Expect "toContainText" locator('[data-practice="js-componentes-descarte-unico"]').locator('.practice-feedback') with timeout 20000ms
+      - waiting for locator('[data-practice="js-componentes-descarte-unico"]').locator('.practice-feedback')
+        3 × locator resolved to <p role="status" aria-live="polite" class="practice-feedback">Conferindo…</p>
+          - unexpected value "Conferindo…"
+        39 × locator resolved to <p role="status" aria-live="polite" class="practice-feedback">O ambiente de execução não iniciou. Seu código fo…</p>
+           - unexpected value "O ambiente de execução não iniciou. Seu código foi preservado; este problema não conta como erro de aprendizagem."
+
+
+      65 |  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/componentes');
+      66 |  const pausa=pagina.locator('[data-practice="js-componentes-descarte-unico"]');
+    > 67 |  await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('ordem inversa',{timeout:20000});
+         |                                                                                                                                       ^
+      68 |  await expect(pausa.locator('[data-help] pre')).toHaveCount(0);
+      69 |  await pausa.getByLabel('Seu código corrigido').fill(alternativa);await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('A correção passou',{timeout:20000});
+      70 |  await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('assistência');
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\dom-componentes.spec.ts:67:135
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-componentes-repeticao-20261019\dom-componentes-o-descarte-f88fd-assistência-após-recarregar\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-componentes-repeticao-20261019\dom-componentes-o-descarte-f88fd-assistência-após-recarregar\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-componentes-repeticao-20261019\dom-componentes-o-descarte-f88fd-assistência-após-recarregar\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-componentes-repeticao-20261019\dom-componentes-o-descarte-f88fd-assistência-após-recarregar\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\dom-componentes.spec.ts:64:1 › o descarte executa JavaScript real e conserva a assistência após recarregar 
