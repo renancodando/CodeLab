@@ -1,0 +1,19 @@
+
+Running 12 tests using 1 worker
+
+(node:27204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\dom-componentes.spec.ts:14:1 › o botão desconectado ainda tem listener e as montagens mantêm estado independente (4.2s)
+  ok  2 tests\e2e\dom-componentes.spec.ts:27:1 › o descarte nativo respeita referência, capture, repetição e outra instância (2.8s)
+  ok  3 tests\e2e\dom-componentes.spec.ts:45:1 › componentes praticados preservam capítulos, projeto, teclado e acessibilidade (27.8s)
+  ok  4 tests\e2e\dom-componentes.spec.ts:64:1 › o descarte executa JavaScript real e conserva a assistência após recarregar (13.3s)
+  ok  5 tests\e2e\dom-componentes.spec.ts:76:1 › o descarte funciona offline sem rede arbitrária nem execução de DOM do aluno (14.0s)
+  ok  6 tests\e2e\dom-componentes.spec.ts:88:1 › o backup restaura a habilidade de descarte depois de excluir os dados locais (23.5s)
+  ok  7 tests\e2e\dom-formulario.spec.ts:14:1 › formulário nativo distingue required de espaços e não altera estado inválido (2.8s)
+  ok  8 tests\e2e\dom-formulario.spec.ts:25:1 › a projeção nativa reage a remoção, restauração e instâncias sem acumular (2.2s)
+  ok  9 tests\e2e\dom-formulario.spec.ts:40:1 › formulário praticado conserva a aula, decisões, teclado e projeto (20.4s)
+  ok 10 tests\e2e\dom-formulario.spec.ts:58:1 › a regra de estado executa o código do aluno e registra a assistência (15.2s)
+  ok 11 tests\e2e\dom-formulario.spec.ts:70:1 › a regra de estado funciona offline sem executar DOM ou consultar executor remoto (14.6s)
+  ok 12 tests\e2e\dom-formulario.spec.ts:81:1 › o backup conserva a habilidade executada e a assistência após excluir os dados locais (21.4s)
+
+  12 passed (2.9m)
