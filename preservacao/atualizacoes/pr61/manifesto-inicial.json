@@ -1,0 +1,25 @@
+{
+  "head": "7ec055d384f75edf71ccecffe54c8a036b41b640",
+  "arquivos": [
+    {
+      "nome": "componentes-metricas-20261019.log",
+      "sha256": "523395ff9ad80c3d4d22c53bc9c1130b8d8e262d620706ed1671b95205898a85",
+      "blob": "217b549e7a78ab3e909884400fa546db5c4b589f"
+    },
+    {
+      "nome": "componentes-especificos-20261019.log",
+      "sha256": "184616cad22af6ca1e500e5add7d7cbf6e97a0e8a7df7a1b3ef972a9e4d9106e",
+      "blob": "f0fc3f70d1a5ab8330d098e105db2e7671295809"
+    },
+    {
+      "nome": "playwright-componentes-local-20261019.config.mjs",
+      "sha256": "063a23bd8e193632ee2d5e8f52ae3680f5d17a7ad40c83953211850108c6c44f",
+      "blob": "88c90a58b5e9449eff2e5b6cac9f6d0245ddb928"
+    },
+    {
+      "nome": "playwright-componentes-publico.config.mjs",
+      "sha256": "a1464b1bf10c09e8763ad72a5c35f6a605ffdfe24055240d9279bf8856488da4",
+      "blob": "2155074e9d76c46664e6ed627270cebfe8df41d4"
+    }
+  ]
+}
