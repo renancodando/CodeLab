@@ -1,0 +1,9 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 35 skipped (36)
+   Start at  17:56:29
+   Duration  4.42s (tests 89%, transform 8%, import 2%, worker 1%)
+
