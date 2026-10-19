@@ -1,0 +1,15 @@
+{
+  "head": "e14e7df60a6414a73cf8d75429bc6b06b674d34b",
+  "arquivos": [
+    {
+      "nome": "formulario-build-retencao-20261019.log",
+      "sha256": "0af767bae5218bede7ab7df5da0e45cd6527d82aded3864d4dc61bea6d10e0e6",
+      "blob": "d4ae54bc2221b23127d678a96fc89465fa23dd14"
+    },
+    {
+      "nome": "formulario-navegador-retencao-20261019.log",
+      "sha256": "c8468a44db030605b036253ed7da3c4b285013f9e3b9c86318b8fe151326e238",
+      "blob": "86cb1790a2f831dd0a0a2e987c61b4e31a9cd4e8"
+    }
+  ]
+}
