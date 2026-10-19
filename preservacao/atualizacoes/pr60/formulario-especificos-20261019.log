@@ -1,0 +1,36 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/dom-formulario.test.ts (13 tests | 1 failed) 3570ms
+   × a preparação da aula reúne decisões DOM e execução JavaScript sem premiar leitura 1048ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/dom-formulario.test.ts > a preparação da aula reúne decisões DOM e execução JavaScript sem premiar leitura
+AssertionError: expected [ …(3) ] to deeply equal [ …(4) ]
+
+- Expected
++ Received
+
+  [
+    "conceito-0-estado-formulario-pratica-v1",
+    "html-formulario-prever-validacao",
+    "html-formulario-derivar-contagem",
+-   "js-formulario-preservar-estado",
+  ]
+
+ ❯ tests/unit/dom-formulario.test.ts:15:171
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 18 passed (19)
+   Start at  10:38:19
+   Duration  23.83s (tests 41%, transform 34%, import 20%, worker 5%)
+
+  Transform  transforming modules took 4.02s · 34% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
