@@ -1,0 +1,63 @@
+
+Running 18 tests using 1 worker
+
+(node:14328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\css-fluxo.spec.ts:13:1 › margens nativas distinguem colapso e soma, incluindo zero e sobreposição (6.9s)
+  ok  2 tests\e2e\css-fluxo.spec.ts:25:1 › empilhamento nativo limita o selo ao contexto e reage à alteração do ancestral (9.4s)
+  x   3 tests\e2e\css-fluxo.spec.ts:43:1 › caixas praticadas conservam capítulos, projeto, assistência e revisão (1.5m)
+(node:25864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 tests\e2e\css-fluxo.spec.ts:65:1 › caixas offline retomam a previsão conceitual sem execução livre (59.8s)
+  ok  5 tests\e2e\css-fluxo.spec.ts:77:1 › backup CSS restaura as novas habilidades e conserva assistência nas duas aulas (43.7s)
+  ok  6 tests\e2e\css-movimento.spec.ts:12:1 › transição nativa interpola pelo tempo e não redistribui os vizinhos (7.1s)
+  ok  7 tests\e2e\css-movimento.spec.ts:34:1 › movimento reduzido remove keyframes, conserva texto e foco e não congela um pulso (14.8s)
+  ok  8 tests\e2e\css-movimento.spec.ts:63:1 › animações praticadas preservam assistência, revisão, teclado e projeto (49.4s)
+  ok  9 tests\e2e\css-movimento.spec.ts:95:1 › animações offline retomam respostas sem inventar execução de CSS (34.0s)
+  ok 10 tests\e2e\dom-eventos.spec.ts:12:1 › eventos nativos: cancelar navegação não interrompe bubbling, nem muda o alvo para o painel (4.0s)
+  ok 11 tests\e2e\dom-eventos.spec.ts:27:1 › delegação nativa aceita conteúdo interno e novas ações sem capturar o ancestral externo (12.4s)
+  ok 12 tests\e2e\dom-eventos.spec.ts:47:1 › eventos praticados preservam projeto, assistência, revisão e navegação acessível (27.5s)
+  ok 13 tests\e2e\dom-eventos.spec.ts:69:1 › eventos offline retomam previsão e diagnóstico sem executar código livre do aluno (20.3s)
+  ok 14 tests\e2e\dom-selecao.spec.ts:13:1 › DOM nativo: a lista conserva os nós, sem congelar seus valores ou ampliar o escopo (1.4s)
+  ok 15 tests\e2e\dom-selecao.spec.ts:30:1 › DOM nativo: atualizar texto preserva identidade, foco, classes e instâncias independentes (1.6s)
+  ok 16 tests\e2e\dom-selecao.spec.ts:58:1 › seleção praticada conserva tentativas, assistência, revisão e o projeto (12.5s)
+  ok 17 tests\e2e\dom-selecao.spec.ts:80:1 › seleção offline conserva a decisão e seu rascunho sem executar código livre (6.3s)
+  ok 18 tests\e2e\dom-selecao.spec.ts:92:1 › backup DOM restaura as habilidades de seleção e eventos com assistência (11.0s)
+
+
+  1) tests\e2e\css-fluxo.spec.ts:43:1 › caixas praticadas conservam capítulos, projeto, assistência e revisão 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.setViewportSize: Test timeout of 60000ms exceeded.
+
+      60 |  await expect(pagina.locator('#aula-projeto')).toContainText('três caixas');
+      61 |  expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
+    > 62 |  for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);}
+         |                                                ^
+      63 | });
+      64 |
+      65 | test('caixas offline retomam a previsão conceitual sem execução livre',async({page:pagina,context:contexto})=>{
+        at C:\Users\perei\Documents\Codex\2026-10-03\nao-m\work\CodeLab\tests\e2e\css-fluxo.spec.ts:62:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dom-publico-59\css-fluxo-caixas-praticada-f72e1-ojeto-assistência-e-revisão\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dom-publico-59\css-fluxo-caixas-praticada-f72e1-ojeto-assistência-e-revisão\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\outputs\resultados-dom-publico-59\css-fluxo-caixas-praticada-f72e1-ojeto-assistência-e-revisão\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-dom-publico-59\css-fluxo-caixas-praticada-f72e1-ojeto-assistência-e-revisão\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-dom-publico-59\css-fluxo-caixas-praticada-f72e1-ojeto-assistência-e-revisão\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\css-fluxo.spec.ts:43:1 › caixas praticadas conservam capítulos, projeto, assistência e revisão 
+  17 passed (8.3m)
