@@ -1,0 +1,32 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/adaptive.test.ts (36 tests | 1 failed) 14800ms
+   ❯ evidência independente por habilidade (12)
+     × rejeita a habilidade excedente atomicamente 10773ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/adaptive.test.ts > evidência independente por habilidade > rejeita a habilidade excedente atomicamente
+Error: Test timed out in 10000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/adaptive.test.ts:96:2
+     94|   expect(prepareAdaptiveBackup(state)).toEqual(state);
+     95|  });
+     96|  it('rejeita a habilidade excedente atomicamente',()=>{
+       |  ^
+     97|   const state=freshAdaptive();
+     98|   for(let i=0;i<ADAPTIVE_LIMITS.skills;i++)record(state,'2026-10-06',{…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 96 passed (97)
+   Start at  17:54:30
+   Duration  76.52s (transform 58%, tests 36%, import 6%, worker 1%)
+
+  Transform  transforming modules took 31.29s · 58% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
