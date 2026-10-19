@@ -1,0 +1,58 @@
+[
+  {
+    "origem": "resultados-componentes-local-20261019",
+    "erros": [
+      "Aborted(Assertion failed: list_empty(&rt->gc_obj_list), at: ../../vendor/quickjs/quickjs.c,1998,JS_FreeRuntime)"
+    ],
+    "recursos": [
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "duracao": 216.995
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "duracao": 349.107
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "duracao": 119.884
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "duracao": 3.009
+      }
+    ]
+  },
+  {
+    "origem": "resultados-componentes-repeticao-20261019",
+    "erros": [
+      "Aborted(Assertion failed: list_empty(&rt->gc_obj_list), at: ../../vendor/quickjs/quickjs.c,1998,JS_FreeRuntime)"
+    ],
+    "recursos": [
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "duracao": 394.486
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "duracao": 1180.102
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "duracao": 54.876999999999995
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "duracao": 2.673
+      }
+    ]
+  }
+]
