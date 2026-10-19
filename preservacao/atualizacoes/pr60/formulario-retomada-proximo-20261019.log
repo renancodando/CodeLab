@@ -1,0 +1,36 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/dom-formulario.test.ts (16 tests | 1 failed) 2071ms
+   × o catálogo completo retoma a prática anterior junto do próximo conceito sem perder a preparação seguinte 228ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/dom-formulario.test.ts > o catálogo completo retoma a prática anterior junto do próximo conceito sem perder a preparação seguinte
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/dom-formulario.test.ts:45:165
+     43|  const semDesafioAnterior={...catalogo,activities:catalogo.activities.…
+     44|  const terceiro=ensureDailySession(estado,semDesafioAnterior,{...relog…
+     45|  expect(terceiro.items.some(item=>semDesafioAnterior.activities.find(a…
+       |                                                                                                                                                                     ^
+     46|  expect(estado.skills).toEqual({});
+     47| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 76 passed (77)
+   Start at  17:52:04
+   Duration  21.81s (tests 64%, transform 20%, import 14%, worker 2%)
+
+    Isolate  5 workers spawned · ~1.67s startup each (spawn + environment, per file)
+             at least ~6.66s faster with isolate: false — reuses workers across files instead of one per file
+
