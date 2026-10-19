@@ -1,0 +1,40 @@
+
+ RUN  v5.0.1 C:/Users/perei/Documents/Codex/2026-10-03/nao-m/work/CodeLab
+
+ ❯ tests/unit/dom-formulario.test.ts (18 tests | 1 failed) 3248ms
+   × a preparação conserva práticas mesmo depois de desaparecer dos itens do plano anterior 162ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/dom-formulario.test.ts > a preparação conserva práticas mesmo depois de desaparecer dos itens do plano anterior
+AssertionError: expected [ …(3) ] to deeply equal [ …(3) ]
+
+- Expected
++ Received
+
+  [
+-   "html-formulario-prever-validacao",
+    "html-formulario-derivar-contagem",
++   "html-formulario-prever-validacao",
+    "js-formulario-preservar-estado",
+  ]
+
+ ❯ tests/unit/dom-formulario.test.ts:73:114
+     71|  const retomada=ensureDailySession(estado,catalogo,{...relogio,now:Dat…
+     72|  expect(retomada.items.find(item=>item.kind==='concept')?.activityId).…
+     73|  expect(retomada.items.filter(item=>item.kind==='practice'||item.kind=…
+       |                                                                                                                  ^
+     74| });
+     75| it('a preparação vista não contorna requisitos ausentes nem libera out…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 97 passed (98)
+   Start at  18:10:40
+   Duration  45.04s (tests 65%, transform 20%, import 13%, worker 2%)
+
+    Isolate  6 workers spawned · ~2.66s startup each (spawn + environment, per file)
+             at least ~13.30s faster with isolate: false — reuses workers across files instead of one per file
+
