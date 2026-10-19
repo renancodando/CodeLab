@@ -1,5 +1,19 @@
 # Continuidade do CODELAB
 
+## Formulário e estado, em implementação
+
+A retomada parte de main 541b97a84edb21c5a4156b3ec76fa916306abcfe. A aula estado-formulario conserva doze capítulos, exemplo e projeto de despesas. Três pausas após 3/6/8 separam restrição HTML de validação após trim, contagem derivada e atualização que preserva a versão anterior. Duas respostas são conceituais; a função JavaScript do aluno é realmente executada no QuickJS isolado, sem DOM nem executor remoto. O corretor aceita concat, espalhamento ou cópia antes de push, e rejeita mutação, texto sem normalização, deduplicação não solicitada e resposta fixa. Renderização, teclado e formulário completo continuam no projeto independente.
+
+A primeira conferência revelou que a preferência HTML retirava o desafio JavaScript da própria preparação DOM. A seleção agora inclui atividades explicitamente vinculadas à preparação apresentada, mantendo os filtros de pré-requisitos e assunto. Passaram 55 testes específicos, incluindo sessão adaptativa e as duas aulas DOM anteriores; o log da falha anterior foi preservado. Build, referências nativas, suíte integral, CI do próprio head, revisão e publicação desta aula seguem pendentes. Métricas atuais são geradas; retirar uma linha da fila não comprova conclusão curricular.
+
+Referências conferidas: [requestSubmit](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/requestSubmit), [required](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/required) e [trim](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim). Próxima lacuna após esta entrega verificada: componentes.
+
+## Seleção e eventos publicados em 19 de outubro
+
+PR #59 integrada em 541b97a84edb21c5a4156b3ec76fa916306abcfe, árvore ae51fb2dfe2a260dfcde8edc0b41720ab3ca5482 igual ao head 8e96d1903242ed7199956ae0e88d6bb08771cd66. Pais e revisão Codex do mesmo head conferidos, sem achados ou tópicos pendentes. CI 39167754361 aprovado nos seis jobs: 1126 unitários/71 arquivos, 194 exemplos externos, três cronogramas PostgreSQL e 218 cenários de navegador (58/63/43/54). Pós-merge 39169679599 também aprovado integralmente.
+
+Deployment dpl_6tWoHm9rwcA4swCwtUeVLQvCBHQj READY/production, projeto, SHA e alias conferidos. No domínio, 17/18 fluxos Edge passaram em 8,3 min, incluindo os nove DOM. A regressão antiga de caixas CSS expirou no setViewportSize final após axe; o trace também registra recarga demorada, sem causa única demonstrada. O mesmo teste passou isoladamente com as mesmas asserções e prazo (1,0 min, 1,7 min total). Isso não é aprovação de 18/18 na primeira tentativa; falha e trace foram preservados. Dezoito fluxos locais passaram em 4 min, e o build passou em 5m15 de Vite, com 157 páginas, 250,36 kB gzip inicial e 135,92 kB mundo. A suíte local teve 1118/1126 aprovados e oito expirações nos limites originais; o CI do head aprovou integralmente. Logs, configurações e hashes foram enviados à branch preservacao/retomada-cloud-20261015, pasta preservacao/atualizacoes/pr59. A publicação deixou 52 aulas sem pausas; a distribuição posterior vem das métricas geradas.
+
 ## Retomada de seleção e eventos em 18 de outubro
 
 Main fa94605b500a26298c5ce42080a24417ac50cc7c encerrou o pós-merge 39156279465 com seis jobs aprovados, incluindo PostgreSQL real. Deployment dpl_8argu5aCdnEThry4xzfdiKCJAeHz READY/production, SHA e alias code-lab-omega.vercel.app conferidos novamente nesta retomada. A PR #58 já está integrada; os quatro fluxos públicos registrados nela passaram. A falha antiga por quota permanece no histórico, sem enfraquecer gates nem ampliar prazos.

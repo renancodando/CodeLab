@@ -2,6 +2,8 @@
 
 ## Escopo e estado corrente
 
+A aula de formulário e estado acrescenta correção JavaScript executada da regra de inserir uma nota sem modificar a versão anterior. A previsão de validade e a decisão de contagem continuam conceituais, com referências DOM reais; uma evidência não substitui a outra. A preparação diária mantém a prática explicitamente vinculada à aula mesmo quando sua linguagem executada difere da preferência de estudo. O projeto de despesas exige integração independente. O estado dos gates desta entrega está em continuidade.
+
 As aulas originais de seleção e eventos do DOM praticam lista estática, consulta local, texto literal sem destruir controles, propagação e fronteiras de delegação. As pausas são conceituais; os documentos de referência usam DOM real e incluem alternativas defeituosas, alterações independentes e teclado. Os projetos preservados exigem contadores e lista dinâmica construídos pelo aluno. O head combinado ainda precisa dos gates próprios registrados em continuidade.
 
 Esta edição prioriza aprendizagem ativa nas aulas, percursos e projetos existentes. A [fila gerada](aulas-sem-pratica.md) ordena as aulas sem pausas, e as [métricas geradas](metricas-catalogo.md) mantêm as contagens. Uma pausa ou leitura não encerra o domínio; previsão, diagnóstico, produção, assistência e revisão precisam de evidência adequada. A confirmação de cada entrega está em [continuidade](continuidade.md). Os registros seguintes são históricos e conservam os números e gates de cada etapa.

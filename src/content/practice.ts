@@ -12,6 +12,28 @@ export type PracticeActivity = {
  * "reserved" cases means withheld during the attempt, never secret or tamper proof. */
 export const practiceActivities:PracticeActivity[]=[
  {
+  id:"html-formulario-prever-validacao",language:"html",lessonIds:["estado-formulario"],skillIds:["html.dom.validacao"],afterBlock:3,kind:"predict",capability:"leitura",requiresConcept:true,
+  title:"Três espaços satisfazem required?",
+  prompt:"O campo é de texto, sem outras restrições. Escreva as três saídas de console.log, uma por linha. requestSubmit tenta enviar pelo fluxo nativo; o listener cancela a navegação. Separe a restrição HTML da regra que rejeita uma nota vazia depois de trim. Previsão conceitual; o documento de referência é executado no navegador.",
+  code:"<form id=\"formulario\"><label for=\"nota\">Ideia</label><input id=\"nota\" required><button>Guardar</button></form>\n<output id=\"quantidade\">1</output>\n<script>\nconst notas = [\"Revisar\"];\nconst formulario = document.querySelector(\"#formulario\");\nconst campo = document.querySelector(\"#nota\");\nconst quantidade = document.querySelector(\"#quantidade\");\nformulario.addEventListener(\"submit\", evento => {\n  evento.preventDefault();\n  const texto = campo.value.trim();\n  if (!texto) return;\n  notas.push(texto);\n  quantidade.textContent = String(notas.length);\n  campo.value = \"\";\n});\ncampo.value = \"   \";\nconsole.log(campo.validity.valueMissing);\nformulario.requestSubmit();\nconsole.log(notas.join(\"|\"));\nconsole.log(campo.value.length);\n</script>",
+  hint:"valueMissing verifica ausência de valor, não a regra de negócio após normalizar. O retorno antecipado deve acontecer antes da mutação e da limpeza do campo.",minutes:4
+ },
+ {
+  id:"html-formulario-derivar-contagem",language:"html",lessonIds:["estado-formulario"],skillIds:["html.dom.contagem"],afterBlock:6,kind:"choice",capability:"depuracao",requiresConcept:true,
+  title:"A lista mudou, mas o contador ficou para trás",
+  prompt:"O estado da lista pode mudar por inclusão, remoção ou restauração. renderizar recebe a lista atual e um output, pode ser chamada repetidamente e não deve alterar os dados. Substitua o corpo da função para mostrar a quantidade correta também com lista vazia, notas repetidas e dois outputs independentes. Escolha conceitual, conferida com documentos nativos; não executa código livre do aluno.",
+  code:"<output id=\"quantidade\"></output>\n<script>\nconst notas = [\"Ler\", \"Revisar\"];\nlet quantidade = notas.length;\nfunction renderizar(lista, saida) {\n  saida.textContent = String(quantidade);\n}\nnotas.pop();\nrenderizar(notas, document.querySelector(\"#quantidade\"));\n</script>",
+  options:[{"id":"derivar","text":"saida.textContent = String(lista.length);"},{"id":"cache","text":"saida.textContent = String(quantidade);"},{"id":"acumular","text":"quantidade += lista.length; saida.textContent = String(quantidade);"}],
+  hint:"A quantidade pode ser calculada a partir do estado recebido. Renderizar duas vezes não deve acumular nem exigir sincronizar uma segunda variável.",minutes:4
+ },
+ {
+  id:"js-formulario-preservar-estado",language:"javascript",lessonIds:["estado-formulario"],skillIds:["javascript.dom.estado"],afterBlock:8,kind:"debug",capability:"depuracao",requiresConcept:true,
+  title:"Guardar uma nota sem modificar a versão anterior",
+  prompt:"Corrija inserirNota(notas, entrada). notas é um array de strings e entrada é uma string. Remova espaços das pontas da entrada; se ficar vazia, devolva uma lista com os mesmos valores. Caso contrário, devolva um novo array com a nota no fim. Preserve ordem, repetições e todos os valores anteriores, sem modificar notas. Não interprete marcação. Chamadas diferentes precisam ser independentes. O JavaScript da função será executado no sandbox; esta etapa não executa DOM. O formulário completo continua no projeto.",
+  code:"function inserirNota(notas, entrada) {\n  const texto = entrada.trim();\n  notas.push(texto);\n  return notas;\n}",
+  hint:"Separe normalização, validação e criação do próximo estado. push muda a lista que recebeu; a versão anterior ainda pode estar sendo usada pelo histórico.",minutes:7
+ },
+ {
   id:'html-eventos-prever-propagacao',language:'html',lessonIds:['eventos'],skillIds:['html.dom.propagacao'],afterBlock:3,kind:'predict',capability:'leitura',requiresConcept:true,
   title:'Cancelar a navegação também impede o listener do painel?',
   prompt:'Neste DOM comum, sem Shadow DOM, o script aciona o span dentro do link. Escreva as três saídas de console.log, uma por linha. O listener do link roda antes do listener do painel e o click pode ser cancelado. Diferencie origem, local do listener e comportamento padrão. Previsão conceitual; a referência é executada no navegador.',

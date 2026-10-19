@@ -226,7 +226,7 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
  const novosConceitos=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id));
  const concept=novosConceitos.filter(activity=>!novosConceitos.some(outro=>outro.incluiConceitos?.includes(activity.id))).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(concept)add('concept',concept);
- const eligible=candidates.filter(activity=>prerequisitesMet(state,activity,catalog,concept));
+ const eligible=activities.filter(activity=>(candidates.includes(activity)||(concept?.preparacaoAteBloco!==undefined&&activity.requiredConcepts?.includes(concept.id)))&&prerequisitesMet(state,activity,catalog,concept));
  const focus=new Set([...(concept?.skillIds??[]),...items.flatMap(item=>item.skillId?[item.skillId]:[])]);
  const relevant=(activity:LearningActivity)=>activity.skillIds.some(id=>focus.has(id));
  const assuntoApresentado=(atividade:LearningActivity)=>!concept||(concept.preparacaoAteBloco!==undefined
