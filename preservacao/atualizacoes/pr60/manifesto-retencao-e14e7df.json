@@ -1,0 +1,35 @@
+{
+  "head": "e14e7df60a6414a73cf8d75429bc6b06b674d34b",
+  "arquivos": [
+    {
+      "nome": "formulario-build-retomada-20261019.log",
+      "sha256": "451070fc661f6dca45ea80e050012880727fb477a5c3e4f6f15f30b7eb766c90",
+      "blob": "c27276b311169387923f7991e978388b3a05e0e1"
+    },
+    {
+      "nome": "formulario-navegador-retomada-20261019.log",
+      "sha256": "f779dc0dcb1d38800e9d69a4d0d6a92b4db4bf43dbc5bc07bba21893ca158aa6",
+      "blob": "2b43abfd108a2061a1542bbcc77a8fea47e8b6bd"
+    },
+    {
+      "nome": "formulario-preparacao-deslocada-20261019.log",
+      "sha256": "ff95af8caef959fbdf6bb2d4af9ca920d58143d9d4e84f59635f03fffea0b218",
+      "blob": "18eb084138ad13971085bc460432f78cf8a33c32"
+    },
+    {
+      "nome": "formulario-preparacao-deslocada-final-20261019.log",
+      "sha256": "47ae6fed8b3e019174ed7188a0bd49b7a998be4ee830e4b4f6e92c0694b0cf95",
+      "blob": "f37ac2b703f4c970e5e99eb1eff1f2d3833e1e46"
+    },
+    {
+      "nome": "formulario-preparacao-retida-20261019.log",
+      "sha256": "5c7de58e8aefaa8fbd44fa2909689c18e85f19a76c064beec234467e4138441c",
+      "blob": "34470761e0ef1aa63f8504b73d591673f06eba4d"
+    },
+    {
+      "nome": "playwright-formulario-local-retencao-20261019.config.mjs",
+      "sha256": "d60b338ad30ff15b7e198494bee8eecf9bdc0fcda3f9d50ec639b59c49600c38",
+      "blob": "af4de93555167003371e2243a98c912d8ca80570"
+    }
+  ]
+}
