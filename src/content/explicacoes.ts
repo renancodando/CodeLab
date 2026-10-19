@@ -521,7 +521,7 @@ const roteiros:Record<string,Roteiro>={
   },
   "estado-formulario": {
     "contexto": "Quando um formulário cresce, ler diretamente o DOM em cada lugar cria múltiplas fontes de verdade. Um estado explícito concentra os dados atuais e permite validar, transformar e renderizar de forma previsível.",
-    "modelo": "Use o fluxo evento → validar → atualizar estado → renderizar. O DOM mostra o estado; ele não precisa ser o único lugar onde a regra de negócio vive.",
+    "modelo": "Use o fluxo evento → validar → atualizar estado → renderizar. O DOM mostra o estado; ele não precisa ser o único lugar onde a regra de negócio vive. Um campo text com required rejeita a string vazia, mas espaços ainda contam como valor. Normalize com trim e aplique a regra do domínio antes de alterar a lista. requestSubmit percorre a validação nativa antes do evento submit; submit() não é um substituto equivalente. No listener, preventDefault impede a navegação padrão, não desfaz uma mutação já feita. Em uma entrada inválida, preserve os dados e os campos válidos; limpe o campo somente depois de aceitar a nota. A quantidade de notas é derivada de lista.length: manter um contador separado exige sincronizá-lo também ao remover ou restaurar dados. Renderizar novamente o mesmo estado deve mostrar o mesmo resultado, sem acumular contagens. O exemplo inicial usa uma lista local mutável; quando o histórico precisa conservar versões anteriores, uma função de estado pode receber a lista e devolver um novo array ao aceitar a nota. Nesse contrato, não normalize as notas antigas nem remova repetições: só a nova entrada é normalizada. Isso separa a regra JavaScript, executável sem DOM, da leitura e renderização do formulário. Texto que contém marcação continua sendo texto; na interface, use textContent no destino correto. Reconstruir o formulário inteiro pode destruir foco, valores e listeners.",
     "passos": [
       "Defina a estrutura do estado antes dos handlers.",
       "Normalize o valor recebido do formulário.",
@@ -531,10 +531,10 @@ const roteiros:Record<string,Roteiro>={
     ],
     "experimentos": [
       "Crie uma entrada inválida e confirme que o estado anterior permanece intacto.",
-      "Derive um contador a partir da lista em vez de manter duas fontes de verdade.",
+      "Derive um contador a partir da lista em vez de manter duas fontes de verdade. Remova uma nota, restaure outra lista e renderize duas vezes: a quantidade deve continuar seguindo o estado atual.",
       "Recarregue a renderização várias vezes e verifique se handlers não duplicam."
     ],
-    "projeto": "Implemente um formulário de despesas com descrição, valor e categoria, exibindo total derivado e erros sem perder os campos válidos.",
+    "projeto": "Implemente um formulário de despesas com descrição, valor e categoria, exibindo total derivado e erros sem perder os campos válidos. Separe a regra de atualização da manipulação do DOM. Teste entrada só com espaços, remoção, restauração, repetição de renderização e duas instâncias independentes. Preserve o foco e anuncie o resultado; o envio inválido não pode alterar dados nem apagar campos válidos. Se conservar histórico, demonstre que aceitar uma despesa não muda uma versão anterior. Escreva testes da regra e confira o formulário real pelo teclado; acertar as pausas não substitui construir o projeto.",
     "conexao": "A aula seguinte transforma esse fluxo em componentes com montagem, atualização e desmontagem explícitas."
   },
   "componentes": {
