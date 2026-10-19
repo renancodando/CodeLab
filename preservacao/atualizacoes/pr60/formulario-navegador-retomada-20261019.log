@@ -1,0 +1,22 @@
+
+Running 15 tests using 1 worker
+
+(node:27464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\dom-eventos.spec.ts:12:1 › eventos nativos: cancelar navegação não interrompe bubbling, nem muda o alvo para o painel (4.4s)
+  ok  2 tests\e2e\dom-eventos.spec.ts:27:1 › delegação nativa aceita conteúdo interno e novas ações sem capturar o ancestral externo (6.7s)
+  ok  3 tests\e2e\dom-eventos.spec.ts:47:1 › eventos praticados preservam projeto, assistência, revisão e navegação acessível (24.2s)
+  ok  4 tests\e2e\dom-eventos.spec.ts:69:1 › eventos offline retomam previsão e diagnóstico sem executar código livre do aluno (17.3s)
+  ok  5 tests\e2e\dom-formulario.spec.ts:14:1 › formulário nativo distingue required de espaços e não altera estado inválido (1.9s)
+  ok  6 tests\e2e\dom-formulario.spec.ts:25:1 › a projeção nativa reage a remoção, restauração e instâncias sem acumular (1.8s)
+  ok  7 tests\e2e\dom-formulario.spec.ts:40:1 › formulário praticado conserva a aula, decisões, teclado e projeto (17.2s)
+  ok  8 tests\e2e\dom-formulario.spec.ts:58:1 › a regra de estado executa o código do aluno e registra a assistência (11.3s)
+  ok  9 tests\e2e\dom-formulario.spec.ts:70:1 › a regra de estado funciona offline sem executar DOM ou consultar executor remoto (12.5s)
+  ok 10 tests\e2e\dom-formulario.spec.ts:81:1 › o backup conserva a habilidade executada e a assistência após excluir os dados locais (27.4s)
+  ok 11 tests\e2e\dom-selecao.spec.ts:13:1 › DOM nativo: a lista conserva os nós, sem congelar seus valores ou ampliar o escopo (4.8s)
+  ok 12 tests\e2e\dom-selecao.spec.ts:30:1 › DOM nativo: atualizar texto preserva identidade, foco, classes e instâncias independentes (3.0s)
+  ok 13 tests\e2e\dom-selecao.spec.ts:58:1 › seleção praticada conserva tentativas, assistência, revisão e o projeto (25.4s)
+  ok 14 tests\e2e\dom-selecao.spec.ts:80:1 › seleção offline conserva a decisão e seu rascunho sem executar código livre (28.4s)
+  ok 15 tests\e2e\dom-selecao.spec.ts:92:1 › backup DOM restaura as habilidades de seleção e eventos com assistência (28.3s)
+
+  15 passed (3.8m)
