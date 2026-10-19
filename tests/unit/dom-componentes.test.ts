@@ -19,6 +19,12 @@ it('a previsão separa estado por montagem de conexão com a árvore',async()=>{
  expect(await evaluatePractice('html-componentes-prever-desconexao',' 2\r\n1\r\nfalse ')).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});
  for(const resposta of ['1\n1\nfalse','2\n2\nfalse','2\n1\ntrue','2 1 false'])expect((await evaluatePractice('html-componentes-prever-desconexao',resposta)).passed).toBe(false);
 });
+it('o código inicial recebe diagnóstico executado em vez de falha de inicialização',async()=>{
+ const inicial=practicesForLesson('componentes').find(atividade=>atividade.id==='js-componentes-descarte-unico')!.code!;
+ const resultado=await evaluatePractice('js-componentes-descarte-unico',inicial);
+ expect(resultado).toMatchObject({passed:false,status:'evaluated',evidence:'executed',execution:'quickjs'});
+ expect(resultado.feedback).toContain('ordem inversa');
+});
 it('o descarte precisa remover a referência e a captura do registro certo',async()=>{
  for(const resposta of ['captura','nova-funcao','']){
   const resultado=await evaluatePractice('html-componentes-remover-listener',resposta);
