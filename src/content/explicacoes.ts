@@ -538,21 +538,21 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "A aula seguinte transforma esse fluxo em componentes com montagem, atualização e desmontagem explícitas."
   },
   "componentes": {
-    "contexto": "Um componente saudável possui uma fronteira: recebe dados ou dependências, cria recursos que controla e sabe liberá-los quando deixa de existir. Sem ciclo de vida, timers, observers e listeners podem continuar vivos invisivelmente.",
-    "modelo": "Pense no componente como um pequeno sistema com nascimento, vida e descarte. Tudo que ele cria e que pode continuar executando precisa ter um dono e um caminho de limpeza.",
+    "contexto": "Um componente saudável possui uma fronteira: recebe dados ou dependências, cria recursos que controla e sabe liberá-los quando deixa de existir. Sem ciclo de vida, timers, observers e listeners podem continuar vivos invisivelmente. Cada montagem tem seu próprio estado no escopo da função. Remover o nó não apaga seu listener se ainda guardamos uma referência ao objeto: um click programático pode continuar acionando esse callback.",
+    "modelo": "Pense no componente como um pequeno sistema com nascimento, vida e descarte. Tudo que ele cria e que pode continuar executando precisa ter um dono e um caminho de limpeza. Para remover um listener, conserve o mesmo callback, tipo e capture usados no registro; uma nova função de mesmo corpo não é a mesma referência. Remover a raiz não cancela um listener no window, um intervalo ou a observação de tamanho.",
     "passos": [
       "Defina o elemento raiz e os dados recebidos.",
       "Crie listeners, observers e timers apenas durante montagem.",
       "Mantenha referências aos recursos que precisarão ser removidos.",
       "Atualize somente o necessário quando o estado muda.",
-      "Na desmontagem, cancele e desconecte tudo que o componente criou."
+      "Na desmontagem, cancele e desconecte tudo que o componente criou. Guarde o identificador para clearInterval e o observer para disconnect. Se a limpeza de um recurso depende de outro ainda existir, libere em ordem inversa à aquisição, deixando a raiz por último."
     ],
     "experimentos": [
       "Monte e desmonte o mesmo componente vinte vezes observando contagem de listeners ou timers.",
       "Crie ResizeObserver e esqueça de disconnect; depois corrija e compare.",
-      "Use AbortController como mecanismo único para cancelar múltiplos listeners compatíveis."
+      "Use AbortController para cancelar múltiplos listeners compatíveis; isso não substitui clearInterval ou disconnect. Para callbacks síncronos que não lançam exceções, escreva um descarte único que marque seu estado antes dos callbacks e tolere repetição ou reentrada. Erros de limpeza exigem uma política própria; esta prática não a implementa."
     ],
-    "projeto": "Crie um painel reutilizável que observa tamanho, atualiza um relógio e responde a um botão, retornando uma função dispose que elimina todos os recursos.",
+    "projeto": "Crie um painel reutilizável que observa tamanho, atualiza um relógio e responde a um botão, retornando uma função dispose que elimina todos os recursos. Preserve dois painéis independentes: descartar um não pode parar o outro. Monte e desmonte vinte vezes, descarte duas vezes e teste resize, avanço do relógio e click programático num botão guardado após remover a raiz. O descartado não deve mais produzir efeitos. Documente a ordem das aquisições e limpezas, teste funções repetidas e declare o que ocorre se uma limpeza falhar. Conferir callbacks da pausa não substitui demonstrar timers e observers reais no painel.",
     "conexao": "Depois de controlar o ciclo de vida, a próxima aula persiste parte do estado entre sessões com armazenamento local."
   },
   "armazenamento": {
