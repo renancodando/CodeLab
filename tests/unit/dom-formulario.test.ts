@@ -3,7 +3,7 @@ import {lessons} from '../../src/content/curriculum';
 import {practicesForLesson} from '../../src/content/practice';
 import {evaluatePractice,getPracticeSolution} from '../../src/learning/practice';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
-import {freshAdaptive,buildDailySession,ensureDailySession} from '../../src/learning/adaptive';
+import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen,recordEvidence} from '../../src/learning/adaptive';
 
 it('a preparação da aula reúne decisões DOM e execução JavaScript sem premiar leitura',()=>{
  const aula=lessons.find(item=>item.id==='estado-formulario')!,pausas=practicesForLesson(aula.id);
@@ -25,6 +25,37 @@ it('a mudança de dia conserva o desafio JavaScript ainda não tentado depois da
  expect(retomada.day).toBe('2026-10-20');
  expect(retomada.items.map(item=>item.activityId)).toEqual(practicesForLesson('estado-formulario').map(item=>item.id));
  expect(estado.skills).toEqual({});
+});
+it('o catálogo completo retoma a prática anterior junto do próximo conceito',()=>{
+ const catalogo={...adaptiveCatalog,preferredLanguage:'html'};
+ const estado=freshAdaptive(),relogio={now:Date.parse('2026-10-19T12:00:00Z'),timeZone:'UTC'};
+ const preparacao=catalogo.activities.find(atividade=>atividade.id===idPreparacao('estado-formulario'))!;
+ estado.seenConcepts=catalogo.activities.filter(atividade=>atividade.kind==='concept'&&(atividade.ordem??10001)<preparacao.ordem!).map(atividade=>atividade.id);
+ const primeiro=ensureDailySession(estado,catalogo,relogio);
+ expect(primeiro.items[0].activityId).toBe(preparacao.id);
+ markConceptSeen(estado,preparacao.id,relogio,preparacao.incluiConceitos);
+ const segundo=ensureDailySession(estado,catalogo,{...relogio,now:Date.parse('2026-10-20T12:00:00Z')});
+ const conceitoSeguinte=segundo.items.find(item=>item.kind==='concept')!;
+ expect(conceitoSeguinte).toBeDefined();expect(conceitoSeguinte.activityId).not.toBe(preparacao.id);
+ expect(segundo.items.filter(item=>item.kind!=='concept').map(item=>item.activityId)).toEqual(practicesForLesson('estado-formulario').map(item=>item.id));
+ expect(estado.skills).toEqual({});
+});
+it('uma preparação nova lida durante a retomada conserva suas práticas para o terceiro dia',()=>{
+ const catalogo={...adaptiveCatalog,preferredLanguage:'html',activities:adaptiveCatalog.activities.filter(atividade=>['estado-formulario','html-dados-formulario'].includes(atividade.lessonId??''))};
+ const estado=freshAdaptive(),relogio={now:Date.parse('2026-10-19T12:00:00Z'),timeZone:'UTC'};
+ estado.seenConcepts=catalogo.activities.filter(atividade=>atividade.kind==='concept'&&atividade.preparacaoAteBloco===undefined).map(atividade=>atividade.id);
+ ensureDailySession(estado,catalogo,relogio);markConceptSeen(estado,idPreparacao('estado-formulario'),relogio);
+ const segundoDia={...relogio,now:Date.parse('2026-10-20T12:00:00Z')};
+ const segundo=ensureDailySession(estado,catalogo,segundoDia);
+ expect(segundo.items.find(item=>item.kind==='concept')?.activityId).toBe(idPreparacao('html-dados-formulario'));
+ markConceptSeen(estado,idPreparacao('html-dados-formulario'),segundoDia);
+ expect(estado.skills).toEqual({});
+ for(const pausa of practicesForLesson('estado-formulario'))expect(recordEvidence(estado,{id:'acerto-'+pausa.id,activityId:pausa.id,assessmentId:pausa.id,skillIds:pausa.skillIds,revision:1,passed:true,assisted:false,attempts:1,hints:0,kind:'practice'},segundoDia).accepted).toBe(true);
+ const terceiro=ensureDailySession(estado,catalogo,{...relogio,now:Date.parse('2026-10-21T12:00:00Z')});
+ const novas=catalogo.activities.filter(atividade=>atividade.requiredConcepts?.includes(idPreparacao('html-dados-formulario'))).map(atividade=>atividade.id);
+ expect(terceiro.items.some(item=>novas.includes(item.activityId))).toBe(true);
+ expect(terceiro.items.filter(item=>item.kind==='practice'||item.kind==='challenge').every(item=>novas.includes(item.activityId))).toBe(true);
+ expect(new Set(terceiro.items.map(item=>item.activityId)).size).toBe(terceiro.items.length);
 });
 it('a preparação vista não contorna requisitos ausentes nem libera outro idioma escolhido',()=>{
  const atividades=adaptiveCatalog.activities.filter(atividade=>atividade.lessonId==='estado-formulario');

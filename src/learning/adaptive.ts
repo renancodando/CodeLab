@@ -223,6 +223,13 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
   if(activity)add('review',activity,skillId);
  }
  const preparacoesConhecidas=new Set(activities.filter(atividade=>atividade.preparacaoAteBloco!==undefined&&state.seenConcepts.includes(atividade.id)&&(!catalog.preferredLanguage||atividade.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage))).map(atividade=>atividade.id));
+ const preparacoesRetomadas=new Set((state.daily?.day!==day?state.daily?.items??[]:[]).flatMap(item=>{
+  const atividade=activities.find(atividade=>atividade.id===item.activityId);
+  if(!atividade)return [];
+  return atividade.kind==='concept'?[atividade.id].filter(id=>preparacoesConhecidas.has(id))
+   : (atividade.requiredConcepts??[]).filter(id=>preparacoesConhecidas.has(id));
+ }));
+ const retomadaPendente=(atividade:LearningActivity)=>!hasPassed(state,atividade.id)&&atividade.requiredConcepts?.some(id=>preparacoesRetomadas.has(id))===true;
  const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage)||(activity.kind!=='concept'&&!hasPassed(state,activity.id)&&activity.requiredConcepts?.some(id=>preparacoesConhecidas.has(id))));
  const novosConceitos=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id));
  const concept=novosConceitos.filter(activity=>!novosConceitos.some(outro=>outro.incluiConceitos?.includes(activity.id))).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
@@ -230,14 +237,14 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
  const eligible=activities.filter(activity=>(candidates.includes(activity)||(concept?.preparacaoAteBloco!==undefined&&activity.requiredConcepts?.includes(concept.id)))&&prerequisitesMet(state,activity,catalog,concept));
  const focus=new Set([...(concept?.skillIds??[]),...items.flatMap(item=>item.skillId?[item.skillId]:[])]);
  const relevant=(activity:LearningActivity)=>activity.skillIds.some(id=>focus.has(id));
- const assuntoApresentado=(atividade:LearningActivity)=>!concept||(concept.preparacaoAteBloco!==undefined
+ const assuntoApresentado=(atividade:LearningActivity)=>retomadaPendente(atividade)||!concept||(concept.preparacaoAteBloco!==undefined
   ? atividade.requiredConcepts?.includes(concept.id)===true
   : atividade.skillIds.some(id=>concept.skillIds.includes(id)));
  const practices=eligible.filter(activity=>activity.kind==='practice'&&!used.has(activity.id)&&assuntoApresentado(activity))
-  .sort((a,b)=>Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id));
+  .sort((a,b)=>Number(retomadaPendente(b))-Number(retomadaPendente(a))||Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id));
  for(const activity of practices.slice(0,2))add('practice',activity);
  const challenge=eligible.filter(activity=>activity.kind==='challenge'&&!used.has(activity.id)&&assuntoApresentado(activity))
-  .sort((a,b)=>Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
+  .sort((a,b)=>Number(retomadaPendente(b))-Number(retomadaPendente(a))||Number(relevant(b))-Number(relevant(a))||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||weakness(state,a)-weakness(state,b)||(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(challenge)add('challenge',challenge);
  return {day,items,completed:[],totalMinutes:items.reduce((sum,item)=>sum+item.minutes,0)};
 }
