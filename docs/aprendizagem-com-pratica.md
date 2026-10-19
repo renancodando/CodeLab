@@ -322,3 +322,6 @@ Concorrência passou em TypeScript strict e build: 157 páginas, 35 recursos ess
 
 
 Engenharia passou em strict/build: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 207,84 kB gzip e mundo 135,94 kB gzip. O teste do marco exige ao menos uma pausa em cada uma das dez aulas Python, sem afirmar domínio por leitura ou conclusão da linguagem. Dois fluxos locais Edge passaram em 1,5 min: engenharia e regressão de concorrência, incluindo assistência, recarga offline, evidência e 220/4000 px. A publicação de #40 já tem deployment dpl_5fxMM1Q7tCi8cSn7gRCUUXWPeRp2 READY/production, gitSource.sha be777ce404aaa9257eed502d4fa1e0da491f5f66 confirmado e domínio atribuído; os fluxos públicos ainda precisam passar.
+
+
+Componentes e ciclo de vida acrescenta previsão de instâncias/nó desconectado, diagnóstico de remoção por identidade/capture e correção JavaScript de descarte único. A função executada recebe callbacks síncronos sem exceções e não executa DOM; o painel real permanece projeto independente, com timers e observers. A árvore de habilidades distingue leitura e depuração e mantém assistência. Validações e publicação próprias permanecem exigidas.
