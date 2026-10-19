@@ -3,7 +3,7 @@ import {lessons} from '../../src/content/curriculum';
 import {practicesForLesson} from '../../src/content/practice';
 import {evaluatePractice,getPracticeSolution} from '../../src/learning/practice';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
-import {freshAdaptive,buildDailySession} from '../../src/learning/adaptive';
+import {freshAdaptive,buildDailySession,ensureDailySession} from '../../src/learning/adaptive';
 
 it('a preparação da aula reúne decisões DOM e execução JavaScript sem premiar leitura',()=>{
  const aula=lessons.find(item=>item.id==='estado-formulario')!,pausas=practicesForLesson(aula.id);
@@ -14,6 +14,28 @@ it('a preparação da aula reúne decisões DOM e execução JavaScript sem prem
  estado.seenConcepts=adaptiveCatalog.activities.filter(item=>item.kind==='concept'&&item.id!==preparacao).map(item=>item.id);
  expect(buildDailySession(estado,{...adaptiveCatalog,preferredLanguage:'html'},{now:Date.parse('2026-10-19T12:00:00Z'),timeZone:'UTC'}).items.map(item=>item.activityId)).toEqual([preparacao,...pausas.map(item=>item.id)]);
  expect(estado.skills).toEqual({});
+});
+it('a mudança de dia conserva o desafio JavaScript ainda não tentado depois da preparação HTML',()=>{
+ const catalogo={...adaptiveCatalog,preferredLanguage:'html',activities:adaptiveCatalog.activities.filter(atividade=>atividade.lessonId==='estado-formulario')};
+ const estado=freshAdaptive(),primeiroDia={now:Date.parse('2026-10-19T12:00:00Z'),timeZone:'UTC'};
+ estado.daily=buildDailySession(estado,catalogo,primeiroDia);
+ estado.seenConcepts=catalogo.activities.filter(atividade=>atividade.kind==='concept').map(atividade=>atividade.id);
+ estado.daily.completed=[idPreparacao('estado-formulario')];
+ const retomada=ensureDailySession(estado,catalogo,{...primeiroDia,now:Date.parse('2026-10-20T12:00:00Z')});
+ expect(retomada.day).toBe('2026-10-20');
+ expect(retomada.items.map(item=>item.activityId)).toEqual(practicesForLesson('estado-formulario').map(item=>item.id));
+ expect(estado.skills).toEqual({});
+});
+it('a preparação vista não contorna requisitos ausentes nem libera outro idioma escolhido',()=>{
+ const atividades=adaptiveCatalog.activities.filter(atividade=>atividade.lessonId==='estado-formulario');
+ const desafio=atividades.find(atividade=>atividade.id==='js-formulario-preservar-estado')!;
+ const catalogo={...adaptiveCatalog,preferredLanguage:'html',activities:[...atividades,{...desafio,id:'js-sem-outro-requisito',requiredConcepts:[idPreparacao('estado-formulario'),'preparacao-ausente']},{...desafio,id:'conceito-js-alheio',kind:'concept' as const,requiredConcepts:[idPreparacao('estado-formulario')]}]};
+ const estado=freshAdaptive();estado.seenConcepts=atividades.filter(atividade=>atividade.kind==='concept').map(atividade=>atividade.id);
+ const relogio={now:Date.parse('2026-10-20T12:00:00Z'),timeZone:'UTC'};
+ expect(buildDailySession(estado,catalogo,relogio).items.map(item=>item.activityId)).toContain('js-formulario-preservar-estado');
+ expect(buildDailySession(estado,catalogo,relogio).items.map(item=>item.activityId)).not.toContain('js-sem-outro-requisito');
+ expect(buildDailySession(estado,catalogo,relogio).items.map(item=>item.activityId)).not.toContain('conceito-js-alheio');
+ expect(buildDailySession(estado,{...catalogo,preferredLanguage:'css'},relogio).items).toEqual([]);
 });
 it('required não equivale à validação da nota normalizada',async()=>{
  expect(await evaluatePractice('html-formulario-prever-validacao',' false\r\nRevisar\r\n3 ')).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});

@@ -222,7 +222,8 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
    .sort((a,b)=>Number(b.kind==='practice')-Number(a.kind==='practice')||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||compare(a.id,b.id))[0];
   if(activity)add('review',activity,skillId);
  }
- const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage));
+ const preparacoesConhecidas=new Set(activities.filter(atividade=>atividade.preparacaoAteBloco!==undefined&&state.seenConcepts.includes(atividade.id)&&(!catalog.preferredLanguage||atividade.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage))).map(atividade=>atividade.id));
+ const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage)||(activity.kind!=='concept'&&!hasPassed(state,activity.id)&&activity.requiredConcepts?.some(id=>preparacoesConhecidas.has(id))));
  const novosConceitos=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id));
  const concept=novosConceitos.filter(activity=>!novosConceitos.some(outro=>outro.incluiConceitos?.includes(activity.id))).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(concept)add('concept',concept);
