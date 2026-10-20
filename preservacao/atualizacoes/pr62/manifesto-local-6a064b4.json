@@ -1,0 +1,46 @@
+{
+  "head": "6a064b4bb813a548a2d2711da241f6c81c7a5682",
+  "execucaoCompleta": {
+    "aprovados": 12,
+    "falhas": 1
+  },
+  "repeticaoIsolada": {
+    "aprovados": 1,
+    "falhas": 0
+  },
+  "originaisLogSomenteLocais": true,
+  "arquivos": [
+    {
+      "nome": "componentes-validacao-local-20261020.sanitizado.log",
+      "original": "componentes-validacao-local-20261020.log",
+      "sha256Original": "46b32b25f349419bc5daba38dcbecf78fa965a77d8d2333caf148bc854f1aaeb",
+      "sha256": "46b32b25f349419bc5daba38dcbecf78fa965a77d8d2333caf148bc854f1aaeb",
+      "bytes": 3309,
+      "blob": "ced5d752c9b518593420ca98dd71d55bca4cc4c7"
+    },
+    {
+      "nome": "formulario-backup-local-repeticao-20261020.sanitizado.log",
+      "original": "formulario-backup-local-repeticao-20261020.log",
+      "sha256Original": "9f3877e4a15c56598953c4df237e241cfc87bffc8cafa261f25a104921893707",
+      "sha256": "9f3877e4a15c56598953c4df237e241cfc87bffc8cafa261f25a104921893707",
+      "bytes": 368,
+      "blob": "920d278a7b5fd9f6a400e2ed2bb338f9360335ce"
+    },
+    {
+      "nome": "playwright-componentes-local-20261020.config.mjs",
+      "original": "playwright-componentes-local-20261020.config.mjs",
+      "sha256Original": "2c3829cc57543aaf1a71538e59c2dd2a809d69a4153ee6367375f22c15dc482f",
+      "sha256": "2c3829cc57543aaf1a71538e59c2dd2a809d69a4153ee6367375f22c15dc482f",
+      "bytes": 227,
+      "blob": "6383acdb9ac3dc5e1bc14fbf166eccfee2cf7152"
+    },
+    {
+      "nome": "playwright-formulario-backup-local-20261020.config.mjs",
+      "original": "playwright-formulario-backup-local-20261020.config.mjs",
+      "sha256Original": "f30c810eaff7871ae219582b66b80747ce29295ef68721e1cfd1f0514d85a922",
+      "sha256": "f30c810eaff7871ae219582b66b80747ce29295ef68721e1cfd1f0514d85a922",
+      "bytes": 279,
+      "blob": "a425847bfc633ee8b99765d9512f662325feaa07"
+    }
+  ]
+}
