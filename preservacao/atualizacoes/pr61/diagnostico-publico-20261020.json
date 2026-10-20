@@ -1,0 +1,143 @@
+[
+  {
+    "pasta": "resultados-componentes-publico",
+    "cenario": "dom-componentes-componente-0d47e-to-teclado-e-acessibilidade",
+    "erros": [
+      "Test timeout of 60000ms exceeded.",
+      "Error: page.evaluate: Test timeout of 60000ms exceeded.\n Please check out https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md"
+    ],
+    "recursos": [
+      {
+        "caminho": "/assets/editor.worker-DERb3WoQ.js",
+        "status": 200,
+        "milissegundos": 1572.2440000000001
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "milissegundos": 3215.763
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "milissegundos": 7933.52
+      }
+    ]
+  },
+  {
+    "pasta": "resultados-componentes-publico",
+    "cenario": "dom-componentes-o-backup-r-df400--de-excluir-os-dados-locais",
+    "erros": [
+      "Test timeout of 60000ms exceeded."
+    ],
+    "recursos": [
+      {
+        "caminho": "/assets/editor.worker-DERb3WoQ.js",
+        "status": 200,
+        "milissegundos": 1285.039
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "milissegundos": 1305.605
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "milissegundos": 2072.419
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "milissegundos": 274.078
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "milissegundos": 8.79
+      }
+    ]
+  },
+  {
+    "pasta": "resultados-componentes-publico",
+    "cenario": "dom-formulario-a-regra-de--b4141-no-e-registra-a-assistência",
+    "erros": [
+      "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('[data-practice=\"js-formulario-preservar-estado\"]').locator('.practice-feedback')\nExpected substring: \"fronteira vazia\"\nReceived string:    \"O ambiente de execução não iniciou. Seu código foi preservado; este problema não conta como erro de aprendizagem.\"\nTimeout: 20000ms\n\nCall log:\n  - Expect \"toContainText\" locator('[data-practice=\"js-formulario-preservar-estado\"]').locator('.practice-feedback') with timeout 20000ms\n  - waiting for locator('[data-practice=\"js-formulario-preservar-estado\"]').locator('.practice-feedback')\n    3 × locator resolved to <p role=\"status\" aria-live=\"polite\" class=\"practice-feedback\">Conferindo…</p>\n      - unexpected value \"Conferindo…\"\n    27 × locator resolved to <p role=\"status\" aria-live=\"polite\" class=\"practice-feedback\">O ambiente de execução não iniciou. Seu código fo…</p>\n       - unexpected value \"O ambiente de execução não iniciou. Seu código foi preservado; este problema não conta como erro de aprendizagem.\"\n"
+    ],
+    "recursos": [
+      {
+        "caminho": "/assets/editor.worker-DERb3WoQ.js",
+        "status": 200,
+        "milissegundos": 1347.401
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "milissegundos": 1421.7589999999998
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "milissegundos": 5266.1089999999995
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "milissegundos": 1270.381
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "milissegundos": 78.263
+      }
+    ]
+  },
+  {
+    "pasta": "resultados-componentes-publico",
+    "cenario": "dom-formulario-formulário--d082f--decisões-teclado-e-projeto",
+    "erros": [
+      "Test timeout of 60000ms exceeded."
+    ],
+    "recursos": [
+      {
+        "caminho": "/assets/editor.worker-DERb3WoQ.js",
+        "status": 200,
+        "milissegundos": 785.299
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "milissegundos": 1060.932
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "milissegundos": 3272.701
+      }
+    ]
+  },
+  {
+    "pasta": "resultados-componentes-publico-repeticao-20261020",
+    "cenario": "dom-componentes-componente-0d47e-to-teclado-e-acessibilidade",
+    "erros": [
+      "Test timeout of 60000ms exceeded."
+    ],
+    "recursos": [
+      {
+        "caminho": "/assets/editor.worker-DERb3WoQ.js",
+        "status": 200,
+        "milissegundos": 6737.726
+      },
+      {
+        "caminho": "/assets/emscripten-module-NWak2PoB.wasm",
+        "status": 200,
+        "milissegundos": 7208.624
+      },
+      {
+        "caminho": "/assets/runner.worker-COjsV4wj.js",
+        "status": 200,
+        "milissegundos": 9146.229
+      }
+    ]
+  }
+]
