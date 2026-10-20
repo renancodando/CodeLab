@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Validação pública de componentes, em correção
+
+A PR #61 foi integrada em 25197c70895170781337f301d4200c1645f81820; árvore e pais conferidos, fonte enviada e checkout limpo antes desta correção. O CI completo pós-merge 39336917502 terminou aprovado. Em 20/10, o alias público voltou a confirmar READY/production no mesmo SHA. Isso ainda não encerra a validação dos fluxos públicos.
+
+A primeira execução pública de doze cenários terminou com oito aprovados e quatro falhas. A repetição dos quatro, com os mesmos limites e saídas separadas, aprovou três: backup de componentes, fluxo de formulário com axe/220/4000 px e execução/assistência de formulário. O cenário combinado de componentes voltou a exceder 60 segundos durante a avaliação do axe. Os traces não registraram uma violação axe nesse cenário; registraram navegação, decisões corretas e tempo esgotado na análise. Não atribuir a causa ao computador ou ao site sem comprovação. A inspeção pontual encontrou 2,9 GB livres no disco, sem medir impacto na latência; memória medida a 68%. Nada foi apagado ou encerrado.
+
+Esta correção divide as responsabilidades do cenário: decisões, teclado e preservação da aula ficam num teste; o estado com as duas respostas corretas é reconstruído por UI no teste próprio de axe e largura. Todas as afirmações anteriores continuam, incluindo 220/4000 px, mesma região main, feedback acessível e leitura sem domínio. Mantém timeout de 60 segundos, expectativas, sandbox e limites de execução. Não há alteração de aplicação, currículo ou visual. A nova distribuição passou nos dois cenários públicos separados em 37,4 segundos e nos 33 unitários de componentes/formulário. O build completo foi aprovado (Vite 4m03, 157 páginas, offline f37d964d9f0d8e658bfd). CI completo, revisão do head, integração e verificação pública própria ainda estão pendentes.
+
+Os logs e checkpoints anteriores são preservados na branch preservacao/retomada-cloud-20261015. A próxima lacuna curricular permanece armazenamento; a fila e as métricas geradas não mudaram. Não declarar a edição concluída nem converter a repetição em aprovação da primeira execução.
+
 ## Componentes e ciclo de vida, em implementação
 
 A nova branch parte do main publicado 427860579d068a6916bb74f26f1aa990434208b8. Preserva doze capítulos, exemplo de contador e projeto de painel. Três pausas após 3/6/8 distinguem instâncias e nó desconectado, identidade/capture na remoção de listener e descarte único em ordem inversa. Duas respostas são conceituais, com referências nativas no navegador; a função JavaScript do aluno será executada no sandbox com callbacks de teste. Isso não comprova liberação de DOM, timers e observers reais: o projeto continua exigindo essa integração. O contrato da função limita callbacks a síncronos sem exceção, conservando o array e tolerando repetição/reentrada, vazio e montagens independentes. Passaram 106 testes específicos em cinco arquivos, incluindo soluções equivalentes e oito implementações defeituosas. Build, navegador, CI integral, revisão e publicação próprios ainda pendentes; não herda os gates da PR #60.
