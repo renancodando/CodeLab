@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:24260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\e2e\dom-componentes.spec.ts:74:1 › o descarte executa JavaScript real e conserva a assistência após recarregar (49.9s)
+
+  1 passed (1.2m)
