@@ -1,0 +1,78 @@
+{
+  "pr": 63,
+  "head": "8228cc45eb070911fc0e23bb59ffdd08d5ce1d47",
+  "merge": "c62d24c0a24eab1084af842e3a6db5e55e983686",
+  "tree": "5742fdb6a24768cf0c429b2e0892f3b9cfe8ac4d",
+  "parents": [
+    "681890cd027ab35041a7186c33ce0c5b14b54410",
+    "8228cc45eb070911fc0e23bb59ffdd08d5ce1d47"
+  ],
+  "run": {
+    "id": 39487372972,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "unitarios": 1183,
+    "arquivosUnitarios": 74,
+    "exemplosExternos": 194,
+    "browser": [
+      61,
+      80,
+      42,
+      55
+    ],
+    "jobs": [
+      {
+        "id": 118851180982,
+        "name": "Testes e compilação",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 118851181163,
+        "name": "Auditoria de dependências",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 118852622604,
+        "name": "Navegador (4/4)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 118852622608,
+        "name": "Navegador (1/4)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 118852622697,
+        "name": "Navegador (2/4)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 118852622722,
+        "name": "Navegador (3/4)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "review": {
+    "head": "8228cc45eb070911fc0e23bb59ffdd08d5ce1d47",
+    "status": "completed",
+    "findings": false,
+    "unresolved": false
+  },
+  "local": {
+    "unitariosEspecificos": 156,
+    "browserAnterior": "14/15",
+    "browserFinal": "15/15 em 3.4 min",
+    "viteFinal": "2m36",
+    "paginas": 157,
+    "offline": "401dd48f7d814c6e3fb3"
+  },
+  "publicacao": "aguardando conferir deployment/SHA/alias e fluxos públicos; não está comprovada por este recibo"
+}
