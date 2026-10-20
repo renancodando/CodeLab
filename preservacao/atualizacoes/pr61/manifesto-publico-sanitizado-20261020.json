@@ -1,0 +1,26 @@
+{
+  "aviso": "Os dois logs brutos listados no manifesto-publico-20261020.json tiveram upload rejeitado e não estão arquivados remotamente. Seus hashes identificam os originais locais. Este manifesto registra as versões sanitizadas realmente enviadas, removendo caminhos pessoais e ANSI. Configurações e diagnóstico sanitizado do manifesto anterior foram enviados.",
+  "shaPublicado": "25197c70895170781337f301d4200c1645f81820",
+  "primeiraExecucao": {
+    "aprovados": 8,
+    "falhas": 4
+  },
+  "repeticao": {
+    "aprovados": 3,
+    "falhas": 1
+  },
+  "logs": [
+    {
+      "nome": "componentes-publico-61.sanitizado.log",
+      "original": "componentes-publico-61.log",
+      "sha256Original": "cfac401405c5ee540ea81ecbd96717de33fad635ed702f995bf1d875de5c826e",
+      "originalSomenteLocal": true
+    },
+    {
+      "nome": "componentes-publico-61-repeticao-20261020.sanitizado.log",
+      "original": "componentes-publico-61-repeticao-20261020.log",
+      "sha256Original": "bdb0ad820ce761395ef8c51d7e22d5f70f1e98a702fc86b5f78b99a6196ad08d",
+      "originalSomenteLocal": true
+    }
+  ]
+}
