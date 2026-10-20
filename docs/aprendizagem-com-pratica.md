@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Armazenamento: três fronteiras distintas
+
+As pausas de armazenamento trabalham previsão do texto salvo, diagnóstico de perda do trabalho numa falha de escrita e depuração de um validador/migrador JavaScript. As duas primeiras são decisões conceituais; os documentos de referência usam Storage nativo, com falha de setItem explicitamente injetada no teste. A terceira executa a função do aluno em QuickJS, sem acesso ao localStorage ou DOM da plataforma. Soluções equivalentes, bordas e independência entre chamadas são verificadas pelo comportamento. Leitura não gera domínio e abrir solução continua sendo assistência. Exportação/importação e interface de recuperação precisam ser construídas no projeto, com rubrica manual. Validação e publicação são registradas em continuidade.md.
+
 ## Escopo e estado corrente
 
 A aula de formulário e estado acrescenta correção JavaScript executada da regra de inserir uma nota sem modificar a versão anterior. A previsão de validade e a decisão de contagem continuam conceituais, com referências DOM reais; uma evidência não substitui a outra. A preparação diária mantém a prática explicitamente vinculada à aula mesmo quando sua linguagem executada difere da preferência de estudo. O projeto de despesas exige integração independente. O estado dos gates desta entrega está em continuidade.

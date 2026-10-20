@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: armazenamento com recuperação
+
+A aula existente armazenamento conserva seus doze capítulos, exemplo e projeto de preferências versionadas. Três pausas separam snapshot persistido, preservação das versões numa escrita rejeitada e validação/migração executada de tema/compacto. A teoria prepara gramática versus formato, false válido, versões conhecidas e a separação entre validar e gravar; null não autoriza apagar o original. Filtros, limite de importação, exportação e interface permanecem como construção do aluno. O recorte não implementa transação entre abas nem backup remoto e não conclui persistência ou HTML/JavaScript.
+
+Referências: [setItem](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem), [JSON.parse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) e [Web Storage](https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-setitem). Gates e limitações observadas ficam em continuidade.md; métricas e lacunas continuam geradas.
+
 ## Escopo desta edição
 
 Concluir o catálogo existente por profundidade e prática, conforme a orientação de 12 de outubro. A [fila pedagógica gerada](aulas-sem-pratica.md) identifica as aulas ainda sem pausas; as [métricas geradas](metricas-catalogo.md) fornecem as contagens atuais. Os recortes abaixo registram aprofundamentos e seus limites, não conclusão das linguagens. O estado de integração e publicação é mantido em [continuidade](continuidade.md).

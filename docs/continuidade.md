@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Armazenamento e recuperação
+
+A PR #62 está integrada em 681890cd027ab35041a7186c33ce0c5b14b54410. O CI pós-merge 39426437901 terminou aprovado nos seis jobs. Em 20/10, o alias público confirmou novamente READY/production nesse SHA. O lote público anterior teve 12/13 aprovados, com indisponibilidade do executor numa tentativa de código correto; a repetição isolada passou nos mesmos limites. Essa falha intermitente continua registrada, sem causa demonstrada nem alegação de correção. Evidências sanitizadas e o checkpoint posterior estão na branch preservacao/retomada-cloud-20261015.
+
+Esta branch parte desse main limpo e preserva os doze capítulos e o projeto de preferências versionadas de armazenamento. Acrescenta três pausas após 3/6/8: snapshot versus objetos em memória, recuperação de uma gravação rejeitada e validação/migração de preferências. Duas decisões são conceituais, com referências nativas; a função JavaScript do aluno é executada no sandbox. O contrato usa somente tema e compacto, duas versões conhecidas e null para dados recusados; filtros, leitura/escrita, limites de importação e interface continuam no projeto. Não grava padrões automaticamente sobre um original inválido ou desconhecido.
+
+Os 156 testes específicos e de regressão passaram, incluindo três soluções equivalentes, onze defeitos do validador e métricas. O primeiro build da fonte refinada passou: Vite 7m15, 157 páginas e offline a8ccecea9886796bc446. O lote local teve 14/15 aprovados: quota real, referências nativas, decisões, execução, assistência, offline, backups e regressão de componentes passaram; axe também passou, mas a largura de 220 px tinha 9 px de overflow. A medição localizou texto sem quebra no ponto que explica localStorage.setItem(chave, JSON.stringify(notas)); o item tinha 217 px de conteúdo numa caixa de 196 px. Aplicar overflow-wrap:anywhere somente aos pontos zerou o transbordamento na reprodução. A correção mantém o conteúdo e o teste passa a medir também o retângulo do texto, sem aceitar apenas ocultá-lo. O trace e os logs anteriores permanecem preservados.
+
+A falha injetada de setItem é explicitamente uma simulação no documento de referência; o cenário existente de quota real da plataforma continua na suíte. Esta entrega exige novo build e repetição do lote com o CSS corrigido, CI completo, revisão do mesmo head e conferência de deployment/SHA/alias e fluxos públicos. Os resultados posteriores devem ser conferidos nos checks da PR e no checkpoint remoto da entrega, sem converter a primeira execução em 15/15. Não ampliar limites nem reduzir verificações. A próxima lacuna da fila é http; as métricas geradas descrevem o checkout, sem declarar conclusão curricular.
+
 ## Validação pública de componentes, em correção
 
 A PR #61 foi integrada em 25197c70895170781337f301d4200c1645f81820; árvore e pais conferidos, fonte enviada e checkout limpo antes desta correção. O CI completo pós-merge 39336917502 terminou aprovado. Em 20/10, o alias público voltou a confirmar READY/production no mesmo SHA. Isso ainda não encerra a validação dos fluxos públicos.
