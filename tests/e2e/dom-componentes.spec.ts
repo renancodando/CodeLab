@@ -42,7 +42,7 @@ test('o descarte nativo respeita referência, capture, repetição e outra inst�
  }
 });
 
-test('componentes praticados preservam capítulos, projeto, teclado e acessibilidade',async({page:pagina})=>{
+test('componentes praticados preservam capítulos, projeto, decisões e teclado',async({page:pagina})=>{
  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/componentes');
  await expect(pagina.locator('.lesson-chapter')).toHaveCount(12);await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);
  expect(await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')??'null')?.adaptive?.skills??{})).toEqual({});
@@ -57,6 +57,16 @@ test('componentes praticados preservam capítulos, projeto, teclado e acessibili
  await diagnostico.locator('input[value="referencia"]').focus();await pagina.keyboard.press('Space');await diagnostico.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
  await expect(diagnostico.locator('.practice-feedback')).toContainText('Sua resposta está correta');
  await expect(pagina.locator('#aula-projeto')).toContainText('painel reutilizável');
+});
+
+test('componentes respondidos preservam acessibilidade e largura de 220 a 4000 px',async({page:pagina})=>{
+ await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/componentes');
+ const previsao=pagina.locator('[data-practice="html-componentes-prever-desconexao"]');
+ await previsao.getByLabel('Saída prevista, uma linha por saída').fill('2\n1\nfalse');await previsao.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+ await expect(previsao.locator('.practice-feedback')).toContainText('decisão conceitual');
+ const diagnostico=pagina.locator('[data-practice="html-componentes-remover-listener"]');
+ await diagnostico.locator('input[value="referencia"]').check();await diagnostico.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+ await expect(diagnostico.locator('.practice-feedback')).toContainText('Sua resposta está correta');
  expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
  for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);}
 });
