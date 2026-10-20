@@ -44,6 +44,7 @@ const criacao=getPracticeSolution('js-http-resposta-criacao')!;
 it.each([
  ['referência',criacao],
  ['cabeçalhos minúsculos e campos em outra ordem','const respostaDeCriacao=nota=>({corpo:{titulo:nota.titulo,id:nota.id},cabecalhos:{"content-type":"APPLICATION/JSON; charset=utf-8",location:`/notas/${nota.id}`},status:201});'],
+ ['cabeçalho adicional válido',criacao.replace('Location:', '"Cache-Control": "no-store", Location:')],
  ['corpo compartilhado com a nota sem mutação','function respostaDeCriacao(nota){return {status:201,corpo:nota,cabecalhos:{"Location":"/notas/"+nota.id,"Content-Type":"application/json"}};}']
 ])('executa a criação equivalente: %s',async(_,codigo)=>{
  expect(await evaluatePractice('js-http-resposta-criacao',codigo)).toMatchObject({passed:true,evidence:'executed',execution:'quickjs'});
@@ -51,6 +52,11 @@ it.each([
 it.each([
  ['status de consulta',criacao.replace('status: 201','status: 200')],
  ['localização fixa',criacao.replace('"/notas/" + nota.id','"/notas/7"')],
+ ['nome de cabeçalho inválido',criacao.replace('Location:', '"Nome Ruim": "valor", Location:')],
+ ['valor de cabeçalho com quebra de linha',criacao.replace('application/json','application/json;\\r\\nquebra')],
+ ['cabeçalho extra sem string',criacao.replace('Location:', '"X-Contagem": 3, Location:')],
+ ['controle no valor do cabeçalho',criacao.replace('application/json','application/json;\\u0000')],
+ ['valor não representável por Headers',criacao.replace('Location:', '"X-Extra": "😀", Location:')],
  ['tipo de conteúdo errado',criacao.replace('application/json','text/plain')],
  ['corpo serializado cedo',criacao.replace('corpo: { id: nota.id, titulo: nota.titulo }','corpo: JSON.stringify(nota)')],
  ['corpo incompleto',criacao.replace('corpo: { id: nota.id, titulo: nota.titulo }','corpo: { id: nota.id }')],
@@ -58,9 +64,9 @@ it.each([
  ['nota modificada',criacao.replace('  return {','  nota.id++; return {')],
  ['resposta compartilhada','let resposta={};'+criacao.replace('respostaDeCriacao','construirResposta')+';function respostaDeCriacao(nota){return Object.assign(resposta,construirResposta(nota));}'],
  ['cabeçalhos compartilhados','const cabecalhos={};'+criacao.replace('respostaDeCriacao','construirResposta')+';function respostaDeCriacao(nota){const r=construirResposta(nota);Object.assign(cabecalhos,r.cabecalhos);return {...r,cabecalhos};}']
-])('a correção de criação detecta o defeito: %s',async(_,codigo)=>{
+])('a correção de criação detecta o defeito: %s',async(defeito,codigo)=>{
  expect(codigo).not.toBe(criacao);const r=await evaluatePractice('js-http-resposta-criacao',codigo);
- expect(r.passed).toBe(false);expect(r.evidence).toBe('executed');expect(r.feedback).not.toContain(criacao);
+ expect(r.passed).toBe(false);expect(r.evidence).toBe('executed');expect(r.feedback).not.toContain(criacao);if(defeito==='cabeçalhos compartilhados')expect(r.feedback).toContain('Não reutilize um descritor');else if(defeito.includes('cabeçalho')||defeito.includes('Headers'))expect(r.feedback).toContain('três componentes');
 });
 const parcial=getPracticeSolution('js-metodos-preservar-campos')!;
 it.each([

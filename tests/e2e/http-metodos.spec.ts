@@ -50,6 +50,11 @@ test('o descritor de criação produz cabeçalhos e representação nativos coer
   },nota);
   expect(resultado).toEqual({status:201,ok:true,localizacao:'/notas/'+nota.id,tipo:'application/json',corpo:nota});
  }
+ const rejeitados=await pagina.evaluate(()=>{
+  const invalidos=[{'Nome Ruim':'valor'},{'Content-Type':'application/json;\r\nquebra'},{'X-Extra':'\u0000'},{'X-Extra':'😀'}];
+  return invalidos.map(cabecalhos=>{try{new Response('{}',{headers:cabecalhos});return false;}catch(erro){return erro instanceof TypeError;}});
+ });
+ expect(rejeitados).toEqual([true,true,true,true]);
 });
 test('o modelo de exclusão mantém o recurso ausente em tentativas seguintes',async({page:pagina})=>{
  const saidas:string[]=[];pagina.on('console',mensagem=>{if(mensagem.type()==='log')saidas.push(mensagem.text());});
