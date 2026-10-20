@@ -83,6 +83,8 @@ it.each([
  ['muta a tarefa','function aplicarAlteracao(tarefa,alteracao){if(Object.hasOwn(alteracao,"titulo"))tarefa.titulo=alteracao.titulo;if(Object.hasOwn(alteracao,"concluida"))tarefa.concluida=alteracao.concluida;return tarefa;}'],
  ['reutiliza tarefa em patch vazio',parcial.replace('  return {','  if(!Object.keys(alteracao).length)return tarefa; return {')],
  ['presume false para campo ausente',parcial.replace('alteracao.concluida : tarefa.concluida','alteracao.concluida : false')],
+ ['remove campos extras',parcial.replace('  return {','  delete alteracao.id; delete alteracao.papel; return {')],
+ ['modifica conteúdo extra',parcial.replace('  return {','  if(alteracao.extra)alteracao.extra.rotulo="alterado"; return {')],
  ['resultado global','let resultado={};'+parcial.replace('aplicarAlteracao','construirAlteracao')+';function aplicarAlteracao(tarefa,alteracao){return Object.assign(resultado,construirAlteracao(tarefa,alteracao));}'],
  ['resposta do exemplo','function aplicarAlteracao(){return {id:12,titulo:"Revisar",concluida:false};}']
 ])('a correção parcial detecta o defeito: %s',async(_,codigo)=>{
