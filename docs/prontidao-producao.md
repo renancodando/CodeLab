@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Base conferida para a entrega de armazenamento
+
+Antes de modificar esta aula, main/PRs/CI/alias foram conferidos novamente em 20 de outubro. A PR #62 estava integrada em 681890cd027ab35041a7186c33ce0c5b14b54410, sem PR aberta; CI pós-merge 39426437901 aprovado nos seis jobs. O deployment dpl_FyXHeiUo4AfKCRgUp4RxbWLaqP7b estava READY/production no projeto e SHA esperados. O lote público anterior tinha 12/13 e uma repetição isolada aprovada: a inicialização intermitente do executor continua uma limitação conhecida, sem causa demonstrada. Não chamar esse lote de integralmente aprovado nem atribuir a causa ao computador sem evidência.
+
+A prática de armazenamento acrescenta referências nativas e execução isolada sem mudar persistência, sandbox, runtimes ou contas. Sua validação própria, incluindo a correção de overflow encontrada no teste de 220 px, está registrada em continuidade.md e nos checks/checkpoint da entrega. Não herda aprovação do build ou do SHA anterior. As contagens seguem as métricas geradas; as seções seguintes preservam o histórico de suas etapas.
+
 ## Estado corrente e critério de conclusão
 
 As contagens atuais vêm das [métricas geradas](metricas-catalogo.md); as lacunas pedagógicas estão na [fila de aulas](aulas-sem-pratica.md). O [checkpoint de continuidade](continuidade.md) registra o head, a árvore, CI, revisões, deployment, SHA, alias e fluxos públicos conferidos de cada entrega. Build ou CI aprovado sozinho não confirma produção. A auditoria final desta edição ocorre depois da cobertura ativa, projetos/percursos utilizáveis e validações de dados locais, offline, acessibilidade, responsividade e ausência de regressões graves. Os registros abaixo são históricos de suas etapas, não a fotografia atual da publicação.
