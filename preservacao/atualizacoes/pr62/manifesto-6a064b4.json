@@ -1,0 +1,31 @@
+{
+  "head": "6a064b4bb813a548a2d2711da241f6c81c7a5682",
+  "originaisSomenteLocais": true,
+  "nota": "Logs sanitizados retiram caminhos pessoais e ANSI; hashes dos originais permitem identificar a evidência privada sem expô-la.",
+  "arquivos": [
+    {
+      "nome": "componentes-publico-correcao-20261020.sanitizado.log",
+      "original": "componentes-publico-correcao-20261020.log",
+      "sha256Original": "40935748f57d820365b0903b9c9139fa8db9a6816e62a673e9f48344889c9b56",
+      "sha256": "40935748f57d820365b0903b9c9139fa8db9a6816e62a673e9f48344889c9b56",
+      "bytes": 492,
+      "blob": "5d30d6ced3005272714035863657420fe6b46259"
+    },
+    {
+      "nome": "componentes-validacao-unitarios-20261020.sanitizado.log",
+      "original": "componentes-validacao-unitarios-20261020.log",
+      "sha256Original": "a38ed9b14c5d13a91097e40936cf39b5e082199230e3c6b64d922d6602220e8e",
+      "sha256": "59c6d02b2c32418337c9fe58ca207d2fea9674c8314f57c317bc64086d2f2dd7",
+      "bytes": 387,
+      "blob": "35700406f9b7d725428ec292cc536b22b81bf0c0"
+    },
+    {
+      "nome": "componentes-validacao-build-20261020.sanitizado.log",
+      "original": "componentes-validacao-build-20261020.log",
+      "sha256Original": "ec6236cbdfa09367c9819a362a0ad33560b1cde486a8292572652b45c9330ee8",
+      "sha256": "99c0f811756e3940f05ae684db1b81c86a79cec29e4d817fe019bb2b0f5465eb",
+      "bytes": 4638,
+      "blob": "9450b1373be53cf4247a7aac23c491a8ea343984"
+    }
+  ]
+}
