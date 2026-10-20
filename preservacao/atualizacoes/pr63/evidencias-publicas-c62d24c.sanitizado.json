@@ -1,0 +1,27 @@
+{
+  "fonte": "c62d24c0a24eab1084af842e3a6db5e55e983686",
+  "descricao": "Publico 15/15 em 2,6 min no merge c62d24c; deployment READY/projeto/SHA/alias conferidos antes e depois. Nao prova correcao da intermitencia anterior de inicializacao. Originais e traces privados permanecem locais. Sem respostas privadas de hospedagem.",
+  "arquivos": [
+    {
+      "arquivo": "armazenamento-publico-c62d24c-20261020.log",
+      "sha256Original": "c961b9f0900fd7227a08498af9c14d39d7e193658a9438c3a5fc8acea6b63eb6",
+      "sha256Sanitizado": "c961b9f0900fd7227a08498af9c14d39d7e193658a9438c3a5fc8acea6b63eb6",
+      "conteudoSanitizado": "\r\nRunning 15 tests using 1 worker\r\n\r\n(node:784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok  1 tests\\e2e\\armazenamento-real.spec.ts:3:1 › quota real preserva checkpoint, exporta trabalho em memória e volta a salvar (19.3s)\r\n  ok  2 tests\\e2e\\dom-armazenamento.spec.ts:13:1 › o armazenamento nativo conserva o snapshot até outra gravação explícita (1.2s)\r\n  ok  3 tests\\e2e\\dom-armazenamento.spec.ts:27:1 › falha injetada de setItem diferencia preservação, reversão e perda do checkpoint (1.9s)\r\n  ok  4 tests\\e2e\\dom-armazenamento.spec.ts:47:1 › armazenamento praticado conserva capítulos, projeto, decisões e teclado (7.5s)\r\n  ok  5 tests\\e2e\\dom-armazenamento.spec.ts:63:1 › as respostas de armazenamento mantêm acessibilidade e largura de 220 a 4000 px (14.5s)\r\n  ok  6 tests\\e2e\\dom-armazenamento.spec.ts:78:1 › o validador executa JavaScript real e conserva assistência depois do reload (9.7s)\r\n  ok  7 tests\\e2e\\dom-armazenamento.spec.ts:90:1 › a recuperação funciona offline sem acesso ao armazenamento pelo código do aluno (10.2s)\r\n  ok  8 tests\\e2e\\dom-armazenamento.spec.ts:101:1 › o backup recupera o validador praticado e a assistência depois da exclusão local (15.2s)\r\n  ok  9 tests\\e2e\\dom-componentes.spec.ts:14:1 › o botão desconectado ainda tem listener e as montagens mantêm estado independente (1.6s)\r\n  ok 10 tests\\e2e\\dom-componentes.spec.ts:27:1 › o descarte nativo respeita referência, capture, repetição e outra instância (1.7s)\r\n  ok 11 tests\\e2e\\dom-componentes.spec.ts:45:1 › componentes praticados preservam capítulos, projeto, decisões e teclado (6.4s)\r\n  ok 12 tests\\e2e\\dom-componentes.spec.ts:62:1 › componentes respondidos preservam acessibilidade e largura de 220 a 4000 px (13.7s)\r\n  ok 13 tests\\e2e\\dom-componentes.spec.ts:74:1 › o descarte executa JavaScript real e conserva a assistência após recarregar (11.1s)\r\n  ok 14 tests\\e2e\\dom-componentes.spec.ts:86:1 › o descarte funciona offline sem rede arbitrária nem execução de DOM do aluno (10.5s)\r\n  ok 15 tests\\e2e\\dom-componentes.spec.ts:98:1 › o backup restaura a habilidade de descarte depois de excluir os dados locais (16.3s)\r\n\r\n  15 passed (2.6m)\r\n"
+    },
+    {
+      "arquivo": "playwright-armazenamento-publico-20261020-1902.config.mjs",
+      "sha256Original": "2578478eb6bf4749286cc22b15a188ceeddf41b4dd14727bd556e429576e0bab",
+      "sha256Sanitizado": "2578478eb6bf4749286cc22b15a188ceeddf41b4dd14727bd556e429576e0bab",
+      "conteudoSanitizado": "import base from './playwright-armazenamento-local-20261020-1902.config.mjs';\r\nexport default {...base,outputDir:new URL('./resultados-armazenamento-publico-20261020-1902/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1'),use:{...base.use,baseURL:'https://code-lab-omega.vercel.app'}};\r\n"
+    }
+  ],
+  "deployment": {
+    "id": "dpl_HykARHJMA8XQkTRu4uzj8UxuZfjf",
+    "estado": "READY",
+    "alvo": "production",
+    "projeto": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+    "sha": "c62d24c0a24eab1084af842e3a6db5e55e983686",
+    "alias": "https://code-lab-omega.vercel.app",
+    "verificadoAntesEDepois": true
+  }
+}
