@@ -1,0 +1,62 @@
+{
+  "headPR": "6a064b4bb813a548a2d2711da241f6c81c7a5682",
+  "merge": "681890cd027ab35041a7186c33ce0c5b14b54410",
+  "deployment": "dpl_FyXHeiUo4AfKCRgUp4RxbWLaqP7b",
+  "alias": "https://code-lab-omega.vercel.app",
+  "estado": "READY/production",
+  "primeiraExecucao": {
+    "aprovados": 12,
+    "falhas": 1,
+    "duracao": "5.3m"
+  },
+  "repeticaoIsolada": {
+    "aprovados": 1,
+    "falhas": 0,
+    "duracaoCenario": "49.9s"
+  },
+  "limiteCenarioMs": 60000,
+  "limiteExpectativaMs": 20000,
+  "observacao": "A primeira execução não foi integralmente aprovada. O executor informou indisponibilidade ao avaliar a solução correta; a repetição passou sem alterar código ou limites. Causa não comprovada: recursos HTTP 200 com MIME correto; diagnóstico preservado. Originais dos logs/traces permanecem privados e locais; versões sanitizadas são as publicadas.",
+  "arquivos": [
+    {
+      "nome": "componentes-publico-62.sanitizado.log",
+      "original": "componentes-publico-62.log",
+      "sha256Original": "05de3db93039bd7ed34224e0a9db8a6277f6ebe2f5f54a8d2d6726bb687a8dc6",
+      "sha256": "4202e420b23f7fbac838dc00264b725d6a82d1553c4bfd1d43c44e516f1603be",
+      "bytes": 6410,
+      "blob": "3df809fcfdf0640a4024e40436a4117a24074dae"
+    },
+    {
+      "nome": "componentes-publico-62-repeticao.sanitizado.log",
+      "original": "componentes-publico-62-repeticao.log",
+      "sha256Original": "3e70d4e54e97ec59f45ac12d189d18b49623bd61575c3a2860489363a56c00e0",
+      "sha256": "3e70d4e54e97ec59f45ac12d189d18b49623bd61575c3a2860489363a56c00e0",
+      "bytes": 359,
+      "blob": "a8c2fa5a411643f7fbe39fe34f29fc13f8a373da"
+    },
+    {
+      "nome": "playwright-componentes-publico-62.config.mjs",
+      "original": "playwright-componentes-publico-62.config.mjs",
+      "sha256Original": "4652ed72831a62d7affebd4308e2c68c4d554555280d5b44a66b68e8882840bc",
+      "sha256": "4652ed72831a62d7affebd4308e2c68c4d554555280d5b44a66b68e8882840bc",
+      "bytes": 206,
+      "blob": "eceddd9bd4306b129bf587b6f407a9719dcffed9"
+    },
+    {
+      "nome": "playwright-componentes-publico-62-repeticao.config.mjs",
+      "original": "playwright-componentes-publico-62-repeticao.config.mjs",
+      "sha256Original": "5b64b96129dd3ceb1c7b07cfdf26b5c644a1220f72ed6377587c25f266c756d2",
+      "sha256": "5b64b96129dd3ceb1c7b07cfdf26b5c644a1220f72ed6377587c25f266c756d2",
+      "bytes": 261,
+      "blob": "ed0cfffd2b3c689eff3e48de2400a94a66c16bcb"
+    },
+    {
+      "nome": "diagnostico-publico-62-20261020.json",
+      "original": null,
+      "sha256Original": null,
+      "sha256": "c479dca3a7e879d7b15eb063d0517501bda8e2fe972f2fea80d946c394403077",
+      "bytes": 2778,
+      "blob": "41e0e857b25be00183711d9df92d852ea4553ff9"
+    }
+  ]
+}
