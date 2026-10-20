@@ -69,7 +69,11 @@ test('as respostas de armazenamento mantêm acessibilidade e largura de 220 a 40
  await diagnostico.locator('input[value="preservar"]').check();await diagnostico.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
  await expect(diagnostico.locator('.practice-feedback')).toContainText('Sua resposta está correta');
  expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
- for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);}
+ for(const largura of [220,4000]){
+  await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);
+  const linha=pagina.locator('.lesson-points li').filter({hasText:'localStorage.setItem(chave,'});
+  expect(await linha.evaluate(elemento=>{const faixa=document.createRange();faixa.selectNodeContents(elemento);const borda=elemento.getBoundingClientRect();return Math.max(0,...[...faixa.getClientRects()].map(retangulo=>retangulo.right-borda.right));})).toBeLessThanOrEqual(1);
+ }
 });
 test('o validador executa JavaScript real e conserva assistência depois do reload',async({page:pagina})=>{
  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/armazenamento');
