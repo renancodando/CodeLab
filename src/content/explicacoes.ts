@@ -557,20 +557,21 @@ const roteiros:Record<string,Roteiro>={
   },
   "armazenamento": {
     "contexto": "localStorage parece simples, mas dados persistidos sobrevivem ao código que os criou. Versões futuras da aplicação precisam ler formatos antigos, rejeitar dados corrompidos e respeitar limites de espaço.",
-    "modelo": "Considere armazenamento como uma fronteira externa, mesmo estando no navegador. Serialize conscientemente, inclua versão, valide ao ler e tenha sempre um estado padrão seguro.",
+    "modelo": "Considere armazenamento como uma fronteira externa, mesmo estando no navegador. JSON.stringify cria um texto do estado naquele instante; mudar o objeto depois não atualiza esse texto. JSON.parse cria outro valor em memória, sem vínculo vivo com a chave. Compare estado atual, texto salvo e valor restaurado separadamente. Uma gravação que falha não deve apagar a versão persistida nem substituir o trabalho em memória. Mantenha um aviso e uma pendência, permita exportar e tente salvar de novo quando houver condições. O exemplo introdutório ilustra leitura de notas, mas seu catch genérico não é um fluxo completo de recuperação: na aplicação, separe erro de leitura, validação e escrita; não grave padrões automaticamente sobre dados inválidos ou de versão desconhecida.",
     "passos": [
-      "Defina uma chave estável e uma versão do formato.",
-      "Serialize somente dados necessários.",
-      "Trate JSON inválido e tipos inesperados na leitura.",
-      "Migre versões antigas de maneira explícita.",
-      "Limite tamanho e comunique falhas de cota sem apagar o estado atual."
-    ],
+  "Defina uma chave estável e uma versão numérica do formato. O formato da pausa usa tema claro ou escuro; versão 1 só conhece tema. Versão 2 acrescenta compacto booleano.",
+  "Serialize somente os dados necessários. setItem recebe texto; um parse posterior não acompanha alterações feitas depois da gravação.",
+  "Trate ausência e JSON inválido antes de acessar propriedades. JSON válido pode ser null, array ou outro primitivo. Valide tipos e valores: false é um booleano válido.",
+  "Migre somente versões conhecidas. Na função da pausa, versão 1 vira versão 2 com compacto false, ignorando campos extras antigos. Versão 2 exige compacto booleano. Strings como false não são booleanos; não use coerção para aceitar o formato.",
+  "Reconstrua só os três campos conhecidos num objeto novo. A função de leitura/validação da pausa não grava nada: null sinaliza que a interface deve oferecer recuperação, mantendo o original disponível. Limite tamanho antes de importar arquivos; não processe cargas ilimitadas.",
+  "Comunique a falha de gravação sem apagar o estado atual nem anunciar sucesso. setItem que lança por falta de espaço não substitui o valor anterior nessa operação. Isso não garante backup contra limpeza do navegador, falha do dispositivo nem atualização concorrente por outra aba."
+],
     "experimentos": [
-      "Grave JSON inválido manualmente e verifique recuperação.",
-      "Adicione um campo novo mantendo compatibilidade com uma versão antiga.",
-      "Simule exceção de quota e confirme que a interface continua usando os dados em memória."
-    ],
-    "projeto": "Implemente preferências locais versionadas com tema, densidade e filtros, incluindo função de migração e opção de exportar/importar.",
+  "Compare o texto salvo antes e depois de mudar uma propriedade em memória. Faça uma nova gravação explícita e repita a leitura.",
+  "Experimente JSON inválido, array, versão desconhecida e compacto false. Depois migre a versão 1. O validador devolve null nos formatos recusados sem escrever sobre o original.",
+  "Simule a falha de setItem num documento descartável servido por HTTP. Confira separadamente o trabalho em memória, o valor anterior da chave e o aviso de pendência. Depois exporte e recupere a gravação."
+],
+    "projeto": "Implemente preferências locais versionadas com tema, densidade e filtros, incluindo função de migração e opção de exportar/importar. A função praticada cobre apenas tema e compacto; defina também o contrato dos filtros no projeto. Separe validar/migrar de ler/gravar. Critérios: uma gravação bem-sucedida sobrevive ao reload; JSON inválido ou versão desconhecida não apaga o original; a falha de escrita conserva o trabalho em memória e permite exportá-lo, mantendo o checkpoint anterior. Teste campos ausentes, false, duas leituras independentes e importação rejeitada sem mutação do estado atual. Revise por teclado o aviso e a recuperação. Esta etapa não implementa transação entre abas nem backup remoto.",
     "conexao": "A trilha de APIs leva essa noção de fronteira para comunicação HTTP com sistemas externos."
   },
   "http": {

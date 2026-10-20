@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Armazenamento e recuperação, em implementação
+
+A PR #62 está integrada em 681890cd027ab35041a7186c33ce0c5b14b54410. O CI pós-merge 39426437901 terminou aprovado nos seis jobs. Em 20/10, o alias público confirmou novamente READY/production nesse SHA. O lote público anterior teve 12/13 aprovados, com indisponibilidade do executor numa tentativa de código correto; a repetição isolada passou nos mesmos limites. Essa falha intermitente continua registrada, sem causa demonstrada nem alegação de correção. Evidências sanitizadas e o checkpoint posterior estão na branch preservacao/retomada-cloud-20261015.
+
+Esta branch parte desse main limpo e preserva os doze capítulos e o projeto de preferências versionadas de armazenamento. Acrescenta três pausas após 3/6/8: snapshot versus objetos em memória, recuperação de uma gravação rejeitada e validação/migração de preferências. Duas decisões são conceituais, com referências nativas; a função JavaScript do aluno é executada no sandbox. O contrato usa somente tema e compacto, duas versões conhecidas e null para dados recusados; filtros, leitura/escrita, limites de importação e interface continuam no projeto. Não grava padrões automaticamente sobre um original inválido ou desconhecido.
+
+Testes específicos, build, navegador, CI completo, revisão do head e produção próprios ainda pendentes. A falha injetada de setItem é explicitamente uma simulação do erro no documento de referência; o cenário existente de quota real da plataforma permanece na suíte. Não ampliar limites nem reduzir verificações para obter aprovação. A próxima lacuna da fila após esta aula será http; as métricas geradas descrevem o checkout, sem declarar conclusão curricular.
+
 ## Validação pública de componentes, em correção
 
 A PR #61 foi integrada em 25197c70895170781337f301d4200c1645f81820; árvore e pais conferidos, fonte enviada e checkout limpo antes desta correção. O CI completo pós-merge 39336917502 terminou aprovado. Em 20/10, o alias público voltou a confirmar READY/production no mesmo SHA. Isso ainda não encerra a validação dos fluxos públicos.
