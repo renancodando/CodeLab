@@ -1,0 +1,141 @@
+
+Running 12 tests using 1 worker
+
+(node:2980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\dom-componentes.spec.ts:14:1 › o botão desconectado ainda tem listener e as montagens mantêm estado independente (12.9s)
+  ok  2 tests\e2e\dom-componentes.spec.ts:27:1 › o descarte nativo respeita referência, capture, repetição e outra instância (12.8s)
+  x   3 tests\e2e\dom-componentes.spec.ts:45:1 › componentes praticados preservam capítulos, projeto, teclado e acessibilidade (1.4m)
+(node:17460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 tests\e2e\dom-componentes.spec.ts:64:1 › o descarte executa JavaScript real e conserva a assistência após recarregar (48.6s)
+  ok  5 tests\e2e\dom-componentes.spec.ts:76:1 › o descarte funciona offline sem rede arbitrária nem execução de DOM do aluno (23.2s)
+  x   6 tests\e2e\dom-componentes.spec.ts:88:1 › o backup restaura a habilidade de descarte depois de excluir os dados locais (1.6m)
+(node:14452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 tests\e2e\dom-formulario.spec.ts:14:1 › formulário nativo distingue required de espaços e não altera estado inválido (13.8s)
+  ok  8 tests\e2e\dom-formulario.spec.ts:25:1 › a projeção nativa reage a remoção, restauração e instâncias sem acumular (8.6s)
+  x   9 tests\e2e\dom-formulario.spec.ts:40:1 › formulário praticado conserva a aula, decisões, teclado e projeto (1.9m)
+(node:14192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 tests\e2e\dom-formulario.spec.ts:58:1 › a regra de estado executa o código do aluno e registra a assistência (1.3m)
+(node:24772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 tests\e2e\dom-formulario.spec.ts:70:1 › a regra de estado funciona offline sem executar DOM ou consultar executor remoto (35.1s)
+  ok 12 tests\e2e\dom-formulario.spec.ts:81:1 › o backup conserva a habilidade executada e a assistência após excluir os dados locais (51.9s)
+
+
+  1) tests\e2e\dom-componentes.spec.ts:45:1 › componentes praticados preservam capítulos, projeto, teclado e acessibilidade 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.evaluate: Test timeout of 60000ms exceeded.
+     Please check out https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md
+
+      58 |  await expect(diagnostico.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+      59 |  await expect(pagina.locator('#aula-projeto')).toContainText('painel reutilizável');
+    > 60 |  expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
+         |          ^
+      61 |  for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);}
+      62 | });
+      63 |
+        at AxeBuilder.analyze (node_modules\@axe-core\playwright\dist\index.mjs:218:13)
+        at tests\e2e\dom-componentes.spec.ts:60:10
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-componentes-componente-0d47e-to-teclado-e-acessibilidade\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artefatos/resultados-componentes-publico\dom-componentes-componente-0d47e-to-teclado-e-acessibilidade\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-componentes-componente-0d47e-to-teclado-e-acessibilidade\trace.zip
+    Usage:
+
+        npx playwright show-trace artefatos/resultados-componentes-publico\dom-componentes-componente-0d47e-to-teclado-e-acessibilidade\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\e2e\dom-componentes.spec.ts:88:1 › o backup restaura a habilidade de descarte depois de excluir os dados locais 
+
+    Test timeout of 60000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-componentes-o-backup-r-df400--de-excluir-os-dados-locais\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artefatos/resultados-componentes-publico\dom-componentes-o-backup-r-df400--de-excluir-os-dados-locais\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-componentes-o-backup-r-df400--de-excluir-os-dados-locais\trace.zip
+    Usage:
+
+        npx playwright show-trace artefatos/resultados-componentes-publico\dom-componentes-o-backup-r-df400--de-excluir-os-dados-locais\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\e2e\dom-formulario.spec.ts:40:1 › formulário praticado conserva a aula, decisões, teclado e projeto 
+
+    Test timeout of 60000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-formulario-formulário--d082f--decisões-teclado-e-projeto\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artefatos/resultados-componentes-publico\dom-formulario-formulário--d082f--decisões-teclado-e-projeto\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-formulario-formulário--d082f--decisões-teclado-e-projeto\trace.zip
+    Usage:
+
+        npx playwright show-trace artefatos/resultados-componentes-publico\dom-formulario-formulário--d082f--decisões-teclado-e-projeto\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) tests\e2e\dom-formulario.spec.ts:58:1 › a regra de estado executa o código do aluno e registra a assistência 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('[data-practice="js-formulario-preservar-estado"]').locator('.practice-feedback')
+    Expected substring: "fronteira vazia"
+    Received string:    "O ambiente de execução não iniciou. Seu código foi preservado; este problema não conta como erro de aprendizagem."
+    Timeout: 20000ms
+
+    Call log:
+      - Expect "toContainText" locator('[data-practice="js-formulario-preservar-estado"]').locator('.practice-feedback') with timeout 20000ms
+      - waiting for locator('[data-practice="js-formulario-preservar-estado"]').locator('.practice-feedback')
+        3 × locator resolved to <p role="status" aria-live="polite" class="practice-feedback">Conferindo…</p>
+          - unexpected value "Conferindo…"
+        27 × locator resolved to <p role="status" aria-live="polite" class="practice-feedback">O ambiente de execução não iniciou. Seu código fo…</p>
+           - unexpected value "O ambiente de execução não iniciou. Seu código foi preservado; este problema não conta como erro de aprendizagem."
+
+
+      59 |  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/estado-formulario');
+      60 |  const pausa=pagina.locator('[data-practice="js-formulario-preservar-estado"]');
+    > 61 |  await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('fronteira vazia',{timeout:20000});
+         |                                                                                                                                       ^
+      62 |  await expect(pausa.locator('[data-help] pre')).toHaveCount(0);
+      63 |  await pausa.getByLabel('Seu código corrigido').fill(alternativa);await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();
+      64 |  await expect(pausa.locator('.practice-feedback')).toContainText('A correção passou',{timeout:20000});
+        at tests\e2e\dom-formulario.spec.ts:61:135
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-formulario-a-regra-de--b4141-no-e-registra-a-assistência\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artefatos/resultados-componentes-publico\dom-formulario-a-regra-de--b4141-no-e-registra-a-assistência\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artefatos/resultados-componentes-publico\dom-formulario-a-regra-de--b4141-no-e-registra-a-assistência\trace.zip
+    Usage:
+
+        npx playwright show-trace artefatos/resultados-componentes-publico\dom-formulario-a-regra-de--b4141-no-e-registra-a-assistência\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    tests\e2e\dom-componentes.spec.ts:45:1 › componentes praticados preservam capítulos, projeto, teclado e acessibilidade 
+    tests\e2e\dom-componentes.spec.ts:88:1 › o backup restaura a habilidade de descarte depois de excluir os dados locais 
+    tests\e2e\dom-formulario.spec.ts:40:1 › formulário praticado conserva a aula, decisões, teclado e projeto 
+    tests\e2e\dom-formulario.spec.ts:58:1 › a regra de estado executa o código do aluno e registra a assistência 
+  8 passed (18.2m)
