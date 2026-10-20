@@ -1,0 +1,43 @@
+{
+  "shaPublicado": "25197c70895170781337f301d4200c1645f81820",
+  "primeiraExecucao": {
+    "aprovados": 8,
+    "falhas": 4
+  },
+  "repeticao": {
+    "aprovados": 3,
+    "falhas": 1
+  },
+  "arquivos": [
+    {
+      "nome": "componentes-publico-61.log",
+      "bytes": 13213,
+      "sha256": "cfac401405c5ee540ea81ecbd96717de33fad635ed702f995bf1d875de5c826e",
+      "blob": "e344a832323b2d2595dd1c5ad15d23014df216bd"
+    },
+    {
+      "nome": "componentes-publico-61-repeticao-20261020.log",
+      "bytes": 2894,
+      "sha256": "bdb0ad820ce761395ef8c51d7e22d5f70f1e98a702fc86b5f78b99a6196ad08d",
+      "blob": "87d0c9122d01980d84b01581b0f7364e30d736d4"
+    },
+    {
+      "nome": "playwright-componentes-publico-repeticao-20261020.config.mjs",
+      "bytes": 349,
+      "sha256": "69b232f88587f60a25c7758c6fbca5a285759d55f0687bc170496e58af9efad6",
+      "blob": "d804327b7e24010bcd01f167adc5268804bc3ceb"
+    },
+    {
+      "nome": "playwright-componentes-publico-correcao-20261020.config.mjs",
+      "bytes": 275,
+      "sha256": "b37c2beb83013562d46cca4b0219b69a08a2cea69b172612e0ec3d27ce9f5b6e",
+      "blob": "a60fcd4ad9be4e4c6945585476ca0f4aa25a687a"
+    },
+    {
+      "nome": "diagnostico-publico-20261020.json",
+      "bytes": 4909,
+      "sha256": "6866edd2b6feab56d326f18d9318869d0d6526b693073b46ed60e92a8f49a1dc",
+      "blob": "08b676060524dd5b5f64b44887e17ffc9b30a435"
+    }
+  ]
+}
