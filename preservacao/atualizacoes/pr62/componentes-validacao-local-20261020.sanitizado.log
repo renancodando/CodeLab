@@ -1,0 +1,37 @@
+
+Running 13 tests using 1 worker
+
+(node:19968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\e2e\dom-componentes.spec.ts:14:1 › o botão desconectado ainda tem listener e as montagens mantêm estado independente (4.2s)
+  ok  2 tests\e2e\dom-componentes.spec.ts:27:1 › o descarte nativo respeita referência, capture, repetição e outra instância (2.3s)
+  ok  3 tests\e2e\dom-componentes.spec.ts:45:1 › componentes praticados preservam capítulos, projeto, decisões e teclado (10.6s)
+  ok  4 tests\e2e\dom-componentes.spec.ts:62:1 › componentes respondidos preservam acessibilidade e largura de 220 a 4000 px (21.9s)
+  ok  5 tests\e2e\dom-componentes.spec.ts:74:1 › o descarte executa JavaScript real e conserva a assistência após recarregar (12.4s)
+  ok  6 tests\e2e\dom-componentes.spec.ts:86:1 › o descarte funciona offline sem rede arbitrária nem execução de DOM do aluno (15.1s)
+  ok  7 tests\e2e\dom-componentes.spec.ts:98:1 › o backup restaura a habilidade de descarte depois de excluir os dados locais (16.4s)
+  ok  8 tests\e2e\dom-formulario.spec.ts:14:1 › formulário nativo distingue required de espaços e não altera estado inválido (3.4s)
+  ok  9 tests\e2e\dom-formulario.spec.ts:25:1 › a projeção nativa reage a remoção, restauração e instâncias sem acumular (2.9s)
+  ok 10 tests\e2e\dom-formulario.spec.ts:40:1 › formulário praticado conserva a aula, decisões, teclado e projeto (18.1s)
+  ok 11 tests\e2e\dom-formulario.spec.ts:58:1 › a regra de estado executa o código do aluno e registra a assistência (6.8s)
+  ok 12 tests\e2e\dom-formulario.spec.ts:70:1 › a regra de estado funciona offline sem executar DOM ou consultar executor remoto (6.9s)
+  x  13 tests\e2e\dom-formulario.spec.ts:81:1 › o backup conserva a habilidade executada e a assistência após excluir os dados locais (1.4m)
+
+
+  1) tests\e2e\dom-formulario.spec.ts:81:1 › o backup conserva a habilidade executada e a assistência após excluir os dados locais 
+
+    Test timeout of 60000ms exceeded.
+
+    Error Context: ..\..\outputs\resultados-componentes-local-20261020\dom-formulario-o-backup-co-eb875-pós-excluir-os-dados-locais\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\outputs\resultados-componentes-local-20261020\dom-formulario-o-backup-co-eb875-pós-excluir-os-dados-locais\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\outputs\resultados-componentes-local-20261020\dom-formulario-o-backup-co-eb875-pós-excluir-os-dados-locais\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\dom-formulario.spec.ts:81:1 › o backup conserva a habilidade executada e a assistência após excluir os dados locais 
+  12 passed (4.1m)
