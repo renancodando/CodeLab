@@ -1,0 +1,45 @@
+{
+  "run": 39491006879,
+  "head": "c62d24c0a24eab1084af842e3a6db5e55e983686",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 118863870610,
+      "nome": "Testes e compilação",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118863871096,
+      "nome": "Auditoria de dependências",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118865191463,
+      "nome": "Navegador (2/4)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118865191565,
+      "nome": "Navegador (3/4)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118865191715,
+      "nome": "Navegador (1/4)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118865191720,
+      "nome": "Navegador (4/4)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "observacao": "Confirma os seis jobs pós-merge da PR #63. O checkpoint publicado anterior registrava execução ainda em andamento; este recibo encerra essa pendência."
+}
