@@ -1,0 +1,11 @@
+# PR #62: separação de decisões e acessibilidade
+
+Fonte enviada na branch validacao/componentes-acessibilidade, commit 6a064b4bb813a548a2d2711da241f6c81c7a5682. Checkout limpo e ls-remote conferido. PR https://github.com/renancodando/CodeLab/pull/62 aberta sobre main 25197c70895170781337f301d4200c1645f81820, head verdadeiro igual ao push. Apenas tests/e2e/dom-componentes.spec.ts e docs/continuidade.md mudam.
+
+O cenário combinado voltou a exceder 60s durante o axe no domínio atual. Primeira execução 8/12; repetição dos quatro 3/4; não são aprovações integrais. A alteração conserva todas as afirmações anteriores e divide responsabilidades. O estado das duas respostas corretas é reconstruído por UI antes do axe e de 220/4000 px. Todos os limites permanecem. Dois cenários separados passaram em 37,4s, 33 unitários passaram e build completo passou (4m03, 157 páginas, offline f37d964d9f0d8e658bfd). Aplicação/currículo/mundo não mudaram.
+
+CI 39422799320 e revisão do próprio head em andamento. Antes de integrar: CI completo, revisão sem achados/tópicos abertos, main e árvore virtual/reais conferidos, merge esperado por SHA, deployment READY/projeto/gitSource.sha/alias e treze cenários públicos relevantes. Não reutilizar aprovação da PR #61 nem chamar a entrega de publicada antes dessas verificações.
+
+Artefatos sanitizados e manifestos estão em preservacao/atualizacoes/pr61 e pr62. A revisão automática rejeitou dois logs brutos por conter caminhos pessoais. Seus originais permanecem locais; as versões sanitizadas foram enviadas e conferidas por leitura remota. O manifesto-publico-sanitizado-20261020.json corrige o primeiro manifesto que também listava hashes dos originais rejeitados. Configurações e diagnóstico sanitizado do primeiro conjunto foram enviados e seus blobs conferidos. Segredos, respostas brutas da hospedagem e traces binários não foram publicados.
+
+Métricas permanecem 137 aulas, 177 atividades, 87 aulas com pausas e 50 sem. A primeira lacuna é armazenamento. Encerrar a validação atual e depois aprofundar essa aula, preservando teoria, projeto, assistência, offline e dados locais. Toda fonte relevante está remota; logs privados não são fonte necessária para reconstruir o produto. Não apagar artefatos locais ou branches preservadas.
