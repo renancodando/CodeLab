@@ -576,38 +576,18 @@ const roteiros:Record<string,Roteiro>={
   },
   "http": {
     "contexto": "HTTP é um protocolo de mensagens. Uma requisição descreve método, destino, headers e eventualmente corpo; a resposta traz status, headers e corpo. Entender essas peças impede tratar toda falha como 'a API não funcionou'.",
-    "modelo": "Pense em cada interação como um envelope de ida e outro de volta. O status resume o resultado do protocolo, mas o corpo carrega detalhes do contrato da aplicação.",
-    "passos": [
-      "Identifique recurso e rota sem misturar ação no nome quando o método já expressa a operação.",
-      "Escolha o método de acordo com a intenção.",
-      "Envie Content-Type quando o corpo realmente possui aquele formato.",
-      "Interprete classes 2xx, 4xx e 5xx sem reduzir tudo a 200 ou erro.",
-      "Valide o corpo separadamente do status."
-    ],
-    "experimentos": [
-      "Compare 200, 201, 204, 400, 404 e 500 em uma API de teste local.",
-      "Envie JSON sem Content-Type e observe como o servidor interpreta.",
-      "Receba 200 com corpo inesperado para provar que status correto não garante contrato correto."
-    ],
-    "projeto": "Desenhe o contrato HTTP de uma API de tarefas com rotas, métodos, respostas de sucesso e pelo menos quatro falhas relevantes.",
+    "modelo": "Pense em cada interação como um envelope de ida e outro de volta. Receber uma resposta HTTP não equivale a aceitar seu resultado: Fetch pode resolver normalmente com 404, e ok resume os status de 200 a 299. Falha de rede é outra fronteira. Depois de interpretar o status, confira se existe corpo: 204 não contém representação e tentar decodificá-lo como JSON falha. Nesta aula, o leitor combina null para ausência de corpo com os valores JSON dos demais sucessos. O contrato do endpoint define o que esses dados significam. Uma criação de nota pode ser descrita por status 201, Location do recurso criado, Content-Type application/json e corpo com id/titulo. Nomes dos cabeçalhos HTTP não diferenciam maiúsculas; parâmetros de mídia não mudam o tipo principal. A função de produção prepara esse descritor em JavaScript, sem enviar HTTP nem persistir a nota. O servidor ainda precisa validar, serializar e enviar; um objeto local não é prova de API funcionando.",
+    "passos": ["Identifique recurso, método e rota. Na previsão, a consulta a uma nota ausente recebe uma resposta 404 legível, e nenhum erro de rede é lançado.", "Separe transporte, status e corpo. Inspecione status/ok antes de interpretar JSON; o catch de uma Promise não detecta sozinho todos os status HTTP de erro.", "Respeite a ausência de conteúdo. Para o contrato do leitor desta aula, 204 vira null sem chamar json; 200/201 podem trazer JSON que também pode ser false, zero ou null. Outros métodos/status precisam de contratos próprios.", "Para criar uma nota já validada, prepare um descritor novo com status 201, cabecalhos contendo Location /notas/id e Content-Type JSON, e corpo contendo os mesmos id/titulo. Não fixe a nota do primeiro exemplo.", "Preserve os valores da nota e de respostas anteriores. Um objeto de cabeçalhos reutilizado pode trocar o destino de uma resposta já preparada. O projeto continua responsável por persistência, serialização JSON e envio real."],
+    "experimentos": ["Compare uma resposta 404 com uma falha de rede controlada. Registre separadamente a resolução de Fetch e o valor de ok.", "Tente decodificar uma Response 204 sem corpo; depois compare com 201 trazendo JSON false e null. Nenhum desses casos autoriza tratar todos os sucessos como apenas 200.", "Prepare respostas para duas notas diferentes e serialize seus corpos num servidor ou documento descartável. Confira Location, Content-Type e representação sem alterar a nota original."],
+    "projeto": "Desenhe o contrato HTTP de uma API de tarefas com rotas, métodos, respostas de sucesso e pelo menos quatro falhas relevantes. Implemente e teste um fluxo local de criação/consulta: valide a entrada, persista a nota e devolva 201 com localização que possa ser consultada. Confira nota ausente, corpo inesperado e uma operação 204 sem JSON. O descritor praticado não substitui esse servidor; a referência de Fetch nos testes usa respostas controladas e não comprova DNS/TLS, CORS de outro host ou persistência real.",
     "conexao": "A próxima aula aprofunda a semântica dos métodos usados para consultar e modificar recursos."
   },
   "metodos": {
     "contexto": "GET, POST, PUT, PATCH e DELETE não são nomes decorativos: comunicam semântica de leitura e mudança. Escolher corretamente melhora previsibilidade, cache, repetição segura e documentação.",
-    "modelo": "Veja o recurso como um estado no servidor. GET observa; POST normalmente cria ou dispara uma operação; PUT substitui uma representação; PATCH altera parte; DELETE solicita remoção.",
-    "passos": [
-      "Defina qual recurso está sendo manipulado.",
-      "Decida se a operação apenas lê ou muda estado.",
-      "Escolha se a atualização representa substituição completa ou parcial.",
-      "Pense no que acontece se a mesma requisição for repetida.",
-      "Defina status e corpo coerentes para sucesso e falha."
-    ],
-    "experimentos": [
-      "Repita um PUT idêntico e compare com repetir um POST de criação.",
-      "Envie PATCH com apenas um campo e defina o que acontece com os demais.",
-      "Tente DELETE duas vezes e escolha uma resposta consistente para a segunda tentativa."
-    ],
-    "projeto": "Especifique e implemente em uma API local CRUD de notas com métodos e status coerentes, incluindo validação e recurso inexistente.",
+    "modelo": "Veja o recurso como um estado no servidor. GET observa; POST normalmente cria ou dispara uma operação; PUT substitui uma representação; PATCH descreve mudanças; DELETE solicita remoção. Idempotência compara o efeito pretendido de repetir uma requisição, não a igualdade de cada resposta: excluir uma nota pode produzir 204 e depois 404, mantendo-a ausente. O método PATCH não garante sozinho idempotência; definir um booleano pode ser repetível, mas uma instrução de incrementar pode acumular efeitos. Seu formato depende do contrato e do tipo de mídia. Na API didática desta aula, PUT exige a representação inteira e PATCH application/json próprio aceita somente campos enviados; isso não é o formato universal de PATCH. Ao aplicar a alteração em memória, diferencie propriedade ausente de false explícito, preserve id/título omitidos e selecione só campos editáveis. Essa seleção não autentica o cliente nem resolve concorrência no servidor.",
+    "passos": ["Defina o recurso e o estado anterior. No modelo de exclusão, presente começa true; a primeira operação o torna false e as demais conservam a ausência.", "Decida se a intenção apenas consulta ou muda estado. GET não deve ser usado para provocar uma atualização; prefetch e robôs também podem consultar URLs.", "Escolha substituição ou mudança parcial de acordo com o contrato. Nesta API, PUT exige titulo/concluida; PATCH pode enviar apenas concluida false, preservando o título. Cada API deve documentar seus formatos aceitos.", "Na regra aplicarAlteracao, teste a presença de titulo/concluida com Object.hasOwn ou mecanismo equivalente para objetos JSON. || substitui false pelo valor anterior e esconde uma alteração válida.", "Crie o próximo estado sem modificar tarefa ou alteracao. A tarefa didática tem somente id, titulo e concluida; apenas os dois últimos são editáveis. Campos extras do patch não são aplicados. Validação de tipos/regras, autorização e transação do endpoint continuam responsabilidades separadas."],
+    "experimentos": ["Execute o modelo de exclusão duas vezes e compare respostas com estado. Depois confira um servidor descartável com a política 204/404 documentada; isso não torna todas as implementações obrigadas a responder igual.", "Envie a mesma alteração de booleano duas vezes; compare com uma API que recebe uma instrução de incrementar. O nome PATCH não torna ambas idempotentes.", "Tente desmarcar uma tarefa, alterar só o título, aplicar patch vazio e incluir outro id. Confira entradas congeladas, resultado novo e preservação de chamadas anteriores."],
+    "projeto": "Especifique e implemente em uma API local CRUD de notas com métodos e status coerentes, incluindo validação e recurso inexistente. Documente o formato de PATCH e sua política de campos ausentes/permitidos; não confunda um DTO parcial com todos os formatos de patch. Teste repetição de DELETE, PUT incompleto, mudança para false e preservação do título omitido. A regra praticada muda um objeto em memória; no servidor, complemente validação, autorização e controle de concorrência. Registre requisição, resposta e estado do banco como evidências diferentes.",
     "conexao": "A próxima aula mostra como o navegador chama esses contratos com fetch e como cancela requisições obsoletas."
   },
   "fetch-estados": {

@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## HTTP e métodos: status, representação e estado
+
+A entrega parte do main publicado c62d24c0a24eab1084af842e3a6db5e55e983686, PR #63. Seu CI de entrada 39487372972 passou integralmente: 1.183 unitários, 194 exemplos externos e 238 fluxos (61/80/42/55), revisão do mesmo head e árvore/pais conferidos. Deployment dpl_HykARHJMA8XQkTRu4uzj8UxuZfjf READY/production no SHA/alias esperados, quinze fluxos públicos aprovados em 2,6 min e alias reconfirmado depois. O CI pós-merge 39491006879 continuava em execução ao começar esta branch, com testes/compilação e auditoria aprovados; deve permanecer em acompanhamento e qualquer falha concreta deve ser resolvida antes de integrar outra entrega. Evidências sanitizadas e checkpoint publicado da PR #63 estão na branch de preservação.
+
+As aulas existentes http e metodos conservam doze capítulos, exemplos e projetos. Cada uma recebe três pausas após 3/6/8: HTTP separa 404/falha de rede, 204/JSON e produção do descritor de criação; métodos separa idempotência/status, contrato parcial/substituição e depuração de false/campos ausentes. Quatro respostas são conceituais, com referências nativas ou modelo didático identificado. Duas funções do aluno são executadas no sandbox: preparar descritor não envia HTTP nem comprova persistência, e atualizar objeto não implementa endpoint/autorização/concorrência.
+
+Passaram 154 testes específicos/regressões em três arquivos, com soluções equivalentes, cabeçalhos sem distinção de caixa, ordem de campos, casos adicionais, identidade protegida e ausência de mutação/estado global. Os testes de navegador acrescentam Fetch/Response nativos e rotas controladas, modelo de exclusão, teclado, execução, assistência, offline, backups, axe e 220/4000 px. As rotas controladas não são prova de servidor, DNS/TLS ou CORS externo. Os resultados do build, lote local, CI/revisão do head, integração e domínio devem ser conferidos nos checks e no checkpoint desta entrega; a aprovação da base não autoriza outro head. Métricas e fila permanecem geradas. Próxima lacuna depois dessas duas aulas: fetch-estados. Não declarar a edição concluída.
+
 ## Armazenamento e recuperação
 
 A PR #62 está integrada em 681890cd027ab35041a7186c33ce0c5b14b54410. O CI pós-merge 39426437901 terminou aprovado nos seis jobs. Em 20/10, o alias público confirmou novamente READY/production nesse SHA. O lote público anterior teve 12/13 aprovados, com indisponibilidade do executor numa tentativa de código correto; a repetição isolada passou nos mesmos limites. Essa falha intermitente continua registrada, sem causa demonstrada nem alegação de correção. Evidências sanitizadas e o checkpoint posterior estão na branch preservacao/retomada-cloud-20261015.

@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **49 de 137 aulas sem pausas deste catálogo**. As outras 88 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **47 de 137 aulas sem pausas deste catálogo**. As outras 90 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -10,7 +10,7 @@ Há **49 de 137 aulas sem pausas deste catálogo**. As outras 88 têm ao menos u
 | C# | 14 | 6 | 8 |
 | CSS | 15 | 13 | 2 |
 | HTML | 19 | 15 | 4 |
-| JavaScript | 30 | 23 | 7 |
+| JavaScript | 30 | 25 | 5 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 6 | 8 |
 | Integração (transversal) | 15 | 0 | 15 |
@@ -30,8 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `http` — HTTP, rotas e códigos de status | APIs | JavaScript | Original |
-| `metodos` — GET, POST, PUT, PATCH e DELETE | APIs | JavaScript | Original |
 | `fetch-estados` — Fetch, headers e cancelamento | APIs | JavaScript | Original |
 | `identidade-api` — Autenticação e autorização: conceitos | APIs | JavaScript | Original |
 | `limites-cache` — Rate limits, cache e recuperação | APIs | JavaScript | Original |
