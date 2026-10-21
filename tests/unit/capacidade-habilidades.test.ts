@@ -26,12 +26,19 @@ it('o limite de tamanho do backup continua obrigatório e a rejeição preserva 
  const antes=JSON.stringify(estado);expect(antes.length).toBeGreaterThan(ADAPTIVE_LIMITS.bytes);
  expect(()=>prepareAdaptiveBackup(estado)).toThrow();expect(JSON.stringify(estado)).toBe(antes);
  expect(prepareBackup({version:1}).adaptive.skills).toEqual({});
- const habilidades=Object.keys(estado.skills);
- while(JSON.stringify(estado).length>ADAPTIVE_LIMITS.bytes)delete estado.skills[habilidades.pop()!];
- while(JSON.stringify(estado).length<ADAPTIVE_LIMITS.bytes-200){
-  const tamanho=Math.min(160,ADAPTIVE_LIMITS.bytes-200-JSON.stringify(estado).length-3);if(tamanho<5)break;
-  estado.seenConcepts.push('c'+String(estado.seenConcepts.length).padStart(3,'0')+'x'.repeat(tamanho-4));
+ const habilidades=Object.keys(estado.skills);let tamanhoAtual=antes.length;
+ while(tamanhoAtual>ADAPTIVE_LIMITS.bytes){
+  const chave=habilidades.pop()!;
+  tamanhoAtual-=JSON.stringify(chave).length+1+JSON.stringify(estado.skills[chave]).length+(habilidades.length?1:0);
+  delete estado.skills[chave];
  }
+ while(tamanhoAtual<ADAPTIVE_LIMITS.bytes-200){
+  const tamanho=Math.min(160,ADAPTIVE_LIMITS.bytes-200-tamanhoAtual-3);if(tamanho<5)break;
+  const conceito='c'+String(estado.seenConcepts.length).padStart(3,'0')+'x'.repeat(tamanho-4);
+  tamanhoAtual+=JSON.stringify(conceito).length+(estado.seenConcepts.length?1:0);
+  estado.seenConcepts.push(conceito);
+ }
+ expect(JSON.stringify(estado).length).toBe(tamanhoAtual);
  expect(prepareAdaptiveBackup(estado)).toEqual(estado);
  const recuperavel=JSON.stringify(estado);
  const resultado=recordEvidence(estado,{id:'nova-tentativa',assessmentId:'nova-avaliacao',activityId:'nova-atividade',skillIds:['javascript.assincrono.espera'],revision:1,passed:true,assisted:false,attempts:1,hints:0,kind:'practice'},{now:Date.parse('2026-10-14T12:00:00.000Z'),timeZone:'UTC'});

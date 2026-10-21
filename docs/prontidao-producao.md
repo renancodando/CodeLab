@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Correção Vite publicada; verificações locais em reforço
+
+A PR #65 está integrada em bcdf68a, com CI integral e revisão do head corretos. Deployment READY, SHA/alias e 24 cenários públicos conferidos; o CI pós-merge 39674011779 permanece um resultado próprio. Os três timeouts unitários locais anteriores não são convertidos em aprovação. A entrega seguinte fortalece a prova de memória, conserva o vetor no navegador e reduz o custo dos dados de teste de backup e métricas, com os mesmos limites e todas as afirmações anteriores. Resultados e condições de integração estão em continuidade.md; não há alteração do catálogo nem alegação de conclusão da edição.
+
 ## HTTP integrado; correção de dependência em validação
 
 A PR #64 está no main 4b1c41b com revisão do head, árvore e pais conferidos, CI de entrada integral e 22 fluxos públicos aprovados; deployment READY e SHA/alias foram reconfirmados depois. O CI pós-merge encontrou Vite 7.3.6 na faixa de um aviso de segurança e não é considerado aprovado. A atualização para 7.3.7 segue em entrega própria, com auditoria, testes, build, revisão, CI e produção como gates preservados. Detalhes e evidências estão em continuidade.md e na branch de preservação; não encerrar essa correção nem a edição pela aprovação anterior.
