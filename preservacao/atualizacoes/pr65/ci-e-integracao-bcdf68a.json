@@ -1,0 +1,76 @@
+{
+  "pr": 65,
+  "head": "60f2d32b6e01f46673d34824abccc4ec2f6ce358",
+  "base": "4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4",
+  "merge": {
+    "sha": "bcdf68ab81aab7dfdd3555983a38870cfac813f7",
+    "merged": true,
+    "message": "Pull Request successfully merged"
+  },
+  "arvore": "b687c47b62bd5d25b080b140a418309cd73fc695",
+  "pais": [
+    "4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4",
+    "60f2d32b6e01f46673d34824abccc4ec2f6ce358"
+  ],
+  "revisao": {
+    "sha": "60f2d32b6e01f46673d34824abccc4ec2f6ce358",
+    "status": "completed",
+    "pendencias": false
+  },
+  "ci": {
+    "id": 39669655167,
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 119463843270,
+        "nome": "Auditoria de dependências",
+        "conclusion": "success"
+      },
+      {
+        "id": 119463843697,
+        "nome": "Testes e compilação",
+        "conclusion": "success"
+      },
+      {
+        "id": 119465378472,
+        "nome": "Navegador (3/4)",
+        "conclusion": "success"
+      },
+      {
+        "id": 119465378499,
+        "nome": "Navegador (2/4)",
+        "conclusion": "success"
+      },
+      {
+        "id": 119465378567,
+        "nome": "Navegador (4/4)",
+        "conclusion": "success"
+      },
+      {
+        "id": 119465378753,
+        "nome": "Navegador (1/4)",
+        "conclusion": "success"
+      }
+    ],
+    "unitarios": 1225,
+    "arquivos": 75,
+    "exemplosExternos": 194,
+    "navegador": [
+      68,
+      59,
+      71,
+      55
+    ]
+  },
+  "local": {
+    "auditoria": "0 vulnerabilidades",
+    "build": "4m20;157 páginas;38/6;579cf92d59ff04b9318f",
+    "navegador": "22 HTTP/armazenamento +1 vetor/recuperação +1 cancelamento/memória aprovados",
+    "unitarios": "1222/1225;3 timeouts repetidos, não aprovados; testes/limites não alterados; probe de memória sem Vite atingiu out of memory em21.5s +4.3s limpeza"
+  },
+  "posMerge": {
+    "id": 39674011779,
+    "status": "in_progress"
+  },
+  "limite": "Deploy/SHA/alias e fluxos públicos próprios ainda pendentes. Não declarar todos os testes locais verdes nem edição finalizada."
+}
