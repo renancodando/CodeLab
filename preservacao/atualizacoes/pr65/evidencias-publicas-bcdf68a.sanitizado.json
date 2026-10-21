@@ -1,0 +1,65 @@
+{
+  "merge": "bcdf68ab81aab7dfdd3555983a38870cfac813f7",
+  "resultado": "24 publicos aprovados:22 em4.5min,1 em24.1s,1 em28.3s;alias antes/depois",
+  "limites": "Os feedbacks comprovam limitacao e recuperacao; nao distinguem qual mecanismo encerrou cada execucao. Tres unitarios locais antigos seguem falhos e preservados; reforco em branch propria. CI pos-merge ainda acompanhado separadamente.",
+  "deployments": [
+    {
+      "id": "dpl_FzodUy7rAm33bZBBqNF7UQ4mpcEs",
+      "readyState": "READY",
+      "target": "production",
+      "projectId": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+      "gitSource": {
+        "ref": "main",
+        "repoId": 1378803729,
+        "sha": "bcdf68ab81aab7dfdd3555983a38870cfac813f7",
+        "type": "github",
+        "prId": null
+      }
+    },
+    {
+      "id": "dpl_FzodUy7rAm33bZBBqNF7UQ4mpcEs",
+      "readyState": "READY",
+      "target": "production",
+      "projectId": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+      "gitSource": {
+        "ref": "main",
+        "repoId": 1378803729,
+        "sha": "bcdf68ab81aab7dfdd3555983a38870cfac813f7",
+        "type": "github",
+        "prId": null
+      }
+    }
+  ],
+  "artefatos": [
+    {
+      "arquivo": "vite-http-publico-bcdf68a-20261021.log",
+      "sha256Original": "ee590e2cc82aa63d91d7b6745f8e01af34ea10e16d8ff35609ac51d9330ca874",
+      "conteudo": "\r\nRunning 22 tests using 1 worker\r\n\r\n(node:14296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok  1 tests\\e2e\\dom-armazenamento.spec.ts:13:1 › o armazenamento nativo conserva o snapshot até outra gravação explícita (3.2s)\r\n  ok  2 tests\\e2e\\dom-armazenamento.spec.ts:27:1 › falha injetada de setItem diferencia preservação, reversão e perda do checkpoint (2.8s)\r\n  ok  3 tests\\e2e\\dom-armazenamento.spec.ts:47:1 › armazenamento praticado conserva capítulos, projeto, decisões e teclado (12.6s)\r\n  ok  4 tests\\e2e\\dom-armazenamento.spec.ts:63:1 › as respostas de armazenamento mantêm acessibilidade e largura de 220 a 4000 px (12.8s)\r\n  ok  5 tests\\e2e\\dom-armazenamento.spec.ts:78:1 › o validador executa JavaScript real e conserva assistência depois do reload (7.4s)\r\n  ok  6 tests\\e2e\\dom-armazenamento.spec.ts:90:1 › a recuperação funciona offline sem acesso ao armazenamento pelo código do aluno (9.2s)\r\n  ok  7 tests\\e2e\\dom-armazenamento.spec.ts:101:1 › o backup recupera o validador praticado e a assistência depois da exclusão local (15.6s)\r\n  ok  8 tests\\e2e\\http-metodos.spec.ts:12:1 › Fetch nativo separa 404 legível de transporte rejeitado (3.8s)\r\n  ok  9 tests\\e2e\\http-metodos.spec.ts:20:1 › o leitor nativo distingue ausência, JSON falsy e outros sucessos (9.3s)\r\n  ok 10 tests\\e2e\\http-metodos.spec.ts:43:1 › o descritor de criação produz cabeçalhos e representação nativos coerentes (4.3s)\r\n  ok 11 tests\\e2e\\http-metodos.spec.ts:59:1 › o modelo de exclusão mantém o recurso ausente em tentativas seguintes (2.5s)\r\n  ok 12 tests\\e2e\\http-metodos.spec.ts:64:1 › requisições controladas diferenciam PATCH parcial, PUT incompleto e GET (6.2s)\r\n  ok 13 tests\\e2e\\http-metodos.spec.ts:86:2 › http conserva capítulos, projeto, decisões e teclado (10.5s)\r\n  ok 14 tests\\e2e\\http-metodos.spec.ts:98:2 › http respondida conserva axe e largura de 220 a 4000 px (23.9s)\r\n  ok 15 tests\\e2e\\http-metodos.spec.ts:105:2 › http executa a função e preserva assistência depois de recarregar (14.9s)\r\n  ok 16 tests\\e2e\\http-metodos.spec.ts:112:2 › http executa offline sem consultas remotas do aluno (14.8s)\r\n  ok 17 tests\\e2e\\http-metodos.spec.ts:119:2 › http recupera execução e assistência pelo backup (17.2s)\r\n  ok 18 tests\\e2e\\http-metodos.spec.ts:86:2 › metodos conserva capítulos, projeto, decisões e teclado (8.0s)\r\n  ok 19 tests\\e2e\\http-metodos.spec.ts:98:2 › metodos respondida conserva axe e largura de 220 a 4000 px (26.0s)\r\n  ok 20 tests\\e2e\\http-metodos.spec.ts:105:2 › metodos executa a função e preserva assistência depois de recarregar (13.4s)\r\n  ok 21 tests\\e2e\\http-metodos.spec.ts:112:2 › metodos executa offline sem consultas remotas do aluno (16.8s)\r\n  ok 22 tests\\e2e\\http-metodos.spec.ts:119:2 › metodos recupera execução e assistência pelo backup (20.4s)\r\n\r\n  22 passed (4.5m)\r\n"
+    },
+    {
+      "arquivo": "vite-executor-publico-bcdf68a-20261021.log",
+      "sha256Original": "d8162e4c7794517bc52db863b4abfbfb786f36ddf09d5e9a0ec5b5441554e950",
+      "conteudo": "\r\nRunning 1 test using 1 worker\r\n\r\n(node:1612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok 1 tests\\e2e\\local-platform.spec.ts:27:1 › cancelamento, limite de memória e recuperação do executor (15.8s)\r\n\r\n  1 passed (24.1s)\r\n"
+    },
+    {
+      "arquivo": "vite-memoria-publico-bcdf68a-20261021.log",
+      "sha256Original": "9de172164b230294c7f38b7ff2ce9e796cbbf15dc757a22b9a833aea961ff5a0",
+      "conteudo": "\r\nRunning 1 test using 1 worker\r\n\r\n(node:15088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok 1 artefatos/vite-memoria-vetor-20261021.spec.mjs:7:1 › o limite externo encerra a alocação em vetor e permite executar novamente (20.3s)\r\n\r\n  1 passed (28.3s)\r\n"
+    },
+    {
+      "arquivo": "playwright-vite-http-publico-20261021.config.mjs",
+      "sha256Original": "475517a01f649d61d0cd0b56ede5f8eed1c9ce2b2198766fe983f16894391de4",
+      "conteudo": "import base from './playwright-vite-http-local-20261021.config.mjs';\nexport default {...base,outputDir:new URL('./resultados-vite-http-publico-20261021/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1'),use:{...base.use,baseURL:'https://code-lab-omega.vercel.app'}};\r\n"
+    },
+    {
+      "arquivo": "playwright-vite-executor-publico-20261021.config.mjs",
+      "sha256Original": "9d79d886ca58912f2e20e69b8de92a087c88d70aef5f7e25a22d9d9fdb6fcf37",
+      "conteudo": "import base from './playwright-vite-executor-local-revisao-20261021.config.mjs';\nexport default {...base,outputDir:new URL('./resultados-vite-executor-publico-20261021/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1'),use:{...base.use,baseURL:'https://code-lab-omega.vercel.app'}};\r\n"
+    },
+    {
+      "arquivo": "playwright-vite-memoria-publico-20261021.config.mjs",
+      "sha256Original": "f9cdd2ba5af4574974e3952c405980360ee4c86ee831fc3c8c8093fe13407bab",
+      "conteudo": "import base from './playwright-vite-memoria-local-20261021.config.mjs';\nexport default {...base,outputDir:new URL('./resultados-vite-memoria-publico-20261021/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1'),use:{...base.use,baseURL:'https://code-lab-omega.vercel.app'}};\r\n"
+    }
+  ]
+}
