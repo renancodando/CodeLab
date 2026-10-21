@@ -1,0 +1,73 @@
+{
+  "run": 39674011779,
+  "head": "bcdf68ab81aab7dfdd3555983a38870cfac813f7",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 119478998713,
+      "nome": "Auditoria de dependências",
+      "conclusao": "success"
+    },
+    {
+      "id": 119478999125,
+      "nome": "Testes e compilação",
+      "conclusao": "success"
+    },
+    {
+      "id": 119480089104,
+      "nome": "Navegador (1/4)",
+      "conclusao": "success"
+    },
+    {
+      "id": 119480089115,
+      "nome": "Navegador (3/4)",
+      "conclusao": "success"
+    },
+    {
+      "id": 119480089150,
+      "nome": "Navegador (4/4)",
+      "conclusao": "success"
+    },
+    {
+      "id": 119480089206,
+      "nome": "Navegador (2/4)",
+      "conclusao": "success"
+    }
+  ],
+  "resumos": [
+    {
+      "id": 119478999125,
+      "linhas": [
+        "2026-10-21T20:53:01.0699004Z  Test Files  75 passed (75)",
+        "2026-10-21T20:53:01.0701185Z       Tests  1225 passed (1225)",
+        "2026-10-21T20:53:55.7998673Z 194 exemplos e soluções externos compilados/executados."
+      ]
+    },
+    {
+      "id": 119480089104,
+      "linhas": [
+        "2026-10-21T21:15:27.4815654Z   68 passed (20.5m)"
+      ]
+    },
+    {
+      "id": 119480089115,
+      "linhas": [
+        "2026-10-21T21:20:48.4555368Z   71 passed (25.7m)"
+      ]
+    },
+    {
+      "id": 119480089150,
+      "linhas": [
+        "2026-10-21T21:23:34.5086925Z   55 passed (28.3m)"
+      ]
+    },
+    {
+      "id": 119480089206,
+      "linhas": [
+        "2026-10-21T21:07:34.3540760Z   59 passed (12.5m)"
+      ]
+    }
+  ],
+  "limites": "CI pós-merge integral aprovado. Os três unitários locais antigos continuam registrados como falha; reforço na PR66 com gates próprios. Publicação e fluxos públicos estão em evidencias-publicas-bcdf68a.sanitizado.json."
+}
