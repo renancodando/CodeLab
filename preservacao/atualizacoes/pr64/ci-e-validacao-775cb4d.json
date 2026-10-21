@@ -1,0 +1,65 @@
+{
+  "pr": 64,
+  "head": "775cb4dcca7c41b21eedbf41913131fe9050ed49",
+  "base": "c62d24c0a24eab1084af842e3a6db5e55e983686",
+  "tree": "8c98af20c446a5e7df7e3fd637e20505e6091d83",
+  "mergeVirtual": "3f9dee42253af77a427441b6cf67d003ad081ed7",
+  "run": 39499191771,
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 118892032362,
+      "name": "Testes e compilação",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118892032811,
+      "name": "Auditoria de dependências",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118893033452,
+      "name": "Navegador (2/4)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118893033480,
+      "name": "Navegador (4/4)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118893033515,
+      "name": "Navegador (1/4)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118893033684,
+      "name": "Navegador (3/4)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "unitarios": 1225,
+  "arquivosUnitarios": 75,
+  "exemplosExternos": 194,
+  "navegador": {
+    "total": 253,
+    "parcelas": [
+      68,
+      59,
+      71,
+      55
+    ]
+  },
+  "local": {
+    "unitarios": 162,
+    "build": "Vite 3m14;157 páginas;38/6;579cf92d59ff04b9318f",
+    "navegador": "22/22;5.8m"
+  },
+  "limites": "Revisão atual em andamento; integração e produção ainda não autorizadas por este recibo. Falhas anteriores preservadas."
+}
