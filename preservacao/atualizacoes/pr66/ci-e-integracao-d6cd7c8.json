@@ -1,0 +1,111 @@
+{
+  "pr": 66,
+  "head": "9299b5898936b580589ab94b502adaf174f9683c",
+  "base": "bcdf68ab81aab7dfdd3555983a38870cfac813f7",
+  "merge": {
+    "sha": "d6cd7c8d8c085b8c77826dd39edb232ba20d6c93",
+    "merged": true,
+    "message": "Pull Request successfully merged"
+  },
+  "arvore": "4aed722782d309827502ea7b589dd369efc86fd1",
+  "pais": [
+    "bcdf68ab81aab7dfdd3555983a38870cfac813f7",
+    "9299b5898936b580589ab94b502adaf174f9683c"
+  ],
+  "ci": {
+    "run": 39678278152,
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 119493754959,
+        "nome": "Auditoria de dependências",
+        "conclusao": "success"
+      },
+      {
+        "id": 119493755317,
+        "nome": "Testes e compilação",
+        "conclusao": "success"
+      },
+      {
+        "id": 119495269169,
+        "nome": "Navegador (2/4)",
+        "conclusao": "success"
+      },
+      {
+        "id": 119495269172,
+        "nome": "Navegador (4/4)",
+        "conclusao": "success"
+      },
+      {
+        "id": 119495269260,
+        "nome": "Navegador (3/4)",
+        "conclusao": "success"
+      },
+      {
+        "id": 119495269334,
+        "nome": "Navegador (1/4)",
+        "conclusao": "success"
+      }
+    ],
+    "unitarios": 1227,
+    "arquivos": 75,
+    "exemplosExternos": 194,
+    "navegador": [
+      68,
+      59,
+      71,
+      55
+    ],
+    "resumos": [
+      {
+        "id": 119493755317,
+        "linhas": [
+          "2026-10-21T21:23:38.3561860Z  Test Files  75 passed (75)",
+          "2026-10-21T21:23:38.3567568Z       Tests  1227 passed (1227)",
+          "2026-10-21T21:25:07.7830920Z 194 exemplos e soluções externos compilados/executados.",
+          "2026-10-21T21:25:36.8179941Z Pré-renderização concluída: 157 páginas educacionais. Indexação desativada até definir CODELAB_PUBLIC_URL.",
+          "2026-10-21T21:25:36.9211529Z Aplicação e conteúdo offline preparados: 38 recursos locais e 6 opcionais sob demanda; versão fe4d835c2d8dc5ab5d7b."
+        ]
+      },
+      {
+        "id": 119495269169,
+        "linhas": [
+          "2026-10-21T21:33:52.6203102Z   59 passed (7.4m)"
+        ]
+      },
+      {
+        "id": 119495269172,
+        "linhas": [
+          "2026-10-21T21:54:13.8638189Z   55 passed (27.6m)"
+        ]
+      },
+      {
+        "id": 119495269260,
+        "linhas": [
+          "2026-10-21T21:50:58.5663731Z   71 passed (24.4m)"
+        ]
+      },
+      {
+        "id": 119495269334,
+        "linhas": [
+          "2026-10-21T21:36:47.6644764Z   68 passed (10.4m)"
+        ]
+      }
+    ]
+  },
+  "revisao": {
+    "head": "9299b5898936b580589ab94b502adaf174f9683c",
+    "status": "completed",
+    "pendencias": false
+  },
+  "local": {
+    "unitarios": "1227/75 em318.55s",
+    "build": "3m09;157páginas;38/6;579cf92d59ff04b9318f",
+    "navegador": "cenário ampliado1/1 em52.6s"
+  },
+  "posMerge": {
+    "run": 39682883479,
+    "status": "in_progress"
+  },
+  "limite": "Deploy e fluxos públicos do merge precisam de conferência própria; o CI pós-merge não é declarado aprovado. Falhas intermediárias não são convertidas em sucesso."
+}
