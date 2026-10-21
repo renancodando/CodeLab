@@ -1,0 +1,45 @@
+{
+  "merge": "4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4",
+  "resultado": "22/22 publicos em 6.3 min; alias antes/depois",
+  "deployments": [
+    {
+      "id": "dpl_J9ZhVCYYRcCFnsEVFVwKwC6kygnq",
+      "readyState": "READY",
+      "target": "production",
+      "projectId": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+      "gitSource": {
+        "ref": "main",
+        "repoId": 1378803729,
+        "sha": "4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4",
+        "type": "github",
+        "prId": null
+      }
+    },
+    {
+      "id": "dpl_J9ZhVCYYRcCFnsEVFVwKwC6kygnq",
+      "readyState": "READY",
+      "target": "production",
+      "projectId": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+      "gitSource": {
+        "ref": "main",
+        "repoId": 1378803729,
+        "sha": "4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4",
+        "type": "github",
+        "prId": null
+      }
+    }
+  ],
+  "limite": "CI pos-merge falhou na auditoria Vite 7.3.6. Correcao separada obrigatoria; nao declarar CI integral verde.",
+  "artefatos": [
+    {
+      "arquivo": "http-metodos-publico-4b1c41b-20261021.log",
+      "sha256Original": "9b3de6e2e8ffcabfe6c6092160b53786495e5196121534bc12073f9eaf176114",
+      "conteudo": "\r\nRunning 22 tests using 1 worker\r\n\r\n(node:8708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok  1 tests\\e2e\\dom-armazenamento.spec.ts:13:1 › o armazenamento nativo conserva o snapshot até outra gravação explícita (6.5s)\r\n  ok  2 tests\\e2e\\dom-armazenamento.spec.ts:27:1 › falha injetada de setItem diferencia preservação, reversão e perda do checkpoint (4.0s)\r\n  ok  3 tests\\e2e\\dom-armazenamento.spec.ts:47:1 › armazenamento praticado conserva capítulos, projeto, decisões e teclado (21.2s)\r\n  ok  4 tests\\e2e\\dom-armazenamento.spec.ts:63:1 › as respostas de armazenamento mantêm acessibilidade e largura de 220 a 4000 px (31.0s)\r\n  ok  5 tests\\e2e\\dom-armazenamento.spec.ts:78:1 › o validador executa JavaScript real e conserva assistência depois do reload (28.5s)\r\n  ok  6 tests\\e2e\\dom-armazenamento.spec.ts:90:1 › a recuperação funciona offline sem acesso ao armazenamento pelo código do aluno (14.2s)\r\n  ok  7 tests\\e2e\\dom-armazenamento.spec.ts:101:1 › o backup recupera o validador praticado e a assistência depois da exclusão local (23.0s)\r\n  ok  8 tests\\e2e\\http-metodos.spec.ts:12:1 › Fetch nativo separa 404 legível de transporte rejeitado (2.3s)\r\n  ok  9 tests\\e2e\\http-metodos.spec.ts:20:1 › o leitor nativo distingue ausência, JSON falsy e outros sucessos (3.4s)\r\n  ok 10 tests\\e2e\\http-metodos.spec.ts:43:1 › o descritor de criação produz cabeçalhos e representação nativos coerentes (2.2s)\r\n  ok 11 tests\\e2e\\http-metodos.spec.ts:59:1 › o modelo de exclusão mantém o recurso ausente em tentativas seguintes (1.6s)\r\n  ok 12 tests\\e2e\\http-metodos.spec.ts:64:1 › requisições controladas diferenciam PATCH parcial, PUT incompleto e GET (2.0s)\r\n  ok 13 tests\\e2e\\http-metodos.spec.ts:86:2 › http conserva capítulos, projeto, decisões e teclado (9.1s)\r\n  ok 14 tests\\e2e\\http-metodos.spec.ts:98:2 › http respondida conserva axe e largura de 220 a 4000 px (16.8s)\r\n  ok 15 tests\\e2e\\http-metodos.spec.ts:105:2 › http executa a função e preserva assistência depois de recarregar (9.9s)\r\n  ok 16 tests\\e2e\\http-metodos.spec.ts:112:2 › http executa offline sem consultas remotas do aluno (12.5s)\r\n  ok 17 tests\\e2e\\http-metodos.spec.ts:119:2 › http recupera execução e assistência pelo backup (22.1s)\r\n  ok 18 tests\\e2e\\http-metodos.spec.ts:86:2 › metodos conserva capítulos, projeto, decisões e teclado (18.8s)\r\n  ok 19 tests\\e2e\\http-metodos.spec.ts:98:2 › metodos respondida conserva axe e largura de 220 a 4000 px (55.9s)\r\n  ok 20 tests\\e2e\\http-metodos.spec.ts:105:2 › metodos executa a função e preserva assistência depois de recarregar (13.1s)\r\n  ok 21 tests\\e2e\\http-metodos.spec.ts:112:2 › metodos executa offline sem consultas remotas do aluno (17.6s)\r\n  ok 22 tests\\e2e\\http-metodos.spec.ts:119:2 › metodos recupera execução e assistência pelo backup (24.0s)\r\n\r\n  22 passed (6.3m)\r\n"
+    },
+    {
+      "arquivo": "playwright-http-metodos-publico-20261020.config.mjs",
+      "sha256Original": "6eeee78b4363d20c9901f16759ee1e77232543dd949abf2c32abf204315b6b01",
+      "conteudo": "import base from './playwright-http-metodos-local-20261020.config.mjs';\r\nexport default {...base,outputDir:new URL('./resultados-http-metodos-publico-20261020/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1'),use:{...base.use,baseURL:'https://code-lab-omega.vercel.app'}};\r\n"
+    }
+  ]
+}
