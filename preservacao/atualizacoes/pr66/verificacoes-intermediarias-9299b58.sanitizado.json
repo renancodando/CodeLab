@@ -1,0 +1,26 @@
+{
+  "headAtual": "9299b5898936b580589ab94b502adaf174f9683c",
+  "limite": "Preserva23 especificos iniciais e falha completa1225/1227 do head362cc66; depois API real com diretorio explicito, CLI137/186 e23especificos passaram. O lote antigo nao e aprovado. Nova suite completa1227/75 ebuild passaram emlogs proprios; navegador/CI/integracao atuais tem gates separados.",
+  "artefatos": [
+    {
+      "arquivo": "limites-metricas-especificos-20261021.log",
+      "sha256Original": "ba2a87ebf1b183e5565faa5e890eb4fd36c2c3dc0befefdff7475a4f3c49a49c",
+      "conteudo": "\r\n RUN  v5.0.1 <repositorio>\r\n\r\n\r\n Test Files  3 passed (3)\r\n      Tests  23 passed (23)\r\n   Start at  18:05:40\r\n   Duration  28.13s (tests 88%, transform 10%, import 2%)\r\n\r\n"
+    },
+    {
+      "arquivo": "limites-metricas-unitarios-20261021.log",
+      "sha256Original": "947e5fe509249615169b07d1b87a14f2268d9513b312b14edb42ca4c4f458829",
+      "conteudo": "\r\n RUN  v5.0.1 <repositorio>\r\n\r\n ❯ tests/unit/geracao-metricas.test.ts (3 tests | 2 failed) 28641ms\r\n   × rejeita contagens antigas e atualiza métricas e fila depois de uma nova atividade 12263ms\r\n   × rejeita a fila adulterada e vínculos com aulas inexistentes 12167ms\r\n\r\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯\r\n\r\n FAIL  tests/unit/geracao-metricas.test.ts > rejeita contagens antigas e atualiza métricas e fila depois de uma nova atividade\r\nError: Test timed out in 10000ms.\r\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\r\n ❯ tests/unit/geracao-metricas.test.ts:46:1\r\n     44| });\r\n     45|\r\n     46| it('rejeita contagens antigas e atualiza métricas e fila depois de uma…\r\n       | ^\r\n     47|  const catalogo=await prepararCatalogo();\r\n     48|  try{\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯\r\n\r\n FAIL  tests/unit/geracao-metricas.test.ts > rejeita a fila adulterada e vínculos com aulas inexistentes\r\nError: Test timed out in 10000ms.\r\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\r\n ❯ tests/unit/geracao-metricas.test.ts:70:1\r\n     68| });\r\n     69|\r\n     70| it('rejeita a fila adulterada e vínculos com aulas inexistentes',async…\r\n       | ^\r\n     71|  const catalogo=await prepararCatalogo();\r\n     72|  try{\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯\r\n\r\n\r\n Test Files  1 failed | 74 passed (75)\r\n      Tests  2 failed | 1225 passed (1227)\r\n   Start at  18:08:14\r\n   Duration  353.44s (tests 87%, import 8%, transform 3%, worker 1%)\r\n\r\n    Isolate  75 workers spawned · ~944ms startup each (spawn + environment, per file)\r\n             at least ~69.85s faster with isolate: false — reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "arquivo": "limites-metricas-cli-20261021.log",
+      "sha256Original": "f29486642c0166a209ad80b41966266e90aeb0b049a907df3531a8742daf7a58",
+      "conteudo": "Métricas conferidas: 137 aulas, 186 atividades.\r\n"
+    },
+    {
+      "arquivo": "limites-metricas-api-especificos-20261021.log",
+      "sha256Original": "88656a3e7afc93518e0f1ebf404ee0198f4a874ed9abd5fbf3e9d892026de547",
+      "conteudo": "\r\n RUN  v5.0.1 <repositorio>\r\n\r\n\r\n Test Files  3 passed (3)\r\n      Tests  23 passed (23)\r\n   Start at  18:20:13\r\n   Duration  26.15s (tests 76%, transform 14%, import 9%)\r\n\r\n    Isolate  3 workers spawned · ~1.38s startup each (spawn + environment, per file)\r\n             at least ~2.75s faster with isolate: false — reuses workers across files instead of one per file\r\n\r\n"
+    }
+  ]
+}
