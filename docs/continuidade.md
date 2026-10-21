@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## Auditoria Vite após a integração HTTP
+
+A PR #64 foi integrada em 4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4, preservando a árvore 8c98af20c446a5e7df7e3fd637e20505e6091d83 e os pais conferidos. O head 775cb4d passou no CI integral 39499191771: 1.225 unitários, 194 exemplos externos e 253 cenários de navegador (68/59/71/55). A revisão desse SHA terminou sem novas pendências; o problema de mutação de campos extras foi reproduzido e corrigido. Build local aprovado e 22/22 fluxos locais em 5,8 min. Deployment dpl_J9ZhVCYYRcCFnsEVFVwKwC6kygnq READY/production no SHA esperado; alias conferido antes/depois dos 22/22 fluxos públicos em 6,3 min. Evidências sanitizadas e hashes ficam na branch de preservação.
+
+O CI pós-merge 39667263317 encontrou uma falha nova no gate de dependências: Vite 7.3.6 consta na faixa afetada dos avisos oficiais, incluindo GHSA-587h-7wmj-h5pm. O CI de entrada aprovado não torna esse resultado verde. Esta correção atualiza somente Vite para 7.3.7, mantém a linha 7 e seu contrato de Node, sem mudar outras dependências ou afrouxar a auditoria. A instalação alterou um pacote e a auditoria local retornou zero vulnerabilidades. Suíte completa, build, navegador, CI/revisão do novo head e deployment próprios continuam obrigatórios. A falha original deve permanecer registrada.
+
+Referências: [aviso oficial](https://github.com/advisories/GHSA-587h-7wmj-h5pm) e [release 7.3.7](https://github.com/vitejs/vite/releases/tag/v7.3.7). Não afirmar comprometimento do site a partir do alerta do servidor de desenvolvimento; tampouco ignorar o gate. A fonte atualizada precisa ser enviada e verificada antes da próxima aula, fetch-estados. Não há expansão de catálogo, mudança visual, alteração de sandbox ou alegação de edição concluída.
+
 ## HTTP e métodos: status, representação e estado
 
 A entrega parte do main publicado c62d24c0a24eab1084af842e3a6db5e55e983686, PR #63. Seu CI de entrada 39487372972 passou integralmente: 1.183 unitários, 194 exemplos externos e 238 fluxos (61/80/42/55), revisão do mesmo head e árvore/pais conferidos. Deployment dpl_HykARHJMA8XQkTRu4uzj8UxuZfjf READY/production no SHA/alias esperados, quinze fluxos públicos aprovados em 2,6 min e alias reconfirmado depois. O CI pós-merge 39491006879 também terminou integralmente aprovado no main c62d24c. Os gates dessa base foram encerrados, sem autorizar por si os novos commits desta branch. Evidências sanitizadas e checkpoint publicado da PR #63 estão na branch de preservação.

@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## HTTP integrado; correção de dependência em validação
+
+A PR #64 está no main 4b1c41b com revisão do head, árvore e pais conferidos, CI de entrada integral e 22 fluxos públicos aprovados; deployment READY e SHA/alias foram reconfirmados depois. O CI pós-merge encontrou Vite 7.3.6 na faixa de um aviso de segurança e não é considerado aprovado. A atualização para 7.3.7 segue em entrega própria, com auditoria, testes, build, revisão, CI e produção como gates preservados. Detalhes e evidências estão em continuidade.md e na branch de preservação; não encerrar essa correção nem a edição pela aprovação anterior.
+
 ## Armazenamento publicado antes do recorte HTTP
 
 A PR #63 foi integrada em c62d24c0a24eab1084af842e3a6db5e55e983686, com árvore/pais iguais aos conferidos no head 8228cc4. CI 39487372972 completo: 1.183 unitários, 194 exemplos externos e 238 fluxos de navegador; revisão do mesmo SHA sem pendências. Deployment dpl_HykARHJMA8XQkTRu4uzj8UxuZfjf READY/production no projeto e SHA esperados, alias conferido antes e depois e quinze cenários públicos aprovados em 2,6 min. O cenário de quota foi realmente executado; a falha injetada da aula é identificada separadamente. A intermitência de inicialização do executor anterior não é considerada resolvida por uma execução aprovada.
