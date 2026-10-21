@@ -1,0 +1,55 @@
+{
+  "merge": "d6cd7c8d8c085b8c77826dd39edb232ba20d6c93",
+  "resultado": "22 fluxos HTTP/armazenamento em3.2min e cenario ampliado em29.9s aprovados;alias antes/depois",
+  "limite": "CI pos-merge39682883479 tem acompanhamento proprio;nao e declarado aprovado enquanto pendente. Edicao curricular ainda em andamento.",
+  "deployments": [
+    {
+      "id": "dpl_FxmrWYzspvS6S9CjZSft11Eggg9e",
+      "readyState": "READY",
+      "target": "production",
+      "projectId": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+      "gitSource": {
+        "ref": "main",
+        "repoId": 1378803729,
+        "sha": "d6cd7c8d8c085b8c77826dd39edb232ba20d6c93",
+        "type": "github",
+        "prId": null
+      }
+    },
+    {
+      "id": "dpl_FxmrWYzspvS6S9CjZSft11Eggg9e",
+      "readyState": "READY",
+      "target": "production",
+      "projectId": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+      "gitSource": {
+        "ref": "main",
+        "repoId": 1378803729,
+        "sha": "d6cd7c8d8c085b8c77826dd39edb232ba20d6c93",
+        "type": "github",
+        "prId": null
+      }
+    }
+  ],
+  "artefatos": [
+    {
+      "arquivo": "limites-metricas-http-publico-d6cd7c8-20261021.log",
+      "sha256Original": "73b92fa2ddce5f585573dfbfcd6700e5220c8e9d74ef94d0b09e3dfb00d6c335",
+      "conteudo": "\r\nRunning 22 tests using 1 worker\r\n\r\n(node:4424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok  1 tests\\e2e\\dom-armazenamento.spec.ts:13:1 › o armazenamento nativo conserva o snapshot até outra gravação explícita (2.8s)\r\n  ok  2 tests\\e2e\\dom-armazenamento.spec.ts:27:1 › falha injetada de setItem diferencia preservação, reversão e perda do checkpoint (2.0s)\r\n  ok  3 tests\\e2e\\dom-armazenamento.spec.ts:47:1 › armazenamento praticado conserva capítulos, projeto, decisões e teclado (11.6s)\r\n  ok  4 tests\\e2e\\dom-armazenamento.spec.ts:63:1 › as respostas de armazenamento mantêm acessibilidade e largura de 220 a 4000 px (17.7s)\r\n  ok  5 tests\\e2e\\dom-armazenamento.spec.ts:78:1 › o validador executa JavaScript real e conserva assistência depois do reload (9.1s)\r\n  ok  6 tests\\e2e\\dom-armazenamento.spec.ts:90:1 › a recuperação funciona offline sem acesso ao armazenamento pelo código do aluno (12.1s)\r\n  ok  7 tests\\e2e\\dom-armazenamento.spec.ts:101:1 › o backup recupera o validador praticado e a assistência depois da exclusão local (14.1s)\r\n  ok  8 tests\\e2e\\http-metodos.spec.ts:12:1 › Fetch nativo separa 404 legível de transporte rejeitado (1.8s)\r\n  ok  9 tests\\e2e\\http-metodos.spec.ts:20:1 › o leitor nativo distingue ausência, JSON falsy e outros sucessos (1.5s)\r\n  ok 10 tests\\e2e\\http-metodos.spec.ts:43:1 › o descritor de criação produz cabeçalhos e representação nativos coerentes (1.1s)\r\n  ok 11 tests\\e2e\\http-metodos.spec.ts:59:1 › o modelo de exclusão mantém o recurso ausente em tentativas seguintes (1.1s)\r\n  ok 12 tests\\e2e\\http-metodos.spec.ts:64:1 › requisições controladas diferenciam PATCH parcial, PUT incompleto e GET (1.8s)\r\n  ok 13 tests\\e2e\\http-metodos.spec.ts:86:2 › http conserva capítulos, projeto, decisões e teclado (6.6s)\r\n  ok 14 tests\\e2e\\http-metodos.spec.ts:98:2 › http respondida conserva axe e largura de 220 a 4000 px (12.8s)\r\n  ok 15 tests\\e2e\\http-metodos.spec.ts:105:2 › http executa a função e preserva assistência depois de recarregar (8.7s)\r\n  ok 16 tests\\e2e\\http-metodos.spec.ts:112:2 › http executa offline sem consultas remotas do aluno (8.8s)\r\n  ok 17 tests\\e2e\\http-metodos.spec.ts:119:2 › http recupera execução e assistência pelo backup (13.0s)\r\n  ok 18 tests\\e2e\\http-metodos.spec.ts:86:2 › metodos conserva capítulos, projeto, decisões e teclado (7.0s)\r\n  ok 19 tests\\e2e\\http-metodos.spec.ts:98:2 › metodos respondida conserva axe e largura de 220 a 4000 px (13.5s)\r\n  ok 20 tests\\e2e\\http-metodos.spec.ts:105:2 › metodos executa a função e preserva assistência depois de recarregar (9.5s)\r\n  ok 21 tests\\e2e\\http-metodos.spec.ts:112:2 › metodos executa offline sem consultas remotas do aluno (9.4s)\r\n  ok 22 tests\\e2e\\http-metodos.spec.ts:119:2 › metodos recupera execução e assistência pelo backup (16.4s)\r\n\r\n  22 passed (3.2m)\r\n"
+    },
+    {
+      "arquivo": "limites-metricas-executor-publico-d6cd7c8-20261021.log",
+      "sha256Original": "198e5466d83f28ecd73516c6ef6869ff219aeca7200e5d0ad327075b62b768f4",
+      "conteudo": "\r\nRunning 1 test using 1 worker\r\n\r\n(node:9652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok 1 tests\\e2e\\local-platform.spec.ts:27:1 › cancelamento, limite de memória e recuperação do executor (24.6s)\r\n\r\n  1 passed (29.9s)\r\n"
+    },
+    {
+      "arquivo": "playwright-limites-http-publico-20261021.config.mjs",
+      "sha256Original": "4d3f259c76dc8a639b9a29a47362bc442c0e7384e6b0338176e1deb14d559488",
+      "conteudo": "import base from './playwright-vite-http-publico-20261021.config.mjs';\nexport default {...base,outputDir:new URL('./resultados-limites-http-publico-20261021/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1')};\r\n"
+    },
+    {
+      "arquivo": "playwright-limites-executor-publico-20261021.config.mjs",
+      "sha256Original": "17485884c3f86677bf9f90b5d89b00b1657d21cfbfc0d7a448cbd8d2e4abffdb",
+      "conteudo": "import base from './playwright-limites-executor-local-20261021.config.mjs';\nexport default {...base,outputDir:new URL('./resultados-limites-executor-publico-20261021/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1'),use:{...base.use,baseURL:'https://code-lab-omega.vercel.app'}};\r\n"
+    }
+  ]
+}
