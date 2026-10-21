@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: contratos HTTP praticados
+
+http e metodos passam a praticar transporte/status, representação opcional, criação, idempotência e alteração parcial. Conservam capítulos e projetos existentes, sem criar aulas. As funções executadas preparam descritor de resposta e próximo estado; não fingem persistir, servir HTTP ou autorizar. O leitor 204 e os contratos de atualização são recortes explícitos, sem generalizar o formato de PATCH nem prometer segurança por ocultar campos. Casos normais, fronteiras válidas e implementações defeituosas são conferidos por comportamento; decisões conceituais continuam distintas da execução.
+
+Referências: [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [semântica HTTP](https://www.rfc-editor.org/rfc/rfc9110.html) e [PATCH](https://www.rfc-editor.org/rfc/rfc5789.html). A publicação própria depende dos gates registrados em continuidade.md; contagens vêm das métricas geradas.
+
 ## Aprofundamento incremental: armazenamento com recuperação
 
 A aula existente armazenamento conserva seus doze capítulos, exemplo e projeto de preferências versionadas. Três pausas separam snapshot persistido, preservação das versões numa escrita rejeitada e validação/migração executada de tema/compacto. A teoria prepara gramática versus formato, false válido, versões conhecidas e a separação entre validar e gravar; null não autoriza apagar o original. Filtros, limite de importação, exportação e interface permanecem como construção do aluno. O recorte não implementa transação entre abas nem backup remoto e não conclui persistência ou HTML/JavaScript.

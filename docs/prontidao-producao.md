@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Armazenamento publicado antes do recorte HTTP
+
+A PR #63 foi integrada em c62d24c0a24eab1084af842e3a6db5e55e983686, com árvore/pais iguais aos conferidos no head 8228cc4. CI 39487372972 completo: 1.183 unitários, 194 exemplos externos e 238 fluxos de navegador; revisão do mesmo SHA sem pendências. Deployment dpl_HykARHJMA8XQkTRu4uzj8UxuZfjf READY/production no projeto e SHA esperados, alias conferido antes e depois e quinze cenários públicos aprovados em 2,6 min. O cenário de quota foi realmente executado; a falha injetada da aula é identificada separadamente. A intermitência de inicialização do executor anterior não é considerada resolvida por uma execução aprovada.
+
+A branch de HTTP/métodos parte dessa publicação e conserva recursos maduros. Seus gates, e o acompanhamento do CI pós-merge 39491006879 da base, estão em continuidade.md e nos checkpoints da branch de preservação. A edição curricular permanece em andamento; contagens atuais são geradas e as seções posteriores preservam o histórico.
+
 ## Base conferida para a entrega de armazenamento
 
 Antes de modificar esta aula, main/PRs/CI/alias foram conferidos novamente em 20 de outubro. A PR #62 estava integrada em 681890cd027ab35041a7186c33ce0c5b14b54410, sem PR aberta; CI pós-merge 39426437901 aprovado nos seis jobs. O deployment dpl_FyXHeiUo4AfKCRgUp4RxbWLaqP7b estava READY/production no projeto e SHA esperados. O lote público anterior tinha 12/13 e uma repetição isolada aprovada: a inicialização intermitente do executor continua uma limitação conhecida, sem causa demonstrada. Não chamar esse lote de integralmente aprovado nem atribuir a causa ao computador sem evidência.

@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## HTTP: decisões de protocolo e código executado
+
+As pausas de http/metodos combinam previsão, diagnóstico, produção independente do descritor e alteração da regra parcial. Nomes de cabeçalho podem variar de caixa, campos do corpo podem mudar de ordem e implementações equivalentes são aceitas pelo comportamento. A assinatura de produção começa vazia; abrir solução registra assistência. O código do aluno continua sem rede. Fetch/Response e requisições controladas verificam as referências conceituais no navegador; um pequeno modelo JavaScript de exclusão é apresentado como didático. Nenhum desses mecanismos substitui construir o servidor e testar persistência no projeto. Leitura não gera domínio; backup, revisão e offline continuam nos mecanismos existentes. Resultados próprios em continuidade.md.
+
 ## Armazenamento: três fronteiras distintas
 
 As pausas de armazenamento trabalham previsão do texto salvo, diagnóstico de perda do trabalho numa falha de escrita e depuração de um validador/migrador JavaScript. As duas primeiras são decisões conceituais; os documentos de referência usam Storage nativo, com falha de setItem explicitamente injetada no teste. A terceira executa a função do aluno em QuickJS, sem acesso ao localStorage ou DOM da plataforma. Soluções equivalentes, bordas e independência entre chamadas são verificadas pelo comportamento. Leitura não gera domínio e abrir solução continua sendo assistência. Exportação/importação e interface de recuperação precisam ser construídas no projeto, com rubrica manual. Validação e publicação são registradas em continuidade.md.
