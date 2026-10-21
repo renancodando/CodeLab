@@ -1,0 +1,38 @@
+{
+  "run": 39667263317,
+  "sha": "4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4",
+  "conclusao": "failure",
+  "jobs": [
+    {
+      "id": 119455477755,
+      "nome": "Testes e compilação",
+      "conclusao": "success"
+    },
+    {
+      "id": 119455478306,
+      "nome": "Auditoria de dependências",
+      "conclusao": "failure"
+    },
+    {
+      "id": 119456985086,
+      "nome": "Navegador (3/4)",
+      "conclusao": "success"
+    },
+    {
+      "id": 119456985288,
+      "nome": "Navegador (4/4)",
+      "conclusao": "success"
+    },
+    {
+      "id": 119456985291,
+      "nome": "Navegador (2/4)",
+      "conclusao": "success"
+    },
+    {
+      "id": 119456985319,
+      "nome": "Navegador (1/4)",
+      "conclusao": "success"
+    }
+  ],
+  "limite": "Cinco jobs passaram; auditoria Vite falhou. Nao e CI integral aprovado. Correcao na PR65, head60f2d32, com gates proprios."
+}
