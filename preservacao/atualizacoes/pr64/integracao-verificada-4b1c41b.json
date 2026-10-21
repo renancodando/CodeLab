@@ -1,0 +1,63 @@
+{
+  "pr": 64,
+  "head": "775cb4dcca7c41b21eedbf41913131fe9050ed49",
+  "base": "c62d24c0a24eab1084af842e3a6db5e55e983686",
+  "merge": {
+    "sha": "4b1c41b8a7d6b27d9730e5847fbd1f6f31d984e4",
+    "merged": true,
+    "message": "Pull Request successfully merged"
+  },
+  "arvore": "8c98af20c446a5e7df7e3fd637e20505e6091d83",
+  "pais": [
+    "c62d24c0a24eab1084af842e3a6db5e55e983686",
+    "775cb4dcca7c41b21eedbf41913131fe9050ed49"
+  ],
+  "revisao": {
+    "sha": "775cb4dcca7c41b21eedbf41913131fe9050ed49",
+    "status": "completed",
+    "novasPendencias": false,
+    "atualizadoEm": "2026-10-21T20:04:00Z"
+  },
+  "ci": {
+    "id": 39499191771,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 118892032362,
+        "nome": "Testes e compilação",
+        "conclusao": "success"
+      },
+      {
+        "id": 118892032811,
+        "nome": "Auditoria de dependências",
+        "conclusao": "success"
+      },
+      {
+        "id": 118893033452,
+        "nome": "Navegador (2/4)",
+        "conclusao": "success"
+      },
+      {
+        "id": 118893033480,
+        "nome": "Navegador (4/4)",
+        "conclusao": "success"
+      },
+      {
+        "id": 118893033515,
+        "nome": "Navegador (1/4)",
+        "conclusao": "success"
+      },
+      {
+        "id": 118893033684,
+        "nome": "Navegador (3/4)",
+        "conclusao": "success"
+      }
+    ]
+  },
+  "posMerge": {
+    "id": 39667263317,
+    "status": "in_progress"
+  },
+  "limite": "Deploy e fluxos públicos ainda pendentes; não declarar publicação por este recibo."
+}
