@@ -27,8 +27,10 @@ test('exportação e importação preservam jornada local',async({page})=>{
 test('cancelamento, limite de memória e recuperação do executor',async({page})=>{
  await page.goto('/#/missao/primeira-luz');await expect(page.locator('.monaco-editor')).toBeVisible();await writeCode(page,'while(true) {}');// Inicia e cancela no mesmo turno do navegador, antes de o limite do Worker competir com o clique.
  await page.locator('#run').evaluate(button=>{(button as HTMLButtonElement).click();if(!button.textContent?.includes('Cancelar'))throw new Error('O controle não entrou em execução.');(button as HTMLButtonElement).click();});await expect(page.locator('#result')).toContainText('cancelada');
- await writeCode(page,'const lista=[]; while(true) lista.push("x".repeat(10000));');await page.locator('#run').click();await expect(page.locator('#result')).toContainText(/memória|tempo limite|tempo demais/,{timeout:15000});
- await writeCode(page,'acender();');await page.locator('#run').click();await expect(page.locator('#result')).toContainText('Você fez o mundo responder.',{timeout:15000});
+ for(const codigo of ['const lista=[]; while(true) lista.push("x".repeat(10000));','const values=[]; while(true) values.push(new Array(100000).fill(123));']){
+  await writeCode(page,codigo);await page.locator('#run').click();await expect(page.locator('#result')).toContainText(/memória|tempo limite|tempo demais/,{timeout:15000});
+  await writeCode(page,'acender();');await page.locator('#run').click();await expect(page.locator('#result')).toContainText('Você fez o mundo responder.',{timeout:15000});
+ }
 });
 test('trocas de tela descartam editores visíveis e não acumulam workers ou geometria',async({page,context},testInfo)=>{
  test.setTimeout(120000);await page.goto('/#/missao/primeira-luz');await expect(page.locator('.monaco-editor')).toBeVisible();
