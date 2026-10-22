@@ -127,6 +127,11 @@ jobs:
         with:
           name: aplicacao-compilada
           path: .
+      - name: Usar espelhos oficiais disponíveis para instalar o navegador
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
       - name: Instalar Chromium para os testes de navegador
         run: npx playwright install --with-deps chromium
       - name: Validar os fluxos no navegador
