@@ -1,0 +1,75 @@
+{
+  "repositorio": "renancodando/CodeLab",
+  "pr": 66,
+  "head": "9299b5898936b580589ab94b502adaf174f9683c",
+  "merge": "d6cd7c8d8c085b8c77826dd39edb232ba20d6c93",
+  "run": 39682883479,
+  "status": "completed",
+  "conclusao": "success",
+  "jobs": [
+    {
+      "id": 119509535410,
+      "nome": "Auditoria de dependências",
+      "status": "completed",
+      "conclusao": "success"
+    },
+    {
+      "id": 119509535737,
+      "nome": "Testes e compilação",
+      "status": "completed",
+      "conclusao": "success"
+    },
+    {
+      "id": 119510669376,
+      "nome": "Navegador (1/4)",
+      "status": "completed",
+      "conclusao": "success"
+    },
+    {
+      "id": 119510669433,
+      "nome": "Navegador (4/4)",
+      "status": "completed",
+      "conclusao": "success"
+    },
+    {
+      "id": 119510669439,
+      "nome": "Navegador (2/4)",
+      "status": "completed",
+      "conclusao": "success"
+    },
+    {
+      "id": 119510669468,
+      "nome": "Navegador (3/4)",
+      "status": "completed",
+      "conclusao": "success"
+    }
+  ],
+  "unitarios": 1227,
+  "arquivosUnitarios": 75,
+  "exemplosExternos": 194,
+  "navegador": {
+    "parcelas": [
+      68,
+      59,
+      71,
+      55
+    ],
+    "total": 253
+  },
+  "auditoria": {
+    "gate": "npm audit --audit-level=high",
+    "high": 0,
+    "critical": 0,
+    "moderate": 2,
+    "pacotes": [
+      "vitest",
+      "@vitest/mocker"
+    ],
+    "avisos": [
+      "GHSA-qxg6-89mg-rqv8",
+      "GHSA-xp26-3454-mjgp"
+    ],
+    "correcaoDisponivel": "5.0.3",
+    "situacao": "Gate aprovado nao significa zero vulnerabilidades; patch em andamento na entrega seguinte."
+  }
+}
