@@ -1,6 +1,7 @@
 import {test,expect} from '@playwright/test';
 test('C++: previsão, reconstrução e depuração retomam offline sem compilador',async({page,context})=>{
- test.setTimeout(90000);const external:string[]=[];
+ test.setTimeout(90000);const external:string[]=[],falhasDeRecurso:string[]=[];
+ page.on('requestfailed',pedido=>{if(new URL(pedido.url()).pathname.startsWith('/assets/cpp-'))falhasDeRecurso.push(new URL(pedido.url()).pathname+' '+pedido.failure()?.errorText);});
  page.on('request',request=>{if(/\/api\/(execute|run|submissions)/.test(request.url()))external.push(request.url());});
  await page.goto('/');await expect(page.locator('#offline-status')).toHaveText('Conteúdo preparado para estudar offline.',{timeout:45000});
  await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));await context.setOffline(true);
@@ -43,5 +44,18 @@ test('C++: previsão, reconstrução e depuração retomam offline sem compilado
   await expect(page.locator('#lesson-feedback')).toContainText('aula foi concluída');
   await page.reload({waitUntil:'domcontentloaded'});await expect(page.locator('#lesson-feedback')).toContainText('já concluída');
   expect(external).toEqual([]);
+ }catch(erro){
+  const estado=await page.evaluate(async()=>{
+   const entradas=[];
+   for(const nome of await caches.keys())if(nome.startsWith('codelab-offline-')){
+    const cache=await caches.open(nome);
+    const cpp=(await cache.keys()).filter(pedido=>new URL(pedido.url).pathname.startsWith('/assets/cpp-'));
+    entradas.push({nome,cpp:await Promise.all(cpp.map(async pedido=>({caminho:new URL(pedido.url).pathname,status:(await cache.match(pedido))?.status})))});
+   }
+   const salvo=JSON.parse(localStorage.getItem('codelab.progress.v2')??'null');
+   return{rota:location.hash,online:navigator.onLine,controlador:navigator.serviceWorker.controller?new URL(navigator.serviceWorker.controller.scriptURL).pathname:null,entradas,concluidas:salvo?.lessons??[],pausasGuardadas:Object.keys(salvo?.practiceAnswers??{})};
+  }).catch(()=>null);
+  await test.info().attach('estado-da-retomada-offline',{body:JSON.stringify({falhasDeRecurso,estado}),contentType:'application/json'}).catch(()=>{});
+  throw erro;
  }finally{await context.setOffline(false);}
 });
