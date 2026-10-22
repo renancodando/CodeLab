@@ -1,0 +1,26 @@
+{
+  "pr": 67,
+  "head": "1d2f0a9afa48ec1dc7f1dbcdd83700a40d8c500a",
+  "arvore": "7ba269d39884a03090bb5e3495d572a84ce80a39",
+  "artefatos": [
+    {
+      "nome": "fetch-estados-unitarios-conjunto-20261022.log",
+      "sha256Original": "3eee8bcae13de90d2b8cbafc2ccc979f902d1eecb1ab4f66cc5170119377fef2",
+      "sha256Sanitizado": "89d0e2409aa51b46a1ba9891be683a4e473f013b630fde55331d0262eeeb9d2a",
+      "conteudoSanitizado": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n\r\n Test Files  76 passed (76)\r\n      Tests  1260 passed (1260)\r\n   Start at  09:35:17\r\n   Duration  268.12s (tests 80%, import 13%, transform 5%, worker 2%)\r\n\r\n    Isolate  76 workers spawned · ~946ms startup each (spawn + environment, per file)\r\n             at least ~70.94s faster with isolate: false — reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "nome": "fetch-estados-build-conjunto-20261022.log",
+      "sha256Original": "fe84699afe5b3e9a6c36d917a8f30d7a1adfba74b98cfc1bd5c4c0674140218d",
+      "tipo": "resumo selecionado do build; log completo permanece local",
+      "resumoSanitizado": "npm notice run codelab@0.1.0 build\nnpm notice run node scripts/generate-curriculum-index.mjs --check && node scripts/gerar-metricas.mjs --check && tsc --noEmit && node scripts/verificar-funcao-meteorologica.mjs && vite build --configLoader runner && node scripts/prerender.mjs && node scripts/build-offline.mjs\nÍndice e matriz conferidos: 8 percursos adicionais, 77 aulas.\nMétricas conferidas: 137 aulas, 189 atividades.\nFunção meteorológica conferida em Node.js com módulos ESM emitidos e 30 consultas concorrentes.\n(!) <repositorio>/src/execution/runner.ts is dynamically imported by <repositorio>/src/learning/practice.ts but also statically imported by <repositorio>/src/laboratory.ts, <repositorio>/src/learning/engine.ts, <repositorio>/src/main.ts, dynamic import will not move module into another chunk.\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n✓ built in 4m 37s\nPré-renderização concluída: 157 páginas educacionais. Indexação desativada até definir CODELAB_PUBLIC_URL.\nAplicação e conteúdo offline preparados: 38 recursos locais e 6 opcionais sob demanda; versão 4093ab62c3fee7cb766a.\n"
+    },
+    {
+      "nome": "fetch-estados-navegador-local-20261022.log",
+      "sha256Original": "a0219161bd1f5dc92a7f74f66d3ab0fcf1542b34e8f9c731303e3c74ca0c6f42",
+      "sha256Sanitizado": "a0219161bd1f5dc92a7f74f66d3ab0fcf1542b34e8f9c731303e3c74ca0c6f42",
+      "conteudoSanitizado": "\r\nRunning 8 tests using 1 worker\r\n\r\n(node:8796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok 1 tests\\e2e\\fetch-estados.spec.ts:12:1 › um sinal já abortado rejeita sem iniciar a requisição e emite um único evento (4.0s)\r\n  ok 2 tests\\e2e\\fetch-estados.spec.ts:22:1 › um motivo personalizado continua sendo o motivo original do sinal (1.4s)\r\n  ok 3 tests\\e2e\\fetch-estados.spec.ts:32:1 › as alternativas de finally são executadas com sobreposição, sucesso e rejeição (2.9s)\r\n  ok 4 tests\\e2e\\fetch-estados.spec.ts:49:1 › a aula conserva capítulos e projeto, com previsão, diagnóstico e teclado (13.3s)\r\n  ok 5 tests\\e2e\\fetch-estados.spec.ts:61:1 › a aula respondida mantém axe e largura de 220 a 4000 px (24.6s)\r\n  ok 6 tests\\e2e\\fetch-estados.spec.ts:70:1 › a produção executa uma alternativa e conserva assistência depois de recarregar (13.5s)\r\n  ok 7 tests\\e2e\\fetch-estados.spec.ts:77:1 › a função executa offline sem permitir requisição remota do aluno (13.3s)\r\n  ok 8 tests\\e2e\\fetch-estados.spec.ts:84:1 › a execução e a assistência são recuperadas por exportação e importação (17.6s)\r\n\r\n  8 passed (1.7m)\r\n"
+    }
+  ],
+  "observacao": "Provas locais concluídas: 1260/76, build, 8 cenários de navegador. CI e revisão deste head ainda são gates próprios; não declara integração ou produção."
+}
