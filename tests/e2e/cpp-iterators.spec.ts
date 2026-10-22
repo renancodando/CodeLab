@@ -59,3 +59,38 @@ test('C++: previsão, reconstrução e depuração retomam offline sem compilado
   throw erro;
  }finally{await context.setOffline(false);}
 });
+
+test('C++: uma leitura offline indisponível preserva progresso e permite recuperar a aula',async({page:pagina,context:contexto})=>{
+ test.setTimeout(90000);
+ await pagina.goto('/');await expect(pagina.locator('#offline-status')).toHaveText('Conteúdo preparado para estudar offline.',{timeout:45000});
+ await pagina.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+ await pagina.goto('/#/aula/cpp-iteradores-invalidacao');
+ await pagina.getByLabel('Atribuir o iterador devolvido por erase e só incrementar na etapa que preserva o elemento.',{exact:true}).check();
+ await pagina.getByRole('button',{name:'Conferir resposta',exact:true}).click();await expect(pagina.locator('#lesson-feedback')).toContainText('aula foi concluída');
+ const registros=await pagina.evaluate(async()=>{
+  const registros:{cache:string;caminho:string;codigo:string;tipo:string}[]=[];
+  for(const nome of await caches.keys())if(nome.startsWith('codelab-offline-')){
+   const cache=await caches.open(nome);
+   for(const pedido of await cache.keys())if(new URL(pedido.url).pathname.startsWith('/assets/cpp-')){
+    const resposta=await cache.match(pedido);
+    if(resposta){registros.push({cache:nome,caminho:new URL(pedido.url).pathname,codigo:await resposta.text(),tipo:resposta.headers.get('Content-Type')??'text/javascript'});await cache.delete(pedido);}
+   }
+  }
+  return registros;
+ });
+ expect(registros).toHaveLength(1);
+ await contexto.setOffline(true);
+ try{
+  await pagina.reload({waitUntil:'domcontentloaded'});
+  await expect(pagina.getByRole('heading',{name:'Não foi possível carregar esta aula',exact:true})).toBeVisible();
+  await expect(pagina.locator('main')).toContainText('Não foi possível abrir esta aula offline.');
+  expect(await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).lessons)).toContain('cpp-iteradores-invalidacao');
+  await pagina.evaluate(async registros=>{
+   for(const registro of registros)await(await caches.open(registro.cache)).put(registro.caminho,new Response(registro.codigo,{headers:{'Content-Type':registro.tipo}}));
+  },registros);
+  await pagina.getByRole('button',{name:'Tentar novamente',exact:true}).click();
+  await expect(pagina.locator('.lesson-chapter')).toHaveCount(17);
+  await expect(pagina.locator('#lesson-feedback')).toContainText('já concluída');
+  expect(await pagina.evaluate(()=>navigator.onLine)).toBe(false);
+ }finally{await contexto.setOffline(false);}
+});

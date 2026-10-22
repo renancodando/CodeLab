@@ -83,7 +83,7 @@ function lesson(id:string,readingOnly=false){
   main.innerHTML='<article class="page reading"><p role="status">Carregando o estudo aprofundado…</p></article>';
   void resolveLesson(id).then(()=>{if(active)lesson(id,readingOnly);}).catch(()=>{
    if(!active)return;
-   main.innerHTML='<article class="page reading"><h1>Não foi possível carregar esta aula</h1><p>Verifique a conexão e tente novamente.</p><button class="button primary" id="retry-lesson">Tentar novamente</button><p><a href="#/aprender">Voltar às trilhas</a></p></article>';
+   main.innerHTML=`<article class="page reading"><h1>Não foi possível carregar esta aula</h1><p>${navigator.onLine?'Verifique a conexão e tente novamente.':'Não foi possível abrir esta aula offline. Tente novamente; se a falha continuar, reconecte para preparar os arquivos da aula.'}</p><button class="button primary" id="retry-lesson">Tentar novamente</button><p><a href="#/aprender">Voltar às trilhas</a></p></article>`;
    main.querySelector('#retry-lesson')?.addEventListener('click',()=>location.reload());
   });return;
  }
