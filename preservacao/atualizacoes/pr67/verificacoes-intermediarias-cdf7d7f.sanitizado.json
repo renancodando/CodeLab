@@ -1,0 +1,68 @@
+{
+  "pr": 67,
+  "head": "cdf7d7f9f85c718b187a97603800b7e86c801228",
+  "tipo": "verificacoes intermediarias; lotes com falha nao aprovados",
+  "artefatos": [
+    {
+      "nome": "fetch-estados-especificos-20261021.log",
+      "sha256Original": "c4217042a7052026eb0f03a7c5dcc2cd06a7371af05a84b65343259822186435",
+      "sha256Sanitizado": "866100f61c608fa1b9bf30632209514d2a149045fcc77aec0ac24c9c722d2af8",
+      "conteudoSanitizado": "\r\n RUN  v5.0.1 <repositorio>\r\n\r\n ❯ tests/unit/fetch-estados.test.ts (29 tests | 1 failed) 1178ms\r\n   × o corretor identifica o defeito: retém uma lista global entre chamadas 56ms\r\n\r\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\r\n\r\n FAIL  tests/unit/fetch-estados.test.ts > o corretor identifica o defeito: retém uma lista global entre chamadas\r\nAssertionError: expected true to be false // Object.is equality\r\n\r\n- Expected\r\n+ Received\r\n\r\n- false\r\n+ true\r\n\r\n ❯ tests/unit/fetch-estados.test.ts:69:19\r\n     67| it.each(defeitos)('o corretor identifica o defeito: %s',async(_,codigo…\r\n     68|  expect(codigo).not.toBe(solucao);const r=await evaluatePractice(ident…\r\n     69|  expect(r.passed).toBe(false);expect(r.evidence).toBe('executed');expe…\r\n       |                   ^\r\n     70| });\r\n     71|\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\r\n\r\n\r\n Test Files  1 failed (1)\r\n      Tests  1 failed | 28 passed (29)\r\n   Start at  19:22:44\r\n   Duration  4.34s (transform 57%, tests 34%, import 8%, worker 1%)\r\n\r\n"
+    },
+    {
+      "nome": "fetch-estados-especificos-corrigidos-20261021.log",
+      "sha256Original": "7bb5b9f7d8033b28abb0dedd89d9c7103d74b04015e6be8f12570b8041d3ac98",
+      "sha256Sanitizado": "e1121446a7818621cc8ad7d182feb1f38a6e59bc2b913773f056f8b24a7cf851",
+      "conteudoSanitizado": "\r\n RUN  v5.0.1 <repositorio>\r\n\r\n\r\n Test Files  2 passed (2)\r\n      Tests  67 passed (67)\r\n   Start at  19:23:24\r\n   Duration  6.35s (tests 48%, transform 38%, import 12%, worker 1%)\r\n\r\n    Isolate  2 workers spawned · ~671ms startup each (spawn + environment, per file)\r\n             at least ~671ms faster with isolate: false — reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "nome": "fetch-estados-unitarios-20261021.log",
+      "sha256Original": "11211b325d6d0032072b59f6dec3324c937291898fe05667ad8b98d23b79ad28",
+      "sha256Sanitizado": "8beb801cefdc60d1fdeacc75df42a92982508040f004a6006bf9f85e1d6c0080",
+      "conteudoSanitizado": "\r\n RUN  v5.0.1 <repositorio>\r\n\r\n ❯ tests/unit/geracao-metricas.test.ts (3 tests | 1 failed) 21956ms\r\n   × rejeita a fila adulterada e vínculos com aulas inexistentes 11368ms\r\n\r\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\r\n\r\n FAIL  tests/unit/geracao-metricas.test.ts > rejeita a fila adulterada e vínculos com aulas inexistentes\r\nError: Test timed out in 10000ms.\r\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\r\n ❯ tests/unit/geracao-metricas.test.ts:75:1\r\n     73| });\r\n     74|\r\n     75| it('rejeita a fila adulterada e vínculos com aulas inexistentes',async…\r\n       | ^\r\n     76|  const catalogo=await prepararCatalogo();\r\n     77|  try{\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\r\n\r\n\r\n Test Files  1 failed | 75 passed (76)\r\n      Tests  1 failed | 1257 passed (1258)\r\n   Start at  19:25:30\r\n   Duration  396.37s (tests 87%, import 8%, transform 4%, worker 1%)\r\n\r\n    Isolate  76 workers spawned · ~1.06s startup each (spawn + environment, per file)\r\n             at least ~79.19s faster with isolate: false — reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "nome": "fetch-estados-geracao-20261021.log",
+      "sha256Original": "496a32fc91a7ac343281035d4eef0a01581d6ab573e11b8dbedcc96400d58b37",
+      "sha256Sanitizado": "496a32fc91a7ac343281035d4eef0a01581d6ab573e11b8dbedcc96400d58b37",
+      "conteudoSanitizado": "npm notice run codelab@0.1.0 content:generate\r\nnpm notice run node scripts/generate-curriculum-index.mjs && node scripts/gerar-metricas.mjs\r\nÍndice e matriz atualizados: 8 percursos adicionais, 77 aulas.\r\nMétricas geradas: 137 aulas, 189 atividades.\r\n"
+    },
+    {
+      "nome": "fetch-vitest-atualizacao-20261022.log",
+      "sha256Original": "4e107ec5542acaf2cdec41ad2bb39f60416032191a99d264ded1c5f659754740",
+      "sha256Sanitizado": "4e107ec5542acaf2cdec41ad2bb39f60416032191a99d264ded1c5f659754740",
+      "conteudoSanitizado": "\r\nremoved 2 packages, changed 10 packages, and audited 61 packages in 1m\r\n\r\n9 packages are looking for funding\r\n  run `npm fund` for details\r\n\r\nfound 0 vulnerabilities\r\nnpm warn install-scripts 1 package had install scripts blocked because they are not covered by allowScripts:\r\nnpm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)\r\nnpm warn install-scripts\r\nnpm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.\r\nnpm notice\r\nnpm notice New minor version of npm available! 12.0.2 -> 12.2.1\r\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1\r\nnpm notice To update run: npm install -g npm@12.2.1\r\nnpm notice\r\n"
+    },
+    {
+      "nome": "fetch-vitest-patch-exato-20261022.log",
+      "sha256Original": "c1ffa31cf14a41ace576e3584cd3302402456e77d3930fac90beaac1524b52db",
+      "sha256Sanitizado": "c1ffa31cf14a41ace576e3584cd3302402456e77d3930fac90beaac1524b52db",
+      "conteudoSanitizado": "\r\nchanged 4 packages, and audited 61 packages in 31s\r\n\r\n9 packages are looking for funding\r\n  run `npm fund` for details\r\n\r\nfound 0 vulnerabilities\r\nnpm warn install-scripts 1 package had install scripts blocked because they are not covered by allowScripts:\r\nnpm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)\r\nnpm warn install-scripts\r\nnpm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.\r\n"
+    },
+    {
+      "nome": "fetch-auditoria-vitest-20261022.json",
+      "sha256Original": "4994def253d70af8513ab2029c1f77b9aa08e2c26a2ba40bfa54372514c70131",
+      "sha256Sanitizado": "4994def253d70af8513ab2029c1f77b9aa08e2c26a2ba40bfa54372514c70131",
+      "conteudoSanitizado": "{\r\n  \"auditReportVersion\": 2,\r\n  \"vulnerabilities\": {},\r\n  \"metadata\": {\r\n    \"vulnerabilities\": {\r\n      \"info\": 0,\r\n      \"low\": 0,\r\n      \"moderate\": 0,\r\n      \"high\": 0,\r\n      \"critical\": 0,\r\n      \"total\": 0\r\n    },\r\n    \"dependencies\": {\r\n      \"prod\": 10,\r\n      \"dev\": 101,\r\n      \"optional\": 53,\r\n      \"peer\": 0,\r\n      \"peerOptional\": 0,\r\n      \"total\": 110\r\n    }\r\n  }\r\n}\r\n"
+    },
+    {
+      "nome": "fetch-estados-patch-especificos-20261022.log",
+      "sha256Original": "4ca23676cc16b4722077aad23970abbe2fd9b23a634875b52f1ea376a266ec50",
+      "sha256Sanitizado": "573bbccfcecf8a2dad579a549299326dcba2c72cb95148cb2ee42f06a3e2fe48",
+      "conteudoSanitizado": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n\r\n Test Files  3 passed (3)\r\n      Tests  71 passed (71)\r\n   Start at  09:19:17\r\n   Duration  45.40s (tests 62%, transform 24%, import 13%)\r\n\r\n    Isolate  3 workers spawned · ~1.96s startup each (spawn + environment, per file)\r\n             at least ~3.93s faster with isolate: false — reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "nome": "playwright-fetch-local-20261021.config.mjs",
+      "sha256Original": "4a2fc4dd22ef6dd89b097af6e5b9c2d9058c496aca58cad71874f8b64c1f6944",
+      "sha256Sanitizado": "4a2fc4dd22ef6dd89b097af6e5b9c2d9058c496aca58cad71874f8b64c1f6944",
+      "conteudoSanitizado": "const caminho=relativo=>new URL(relativo,import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1');\nexport default {\n testDir:caminho('../work/CodeLab/tests/e2e/'),testMatch:['fetch-estados.spec.ts'],\n timeout:60000,fullyParallel:false,workers:1,reporter:'list',\n outputDir:caminho('./resultados-fetch-local-20261021/'),\n use:{baseURL:'http://127.0.0.1:5173',channel:'msedge',headless:true,viewport:{width:1440,height:1000},trace:'retain-on-failure',screenshot:'only-on-failure'}\n};\n\r\n"
+    },
+    {
+      "nome": "playwright-fetch-publico-20261021.config.mjs",
+      "sha256Original": "e88a03cc33d644d4c9d7eb1f86d30d41f39508051a850073ff29cf0c49a07287",
+      "sha256Sanitizado": "e88a03cc33d644d4c9d7eb1f86d30d41f39508051a850073ff29cf0c49a07287",
+      "conteudoSanitizado": "import base from './playwright-fetch-local-20261021.config.mjs';\nexport default {...base,outputDir:new URL('./resultados-fetch-publico-20261021/',import.meta.url).pathname.replace(/^\\/([A-Za-z]:)/,'$1'),use:{...base.use,baseURL:'https://code-lab-omega.vercel.app'}};\r\n"
+    }
+  ],
+  "observacao": "O lote 1257/1258 falhou. A instalacao intermediaria resolveu 5.0.5; o head usa explicitamente 5.0.3. Arquivos brutos e traces ficam locais. Configuracoes desta prova nao alteram os limites ou o workflow do projeto."
+}
