@@ -1,0 +1,41 @@
+{
+  "headAplicacao": "c2f5935cd5f7503e7c0a2d770095843bf2df87ee",
+  "headWorkflow": "0f007e236f17d2eaceb814f7e902f60b46f9f9ad",
+  "limitacoes": [
+    "Primeiro build ETIMEDOUT n\u00e3o aprovado; repeti\u00e7\u00e3o passou sem mudar limite.",
+    "Teste com cache removido \u00e9 falha controlada, n\u00e3o reprodu\u00e7\u00e3o de ERR_ABORTED.",
+    "Bash local n\u00e3o instala pacotes no runner; CI real \u00e9 gate separado."
+  ],
+  "provas": [
+    {
+      "arquivo": "cpp-offline-validacao-unitarios-20261022-tarde.log",
+      "sha256Original": "66ceee5ff04dbcd174cc687937124e258ee17a3b712e8e1c3cf31ea177154778",
+      "modo": "texto sanitizado do log",
+      "texto": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n\r\n Test Files  76 passed (76)\r\n      Tests  1260 passed (1260)\r\n   Start at  16:59:11\r\n   Duration  390.82s (tests 84%, import 10%, transform 5%, worker 1%)\r\n\r\n    Isolate  76 workers spawned \u00b7 ~1.29s startup each (spawn + environment, per file)\r\n             at least ~97.09s faster with isolate: false \u2014 reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "arquivo": "cpp-offline-validacao-build-20261022-tarde.log",
+      "sha256Original": "8db18bb27e567fdb1d93ebb27ee6cabdff842cd38fd3e7684b5de6233ac6e74f",
+      "modo": "texto sanitizado do log",
+      "texto": "npm notice run codelab@0.1.0 build\r\nnpm notice run node scripts/generate-curriculum-index.mjs --check && node scripts/gerar-metricas.mjs --check && tsc --noEmit && node scripts/verificar-funcao-meteorologica.mjs && vite build --configLoader runner && node scripts/prerender.mjs && node scripts/build-offline.mjs\r\n\u00cdndice e matriz conferidos: 8 percursos adicionais, 77 aulas.\r\nM\u00e9tricas conferidas: 137 aulas, 189 atividades.\r\nnode:internal/child_process:1160\r\n    result.error = new ErrnoException(result.error, 'spawnSync ' + options.file);\r\n                   ^\r\n\r\nError: spawnSync <node> ETIMEDOUT\r\n    at Object.spawnSync (node:internal/child_process:1160:20)\r\n    at spawnSync (node:child_process:928:24)\r\n    at file:///<repositorio>/scripts/verificar-funcao-meteorologica.mjs:39:20 {\r\n  errno: -4039,\r\n  code: 'ETIMEDOUT',\r\n  syscall: 'spawnSync <node>',\r\n  path: '<node>',\r\n  spawnargs: [\r\n    '--input-type=module',\r\n    '-e',\r\n    '\\n' +\r\n      \"  import assert from 'node:assert/strict';\\n\" +\r\n      '  let chamadas = 0;\\n' +\r\n      '  const capturadoEm = Math.floor(Date.now() / 1000);\\n' +\r\n      '  globalThis.fetch = async (url, opcoes) => {\\n' +\r\n      \"   assert.equal(url, 'https://aviationweather.gov/api/data/metar?ids=SBSP&format=json');\\n\" +\r\n      \"   assert.equal(opcoes.redirect, 'error');\\n\" +\r\n      '   chamadas++;\\n' +\r\n      \"   return Response.json([{icaoId:'SBSP',obsTime:capturadoEm,wxString:'RA'}]);\\n\" +\r\n      '  };\\n' +\r\n      \"  const {default:rota} = await import('./api/meteorologia/observacao.js');\\n\" +\r\n      \"  const respostas = await Promise.all(Array.from({length:30}, () => rota.fetch(new Request('https://codelab.example/api/meteorologia/observacao?estacao=SBSP'))));\\n\" +\r\n      '  assert.equal(chamadas, 1);\\n' +\r\n      '  for (const resposta of respostas) {\\n' +\r\n      '   assert.equal(resposta.status, 200);\\n' +\r\n      '   const boletim = await resposta.json();\\n' +\r\n      '   assert.equal(boletim.dados[0].obsTime, capturadoEm);\\n' +\r\n      '   assert.ok(boletim.recebidoEm >= capturadoEm * 1000);\\n' +\r\n      '  }\\n' +\r\n      \"  assert.equal((await rota.fetch(new Request('https://codelab.example/api/meteorologia/observacao?estacao=ZZZZ'))).status, 400);\\n\" +\r\n      ' '\r\n  ]\r\n}\r\n\r\nNode.js v24.19.0\r\n"
+    },
+    {
+      "arquivo": "cpp-offline-build-repeticao-20261022-tarde.log",
+      "sha256Original": "ee7443be8ba651cb34b284b2d1087fd3605f1530e55ba4f6f0c83b6ae95f93b1",
+      "modo": "resumo selecionado do log de build; hash do original completo",
+      "texto": "\u00cdndice e matriz conferidos: 8 percursos adicionais, 77 aulas.\nM\u00e9tricas conferidas: 137 aulas, 189 atividades.\nFun\u00e7\u00e3o meteorol\u00f3gica conferida em Node.js com m\u00f3dulos ESM emitidos e 30 consultas concorrentes.\nvite v7.3.7 building client environment for production...\n\u2713 built in 4m 8s\nPr\u00e9-renderiza\u00e7\u00e3o conclu\u00edda: 157 p\u00e1ginas educacionais. Indexa\u00e7\u00e3o desativada at\u00e9 definir CODELAB_PUBLIC_URL.\nAplica\u00e7\u00e3o e conte\u00fado offline preparados: 38 recursos locais e 6 opcionais sob demanda; vers\u00e3o faa28ee8c9dc85b9c7da.\n"
+    },
+    {
+      "arquivo": "cpp-offline-recuperacao-navegador-20261022-tarde.log",
+      "sha256Original": "d4d7ef787c8fbf699faffe88d5382f34193671347df7bec2744e374f2939b5ed",
+      "modo": "texto sanitizado do log",
+      "texto": "\r\nRunning 10 tests using 1 worker\r\n\r\n(node:16228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok  1 tests\\e2e\\cpp-iterators.spec.ts:2:1 \u203a C++: previs\u00e3o, reconstru\u00e7\u00e3o e depura\u00e7\u00e3o retomam offline sem compilador (1.3m)\r\n  ok  2 tests\\e2e\\cpp-iterators.spec.ts:63:1 \u203a C++: uma leitura offline indispon\u00edvel preserva progresso e permite recuperar a aula (36.8s)\r\n  ok  3 tests\\e2e\\fetch-estados.spec.ts:12:1 \u203a um sinal j\u00e1 abortado rejeita sem iniciar a requisi\u00e7\u00e3o e emite um \u00fanico evento (2.4s)\r\n  ok  4 tests\\e2e\\fetch-estados.spec.ts:22:1 \u203a um motivo personalizado continua sendo o motivo original do sinal (1.7s)\r\n  ok  5 tests\\e2e\\fetch-estados.spec.ts:32:1 \u203a as alternativas de finally s\u00e3o executadas com sobreposi\u00e7\u00e3o, sucesso e rejei\u00e7\u00e3o (3.0s)\r\n  ok  6 tests\\e2e\\fetch-estados.spec.ts:49:1 \u203a a aula conserva cap\u00edtulos e projeto, com previs\u00e3o, diagn\u00f3stico e teclado (11.4s)\r\n  ok  7 tests\\e2e\\fetch-estados.spec.ts:61:1 \u203a a aula respondida mant\u00e9m axe e largura de 220 a 4000 px (38.0s)\r\n  ok  8 tests\\e2e\\fetch-estados.spec.ts:70:1 \u203a a produ\u00e7\u00e3o executa uma alternativa e conserva assist\u00eancia depois de recarregar (11.5s)\r\n  ok  9 tests\\e2e\\fetch-estados.spec.ts:77:1 \u203a a fun\u00e7\u00e3o executa offline sem permitir requisi\u00e7\u00e3o remota do aluno (14.9s)\r\n  ok 10 tests\\e2e\\fetch-estados.spec.ts:84:1 \u203a a execu\u00e7\u00e3o e a assist\u00eancia s\u00e3o recuperadas por exporta\u00e7\u00e3o e importa\u00e7\u00e3o (16.9s)\r\n\r\n  10 passed (4.2m)\r\n"
+    },
+    {
+      "arquivo": "espelhos-ubuntu-validacao-20261022.log",
+      "sha256Original": "c96989ca522735c0d26b43943b72b80f0256df22f8f005f157ad269d6a5b68dc",
+      "modo": "texto sanitizado do log",
+      "texto": "Shell real conferido: sintaxe, arquivo ausente e troca dos espelhos em diret\ufffdrio descart\ufffdvel. Instala\ufffd\ufffdo real ainda depende do CI.\r\n"
+    }
+  ]
+}
