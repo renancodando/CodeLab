@@ -1,0 +1,117 @@
+{
+  "head": "79a3843026ef0c36ddcd9cc9e91ab2ff9ac0536b",
+  "run": 39790374665,
+  "result": "cancelled",
+  "jobs": [
+    {
+      "id": 119864523496,
+      "name": "Testes e compilação",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:50:05Z",
+      "completed_at": "2026-10-22T13:52:59Z"
+    },
+    {
+      "id": 119864524707,
+      "name": "Auditoria de dependências",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:50:06Z",
+      "completed_at": "2026-10-22T13:50:19Z"
+    },
+    {
+      "id": 119866072574,
+      "name": "Navegador (1/8)",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:05:07Z"
+    },
+    {
+      "id": 119866072607,
+      "name": "Navegador (4/8)",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:03:59Z"
+    },
+    {
+      "id": 119866072608,
+      "name": "Navegador (7/8)",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:08:57Z"
+    },
+    {
+      "id": 119866072612,
+      "name": "Navegador (8/8)",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:08:49Z"
+    },
+    {
+      "id": 119866072643,
+      "name": "Navegador (5/8)",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:01:21Z"
+    },
+    {
+      "id": 119866072716,
+      "name": "Navegador (6/8)",
+      "conclusion": "success",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:07:44Z"
+    },
+    {
+      "id": 119866072775,
+      "name": "Navegador (3/8)",
+      "conclusion": "cancelled",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:28:20Z"
+    },
+    {
+      "id": 119866072801,
+      "name": "Navegador (2/8)",
+      "conclusion": "cancelled",
+      "started_at": "2026-10-22T13:53:01Z",
+      "completed_at": "2026-10-22T14:28:20Z"
+    }
+  ],
+  "installation_excerpt": [
+    "2026-10-22T13:53:28.1099794Z Installing dependencies...",
+    "2026-10-22T13:53:43.4899390Z Ign:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease",
+    "2026-10-22T13:53:43.4900076Z Ign:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease",
+    "2026-10-22T13:53:43.4900613Z Ign:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease",
+    "2026-10-22T13:53:43.4901172Z Ign:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease",
+    "2026-10-22T13:53:44.4907440Z Ign:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease",
+    "2026-10-22T13:53:44.4951255Z Ign:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease",
+    "2026-10-22T13:53:44.4952112Z Ign:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease",
+    "2026-10-22T13:53:44.4952844Z Ign:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease",
+    "2026-10-22T13:53:45.0749601Z Hit:2 https://archive.ubuntu.com/ubuntu noble InRelease",
+    "2026-10-22T13:53:45.2155157Z Get:3 https://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]",
+    "2026-10-22T13:53:45.6192172Z Ign:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages",
+    "2026-10-22T13:53:45.6193189Z Ign:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages",
+    "2026-10-22T13:53:45.7087253Z Get:4 https://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]",
+    "2026-10-22T13:53:45.9270817Z Get:5 https://archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]",
+    "2026-10-22T14:28:16.9603603Z ##[error]The operation was canceled.",
+    "2026-10-22T14:28:17.1103921Z playwright-report/. No artifacts will be uploaded."
+  ],
+  "previous_failure": {
+    "run": 39786006653,
+    "artifact": 12429127944,
+    "sha256": "a4c2c0c25930522d0df8ab4d605033502c1551db33074dc66fd535ec528877de",
+    "finding": "C++ apresentou tela de falha no terceiro carregamento offline; recurso retornou net::ERR_ABORTED. Não comprova perda do progresso ou causa do aborto."
+  },
+  "local_repetition": {
+    "passed": 5,
+    "duration": "4.0m",
+    "limitation": "Não reproduziu a intermitência; não aprova causa ou solução."
+  },
+  "new_head": "c2f5935cd5f7503e7c0a2d770095843bf2df87ee",
+  "pending": [
+    "validação local completa",
+    "build",
+    "dez cenários locais",
+    "CI completo",
+    "revisão do head",
+    "integração",
+    "deployment e fluxos públicos"
+  ]
+}
