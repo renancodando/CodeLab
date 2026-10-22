@@ -100,14 +100,14 @@ jobs:
           fi
 
   navegador:
-    name: Navegador (${{ matrix.parcela }}/4)
+    name: Navegador (${{ matrix.parcela }}/8)
     needs: validar
     runs-on: ubuntu-latest
     timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
-        parcela: [1, 2, 3, 4]
+        parcela: [1, 2, 3, 4, 5, 6, 7, 8]
     steps:
       - name: Baixar o código
         uses: actions/checkout@v4
@@ -130,7 +130,7 @@ jobs:
       - name: Instalar Chromium para os testes de navegador
         run: npx playwright install --with-deps chromium
       - name: Validar os fluxos no navegador
-        run: npm run test:e2e -- --shard=${{ matrix.parcela }}/4
+        run: npm run test:e2e -- --shard=${{ matrix.parcela }}/8
 
       - name: Guardar relatório e cenários atmosféricos
         if: always()
