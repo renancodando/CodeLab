@@ -72,7 +72,7 @@ it('rejeita contagens antigas e atualiza métricas e fila depois de uma nova ati
  }finally{await catalogo.limpar();}
 });
 
-it('rejeita a fila adulterada e vínculos com aulas inexistentes',async()=>{
+it('rejeita a fila adulterada pela CLI',async()=>{
  const catalogo=await prepararCatalogo();
  try{
   await catalogo.gerar();
@@ -80,6 +80,12 @@ it('rejeita a fila adulterada e vínculos com aulas inexistentes',async()=>{
   const fila=catalogo.executarCli('--check');
   expect(fila.status).not.toBe(0);
   expect(fila.stderr).toContain('docs/aulas-sem-pratica.md está desatualizado');
+ }finally{await catalogo.limpar();}
+});
+
+it('rejeita vínculos com aulas inexistentes na API e na CLI',async()=>{
+ const catalogo=await prepararCatalogo();
+ try{
   catalogo.atividades[0].lessonIds=['inexistente'];
   await catalogo.salvarAtividades();
   await expect(catalogo.gerar()).rejects.toThrow('vínculos inválidos');

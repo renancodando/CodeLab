@@ -15,6 +15,15 @@ import coverage from '../../docs/cobertura-curriculo.json';
 import {evaluate} from '../../src/execution/evaluate';
 
 const definitions:DeepCourse[]=[python,typescript,cpp,javascript,html,css,csharp,sql];
+function compilarAmostras(amostras:{nome:string;codigo:string}[]){
+ const opcoes:ts.CompilerOptions={strict:true,noEmit:true,types:[],target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,lib:['lib.es2022.d.ts','lib.dom.d.ts']};
+ const arquivos=new Map(amostras.map(amostra=>[amostra.nome,"export {};\n"+amostra.codigo]));
+ const host=ts.createCompilerHost(opcoes),original=host.getSourceFile.bind(host);
+ host.getSourceFile=(arquivo,versao,erro,recriar)=>arquivos.has(arquivo)?ts.createSourceFile(arquivo,arquivos.get(arquivo)!,versao,true):original(arquivo,versao,erro,recriar);
+ const programa=ts.createProgram([...arquivos.keys()],opcoes,host);
+ return ts.getPreEmitDiagnostics(programa).filter(diagnostico=>diagnostico.category===ts.DiagnosticCategory.Error);
+}
+
 describe('expansão por linguagem',()=>{
  it('publica oito percursos sequenciais com aulas reais em todas as linguagens',async()=>{
   expect(expandedCourses).toHaveLength(8);expect(expandedLessons).toHaveLength(77);
@@ -51,18 +60,25 @@ describe('expansão por linguagem',()=>{
   it('TypeScript strict: exemplo e solução de '+metadata.id,async()=>{
    const aula=(await resolveLesson(metadata.id))!;
    const entry=typescript.lessons.find(l=>l.id===metadata.id)!;
-   const samples=[['exemplo',aula.code],['solução',aula.solution],...('practices' in entry?entry.practices.map(p=>['problema-'+p.id,p.solution]):[])];
-   for(const [kind,code] of samples){
-    const name='/codelab-'+metadata.id+'-'+kind+'.ts',source="export {};\n"+code;
-    const options:ts.CompilerOptions={strict:true,noEmit:true,types:[],target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,lib:['lib.es2022.d.ts','lib.dom.d.ts']};
-    const host=ts.createCompilerHost(options),original=host.getSourceFile.bind(host);
-    host.getSourceFile=(file,version,onError,shouldCreate)=>file===name?ts.createSourceFile(name,source,version,true):original(file,version,onError,shouldCreate);
-    const program=ts.createProgram([name],options,host);
-    const errors=ts.getPreEmitDiagnostics(program).filter(d=>d.category===ts.DiagnosticCategory.Error);
-    expect(errors.map(d=>ts.flattenDiagnosticMessageText(d.messageText,' ')),metadata.id+' '+kind).toEqual([]);
-   }
+   const amostras=[['exemplo',aula.code],['solução',aula.solution],...('practices' in entry?entry.practices.map(p=>['problema-'+p.id,p.solution]):[])];
+   const erros=compilarAmostras(amostras.map(([tipo,codigo])=>({nome:'/codelab-'+metadata.id+'-'+tipo+'.ts',codigo})));
+   expect(erros.map(erro=>({arquivo:erro.file?.fileName,mensagem:ts.flattenDiagnosticMessageText(erro.messageText,' ')})),metadata.id).toEqual([]);
   },30000);
  }
+ it('a compilação conjunta conserva escopos de módulos e diagnósticos strict/DOM',()=>{
+  const erros=compilarAmostras([
+   {nome:'/escopo-a.ts',codigo:'const valor=1; const privado="texto";'},
+   {nome:'/escopo-b.ts',codigo:'const valor="dois";'},
+   {nome:'/tipo-incorreto.ts',codigo:'const total: number = "texto";'},
+   {nome:'/nome-ausente.ts',codigo:'console.log(privado.length);'},
+   {nome:'/nulo.ts',codigo:'const texto: string | null = null; console.log(texto.length);'},
+   {nome:'/dom.ts',codigo:'document.body.inexistente();'}
+  ]);
+  expect(erros.filter(erro=>['/escopo-a.ts','/escopo-b.ts'].includes(erro.file?.fileName??''))).toEqual([]);
+  for(const [arquivo,codigo] of [['/tipo-incorreto.ts',2322],['/nome-ausente.ts',2304],['/nulo.ts',18047],['/dom.ts',2339]] as const){
+   expect(erros.some(erro=>erro.file?.fileName===arquivo&&erro.code===codigo),arquivo).toBe(true);
+  }
+ },30000);
  const expected:Record<string,string[]>= {
   'js-semantica':['1 2 11','0 5','true'],
   'js-funcoes-this':['13','[2,4,6]'],

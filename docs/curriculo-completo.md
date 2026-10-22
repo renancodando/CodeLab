@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: estados e cancelamento de Fetch
+
+A aula existente fetch-estados mantém capítulos e busca de cidades. O aluno prevê o sinal terminal e o evento único de abort, diagnostica uma conclusão antiga e produz a transformação de estado sem apagar dados diante de erro/cancelamento esperado. Cancelar trabalho e proteger a tela por identidade são responsabilidades distintas. As referências de previsão usam APIs nativas; a regra do aluno executa em QuickJS sem rede. A integração do projeto exige transporte, contrato do corpo, renderização segura, teclado e análise da ordem de conclusão. Uma pausa não encerra a aula ou linguagem.
+
+Referências: [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [AbortSignal](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) e [abort](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort). Motivo personalizado não é necessariamente AbortError. Publicação própria depende dos gates de continuidade.md; métricas e lacunas são geradas.
+
 ## Aprofundamento incremental: contratos HTTP praticados
 
 http e metodos passam a praticar transporte/status, representação opcional, criação, idempotência e alteração parcial. Conservam capítulos e projetos existentes, sem criar aulas. As funções executadas preparam descritor de resposta e próximo estado; não fingem persistir, servir HTTP ou autorizar. O leitor 204 e os contratos de atualização são recortes explícitos, sem generalizar o formato de PATCH nem prometer segurança por ocultar campos. Casos normais, fronteiras válidas e implementações defeituosas são conferidos por comportamento; decisões conceituais continuam distintas da execução.

@@ -592,20 +592,24 @@ const roteiros:Record<string,Roteiro>={
   },
   "fetch-estados": {
     "contexto": "fetch resolve transporte, não toda a experiência. Uma interface precisa representar tempo de espera, falha de rede, erro HTTP, corpo inválido, ausência de resultados e cancelamento sem confundir esses estados.",
-    "modelo": "Separe a máquina de estados da interface da Promise de rede. A Promise termina uma operação; o estado informa o que a pessoa deve ver e fazer em cada momento.",
+    "modelo": "Separe a máquina de estados da interface da Promise de rede. A Promise termina uma operação; o estado informa o que a pessoa deve ver e fazer em cada momento. Cancelar tenta economizar trabalho; o identificador da intenção protege a tela. Uma operação antiga pode entrar em catch/finally quando outra já começou. A mesma regra de identidade deve proteger dados, erro e carregamento.",
     "passos": [
-      "Crie AbortController antes da requisição quando cancelamento for possível.",
-      "Marque carregamento e preserve dados antigos quando isso fizer sentido.",
-      "Cheque response.ok e depois valide o formato do corpo.",
-      "Ignore cancelamentos esperados sem exibi-los como erro.",
-      "Em finally, libere estados transitórios somente se aquela requisição ainda for a atual."
+      "Crie um AbortController novo para cada intenção e cancele o anterior. Um sinal abortado não pode ser reiniciado. Sem motivo personalizado, abort() usa AbortError; um motivo fornecido pode ser outro valor.",
+      "Associe um identificador à busca e marque carregamento, preservando os últimos dados quando isso fizer sentido. Não troque uma lista vazia válida por dados antigos.",
+      "Envie Accept como preferência, cheque response.ok e Content-Type, leia o corpo e valide sua forma. O cabeçalho sozinho não garante JSON válido nem o contrato de cidades esperado.",
+      "Aplique sucesso e erro somente se o identificador ainda for o atual. Diferencie falha de transporte, status HTTP, corpo inválido, nenhum resultado e cancelamento esperado.",
+      "Em finally, libere estados transitórios somente se aquela requisição ainda for a atual. A condição deve funcionar com uma única busca, sobreposição e rejeição.",
+      "Separe transporte, validação do resultado e transformação do estado. A função praticada recebe um resultado já validado e não decide se um status HTTP ou corpo é aceitável."
     ],
     "experimentos": [
       "Atrase artificialmente uma resposta e inicie outra mais recente.",
       "Retorne HTML onde JSON era esperado e trate a falha de parsing.",
-      "Interrompa a rede e verifique se existe caminho de tentar novamente."
+      "Interrompa a rede e verifique se existe caminho de tentar novamente.",
+      "Libere a primeira Promise enquanto a segunda aguarda. Antes de executar, preveja carregando; depois inverta a ordem de conclusão e provoque rejeição da atual.",
+      "Use um sinal já abortado e repita abort(). Conte eventos e compare com um controller novo; não generalize AbortError para motivos personalizados.",
+      "Produza a função de estado sem consultar a solução. Teste pedido zero, sucesso vazio, erro preservando dados, cancelamento esperado e conclusões de pedidos antigos ou desconhecidos."
     ],
-    "projeto": "Crie uma busca de cidades que cancela a consulta anterior, mantém última resposta válida e diferencia 'nenhum resultado' de 'falha ao consultar'.",
+    "projeto": "Crie uma busca de cidades que cancela a consulta anterior, mantém última resposta válida e diferencia 'nenhum resultado' de 'falha ao consultar'. Construa a integração em um projeto servido por HTTP, fora do sandbox sem rede do CodeLab. Separe transporte, validação do corpo e regra de estado; crie um controller por intenção e proteja sucesso, erro e finally com a identidade. Exercite duas buscas sobrepostas em ambas as ordens, rejeição da atual, HTML em vez de JSON, lista vazia e nova tentativa. Renderize textos recebidos com textContent, anuncie o estado sem mover o foco e mantenha uso por teclado. Registre entrada, ordem de conclusão, estado esperado e resultado observado; passar na função isolada não comprova essa integração.",
     "conexao": "Quando chamadas passam a depender de identidade e permissões, entra a distinção entre autenticação e autorização."
   },
   "identidade-api": {
