@@ -1,0 +1,25 @@
+{
+  "pr": 67,
+  "head": "1d2f0a9afa48ec1dc7f1dbcdd83700a40d8c500a",
+  "artefatos": [
+    {
+      "nome": "fetch-estados-unitarios-patch-20261022.log",
+      "sha256Original": "54346bf2e2a5bb7ebe81e671c62c7b007cab00c214f8d1ff335da29524d5ac45",
+      "sha256Sanitizado": "3ef73e1aa2eed4fa9ae527a8b3dc74153730256640495f83bdf132d80a6378ba",
+      "conteudoSanitizado": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n ❯ tests/unit/expanded-content.test.ts (24 tests | 4 failed) 250431ms\r\n   ❯ expansão por linguagem (18)\r\n     × TypeScript strict: exemplo e solução de ts-inferencia-ausencia 45887ms\r\n     × TypeScript strict: exemplo e solução de ts-validacao-aninhada 37654ms\r\n     × TypeScript strict: exemplo e solução de ts-genericos-relacoes 30072ms\r\n     × TypeScript strict: exemplo e solução de ts-variancia-contratos 31033ms\r\n\r\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯\r\n\r\n FAIL  tests/unit/expanded-content.test.ts > expansão por linguagem > TypeScript strict: exemplo e solução de ts-inferencia-ausencia\r\n FAIL  tests/unit/expanded-content.test.ts > expansão por linguagem > TypeScript strict: exemplo e solução de ts-validacao-aninhada\r\n FAIL  tests/unit/expanded-content.test.ts > expansão por linguagem > TypeScript strict: exemplo e solução de ts-genericos-relacoes\r\n FAIL  tests/unit/expanded-content.test.ts > expansão por linguagem > TypeScript strict: exemplo e solução de ts-variancia-contratos\r\nError: Test timed out in 30000ms.\r\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\r\n ❯ tests/unit/expanded-content.test.ts:51:3\r\n     49|  });\r\n     50|  for(const metadata of expandedLessons.filter(l=>l.language==='typescr…\r\n     51|   it('TypeScript strict: exemplo e solução de '+metadata.id,async()=>{\r\n       |   ^\r\n     52|    const aula=(await resolveLesson(metadata.id))!;\r\n     53|    const entry=typescript.lessons.find(l=>l.id===metadata.id)!;\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯\r\n\r\n\r\n Test Files  1 failed | 75 passed (76)\r\n      Tests  4 failed | 1255 passed (1259)\r\n   Start at  09:21:10\r\n   Duration  448.18s (tests 90%, import 6%, transform 3%, worker 1%)\r\n\r\n    Isolate  76 workers spawned · ~966ms startup each (spawn + environment, per file)\r\n             at least ~72.42s faster with isolate: false — reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "nome": "fetch-typescript-conjunto-especifico-20261022.log",
+      "sha256Original": "a43355e9cf909dc102546177b2435e171b4f80e63df344e05702ae1d81c7572f",
+      "sha256Sanitizado": "ea4950ed728a26b67c968c7c141c7d73eb8fc9bc0e1f2e801c0e194278a80031",
+      "conteudoSanitizado": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n ❯ tests/unit/expanded-content.test.ts (0 test)\r\n\r\n⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯\r\n\r\n FAIL  tests/unit/expanded-content.test.ts [ tests/unit/expanded-content.test.ts ]\r\nError: Transform failed with 1 error:\r\n<repositorio>/tests/unit/expanded-content.test.ts:17:87: ERROR: Syntax error \"n\"\r\n  Plugin: vite:esbuild\r\n  File: <repositorio>/tests/unit/expanded-content.test.ts:17:87\r\n  \r\n  Syntax error \"n\"\r\n  15 |  import {evaluate} from '../../src/execution/evaluate';\r\n  16 |  \r\n  17 |  const definitions:DeepCourse[]=[python,typescript,cpp,javascript,html,css,csharp,sql];\\n\r\n     |                                                                                         ^\r\n  18 |  function compilarAmostras(amostras:{nome:string;codigo:string}[]){\r\n  19 |   const opcoes:ts.CompilerOptions={strict:true,noEmit:true,types:[],target:ts.ScriptTarget.ES2022,module:ts.ModuleKind...\r\n  \r\n ❯ failureErrorWithLog node_modules/esbuild/lib/main.js:1752:15\r\n ❯ node_modules/esbuild/lib/main.js:1019:50\r\n ❯ responseCallbacks.<computed> node_modules/esbuild/lib/main.js:886:9\r\n ❯ handleIncomingPacket node_modules/esbuild/lib/main.js:941:12\r\n ❯ Socket.readFromStdout node_modules/esbuild/lib/main.js:864:7\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\r\n\r\n\r\n Test Files  1 failed (1)\r\n      Tests  no tests\r\n   Start at  09:31:55\r\n   Duration  1.23s (worker 96%, environment 4%)\r\n\r\n"
+    },
+    {
+      "nome": "fetch-typescript-conjunto-especifico-corrigido-20261022.log",
+      "sha256Original": "2aef44427a730fbc728825200ac678f082a2b90084195ccfb61ddb0b5d4b2974",
+      "sha256Sanitizado": "cfebf9d446794ee975a4b867bc79659a6c511267de4ace08f35be978fada983a",
+      "conteudoSanitizado": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n\r\n Test Files  1 passed (1)\r\n      Tests  25 passed (25)\r\n   Start at  09:32:30\r\n   Duration  78.25s (tests 94%, transform 4%, import 2%)\r\n\r\n"
+    }
+  ],
+  "observacao": "Lote 1255/1259 e tentativa sem testes falharam. Arquivo corrigido passou 25. Suíte completa e gates do novo head continuam pendentes."
+}
