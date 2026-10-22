@@ -1,0 +1,139 @@
+{
+  "pr": 67,
+  "headAtual": "7d4b980e22b48826d606c3b43a4f54a9f7bc2b74",
+  "headAnterior": "1d2f0a9afa48ec1dc7f1dbcdd83700a40d8c500a",
+  "runAnterior": 39779567587,
+  "conclusaoAnterior": "cancelled",
+  "jobsAnteriores": [
+    {
+      "id": 119827031246,
+      "nome": "Testes e compilação",
+      "status": "completed",
+      "conclusao": "success",
+      "iniciou": "2026-10-22T12:35:18Z",
+      "terminou": "2026-10-22T12:37:38Z"
+    },
+    {
+      "id": 119827031815,
+      "nome": "Auditoria de dependências",
+      "status": "completed",
+      "conclusao": "success",
+      "iniciou": "2026-10-22T12:35:18Z",
+      "terminou": "2026-10-22T12:35:32Z"
+    },
+    {
+      "id": 119828156077,
+      "nome": "Navegador (1/4)",
+      "status": "completed",
+      "conclusao": "success",
+      "iniciou": "2026-10-22T12:37:40Z",
+      "terminou": "2026-10-22T12:53:53Z"
+    },
+    {
+      "id": 119828156082,
+      "nome": "Navegador (4/4)",
+      "status": "completed",
+      "conclusao": "cancelled",
+      "iniciou": "2026-10-22T12:37:41Z",
+      "terminou": "2026-10-22T13:12:44Z"
+    },
+    {
+      "id": 119828156089,
+      "nome": "Navegador (2/4)",
+      "status": "completed",
+      "conclusao": "success",
+      "iniciou": "2026-10-22T12:37:41Z",
+      "terminou": "2026-10-22T13:05:07Z"
+    },
+    {
+      "id": 119828156131,
+      "nome": "Navegador (3/4)",
+      "status": "completed",
+      "conclusao": "success",
+      "iniciou": "2026-10-22T12:37:40Z",
+      "terminou": "2026-10-22T12:53:47Z"
+    }
+  ],
+  "navegadorAnterior": {
+    "parcelas": [
+      68,
+      67,
+      62,
+      64
+    ],
+    "total": 261,
+    "observacao": "Quarta parcela cancelled aos 35m03s, apesar de todos os passos informarem sucesso; o run nao esta aprovado."
+  },
+  "divisaoNova": {
+    "suiteInteira": 261,
+    "parcelas": [
+      34,
+      34,
+      31,
+      36,
+      32,
+      30,
+      32,
+      32
+    ],
+    "totalParcelas": 261,
+    "semAusentes": true,
+    "semRepetidos": true,
+    "mesmosTimeoutsEContratos": true,
+    "enumeracao": "Playwright --list; nao representa execucao dos cenarios",
+    "arquivosLocais": [
+      {
+        "nome": "fetch-cenarios-parcela-1-20261022.json",
+        "sha256": "a5b9cf5bbab6678dab497ddc197376dc11a87a9d04170af948a4ae9e4c008f93"
+      },
+      {
+        "nome": "fetch-cenarios-parcela-2-20261022.json",
+        "sha256": "4dcd80a7b53f2e51829fc3fc698bee36d55f13f442dd34333902bb4e746f1d00"
+      },
+      {
+        "nome": "fetch-cenarios-parcela-3-20261022.json",
+        "sha256": "66e5f952b5048b247c041f9369f64b42c1ce9236b6c3ab77df56ea5d141dc396"
+      },
+      {
+        "nome": "fetch-cenarios-parcela-4-20261022.json",
+        "sha256": "6720b7dd4c4f5905a9dcc983367ec7fa7e53976151215158a5b4e1c3e6e7656b"
+      },
+      {
+        "nome": "fetch-cenarios-parcela-5-20261022.json",
+        "sha256": "3f7375f36831d52f870491759aa1d8f6e9a40a0711d31228058bc96962d806b3"
+      },
+      {
+        "nome": "fetch-cenarios-parcela-6-20261022.json",
+        "sha256": "ae3909a27d78d553347d3a182dcffb4cf80aed5a12a428792f055b09246de424"
+      },
+      {
+        "nome": "fetch-cenarios-parcela-7-20261022.json",
+        "sha256": "29244245ccaefab07a6dfe0aab295c945ecefe369edd0cb98d0ac8e7c8dca080"
+      },
+      {
+        "nome": "fetch-cenarios-parcela-8-20261022.json",
+        "sha256": "d98f6e07b168a0af2db2801bc3837704b3aadbe9a208ef99d595656014753700"
+      }
+    ],
+    "matrizRealConferida": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "denominadorRealConferido": 8,
+    "limiteDoJobMinutos": 35
+  },
+  "provasLocais": {
+    "head": "1d2f0a9afa48ec1dc7f1dbcdd83700a40d8c500a",
+    "unitarios": 1260,
+    "arquivos": 76,
+    "navegador": 8,
+    "build": "aprovado",
+    "observacao": "Aplicacao/conteudo/testes identicos; novo commit altera somente workflow e docs. CI e revisao proprios do novo head continuam obrigatorios."
+  }
+}
