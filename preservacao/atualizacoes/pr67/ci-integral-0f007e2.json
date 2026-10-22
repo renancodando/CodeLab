@@ -1,0 +1,137 @@
+{
+  "head": "0f007e236f17d2eaceb814f7e902f60b46f9f9ad",
+  "run": 39847065677,
+  "result": "success",
+  "tree": "8046a0098569ffe0b5d72fef53ac1039aa74f448",
+  "base": "d6cd7c8d8c085b8c77826dd39edb232ba20d6c93",
+  "merge": "9dd40f0635e6a8445f3db10500935a0a97809d68",
+  "review": {
+    "commit": "0f007e236f17d2eaceb814f7e902f60b46f9f9ad",
+    "receipt": "2026-10-22T20:15:56Z",
+    "findings": false,
+    "unresolvedThreads": 0
+  },
+  "jobs": [
+    {
+      "id": 120063026914,
+      "name": "Auditoria de dependências",
+      "conclusion": "success",
+      "started": "2026-10-22T20:14:12Z",
+      "completed": "2026-10-22T20:14:22Z",
+      "summary": [
+        "2026-10-22T20:14:20.3667833Z found 0 vulnerabilities"
+      ]
+    },
+    {
+      "id": 120063027326,
+      "name": "Testes e compilação",
+      "conclusion": "success",
+      "started": "2026-10-22T20:14:13Z",
+      "completed": "2026-10-22T20:17:10Z",
+      "summary": [
+        "2026-10-22T20:14:53.6207404Z found 0 vulnerabilities",
+        "2026-10-22T20:15:12.2600435Z  Test Files  76 passed (76)",
+        "2026-10-22T20:15:12.2611818Z       Tests  1260 passed (1260)",
+        "2026-10-22T20:16:32.5138613Z 194 exemplos e soluções externos compilados/executados.",
+        "2026-10-22T20:16:58.5542246Z Aplicação e conteúdo offline preparados: 38 recursos locais e 6 opcionais sob demanda; versão 92c1dc58ff9a7f9d6421."
+      ]
+    },
+    {
+      "id": 120064561781,
+      "name": "Navegador (2/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:26:21Z",
+      "summary": [
+        "2026-10-22T20:17:30.8981835Z found 0 vulnerabilities",
+        "2026-10-22T20:26:18.4234407Z   34 passed (8.4m)"
+      ]
+    },
+    {
+      "id": 120064561800,
+      "name": "Navegador (7/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:32:59Z",
+      "summary": [
+        "2026-10-22T20:17:27.9840154Z found 0 vulnerabilities",
+        "2026-10-22T20:32:55.8538839Z   32 passed (15.0m)"
+      ]
+    },
+    {
+      "id": 120064561803,
+      "name": "Navegador (1/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:24:40Z",
+      "summary": [
+        "2026-10-22T20:17:22.2362463Z found 0 vulnerabilities",
+        "2026-10-22T20:24:36.8909283Z   35 passed (6.9m)"
+      ]
+    },
+    {
+      "id": 120064561831,
+      "name": "Navegador (6/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:36:03Z",
+      "summary": [
+        "2026-10-22T20:17:30.7370444Z found 0 vulnerabilities",
+        "2026-10-22T20:35:58.8206465Z   33 passed (17.9m)"
+      ]
+    },
+    {
+      "id": 120064561896,
+      "name": "Navegador (4/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:29:29Z",
+      "summary": [
+        "2026-10-22T20:17:31.2345490Z found 0 vulnerabilities",
+        "2026-10-22T20:29:25.1056953Z   37 passed (11.4m)"
+      ]
+    },
+    {
+      "id": 120064561994,
+      "name": "Navegador (5/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:21:57Z",
+      "summary": [
+        "2026-10-22T20:17:33.6823638Z found 0 vulnerabilities",
+        "2026-10-22T20:21:54.2405426Z   29 passed (3.8m)"
+      ]
+    },
+    {
+      "id": 120064562128,
+      "name": "Navegador (3/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:23:43Z",
+      "summary": [
+        "2026-10-22T20:17:36.0974847Z found 0 vulnerabilities",
+        "2026-10-22T20:23:38.2102822Z   30 passed (5.4m)"
+      ]
+    },
+    {
+      "id": 120064562156,
+      "name": "Navegador (8/8)",
+      "conclusion": "success",
+      "started": "2026-10-22T20:17:12Z",
+      "completed": "2026-10-22T20:33:34Z",
+      "summary": [
+        "2026-10-22T20:17:34.9075900Z found 0 vulnerabilities",
+        "2026-10-22T20:33:30.6734089Z   32 passed (15.5m)"
+      ]
+    }
+  ],
+  "browserTotal": 262,
+  "externalExamples": 194,
+  "unitTotal": 1260,
+  "auditVulnerabilities": 0,
+  "limitations": [
+    "CI de entrada não comprova deployment, domínio ou testes públicos.",
+    "ERR_ABORTED anterior não tem causa demonstrada; não declarar intermitência resolvida.",
+    "Pausas não encerram aula ou linguagem."
+  ]
+}
