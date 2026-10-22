@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Fetch: intenção atual, conclusão e evidência
+
+A aula fetch-estados combina previsão do sinal abortado, investigação de um finally antigo e produção da regra de estado a partir de assinatura vazia. O corretor aceita implementações equivalentes e preserva a distinção entre conceitos e JavaScript efetivamente executado: a função pura não faz HTTP nem valida o corpo. Pausas trabalham pedido zero, sucesso vazio, erro, cancelamento esperado e conclusões obsoletas, sem permitir mutação ou sobrescrita entre chamadas. O projeto pede a busca real com controller por intenção, validação, interface acessível e provas em ambas as ordens de conclusão. Leitura não gera domínio, abrir solução registra assistência e a conclusão da função não comprova integração. Gates próprios em continuidade.md.
+
 ## HTTP: decisões de protocolo e código executado
 
 As pausas de http/metodos combinam previsão, diagnóstico, produção independente do descritor e alteração da regra parcial. Nomes de cabeçalho podem variar de caixa, campos do corpo podem mudar de ordem e implementações equivalentes são aceitas pelo comportamento. A assinatura de produção começa vazia; abrir solução registra assistência. O código do aluno continua sem rede. Fetch/Response e requisições controladas verificam as referências conceituais no navegador; um pequeno modelo JavaScript de exclusão é apresentado como didático. Nenhum desses mecanismos substitui construir o servidor e testar persistência no projeto. Leitura não gera domínio; backup, revisão e offline continuam nos mecanismos existentes. Resultados próprios em continuidade.md.

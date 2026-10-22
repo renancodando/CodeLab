@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Base publicada e lote de Fetch em validação
+
+A PR #66 está integrada em d6cd7c8, com revisão e CI de entrada integral do head correto, árvore/pais conferidos e deployment READY no SHA/alias esperados. Vinte e três cenários públicos passaram e o alias foi reconfirmado. O pós-merge 39682883479 concluiu aprovado nos seis jobs, sem reutilizar o CI do head. O relatório conserva dois alertas moderados de Vitest/@vitest/mocker, embora o gate high/critical esteja aprovado; o patch 5.0.3 será validado no novo head. A PR #65 também concluiu o pós-merge integral. Resultados locais anteriores com falhas continuam preservados.
+
+A nova prática de Fetch não muda runtime, rede do aluno, layout ou limites: amplia uma aula existente e sua aplicação. Referências nativas, revisão pedagógica, casos mutantes, fluxo de solução/assistência, offline, exportação/importação, axe e larguras extremas têm provas próprias. Resultados em continuidade.md e nos checks/checkpoints; não declarar este lote publicado ou a edição concluída pela aprovação da base.
+
 ## Correção Vite publicada; verificações locais em reforço
 
 A PR #65 está integrada em bcdf68a, com CI integral e revisão do head corretos. Deployment READY, SHA/alias e 24 cenários públicos conferidos; o CI pós-merge 39674011779 permanece um resultado próprio. Os três timeouts unitários locais anteriores não são convertidos em aprovação. A entrega seguinte fortalece a prova de memória, conserva o vetor no navegador e reduz o custo dos dados de teste de backup e métricas, com os mesmos limites e todas as afirmações anteriores. Resultados e condições de integração estão em continuidade.md; não há alteração do catálogo nem alegação de conclusão da edição.
