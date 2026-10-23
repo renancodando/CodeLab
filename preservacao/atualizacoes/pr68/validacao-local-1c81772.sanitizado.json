@@ -1,0 +1,54 @@
+{
+  "headFinal": "1c817721ebdde1565310585ae6108c2e17c97cfc",
+  "headAnterior": "f7bac1f5528ccb21d80f4d566a4d8efd74c078f6",
+  "provas": [
+    {
+      "arquivo": "identidade-especificos-20261023.log",
+      "sha256Original": "537ac1a552a7ffc5613d72e626fd96e431e46c21a1717baa9c277f6357153ae4",
+      "modo": "texto sanitizado",
+      "texto": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n \u276f tests/unit/identidade-api.test.ts (25 tests | 1 failed) 1347ms\r\n   \u00d7 recusa o defeito concreto: muda a lista de pap\u00e9is 155ms\r\n\r\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\r\n\r\n FAIL  tests/unit/identidade-api.test.ts > recusa o defeito concreto: muda a lista de pap\u00e9is\r\nAssertionError: expected true to be false // Object.is equality\r\n\r\n- Expected\r\n+ Received\r\n\r\n- false\r\n+ true\r\n\r\n \u276f tests/unit/identidade-api.test.ts:61:105\r\n     59| ];\r\n     60| it.each(defeitos)('recusa o defeito concreto: %s',async(_,codigo)=>{\r\n     61|  expect(codigo).not.toBe(solucao);const r=await evaluatePractice(ident\u2026\r\n       |                                                                                                         ^\r\n     62| });\r\n     63|\r\n\r\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\r\n\r\n\r\n Test Files  1 failed | 1 passed (2)\r\n      Tests  1 failed | 53 passed (54)\r\n   Start at  17:16:11\r\n   Duration  12.72s (tests 48%, transform 38%, import 10%, worker 4%)\r\n\r\n  Transform  transforming modules took 2.88s \u00b7 38% of tracked time, re-done on every run\r\n             persist transforms across runs with fsModuleCache: true\r\n             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns\r\n\r\n"
+    },
+    {
+      "arquivo": "identidade-especificos-corrigidos-20261023.log",
+      "sha256Original": "9912115aad3617c036e772bc75f7a4bb9bde5980d957f1162c6bb5251120c04b",
+      "modo": "texto sanitizado",
+      "texto": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n\r\n Test Files  2 passed (2)\r\n      Tests  54 passed (54)\r\n   Start at  17:18:12\r\n   Duration  7.09s (tests 47%, transform 39%, import 13%, worker 1%)\r\n\r\n    Isolate  2 workers spawned \u00b7 ~961ms startup each (spawn + environment, per file)\r\n             at least ~961ms faster with isolate: false \u2014 reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "arquivo": "identidade-unitarios-completos-20261023.log",
+      "sha256Original": "39d0c5c8d81dcabe38912c8c6fb69f4a072261adaced0bfa01d1edb2f9c52bde",
+      "modo": "texto sanitizado",
+      "texto": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n\r\n Test Files  77 passed (77)\r\n      Tests  1287 passed (1287)\r\n   Start at  17:20:06\r\n   Duration  241.70s (tests 79%, import 13%, transform 6%, worker 2%)\r\n\r\n    Isolate  77 workers spawned \u00b7 ~829ms startup each (spawn + environment, per file)\r\n             at least ~62.99s faster with isolate: false \u2014 reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "arquivo": "identidade-build-20261023.log",
+      "sha256Original": "7a50e02bf2d4def5f7476a59a74cad3a925b008f330873865555ac370c38fbcf",
+      "modo": "resumo selecionado; hash do original completo",
+      "texto": "\u00cdndice e matriz conferidos: 8 percursos adicionais, 77 aulas.\nM\u00e9tricas conferidas: 137 aulas, 192 atividades.\nFun\u00e7\u00e3o meteorol\u00f3gica conferida em Node.js com m\u00f3dulos ESM emitidos e 30 consultas concorrentes.\nvite v7.3.7 building client environment for production...\ndist/assets/index-Cpx7whNe.css                        45.13 kB \u2502 gzip:  10.64 kB\ndist/assets/index-CUgPmesw.js                        856.52 kB \u2502 gzip: 272.39 kB\n\u2713 built in 3m 43s\nPr\u00e9-renderiza\u00e7\u00e3o conclu\u00edda: 157 p\u00e1ginas educacionais. Indexa\u00e7\u00e3o desativada at\u00e9 definir CODELAB_PUBLIC_URL.\nAplica\u00e7\u00e3o e conte\u00fado offline preparados: 38 recursos locais e 6 opcionais sob demanda; vers\u00e3o 25d8e4ae1f48c0652270.\n"
+    },
+    {
+      "arquivo": "identidade-especificos-head-final-20261023.log",
+      "sha256Original": "1506581c1ea0459ddfc524efc948c17b2984cc2ee70426bebf01e6393eff7220",
+      "modo": "texto sanitizado",
+      "texto": "\r\n RUN  v5.0.3 <repositorio>\r\n\r\n\r\n Test Files  2 passed (2)\r\n      Tests  54 passed (54)\r\n   Start at  17:30:18\r\n   Duration  5.35s (transform 44%, tests 43%, import 12%, worker 2%)\r\n\r\n    Isolate  2 workers spawned \u00b7 ~614ms startup each (spawn + environment, per file)\r\n             at least ~614ms faster with isolate: false \u2014 reuses workers across files instead of one per file\r\n\r\n"
+    },
+    {
+      "arquivo": "identidade-build-head-final-20261023.log",
+      "sha256Original": "efe627d1caccf75df25e9cbc6041a375f6741ea76b1032a83617ecc7c505f3d3",
+      "modo": "resumo selecionado; hash do original completo",
+      "texto": "\u00cdndice e matriz conferidos: 8 percursos adicionais, 77 aulas.\nM\u00e9tricas conferidas: 137 aulas, 192 atividades.\nFun\u00e7\u00e3o meteorol\u00f3gica conferida em Node.js com m\u00f3dulos ESM emitidos e 30 consultas concorrentes.\nvite v7.3.7 building client environment for production...\ndist/assets/index-Cpx7whNe.css                        45.13 kB \u2502 gzip:  10.64 kB\ndist/assets/index-JrToBqTc.js                        856.53 kB \u2502 gzip: 272.39 kB\n\u2713 built in 1m 59s\nPr\u00e9-renderiza\u00e7\u00e3o conclu\u00edda: 157 p\u00e1ginas educacionais. Indexa\u00e7\u00e3o desativada at\u00e9 definir CODELAB_PUBLIC_URL.\nAplica\u00e7\u00e3o e conte\u00fado offline preparados: 38 recursos locais e 6 opcionais sob demanda; vers\u00e3o e134bdd6af1d66309dee.\n"
+    },
+    {
+      "arquivo": "identidade-navegador-local-20261023.log",
+      "sha256Original": "24767870bc18ff2dfef2014b58bbcbc948d725c6e0957715a4af5f71df101479",
+      "modo": "texto sanitizado",
+      "texto": "\r\nRunning 15 tests using 1 worker\r\n\r\n(node:10864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok  1 tests\\e2e\\fetch-estados.spec.ts:12:1 \u203a um sinal j\u00e1 abortado rejeita sem iniciar a requisi\u00e7\u00e3o e emite um \u00fanico evento (3.2s)\r\n  ok  2 tests\\e2e\\fetch-estados.spec.ts:22:1 \u203a um motivo personalizado continua sendo o motivo original do sinal (1.5s)\r\n  ok  3 tests\\e2e\\fetch-estados.spec.ts:32:1 \u203a as alternativas de finally s\u00e3o executadas com sobreposi\u00e7\u00e3o, sucesso e rejei\u00e7\u00e3o (2.3s)\r\n  ok  4 tests\\e2e\\fetch-estados.spec.ts:49:1 \u203a a aula conserva cap\u00edtulos e projeto, com previs\u00e3o, diagn\u00f3stico e teclado (10.5s)\r\n  ok  5 tests\\e2e\\fetch-estados.spec.ts:61:1 \u203a a aula respondida mant\u00e9m axe e largura de 220 a 4000 px (14.3s)\r\n  ok  6 tests\\e2e\\fetch-estados.spec.ts:70:1 \u203a a produ\u00e7\u00e3o executa uma alternativa e conserva assist\u00eancia depois de recarregar (10.7s)\r\n  ok  7 tests\\e2e\\fetch-estados.spec.ts:77:1 \u203a a fun\u00e7\u00e3o executa offline sem permitir requisi\u00e7\u00e3o remota do aluno (9.4s)\r\n  ok  8 tests\\e2e\\fetch-estados.spec.ts:84:1 \u203a a execu\u00e7\u00e3o e a assist\u00eancia s\u00e3o recuperadas por exporta\u00e7\u00e3o e importa\u00e7\u00e3o (15.5s)\r\n  ok  9 tests\\e2e\\identidade-api.spec.ts:12:1 \u203a a refer\u00eancia da previs\u00e3o executa a falha sem mudar a identidade recebida (1.2s)\r\n  ok 10 tests\\e2e\\identidade-api.spec.ts:20:1 \u203a o diagn\u00f3stico compara dono leitor, editor externo e editor dono em JavaScript real (1.4s)\r\n  ok 11 tests\\e2e\\identidade-api.spec.ts:30:1 \u203a identidade mant\u00e9m a aula, previs\u00e3o, diagn\u00f3stico, teclado e projeto externo (6.5s)\r\n  ok 12 tests\\e2e\\identidade-api.spec.ts:42:1 \u203a uma pol\u00edtica equivalente executa e a solu\u00e7\u00e3o consultada conserva assist\u00eancia (8.6s)\r\n  ok 13 tests\\e2e\\identidade-api.spec.ts:49:1 \u203a a pol\u00edtica respondida conserva axe e a leitura de 220 a 4000 px (12.5s)\r\n  ok 14 tests\\e2e\\identidade-api.spec.ts:55:1 \u203a a pol\u00edtica executa offline e retoma sem autentica\u00e7\u00e3o ou executor remoto (8.4s)\r\n  ok 15 tests\\e2e\\identidade-api.spec.ts:62:1 \u203a exporta\u00e7\u00e3o e importa\u00e7\u00e3o recuperam a pol\u00edtica escrita e sua assist\u00eancia (14.3s)\r\n\r\n  15 passed (2.2m)\r\n"
+    }
+  ],
+  "limitacoes": [
+    "Primeiro lote espec\u00edfico 53/54 n\u00e3o aprovado: muta\u00e7\u00e3o por sort n\u00e3o era recusada.",
+    "O lote unit\u00e1rio completo e o primeiro build pertencem ao head f7bac1f; n\u00e3o reutilizar como aprova\u00e7\u00e3o do novo SHA.",
+    "No head final passaram 54 espec\u00edficos, build e 15 cen\u00e1rios locais; CI completo e revis\u00e3o s\u00e3o gates pr\u00f3prios.",
+    "Projeto aberto tem revis\u00e3o manual; fun\u00e7\u00e3o pura n\u00e3o comprova autentica\u00e7\u00e3o ou servidor."
+  ]
+}
