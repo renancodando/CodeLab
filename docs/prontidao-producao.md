@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Identidade publicada; cache em preparação
+
+A PR #68 está integrada em 63a8e54 com revisão do head e CI de entrada completos, árvore/pais conferidos, deployment READY no projeto/SHA/alias esperados e quinze fluxos públicos aprovados em dois lotes, com alias reconfirmado depois. Seu CI pós-merge permanece acompanhado como resultado próprio. Provas sanitizadas e limitações em continuidade.md/checkpoints.
+
+A entrega de cache aprofunda uma aula existente sem alterar recursos do produto: a atividade executada é seleção em memória, com relógio e falha fornecidos. Não comprova cache HTTP, transporte, espera ou retry. A base publicada não aprova o novo head; exigir seus testes, build, navegador, CI, revisão, árvore e conferência pública antes de integrar/declarar publicado. Preservar visual, mundo/clima, sandbox, limites, lazy loading, offline e progresso sem contas. A edição ainda não está concluída.
+
 ## Fetch conferido; identidade em preparação
 
 A PR #67 está integrada no main 9dd40f0, com CI de entrada e pós-merge integralmente aprovados, revisão do head correto e árvore/pais conferidos. Deployment READY no projeto/SHA/alias esperados; oito fluxos públicos Fetch e dois C++ passaram em dois lotes completos, com alias reconfirmado depois. Os lotes interrompidos anteriores e a intermitência sem causa demonstrada continuam registrados em continuidade.md e nas provas sanitizadas da branch de preservação.

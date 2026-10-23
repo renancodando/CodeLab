@@ -631,23 +631,23 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "Mesmo uma API autorizada precisa lidar com volume, cache e falhas externas, assunto da próxima aula."
 },
   "limites-cache": {
-    "contexto": "Sistemas reais têm latência, limites de requisição e indisponibilidade. Cache e rate limit são mecanismos de controle, não atalhos: precisam de validade, escopo e comportamento claro quando os dados envelhecem.",
-    "modelo": "Pense em cache como uma cópia com relógio e identidade. Antes de reutilizar, você precisa saber de qual recurso ela é, quando foi obtida e por quanto tempo continua aceitável.",
+    "contexto": "Sistemas reais têm latência, limites de requisição e indisponibilidade. Cache mantém uma cópia com contexto e relógio; não transforma uma resposta antiga em informação atual. A cópia precisa pertencer à mesma consulta e ter uma política explícita de uso quando expira. Um resultado vazio, zero, false ou null pode ser conteúdo válido: ausência de entrada e valor dos dados são coisas diferentes.",
+    "modelo": "Pense em três etiquetas: atual, antigo e ausente. Neste modelo em memória, idade é agora menos salvoEm, com os dois tempos em milissegundos. A cópia é atual somente quando idade não é negativa e é menor que ttl. No limite exato ela expirou; ttl zero nunca é atual. A política didática permite recuperar uma cópia expirada somente após uma falha explícita e com etiqueta antigo, sem trocar sua data. Isso não implementa todas as regras de cache HTTP.",
     "passos": [
-      "Defina a chave de cache com todos os fatores que alteram a resposta.",
-      "Estabeleça validade e limite de quantidade armazenada.",
-      "Deduplique requisições simultâneas iguais.",
-      "Respeite sinais de rate limit e use espera apropriada.",
-      "Ao usar dado antigo, identifique explicitamente que ele pode estar desatualizado."
+        "Defina a chave com todos os fatores que alteram a resposta. Se uma busca depende de pessoa e filtro, não use só a rota, um único fator ou uma concatenação ambígua. Strings opacas podem conter o separador escolhido; representar o par com JSON.stringify([pessoa, filtro]) conserva seus limites sem aparar ou mudar os valores.",
+        "Estabeleça validade, unidade e limite de quantidade armazenada. Calcule idade = agora - salvoEm no mesmo relógio; idade < ttl é atual, enquanto igualdade já é expiração. Neste contrato, uma data no futuro é inutilizável, inclusive como fallback. TTL não prova que o dado continua verdadeiro: ele é a validade escolhida para a cópia.",
+        "Deduplique requisições simultâneas iguais guardando a operação pendente por chave. Depois de sucesso ou falha, libere a pendência correspondente, sem apagar uma operação mais nova. Não guarde indefinidamente uma Promise rejeitada. A função selecionarCache só decide sobre uma entrada recebida: não faz rede nem executa essa deduplicação.",
+        "Respeite rate limit e cancelamento. Uma resposta 429 pode trazer Retry-After; avalie o contrato antes de repetir, estabeleça limite de tentativas e permita cancelar a espera. Não faça retry recursivo imediato nem repita efeitos sem uma estratégia de idempotência. O exercício de seleção não implementa espera, jitter, Retry-After ou comunicação HTTP.",
+        "Quando uma consulta falhar, use uma cópia antiga apenas se a política permitir e ela pertencer à mesma chave. Mostre a condição desatualizada e o instante de origem. Não renove salvoEm para esconder a idade nem transforme erro em sucesso vazio. As regras de Cache-Control, Vary, autorização e revalidação HTTP precisam de tratamento próprio na integração."
     ],
     "experimentos": [
-      "Faça duas consultas iguais simultâneas e garanta uma única chamada externa.",
-      "Avance o relógio além da validade e confirme nova consulta.",
-      "Simule 429 e implemente uma espera sem criar tempestade de retries."
+        "Antes de executar, monte uma linha do tempo com salvoEm 1000 e TTL 50: compare 1049, 1050 e um relógio anterior à gravação. Acrescente TTL zero, dados false/null e uma cópia de outra chave; use números fornecidos, sem depender de esperar o relógio real.",
+        "Construa duas consultas com componentes diferentes que colidem ao concatenar com |. Execute a chave corrigida e confira que pessoa e filtro continuam distinguíveis. Depois teste a política com JSON em diferentes ordens de propriedades, sem modificar a entrada nem respostas anteriores.",
+        "No projeto externo, faça duas consultas iguais simultâneas e comprove uma chamada ao serviço. Avance um relógio controlado além do TTL, simule falha e confira o rótulo antigo. Simule 429 com e sem Retry-After, limite as repetições e cancele uma espera; falhas devem liberar a pendência para uma próxima tentativa."
     ],
-    "projeto": "Construa uma camada de cache para clima ou catálogo com TTL, limite de entradas, deduplicação, cancelamento e fallback antigo rotulado.",
+    "projeto": "Construa uma camada de cache para clima ou catálogo com TTL, limite de entradas, deduplicação, cancelamento e fallback antigo rotulado. Especifique a unidade do relógio, a chave por contexto e quando um fallback antigo é aceitável. Separe seleção da cópia, transporte, armazenamento das pendências e renderização. Use relógio controlado e um serviço de teste para conferir prazo exato, TTL zero, dados vazios/falsy, consultas de pessoas diferentes, duas chamadas simultâneas, 429, cancelamento e recuperação após falha. Não sobrescreva uma cópia válida com uma resposta de erro; limite entradas e documente a política de descarte. A função do sandbox executa somente a seleção em memória, sem HTTP, deduplicação, retry ou persistência. Construa a integração externamente e use a rubrica manual do projeto.",
     "conexao": "A trilha seguinte leva essas ideias para C# e .NET, começando pelo ambiente de execução e sistema de tipos."
-  },
+},
   "dotnet": {
     "contexto": "O .NET SDK reúne compilador, runtime, ferramentas de projeto e comandos. C# é a linguagem; .NET é a plataforma que compila e executa o programa. Separar essas ideias ajuda a interpretar erros de build, runtime e dependências.",
     "modelo": "Pense no projeto como uma unidade descrita pelo .csproj. O SDK lê essa descrição, restaura dependências, compila código C# para IL e o runtime executa o resultado conforme o framework alvo.",

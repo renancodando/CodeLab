@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **45 de 137 aulas sem pausas deste catálogo**. As outras 92 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **44 de 137 aulas sem pausas deste catálogo**. As outras 93 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -10,7 +10,7 @@ Há **45 de 137 aulas sem pausas deste catálogo**. As outras 92 têm ao menos u
 | C# | 14 | 6 | 8 |
 | CSS | 15 | 13 | 2 |
 | HTML | 19 | 15 | 4 |
-| JavaScript | 30 | 27 | 3 |
+| JavaScript | 30 | 28 | 2 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 6 | 8 |
 | Integração (transversal) | 15 | 0 | 15 |
@@ -30,7 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `limites-cache` — Rate limits, cache e recuperação | APIs | JavaScript | Original |
 | `dotnet` — SDK, tipos e primeiro programa | C# e .NET 10 | C# | Original |
 | `csharp-controle` — Condições, loops e métodos | C# e .NET 10 | C# | Original |
 | `csharp-objetos` — Classes, objetos, herança e interfaces | C# e .NET 10 | C# | Original |
