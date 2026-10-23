@@ -1,5 +1,11 @@
 # Prontidão de produção
 
+## Fetch conferido; identidade em preparação
+
+A PR #67 está integrada no main 9dd40f0, com CI de entrada e pós-merge integralmente aprovados, revisão do head correto e árvore/pais conferidos. Deployment READY no projeto/SHA/alias esperados; oito fluxos públicos Fetch e dois C++ passaram em dois lotes completos, com alias reconfirmado depois. Os lotes interrompidos anteriores e a intermitência sem causa demonstrada continuam registrados em continuidade.md e nas provas sanitizadas da branch de preservação.
+
+A entrega de identidade aprofunda uma aula existente, sem introduzir contas, runtime ou permissão de rede. A política é executada em memória, sem fingir autenticação ou API real. A publicação da base não aprova as alterações desta branch: seus testes, build, navegador, CI, revisão, integração e conferência do domínio são gates próprios. Não iniciar auditoria final ou declarar a edição concluída.
+
 ## Base publicada e lote de Fetch em validação
 
 A PR #66 está integrada em d6cd7c8, com revisão e CI de entrada integral do head correto, árvore/pais conferidos e deployment READY no SHA/alias esperados. Vinte e três cenários públicos passaram e o alias foi reconfirmado. O pós-merge 39682883479 concluiu aprovado nos seis jobs, sem reutilizar o CI do head. O relatório conserva dois alertas moderados de Vitest/@vitest/mocker, embora o gate high/critical esteja aprovado; o patch 5.0.3 será validado no novo head. A PR #65 também concluiu o pós-merge integral. Resultados locais anteriores com falhas continuam preservados.

@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Política por recurso na aula de identidade
+
+As pausas de identidade-api distinguem entrada controlada pelo solicitante, combinação de requisitos e produção da decisão. Previsão e escolha são conceituais; autorizarNota executa JavaScript puro em QuickJS. Casos conferem dono leitor, dono editor, pessoa externa, ausência de identidade, arquivo, ação desconhecida, papéis/IDs literais, mutação e decisões independentes. Uma regra em memória não autentica nem protege um endpoint real. O projeto aplica a política no servidor e tem revisão manual. Leitura não gera domínio e a solução consultada continua assistência; a preparação antecede as pausas na sessão diária. Resultados e gates próprios ficam em continuidade.md.
+
 ## Fetch: intenção atual, conclusão e evidência
 
 A aula fetch-estados combina previsão do sinal abortado, investigação de um finally antigo e produção da regra de estado a partir de assinatura vazia. O corretor aceita implementações equivalentes e preserva a distinção entre conceitos e JavaScript efetivamente executado: a função pura não faz HTTP nem valida o corpo. Pausas trabalham pedido zero, sucesso vazio, erro, cancelamento esperado e conclusões obsoletas, sem permitir mutação ou sobrescrita entre chamadas. O projeto pede a busca real com controller por intenção, validação, interface acessível e provas em ambas as ordens de conclusão. Leitura não gera domínio, abrir solução registra assistência e a conclusão da função não comprova integração. Gates próprios em continuidade.md.
