@@ -1,0 +1,36 @@
+{
+  "merge": "63a8e54b953e41965c6b4641fc74da296e827afc",
+  "deployment": {
+    "id": "dpl_5qs9ZfE5cQxzo9idrn2jiSxVU24S",
+    "readyState": "READY",
+    "target": "production",
+    "projectId": "prj_XgncY54wYGiSgPH0n1JOol3UFWCn",
+    "gitSource": {
+      "ref": "main",
+      "repoId": 1378803729,
+      "sha": "63a8e54b953e41965c6b4641fc74da296e827afc",
+      "type": "github",
+      "prId": null
+    }
+  },
+  "alias": "code-lab-omega.vercel.app",
+  "fluxos": 15,
+  "lotes": 2,
+  "provas": [
+    {
+      "arquivo": "pr68-identidade-publico-20261023.log",
+      "sha256Original": "38b5e851b187cc63d589025291aa614667fd67770cb2df01b83caa5ac877f674",
+      "textoSanitizado": "\r\nRunning 7 tests using 1 worker\r\n\r\n(node:4264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok 1 tests\\e2e\\identidade-api.spec.ts:12:1 \u203a a refer\u00eancia da previs\u00e3o executa a falha sem mudar a identidade recebida (3.9s)\r\n  ok 2 tests\\e2e\\identidade-api.spec.ts:20:1 \u203a o diagn\u00f3stico compara dono leitor, editor externo e editor dono em JavaScript real (2.2s)\r\n  ok 3 tests\\e2e\\identidade-api.spec.ts:30:1 \u203a identidade mant\u00e9m a aula, previs\u00e3o, diagn\u00f3stico, teclado e projeto externo (14.0s)\r\n  ok 4 tests\\e2e\\identidade-api.spec.ts:42:1 \u203a uma pol\u00edtica equivalente executa e a solu\u00e7\u00e3o consultada conserva assist\u00eancia (15.8s)\r\n  ok 5 tests\\e2e\\identidade-api.spec.ts:49:1 \u203a a pol\u00edtica respondida conserva axe e a leitura de 220 a 4000 px (20.5s)\r\n  ok 6 tests\\e2e\\identidade-api.spec.ts:55:1 \u203a a pol\u00edtica executa offline e retoma sem autentica\u00e7\u00e3o ou executor remoto (12.9s)\r\n  ok 7 tests\\e2e\\identidade-api.spec.ts:62:1 \u203a exporta\u00e7\u00e3o e importa\u00e7\u00e3o recuperam a pol\u00edtica escrita e sua assist\u00eancia (20.4s)\r\n\r\n  7 passed (1.7m)\r\n"
+    },
+    {
+      "arquivo": "pr68-fetch-publico-20261023.log",
+      "sha256Original": "895fa5fc86bcca92a7d7ece59b61e8c18493dbb36b9c0ff2739c2beb0c2b83a7",
+      "textoSanitizado": "\r\nRunning 8 tests using 1 worker\r\n\r\n(node:12980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\n  ok 1 tests\\e2e\\fetch-estados.spec.ts:12:1 \u203a um sinal j\u00e1 abortado rejeita sem iniciar a requisi\u00e7\u00e3o e emite um \u00fanico evento (3.7s)\r\n  ok 2 tests\\e2e\\fetch-estados.spec.ts:22:1 \u203a um motivo personalizado continua sendo o motivo original do sinal (1.8s)\r\n  ok 3 tests\\e2e\\fetch-estados.spec.ts:32:1 \u203a as alternativas de finally s\u00e3o executadas com sobreposi\u00e7\u00e3o, sucesso e rejei\u00e7\u00e3o (2.5s)\r\n  ok 4 tests\\e2e\\fetch-estados.spec.ts:49:1 \u203a a aula conserva cap\u00edtulos e projeto, com previs\u00e3o, diagn\u00f3stico e teclado (12.0s)\r\n  ok 5 tests\\e2e\\fetch-estados.spec.ts:61:1 \u203a a aula respondida mant\u00e9m axe e largura de 220 a 4000 px (25.0s)\r\n  ok 6 tests\\e2e\\fetch-estados.spec.ts:70:1 \u203a a produ\u00e7\u00e3o executa uma alternativa e conserva assist\u00eancia depois de recarregar (20.7s)\r\n  ok 7 tests\\e2e\\fetch-estados.spec.ts:77:1 \u203a a fun\u00e7\u00e3o executa offline sem permitir requisi\u00e7\u00e3o remota do aluno (15.3s)\r\n  ok 8 tests\\e2e\\fetch-estados.spec.ts:84:1 \u203a a execu\u00e7\u00e3o e a assist\u00eancia s\u00e3o recuperadas por exporta\u00e7\u00e3o e importa\u00e7\u00e3o (47.5s)\r\n\r\n  8 passed (2.3m)\r\n"
+    }
+  ],
+  "limites": [
+    "Refer\u00eancias JavaScript em mem\u00f3ria n\u00e3o comprovam autentica\u00e7\u00e3o ou servidor.",
+    "Projetos abertos permanecem com revis\u00e3o manual.",
+    "Confer\u00eancia p\u00fablica n\u00e3o substitui acompanhamento pr\u00f3prio do CI p\u00f3s-merge."
+  ]
+}
