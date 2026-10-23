@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Seleção de cache com idade explícita
+
+limites-cache pratica limite temporal, composição da chave e decisão sobre uma cópia. Previsão e escolha continuam conceituais. A produção executa JavaScript puro e preserva JSON, inclusive valores falsy, sem renovar uma data ou esconder expiração. A comparação estrutural aceita cópias equivalentes; cenários conferem mutação e resultados anteriores. Relógio e falha são entradas controladas, sem rede ou espera real. Deduplicação, cancelamento, rate limit e HTTP continuam como integração externa e revisão manual do projeto. Leitura não gera domínio, consultar solução segue assistência e a preparação antecede as pausas. Gates/resultados em continuidade.md.
+
 ## Política por recurso na aula de identidade
 
 As pausas de identidade-api distinguem entrada controlada pelo solicitante, combinação de requisitos e produção da decisão. Previsão e escolha são conceituais; autorizarNota executa JavaScript puro em QuickJS. Casos conferem dono leitor, dono editor, pessoa externa, ausência de identidade, arquivo, ação desconhecida, papéis/IDs literais, mutação e decisões independentes. Uma regra em memória não autentica nem protege um endpoint real. O projeto aplica a política no servidor e tem revisão manual. Leitura não gera domínio e a solução consultada continua assistência; a preparação antecede as pausas na sessão diária. Resultados e gates próprios ficam em continuidade.md.

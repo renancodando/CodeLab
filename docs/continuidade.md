@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## Cache: validade, chave e recuperação em preparação
+
+Base publicada: main 63a8e54b953e41965c6b4641fc74da296e827afc, PR #68 integrada com árvore 60e46b2dfab7c5cad0744ec8832459e539cd1b28 e pais conferidos. CI de entrada 40019723894 aprovado nos dez jobs: 1.287 testes/77 arquivos, 194 exemplos externos, 269 fluxos e auditoria zero em todos os contadores; revisão do head 1c81772 sem findings/threads pendentes. Deployment dpl_5qs9ZfE5cQxzo9idrn2jiSxVU24S READY/production no projeto/SHA/alias esperados. Sete fluxos públicos identidade em 1,7 min e oito Fetch em 2,3 min passaram em dois lotes completos, com alias reconfirmado depois. Provas sanitizadas/hashes e checkpoint na branch de preservação. O pós-merge 40022702203 é acompanhado separadamente; resolver eventual falha antes de integrar a entrega seguinte.
+
+A aula existente limites-cache conserva doze capítulos, deduplicação, rate limit, cancelamento e projeto. Recebe previsão de TTL com relógio fornecido, diagnóstico de chave ambígua e produção da seleção atual/antigo/ausente. Duas pausas são conceituais com referências JavaScript nativas executadas nos testes; selecionarCache roda no sandbox e somente decide sobre uma entrada recebida. Não implementa cache HTTP, rede, espera, deduplicação, Retry-After, retry ou persistência. Esses pontos continuam no projeto externo/manual, sem alegação de conclusão de toda a aula.
+
+O corretor compara JSON por estrutura e aceita cópias com outra ordem de propriedades e uma constante ausente congelada. Confere dados falsy/null, chave vazia/literal, limite exato e TTL zero, relógio anterior à gravação, fallback restrito à falha explícita, outra chave, mutação, listas esparsas indevidas e independência entre respostas. Passaram 55 testes específicos em dois arquivos, incluindo identidade, em 9,45 s. Métricas/fila são geradas; a cobertura do checkout não é publicação. Exigir suíte completa, build, sete novos cenários e regressões, CI/revisão do head verdadeiro, árvore/base, integração, deployment/SHA/alias e fluxos públicos próprios. A edição segue em andamento; a próxima lacuna original é dotnet.
+
+Referências: [cache HTTP](https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2) e [429](https://www.rfc-editor.org/rfc/rfc6585.html#section-4). O modelo didático em memória usa uma política explícita de fallback; não afirma implementar a semântica completa dessas especificações.
+
 ## Identidade e autorização: prática em preparação
 
 No head f7bac1f, a suíte local completa passou em 1.287 testes/77 arquivos (241,70 s), e o build aprovou strict, 30 consultas meteorológicas concorrentes, Vite em 3m43, 157 páginas e offline 25d8e4ae1f48c0652270 (38 essenciais/6 opcionais). A revisão pedagógica seguinte alinhou o título do diagnóstico com a ação de editar que o programa verifica. Essa correção de texto não reutiliza a aprovação do SHA anterior: repetir build/fluxos e exigir CI/revisão do novo head. Os sete cenários novos e oito regressões Fetch ainda precisam rodar no navegador local.

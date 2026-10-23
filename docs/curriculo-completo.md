@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: cache com contexto e idade
+
+A aula limites-cache conserva seus capítulos e projeto e passa a praticar TTL, chaves e recuperação antiga rotulada. A função executada decide sobre dados em memória; não promete transporte, deduplicação ou retry executados. Zero/false/null, prazo exato, tempo futuro, chave de outra consulta, cópias JSON, entradas preservadas e chamadas independentes sustentam o corretor. O projeto mantém integração de limites, espera cancelável e serviço de teste, com rubrica manual. A pausa não conclui a aula ou linguagem.
+
+Referências: [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2) e [RFC 6585](https://www.rfc-editor.org/rfc/rfc6585.html#section-4). O contrato do exercício é um recorte próprio de cache em memória, não uma implementação completa do cache HTTP. Métricas/lacunas são geradas; publicação depende dos gates de continuidade.md.
+
 ## Aprofundamento incremental: identidade e política por recurso
 
 identidade-api conserva seus capítulos e projeto. A pessoa acompanha a origem dos dados, encontra uma concessão indevida entre proprietário e editor e implementa a política explícita de notas privadas. A referência distingue autenticação de autorização; a atividade executada cobre uma decisão pura, sem credenciais, transporte, armazenamento ou alegação de API segura. Tabela de decisões, ações desconhecidas, recursos arquivados, entradas preservadas e chamadas independentes sustentam o corretor. Integração e revisão do projeto permanecem externas/manuais. Uma pausa não conclui a aula ou linguagem.
