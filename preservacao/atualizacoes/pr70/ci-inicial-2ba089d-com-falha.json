@@ -1,0 +1,98 @@
+{
+  "pr": 70,
+  "head": "2ba089d9da4a73e6cc193237c1b9b797906a7e9d",
+  "workflow": 40030039182,
+  "conclusao": "failure",
+  "jobs": [
+    {
+      "id": 120675751520,
+      "name": "Testes e compilação",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T21:55:11.8841857Z  Test Files  79 passed (79)",
+        "2026-10-23T21:55:11.8849347Z       Tests  1359 passed (1359)",
+        "2026-10-23T21:56:34.0691962Z 194 exemplos e soluções externos compilados/executados.",
+        "2026-10-23T21:56:34.0701526Z 36 cenários .NET 10 conferidos para tipos, divisão, dependências e diagnósticos reais."
+      ]
+    },
+    {
+      "id": 120675751777,
+      "name": "Auditoria de dependências",
+      "conclusion": "success",
+      "linhas": []
+    },
+    {
+      "id": 120676866647,
+      "name": "Navegador (1/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T22:10:51.8547947Z   39 passed (12.9m)"
+      ]
+    },
+    {
+      "id": 120676866682,
+      "name": "Navegador (8/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T22:15:13.8199449Z   32 passed (17.0m)"
+      ]
+    },
+    {
+      "id": 120676866686,
+      "name": "Navegador (3/8)",
+      "conclusion": "failure",
+      "linhas": [
+        "2026-10-23T22:08:41.4831722Z     Test timeout of 60000ms exceeded.",
+        "2026-10-23T22:08:41.4843064Z   1 failed",
+        "2026-10-23T22:08:41.4844799Z   34 passed (10.7m)"
+      ]
+    },
+    {
+      "id": 120676866714,
+      "name": "Navegador (2/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T22:06:49.5065355Z   34 passed (8.9m)"
+      ]
+    },
+    {
+      "id": 120676866774,
+      "name": "Navegador (5/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T22:05:10.6070460Z   36 passed (6.9m)"
+      ]
+    },
+    {
+      "id": 120676866782,
+      "name": "Navegador (6/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T22:14:57.0056603Z   40 passed (17.0m)"
+      ]
+    },
+    {
+      "id": 120676866796,
+      "name": "Navegador (4/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T22:08:00.6136128Z   33 passed (10.1m)"
+      ]
+    },
+    {
+      "id": 120676866810,
+      "name": "Navegador (7/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-23T22:12:04.0836145Z   32 passed (14.0m)"
+      ]
+    }
+  ],
+  "falha": {
+    "teste": "Git conserva os três estados, assistência, backup e retomada offline",
+    "limiteMs": 60000,
+    "artefatoPublico": "https://github.com/renancodando/CodeLab/actions/runs/40030039182/artifacts/12535705817",
+    "observacao": "O trace alcança a conferência do arquivo depois da restauração, mas registra estouro do orçamento global. Não comprova causa da lentidão ou perda de dados.",
+    "acao": "Separar as verificações de larguras extremas em cenário próprio, preservando o fluxo completo de backup/retomada e todos os limites. Exigir novo CI completo e revisão no novo head."
+  }
+}
