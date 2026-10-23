@@ -1,5 +1,11 @@
 # Currículo do zero à especialização
 
+## Aprofundamento incremental: identidade e política por recurso
+
+identidade-api conserva seus capítulos e projeto. A pessoa acompanha a origem dos dados, encontra uma concessão indevida entre proprietário e editor e implementa a política explícita de notas privadas. A referência distingue autenticação de autorização; a atividade executada cobre uma decisão pura, sem credenciais, transporte, armazenamento ou alegação de API segura. Tabela de decisões, ações desconhecidas, recursos arquivados, entradas preservadas e chamadas independentes sustentam o corretor. Integração e revisão do projeto permanecem externas/manuais. Uma pausa não conclui a aula ou linguagem.
+
+Referência: [Authorization Cheat Sheet da OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html). A política didática é específica desta aplicação; os gates e as limitações observadas estão em continuidade.md, e contagens/lacunas são geradas.
+
 ## Aprofundamento incremental: estados e cancelamento de Fetch
 
 A aula existente fetch-estados mantém capítulos e busca de cidades. O aluno prevê o sinal terminal e o evento único de abort, diagnostica uma conclusão antiga e produz a transformação de estado sem apagar dados diante de erro/cancelamento esperado. Cancelar trabalho e proteger a tela por identidade são responsabilidades distintas. As referências de previsão usam APIs nativas; a regra do aluno executa em QuickJS sem rede. A integração do projeto exige transporte, contrato do corpo, renderização segura, teclado e análise da ordem de conclusão. Uma pausa não encerra a aula ou linguagem.

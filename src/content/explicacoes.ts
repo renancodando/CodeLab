@@ -613,23 +613,23 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "Quando chamadas passam a depender de identidade e permissões, entra a distinção entre autenticação e autorização."
   },
   "identidade-api": {
-    "contexto": "Autenticação responde quem é a identidade; autorização responde o que essa identidade pode fazer. Confundir as duas produz APIs que aceitam ações apenas porque alguém conseguiu provar quem é.",
-    "modelo": "Imagine duas catracas. A primeira valida uma credencial e associa uma identidade à requisição. A segunda compara essa identidade, o recurso e a ação com uma política de acesso.",
+    "contexto": "Autenticação verifica a identidade apresentada; autorização decide uma ação sobre um recurso. Na API de notas privadas, saber quem chegou não permite devolver qualquer nota. O corpo, a URL e a interface pertencem à entrada do solicitante: informar usuarioId não troca a identidade que o servidor verificou.",
+    "modelo": "Separe três coisas na mesa: identidade verificada, nota obtida do armazenamento e ação pedida. O dono da nota pode consultar seu conteúdo. Neste recorte, alterar também exige papel editor e nota não arquivada; ler uma nota arquivada continua permitido ao dono. Papéis e vínculos precisam vir de dados confiáveis do servidor, não de uma cópia enviada no corpo. Não existe liberação implícita de admin nesta política didática.",
     "passos": [
-      "Defina quais rotas realmente precisam de identidade.",
-      "Valide credenciais no servidor, nunca por confiança em campos enviados pelo cliente.",
-      "Associe identidade autenticada à requisição de forma verificável.",
-      "Aplique autorização por ação e recurso.",
-      "Evite expor segredos em logs, URLs ou armazenamento inadequado do cliente."
+        "Defina quais rotas são públicas e quais exigem identidade. Na prática desta aula, identidade já foi verificada ou é null; não estamos implementando senhas, sessões, assinatura de tokens ou um provedor de autenticação.",
+        "Valide credenciais no servidor e separe a identidade verificada dos campos do corpo. No programa de previsão, mudar corpo.usuarioId não altera identidade.id, mas o código defeituoso pode usar a origem errada e expor a nota.",
+        "Expresse a política como uma tabela de decisões: sem identidade nega; pessoa diferente do dono nega; o dono lê; o dono com editor altera uma nota ativa. Um papel isolado não concede acesso à nota de outra pessoa. Compare o dono sem papel com o editor de outra pessoa antes de escolher entre && e ||.",
+        "Aplique a autorização por ação e recurso antes de devolver dados ou persistir mudanças. Na função autorizarNota, cada chamada retorna booleano, sem mudar entradas. Ações desconhecidas são negadas, e identificadores como 01 e 1 continuam diferentes. Essa função pura exercita a regra; executá-la no navegador não protege um servidor real.",
+        "Evite segredos em logs, URLs e mensagens de erro. Teste também requisições construídas fora da interface: ocultar um botão pode orientar a pessoa, mas não impede que alguém envie a ação diretamente. Não use a resposta de uma nota privada como cache compartilhado entre identidades."
     ],
     "experimentos": [
-      "Compare uma requisição não autenticada, autenticada sem permissão e autenticada com permissão.",
-      "Tente enviar manualmente um id de usuário diferente e confirme que o servidor usa a identidade autenticada, não o campo do corpo.",
-      "Revise logs e mensagens de erro para garantir que tokens não aparecem."
+        "Preveja a leitura com corpo.usuarioId forjado e registre separadamente o retorno e a identidade que permanece verificada. Depois confronte uma função que verifica propriedade com outra que confia somente no corpo; os modelos rodam em memória, sem autenticação ou HTTP reais.",
+        "Monte a tabela de leitura e alteração para pessoa ausente, dono leitor, dono editor e editor de outra pessoa, com a nota ativa e arquivada. Acrescente ação excluir, papel EDITOR e IDs com espaços: somente as concessões explícitas da política podem passar.",
+        "Execute a política com dados diferentes em chamadas independentes. Preserve os objetos e papéis recebidos; altere uma entrada como chamador entre chamadas e confira que a próxima decisão considera o novo valor. Na integração externa, repita as mesmas regras pelos endpoints, com duas identidades de teste."
     ],
-    "projeto": "Modele uma API de anotações privadas em que cada pessoa só pode consultar e alterar os próprios registros, documentando os pontos de autenticação e autorização.",
+    "projeto": "Modele uma API de anotações privadas em que cada pessoa só consulta e altera seus próprios registros. Escreva requisitos, tabela de decisões e testes antes dos endpoints. Implemente separadamente a política pura, a autenticação no servidor e sua aplicação antes da leitura ou gravação. Inclua nota arquivada, dono sem editor, editor de outra pessoa, ação desconhecida e corpo com id forjado; uma recusa deve preservar os dados. Defina o contrato HTTP e como evitar revelar detalhes privados, documente as decisões e revise logs sem credenciais. A função do sandbox cobre somente a política em memória: não comprova autenticação, HTTP, concorrência, persistência ou segurança da API inteira. O projeto é construído externamente e tem revisão manual; o sandbox desta aula não oferece rede e o CodeLab permanece sem contas.",
     "conexao": "Mesmo uma API autorizada precisa lidar com volume, cache e falhas externas, assunto da próxima aula."
-  },
+},
   "limites-cache": {
     "contexto": "Sistemas reais têm latência, limites de requisição e indisponibilidade. Cache e rate limit são mecanismos de controle, não atalhos: precisam de validade, escopo e comportamento claro quando os dados envelhecem.",
     "modelo": "Pense em cache como uma cópia com relógio e identidade. Antes de reutilizar, você precisa saber de qual recurso ela é, quando foi obtida e por quanto tempo continua aceitável.",
