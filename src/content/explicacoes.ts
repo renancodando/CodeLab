@@ -649,23 +649,23 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "A trilha seguinte leva essas ideias para C# e .NET, começando pelo ambiente de execução e sistema de tipos."
 },
   "dotnet": {
-    "contexto": "O .NET SDK reúne compilador, runtime, ferramentas de projeto e comandos. C# é a linguagem; .NET é a plataforma que compila e executa o programa. Separar essas ideias ajuda a interpretar erros de build, runtime e dependências.",
-    "modelo": "Pense no projeto como uma unidade descrita pelo .csproj. O SDK lê essa descrição, restaura dependências, compila código C# para IL e o runtime executa o resultado conforme o framework alvo.",
+    "contexto": "O .NET SDK reúne compilador, runtime e ferramentas de projeto. C# é a linguagem; .NET é a plataforma. Comece conferindo dotnet --info e o TargetFramework net10.0 do .csproj. Um SDK capaz de compilar o projeto não significa que um trecho com erro de tipo pode ser executado: restauração, compilação e execução são etapas distintas.",
+    "modelo": "A declaração associa um nome a um tipo conhecido pelo compilador. var pede inferência a partir do inicializador, sem adiar a escolha para uma atribuição posterior: var pontos = 3 produz int; pontos = \"3\" não compila. Na divisão, os tipos dos operandos decidem a operação antes do destino: 5 / 2 é 2; atribuir esse resultado a decimal produz 2, não 2.5. Com 5 / 2m, um operando já é decimal e a fração é preservada. decimal é apropriado para muitos cálculos decimais monetários, mas não substitui definir unidade, limites e arredondamento quando o domínio exigir.",
     "passos": [
-      "Confirme versão do SDK e TargetFramework do projeto.",
-      "Entenda onde o ponto de entrada começa no modelo moderno de top-level statements.",
-      "Use tipos adequados e deixe o compilador ajudar a encontrar combinações inválidas.",
-      "Compile frequentemente para reduzir o conjunto de mudanças entre erros.",
-      "Diferencie erro de restauração, compilação e execução."
+        "Confira o SDK com dotnet --info e crie um console com dotnet new console -n MeuPrograma -f net10.0. Inspecione o .csproj antes de alterar Program.cs.",
+        "Identifique o ponto de entrada em top-level statements: neste exemplo, as instruções de Program.cs rodam na ordem escrita. Uma variável local só pode ser lida depois de declarada.",
+        "Marque o tipo e a unidade de cada valor. 725 centavos são inteiros; centavos / 100m calcula o preço decimal em reais. centavos / 100 calcula primeiro um inteiro truncado e só depois pode ser convertido.",
+        "Preveja as saídas antes de dotnet build. Se o build falhar, leia o primeiro diagnóstico e a linha: um literal 7.25 é double; 7.25m é decimal. Não houve resultado do programa se a compilação falhou.",
+        "Depois de compilar, execute dotnet run --project MeuPrograma. Para comparar saídas numéricas, ToString(\"F2\", System.Globalization.CultureInfo.InvariantCulture) fixa duas casas e ponto; formatação não corrige um cálculo errado nem define a política de arredondamento do domínio."
     ],
     "experimentos": [
-      "Execute dotnet --info e compare com o TargetFramework.",
-      "Troque int por string em um cálculo e leia a mensagem do compilador sem corrigi-la de imediato.",
-      "Crie um projeto console mínimo e observe arquivos gerados por build."
+        "Compare 5 / 2, (decimal)(5 / 2), (decimal)5 / 2 e 5 / 2m no console .NET 10. Escreva os resultados antes de executar e explique em qual momento cada conversão acontece.",
+        "Declare var preco = 7.25 e tente atribuir preco * 4 a decimal. Leia CS0266 no build. Troque apenas o inicializador para 7.25m, compile novamente e compare com trocar o preço por um inteiro: remover o erro não basta se o valor mudou.",
+        "Reordene declarações independentes sem alterar o resultado. Depois coloque uma leitura antes da declaração e confirme o diagnóstico do compilador. Varie o preço em centavos entre 0, 1, 99, 100 e 725 e a quantidade entre 0 e 4; compare com a conta manual, sem depender da cultura para o separador."
     ],
-    "projeto": "Crie um console .NET 10 que recebe dados simples, valida, calcula um resultado e possui uma função separada para a regra principal.",
-    "conexao": "Com o ambiente entendido, a próxima aula usa condições, loops e métodos na sintaxe e no sistema de tipos do C#."
-  },
+    "projeto": "Crie um console .NET 10 que recebe dados simples, valida, calcula um resultado e possui uma função separada para a regra principal. Comece com valores fixos: mantenha preço em centavos e quantidade inteira, converta para decimal antes de dividir e declare a saída esperada para zero itens e para um item de um centavo. Depois introduza entrada textual, definindo explicitamente o formato aceito e o comportamento para texto inválido; não confunda texto com número nem uma exceção de entrada com erro de compilação. Entregue .csproj, Program.cs e instruções de build/run, junto de casos de teste e uma explicação do erro de tipo corrigido. A integração com leitura e validação é construída fora das pausas e tem revisão manual; a reconstrução conceitual não comprova esse projeto executado.",
+    "conexao": "A próxima aula aplica condições, loops e métodos a entradas e regras explícitas. Aqui o critério é explicar o tipo de cada expressão, prever quando ocorre a divisão, localizar a etapa do erro e reconstruir dependências sem copiar uma única ordem. As pausas funcionam offline como decisões conceituais; os verificadores compilam e executam referências em .NET 10, mas não fingem compilar código do aluno no navegador."
+},
   "csharp-controle": {
     "contexto": "C# oferece estruturas de controle familiares, mas o compilador e os tipos tornam muitas intenções mais explícitas. Métodos ajudam a isolar regras e pattern matching pode tornar decisões sobre dados mais legíveis.",
     "modelo": "Acompanhe estado e fluxo como na lógica geral, mas use assinaturas de métodos para declarar contrato. O tipo de retorno e dos parâmetros já elimina várias classes de ambiguidade antes da execução.",

@@ -14,6 +14,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "cs-dotnet-prever-divisao":{"accepted":["2\n2.0\n2.5"],"solution":"2\n2.0\n2.5","failure":"Compare o tipo de quociente com o tipo de antes. Transformar o inteiro já calculado em decimal não recupera uma fração que deixou de existir na divisão."},
+ "cs-dotnet-diagnosticar-inferencia":{"accepted":["decimal"],"solution":"decimal preco = 7.25m;\ndecimal total = preco * 4;\nConsole.WriteLine(total.ToString(\"F2\", System.Globalization.CultureInfo.InvariantCulture));","failure":"Uma declaração pode remover o erro e ainda mudar o resultado pedido. Verifique o tipo inferido, o sufixo do literal e se uma divisão inteira já descartou centavos antes da conversão."},
+ "cs-dotnet-reconstruir-total":{"accepted":[],"order":["centavos","preco","quantidade","saida"],"solution":"int centavos = 725;\ndecimal preco = centavos / 100m;\nint quantidade = 4;\nConsole.WriteLine((preco * quantidade).ToString(\"F2\", System.Globalization.CultureInfo.InvariantCulture));","failure":"Procure o primeiro nome usado antes de ser declarado. O preço precisa dos centavos, e a saída precisa do preço e da quantidade; esta última declaração pode mudar de posição sem alterar o cálculo."},
  "js-cache-prever-validade":{"accepted":["true\nfalse\nfalse"],"solution":"true\nfalse\nfalse","failure":"Compare idade e TTL sem arredondar ou trocar unidades. O teste também exige que a idade não seja negativa; nenhum relógio real é consultado pelo programa."},
  "js-cache-distinguir-chaves":{"accepted":["par"],"solution":"function chaveBusca(pessoa, filtro) {\n  return JSON.stringify([pessoa, filtro]);\n}\nconsole.log(chaveBusca(\"ana\", \"café|chá\") === chaveBusca(\"ana|café\", \"chá\"));","failure":"Os dois pares do programa são diferentes, mas uma concatenação ambígua pode produzir a mesma sequência. A chave precisa preservar os dois componentes e seus limites."},
  "js-identidade-prever-corpo":{"accepted":["Nota de Ana\nbia"],"failure":"A condição usa um campo do corpo enviado pelo solicitante. Acompanhe o retorno efetivo da função e, separadamente, o id que continua no objeto identidade.","solution":"Nota de Ana\nbia"},
@@ -454,7 +457,8 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    if(Array.isArray(answer))submitted=answer.map(normalized);
    else submitted=normalized(answer).split('\n').map(normalized).filter(Boolean);
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
-   passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
+   if(id==='cs-dotnet-reconstruir-total')passed=submitted.length===4&&new Set(submitted).size===4&&submitted.every(linha=>concept.order!.includes(linha))&&submitted.indexOf('centavos')<submitted.indexOf('preco')&&submitted.indexOf('preco')<submitted.indexOf('saida')&&submitted.indexOf('quantidade')<submitted.indexOf('saida');
+   else passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
   }else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
   else if(id==='cs-copiar-linhas-array')passed=typeof answer==='string'&&/^linha\s*\.\s*ToArray\s*(?:<\s*(?:int|System\s*\.\s*Int32)\s*>)?\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));

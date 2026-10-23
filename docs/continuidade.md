@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Prática de cache publicada; fundamentos .NET em validação
+
+A PR #69 está integrada em e08e814, com CI de entrada completo 40025303133 (1.319 testes/78 arquivos, 194 externos, 276 fluxos, dez jobs e auditoria zerada), revisão do head ff04212 sem apontamentos e árvore/pais conferidos. Deployment READY, SHA e domínio conferidos antes/depois de sete fluxos públicos de cache e sete de identidade, em dois lotes completos aprovados. O pós-merge 40027848561 é uma execução independente; conferir sua conclusão real. O checkpoint remoto omite metadados internos do provedor.
+
+A próxima entrega trabalha a aula existente dotnet: três pausas conceituais sobre tipos e dependências, ordens equivalentes, referência executada e diagnósticos de compilação .NET 10. Testes, build, revisão e CI desta entrega são gates próprios; não reutilizar a aprovação da base. Métricas e fila são geradas. Não iniciar auditoria final nem declarar a edição concluída.
+
 ## Cache: validade, chave e recuperação em preparação
 
 Base publicada: main 63a8e54b953e41965c6b4641fc74da296e827afc, PR #68 integrada com árvore 60e46b2dfab7c5cad0744ec8832459e539cd1b28 e pais conferidos. CI de entrada 40019723894 aprovado nos dez jobs: 1.287 testes/77 arquivos, 194 exemplos externos, 269 fluxos e auditoria zero em todos os contadores; revisão do head 1c81772 sem findings/threads pendentes. Deployment dpl_5qs9ZfE5cQxzo9idrn2jiSxVU24S READY/production no projeto/SHA/alias esperados. Sete fluxos públicos identidade em 1,7 min e oito Fetch em 2,3 min passaram em dois lotes completos, com alias reconfirmado depois. Provas sanitizadas/hashes e checkpoint na branch de preservação. O pós-merge 40022702203 é acompanhado separadamente; resolver eventual falha antes de integrar a entrega seguinte.
