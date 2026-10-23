@@ -1,0 +1,110 @@
+{
+  "pr": 69,
+  "merge": "e08e8143f90ba961cd85e5330090a6677ce871a2",
+  "workflow": 40027848561,
+  "conclusao": "success",
+  "jobs": [
+    {
+      "id": 120668417375,
+      "name": "Auditoria de dependências",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:35:24.6513899Z found 0 vulnerabilities"
+      ],
+      "auditoriaZerada": true
+    },
+    {
+      "id": 120668417542,
+      "name": "Testes e compilação",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:36:01.0734305Z found 0 vulnerabilities",
+        "2026-10-23T21:36:21.3526461Z  Test Files  78 passed (78)",
+        "2026-10-23T21:36:21.3537986Z       Tests  1319 passed (1319)",
+        "2026-10-23T21:37:43.2146143Z 194 exemplos e soluções externos compilados/executados.",
+        "2026-10-23T21:38:09.1613322Z Aplicação e conteúdo offline preparados: 38 recursos locais e 6 opcionais sob demanda; versão 3fdcdf1a5a09391ee6be."
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653604,
+      "name": "Navegador (3/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:39.5483894Z found 0 vulnerabilities",
+        "2026-10-23T21:47:45.2377750Z   35 passed (8.6m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653646,
+      "name": "Navegador (8/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:42.3972117Z found 0 vulnerabilities",
+        "2026-10-23T21:52:14.2368934Z   32 passed (13.1m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653706,
+      "name": "Navegador (4/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:48.8029090Z found 0 vulnerabilities",
+        "2026-10-23T21:46:09.9671151Z   35 passed (6.8m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653713,
+      "name": "Navegador (2/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:41.3194224Z found 0 vulnerabilities",
+        "2026-10-23T21:43:23.8746292Z   38 passed (4.2m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653716,
+      "name": "Navegador (5/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:44.6471995Z found 0 vulnerabilities",
+        "2026-10-23T21:43:49.7835501Z   32 passed (4.5m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653725,
+      "name": "Navegador (7/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:43.3754901Z found 0 vulnerabilities",
+        "2026-10-23T21:54:07.3638775Z   32 passed (14.8m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653742,
+      "name": "Navegador (1/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:38.8867205Z found 0 vulnerabilities",
+        "2026-10-23T21:48:20.8998861Z   35 passed (9.2m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120669653808,
+      "name": "Navegador (6/8)",
+      "conclusion": "success",
+      "lines": [
+        "2026-10-23T21:38:41.1531447Z found 0 vulnerabilities",
+        "2026-10-23T21:50:30.1657434Z   37 passed (11.3m)"
+      ],
+      "auditoriaZerada": false
+    }
+  ]
+}
