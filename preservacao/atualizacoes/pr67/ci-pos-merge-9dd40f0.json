@@ -1,0 +1,122 @@
+{
+  "sha": "9dd40f0635e6a8445f3db10500935a0a97809d68",
+  "run": 39850541576,
+  "conclusao": "success",
+  "jobs": [
+    {
+      "id": 120075183591,
+      "nome": "Testes e compilação",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:38:05Z",
+      "concluido": "2026-10-22T20:41:01Z",
+      "resumo": [
+        "2026-10-22T20:38:45.5031446Z found 0 vulnerabilities",
+        "2026-10-22T20:39:04.5936530Z  Test Files  76 passed (76)",
+        "2026-10-22T20:39:04.5946541Z       Tests  1260 passed (1260)",
+        "2026-10-22T20:40:22.9676297Z 194 exemplos e soluções externos compilados/executados.",
+        "2026-10-22T20:40:48.2184517Z Aplicação e conteúdo offline preparados: 38 recursos locais e 6 opcionais sob demanda; versão 92c1dc58ff9a7f9d6421."
+      ]
+    },
+    {
+      "id": 120075184190,
+      "nome": "Auditoria de dependências",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:38:05Z",
+      "concluido": "2026-10-22T20:38:18Z",
+      "resumo": [
+        "2026-10-22T20:38:13.7141211Z found 0 vulnerabilities"
+      ]
+    },
+    {
+      "id": 120076670124,
+      "nome": "Navegador (4/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:03Z",
+      "concluido": "2026-10-22T20:48:47Z",
+      "resumo": [
+        "2026-10-22T20:41:23.6513515Z found 0 vulnerabilities",
+        "2026-10-22T20:48:44.0315632Z   37 passed (6.6m)"
+      ]
+    },
+    {
+      "id": 120076670138,
+      "nome": "Navegador (5/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:03Z",
+      "concluido": "2026-10-22T20:48:12Z",
+      "resumo": [
+        "2026-10-22T20:41:23.7031435Z found 0 vulnerabilities",
+        "2026-10-22T20:48:09.0697257Z   29 passed (6.2m)"
+      ]
+    },
+    {
+      "id": 120076670180,
+      "nome": "Navegador (2/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:03Z",
+      "concluido": "2026-10-22T20:45:56Z",
+      "resumo": [
+        "2026-10-22T20:41:23.1479165Z found 0 vulnerabilities",
+        "2026-10-22T20:45:52.1686947Z   34 passed (3.9m)"
+      ]
+    },
+    {
+      "id": 120076670215,
+      "nome": "Navegador (7/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:03Z",
+      "concluido": "2026-10-22T20:50:55Z",
+      "resumo": [
+        "2026-10-22T20:41:23.7838583Z found 0 vulnerabilities",
+        "2026-10-22T20:50:50.6206828Z   32 passed (9.0m)"
+      ]
+    },
+    {
+      "id": 120076670275,
+      "nome": "Navegador (3/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:03Z",
+      "concluido": "2026-10-22T20:43:35Z",
+      "resumo": [
+        "2026-10-22T20:41:21.6575881Z found 0 vulnerabilities",
+        "2026-10-22T20:43:32.4320216Z   30 passed (1.7m)"
+      ]
+    },
+    {
+      "id": 120076670309,
+      "nome": "Navegador (1/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:03Z",
+      "concluido": "2026-10-22T20:48:53Z",
+      "resumo": [
+        "2026-10-22T20:41:26.7055599Z found 0 vulnerabilities",
+        "2026-10-22T20:48:49.3452475Z   35 passed (6.9m)"
+      ]
+    },
+    {
+      "id": 120076670321,
+      "nome": "Navegador (8/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:04Z",
+      "concluido": "2026-10-22T20:59:25Z",
+      "resumo": [
+        "2026-10-22T20:41:26.4581128Z found 0 vulnerabilities",
+        "2026-10-22T20:59:19.9336491Z   32 passed (17.4m)"
+      ]
+    },
+    {
+      "id": 120076670401,
+      "nome": "Navegador (6/8)",
+      "conclusao": "success",
+      "iniciado": "2026-10-22T20:41:03Z",
+      "concluido": "2026-10-22T20:53:48Z",
+      "resumo": [
+        "2026-10-22T20:41:21.7713325Z found 0 vulnerabilities",
+        "2026-10-22T20:53:45.8747416Z   33 passed (12.0m)"
+      ]
+    }
+  ],
+  "limitacoes": [
+    "Pós-merge é resultado próprio; não substitui conferência do domínio e cenários públicos."
+  ]
+}
