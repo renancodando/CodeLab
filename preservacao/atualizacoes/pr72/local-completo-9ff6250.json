@@ -1,0 +1,48 @@
+{
+  "head": "9ff6250c7b147f25f8690cd20f881a666f3a9be2",
+  "merge": "6a912cdf369f3208529b2e8c6fa532d514327d56",
+  "tree": "f70104fb9b5dcc2ecb081358d46096e422037d94",
+  "local": {
+    "unitTests": 52,
+    "unitFiles": 2,
+    "dotnetScenarios": 15,
+    "nativeExitCode": 0,
+    "build": "success",
+    "buildDuration": "10m 2s",
+    "pages": 157,
+    "offline": {
+      "essential": 38,
+      "optional": 6,
+      "version": "2bdaab815817e92c2bda"
+    },
+    "browserTests": 10,
+    "browserDuration": "3.1m",
+    "browserExitCode": 0,
+    "temporaryActivityRequestReleased": true,
+    "sourceChanged": false
+  },
+  "previousFailures": {
+    "nativeTimeouts": 2,
+    "nativeCause": "não comprovada",
+    "browserInitial": {
+      "passed": 9,
+      "failed": 1,
+      "systemSuspensionConfirmed": true,
+      "rawTrace": "somente local"
+    }
+  },
+  "ci": {
+    "run": 40121389848,
+    "conclusion": "success",
+    "jobs": 10,
+    "unitTests": 1411,
+    "browserTests": 292
+  },
+  "review": {
+    "sha": "9ff6250c7b147f25f8690cd20f881a666f3a9be2",
+    "completed": true,
+    "findings": false,
+    "unresolved": false
+  },
+  "publication": "conferência própria ainda pendente"
+}
