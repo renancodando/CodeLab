@@ -1,5 +1,15 @@
 # Continuidade do CODELAB
 
+## PR #71 publicada; próxima lacuna: objetos C#
+
+A validação local específica passou em 52 testes de objetos/controle (dois arquivos). A primeira compilação nativa atingiu o limite de 90 s; a repetição isolada deve ter sua conclusão conferida, sem apagar a falha anterior nem presumir sua causa. O disco C: chegou a 0,52 GB livres durante a execução. Build local e fluxos locais deste lote continuam pendentes; não reutilizar a aprovação da base. Preservar o trabalho no GitHub em rascunho e exigir os gates completos antes de integrar.
+
+A PR #71 foi integrada em a8b7cedb0e93b035b3a8b38afe66a77850ea386c pelo head fd602ef, com árvore/pais conferidos e revisão do head sem apontamentos. CI de entrada 40116365172 e pós-merge 40118329632 integralmente aprovados nos dez jobs: 1.385 testes/80 arquivos, 194 exemplos externos, 36 cenários .NET de fundamentos, 16 de controle e 287 fluxos de navegador, com auditoria zerada. Deployment READY/production, SHA/projeto/alias conferidos antes/depois de 28 fluxos públicos (40118462622): 14 Chromium/Ubuntu e 14 Edge/Windows 2025. Provas e checkpoint final na branch de preservação; branches de conferência não devem ser integradas em main.
+
+Os quatro timeouts anteriores no Edge local continuam registrados, sem causa comprovada. Os fluxos passaram em outro Windows, mas isso não comprova recuperação deste PC. Nenhum limite foi aumentado e nenhum cenário foi retirado.
+
+O novo lote aprofunda somente a aula existente csharp-objetos: referência por interface, proteção contra escrita externa e saque recusado sem mutação. Preserva os exemplos originais, IForma/Retangulo, projeto de Conta e doze capítulos. Exigir validações locais, CI/revisão próprios e produção antes de integrar/publicar. Métricas e fila são geradas; não declarar a edição concluída.
+
 ## PR #70 conferida em Chromium; controle C# em preparação
 
 A PR #70 está integrada em main 714991c, com árvore/pais e revisão do head a933b85 conferidos. CI de entrada 40042896202 e pós-merge 40097101648 concluíram os dez jobs aprovados: 1.359 testes/79 arquivos, 282 fluxos, 194 exemplos externos, 36 cenários .NET 10 e auditoria zerada. Deployment READY/production, SHA/projeto/domínio foram reconfirmados antes/depois de nove fluxos públicos Chromium aprovados em 4,3 min na execução 40098887331. O workflow de conferência apenas faz checkout do SHA 714991c e fica na branch verificacao/publicacao-pr70, que não deve ser integrada em main. Provas e checkpoint final na branch de preservação.

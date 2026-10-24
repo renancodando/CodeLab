@@ -353,3 +353,7 @@ Engenharia passou em strict/build: 157 páginas, 35 recursos essenciais e cinco 
 
 
 Componentes e ciclo de vida acrescenta previsão de instâncias/nó desconectado, diagnóstico de remoção por identidade/capture e correção JavaScript de descarte único. A função executada recebe callbacks síncronos sem exceções e não executa DOM; o painel real permanece projeto independente, com timers e observers. A árvore de habilidades distingue leitura e depuração e mantém assistência. Validações e publicação próprias permanecem exigidas.
+
+## Objetos C#: referência, acesso e invariantes
+
+A aula existente `csharp-objetos` recebe três pausas ligadas à teoria: prever uma interface observando a mesma instância, diagnosticar escrita externa que contorna a validação e reconstruir um saque que recusa sem alterar saldo. A reconstrução usa cinco peças com contrato e ordem explícitos; não é avaliação de código livre. Todas são conceituais offline, sem alegar compilação do aluno. O projeto de Conta continua construído pelo aluno e tem rubrica manual, chamadas consecutivas e instâncias independentes. A integração e publicação deste lote dependem dos seus próprios gates.

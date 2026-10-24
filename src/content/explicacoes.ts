@@ -685,23 +685,25 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "A aula de objetos passa de métodos isolados para estado e contratos por interfaces. Antes disso, consiga explicar cada caminho de saída, localizar uma parcela omitida, reconstruir o escopo e inventar um caso de borda para sua regra. O exercício EhPar continua aplicável a zero, pares e ímpares, incluindo negativos. As pausas são conceituais offline; referências compiladas em .NET 10 não significam execução do código do aluno ou conclusão do projeto."
 },
   "csharp-objetos": {
-    "contexto": "Orientação a objetos é útil quando dados e regras pertencem ao mesmo conceito com ciclo de vida próprio. Classes não devem existir apenas para embrulhar funções; elas devem proteger invariantes e expor operações coerentes.",
-    "modelo": "Veja uma classe como guardiã de um estado válido. Construtores estabelecem condições iniciais, propriedades expõem apenas o necessário e métodos realizam transições permitidas. Interfaces descrevem capacidades sem exigir uma implementação específica.",
+    "contexto": "Uma classe é útil quando precisa conservar regras ao longo de várias operações. A aula mantém Produto e o exercício IForma/Retangulo, e acrescenta três investigações: quem compartilha um objeto, quem pode escrever seu estado e o que uma operação recusada deve preservar. Não é necessário criar uma hierarquia para cada regra.",
+    "modelo": "Separe variável, objeto e contrato. new Contador() cria uma instância; atribuir essa referência a ILeitura não cria outra. Duas variáveis podem observar o mesmo estado, enquanto outro new começa com estado independente. Uma interface com get limita as operações oferecidas por aquela referência, mas não congela o objeto nem impede que seu dono o altere.",
     "passos": [
-      "Defina quais invariantes o objeto deve sempre preservar.",
-      "Receba dados necessários no construtor quando o objeto não faz sentido sem eles.",
-      "Evite setters públicos para estados que exigem validação.",
-      "Use composição antes de herança quando a relação não for realmente 'é um'.",
-      "Extraia interface quando consumidores precisam do contrato e múltiplas implementações são plausíveis."
+        "Desenhe uma caixa por new e setas das variáveis até essas caixas. Depois de uma mudança, atualize a caixa antes de prever o que cada referência lê. ReferenceEquals compara identidade, não igualdade de valores.",
+        "No exemplo original, Produto implementa IDescritivel: um cliente pode pedir Descrever sem exigir a classe concreta. A interface não produz uma cópia nem garante por si só que preço ou nome sejam válidos.",
+        "Liste os caminhos que escrevem estado. Um método Depositar validado não protege uma propriedade com setter público. get público e private set conservam a leitura externa e permitem que a própria classe atualize o saldo; a atribuição direta do cliente passa a falhar na compilação.",
+        "get com init permite inicialização, mas não uma atribuição comum em Depositar depois dela. get sem setter também não permite essa atualização no método. Encapsular exige escolher acessibilidade conforme as operações reais, não apenas esconder tudo.",
+        "Para a Conta deste exercício, use inteiros em centavos, saldo inicial entre 0 e 1000000 e pedido de saque de qualquer int. Uma tentativa válida é positiva e no máximo igual ao saldo. Verifique essas condições no estado anterior; só então desconte e devolva sucesso.",
+        "Registre estado antes, pedido, retorno e estado depois. Zero, negativo e pedido acima do saldo devem recusar sem alteração; retirar exatamente o saldo deixa zero. Teste chamadas seguidas e duas contas para descobrir estado compartilhado indevidamente.",
+        "Preserve IForma.Area e implemente Retangulo como no exercício original. Depois escreva um consumidor que recebe IForma e teste outra implementação com o mesmo contrato. Uma interface não exige herança entre as classes concretas. Use composição para colaboradores; herança exige uma relação de substituição que mantenha as promessas do tipo base."
     ],
     "experimentos": [
-      "Transforme uma propriedade pública mutável em operação validada.",
-      "Compare herança e composição em um exemplo de notificação.",
-      "Substitua uma implementação por fake através de interface num teste."
+        "Antes da primeira pausa, preveja as três saídas do contador. Troque apenas ILeitura leitura = original por ILeitura leitura = separado, faça nova previsão e compile em um projeto .NET 10. Compare identidade e valor sem atribuir à interface uma cópia que não aconteceu.",
+        "No diagnóstico, conserve a atribuição externa e use a declaração escolhida: confira a recusa real do compilador. Depois remova essa atribuição do cliente e confirme que Depositar válido ainda funciona. Experimente init e get sem setter separadamente para localizar a diferença.",
+        "Na reconstrução, investigue o erro de descontar antes de validar e registre o saldo após uma recusa. Teste saldo zero, pedido negativo, valor insuficiente, retirada exata e chamadas consecutivas. As pausas são conceituais offline; referências são compiladas em .NET 10 nos verificadores. Código livre deve ser compilado no seu projeto ou no executor configurado."
     ],
-    "projeto": "Modele uma Conta simples que não permite saldo inválido por atribuição direta e oferece operações Depositar e Sacar com regras explícitas.",
-    "conexao": "Objetos normalmente vivem em coleções; a próxima aula usa generics e LINQ para trabalhar com conjuntos tipados."
-  },
+    "projeto": "Construa a Conta do projeto, sem receber uma implementação pronta: saldo em centavos entre 0 e 1000000, construtor que recusa saldo inicial inválido, leitura pública, depósito positivo sem exceder o teto e TentarSacar que retorna false sem mutar quando recusa. Separe Conta.cs, Program.cs e casos de teste. Defina um contrato de consulta pequeno quando um consumidor precisar somente ler, sem afirmar que a referência torna o objeto imutável. Registre entradas, estado anterior, retorno e estado posterior para zero, negativos, limite, insuficiência, retirada exata, chamadas seguidas e duas instâncias. Inclua um cliente que tenta escrever o saldo e documente a recusa do compilador. Entregue dotnet build/dotnet run, testes reproduzíveis e uma explicação de um defeito investigado. Rubrica de revisão manual: invariantes em todos os caminhos, instâncias independentes, recusa sem mutação, contrato acessível e legibilidade; a pausa não aprova automaticamente o projeto.",
+    "conexao": "As operações e os contratos de cada objeto sustentam a próxima aula: generics e coleções organizam muitas instâncias sem apagar seus tipos ou as regras que cada uma precisa preservar."
+},
   "csharp-colecoes": {
     "contexto": "Generics preservam informação de tipo enquanto estruturas e algoritmos são reutilizados. LINQ cria uma linguagem de consulta sobre coleções, mas cada operação ainda possui custo e semântica que precisam ser entendidos.",
     "modelo": "Pense em IEnumerable<T> como uma sequência que pode ser percorrida. Operadores LINQ compõem uma consulta; muitos são avaliados apenas quando a sequência é enumerada, o que torna execução adiada importante.",

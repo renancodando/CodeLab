@@ -772,3 +772,7 @@ As definições por linguagem são a fonte de verdade. `npm run content:generate
 ## Escopo ainda aberto
 
 O pedido integral reúne [17 frentes abertas](etapas-restantes.md), com próximo aprofundamento e evidência exigida. A sincronização local foi concluída preservando commits e arquivos antigos. O fluxo público Python foi verificado; isso não encerra os demais fluxos de produção. Consulte continuidade.md para os resultados e o próximo passo.
+
+## Prática da aula original de objetos C#
+
+`csharp-objetos` conserva Produto/IDescritivel, IForma/Retangulo e os doze capítulos. A preparação agora diferencia referência de cópia, contrato de leitura de imutabilidade e acessibilidade de validação. A Conta aplica estado em centavos, limites, recusa sem mutação e operações por instância; o projeto exige arquivos, compilação, testes e análise de um defeito. As referências são verificadas em .NET 10, incluindo os exemplos/gabaritos reais da aula e diagnósticos de acesso, init e propriedade somente de leitura. A execução das referências não equivale à compilação de respostas do aluno no navegador. Métricas e lacunas vêm dos arquivos gerados; a presença de uma pausa não encerra a aula ou a linguagem.
