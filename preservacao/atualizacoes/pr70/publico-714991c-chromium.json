@@ -1,0 +1,49 @@
+{
+  "pr": 70,
+  "fonteTestada": "714991c0f7e066ab5a92a3ee40e48f0568375e3f",
+  "workflowDefinicao": "080bfc28e6c13b5f068211cacb440018ca2c605e",
+  "branchSomenteVerificacao": "verificacao/publicacao-pr70",
+  "workflow": 40098887331,
+  "job": 120886762062,
+  "conclusao": "success",
+  "navegador": "Chromium em runner isolado Ubuntu",
+  "testes": 9,
+  "minutos": 4.3,
+  "limitePorTesteMs": 60000,
+  "retries": 0,
+  "linhas": [
+    "2026-10-24T13:36:50.0059629Z ##[group]Run test \"$(git rev-parse HEAD)\" = \"714991c0f7e066ab5a92a3ee40e48f0568375e3f\"",
+    "2026-10-24T13:36:50.0062513Z test \"$(git rev-parse HEAD)\" = \"714991c0f7e066ab5a92a3ee40e48f0568375e3f\"",
+    "2026-10-24T13:37:53.8224593Z   ✓  1 tests/e2e/dotnet-fundamentos.spec.ts:22:1 › a aula .NET conserva teoria e trabalha divisão e diagnóstico antes da solução (33.5s)",
+    "2026-10-24T13:38:19.8505579Z   ✓  2 tests/e2e/dotnet-fundamentos.spec.ts:34:1 › a reconstrução aceita dependências equivalentes pelo teclado e registra assistência (26.0s)",
+    "2026-10-24T13:38:44.7834451Z   ✓  3 tests/e2e/dotnet-fundamentos.spec.ts:43:1 › as pausas e a solução de .NET mantêm acessibilidade e leitura de 220 a 4000 px (24.9s)",
+    "2026-10-24T13:39:05.8184369Z   ✓  4 tests/e2e/dotnet-fundamentos.spec.ts:49:1 › a reconstrução .NET funciona offline sem afirmar compilação nem chamar executor remoto (21.0s)",
+    "2026-10-24T13:39:37.0586468Z   ✓  5 tests/e2e/dotnet-fundamentos.spec.ts:55:1 › a exportação recupera a ordem alternativa e sua assistência sem fabricar domínio (31.2s)",
+    "2026-10-24T13:40:28.9779134Z   ✓  6 tests/e2e/git-bancada.spec.ts:5:1 › Git conserva os três estados, assistência, backup e retomada offline (51.9s)",
+    "2026-10-24T13:40:53.0893537Z   ✓  7 tests/e2e/git-bancada.spec.ts:22:1 › Git conserva trabalho, preparação e histórico nas larguras extremas (24.1s)",
+    "2026-10-24T13:41:10.3694556Z   ✓  8 tests/e2e/git-bancada.spec.ts:31:1 › Git preserva rascunho incompatível até exportar e reiniciar explicitamente (17.3s)",
+    "2026-10-24T13:41:37.0163558Z   ✓  9 tests/e2e/git-bancada.spec.ts:35:1 › Git exporta estado em memória depois de uma falha real de quota (26.6s)",
+    "2026-10-24T13:41:37.1771097Z   9 passed (4.3m)"
+  ],
+  "deployment": {
+    "estado": "READY",
+    "destino": "production",
+    "sha": "714991c0f7e066ab5a92a3ee40e48f0568375e3f",
+    "dominio": "code-lab-omega.vercel.app",
+    "projetoConferido": true,
+    "aliasShaConferidosAntesEDepois": true
+  },
+  "tentativaPublicaEdge": {
+    "dotnet": {
+      "passaram": 4,
+      "falharam": 1
+    },
+    "git": {
+      "passaram": 1,
+      "falharam": 3
+    },
+    "aprovada": false,
+    "motivo": "Timeouts globais locais; causa não comprovada. O resultado isolado não apaga essas falhas."
+  },
+  "observacao": "O workflow de conferência apenas faz checkout do SHA testado e verifica sua igualdade. Sua branch contém um único workflow, não foi integrada em main e não altera a aplicação. Metadados internos do provedor e traces privados não são incluídos."
+}
