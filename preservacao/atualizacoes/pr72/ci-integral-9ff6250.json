@@ -1,0 +1,66 @@
+{
+  "run": 40121389848,
+  "head": "9ff6250c7b147f25f8690cd20f881a666f3a9be2",
+  "conclusion": "success",
+  "jobs": 10,
+  "unitTests": 1411,
+  "unitFiles": 81,
+  "externalExamples": 194,
+  "dotnetObjectScenarios": 15,
+  "dotnetControlScenarios": 16,
+  "dotnetFundamentalsScenarios": 36,
+  "browser": {
+    "count": 292,
+    "jobs": [
+      {
+        "job": "Navegador (5/8)",
+        "id": 120954216009,
+        "passed": 36,
+        "duration": "7.5m"
+      },
+      {
+        "job": "Navegador (4/8)",
+        "id": 120954216030,
+        "passed": 38,
+        "duration": "13.0m"
+      },
+      {
+        "job": "Navegador (3/8)",
+        "id": 120954216031,
+        "passed": 35,
+        "duration": "2.2m"
+      },
+      {
+        "job": "Navegador (8/8)",
+        "id": 120954216036,
+        "passed": 32,
+        "duration": "17.2m"
+      },
+      {
+        "job": "Navegador (6/8)",
+        "id": 120954216054,
+        "passed": 33,
+        "duration": "15.6m"
+      },
+      {
+        "job": "Navegador (7/8)",
+        "id": 120954216095,
+        "passed": 39,
+        "duration": "14.6m"
+      },
+      {
+        "job": "Navegador (1/8)",
+        "id": 120954216099,
+        "passed": 40,
+        "duration": "14.4m"
+      },
+      {
+        "job": "Navegador (2/8)",
+        "id": 120954216130,
+        "passed": 39,
+        "duration": "4.3m"
+      }
+    ]
+  },
+  "local": "52 específicos/regressões aprovados; compilação completa/build/navegador ainda em verificação própria"
+}
