@@ -1,0 +1,26 @@
+{
+  "head": "9ff6250c7b147f25f8690cd20f881a666f3a9be2",
+  "initialLocalBrowser": {
+    "passed": 9,
+    "failed": 1,
+    "total": 10,
+    "conclusion": "failure",
+    "duration": "20.5m",
+    "failure": "timeout de 60000 ms no primeiro fluxo de objetos",
+    "trace": {
+      "navigationMs": 1039586.4,
+      "systemSuspendAndResumeConfirmed": true,
+      "explanation": "eventos locais de energia confirmam suspensão durante a navegação; o erro posterior de clique ocorreu com o prazo já esgotado"
+    }
+  },
+  "rawTrace": "mantido localmente, sem upload",
+  "rerun": {
+    "sourceChanged": false,
+    "testTimeoutChanged": false,
+    "testsRemoved": false,
+    "retriesAdded": false,
+    "systemActivityRequest": "temporária, apenas no processo de validação, restaurada em finally",
+    "status": "in_progress"
+  },
+  "officialReference": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-setthreadexecutionstate"
+}
