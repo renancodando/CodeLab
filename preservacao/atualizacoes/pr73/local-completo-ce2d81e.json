@@ -1,0 +1,34 @@
+{
+  "head": "ce2d81e4a4f44d24629bb41f07dd4a6d7144269e",
+  "branch": "pratica/csharp-colecoes-consultas",
+  "local": {
+    "specificTests": 52,
+    "specificFiles": 2,
+    "contentAndNativeUnchangedByFinalTestFix": true,
+    "newDotnetScenarios": 15,
+    "previousLinqScenarios": 10,
+    "build": "success",
+    "buildDuration": "3m28",
+    "pages": 157,
+    "offlineEssential": 38,
+    "offlineOptional": 6,
+    "offlineVersion": "1c64dfca9c47d093fdbd",
+    "browserPassed": 10,
+    "browserDuration": "2.9m",
+    "browserExitCode": 0,
+    "temporaryActivityReleased": true
+  },
+  "initial": {
+    "head": "71747d3a18fc603af9356cc381536e6591f5b8da",
+    "ci": 40142806559,
+    "ciConclusion": "failure",
+    "localBrowserPassed": 9,
+    "localBrowserFailed": 1,
+    "cause": "seletor ambíguo entre apoio e solução"
+  },
+  "currentCi": {
+    "run": 40143973678,
+    "lastObserved": "in_progress"
+  },
+  "review": "liberada no head corrigido; conferir conclusão"
+}
