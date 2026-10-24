@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Cache publicado; prática .NET precisa de gates próprios
+
+A PR #69 tem CI e revisão do head correto, integração e domínio READY/SHA conferidos, com catorze fluxos públicos completos aprovados. Conferir o pós-merge independente 40027848561. A entrega seguinte de dotnet não muda runtime, rede, layout ou permissões: adiciona decisões conceituais e verificação de referências em .NET 10. Ela exige testes específicos, compilação, suíte integral, build, navegador, revisão/CI do head verdadeiro e confirmação própria de produção antes de ser declarada publicada.
+
 ## Identidade publicada; cache em preparação
 
 A PR #68 está integrada em 63a8e54 com revisão do head e CI de entrada completos, árvore/pais conferidos, deployment READY no projeto/SHA/alias esperados e quinze fluxos públicos aprovados em dois lotes, com alias reconfirmado depois. Seu CI pós-merge permanece acompanhado como resultado próprio. Provas sanitizadas e limitações em continuidade.md/checkpoints.
