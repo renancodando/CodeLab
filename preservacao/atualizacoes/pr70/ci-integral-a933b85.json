@@ -1,0 +1,115 @@
+{
+  "pr": 70,
+  "head": "a933b85cf96568e834a462a2b434b9d386f2080e",
+  "workflow": 40042896202,
+  "conclusao": "success",
+  "jobs": [
+    {
+      "id": 120717834394,
+      "name": "Auditoria de dependências",
+      "conclusion": "success",
+      "linhas": [],
+      "auditoriaZerada": true
+    },
+    {
+      "id": 120717834900,
+      "name": "Testes e compilação",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:03:01.0887860Z  Test Files  79 passed (79)",
+        "2026-10-24T00:03:01.0896578Z       Tests  1359 passed (1359)",
+        "2026-10-24T00:04:20.8749142Z 194 exemplos e soluções externos compilados/executados.",
+        "2026-10-24T00:04:20.8759272Z 36 cenários .NET 10 conferidos para tipos, divisão, dependências e diagnósticos reais."
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660035,
+      "name": "Navegador (1/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:18:44.0693978Z   39 passed (12.9m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660041,
+      "name": "Navegador (5/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:11:52.7718469Z   36 passed (5.9m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660052,
+      "name": "Navegador (7/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:20:51.8371041Z   32 passed (15.2m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660064,
+      "name": "Navegador (6/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:18:43.0347636Z   40 passed (12.8m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660080,
+      "name": "Navegador (4/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:15:57.0567460Z   33 passed (10.1m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660107,
+      "name": "Navegador (2/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:09:43.3648851Z   34 passed (4.0m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660128,
+      "name": "Navegador (8/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:18:43.2409781Z   32 passed (12.9m)"
+      ],
+      "auditoriaZerada": false
+    },
+    {
+      "id": 120718660135,
+      "name": "Navegador (3/8)",
+      "conclusion": "success",
+      "linhas": [
+        "2026-10-24T00:14:22.4100465Z   ✓  33 tests/e2e/git-bancada.spec.ts:5:1 › Git conserva os três estados, assistência, backup e retomada offline (54.8s)",
+        "2026-10-24T00:14:43.0854176Z   ✓  34 tests/e2e/git-bancada.spec.ts:22:1 › Git conserva trabalho, preparação e histórico nas larguras extremas (20.6s)",
+        "2026-10-24T00:15:32.2310415Z   36 passed (9.7m)"
+      ],
+      "auditoriaZerada": false
+    }
+  ],
+  "revisao": {
+    "head": "a933b85cf96568e834a462a2b434b9d386f2080e",
+    "concluida": true,
+    "apontamentos": false,
+    "discussoesPendentes": 0
+  },
+  "arvore": "814a590eba89eee98619e73e3ac4de31d2b0bb33",
+  "base": "e08e8143f90ba961cd85e5330090a6677ce871a2",
+  "validacaoLocalAtual": {
+    "navegador": 9,
+    "minutos": 4.4,
+    "exitCode": 0
+  },
+  "falhaAnteriorPreservada": 40030039182
+}
