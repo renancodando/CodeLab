@@ -1,0 +1,35 @@
+{
+  "head": "9ff6250c7b147f25f8690cd20f881a666f3a9be2",
+  "run": 40121389848,
+  "overall": "in_progress",
+  "core": {
+    "job": 120953479631,
+    "conclusion": "success",
+    "unitTests": 1411,
+    "unitFiles": 81,
+    "externalExamples": 194,
+    "dotnetFundamentalsScenarios": 36,
+    "dotnetControlScenarios": 16,
+    "dotnetObjectScenarios": 15,
+    "build": "success",
+    "pages": 157,
+    "offlineEssential": 38,
+    "offlineOptional": 6
+  },
+  "audit": {
+    "job": 120953480106,
+    "conclusion": "success",
+    "allCountersZero": true
+  },
+  "browser": "oito parcelas ainda em andamento na última leitura",
+  "local": {
+    "specificAndRegressionTests": 52,
+    "specificFiles": 2,
+    "duration": "17.95s",
+    "nativeFullRun": "duas tentativas com timeout; segunda completou 12 programas e dois diagnósticos, mas não o terceiro",
+    "build": "pending",
+    "browser": "pending",
+    "freeDiskGB": 0.52
+  },
+  "draft": true
+}
