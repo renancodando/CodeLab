@@ -1,0 +1,62 @@
+{
+  "run": 40118329632,
+  "head": "a8b7cedb0e93b035b3a8b38afe66a77850ea386c",
+  "conclusion": "success",
+  "unitTests": 1385,
+  "unitFiles": 80,
+  "externalExamples": 194,
+  "dotnetFundamentalsScenarios": 36,
+  "dotnetControlScenarios": 16,
+  "browserTests": 287,
+  "browserJobs": [
+    {
+      "job": "Navegador (5/8)",
+      "id": 120944887212,
+      "passed": 36,
+      "duration": "7.5m"
+    },
+    {
+      "job": "Navegador (4/8)",
+      "id": 120944887229,
+      "passed": 38,
+      "duration": "12.5m"
+    },
+    {
+      "job": "Navegador (6/8)",
+      "id": 120944887270,
+      "passed": 33,
+      "duration": "16.1m"
+    },
+    {
+      "job": "Navegador (8/8)",
+      "id": 120944887272,
+      "passed": 32,
+      "duration": "10.2m"
+    },
+    {
+      "job": "Navegador (1/8)",
+      "id": 120944887283,
+      "passed": 40,
+      "duration": "14.4m"
+    },
+    {
+      "job": "Navegador (2/8)",
+      "id": 120944887305,
+      "passed": 34,
+      "duration": "8.9m"
+    },
+    {
+      "job": "Navegador (7/8)",
+      "id": 120944887306,
+      "passed": 39,
+      "duration": "16.2m"
+    },
+    {
+      "job": "Navegador (3/8)",
+      "id": 120944887458,
+      "passed": 35,
+      "duration": "7.6m"
+    }
+  ],
+  "auditZero": true
+}
