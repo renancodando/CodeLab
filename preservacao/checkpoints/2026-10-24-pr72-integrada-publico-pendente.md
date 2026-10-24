@@ -1,0 +1,11 @@
+# PR 72 integrada; publicação em conferência
+
+Head 9ff6250c7b147f25f8690cd20f881a666f3a9be2 integrado em 6a912cdf369f3208529b2e8c6fa532d514327d56. Árvore f70104fb9b5dcc2ecb081358d46096e422037d94 igual ao head e à integração conferida; pais a8b7ced e 9ff6250. Revisão completed no mesmo head sem apontamentos ou threads pendentes. PR https://github.com/renancodando/CodeLab/pull/72.
+
+CI de entrada 40121389848 aprovado nos dez jobs: 1.411 testes/81 arquivos, 194 externos, 36 cenários .NET de fundamentos, 16 de controle, 15 de objetos, build, 292 testes de navegador e auditoria zerada. Local: 52 específicos/regressão, 15 cenários .NET, build completo e dez fluxos Edge em 3,1 min aprovados com exit 0.
+
+A falha local inicial de navegador (9/10) foi preservada. O trace mostra navegação de cerca de 17 min durante suspensão confirmada do Windows. Repetiu-se a suíte completa com pedido temporário de atividade, restaurado em finally, sem alterar fonte, timeout de 60 s, cenários ou retries. Isso explica essa falha específica; as duas falhas nativas anteriores de 90 s continuam com causa não comprovada. Auxiliares novos preservados em preservacao/auxiliares/pr72 nos commits ccecb51 e e568d4a. Prova local completa em local-completo-9ff6250.json (9aac635); falha resumida em navegador-local-inicial-suspenso-9ff6250.json (d5570b5). Traces brutos e logs privados seguem locais.
+
+Deployment READY/production no SHA integrado, projeto e alias conferidos antes dos fluxos. CI pós-merge 40138959136 e conferência pública 40139111487 ainda em andamento: acompanhar conclusões reais. A conferência usa Chromium/Ubuntu e Edge/Windows 2025, dez fluxos por navegador (objetos/controle). Definição 85e4228d0f0f56cdb99c960f689d0e3832e80f86 na branch verificacao/publicacao-pr72, com checkout fixo de 6a912cd; não integrar essa branch ou a de preservação em main. Reconfirmar SHA/projeto/alias depois dos fluxos antes de declarar a entrega concluída.
+
+Fonte toda remota; main local em sincronização por fast-forward. Conferir conclusão da sincronização e worktree limpo. Depois dos gates, seguir csharp-colecoes e csharp-async, preservando as 137 aulas. Métricas integradas 204 atividades, 96 aulas com pausas e 41 sem; uma pausa não encerra a profundidade. A edição ainda não está finalizada.
