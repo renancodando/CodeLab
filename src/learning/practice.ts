@@ -14,6 +14,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "cs-controle-prever-interrupcoes":{"accepted":["5\n0\n0"],"solution":"5\n0\n0","failure":"Acompanhe quais elementos chegam à soma e em qual deles o laço termina. O negativo é ignorado; o zero encerra o laço, e o valor posterior a ele não deve ser visitado. O array vazio chega ao retorno sem executar o corpo."},
+ "cs-controle-corrigir-limite":{"accepted":["incluir"],"solution":"static int SomarAte(int limite) {\n    int total = 0;\n    for (int i = 1; i <= limite; i++) total += i;\n    return total;\n}\nConsole.WriteLine(SomarAte(0));\nConsole.WriteLine(SomarAte(1));\nConsole.WriteLine(SomarAte(4));","failure":"Teste separadamente zero, um e um limite maior. A última parcela precisa entrar uma vez; não deve faltar nem surgir um número posterior ao limite."},
+ "cs-controle-reconstruir-retorno":{"accepted":[],"order":["metodo","total","percorrer","filtrar","acumular","fechar-laco","retornar","fechar-metodo"],"solution":"static int SomarPares(int[] numeros) {\n    int total = 0;\n    foreach (int numero in numeros) {\n        if (numero % 2 != 0) continue;\n        total += numero;\n    }\n    return total;\n}","failure":"Verifique o escopo de numero, a posição do filtro e qual bloco contém o return. O laço pode executar zero vezes; devolver o resultado dentro dele não cobre esse caminho e pode encerrar a soma cedo."},
  "cs-dotnet-prever-divisao":{"accepted":["2\n2.0\n2.5"],"solution":"2\n2.0\n2.5","failure":"Compare o tipo de quociente com o tipo de antes. Transformar o inteiro já calculado em decimal não recupera uma fração que deixou de existir na divisão."},
  "cs-dotnet-diagnosticar-inferencia":{"accepted":["decimal"],"solution":"decimal preco = 7.25m;\ndecimal total = preco * 4;\nConsole.WriteLine(total.ToString(\"F2\", System.Globalization.CultureInfo.InvariantCulture));","failure":"Uma declaração pode remover o erro e ainda mudar o resultado pedido. Verifique o tipo inferido, o sufixo do literal e se uma divisão inteira já descartou centavos antes da conversão."},
  "cs-dotnet-reconstruir-total":{"accepted":[],"order":["centavos","preco","quantidade","saida"],"solution":"int centavos = 725;\ndecimal preco = centavos / 100m;\nint quantidade = 4;\nConsole.WriteLine((preco * quantidade).ToString(\"F2\", System.Globalization.CultureInfo.InvariantCulture));","failure":"Procure o primeiro nome usado antes de ser declarado. O preço precisa dos centavos, e a saída precisa do preço e da quantidade; esta última declaração pode mudar de posição sem alterar o cálculo."},
@@ -457,7 +460,13 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    if(Array.isArray(answer))submitted=answer.map(normalized);
    else submitted=normalized(answer).split('\n').map(normalized).filter(Boolean);
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
-   if(id==='cs-dotnet-reconstruir-total')passed=submitted.length===4&&new Set(submitted).size===4&&submitted.every(linha=>concept.order!.includes(linha))&&submitted.indexOf('centavos')<submitted.indexOf('preco')&&submitted.indexOf('preco')<submitted.indexOf('saida')&&submitted.indexOf('quantidade')<submitted.indexOf('saida');
+   if(id==='cs-controle-reconstruir-retorno'){
+    const linhas=activity.lines!;
+    passed=submitted.length===concept.order.length&&new Set(submitted).size===concept.order.length&&submitted.every((linhaId,indice)=>{
+     const linha=linhas.find(linha=>linha.id===linhaId),esperada=linhas.find(linha=>linha.id===concept.order![indice]);
+     return linha?.code.trim()===esperada?.code.trim();
+    });
+   }else if(id==='cs-dotnet-reconstruir-total')passed=submitted.length===4&&new Set(submitted).size===4&&submitted.every(linha=>concept.order!.includes(linha))&&submitted.indexOf('centavos')<submitted.indexOf('preco')&&submitted.indexOf('preco')<submitted.indexOf('saida')&&submitted.indexOf('quantidade')<submitted.indexOf('saida');
    else passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
   }else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
   else if(id==='cs-copiar-linhas-array')passed=typeof answer==='string'&&/^linha\s*\.\s*ToArray\s*(?:<\s*(?:int|System\s*\.\s*Int32)\s*>)?\s*\(\s*\)$/.test(normalized(answer));

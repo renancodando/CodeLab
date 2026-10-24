@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Base .NET conferida; controle C# exige validação própria
+
+A PR #70 tem revisão do head correto, CI de entrada e pós-merge integrais, árvore/pais e deployment READY/SHA/domínio conferidos. Nove fluxos públicos Chromium passaram na execução 40098887331; os quatro timeouts locais de Edge não foram apagados ou considerados resolvidos. O lote csharp-controle preserva runtime, rede, identidade e arquitetura: amplia prática conceitual e referências .NET 10. Exigir testes, build, navegador, revisão/CI e produção próprios. Catálogo/fila são gerados e uma pausa não encerra aula, linguagem ou edição.
+
 ## Cache publicado; prática .NET precisa de gates próprios
 
 A PR #69 tem CI e revisão do head correto, integração e domínio READY/SHA conferidos, com catorze fluxos públicos completos aprovados. Conferir o pós-merge independente 40027848561. A entrega seguinte de dotnet não muda runtime, rede, layout ou permissões: adiciona decisões conceituais e verificação de referências em .NET 10. Ela exige testes específicos, compilação, suíte integral, build, navegador, revisão/CI do head verdadeiro e confirmação própria de produção antes de ser declarada publicada.

@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Controle C#: interromper, incluir a borda e retornar
+
+A aula csharp-controle conserva seu exemplo, EhPar e projeto e distribui previsão, diagnóstico e reconstrução entre a teoria. O corretor exige cada linha uma vez e aceita a troca entre chaves equivalentes: indentação não define o escopo de C#. Referências verificam o zero sentinela, negativos ignorados, limite inclusivo, array vazio, pares negativos, entrada preservada e chamadas sucessivas. Respostas do aluno continuam conceituais offline; referências e o exemplo/gabarito originais são compilados em .NET 10. Leitura não gera domínio, consultar solução registra assistência e o calculador de frete continua construído pelo aluno, com revisão manual.
+
 ## Tipos e dependências na abertura de C#
 
 A aula existente dotnet trabalha previsão de divisão inteira/decimal, diagnóstico do tipo inferido e reconstrução por dependências. Ordens independentes equivalentes são aceitas; duplicações, omissões e leituras antes de declaração são recusadas. As três respostas são conceituais e funcionam offline: não há compilação do código do aluno. Referências e diagnósticos reais são verificados em .NET 10. Leitura não gera domínio, solução continua assistência e o console com entrada/validação é construído no projeto, com revisão manual. Gates próprios em continuidade.md.
