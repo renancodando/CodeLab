@@ -1,0 +1,133 @@
+{
+  "run": 40116365172,
+  "head": "fd602efedbe3ab4967b108bf5a2e201e52004a7d",
+  "browserTests": 287,
+  "jobs": [
+    {
+      "job": "Auditoria de dependências",
+      "id": 120938372785,
+      "summary": [
+        "2026-10-24T17:29:47.1051559Z (node:2306) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:29:51.7678884Z found 0 vulnerabilities",
+        "2026-10-24T17:29:52.2639667Z   \"vulnerabilities\": {},",
+        "2026-10-24T17:29:52.2640215Z     \"vulnerabilities\": {"
+      ]
+    },
+    {
+      "job": "Testes e compilação",
+      "id": 120938372961,
+      "summary": [
+        "2026-10-24T17:32:06.2990418Z 7 cenários C++20 conferidos, incluindo falhas esperadas de instanciação e ambiguidade.",
+        "2026-10-24T17:32:06.2991719Z 8 cenários C++20 de posse conferidos, sem executar acessos pendentes.",
+        "2026-10-24T17:32:06.2993032Z 12 cenários PostgreSQL conferidos para ausência, restrições e correspondência.",
+        "2026-10-24T17:32:06.2994613Z 10 cenários .NET conferidos para suspensão, descarte e materialização.",
+        "2026-10-24T17:32:06.2995877Z 10 cenários .NET conferidos para igualdade, agrupamento e cópia interna.",
+        "2026-10-24T17:32:06.2996843Z 36 cenários .NET 10 conferidos para tipos, divisão, dependências e diagnósticos reais.",
+        "2026-10-24T17:32:06.2997634Z 16 cenários .NET 10 conferidos para interrupções, limites, paridade e retorno.",
+        "2026-10-24T17:32:38.3271126Z (node:6321) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (3/8)",
+      "id": 120939070376,
+      "summary": [
+        "2026-10-24T17:32:48.9325855Z (node:2053) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:33:01.7085521Z found 0 vulnerabilities",
+        "2026-10-24T17:38:28.2738980Z   ✓  26 tests/e2e/expanded-content.spec.ts:56:1 › exemplos HTML funcionam e inserem entradas como texto (478ms)",
+        "2026-10-24T17:38:28.6664197Z   ✓  27 tests/e2e/expanded-content.spec.ts:66:1 › exemplos CSS conservam caixas e mudam o layout pelo contêiner (380ms)",
+        "2026-10-24T17:39:28.2830535Z   35 passed (5.9m)",
+        "2026-10-24T17:39:28.9343436Z (node:5111) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (4/8)",
+      "id": 120939070385,
+      "summary": [
+        "2026-10-24T17:32:51.5112742Z (node:2310) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:33:05.6631550Z found 0 vulnerabilities",
+        "2026-10-24T17:46:29.1136061Z   38 passed (12.8m)",
+        "2026-10-24T17:46:29.7795741Z (node:5599) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (7/8)",
+      "id": 120939070388,
+      "summary": [
+        "2026-10-24T17:32:49.3897200Z (node:2315) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:33:02.4858529Z found 0 vulnerabilities",
+        "2026-10-24T17:39:31.2482795Z   ✓  17 tests/e2e/meteorologia-visual.spec.ts:3:1 › treze cenários atmosféricos renderizam sem erros em desktop e celular (22.0s)",
+        "2026-10-24T17:49:44.4349488Z   39 passed (16.2m)",
+        "2026-10-24T17:49:45.3484084Z (node:5715) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (1/8)",
+      "id": 120939070432,
+      "summary": [
+        "2026-10-24T17:32:48.9870036Z (node:2052) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:33:03.2674250Z found 0 vulnerabilities",
+        "2026-10-24T17:44:49.6117446Z   40 passed (11.3m)",
+        "2026-10-24T17:44:50.2618455Z (node:5373) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (6/8)",
+      "id": 120939070442,
+      "summary": [
+        "2026-10-24T17:32:48.7765753Z (node:2059) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:33:02.1873244Z found 0 vulnerabilities",
+        "2026-10-24T17:42:19.0319075Z   33 passed (8.8m)",
+        "2026-10-24T17:42:19.5068582Z (node:5250) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (2/8)",
+      "id": 120939070453,
+      "summary": [
+        "2026-10-24T17:32:51.9224928Z (node:2276) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:33:04.9118122Z found 0 vulnerabilities",
+        "2026-10-24T17:42:57.2568266Z   34 passed (9.4m)",
+        "2026-10-24T17:42:57.9071678Z (node:5359) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (5/8)",
+      "id": 120939070463,
+      "summary": [
+        "2026-10-24T17:32:51.4182058Z (node:2054) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:33:07.7453658Z found 0 vulnerabilities",
+        "2026-10-24T17:38:48.5041976Z   36 passed (5.1m)",
+        "2026-10-24T17:38:48.9714631Z (node:5065) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    },
+    {
+      "job": "Navegador (8/8)",
+      "id": 120939070539,
+      "summary": [
+        "2026-10-24T17:32:46.3605852Z (node:2357) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.",
+        "2026-10-24T17:32:59.0845072Z found 0 vulnerabilities",
+        "2026-10-24T17:50:18.9041000Z   32 passed (16.9m)",
+        "2026-10-24T17:50:19.4282870Z (node:5792) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities."
+      ]
+    }
+  ],
+  "conclusion": "success",
+  "local": {
+    "specificTests": 66,
+    "browserTests": 10,
+    "dotnet10Scenarios": 16,
+    "build": "success",
+    "pages": 157
+  },
+  "review": {
+    "sha": "fd602efedbe3ab4967b108bf5a2e201e52004a7d",
+    "status": "completed",
+    "findings": false,
+    "unresolved": false
+  },
+  "merge": {
+    "sha": "a8b7cedb0e93b035b3a8b38afe66a77850ea386c",
+    "tree": "d7ac818d551929cc08b0833472bac59fe9cf5b16"
+  },
+  "publication": "ainda em conferência"
+}
