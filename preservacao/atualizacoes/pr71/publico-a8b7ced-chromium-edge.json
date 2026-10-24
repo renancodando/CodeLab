@@ -1,0 +1,22 @@
+{
+  "run": 40118462622,
+  "testedSha": "a8b7cedb0e93b035b3a8b38afe66a77850ea386c",
+  "workflowSha": "05141519dd1a58ed4f170d4b8c0911563dfada56",
+  "jobs": [
+    {
+      "job": "Fluxos públicos em chromium",
+      "id": 120944651394,
+      "passed": 14,
+      "edgeVersion": null,
+      "duration": "6.0m"
+    },
+    {
+      "job": "Fluxos públicos em msedge",
+      "id": 120944651545,
+      "passed": 14,
+      "edgeVersion": "155.0.4283.62",
+      "duration": "4.6m"
+    }
+  ],
+  "conclusion": "success"
+}
