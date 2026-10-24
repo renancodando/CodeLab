@@ -1,0 +1,17 @@
+{
+  "run": 40142806559,
+  "head": "71747d3a18fc603af9356cc381536e6591f5b8da",
+  "conclusion": "failure",
+  "job": 121018515815,
+  "name": "Navegador (1/8)",
+  "evidence": [
+    "2026-10-24T23:37:57.8476183Z   ✘  13 tests/e2e/csharp-colecoes.spec.ts:36:1 › coleções mantém axe e conteúdo completo de 220 a 4000 px (14.4s)",
+    "2026-10-24T23:45:52.6140605Z   1) tests/e2e/csharp-colecoes.spec.ts:36:1 › coleções mantém axe e conteúdo completo de 220 a 4000 px ",
+    "2026-10-24T23:45:52.6142015Z     Error: expect(locator).toContainText(expected) failed",
+    "2026-10-24T23:45:52.6146818Z     Error: strict mode violation: locator('[data-practice=\"cs-colecoes-reconstruir-total\"]').locator('.example-code') resolved to 2 elements:",
+    "2026-10-24T23:45:52.6176539Z     test-results/csharp-colecoes-coleções-m-e3ba5-o-completo-de-220-a-4000-px/test-failed-1.png",
+    "2026-10-24T23:45:52.6186807Z   1 failed",
+    "2026-10-24T23:45:52.6187822Z     tests/e2e/csharp-colecoes.spec.ts:36:1 › coleções mantém axe e conteúdo completo de 220 a 4000 px ",
+    "2026-10-24T23:45:52.6188694Z   38 passed (14.5m)"
+  ]
+}
