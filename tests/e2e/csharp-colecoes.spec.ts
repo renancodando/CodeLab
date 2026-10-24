@@ -28,7 +28,7 @@ test('coleções conserva a aula e pratica presença e materialização filtrada
 
 test('a composição do total funciona pelo teclado e registra assistência',async({page:pagina})=>{
  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/csharp-colecoes');const pausa=pagina.locator('[data-practice="'+idOrdem+'"]');
- await expect(pausa.locator('.example-code')).toContainText('class Pedido');await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('filtrados');await expect(pausa.locator('[data-help] pre')).toHaveCount(0);
+ await expect(pausa.locator(':scope > .example-code')).toContainText('class Pedido');await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('filtrados');await expect(pausa.locator('[data-help] pre')).toHaveCount(0);
  await ordenar(pausa);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('assistência');await pagina.reload();
  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[idOrdem]).toMatchObject({value:ordem,passed:true,assisted:true});expect(salvo.adaptive.skills['csharp.colecoes.composicao'].review.lastOutcome).toBe('assisted');
 });
@@ -36,7 +36,7 @@ test('a composição do total funciona pelo teclado e registra assistência',asy
 test('coleções mantém axe e conteúdo completo de 220 a 4000 px',async({page:pagina})=>{
  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/csharp-colecoes');const pausa=pagina.locator('[data-practice="'+idOrdem+'"]');await ordenar(pausa);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();
  expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
- for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);await expect(pausa.locator('.example-code')).toContainText('class Pedido');}
+ for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);await expect(pausa.locator(':scope > .example-code')).toContainText('class Pedido');await expect(pausa.locator(':scope > .example-code')).toBeVisible();await expect(pausa.locator('[data-help] > .example-code')).toContainText('SomarValidos');await expect(pausa.locator('[data-help] > .example-code')).toBeVisible();}
 });
 
 test('a composição de coleções funciona offline sem executor remoto',async({page:pagina,context:contexto})=>{
