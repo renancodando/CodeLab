@@ -2,12 +2,12 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **44 de 137 aulas sem pausas deste catálogo**. As outras 93 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **43 de 137 aulas sem pausas deste catálogo**. As outras 94 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 8 | 2 |
-| C# | 14 | 6 | 8 |
+| C# | 14 | 7 | 7 |
 | CSS | 15 | 13 | 2 |
 | HTML | 19 | 15 | 4 |
 | JavaScript | 30 | 28 | 2 |
@@ -30,7 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `dotnet` — SDK, tipos e primeiro programa | C# e .NET 10 | C# | Original |
 | `csharp-controle` — Condições, loops e métodos | C# e .NET 10 | C# | Original |
 | `csharp-objetos` — Classes, objetos, herança e interfaces | C# e .NET 10 | C# | Original |
 | `csharp-colecoes` — Generics, coleções e LINQ | C# e .NET 10 | C# | Original |

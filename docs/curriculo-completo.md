@@ -1,5 +1,9 @@
 # Currículo do zero à especialização
 
+## Aprofundamento da aula existente dotnet
+
+A abertura de C# preserva SDK, runtime, primeiro programa e projeto e acrescenta prática de tipos, divisão antes/depois da conversão e dependências entre declarações. O verificador compila referências e programas inválidos em .NET 10; a pausa offline é conceitual e não comprova o projeto executado. Não expande a quantidade de aulas nem conclui C#. Referências: [inferência de variáveis locais](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/declarations) e [conversões numéricas](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions).
+
 ## Aprofundamento incremental: cache com contexto e idade
 
 A aula limites-cache conserva seus capítulos e projeto e passa a praticar TTL, chaves e recuperação antiga rotulada. A função executada decide sobre dados em memória; não promete transporte, deduplicação ou retry executados. Zero/false/null, prazo exato, tempo futuro, chave de outra consulta, cópias JSON, entradas preservadas e chamadas independentes sustentam o corretor. O projeto mantém integração de limites, espera cancelável e serviço de teste, com rubrica manual. A pausa não conclui a aula ou linguagem.

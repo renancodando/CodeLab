@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Tipos e dependências na abertura de C#
+
+A aula existente dotnet trabalha previsão de divisão inteira/decimal, diagnóstico do tipo inferido e reconstrução por dependências. Ordens independentes equivalentes são aceitas; duplicações, omissões e leituras antes de declaração são recusadas. As três respostas são conceituais e funcionam offline: não há compilação do código do aluno. Referências e diagnósticos reais são verificados em .NET 10. Leitura não gera domínio, solução continua assistência e o console com entrada/validação é construído no projeto, com revisão manual. Gates próprios em continuidade.md.
+
 ## Seleção de cache com idade explícita
 
 limites-cache pratica limite temporal, composição da chave e decisão sobre uma cópia. Previsão e escolha continuam conceituais. A produção executa JavaScript puro e preserva JSON, inclusive valores falsy, sem renovar uma data ou esconder expiração. A comparação estrutural aceita cópias equivalentes; cenários conferem mutação e resultados anteriores. Relógio e falha são entradas controladas, sem rede ou espera real. Deduplicação, cancelamento, rate limit e HTTP continuam como integração externa e revisão manual do projeto. Leitura não gera domínio, consultar solução segue assistência e a preparação antecede as pausas. Gates/resultados em continuidade.md.
