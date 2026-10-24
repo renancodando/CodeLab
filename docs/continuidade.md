@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## PR #70 conferida em Chromium; controle C# em preparação
+
+A PR #70 está integrada em main 714991c, com árvore/pais e revisão do head a933b85 conferidos. CI de entrada 40042896202 e pós-merge 40097101648 concluíram os dez jobs aprovados: 1.359 testes/79 arquivos, 282 fluxos, 194 exemplos externos, 36 cenários .NET 10 e auditoria zerada. Deployment READY/production, SHA/projeto/domínio foram reconfirmados antes/depois de nove fluxos públicos Chromium aprovados em 4,3 min na execução 40098887331. O workflow de conferência apenas faz checkout do SHA 714991c e fica na branch verificacao/publicacao-pr70, que não deve ser integrada em main. Provas e checkpoint final na branch de preservação.
+
+A tentativa pública local de Edge teve quatro timeouts, com cinco testes passando; permanece registrada sem causa comprovada. A pressão de disco observada não demonstra causalidade, e a aprovação em Chromium não confirma recuperação do Edge. Não apagar artefatos ou aumentar limites para obter verde.
+
+O novo lote trabalha somente a aula existente csharp-controle: três pausas conceituais, chaves equivalentes e verificação nativa de referências e do exemplo/gabarito originais. Exigir seus testes locais, build, CI integral, revisão e produção no head verdadeiro antes de integrar/declarar publicado. Métricas/fila são geradas; não declarar a edição concluída.
+
 ## PR #70: timeout de Git investigado; validação própria pendente
 
 O head inicial 2ba089d concluiu 1.359 testes/79 arquivos, 194 exemplos externos, 36 cenários .NET 10 e build no CI, mas a execução integral 40030039182 falhou: a parcela 3 esgotou os 60 segundos do fluxo Git. As cinco novas verificações .NET passaram. O trace alcança a restauração e a conferência do arquivo, sem comprovar a causa da lentidão ou perda de dados. A falha pública foi preservada, sem converter os demais jobs aprovados em aprovação integral.

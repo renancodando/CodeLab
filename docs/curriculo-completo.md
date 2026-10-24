@@ -1,5 +1,9 @@
 # Currículo do zero à especialização
 
+## Aprofundamento da aula existente csharp-controle
+
+A aula original de condições, loops e métodos passa a praticar interrupções, limite inclusivo e retorno depois do laço. Não amplia o catálogo. Array vazio, negativos, zero e chamadas independentes fazem parte do raciocínio; o verificador executa referências e o exemplo/gabarito originais em .NET 10 e exige o diagnóstico real para caminho sem retorno. A reconstrução conceitual aceita chaves equivalentes, sem prometer compilação do aluno. Fontes: [iteração](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements) e [interrupções](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/jump-statements), no recorte de sintaxe clássica usado em .NET 10. O projeto permanece aberto/manual e C# não é considerado concluído.
+
 ## Aprofundamento da aula existente dotnet
 
 A abertura de C# preserva SDK, runtime, primeiro programa e projeto e acrescenta prática de tipos, divisão antes/depois da conversão e dependências entre declarações. O verificador compila referências e programas inválidos em .NET 10; a pausa offline é conceitual e não comprova o projeto executado. Não expande a quantidade de aulas nem conclui C#. Referências: [inferência de variáveis locais](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/declarations) e [conversões numéricas](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions).

@@ -667,23 +667,23 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "A próxima aula aplica condições, loops e métodos a entradas e regras explícitas. Aqui o critério é explicar o tipo de cada expressão, prever quando ocorre a divisão, localizar a etapa do erro e reconstruir dependências sem copiar uma única ordem. As pausas funcionam offline como decisões conceituais; os verificadores compilam e executam referências em .NET 10, mas não fingem compilar código do aluno no navegador."
 },
   "csharp-controle": {
-    "contexto": "C# oferece estruturas de controle familiares, mas o compilador e os tipos tornam muitas intenções mais explícitas. Métodos ajudam a isolar regras e pattern matching pode tornar decisões sobre dados mais legíveis.",
-    "modelo": "Acompanhe estado e fluxo como na lógica geral, mas use assinaturas de métodos para declarar contrato. O tipo de retorno e dos parâmetros já elimina várias classes de ambiguidade antes da execução.",
+    "contexto": "Depois de escolher tipos e unidades, o programa precisa decidir quais valores processar, quando repetir e o que devolver. Em C#, condições de if e for são booleanas; um método declara parâmetros e tipo de retorno. Separar cálculo da apresentação permite testar uma regra sem interpretar mensagens do console. if, switch e pattern matching ajudam a expressar decisões, mas uma regra curta também precisa ter contrato e casos de fronteira claros.",
+    "modelo": "Acompanhe uma tabela com elemento, condição, acumulador e próximo passo. continue ignora o restante da iteração atual; em um for, o iterador ainda ocorre antes da próxima avaliação da condição. break encerra o laço mais próximo; return encerra o método. As chaves delimitam onde variáveis existem e onde uma interrupção atua. Uma coleção pode estar vazia, portanto um retorno dentro de foreach não garante resultado em todos os caminhos de um método int. O acumulador local começa novamente a cada chamada; escrever no console não substitui devolver o resultado.",
     "passos": [
-      "Defina assinatura do método antes do corpo.",
-      "Use condições que expressem diretamente as regras do domínio.",
-      "Escolha foreach quando o objetivo é visitar itens e for quando o índice realmente importa.",
-      "Garanta que todos os caminhos retornem valor quando o método exige.",
-      "Teste limites usando chamadas pequenas e previsíveis."
+        "Defina a assinatura e o domínio antes do corpo: SomarAte recebe limite entre 0 e 1000 e devolve a soma inclusiva de 1 até esse limite; fora desse recorte, é preciso definir validação e limites numéricos adicionais.",
+        "Escolha foreach para visitar elementos e for quando o contador participa da regra. Diferencie 1 até limite, inclusivo, de índices de array: estes vão de 0 até Length - 1 e normalmente usam i < Length.",
+        "Registre o estado antes e depois de cada iteração. Em SomarAntesDoZero, um negativo não soma; o primeiro zero encerra o laço, mesmo que existam positivos depois dele.",
+        "Coloque o filtro antes da alteração do acumulador. numero % 2 != 0 identifica ímpares positivos e negativos; comparar apenas com 1 deixaria passar restos negativos. Zero é par e somá-lo não muda o total.",
+        "Confira o caminho sem iterações e o ponto em que o método retorna. Um resultado calculado deve ser retornado depois de visitar todos os itens pertinentes, sem modificar a entrada ou depender da chamada anterior."
     ],
     "experimentos": [
-      "Converta um if encadeado em switch expression quando os casos forem discretos.",
-      "Compare for e foreach sobre a mesma coleção.",
-      "Faça o compilador apontar um caminho sem return e leia a mensagem completa."
+        "Faça a previsão de SomarAntesDoZero para [2, -1, 3, 0, 9], [-1, 0, 8] e []. Troque apenas o break do zero por continue; depois troque apenas o continue do negativo por break. Execute cada versão em .NET 10 e explique a primeira diferença, sem misturar as duas alterações.",
+        "Compare i < limite, i <= limite, i <= limite + 1 e i == limite mantendo o mesmo início e incremento. Faça uma tabela para limites 0, 1 e 4, depois confira 1000. Escolha uma condição pela regra inteira, e não apenas por coincidir com o exemplo.",
+        "Reconstrua SomarPares, teste [], [1, 3], [-4, -3, 0, 2] e chamadas sucessivas. Depois mova return para dentro do foreach e leia o diagnóstico do compilador sobre caminhos sem retorno. Retorne à versão correta antes de investigar uma alteração da regra; preserve a entrada para comparar os resultados."
     ],
-    "projeto": "Implemente um calculador de frete com método que recebe peso, distância e categoria, retornando um resultado tipado e testável.",
-    "conexao": "A próxima aula passa de métodos isolados para objetos que mantêm estado e cumprem contratos por interfaces."
-  },
+    "projeto": "Implemente um calculador de frete com método que recebe peso, distância e categoria, retornando um resultado tipado e testável. Escreva primeiro uma tabela de regras com unidades e faixas explícitas: pesos e distâncias aceitos, categorias conhecidas, fronteiras inclusivas e comportamento para dados inválidos. Separe cálculo, validação e Console.WriteLine; mantenha o preço decimal. Entregue casos no limite de cada faixa, abaixo/acima dele, categoria desconhecida e chamadas consecutivas com entradas diferentes. Inclua o .csproj net10.0, código, instruções para compilar/executar e uma investigação curta de uma condição errada. O aluno define e implementa as regras; as pausas não entregam o projeto pronto. Integração, entrada textual e rubrica do projeto continuam com revisão manual.",
+    "conexao": "A aula de objetos passa de métodos isolados para estado e contratos por interfaces. Antes disso, consiga explicar cada caminho de saída, localizar uma parcela omitida, reconstruir o escopo e inventar um caso de borda para sua regra. O exercício EhPar continua aplicável a zero, pares e ímpares, incluindo negativos. As pausas são conceituais offline; referências compiladas em .NET 10 não significam execução do código do aluno ou conclusão do projeto."
+},
   "csharp-objetos": {
     "contexto": "Orientação a objetos é útil quando dados e regras pertencem ao mesmo conceito com ciclo de vida próprio. Classes não devem existir apenas para embrulhar funções; elas devem proteger invariantes e expor operações coerentes.",
     "modelo": "Veja uma classe como guardiã de um estado válido. Construtores estabelecem condições iniciais, propriedades expõem apenas o necessário e métodos realizam transições permitidas. Interfaces descrevem capacidades sem exigir uma implementação específica.",
