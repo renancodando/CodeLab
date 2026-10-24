@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## PR #70: timeout de Git investigado; validação própria pendente
+
+O head inicial 2ba089d concluiu 1.359 testes/79 arquivos, 194 exemplos externos, 36 cenários .NET 10 e build no CI, mas a execução integral 40030039182 falhou: a parcela 3 esgotou os 60 segundos do fluxo Git. As cinco novas verificações .NET passaram. O trace alcança a restauração e a conferência do arquivo, sem comprovar a causa da lentidão ou perda de dados. A falha pública foi preservada, sem converter os demais jobs aprovados em aprovação integral.
+
+A verificação de 220/4000 px foi movida para um cenário Git próprio que também confere trabalho, preparação e histórico em ambas as larguras. O fluxo completo de preparação, assistência, segurança do texto, offline, reload, exportação e importação continua no cenário original. Nenhum limite foi aumentado ou verificação removida. Uma execução local de nove fluxos foi interrompida após dois resultados: não é aprovação. Exigir conclusão completa local, novo CI integral e nova revisão do head atualizado antes de integrar. A revisão sem apontamentos do head antigo não aprova o novo.
+
 ## Prática de cache publicada; fundamentos .NET em validação
 
 A PR #69 está integrada em e08e814, com CI de entrada completo 40025303133 (1.319 testes/78 arquivos, 194 externos, 276 fluxos, dez jobs e auditoria zerada), revisão do head ff04212 sem apontamentos e árvore/pais conferidos. Deployment READY, SHA e domínio conferidos antes/depois de sete fluxos públicos de cache e sete de identidade, em dois lotes completos aprovados. O pós-merge 40027848561 é uma execução independente; conferir sua conclusão real. O checkpoint remoto omite metadados internos do provedor.
