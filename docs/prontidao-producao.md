@@ -318,3 +318,7 @@ O deployment dpl_8D5VkrUT9FwGehVs1WSFhVrjb26G ficou READY/production com gitSour
 ## Números Python integrados, domínio pendente
 
 A PR #40 passou no CI 38259821060 com 706 unidades, 151 fluxos em parcelas de 75/76 e 169 exemplos externos, compiladores, PostgreSQL, API/cache e auditoria. Sem revisões abertas. Merge be777ce404aaa9257eed502d4fa1e0da491f5f66, árvore 94ab7f69ccf88425ca94d0658ae9f6a9ac2d34a5 igual ao head fe30a994bd99bd7cbeda4f06d65ecaeb1e781981. Não declarar publicação até conferir deployment/SHA e os dois fluxos públicos. A PR #41 mantém head 8501af3431f5736aa9d101b7620b4b8ff0681bb2; seu CI 38262798743 está em andamento, sem usar os gates de #40 como substitutos.
+
+## Gate da prática de objetos C#
+
+A entrega de `csharp-objetos` precisa comprovar previsões de referência, diferença entre escrita externa e interna, recusa sem mutação, retirada exata e instâncias independentes em .NET 10. Conferir também assistência, teclado, axe, 220/4000 px, offline e exportação/importação. Respostas são conceituais; o projeto de Conta permanece sob revisão manual. Exigir testes e build próprios, CI integral e revisão no head verdadeiro, árvore, implantação e fluxos públicos antes de declarar publicado. A aprovação da base não aprova este lote.

@@ -18,6 +18,7 @@ import {verificarAusenciasSql} from '../tests/fixtures/sql-null.mjs';
 import {verificarIteradoresCsharp} from '../tests/fixtures/csharp-iteradores.mjs';
 import {verificarFundamentosDotnet} from '../tests/fixtures/dotnet-fundamentos.mjs';
 import {verificarControleCsharp} from '../tests/fixtures/csharp-controle.mjs';
+import {verificarObjetosCsharp} from '../tests/fixtures/csharp-objetos.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
@@ -89,6 +90,7 @@ try{
  const cenariosLinq=await verificarLinqCsharp(root,montarCasosLinq(practiceActivities,getPracticeSolution));
  const cenariosFundamentos=await verificarFundamentosDotnet(root,practiceActivities,getPracticeSolution);
  const cenariosControle=await verificarControleCsharp(root,practiceActivities,getPracticeSolution);
+ const cenariosObjetos=await verificarObjetosCsharp(root,practiceActivities,getPracticeSolution);
  const clienteSqlUrl=asUrl(compileContent(await readFile('src/execution/sql-local.ts','utf8')));
  const fontePraticaSql=compileContent(await readFile('src/learning/pratica-sql.ts','utf8')).replace(/from ['"]\.\.\/execution\/sql-local['"]/g,'from '+JSON.stringify(clienteSqlUrl));
  const {cenariosSql}=await import(asUrl(fontePraticaSql));
@@ -151,5 +153,6 @@ try{
  console.log(cenariosLinq+' cenários .NET conferidos para igualdade, agrupamento e cópia interna.');
  console.log(cenariosFundamentos+' cenários .NET 10 conferidos para tipos, divisão, dependências e diagnósticos reais.');
  console.log(cenariosControle+' cenários .NET 10 conferidos para interrupções, limites, paridade e retorno.');
+ console.log(cenariosObjetos+' cenários .NET 10 conferidos para referências, encapsulamento e invariantes.');
  console.log(cenariosPraticaSql+' bases PostgreSQL conferidas para os novos gabaritos SQL executados em SQLite no navegador.');
 }finally{await rm(root,{recursive:true,force:true});}
