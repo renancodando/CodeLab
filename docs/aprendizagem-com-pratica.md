@@ -357,3 +357,7 @@ Componentes e ciclo de vida acrescenta previsão de instâncias/nó desconectado
 ## Objetos C#: referência, acesso e invariantes
 
 A aula existente `csharp-objetos` recebe três pausas ligadas à teoria: prever uma interface observando a mesma instância, diagnosticar escrita externa que contorna a validação e reconstruir um saque que recusa sem alterar saldo. A reconstrução usa cinco peças com contrato e ordem explícitos; não é avaliação de código livre. Todas são conceituais offline, sem alegar compilação do aluno. O projeto de Conta continua construído pelo aluno e tem rubrica manual, chamadas consecutivas e instâncias independentes. A integração e publicação deste lote dependem dos seus próprios gates.
+
+## Coleções C#: presença, materialização e agregação
+
+A aula original `csharp-colecoes` distribui previsão de Dictionary, diagnóstico de lista filtrada e reconstrução de Where/Select/Sum. Presença não se confunde com valor zero; uma cópia precisa conservar o filtro e a origem; agregar não é contar itens. Respostas são conceituais offline, sem alegar compilação do aluno ou correção de código livre. Referências e exemplos/gabaritos originais são compilados em .NET 10; o projeto de relatório permanece construído pelo aluno e revisado por rubrica manual. Gates próprios em continuidade.md.

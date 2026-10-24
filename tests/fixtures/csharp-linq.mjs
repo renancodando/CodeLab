@@ -49,7 +49,7 @@ Console.WriteLine("cópia isolada");`,saida:['cópia isolada']}
  return casos;
 }
 
-export async function verificarLinqCsharp(raiz,casos){
+export async function verificarLinqCsharp(raiz,casos,declaracoes=''){
  const pasta=join(raiz,'csharp-linq');await mkdir(pasta);
  await writeFile(join(pasta,'NuGet.Config'),'<configuration><packageSources><clear /></packageSources></configuration>');
  await writeFile(join(pasta,'Linq.csproj'),'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><Nullable>enable</Nullable><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup></Project>');
@@ -69,7 +69,8 @@ static void Conferir(string nome, Action executar, string esperada) {
     if (obtida != esperada) throw new Exception(nome + ": saída divergente: " + obtida);
     Console.WriteLine("OK LINQ C# " + nome);
 }
-${funcoes}`;
+${funcoes}
+${declaracoes}`;
  await writeFile(join(pasta,'Program.cs'),codigo);
  const ambiente={...process.env,DOTNET_NOLOGO:'1',DOTNET_CLI_TELEMETRY_OPTOUT:'1',DOTNET_CLI_HOME:pasta,DOTNET_ADD_GLOBAL_TOOLS_TO_PATH:'false'};
  const executar=argumentos=>{const resultado=spawnSync('dotnet',argumentos,{encoding:'utf8',timeout:90000,maxBuffer:256*1024,env:ambiente});if(resultado.error||resultado.status!==0)throw new Error('LINQ C#: '+(resultado.error?.message??resultado.stderr)+resultado.stdout);return resultado.stdout;};

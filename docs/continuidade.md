@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## PR #72 publicada; coleções C# em preparação
+
+A PR #72 foi integrada em 6a912cdf369f3208529b2e8c6fa532d514327d56 pelo head 9ff6250, com árvore/pais conferidos e revisão do head sem apontamentos. CI de entrada 40121389848 e pós-merge 40138959136 concluíram os dez jobs aprovados: 1.411 testes/81 arquivos, 194 exemplos externos, 36 cenários .NET de fundamentos, 16 de controle, 15 de objetos e 292 testes de navegador, com auditoria zerada. Local: 52 específicos/regressões, 15 cenários .NET, build e dez fluxos Edge completos aprovados. Deployment READY/production, SHA/projeto/alias foram conferidos antes/depois de vinte fluxos públicos no run 40139111487: dez Chromium/Ubuntu e dez Edge/Windows.
+
+A falha local inicial de navegador ficou preservada (9/10). O trace mostra cerca de 17 min na navegação durante suspensão/retorno confirmados do Windows. Todos os dez cenários passaram depois com pedido temporário de atividade, restaurado ao terminar, sem mudar fonte, timeout ou retries. As duas falhas nativas anteriores de 90 s continuam com causa não comprovada; uma execução nativa posterior concluiu os quinze cenários. O disco variou entre medições abaixo de 1 GB e uma margem suficiente antes do build; não atribuir causalidade sem evidência nem apagar arquivos para obter verde.
+
+O novo lote trabalha somente a aula existente csharp-colecoes: consulta em Dictionary, lista filtrada materializada e soma de pedidos por uma sequência tipada. Preserva a aula e o relatório original. Respostas do aluno são conceituais offline; referências e programas originais devem compilar em .NET 10. Exigir regressão dos cenários LINQ, verificações locais, build, CI/revisão do novo head e publicação própria. Métricas/fila são geradas; não declarar aula, linguagem ou edição concluídas só pela presença de pausas.
+
 ## PR #71 publicada; próxima lacuna: objetos C#
 
 A validação local específica passou em 52 testes de objetos/controle (dois arquivos). A primeira compilação nativa atingiu o limite de 90 s; a repetição isolada deve ter sua conclusão conferida, sem apagar a falha anterior nem presumir sua causa. O disco C: chegou a 0,52 GB livres durante a execução. Build local e fluxos locais deste lote continuam pendentes; não reutilizar a aprovação da base. Preservar o trabalho no GitHub em rascunho e exigir os gates completos antes de integrar.

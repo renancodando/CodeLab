@@ -322,3 +322,7 @@ A PR #40 passou no CI 38259821060 com 706 unidades, 151 fluxos em parcelas de 75
 ## Gate da prática de objetos C#
 
 A entrega de `csharp-objetos` precisa comprovar previsões de referência, diferença entre escrita externa e interna, recusa sem mutação, retirada exata e instâncias independentes em .NET 10. Conferir também assistência, teclado, axe, 220/4000 px, offline e exportação/importação. Respostas são conceituais; o projeto de Conta permanece sob revisão manual. Exigir testes e build próprios, CI integral e revisão no head verdadeiro, árvore, implantação e fluxos públicos antes de declarar publicado. A aprovação da base não aprova este lote.
+
+## Gate da aula original de coleções C#
+
+Conferir presença/out sem cadastro implícito, lista filtrada independente e soma dos totais dos pedidos certos, com vazio, borda, repetições, chamadas independentes e enumeração única. Executar exemplos/gabaritos reais e diagnósticos em .NET 10, incluindo regressão do verificador LINQ com dois argumentos. Pausas são conceituais; relatório por cliente/período tem revisão manual. Exigir teclado, axe, 220/4000 px, assistência, offline e backup, build, CI/revisão do head verdadeiro e conferência própria de publicação. Não reutilizar a aprovação da base nem apagar falhas anteriores.
