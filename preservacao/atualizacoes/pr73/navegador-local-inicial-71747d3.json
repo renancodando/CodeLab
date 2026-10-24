@@ -1,0 +1,31 @@
+{
+  "head": "71747d3a18fc603af9356cc381536e6591f5b8da",
+  "localBrowser": {
+    "conclusion": "failure",
+    "passed": 9,
+    "failed": 1,
+    "total": 10,
+    "duration": "3.7m",
+    "cause": "seletor .example-code ambíguo entre tipo de apoio e solução após consultar o gabarito",
+    "appChanged": false
+  },
+  "correctedHead": "ce2d81e4a4f44d24629bb41f07dd4a6d7144269e",
+  "correction": "seletores distintos para os dois blocos e visibilidade obrigatória de ambos em 220/4000 px",
+  "timeoutsChanged": false,
+  "scenariosRemoved": false,
+  "retriesAdded": false,
+  "rawTrace": "preservado localmente",
+  "initialCi": {
+    "run": 40142806559,
+    "lastObserved": "in_progress",
+    "overallApproved": false,
+    "core": {
+      "conclusion": "success",
+      "unitTests": 1437,
+      "unitFiles": 82,
+      "externalExamples": 194,
+      "newDotnetScenarios": 15
+    }
+  },
+  "newHeadGates": "pendentes"
+}
