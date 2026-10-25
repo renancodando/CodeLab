@@ -1,0 +1,81 @@
+{
+  "head": "ce2d81e4a4f44d24629bb41f07dd4a6d7144269e",
+  "run": 40143973678,
+  "conclusion": "success",
+  "jobs": 10,
+  "unitTests": 1437,
+  "unitFiles": 82,
+  "externalExamples": 194,
+  "newDotnetCollectionScenarios": 15,
+  "previousLinqScenarios": 10,
+  "browserTests": 297,
+  "browserJobs": [
+    {
+      "job": "Navegador (1/8)",
+      "id": 121021938092,
+      "passed": 39,
+      "duration": "14.7m"
+    },
+    {
+      "job": "Navegador (5/8)",
+      "id": 121021938098,
+      "passed": 36,
+      "duration": "5.8m"
+    },
+    {
+      "job": "Navegador (7/8)",
+      "id": 121021938102,
+      "passed": 34,
+      "duration": "13.6m"
+    },
+    {
+      "job": "Navegador (8/8)",
+      "id": 121021938109,
+      "passed": 37,
+      "duration": "11.5m"
+    },
+    {
+      "job": "Navegador (6/8)",
+      "id": 121021938121,
+      "passed": 33,
+      "duration": "15.9m"
+    },
+    {
+      "job": "Navegador (2/8)",
+      "id": 121021938141,
+      "passed": 38,
+      "duration": "10.4m"
+    },
+    {
+      "job": "Navegador (4/8)",
+      "id": 121021938145,
+      "passed": 38,
+      "duration": "12.7m"
+    },
+    {
+      "job": "Navegador (3/8)",
+      "id": 121021938220,
+      "passed": 42,
+      "duration": "8.9m"
+    }
+  ],
+  "auditAllCountersZero": true,
+  "build": "success",
+  "local": {
+    "specificTests": 52,
+    "specificFiles": 2,
+    "contentAndNativeUnchangedByFinalTestFix": true,
+    "newDotnetScenarios": 15,
+    "previousLinqScenarios": 10,
+    "build": "success",
+    "buildDuration": "3m28",
+    "pages": 157,
+    "offlineEssential": 38,
+    "offlineOptional": 6,
+    "offlineVersion": "1c64dfca9c47d093fdbd",
+    "browserPassed": 10,
+    "browserDuration": "2.9m",
+    "browserExitCode": 0,
+    "temporaryActivityReleased": true
+  }
+}
