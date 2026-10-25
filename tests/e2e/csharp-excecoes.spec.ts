@@ -6,14 +6,19 @@ const idLeitura='cs-async-aguardar-leitura';
 const expressao='await leitor.ReadToEndAsync(token).ConfigureAwait(false)';
 async function conferir(pausa:Locator){await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();}
 
-test('exceções conserva a aula e distingue retorno, limpeza e falha do teste',async({page:pagina})=>{
+test('exceções conserva a aula e distingue retorno e limpeza',async({page:pagina})=>{
  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/csharp-async');await expect(pagina.locator('.lesson-chapter')).toHaveCount(12);await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);
  expect(await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')??'null')?.adaptive?.skills??{})).toEqual({});
  for(const [bloco,id] of [[3,'cs-async-prever-finally'],[6,'cs-async-diagnosticar-teste'],[8,idLeitura]] as const)await expect(pagina.locator('.lesson-chapter').nth(bloco).locator('[data-practice="'+id+'"]')).toBeVisible();
  const prever=pagina.locator('[data-practice="cs-async-prever-finally"]');await prever.getByLabel('Saída prevista, uma linha por saída').fill('4\nfim\nrecusa\nfim\n-1');await conferir(prever);await expect(prever.locator('.practice-feedback')).toContainText('finally');await expect(prever.locator('[data-help] pre')).toHaveCount(0);await prever.getByLabel('Saída prevista, uma linha por saída').fill('fim\n4\nrecusa\nfim\n-1');await conferir(prever);await expect(prever.locator('.practice-feedback')).toContainText('Sua resposta está correta');
+
+ await expect(pagina.locator('.lesson-chapter').filter({has:pagina.getByRole('heading',{name:'Aplicação real pequena',exact:true})})).toContainText('Revisão manual');
+});
+
+test('a captura específica distingue o erro esperado da falha do próprio teste',async({page:pagina})=>{
+ await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/csharp-async');
  const diagnostico=pagina.locator('[data-practice="cs-async-diagnosticar-teste"]');for(const valor of ['generica','aritmetica','divisao']){await diagnostico.locator('input[value="'+valor+'"]').check();await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).toContainText('próprio teste');await expect(diagnostico.locator('[data-help] pre')).toHaveCount(0);}
  const escolha=diagnostico.locator('input[value="especifica"]');await escolha.focus();await escolha.press('Space');await conferir(diagnostico);await expect(diagnostico.locator('.practice-feedback')).toContainText('não houve execução');
- await expect(pagina.locator('.lesson-chapter').filter({has:pagina.getByRole('heading',{name:'Aplicação real pequena',exact:true})})).toContainText('Revisão manual');
 });
 
 test('aguardar a leitura aceita forma equivalente pelo teclado e registra assistência',async({page:pagina})=>{

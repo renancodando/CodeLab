@@ -1,5 +1,12 @@
 # Continuidade do CODELAB
 
+## PR #75 integrada; conferência pública exige separar jornadas C#
+
+A PR #75 foi integrada em c5ed32b74e977fa48b8f86f8c2c8b853492e2352 pelo head 617ece2 com árvore/pais conferidos, CI de entrada 40211323079 completo (1.500 testes/84 arquivos e 307 fluxos), revisão do head sem apontamentos e validações locais. Deployment READY/SHA/projeto/alias conferidos. No run público 40213353142, Chromium passou 10/10 e Edge ficou 9/10: os cinco novos fluxos ASP.NET passaram, mas a jornada C# que junta previsão e diagnóstico excedeu 60 s. Não considerar a conferência pública inteira aprovada.
+
+O trace do artefato 12605544627 mostra ações/asserções com sucesso levando vários segundos, inclusive clique ~9 s e asserção ~12 s, e verificações concluídas depois do deadline. A causa da lentidão não está comprovada. Separaram-se previsão/leitura e diagnóstico em testes independentes, movendo integralmente as asserções e preservando cenários, 60 s e retries zero. Produto, corretores, currículo e métricas não mudaram. Exigir testes locais, CI/revisão do novo head, árvore e nova conferência pública antes de encerrar esta correção. O CI pós-merge 40213038781 terminou aprovado nos dez jobs, com 307 fluxos. A correção preservou as 35 asserções do arquivo C# (conferência da sintaxe); build gerou 157 páginas e offline 38+6, e os onze fluxos locais passaram em 4,9 min no Edge, incluindo axe, 220–4000 px, assistência, offline e backup. CI e revisão do novo head, integração e nova conferência pública continuam pendentes.
+
+
 ## PR #74 publicada; rotas ASP.NET em preparação
 
 Passaram 63 testes específicos/regressões e 15 cenários ASP.NET Core .NET 10 (13 HTTP e dois diagnósticos, CS0162/CS0841). As duas primeiras tentativas nativas revelaram falhas do próprio arranjo: configuração sem provedor gravável e expectativa Allow que fixava GET mesmo no endpoint POST. O verificador agora isola a configuração com provedor em memória e confere Allow pelo contrato de cada endpoint. Logs anteriores preservados, sem retirar verificações ou ampliar limites. Build, navegador, CI/revisão e publicação deste head continuam pendentes.
