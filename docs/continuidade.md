@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## PR #74 publicada; rotas ASP.NET em preparação
+
+Passaram 63 testes específicos/regressões e 15 cenários ASP.NET Core .NET 10 (13 HTTP e dois diagnósticos, CS0162/CS0841). As duas primeiras tentativas nativas revelaram falhas do próprio arranjo: configuração sem provedor gravável e expectativa Allow que fixava GET mesmo no endpoint POST. O verificador agora isola a configuração com provedor em memória e confere Allow pelo contrato de cada endpoint. Logs anteriores preservados, sem retirar verificações ou ampliar limites. Build, navegador, CI/revisão e publicação deste head continuam pendentes.
+
+A PR #74 foi integrada em 195fb5a2fd139b67dc70ed5c306633a824fa5f81 pelo head 75db1bf, com árvore/pais e revisão do mesmo head conferidos. CI de entrada 40191403879 e pós-merge 40193276393 concluíram os dez jobs: 1.469 testes/83 arquivos, 194 exemplos externos, 19 novos cenários .NET 10 e 302 fluxos de navegador, com build e auditoria zerada. Local: 58 específicos, 19 cenários nativos, build e dez fluxos Edge. Deployment READY/production, SHA/projeto/alias conferidos antes/depois de vinte fluxos públicos Chromium/Edge no run 40193493954. O erro inicial do auxiliar local parou antes dos testes e ficou preservado; a correção não mudou fonte, cenários ou limites. Fonte limpa em main e checkpoint final dac7f5e na branch de preservação.
+
+O novo lote aprofunda somente aspnet-projeto: correspondência, método e montagem da API com validação antes da resposta, aceitando as duas ordens dos endpoints independentes. Respostas offline são conceituais; as referências devem compilar em .NET 10 e receber HTTP real em Kestrel no loopback. Preservar o exemplo, exercício e projeto originais. Exigir os gates próprios antes de integrar/publicar e manter métricas geradas, sem confundir pausas com conclusão de aula ou edição.
+
 ## PR #73 publicada; exceções e leitura C# em preparação
 
 O lote local passou em 58 testes específicos/regressões e 19 cenários .NET 10: 18 programas executados e um diagnóstico esperado CS4016. Mantém os limites e a distinção entre resposta conceitual e execução de referência. Build, navegador, CI/revisão do head e publicação continuam pendentes.

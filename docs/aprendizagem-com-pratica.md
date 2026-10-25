@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Contratos HTTP na aula original de ASP.NET
+
+A aula existente aspnet-projeto preserva o exemplo de saúde, o exercício de dobro e o projeto de API em memória. Agora pratica correspondência, método e montagem com validação antes da resposta. O corretor conceitual aceita as duas ordens dos endpoints independentes, sem aceitar registros dentro de outro handler, peças repetidas ou validação depois do retorno. As referências .NET 10 usam Kestrel/HTTP real em loopback, JSON, bordas de int/faixa e métodos recusados; nenhuma API enviada pelo estudante é executada. Leitura não gera domínio, solução registra assistência e o projeto tem rubrica manual. Este lote exige testes locais, build, revisão/CI do head e publicação próprios. Métricas e fila são geradas; presença de pausa não encerra aula ou edição.
+
 ## Exceções, testes e espera dentro da posse do leitor
 
 A aula existente csharp-async passa a praticar finally antes do retorno, captura específica que não esconde a própria falha do teste e leitura aguardada dentro da posse do TextReader. O aluno pode usar a chamada simples ou ConfigureAwait com bool, dentro de um recorte estrutural explícito; não se promete compilação do código livre. As referências .NET 10 confrontam implementações defeituosas e cobrem erro, cancelamento antes/durante a espera, descarte, texto preservado e arquivo real. O leitor controlado é um dublê de ciclo de vida, não uma simulação de arquivo; a integração com JSON continua construída pelo aluno e revisada manualmente. Leitura não gera domínio e solução consultada registra assistência. Gates desta entrega ainda exigem testes locais, build, revisão/CI do head e publicação próprios; os resultados da base não aprovam este lote. Métricas e fila são geradas.
