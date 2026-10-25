@@ -1,0 +1,26 @@
+{
+  "head": "617ece21717e29ca0bdb35bbb2e699d064e7b85e",
+  "merge": "c5ed32b74e977fa48b8f86f8c2c8b853492e2352",
+  "run": 40213353142,
+  "conclusion": "failure",
+  "chromium": {
+    "job": 121229124285,
+    "passed": 10,
+    "duration": "3.8m"
+  },
+  "edge": {
+    "job": 121229124475,
+    "passed": 9,
+    "failed": 1,
+    "duration": "5.0m",
+    "newAspnetFlowsPassed": 5,
+    "failingTest": "tests/e2e/csharp-excecoes.spec.ts:9",
+    "error": "Test timeout of 60000ms exceeded."
+  },
+  "artifact": 12605544627,
+  "traceInspected": true,
+  "observed": "Ações com sucesso consumiram vários segundos: clique ~9,1 s, uma asserção ~12,1 s e outra ~8,2 s. A primeira jornada junta previsão, três diagnósticos e validação do projeto no mesmo orçamento; houve asserções concluídas depois do deadline e teardown de ~15 s.",
+  "rootCauseOfSlowness": "not-proven",
+  "next": "Separar previsão/leitura de diagnóstico em testes independentes, preservando todas as asserções, cenários, timeouts e retries; exigir nova revisão/CI e publicação do novo head.",
+  "privateTraceAndDownloadMetadataExcluded": true
+}
