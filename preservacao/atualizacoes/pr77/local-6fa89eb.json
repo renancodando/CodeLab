@@ -1,0 +1,41 @@
+{
+  "pr": 77,
+  "head": "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9",
+  "base": "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+  "objetivo": "Reduzir preparo redundante de ordenação no cenário de axe e responsividade, conservando a ordem alternativa nos demais fluxos.",
+  "assercoesPreservadas": 34,
+  "jornadasAspnet": 5,
+  "preparacao": {
+    "antes": 5,
+    "depois": 1,
+    "unidade": "trocas adjacentes"
+  },
+  "limites": {
+    "timeout": 60000,
+    "retries": 0,
+    "workers": 1
+  },
+  "build": {
+    "exitCode": 0,
+    "duracaoVite": "5m13s",
+    "paginas": 157,
+    "offlineEssenciais": 38,
+    "offlineOpcionais": 6,
+    "versao": "9decfcbd055c798d4127"
+  },
+  "navegador": {
+    "exitCode": 0,
+    "canal": "msedge",
+    "fluxos": 11,
+    "duracao": "3.6m",
+    "axeResponsividade": "26.3s",
+    "inclui": [
+      "teclado",
+      "220–4000 px",
+      "assistência",
+      "offline",
+      "recuperação por backup"
+    ]
+  },
+  "estado": "Local aprovada; CI integral e integração/produção do novo head ainda pendentes."
+}
