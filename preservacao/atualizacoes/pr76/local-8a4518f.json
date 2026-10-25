@@ -1,0 +1,32 @@
+{
+  "pr": 76,
+  "head": "8a4518ffe6c70bbbe3168ba4ddc52a1da208c885",
+  "base": "c5ed32b74e977fa48b8f86f8c2c8b853492e2352",
+  "mudanca": "Separa previsão/leitura e diagnóstico em jornadas independentes; conserva todas as asserções e os mesmos cenários.",
+  "assercoesPreservadas": 35,
+  "jornadasCsharpAntes": 5,
+  "jornadasCsharpDepois": 6,
+  "fluxosLocais": 11,
+  "duracaoLocal": "4.9m",
+  "navegador": "msedge",
+  "previsao": "10.9s",
+  "diagnostico": "14.6s",
+  "build": {
+    "paginas": 157,
+    "essenciaisOffline": 38,
+    "opcionaisOffline": 6,
+    "versaoOffline": "9decfcbd055c798d4127"
+  },
+  "limites": {
+    "timeout": 60000,
+    "retries": 0,
+    "workers": 1
+  },
+  "estado": "Validação local aprovada; CI/revisão do head e confirmação pública depois da integração pendentes.",
+  "falhaInicial": {
+    "run": 40213353142,
+    "chromium": "10/10",
+    "edge": "9/10",
+    "causa": "Não comprovada. Jornada ampla excedeu 60 s; trace mostra ações e asserções demoradas com sucesso."
+  }
+}
