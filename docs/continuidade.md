@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Correção de preparação do teste de acessibilidade ASP.NET
+
+A PR #76 foi integrada em db10c3dae681b5ec2e801e3d903911c8fbb72913 pelo head 8a4518f, CI de entrada completo (1.500 testes e 308 fluxos), revisão sem apontamentos e árvore/pais conferidos. A rodada pública anterior ao merge passou 11/11 em ambos os navegadores. Deployment READY/SHA/projeto/alias do merge confirmados. Na rodada posterior 40217741270, Chromium passou 11/11 e Edge 10/11: a montagem, axe e responsividade excedeu 60 s. As seis jornadas C# passaram. Não considerar a conferência pública integral aprovada.
+
+O trace do artefato 12607624060 mostra foco ~23 s e tecla ~15 s, com sucesso, durante a ordenação, e início da limpeza antes do axe. A causa da lentidão não está comprovada. O teste de acessibilidade agora prepara a ordem principal válida (uma troca adjacente), conservando todas as asserções; a ordem alternativa continua testada pelo teclado nos demais fluxos. Limites, retries, produto, corretores e métricas não mudam. Exigir validação local, CI/revisão do novo head e nova conferência pública por SHA integrado. O CI pós-merge 40217528513 da PR 76 terminou aprovado nos dez jobs (1.500 testes e 308 fluxos). Esta correção preservou as 34 asserções ASP.NET por comparação da sintaxe, build completo com 157 páginas/offline 38+6 e onze fluxos locais no Edge em 3,6 min; axe/220–4000 px passou em 26,3 s. CI/revisão do novo head e publicação por SHA integrado continuam pendentes.
+
 ## PR #75 integrada; conferência pública exige separar jornadas C#
 
 A PR #75 foi integrada em c5ed32b74e977fa48b8f86f8c2c8b853492e2352 pelo head 617ece2 com árvore/pais conferidos, CI de entrada 40211323079 completo (1.500 testes/84 arquivos e 307 fluxos), revisão do head sem apontamentos e validações locais. Deployment READY/SHA/projeto/alias conferidos. No run público 40213353142, Chromium passou 10/10 e Edge ficou 9/10: os cinco novos fluxos ASP.NET passaram, mas a jornada C# que junta previsão e diagnóstico excedeu 60 s. Não considerar a conferência pública inteira aprovada.

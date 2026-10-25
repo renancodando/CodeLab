@@ -5,11 +5,12 @@ import {practiceActivities} from '../../src/content/practice';
 
 const idOrdem='aspnet-projeto-montar-api';
 const ordem=['construtor','aplicacao','saude','dobro','validar','retornar','fechar','executar'];
+const ordemDireta=['construtor','aplicacao','dobro','validar','retornar','fechar','saude','executar'];
 async function conferir(pausa:Locator){await pausa.getByRole('button',{name:'Conferir comportamento',exact:true}).click();}
-async function ordenar(pausa:Locator){
+async function ordenar(pausa:Locator,destino=ordem){
  const linhas=practiceActivities.find(atividade=>atividade.id===idOrdem)!.lines!;
  const codigos=await pausa.locator('.practice-order code').allTextContents(),ids=codigos.map(codigo=>linhas.find(linha=>linha.code===codigo)!.id);
- for(let indice=0;indice<ordem.length;indice++){let posicao=ids.indexOf(ordem[indice]);while(posicao>indice){const botao=pausa.getByRole('button',{name:'Mover linha '+(posicao+1)+' para cima',exact:true});await botao.focus();await botao.press('Space');[ids[posicao],ids[posicao-1]]=[ids[posicao-1],ids[posicao]];posicao--;}}
+ for(let indice=0;indice<destino.length;indice++){let posicao=ids.indexOf(destino[indice]);while(posicao>indice){const botao=pausa.getByRole('button',{name:'Mover linha '+(posicao+1)+' para cima',exact:true});await botao.focus();await botao.press('Space');[ids[posicao],ids[posicao-1]]=[ids[posicao-1],ids[posicao]];posicao--;}}
 }
 test('rotas conserva a aula e pratica correspondência e método HTTP',async({page:pagina})=>{
  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/aspnet-projeto');await expect(pagina.locator('.lesson-chapter')).toHaveCount(12);await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);
@@ -25,7 +26,7 @@ test('a ordem equivalente dos endpoints funciona pelo teclado e registra assist�
  const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[idOrdem]).toMatchObject({value:ordem,passed:true,assisted:true});expect(salvo.adaptive.skills['csharp.aspnet.contrato'].review.lastOutcome).toBe('assisted');
 });
 test('rotas mantém axe e código completo de 220 a 4000 px',async({page:pagina})=>{
- await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/aspnet-projeto');const pausa=pagina.locator('[data-practice="'+idOrdem+'"]');await ordenar(pausa);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
+ await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/aspnet-projeto');const pausa=pagina.locator('[data-practice="'+idOrdem+'"]');await ordenar(pausa,ordemDireta);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
  for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);await expect(pausa.locator('.practice-order code')).toHaveCount(8);await expect(pausa.locator('[data-help] > .example-code')).toContainText('numero < -1000000');await expect(pausa.locator('[data-help] > .example-code')).toBeVisible();}
 });
 test('a montagem conceitual funciona offline sem iniciar servidor do aluno',async({page:pagina,context:contexto})=>{
