@@ -1,0 +1,39 @@
+{
+  "pr": 77,
+  "tipo": "Conferência da correção antes da integração",
+  "testes": "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9",
+  "produto": "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+  "definicao": "63fda51ff5785072a2e8e47c519e1af2c4eba69c",
+  "run": 40219944442,
+  "resultado": "success",
+  "jobs": [
+    {
+      "id": 121249137846,
+      "nome": "Fluxos públicos em msedge",
+      "resultado": "success",
+      "passaram": "11 passed (3.8m)"
+    },
+    {
+      "id": 121249138280,
+      "nome": "Fluxos públicos em chromium",
+      "resultado": "success",
+      "passaram": "11 passed (3.4m)"
+    }
+  ],
+  "axeResponsividade": {
+    "edge": "20.6s",
+    "chromium": "13.7s"
+  },
+  "deploymentAntes": {
+    "estado": "READY",
+    "sha": "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+    "projetoConferido": true,
+    "aliasConferido": true
+  },
+  "limites": {
+    "timeout": 60000,
+    "retries": 0,
+    "workers": 1
+  },
+  "nota": "Valida os testes do novo head sobre o produto db10c3d. Ainda exige CI integral, integração e conferência de deployment e dos fluxos após merge da PR77."
+}
