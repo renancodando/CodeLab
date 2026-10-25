@@ -1,0 +1,41 @@
+{
+  "run": 40217741270,
+  "artefato": 12607624060,
+  "tamanho": 18020901,
+  "trace": "test-results-publico/**/trace.zip",
+  "leitura": "ZIP lido em memória, com limites de tamanho; conteúdo não executado.",
+  "observacoes": [
+    {
+      "acao": "Focus no botão Mover linha 6 para cima",
+      "duracaoMs": 23123.905,
+      "sucesso": true
+    },
+    {
+      "acao": "Press Space no mesmo botão",
+      "duracaoMs": 14896.643,
+      "sucesso": true
+    },
+    {
+      "acao": "After Hooks",
+      "inicio": 161375.923
+    },
+    {
+      "acao": "Create page da análise axe",
+      "inicio": 170446.103,
+      "resultado": "Contexto sendo fechado após o prazo"
+    }
+  ],
+  "causa": "Lentidão dos comandos não comprovada. O deadline já havia sido atingido na preparação antes da análise axe.",
+  "correcaoProposta": "Usar a ordem principal válida na preparação de acessibilidade: uma troca adjacente em vez de cinco. Preservar ordem alternativa pelo teclado nos outros fluxos.",
+  "verificacaoEstatica": {
+    "assercoesPreservadas": 34,
+    "jornadasAspnet": 5,
+    "preparacoesComOrdemPrincipal": 1,
+    "preparacoesComOrdemAlternativa": 3
+  },
+  "limites": {
+    "timeout": 60000,
+    "retries": 0
+  },
+  "estado": "Build e execução local da alteração em andamento; ainda sem PR/CI deste novo head."
+}
