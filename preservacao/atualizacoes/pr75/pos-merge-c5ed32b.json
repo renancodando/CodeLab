@@ -1,0 +1,76 @@
+{
+  "pr": 75,
+  "head": "617ece21717e29ca0bdb35bbb2e699d064e7b85e",
+  "integracao": "c5ed32b74e977fa48b8f86f8c2c8b853492e2352",
+  "run": 40213038781,
+  "estado": "success",
+  "jobs": [
+    {
+      "id": 121228182371,
+      "nome": "Testes e compilação",
+      "resultado": "success",
+      "navegador": null
+    },
+    {
+      "id": 121228182658,
+      "nome": "Auditoria de dependências",
+      "resultado": "success",
+      "navegador": null
+    },
+    {
+      "id": 121228964621,
+      "nome": "Navegador (4/8)",
+      "resultado": "success",
+      "navegador": "46 passed (14.0m)"
+    },
+    {
+      "id": 121228964668,
+      "nome": "Navegador (8/8)",
+      "resultado": "success",
+      "navegador": "38 passed (19.9m)"
+    },
+    {
+      "id": 121228964675,
+      "nome": "Navegador (2/8)",
+      "resultado": "success",
+      "navegador": "41 passed (12.1m)"
+    },
+    {
+      "id": 121228964680,
+      "nome": "Navegador (5/8)",
+      "resultado": "success",
+      "navegador": "36 passed (7.5m)"
+    },
+    {
+      "id": 121228964691,
+      "nome": "Navegador (6/8)",
+      "resultado": "success",
+      "navegador": "33 passed (15.9m)"
+    },
+    {
+      "id": 121228964692,
+      "nome": "Navegador (1/8)",
+      "resultado": "success",
+      "navegador": "39 passed (12.1m)"
+    },
+    {
+      "id": 121228964747,
+      "nome": "Navegador (3/8)",
+      "resultado": "success",
+      "navegador": "41 passed (2.8m)"
+    },
+    {
+      "id": 121228964749,
+      "nome": "Navegador (7/8)",
+      "resultado": "success",
+      "navegador": "33 passed (8.4m)"
+    }
+  ],
+  "testes": 1500,
+  "arquivos": 84,
+  "exemplosExternos": 194,
+  "cenariosAspnet": 15,
+  "fluxosNavegador": 307,
+  "publico": "Ainda não aprovado integralmente: Chromium 10/10, Edge 9/10 no run 40213353142. Correção separada das jornadas C# em preparação.",
+  "semReducaoDeTestes": true
+}
