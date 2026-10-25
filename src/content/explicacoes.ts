@@ -705,22 +705,25 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "As operações e os contratos de cada objeto sustentam a próxima aula: generics e coleções organizam muitas instâncias sem apagar seus tipos ou as regras que cada uma precisa preservar."
 },
   "csharp-colecoes": {
-    "contexto": "Generics preservam informação de tipo enquanto estruturas e algoritmos são reutilizados. LINQ cria uma linguagem de consulta sobre coleções, mas cada operação ainda possui custo e semântica que precisam ser entendidos.",
-    "modelo": "Pense em IEnumerable<T> como uma sequência que pode ser percorrida. Operadores LINQ compõem uma consulta; muitos são avaliados apenas quando a sequência é enumerada, o que torna execução adiada importante.",
+    "contexto": "Coleções expressam contratos diferentes. List<T> organiza uma sequência editável por posição; Dictionary<TKey,TValue> associa uma chave a um valor; IEnumerable<T> oferece uma sequência para percorrer. A aula conserva o exemplo de filtrar, projetar e materializar, além do exercício de somar pares. As pausas investigam presença de chave, cópia filtrada e composição de um total.",
+    "modelo": "Mantenha o tipo em cada seta: IEnumerable<Pedido> passa por um filtro e continua sendo uma sequência de pedidos; uma projeção de TotalCentavos produz IEnumerable<int>; a soma termina a consulta e produz int. var preserva o tipo inferido, não transforma a sequência em uma coleção dinâmica com qualquer método. Um dicionário tem outra pergunta: essa chave existe, e qual valor está associado a ela?",
     "passos": [
-      "Escolha a coleção pela operação dominante, não apenas por hábito.",
-      "Mantenha T explícito no modelo mental mesmo quando var aparece no código.",
-      "Diferencie filtrar, projetar, agrupar e agregar.",
-      "Saiba quando a consulta é executada e se será enumerada mais de uma vez.",
-      "Materialize com ToList quando uma fotografia dos resultados é realmente necessária."
+      "Leia os parâmetros genéricos: List<int> admite inteiros; Dictionary<string, int> recebe chaves string e valores int. O tipo faz parte do contrato mesmo quando a variável foi declarada com var. IEnumerable<int> permite percorrer valores, mas não promete Add ou acesso por índice.",
+      "No estoque da primeira pausa, a chave lapis existe com quantidade zero. TryGetValue devolve um bool de presença e escreve o resultado em out. Se a chave não existir, o bool será false e o out receberá o padrão de int, que é zero; uma variável anterior com 99 não conserva esse valor.",
+      "Consultar com TryGetValue não cria uma entrada. Já ler o indexador de uma chave ausente lança KeyNotFoundException. O comparador StringComparer.Ordinal usa comparação literal; escolha o comparador conforme o contrato das chaves em vez de alterar nomes silenciosamente.",
+      "Where retém itens que passam no predicado; Select transforma cada item. No exemplo original, 4 e 7 são removidos, enquanto 12 e 20 são projetados para 24 e 40. A ordem da origem continua visível nesse resultado; filtrar não é ordenar nem remover duplicações.",
+      "Muitos operadores LINQ são adiados. Criar uma consulta não a torna List<T>; ToList percorre o resultado naquele momento e cria uma lista. No diagnóstico, é preciso poder acrescentar um item ao resultado sem alterar a lista de origem, preservando o filtro.",
+      "Uma nova lista não significa cópia profunda. Int é um tipo por valor, então os números ficam em listas independentes; se os elementos forem objetos mutáveis, as referências internas ainda podem apontar para os mesmos objetos. Use a distinção da aula anterior e não prometa isolamento profundo só por chamar ToList.",
+      "Quando basta agregar, não é necessário materializar antes. Em SomarValidos, filtre os pedidos, projete seus totais e deixe Sum consumir a sequência. A sobrecarga de int devolve zero para sequência vazia. O recorte recebe totais não negativos até 1000000 por pedido e assume que a soma cabe em int; fora desse limite, não se deve prometer uma soma válida sem tratar overflow.",
+      "Faça uma tabela com entrada, itens selecionados e resultado. Inclua a borda 10 no filtro da segunda pausa, origem vazia, valores repetidos, pedidos inválidos com total positivo, pedidos válidos de total zero e duas chamadas independentes. Não use apenas o caso demonstrado como evidência."
     ],
     "experimentos": [
-      "Crie uma consulta LINQ, altere a fonte antes de enumerar e observe execução adiada.",
-      "Compare First, FirstOrDefault e Single em coleções com zero, um e vários itens.",
-      "Agrupe dados e calcule agregações por chave."
+      "Antes da primeira pausa, acompanhe o bool e o out em duas colunas. Depois compare uma leitura de chave ausente pelo indexador com TryGetValue e confira Count antes/depois. Explique por que quantidade zero, ausência e inclusão de uma nova chave são estados diferentes.",
+      "No diagnóstico, compile o programa original em um projeto .NET 10 e leia o tipo que não possui Add. Depois compare cada alternativa pelo resultado e pela lista de origem. Teste 9, 10, valores fora de ordem, duplicações e lista vazia; uma cópia sem filtro e um alias da origem falham por motivos diferentes.",
+      "Na reconstrução, desenhe os tipos entre filtro, projeção e soma antes de mover as linhas. Use uma sequência vazia, pedidos sem participação, totais zero e duas referências ao mesmo pedido válido. Some valores, não quantidades de elementos. As pausas são conceituais offline; as referências são compiladas e executadas nos verificadores, sem alegar execução do aluno."
     ],
-    "projeto": "Construa um relatório de pedidos que filtra período, agrupa por cliente e calcula quantidade e total usando LINQ.",
-    "conexao": "A última aula de C# junta falhas, arquivos, assincronismo e testes para tornar programas mais robustos."
+    "projeto": "Construa o relatório de pedidos original: filtrar um período, agrupar por cliente e calcular quantidade e total com LINQ. Defina Pedido com cliente, instante, participação no relatório e total em centavos; valide as entradas na fronteira e documente os limites numéricos. Declare o início incluído e o fim excluído do período para não contar a fronteira em dois relatórios. Separe Pedido.cs, Relatorio.cs, Program.cs e testes. Preserve a origem e defina se cada resultado é uma consulta adiada ou uma fotografia; não use ToList por hábito nem exponha uma coleção interna para contornar regras. Teste origem vazia, cliente sem pedidos no período, mesmo cliente repetido, pedidos fora do período, total zero, itens sem participação e chamadas consecutivas. Compare os totais com um cálculo manual pequeno e justifique o comparador de clientes. Entregue dotnet build/dotnet run, casos reproduzíveis e uma análise de um defeito. Rubrica de revisão manual: filtro temporal correto, agrupamento coerente, agregação dos valores certos, origem preservada e limites documentados. As pausas não aprovam automaticamente o relatório completo.",
+    "conexao": "A próxima aula junta falhas, arquivos, assincronismo e testes. As coleções e consultas precisam continuar com contratos claros quando seus dados chegam de I/O e podem falhar, chegar vazios ou ser cancelados."
   },
   "csharp-async": {
     "contexto": "Exceções, I/O e async aparecem juntas porque operações externas falham e levam tempo. Em C#, Task representa trabalho assíncrono; await preserva fluxo legível sem bloquear uma thread enquanto a operação espera.",
