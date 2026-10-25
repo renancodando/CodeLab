@@ -1,0 +1,94 @@
+{
+  "head": "75db1bfc000f2b81cff9662a00f183593f11861c",
+  "run": 40191403879,
+  "conclusion": "success",
+  "jobs": 10,
+  "unitTests": 1469,
+  "unitFiles": 83,
+  "externalExamples": 194,
+  "newDotnetExceptionScenarios": 19,
+  "browserTests": 302,
+  "browserJobs": [
+    {
+      "id": 121163656589,
+      "name": "Navegador (8/8)",
+      "passed": 37,
+      "duration": "19.7m"
+    },
+    {
+      "id": 121163656591,
+      "name": "Navegador (3/8)",
+      "passed": 34,
+      "duration": "7.9m"
+    },
+    {
+      "id": 121163656596,
+      "name": "Navegador (7/8)",
+      "passed": 34,
+      "duration": "7.6m"
+    },
+    {
+      "id": 121163656601,
+      "name": "Navegador (1/8)",
+      "passed": 39,
+      "duration": "15.5m"
+    },
+    {
+      "id": 121163656641,
+      "name": "Navegador (5/8)",
+      "passed": 36,
+      "duration": "5.9m"
+    },
+    {
+      "id": 121163656649,
+      "name": "Navegador (4/8)",
+      "passed": 46,
+      "duration": "10.4m"
+    },
+    {
+      "id": 121163656684,
+      "name": "Navegador (6/8)",
+      "passed": 33,
+      "duration": "10.7m"
+    },
+    {
+      "id": 121163656792,
+      "name": "Navegador (2/8)",
+      "passed": 43,
+      "duration": "10.7m"
+    }
+  ],
+  "auditAllCountersZero": true,
+  "build": "success",
+  "local": {
+    "head": "75db1bfc000f2b81cff9662a00f183593f11861c",
+    "specificTests": 58,
+    "specificFiles": 2,
+    "specificDuration": "21.31s",
+    "dotnetScenarios": 19,
+    "dotnetExecutedPrograms": 18,
+    "dotnetExpectedCompileErrors": [
+      "CS4016"
+    ],
+    "build": "success",
+    "buildExitCode": 0,
+    "viteDuration": "7m17",
+    "pages": 157,
+    "offlineEssential": 38,
+    "offlineOptional": 6,
+    "offlineVersion": "acce92df287be5723b01",
+    "browserPassed": 10,
+    "browserDuration": "3.8m",
+    "browserExitCode": 0,
+    "browserInitialAttempt": {
+      "stage": "configuration",
+      "testsExecuted": 0,
+      "exitCode": 1,
+      "error": "ReferenceError: config is not defined",
+      "preserved": true
+    },
+    "productSourceChangedForAuxiliaryFix": false,
+    "limitsChanged": false,
+    "temporaryActivityReleased": true
+  }
+}
