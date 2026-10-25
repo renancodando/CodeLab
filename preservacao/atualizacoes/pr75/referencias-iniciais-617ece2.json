@@ -1,0 +1,28 @@
+{
+  "head": "617ece21717e29ca0bdb35bbb2e699d064e7b85e",
+  "attempts": [
+    {
+      "stage": "native-host-configuration",
+      "exitCode": 1,
+      "httpScenariosCompleted": 0,
+      "error": "A configuration source is not registered. Please register one before setting a value.",
+      "fix": "Após isolar as fontes, adicionar provedor em memória antes de configurar a URL do host."
+    },
+    {
+      "stage": "native-allow-expectation",
+      "exitCode": 1,
+      "httpScenariosCompleted": 5,
+      "error": "método permitido ausente",
+      "fix": "Conferir Allow pelo contrato do endpoint; GET recusado em MapPost deve anunciar POST."
+    }
+  ],
+  "finalNativeScenarios": 15,
+  "finalHttpScenarios": 13,
+  "expectedCompileErrors": [
+    "CS0162",
+    "CS0841"
+  ],
+  "limitsChanged": false,
+  "assertionsRemoved": false,
+  "initialLogsPreserved": true
+}
