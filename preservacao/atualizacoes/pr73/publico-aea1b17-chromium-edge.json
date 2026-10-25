@@ -1,0 +1,28 @@
+{
+  "merge": "aea1b17fd80da25a5be3c51981f8aaeabe582ac2",
+  "head": "ce2d81e4a4f44d24629bb41f07dd4a6d7144269e",
+  "run": 40145679835,
+  "conclusion": "success",
+  "jobs": [
+    {
+      "job": 121026380063,
+      "passed": 10,
+      "duration": "49.5s",
+      "edge": "155.0.4283.62"
+    },
+    {
+      "job": 121026380222,
+      "passed": 10,
+      "duration": "54.1s",
+      "edge": null
+    }
+  ],
+  "sourcePinned": true,
+  "workflowCommit": "89a61513298242529c8750b7f3a8298d65b60331",
+  "publicDomain": "https://code-lab-omega.vercel.app",
+  "readyBeforeTests": true,
+  "sourceProjectAliasVerifiedBeforeTests": true,
+  "privateProviderMetadataExcluded": true,
+  "readyAfterTests": true,
+  "sourceProjectAliasVerifiedAfterTests": true
+}
