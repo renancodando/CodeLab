@@ -1,4 +1,4 @@
-name: Conferência pública da PR 76 — correção antes da integração
+name: Conferência pública da PR 76 — após integração
 
 on:
   push:
@@ -30,10 +30,10 @@ jobs:
       - name: Recuperar somente o código integrado e verificado
         uses: actions/checkout@v4
         with:
-          ref: 8a4518ffe6c70bbbe3168ba4ddc52a1da208c885
+          ref: db10c3dae681b5ec2e801e3d903911c8fbb72913
           persist-credentials: false
       - name: Conferir o SHA dos testes
-        run: test "$(git rev-parse HEAD)" = "8a4518ffe6c70bbbe3168ba4ddc52a1da208c885"
+        run: test "$(git rev-parse HEAD)" = "db10c3dae681b5ec2e801e3d903911c8fbb72913"
       - name: Preparar Node.js 24
         uses: actions/setup-node@v4
         with:
