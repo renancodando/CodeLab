@@ -1,0 +1,89 @@
+{
+  "pr": 77,
+  "head": "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9",
+  "base": "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+  "arvore": "7350c9118e7e7ebb828586943ed8482d831e1ddb",
+  "run": 40219890859,
+  "resultado": "success",
+  "testes": 1500,
+  "arquivos": 84,
+  "exemplosExternos": 194,
+  "cenariosAspnet": 15,
+  "fluxosNavegador": 308,
+  "auditoriaZero": true,
+  "revisao": {
+    "commit_sha": "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9",
+    "has_any_findings": false,
+    "has_unresolved_findings": false,
+    "status": "completed"
+  },
+  "threadsPendentes": 0,
+  "jobs": [
+    {
+      "id": 121248967938,
+      "nome": "Auditoria de dependências",
+      "resultado": "success",
+      "navegador": null
+    },
+    {
+      "id": 121248968197,
+      "nome": "Testes e compilação",
+      "resultado": "success",
+      "navegador": null
+    },
+    {
+      "id": 121249720928,
+      "nome": "Navegador (4/8)",
+      "resultado": "success",
+      "navegador": "46 passed (7.8m)"
+    },
+    {
+      "id": 121249720931,
+      "nome": "Navegador (3/8)",
+      "resultado": "success",
+      "navegador": "41 passed (9.2m)"
+    },
+    {
+      "id": 121249720967,
+      "nome": "Navegador (5/8)",
+      "resultado": "success",
+      "navegador": "36 passed (7.5m)"
+    },
+    {
+      "id": 121249720969,
+      "nome": "Navegador (1/8)",
+      "resultado": "success",
+      "navegador": "40 passed (12.2m)"
+    },
+    {
+      "id": 121249720987,
+      "nome": "Navegador (2/8)",
+      "resultado": "success",
+      "navegador": "41 passed (8.9m)"
+    },
+    {
+      "id": 121249720992,
+      "nome": "Navegador (7/8)",
+      "resultado": "success",
+      "navegador": "33 passed (13.4m)"
+    },
+    {
+      "id": 121249721032,
+      "nome": "Navegador (8/8)",
+      "resultado": "success",
+      "navegador": "38 passed (20.1m)"
+    },
+    {
+      "id": 121249721071,
+      "nome": "Navegador (6/8)",
+      "resultado": "success",
+      "navegador": "33 passed (15.8m)"
+    }
+  ],
+  "publicoAntesMerge": {
+    "run": 40219944442,
+    "chromium": 11,
+    "edge": 11
+  },
+  "publicacaoDepoisMerge": "Ainda pendente."
+}
