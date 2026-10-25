@@ -53,7 +53,12 @@
   },
   "ciPosMerge": {
     "run": 40227594441,
-    "estado": "Em andamento; ainda precisa terminar integralmente."
+    "resultado": "success",
+    "testes": 1500,
+    "arquivos": 84,
+    "exemplosExternos": 194,
+    "cenariosAspnet": 15,
+    "fluxosNavegador": 308
   },
   "limites": {
     "timeout": 60000,
