@@ -746,22 +746,25 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "A trilha ASP.NET Core usa esses contratos ao receber requisições e cancelar trabalho. Revise novamente os caminhos de erro, quem possui cada recurso e como um teste detecta uma implementação defeituosa antes de avançar."
   },
   "aspnet-projeto": {
-    "contexto": "Uma aplicação ASP.NET Core moderna é montada em Program.cs: serviços são registrados, o pipeline é configurado e rotas são mapeadas. Entender essa composição evita tratar o framework como magia.",
-    "modelo": "Pense na aplicação em duas fases. Na construção, você registra capacidades no contêiner; em execução, cada requisição atravessa middleware e chega a um endpoint que usa as dependências necessárias.",
+    "contexto": "Uma aplicação ASP.NET Core moderna é montada em Program.cs: serviços são registrados, o pipeline é configurado e rotas são mapeadas. Entender essa composição evita tratar o framework como magia. Nos exemplos desta aula o contrato é .NET 10, com o SDK Web e um projeto local; o navegador do CodeLab não hospeda a API do aluno.",
+    "modelo": "Pense na construção e na execução como momentos distintos. WebApplication.CreateBuilder prepara configuração e serviços; Build cria a aplicação; MapGet e MapPost registram endpoints; Run mantém o host atendendo até encerrar. Um endpoint considera caminho e método. Na rota /dobro/{numero:int}, a restrição participa da correspondência: abc não corresponde. Isso é diferente de converter uma entrada da query num handler (int numero), em que uma entrada ausente ou não conversível gera falha de binding. Não use restrições de rota para esconder validações de domínio: elas podem transformar entrada inválida em 404. Uma regra de faixa pode responder 400 explicitamente dentro do handler. Results.Ok define uma resposta quando o handler executa; não libera outros métodos. Neste recorte sem fallback, um caminho desconhecido retorna 404 e um método recusado no caminho existente retorna 405. Essas respostas não demonstram autenticação, persistência ou disponibilidade de banco.",
     "passos": [
-      "Leia o .csproj para saber framework e pacotes.",
-      "Identifique WebApplication.CreateBuilder e o registro de serviços.",
-      "Observe WebApplication.Build como a transição para o app executável.",
-      "Mapeie middleware na ordem em que requisições devem atravessá-lo.",
-      "Mapeie endpoints e teste cada rota pelo contrato HTTP."
+      "Leia o .csproj e confirme Microsoft.NET.Sdk.Web e net10.0. O exemplo original de /saude e o exercício /dobro/{numero:int} continuam disponíveis; execute num projeto local e use a URL exibida pelo servidor, sem confundir a porta do front-end.",
+      "Localize CreateBuilder, registro de serviços, Build, middleware, endpoints e Run. Configure o pipeline na ordem em que as requisições devem atravessá-lo. Registros de dois endpoints independentes podem trocar de posição; isso não autoriza mover um registro para dentro do handler do outro.",
+      "Antes de executar, monte uma tabela de método, caminho e resultado esperado. Compare GET /dobro/5, GET /dobro/abc e POST /dobro/5. A restrição :int não é uma validação completa do número de negócio.",
+      "Quando o monitor recebe 405, investigue o método registrado antes de mudar corpo, cliente ou porta. Verifique também o método que deve permanecer recusado; aceitar todos pode quebrar o contrato sem causar erro de compilação.",
+      "Na reconstrução, /dobro recebe numero da query. Confira -1000000, zero, 1000000 e os valores imediatamente externos. Valide antes de calcular e retornar. O exemplo original usa multiplicação de int; fora de uma faixa segura, uma conta pode transbordar mesmo que a entrada caiba em int.",
+      "Teste HTTP de verdade: status, JSON, métodos recusados, binding, caminhos ausentes e chamadas independentes. As referências usam Kestrel em porta dinâmica somente no loopback e encerram cada host. O verificador não roda um servidor enviado pelo estudante, e as pausas offline continuam conceituais."
     ],
     "experimentos": [
       "Crie uma Minimal API com /saude e /tarefas.",
       "Mude a ordem de dois middleware simples e registre o caminho da requisição.",
-      "Leia configuração por ambiente sem colocar segredo no código."
+      "Leia configuração por ambiente sem colocar segredo no código.",
+      "Compare o exercício original /dobro/{numero:int} com /dobro?numero=5 da reconstrução. Teste texto, ausência, int fora da representação e número fora da faixa de negócio; anote onde a requisição foi recusada.",
+      "Troque a ordem dos dois registros completos e comprove o mesmo contrato HTTP. Depois introduza um método errado ou uma resposta fixa: os testes devem detectar o defeito, não apenas confirmar um caso feliz."
     ],
-    "projeto": "Monte uma API .NET 10 mínima com health check, endpoint de leitura e endpoint de criação validado em memória.",
-    "conexao": "A próxima aula explica como serviços registrados entram nos endpoints sem criação manual espalhada pelo código."
+    "projeto": "Monte a API .NET 10 mínima original com health check, endpoint de leitura e endpoint de criação validado em memória. Documente caminhos, métodos, JSON e status; diferencie ausência de rota, binding e regra de domínio. Acrescente casos de borda, métodos recusados e uma tentativa defeituosa que a suíte precisa detectar. Use dados descartáveis nos testes, confira o encerramento do host e registre que o armazenamento em memória se perde ao reiniciar. Entregue Program.cs, .csproj, testes e README com dotnet build e comandos de execução, exportando os arquivos. Revisão manual por rubrica: a pausa não constrói nem certifica o projeto ou sua implantação.",
+    "conexao": "A próxima aula explica como serviços registrados entram nos endpoints sem criação manual espalhada pelo código. Revise antes o contrato HTTP e a ordem de construção; leitura da teoria não comprova que uma API foi construída e testada."
   },
   "aspnet-di": {
     "contexto": "Injeção de dependência separa o que uma classe precisa de como essa dependência é construída. O contêiner do ASP.NET Core gerencia criação e ciclo de vida, mas escolhas erradas de lifetime podem compartilhar ou reter estado indevidamente.",

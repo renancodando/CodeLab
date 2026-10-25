@@ -14,6 +14,10 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "aspnet-projeto-prever-rotas":{"accepted":["200\n404\n405"],"solution":"200\n404\n405","failure":"Separe três caminhos: handler de sucesso, caminho que não satisfaz a restrição e método não permitido em um caminho existente. :int participa da seleção da rota; a recusa do método não é um erro do cálculo."},
+ "aspnet-projeto-corrigir-metodo":{"accepted":["leitura"],"solution":"var construtor = WebApplication.CreateBuilder(args);\nvar aplicacao = construtor.Build();\naplicacao.MapGet(\"/saude\", () => Results.Ok(new { estado = \"ok\" }));\naplicacao.Run();","failure":"O método HTTP faz parte do contrato. Confira separadamente a requisição do monitor e o POST que deve continuar recusado. Alterar o JSON ou a porta não muda o conjunto de métodos aceitos pelo endpoint."},
+ "aspnet-projeto-montar-api":{"accepted":[],"order":["construtor","aplicacao","dobro","validar","retornar","fechar","saude","executar"],"solution":"var construtor = WebApplication.CreateBuilder(args);\nvar aplicacao = construtor.Build();\naplicacao.MapGet(\"/dobro\", (int numero) => {\n    if (numero < -1000000 || numero > 1000000) return Results.BadRequest();\n    return Results.Ok(new { resultado = numero * 2 });\n});\naplicacao.MapGet(\"/saude\", () => Results.Ok(new { estado = \"ok\" }));\naplicacao.Run();","failure":"Verifique a primeira leitura de cada variável, os limites do handler e os retornos. Uma validação depois de um return não protege a resposta. As duas rotas devem existir antes de iniciar o host; registrar /saude dentro de /dobro não é uma ordem equivalente."},
+
  "cs-async-prever-finally":{"accepted":["fim\n4\nrecusa\nfim\n-1"],"solution":"fim\n4\nrecusa\nfim\n-1","failure":"Acompanhe cada chamada até sair do método. finally roda depois de escolher o retorno, antes de ele chegar ao chamador; no caminho de erro, a mensagem do catch também participa da sequência."},
  "cs-async-diagnosticar-teste":{"accepted":["especifica"],"solution":"static int Dividir(int a, int b) {\n    if (b == 0) throw new ArgumentException(\"divisor\");\n    return a / b;\n}\nstatic void ExigirDivisorZero() {\n    try {\n        Dividir(1, 0);\n        throw new Exception(\"não recusou\");\n    } catch (ArgumentException) { }\n}\nExigirDivisorZero();\nConsole.WriteLine(\"teste passou\");","failure":"Um teste precisa distinguir a falha esperada da falha criada pelo próprio teste. Capturar tudo pode esconder uma função que retornou normalmente; capturar um tipo que ela não lança também recusa o caso correto."},
  "cs-async-aguardar-leitura":{"accepted":["await leitor.ReadToEndAsync(token)"],"solution":"await leitor.ReadToEndAsync(token)","failure":"Confira três pontos: a leitura deve ser aguardada dentro do using, receber o token e produzir texto sem bloquear a thread. A conclusão ou falha precisa acontecer antes do descarte; devolver uma tarefa não é devolver o seu texto."},
@@ -472,7 +476,10 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    if(Array.isArray(answer))submitted=answer.map(normalized);
    else submitted=normalized(answer).split('\n').map(normalized).filter(Boolean);
    // Require every line exactly once; a prefix, duplicate or injected line cannot pass.
-   if(id==='cs-controle-reconstruir-retorno'){
+   if(id==='aspnet-projeto-montar-api'){
+    const semSaude=submitted.filter(linha=>linha!=='saude'),esperada=concept.order.filter(linha=>linha!=='saude');
+    passed=submitted.length===8&&new Set(submitted).size===8&&semSaude.length===esperada.length&&semSaude.every((linha,indice)=>linha===esperada[indice])&&[2,6].includes(submitted.indexOf('saude'));
+   }else if(id==='cs-controle-reconstruir-retorno'){
     const linhas=activity.lines!;
     passed=submitted.length===concept.order.length&&new Set(submitted).size===concept.order.length&&submitted.every((linhaId,indice)=>{
      const linha=linhas.find(linha=>linha.id===linhaId),esperada=linhas.find(linha=>linha.id===concept.order![indice]);
