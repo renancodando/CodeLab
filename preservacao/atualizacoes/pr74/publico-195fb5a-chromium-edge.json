@@ -1,0 +1,30 @@
+{
+  "head": "75db1bfc000f2b81cff9662a00f183593f11861c",
+  "merge": "195fb5a2fd139b67dc70ed5c306633a824fa5f81",
+  "run": 40193493954,
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 121169285216,
+      "name": "Fluxos públicos em chromium",
+      "passed": 10,
+      "duration": "3.0m",
+      "edge": null
+    },
+    {
+      "id": 121169285443,
+      "name": "Fluxos públicos em msedge",
+      "passed": 10,
+      "duration": "3.3m",
+      "edge": "155.0.4283.62"
+    }
+  ],
+  "sourcePinned": true,
+  "workflowCommit": "89326248641ce6c2e2ba8462b2c777a576f6d685",
+  "publicDomain": "https://code-lab-omega.vercel.app",
+  "readyBeforeTests": true,
+  "sourceProjectAliasVerifiedBeforeTests": true,
+  "readyAfterTests": true,
+  "sourceProjectAliasVerifiedAfterTests": true,
+  "privateProviderMetadataExcluded": true
+}
