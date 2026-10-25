@@ -1,0 +1,67 @@
+{
+  "merge": "195fb5a2fd139b67dc70ed5c306633a824fa5f81",
+  "run": 40193276393,
+  "conclusion": "success",
+  "jobs": 10,
+  "unitTests": 1469,
+  "unitFiles": 83,
+  "externalExamples": 194,
+  "newDotnetExceptionScenarios": 19,
+  "browserTests": 302,
+  "browserJobs": [
+    {
+      "id": 121169390393,
+      "name": "Navegador (1/8)",
+      "passed": 39,
+      "duration": "15.6m"
+    },
+    {
+      "id": 121169390399,
+      "name": "Navegador (4/8)",
+      "passed": 46,
+      "duration": "14.4m"
+    },
+    {
+      "id": 121169390402,
+      "name": "Navegador (7/8)",
+      "passed": 34,
+      "duration": "6.6m"
+    },
+    {
+      "id": 121169390410,
+      "name": "Navegador (5/8)",
+      "passed": 36,
+      "duration": "5.1m"
+    },
+    {
+      "id": 121169390426,
+      "name": "Navegador (2/8)",
+      "passed": 43,
+      "duration": "10.0m"
+    },
+    {
+      "id": 121169390444,
+      "name": "Navegador (6/8)",
+      "passed": 33,
+      "duration": "15.7m"
+    },
+    {
+      "id": 121169390473,
+      "name": "Navegador (8/8)",
+      "passed": 37,
+      "duration": "21.4m"
+    },
+    {
+      "id": 121169390486,
+      "name": "Navegador (3/8)",
+      "passed": 34,
+      "duration": "7.5m"
+    }
+  ],
+  "auditAllCountersZero": true,
+  "build": "success",
+  "pages": 157,
+  "offlineEssential": 38,
+  "offlineOptional": 6,
+  "offlineVersion": "76dc9a68976f5ef92d2c"
+}
