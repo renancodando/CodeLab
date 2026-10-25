@@ -1,0 +1,121 @@
+{
+  "pr": 77,
+  "head": "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9",
+  "integracao": "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+  "arvore": "7350c9118e7e7ebb828586943ed8482d831e1ddb",
+  "run": 40227594441,
+  "resultado": "success",
+  "testes": 1500,
+  "arquivos": 84,
+  "exemplosExternos": 194,
+  "cenariosAspnet": 15,
+  "fluxosNavegador": 308,
+  "navegadores": [
+    {
+      "id": 121272901867,
+      "nome": "Navegador (2/8)",
+      "resultado": "41 passed (5.1m)"
+    },
+    {
+      "id": 121272901896,
+      "nome": "Navegador (3/8)",
+      "resultado": "41 passed (2.8m)"
+    },
+    {
+      "id": 121272901923,
+      "nome": "Navegador (4/8)",
+      "resultado": "46 passed (14.2m)"
+    },
+    {
+      "id": 121272901930,
+      "nome": "Navegador (5/8)",
+      "resultado": "36 passed (7.6m)"
+    },
+    {
+      "id": 121272901939,
+      "nome": "Navegador (1/8)",
+      "resultado": "40 passed (12.2m)"
+    },
+    {
+      "id": 121272901940,
+      "nome": "Navegador (6/8)",
+      "resultado": "33 passed (9.2m)"
+    },
+    {
+      "id": 121272901967,
+      "nome": "Navegador (7/8)",
+      "resultado": "33 passed (13.3m)"
+    },
+    {
+      "id": 121272902134,
+      "nome": "Navegador (8/8)",
+      "resultado": "38 passed (20.3m)"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 121272175183,
+      "nome": "Testes e compilação",
+      "resultado": "success"
+    },
+    {
+      "id": 121272175395,
+      "nome": "Auditoria de dependências",
+      "resultado": "success"
+    },
+    {
+      "id": 121272901867,
+      "nome": "Navegador (2/8)",
+      "resultado": "success"
+    },
+    {
+      "id": 121272901896,
+      "nome": "Navegador (3/8)",
+      "resultado": "success"
+    },
+    {
+      "id": 121272901923,
+      "nome": "Navegador (4/8)",
+      "resultado": "success"
+    },
+    {
+      "id": 121272901930,
+      "nome": "Navegador (5/8)",
+      "resultado": "success"
+    },
+    {
+      "id": 121272901939,
+      "nome": "Navegador (1/8)",
+      "resultado": "success"
+    },
+    {
+      "id": 121272901940,
+      "nome": "Navegador (6/8)",
+      "resultado": "success"
+    },
+    {
+      "id": 121272901967,
+      "nome": "Navegador (7/8)",
+      "resultado": "success"
+    },
+    {
+      "id": 121272902134,
+      "nome": "Navegador (8/8)",
+      "resultado": "success"
+    }
+  ],
+  "publico": {
+    "run": 40227747630,
+    "checkout": "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+    "resultado": "success",
+    "chromium": 11,
+    "edge": 11
+  },
+  "deploymentAntesEDepois": {
+    "estado": "READY",
+    "sha": "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+    "projetoConferido": true,
+    "aliasConferido": true
+  },
+  "limite": "Encerra esta entrega, preservando as falhas anteriores. A edição curricular ainda tem 38 aulas sem pausas e aprofundamentos registrados."
+}
