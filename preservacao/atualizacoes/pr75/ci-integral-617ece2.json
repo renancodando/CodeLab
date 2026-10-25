@@ -1,0 +1,94 @@
+{
+  "head": "617ece21717e29ca0bdb35bbb2e699d064e7b85e",
+  "run": 40211323079,
+  "conclusion": "success",
+  "jobs": 10,
+  "unitTests": 1500,
+  "unitFiles": 84,
+  "externalExamples": 194,
+  "newAspnetScenarios": 15,
+  "browserTests": 307,
+  "browserJobs": [
+    {
+      "id": 121223761008,
+      "name": "Navegador (3/8)",
+      "passed": 41,
+      "duration": "6.8m"
+    },
+    {
+      "id": 121223761011,
+      "name": "Navegador (7/8)",
+      "passed": 33,
+      "duration": "10.2m"
+    },
+    {
+      "id": 121223761025,
+      "name": "Navegador (2/8)",
+      "passed": 41,
+      "duration": "11.5m"
+    },
+    {
+      "id": 121223761036,
+      "name": "Navegador (1/8)",
+      "passed": 39,
+      "duration": "16.0m"
+    },
+    {
+      "id": 121223761039,
+      "name": "Navegador (8/8)",
+      "passed": 38,
+      "duration": "11.4m"
+    },
+    {
+      "id": 121223761060,
+      "name": "Navegador (4/8)",
+      "passed": 46,
+      "duration": "14.0m"
+    },
+    {
+      "id": 121223761061,
+      "name": "Navegador (5/8)",
+      "passed": 36,
+      "duration": "3.9m"
+    },
+    {
+      "id": 121223761076,
+      "name": "Navegador (6/8)",
+      "passed": 33,
+      "duration": "15.8m"
+    }
+  ],
+  "build": "success",
+  "auditAllCountersZero": true,
+  "local": {
+    "head": "617ece21717e29ca0bdb35bbb2e699d064e7b85e",
+    "specificTests": 63,
+    "specificFiles": 2,
+    "specificDuration": "7.13s",
+    "nativeScenarios": 15,
+    "httpScenarios": 13,
+    "expectedCompileDiagnostics": [
+      {
+        "code": "CS0162",
+        "warningsAsErrors": true
+      },
+      {
+        "code": "CS0841"
+      }
+    ],
+    "build": "success",
+    "buildExitCode": 0,
+    "viteDuration": "5m30",
+    "pages": 157,
+    "offlineEssential": 38,
+    "offlineOptional": 6,
+    "offlineVersion": "9decfcbd055c798d4127",
+    "browserPassed": 10,
+    "browserDuration": "3.9m",
+    "browserExitCode": 0,
+    "initialNativeFailuresPreserved": true,
+    "assertionsRemoved": false,
+    "limitsChanged": false,
+    "temporaryActivityReleased": true
+  }
+}
