@@ -1,0 +1,31 @@
+{
+  "head": "617ece21717e29ca0bdb35bbb2e699d064e7b85e",
+  "specificTests": 63,
+  "specificFiles": 2,
+  "specificDuration": "7.13s",
+  "nativeScenarios": 15,
+  "httpScenarios": 13,
+  "expectedCompileDiagnostics": [
+    {
+      "code": "CS0162",
+      "warningsAsErrors": true
+    },
+    {
+      "code": "CS0841"
+    }
+  ],
+  "build": "success",
+  "buildExitCode": 0,
+  "viteDuration": "5m30",
+  "pages": 157,
+  "offlineEssential": 38,
+  "offlineOptional": 6,
+  "offlineVersion": "9decfcbd055c798d4127",
+  "browserPassed": 10,
+  "browserDuration": "3.9m",
+  "browserExitCode": 0,
+  "initialNativeFailuresPreserved": true,
+  "assertionsRemoved": false,
+  "limitsChanged": false,
+  "temporaryActivityReleased": true
+}
