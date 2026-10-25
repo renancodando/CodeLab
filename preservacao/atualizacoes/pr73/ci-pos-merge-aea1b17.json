@@ -1,0 +1,68 @@
+{
+  "merge": "aea1b17fd80da25a5be3c51981f8aaeabe582ac2",
+  "run": 40145403728,
+  "conclusion": "success",
+  "jobs": 10,
+  "unitTests": 1437,
+  "unitFiles": 82,
+  "externalExamples": 194,
+  "newDotnetCollectionScenarios": 15,
+  "previousLinqScenarios": 10,
+  "browserTests": 297,
+  "browserJobs": [
+    {
+      "id": 121025998200,
+      "name": "Navegador (8/8)",
+      "passed": 37,
+      "duration": "19.7m"
+    },
+    {
+      "id": 121025998203,
+      "name": "Navegador (2/8)",
+      "passed": 38,
+      "duration": "7.6m"
+    },
+    {
+      "id": 121025998204,
+      "name": "Navegador (6/8)",
+      "passed": 33,
+      "duration": "15.9m"
+    },
+    {
+      "id": 121025998206,
+      "name": "Navegador (5/8)",
+      "passed": 36,
+      "duration": "5.9m"
+    },
+    {
+      "id": 121025998207,
+      "name": "Navegador (3/8)",
+      "passed": 42,
+      "duration": "9.2m"
+    },
+    {
+      "id": 121025998210,
+      "name": "Navegador (4/8)",
+      "passed": 38,
+      "duration": "12.6m"
+    },
+    {
+      "id": 121025998231,
+      "name": "Navegador (7/8)",
+      "passed": 34,
+      "duration": "10.2m"
+    },
+    {
+      "id": 121025998240,
+      "name": "Navegador (1/8)",
+      "passed": 39,
+      "duration": "11.1m"
+    }
+  ],
+  "auditAllCountersZero": true,
+  "build": "success",
+  "pages": 157,
+  "offlineEssential": 38,
+  "offlineOptional": 6,
+  "offlineVersion": "74d0c1b04de3f9fa8739"
+}
