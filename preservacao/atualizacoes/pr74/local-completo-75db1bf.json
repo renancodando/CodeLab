@@ -1,0 +1,31 @@
+{
+  "head": "75db1bfc000f2b81cff9662a00f183593f11861c",
+  "specificTests": 58,
+  "specificFiles": 2,
+  "specificDuration": "21.31s",
+  "dotnetScenarios": 19,
+  "dotnetExecutedPrograms": 18,
+  "dotnetExpectedCompileErrors": [
+    "CS4016"
+  ],
+  "build": "success",
+  "buildExitCode": 0,
+  "viteDuration": "7m17",
+  "pages": 157,
+  "offlineEssential": 38,
+  "offlineOptional": 6,
+  "offlineVersion": "acce92df287be5723b01",
+  "browserPassed": 10,
+  "browserDuration": "3.8m",
+  "browserExitCode": 0,
+  "browserInitialAttempt": {
+    "stage": "configuration",
+    "testsExecuted": 0,
+    "exitCode": 1,
+    "error": "ReferenceError: config is not defined",
+    "preserved": true
+  },
+  "productSourceChangedForAuxiliaryFix": false,
+  "limitsChanged": false,
+  "temporaryActivityReleased": true
+}
