@@ -1,0 +1,89 @@
+{
+  "pr": 76,
+  "head": "8a4518ffe6c70bbbe3168ba4ddc52a1da208c885",
+  "base": "c5ed32b74e977fa48b8f86f8c2c8b853492e2352",
+  "arvore": "69f231f121a711d5170092209ef6d2ae0716ad40",
+  "run": 40215361917,
+  "resultado": "success",
+  "jobs": [
+    {
+      "id": 121235218929,
+      "nome": "Auditoria de dependências",
+      "resultado": "success",
+      "navegador": null
+    },
+    {
+      "id": 121235219136,
+      "nome": "Testes e compilação",
+      "resultado": "success",
+      "navegador": null
+    },
+    {
+      "id": 121236094027,
+      "nome": "Navegador (2/8)",
+      "resultado": "success",
+      "navegador": "41 passed (10.9m)"
+    },
+    {
+      "id": 121236094028,
+      "nome": "Navegador (3/8)",
+      "resultado": "success",
+      "navegador": "41 passed (9.0m)"
+    },
+    {
+      "id": 121236094029,
+      "nome": "Navegador (6/8)",
+      "resultado": "success",
+      "navegador": "33 passed (11.9m)"
+    },
+    {
+      "id": 121236094048,
+      "nome": "Navegador (4/8)",
+      "resultado": "success",
+      "navegador": "46 passed (13.9m)"
+    },
+    {
+      "id": 121236094052,
+      "nome": "Navegador (8/8)",
+      "resultado": "success",
+      "navegador": "38 passed (20.3m)"
+    },
+    {
+      "id": 121236094061,
+      "nome": "Navegador (7/8)",
+      "resultado": "success",
+      "navegador": "33 passed (7.2m)"
+    },
+    {
+      "id": 121236094088,
+      "nome": "Navegador (1/8)",
+      "resultado": "success",
+      "navegador": "40 passed (12.1m)"
+    },
+    {
+      "id": 121236094140,
+      "nome": "Navegador (5/8)",
+      "resultado": "success",
+      "navegador": "36 passed (7.5m)"
+    }
+  ],
+  "testes": 1500,
+  "arquivos": 84,
+  "exemplosExternos": 194,
+  "cenariosAspnet": 15,
+  "fluxosNavegador": 308,
+  "auditoriaZero": true,
+  "revisao": {
+    "commit_sha": "8a4518ffe6c70bbbe3168ba4ddc52a1da208c885",
+    "has_any_findings": false,
+    "has_unresolved_findings": false,
+    "status": "completed"
+  },
+  "threadsPendentes": 0,
+  "publicoAntesMerge": {
+    "run": 40215475529,
+    "chromium": 11,
+    "edge": 11
+  },
+  "publicacaoDepoisMerge": "Pendente; não declarar publicado ainda."
+}
