@@ -1,5 +1,13 @@
 # Continuidade do CODELAB
 
+## PR #73 publicada; exceções e leitura C# em preparação
+
+O lote local passou em 58 testes específicos/regressões e 19 cenários .NET 10: 18 programas executados e um diagnóstico esperado CS4016. Mantém os limites e a distinção entre resposta conceitual e execução de referência. Build, navegador, CI/revisão do head e publicação continuam pendentes.
+
+A PR #73 foi integrada em aea1b17fd80da25a5be3c51981f8aaeabe582ac2 pelo head ce2d81e, com árvore/pais e revisão do head conferidos. CI de entrada 40143973678 e pós-merge 40145403728 aprovaram os dez jobs: 1.437 testes/82 arquivos, 194 exemplos externos, quinze cenários novos de coleções .NET 10 e dez LINQ anteriores, 297 testes de navegador, build e auditoria zerada. Deployment READY/production, SHA/projeto/domínio conferidos antes/depois de vinte fluxos públicos (40145679835): dez Chromium e dez Edge/Windows. Local: 52 específicos, 25 cenários nativos, build final e dez fluxos Edge aprovados. A falha inicial de seletor no head 71747d3 está preservada; não mudou aplicação, limite ou cenário para obter verde. Checkpoint/provas na branch de preservação, que não deve ser integrada em main.
+
+A próxima entrega trabalha somente csharp-async: finally antes do retorno, teste que não engole sua própria falha e leitura aguardada dentro da posse do recurso. Preserva exemplo, divisão, capítulos e importador JSON. As respostas offline são conceituais; referências exigem .NET 10 real, falhas, cancelamento, descarte e arquivo. Este novo head ainda precisa de validações locais, build, CI, revisão e publicação próprios. Métricas/fila são geradas; uma pausa não encerra a profundidade da aula ou a edição.
+
 ## PR #72 publicada; coleções C# em preparação
 
 A primeira verificação local do lote de coleções terminou em 9/10: depois de consultar a solução, o seletor genérico de código encontrou tanto o tipo de apoio quanto o gabarito e falhou por ambiguidade. O teste agora distingue os dois blocos e exige ambos visíveis em 220/4000 px. Mantém todas as verificações, timeout e retries. Os 52 específicos e 25 cenários nativos já passaram; o novo head precisa de build, navegador, CI e revisão próprios. A aprovação parcial do head 71747d3 não aprova o novo.

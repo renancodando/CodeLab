@@ -726,22 +726,24 @@ const roteiros:Record<string,Roteiro>={
     "conexao": "A próxima aula junta falhas, arquivos, assincronismo e testes. As coleções e consultas precisam continuar com contratos claros quando seus dados chegam de I/O e podem falhar, chegar vazios ou ser cancelados."
   },
   "csharp-async": {
-    "contexto": "Exceções, I/O e async aparecem juntas porque operações externas falham e levam tempo. Em C#, Task representa trabalho assíncrono; await preserva fluxo legível sem bloquear uma thread enquanto a operação espera.",
-    "modelo": "Separe falhas esperadas do domínio de falhas técnicas. Use exceções quando não há resultado normal para continuar; capture apenas onde existe uma decisão útil. Em I/O assíncrono, propague Task até a fronteira adequada.",
+    "contexto": "Exceções, arquivos e async aparecem juntas porque operações externas falham e levam tempo. Uma Task pode já estar concluída ou ainda representar trabalho pendente; await obtém seu resultado sem bloquear a thread durante uma espera. Ele não torna um cálculo de CPU automaticamente paralelo.",
+    "modelo": "Siga três caminhos separados: resultado normal, falha e cancelamento. Um return no try ou no catch escolhe o resultado, mas finally ainda roda antes da saída. A suspensão temporária em await não encerra o escopo. using organiza o descarte de IDisposable; aguardar a leitura dentro dele conserva o recurso até a conclusão. Neste exercício, o chamador entrega um TextReader não nulo exclusivamente ao método, que assume seu descarte. Nem todo método que recebe um recurso é dono dele: o contrato deve dizer quem descarta. IAsyncDisposable exige await using, um contrato diferente. Não transforme uma falha técnica em texto vazio nem trate cancelamento esperado como sucesso.",
     "passos": [
-      "Valide condições de domínio antes de iniciar I/O quando possível.",
-      "Use await em APIs assíncronas em vez de bloquear com .Result ou .Wait().",
-      "Capture exceções específicas somente onde há recuperação, tradução ou registro útil.",
-      "Use using/await using para recursos descartáveis.",
-      "Escreva testes sobre comportamento observável, incluindo falhas."
+      "Antes de executar Calcular, escreva a saída de cada caminho. No caso normal, finally escreve antes do chamador receber o número; no caso de divisor zero, o catch específico também escreve. Isso não desfaz mudanças já feitas.",
+      "Em testes de exceção, mantenha uma falha explícita depois da chamada que deveria recusar a entrada. Capture apenas a exceção esperada. catch(Exception) pode capturar a própria falha do teste e aprovar uma função quebrada.",
+      "Confira quem possui o leitor e quando o using termina. Em async Task<string>, return espera uma string; ReadToEndAsync(token) oferece Task<string>. A expressão aguardada precisa permanecer dentro da posse do leitor.",
+      "Passe o CancellationToken recebido à operação. Propague falhas e cancelamento quando não houver recuperação útil; Result e Wait bloqueiam e podem mudar a forma de observar exceções.",
+      "Teste texto vazio, espaços e caracteres Unicode sem alterá-los, sucesso, falha depois de suspender, cancelamento antes/durante a espera e descarte uma vez. Use sinais controlados em testes; dormir por um tempo fixo não prova a ordem.",
+      "Separe a atividade conceitual offline da execução externa: a pausa reconhece a expressão pedida; as referências compilam em .NET 10. Um TextReader controlado é um dublê que verifica ciclo de vida, complementado por leitura real de arquivo nos verificadores."
     ],
     "experimentos": [
-      "Compare File.ReadAllText e ReadAllTextAsync numa operação simulada maior.",
-      "Crie um método async que lança e teste com Assert.ThrowsAsync.",
-      "Introduza CancellationToken e cancele uma operação cooperativa."
+      "Conserve Dividir e seus testes: confira divisor negativo e exija a ArgumentException para zero. Introduza a falha de retornar zero nesse caso e observe se o teste passa indevidamente; não capture a falha do próprio teste.",
+      "Complete LerTextoAsync e teste um StringReader vazio e outro com espaços/acentos. Em projeto local .NET 10, use também StreamReader num arquivo temporário e confira seu fechamento.",
+      "Num teste com leitura controlada por TaskCompletionSource, confirme que a tarefa continua pendente e o leitor vivo antes de liberar o resultado. Depois force falha e cancelamento, sem usar rede ou atrasos arbitrários.",
+      "Compare aguardar a leitura dentro do using com devolver uma Task de um método sem async. A segunda forma pode descartar o recurso antes da conclusão; arquivos pequenos que terminam imediatamente podem esconder esse defeito."
     ],
-    "projeto": "Crie um importador assíncrono de arquivo JSON que valida conteúdo, suporta cancelamento e possui testes para arquivo válido, ausente e inválido.",
-    "conexao": "A trilha ASP.NET Core usa esses fundamentos para receber requisições HTTP em uma aplicação real."
+    "projeto": "Continue o importador assíncrono de arquivo JSON: mantenha validação, cancelamento e testes para arquivo válido, ausente e inválido. Separe leitura, análise e validação; documente encoding, limite de tamanho, dono do recurso e formato aceito. Teste também arquivo vazio, espaços/Unicode, erro de leitura e cancelamento sem registrar sucesso ou gravar estado parcial. Use diretório temporário nos testes e confira liberação dos recursos. Acrescente README com dotnet build, dotnet test e decisões; exporte os arquivos do projeto. Revisão manual por rubrica: a pausa não executa o importador nem certifica sua integração.",
+    "conexao": "A trilha ASP.NET Core usa esses contratos ao receber requisições e cancelar trabalho. Revise novamente os caminhos de erro, quem possui cada recurso e como um teste detecta uma implementação defeituosa antes de avançar."
   },
   "aspnet-projeto": {
     "contexto": "Uma aplicação ASP.NET Core moderna é montada em Program.cs: serviços são registrados, o pipeline é configurado e rotas são mapeadas. Entender essa composição evita tratar o framework como magia.",
