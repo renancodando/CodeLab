@@ -1,0 +1,70 @@
+{
+  "pr": 77,
+  "head": "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9",
+  "integracao": "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+  "arvore": "7350c9118e7e7ebb828586943ed8482d831e1ddb",
+  "pais": [
+    "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+    "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9"
+  ],
+  "ciEntrada": {
+    "run": 40219890859,
+    "resultado": "success",
+    "testes": 1500,
+    "arquivos": 84,
+    "exemplosExternos": 194,
+    "cenariosAspnet": 15,
+    "fluxosNavegador": 308
+  },
+  "revisao": {
+    "head": "6fa89eb0db6bb0d733d89c98dac53c9b0bdc50a9",
+    "resultado": "completed",
+    "apontamentos": false,
+    "threadsPendentes": 0
+  },
+  "publico": {
+    "run": 40227747630,
+    "definicao": "61c15db85ea29057fa2e8bd974de575ef20fbb4a",
+    "checkout": "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+    "resultado": "success",
+    "chromium": "11 passed (3.4m)",
+    "edge": "11 passed (5.0m)",
+    "axeResponsividade": {
+      "chromium": "14.1s",
+      "edge": "24.0s"
+    },
+    "edgeVersion": "155.0.4283.62"
+  },
+  "deploymentAntes": {
+    "estado": "READY",
+    "destino": "production",
+    "sha": "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+    "projetoConferido": true,
+    "aliasConferido": true,
+    "conferidoEm": "2026-10-25T19:47:54Z"
+  },
+  "deploymentDepois": {
+    "estado": "READY",
+    "destino": "production",
+    "sha": "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+    "projetoConferido": true,
+    "aliasConferido": true,
+    "conferidoEm": "2026-10-25T19:56:27Z"
+  },
+  "ciPosMerge": {
+    "run": 40227594441,
+    "estado": "Em andamento; ainda precisa terminar integralmente."
+  },
+  "limites": {
+    "timeout": 60000,
+    "retries": 0,
+    "workers": 1
+  },
+  "cobertura": {
+    "aulas": 137,
+    "atividades": 213,
+    "aulasComPausas": 99,
+    "aulasSemPausas": 38
+  },
+  "limiteCurricular": "A publicação desta etapa não conclui a edição curricular nem comprova execução de C# do aluno nas pausas conceituais."
+}
