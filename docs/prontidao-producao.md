@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Exceções, testes e espera dentro da posse do leitor
+
+A aula existente csharp-async passa a praticar finally antes do retorno, captura específica que não esconde a própria falha do teste e leitura aguardada dentro da posse do TextReader. O aluno pode usar a chamada simples ou ConfigureAwait com bool, dentro de um recorte estrutural explícito; não se promete compilação do código livre. As referências .NET 10 confrontam implementações defeituosas e cobrem erro, cancelamento antes/durante a espera, descarte, texto preservado e arquivo real. O leitor controlado é um dublê de ciclo de vida, não uma simulação de arquivo; a integração com JSON continua construída pelo aluno e revisada manualmente. Leitura não gera domínio e solução consultada registra assistência. Gates desta entrega ainda exigem testes locais, build, revisão/CI do head e publicação próprios; os resultados da base não aprovam este lote. Métricas e fila são geradas.
+
 ## Base .NET conferida; controle C# exige validação própria
 
 A PR #70 tem revisão do head correto, CI de entrada e pós-merge integrais, árvore/pais e deployment READY/SHA/domínio conferidos. Nove fluxos públicos Chromium passaram na execução 40098887331; os quatro timeouts locais de Edge não foram apagados ou considerados resolvidos. O lote csharp-controle preserva runtime, rede, identidade e arquitetura: amplia prática conceitual e referências .NET 10. Exigir testes, build, navegador, revisão/CI e produção próprios. Catálogo/fila são gerados e uma pausa não encerra aula, linguagem ou edição.

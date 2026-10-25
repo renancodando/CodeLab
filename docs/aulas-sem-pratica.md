@@ -2,12 +2,12 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **40 de 137 aulas sem pausas deste catálogo**. As outras 97 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **39 de 137 aulas sem pausas deste catálogo**. As outras 98 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 8 | 2 |
-| C# | 14 | 10 | 4 |
+| C# | 14 | 11 | 3 |
 | CSS | 15 | 13 | 2 |
 | HTML | 19 | 15 | 4 |
 | JavaScript | 30 | 28 | 2 |
@@ -30,7 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `csharp-async` — Exceções, arquivos, async e testes | C# e .NET 10 | C# | Original |
 | `aspnet-projeto` — Projeto, Program.cs e rotas | ASP.NET Core | Integração (transversal) | Original |
 | `aspnet-di` — Injeção de dependência e serviços | ASP.NET Core | Integração (transversal) | Original |
 | `aspnet-dto` — DTOs, validação e respostas REST | ASP.NET Core | Integração (transversal) | Original |

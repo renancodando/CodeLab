@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Exceções, testes e espera dentro da posse do leitor
+
+A aula existente csharp-async passa a praticar finally antes do retorno, captura específica que não esconde a própria falha do teste e leitura aguardada dentro da posse do TextReader. O aluno pode usar a chamada simples ou ConfigureAwait com bool, dentro de um recorte estrutural explícito; não se promete compilação do código livre. As referências .NET 10 confrontam implementações defeituosas e cobrem erro, cancelamento antes/durante a espera, descarte, texto preservado e arquivo real. O leitor controlado é um dublê de ciclo de vida, não uma simulação de arquivo; a integração com JSON continua construída pelo aluno e revisada manualmente. Leitura não gera domínio e solução consultada registra assistência. Gates desta entrega ainda exigem testes locais, build, revisão/CI do head e publicação próprios; os resultados da base não aprovam este lote. Métricas e fila são geradas.
+
 ## Controle C#: interromper, incluir a borda e retornar
 
 A aula csharp-controle conserva seu exemplo, EhPar e projeto e distribui previsão, diagnóstico e reconstrução entre a teoria. O corretor exige cada linha uma vez e aceita a troca entre chaves equivalentes: indentação não define o escopo de C#. Referências verificam o zero sentinela, negativos ignorados, limite inclusivo, array vazio, pares negativos, entrada preservada e chamadas sucessivas. Respostas do aluno continuam conceituais offline; referências e o exemplo/gabarito originais são compilados em .NET 10. Leitura não gera domínio, consultar solução registra assistência e o calculador de frete continua construído pelo aluno, com revisão manual.
