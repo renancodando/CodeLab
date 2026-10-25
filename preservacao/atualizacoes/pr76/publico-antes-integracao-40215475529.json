@@ -1,0 +1,35 @@
+{
+  "pr": 76,
+  "tipo": "Verificação da correção antes da integração",
+  "testes": "8a4518ffe6c70bbbe3168ba4ddc52a1da208c885",
+  "produto": "c5ed32b74e977fa48b8f86f8c2c8b853492e2352",
+  "definicao": "a4afe3019aab2bd26e311c10e97545fcc2094e34",
+  "run": 40215475529,
+  "resultado": "success",
+  "jobs": [
+    {
+      "id": 121235567660,
+      "nome": "Fluxos públicos em chromium",
+      "resultado": "success",
+      "passaram": "11 passed (4.2m)"
+    },
+    {
+      "id": 121235567842,
+      "nome": "Fluxos públicos em msedge",
+      "resultado": "success",
+      "passaram": "11 passed (6.4m)"
+    }
+  ],
+  "deploymentAntes": {
+    "estado": "READY",
+    "sha": "c5ed32b74e977fa48b8f86f8c2c8b853492e2352",
+    "projetoConferido": true,
+    "aliasConferido": true
+  },
+  "limites": {
+    "timeout": 60000,
+    "retries": 0,
+    "workers": 1
+  },
+  "nota": "Valida os testes corrigidos sobre o produto integrado da PR 75. Não substitui a conferência de deployment e dos fluxos após merge da PR 76."
+}
