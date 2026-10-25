@@ -1,0 +1,17 @@
+# PR 73 publicada e conferida
+
+A PR https://github.com/renancodando/CodeLab/pull/73 foi integrada do head ce2d81e4a4f44d24629bb41f07dd4a6d7144269e em aea1b17fd80da25a5be3c51981f8aaeabe582ac2. Árvore 494817a41f2922678ae12e7f673a5036c785c320 e pais 6a912cdf369f3208529b2e8c6fa532d514327d56/ce2d81e conferidos. Revisão concluída no head exato sem apontamentos ou threads pendentes.
+
+CI de entrada 40143973678 e pós-merge 40145403728 concluíram os dez jobs aprovados: 1.437 testes/82 arquivos, 194 exemplos externos, 15 cenários novos de coleções .NET 10 e dez cenários LINQ anteriores, 297 testes de navegador, build e auditoria com todos os contadores zerados. Local: 52 específicos/regressões, 25 cenários nativos (15 novos/dez anteriores), build final 3m28 (157 páginas; offline 38 essenciais/seis opcionais) e dez fluxos Edge completos em 2,9 min.
+
+Deployment READY/production, SHA real integrado, projeto e alias conferidos antes/depois de vinte fluxos públicos aprovados no run 40145679835: dez Chromium/Ubuntu em 54,1 s e dez Edge/Windows 2025 em 49,5 s. Edge lançado na versão 155.0.4283.62. Domínio https://code-lab-omega.vercel.app. A definição 89a61513298242529c8750b7f3a8298d65b60331 na branch verificacao/publicacao-pr73 faz checkout fixo do merge aea1b17. Nunca integrar branches de conferência ou preservação em main.
+
+A execução inicial no head 71747d3 falhou: o seletor de código encontrava tanto o tipo de apoio quanto o gabarito depois de abrir a solução. Local 9/10 e CI inicial 40142806559 ficaram preservados. O head ce2d81e distingue os dois blocos e exige ambos visíveis em 220/4000 px. Não mudou limites, retries, cenários nem aplicação para obter verde. A suspensão comprovada no navegador da PR 72 explica apenas aquela falha específica; não explica esta ambiguidade nem os timeouts nativos anteriores.
+
+Provas resumidas em preservacao/atualizacoes/pr73: ci-integral-ce2d81e.json (0c8769e), local-completo-ce2d81e.json (7785dd8), publico-aea1b17-chromium-edge.json (3c1e09b) e ci-pos-merge-aea1b17.json (8c0557c). Os registros iniciais e auxiliares também estão preservados. Metadados privados da hospedagem, traces e logs brutos seguem locais intencionalmente; não publicar dados internos nem alegar que esses arquivos foram enviados.
+
+Main local sincronizado por fast-forward, limpo em aea1b17. Nenhum stash ou commit de branches locais ficou sem alcance em refs remotas de origin na verificação. Não resetar, apagar ou forçar branches antigas. Toda fonte e auxiliares relevantes desta entrega estão no GitHub.
+
+Edição ainda em andamento: 137 aulas preservadas, 207 atividades, 97 aulas com pausas e 40 sem. A presença de pausa não encerra profundidade, aula ou linguagem. Próxima lacuna da fila gerada: csharp-async. Trabalhar finally/retorno, teste de exceção que não esconda sua própria falha e espera da leitura dentro da posse do recurso. Respostas offline continuam conceituais, com referências .NET 10 reais para sucesso, falha, cancelamento, descarte e arquivos. Preservar exemplo, exercício de divisão, doze capítulos e projeto de importador JSON; não duplicar as atividades avançadas existentes de semáforo/token vinculado. Exigir gates próprios antes de integrar/publicar.
+
+A margem de disco foi 2.341 MB na última leitura; não comprova recuperação permanente do PC. Pedidos temporários de atividade somente durante validações próprias, com restauração em finally, sem mudar a política global de energia.
