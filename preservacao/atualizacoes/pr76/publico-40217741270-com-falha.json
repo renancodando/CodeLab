@@ -1,0 +1,27 @@
+{
+  "pr": 76,
+  "integracao": "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+  "testes": "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+  "definicao": "6cbe5b2fcbd94496ccd2e19fe9276409a7c816f6",
+  "run": 40217741270,
+  "resultado": "failure",
+  "chromium": "11 passed (3.6m)",
+  "edge": "10 passed (6.1m), 1 failed",
+  "falha": {
+    "arquivo": "tests/e2e/aspnet-rotas.spec.ts",
+    "teste": "rotas mantém axe e código completo de 220 a 4000 px",
+    "mensagem": "Test timeout of 60000ms exceeded; browserContext.newPage: Target page, context or browser has been closed",
+    "local": "análise axe",
+    "causa": "Ainda não comprovada; inspecionar trace antes de alterar."
+  },
+  "csharp": "Todos os seis fluxos C# passaram no Edge, incluindo as duas jornadas separadas.",
+  "deploymentAntes": {
+    "ready": "READY",
+    "target": "production",
+    "sha": "db10c3dae681b5ec2e801e3d903911c8fbb72913",
+    "projectMatched": true,
+    "aliasMatched": true,
+    "conferidoEm": "2026-10-25T17:42:01Z"
+  },
+  "publicacaoIntegral": "Pendente; não tratar esta conferência como aprovada."
+}
