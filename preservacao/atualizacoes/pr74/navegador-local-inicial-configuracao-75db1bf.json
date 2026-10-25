@@ -1,0 +1,12 @@
+{
+  "head": "75db1bfc000f2b81cff9662a00f183593f11861c",
+  "stage": "local-browser-configuration",
+  "exitCode": 1,
+  "testsExecuted": 0,
+  "error": "ReferenceError: config is not defined",
+  "cause": "O auxiliar importou configuracao, mas tentou expandir config.",
+  "productChangedToBypassFailure": false,
+  "limitsChanged": false,
+  "sourceTestsChanged": false,
+  "next": "Novo auxiliar com o mesmo conjunto de dez testes e diretório/log distintos; preservar o registro inicial."
+}
