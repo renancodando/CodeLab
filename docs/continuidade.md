@@ -2,6 +2,16 @@
 
 A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
 
+## DTOs: limites, curto-circuito e contrato de criação
+
+A aula existente `aspnet-dto` recebeu três pausas: previsão nos limites de entrada, diagnóstico da guarda e reconstrução da validação antes de criar a resposta. Os exemplos, exercício original e arquitetura continuam. O projeto ganhou revisão manual com bordas, representação de saída, autoria confiável e a distinção entre devolver Location e implementar persistência/GET. As respostas do aluno são conceituais; o verificador executa as referências em .NET 10 e envia HTTP real somente no loopback.
+
+Passaram 124 testes da aula/corretor comum e cinco cenários nativos com títulos ausentes, vazios, espaços, 80/81 unidades UTF-16, JSON inválido, identificadores independentes, resposta e método HTTP. O seletor passou onze testes próprios. Build concluído: 157 páginas e offline 38+6. No navegador local passaram somente os dois cenários afetados: DTO e o smoke cuja API faltava. O disco oscilou até 0,24 GB durante o build e voltou a 2,2 GB; não atribuir causalidade à duração. Logs preservados. Conferir o CI proporcional e a revisão do novo head antes de integrar; não declarar publicado. A fila e as métricas são geradas, sem criar aula nova.
+
+## Validação por impacto em implantação
+
+O primeiro run proporcional 40400301441 passou os contratos selecionados, build e 12 dos 13 fluxos Chromium. O último falhou por conexão recusada em 5080: o seletor tinha considerado os arquivos explícitos, mas não a dependência da API usada pelo smoke. Corrigiu-se a seleção dos serviços, sem alterar teste, asserção, timeout ou retries. A conferência local repetiu apenas o cenário afetado, que passou com a API disponível. Pós-merge e produção agora distribuem dois e três contratos distintos. Não contar este run como aprovado nem a diferença de duração como ganho de uma entrega validada.
+
 ## Backup C# com exportação e restauração separadas
 
 A PR #78 foi integrada em 5a66c2d00f2cb4febe488ff130fd142a04e4bcab pelo head b1a4813, com árvore/pais conferidos, revisão sem apontamentos, CI de entrada completo (1.528 testes/85 arquivos, 194 exemplos externos, 16 cenários de escopos e 314 fluxos) e 17 fluxos locais aprovados. Deployment READY/SHA/projeto/alias conferidos. Na rodada pública 40323519196, Chromium passou 17/17 e Edge 16/17: todos os seis fluxos novos passaram, mas o ciclo de backup C# excedeu 60 s. Não considerar a conferência pública integral aprovada. O CI pós-merge 40323073312 terminou aprovado nos dez jobs, com 1.528 testes e 314 fluxos.
