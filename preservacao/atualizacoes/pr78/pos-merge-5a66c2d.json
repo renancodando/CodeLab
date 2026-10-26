@@ -1,0 +1,83 @@
+{
+  "merge": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+  "run": {
+    "id": 40323073312,
+    "sha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+    "status": "completed",
+    "result": "success"
+  },
+  "unitarios": 1528,
+  "arquivosUnitarios": 85,
+  "exemplos": 194,
+  "escopos": 16,
+  "auditoriaZero": true,
+  "jobs": [
+    {
+      "id": 121574141892,
+      "name": "Navegador (5/8)",
+      "passaram": 51,
+      "duracao": "10.1m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121574141934,
+      "name": "Navegador (3/8)",
+      "passaram": 41,
+      "duracao": "8.0m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121574141975,
+      "name": "Navegador (7/8)",
+      "passaram": 32,
+      "duracao": "9.5m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121574142038,
+      "name": "Navegador (6/8)",
+      "passaram": 33,
+      "duracao": "12.2m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121574142110,
+      "name": "Navegador (1/8)",
+      "passaram": 44,
+      "duracao": "6.3m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121574142164,
+      "name": "Navegador (8/8)",
+      "passaram": 39,
+      "duracao": "20.9m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121574142190,
+      "name": "Navegador (4/8)",
+      "passaram": 38,
+      "duracao": "12.8m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121574142197,
+      "name": "Navegador (2/8)",
+      "passaram": 36,
+      "duracao": "12.0m",
+      "status": "completed",
+      "result": "success"
+    }
+  ],
+  "fluxos": 314,
+  "publicacaoIntegral": false,
+  "pendencia": "timeout no backup C# do Edge na rodada publica 40323519196; correcao em branch separada, não contar Chromium aprovado como aprovação integral"
+}
