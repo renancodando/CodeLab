@@ -1,0 +1,14 @@
+{
+  "pr": 78,
+  "head": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+  "review": {
+    "commit_sha": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+    "has_any_findings": false,
+    "has_unresolved_findings": false,
+    "status": "completed"
+  },
+  "threads": [],
+  "coreJob": 121564409574,
+  "ciRun": 40320647497,
+  "ciCompleto": "pendente"
+}
