@@ -1,0 +1,173 @@
+{
+  "pr": 79,
+  "head": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+  "tree": "7073fd3cf063f3c31608845ce4121edadb17cb76",
+  "arquivos": [
+    "docs/continuidade.md",
+    "tests/e2e/csharp-excecoes.spec.ts"
+  ],
+  "ci": {
+    "id": 40326734056,
+    "head": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+    "status": "completed",
+    "result": "success"
+  },
+  "unitarios": 1528,
+  "arquivosUnitarios": 85,
+  "exemplosExternos": 194,
+  "escoposNativos": 16,
+  "auditoriaZero": true,
+  "browser": [
+    {
+      "id": 121586845007,
+      "name": "Navegador (6/8)",
+      "passed": 33,
+      "duration": "9.0m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121586845140,
+      "name": "Navegador (8/8)",
+      "passed": 39,
+      "duration": "14.1m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121586845145,
+      "name": "Navegador (3/8)",
+      "passed": 41,
+      "duration": "8.1m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121586845150,
+      "name": "Navegador (7/8)",
+      "passed": 32,
+      "duration": "12.7m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121586845169,
+      "name": "Navegador (5/8)",
+      "passed": 51,
+      "duration": "7.9m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121586845179,
+      "name": "Navegador (1/8)",
+      "passed": 40,
+      "duration": "6.0m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121586845397,
+      "name": "Navegador (4/8)",
+      "passed": 38,
+      "duration": "11.5m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121586845410,
+      "name": "Navegador (2/8)",
+      "passed": 41,
+      "duration": "13.0m",
+      "status": "completed",
+      "result": "success"
+    }
+  ],
+  "totalBrowser": 315,
+  "local": {
+    "build": {
+      "estado": "success",
+      "paginas": 157,
+      "offline": "38+6",
+      "versao": "f16693eaed96298b9bc8"
+    },
+    "falhaPreservada": {
+      "passaram": 17,
+      "falhou": 1,
+      "falha": "worker process exited unexpectedly (code=3221226505, signal=null)",
+      "teste": "escopos mantém axe e os programas completos de 220 a 4000 px",
+      "duracaoTeste": "0ms",
+      "estado": "falha preservada; nao conta como suite aprovada"
+    },
+    "novaRodada": {
+      "passaram": 18,
+      "duracao": "4.7m",
+      "exitCode": 0,
+      "log": "backup-csharp-navegador-novo-processo-20261026.log",
+      "semAlterarCodigo": true
+    },
+    "comparacaoAST": {
+      "anteriores": 34,
+      "atuais": 35,
+      "todasPreservadas": true
+    }
+  },
+  "publicBefore": {
+    "run": {
+      "id": 40327303081,
+      "sha": "45971f972e74c7f9f11bdbd34b919ff6de1d981b",
+      "status": "completed",
+      "result": "success"
+    },
+    "workflow": "45971f972e74c7f9f11bdbd34b919ff6de1d981b",
+    "testesSha": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+    "produtoSha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+    "browsers": [
+      {
+        "id": 121587211504,
+        "canal": "chromium",
+        "passaram": 18,
+        "duracao": "1.9m",
+        "testesSha": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+        "produtoSha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+        "estado": "success",
+        "passosBackup": [
+          "  ✓  17 tests/e2e/csharp-excecoes.spec.ts:45:2 › exportação e restauração da expressão de leitura › exporta a expressão de leitura conferida com assistência (3.5s)",
+          "  ✓  18 tests/e2e/csharp-excecoes.spec.ts:49:2 › exportação e restauração da expressão de leitura › restaura o arquivo exportado numa jornada independente (5.6s)"
+        ]
+      },
+      {
+        "id": 121587211774,
+        "canal": "msedge",
+        "passaram": 18,
+        "duracao": "7.9m",
+        "testesSha": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+        "produtoSha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+        "estado": "success",
+        "passosBackup": [
+          "  ok 17 tests\\e2e\\csharp-excecoes.spec.ts:45:2 › exportação e restauração da expressão de leitura › exporta a expressão de leitura conferida com assistência (22.0s)",
+          "  ok 18 tests\\e2e\\csharp-excecoes.spec.ts:49:2 › exportação e restauração da expressão de leitura › restaura o arquivo exportado numa jornada independente (24.9s)"
+        ]
+      }
+    ],
+    "deploymentAntes": {
+      "readyState": "READY",
+      "target": "production",
+      "sha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+      "projectMatches": true,
+      "aliasMatches": true,
+      "testsSha": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+      "domain": "https://code-lab-omega.vercel.app"
+    },
+    "deploymentDepois": {
+      "readyState": "READY",
+      "target": "production",
+      "sha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+      "projectMatches": true,
+      "aliasMatches": true,
+      "domain": "https://code-lab-omega.vercel.app"
+    }
+  },
+  "review": "solicitada ao marcar pronta; ainda não usar como aprovada",
+  "integrado": false
+}
