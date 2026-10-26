@@ -768,20 +768,25 @@ const roteiros:Record<string,Roteiro>={
   },
   "aspnet-di": {
     "contexto": "Injeção de dependência separa o que uma classe precisa de como essa dependência é construída. O contêiner do ASP.NET Core gerencia criação e ciclo de vida, mas escolhas erradas de lifetime podem compartilhar ou reter estado indevidamente.",
-    "modelo": "Veja o construtor ou parâmetro de endpoint como uma lista explícita de necessidades. O contêiner possui receitas para fornecer cada contrato. Singleton, scoped e transient definem por quanto tempo cada instância deve viver.",
+    "modelo": "Veja o construtor ou parâmetro de endpoint como uma lista explícita de necessidades. O contêiner possui receitas para fornecer cada contrato. Singleton, scoped e transient definem por quanto tempo cada instância deve viver. Nas pausas, escopos manuais tornam a identidade observável; uma requisição da API tem seu próprio escopo. Scoped compartilha uma instância dentro dele, sem tornar o objeto seguro para uso concorrente. Um serviço sem estado, como a calculadora do exemplo, pode admitir outra vida conforme seus colaboradores e contrato. Os experimentos de contêiner manual usam um console isolado. Na API, registre no builder e use o provedor do host; construir outro contêiner dentro da aplicação pode duplicar singletons.",
     "passos": [
       "Dependa de abstrações quando isso reduz acoplamento real.",
       "Registre a implementação em um único ponto de composição.",
       "Escolha scoped para dependências ligadas à requisição, quando apropriado.",
       "Evite capturar serviço scoped dentro de singleton.",
-      "Nos testes, substitua implementações por fakes focados no contrato."
+      "Nos testes, substitua implementações por fakes focados no contrato.",
+      "Use validação de escopos explicitamente ao investigar dependências. Uma configuração que passa nessa validação ainda pode compartilhar estado de negócio indevidamente.",
+      "Descarte o escopo quando seu trabalho terminar; o contêiner libera os serviços descartáveis que criou. A memória continua gerenciada pelo GC.",
+      "Para executar os experimentos fora da API, crie um console .NET 10 e inclua <FrameworkReference Include=\"Microsoft.AspNetCore.App\" /> em um ItemGroup do .csproj. O endpoint original continua no projeto web."
     ],
     "experimentos": [
       "Registre um serviço transient e conte quantas instâncias aparecem na mesma requisição.",
       "Compare com scoped em dois pontos da mesma requisição e em duas requisições diferentes.",
-      "Tente criar dependência de lifetime incompatível e entenda o risco antes de apenas corrigir."
+      "Tente criar dependência de lifetime incompatível e entenda o risco antes de apenas corrigir.",
+      "Desative apenas a validação de uma captura inválida e compare dois pedidos: iniciar sem erro não prova isolamento.",
+      "Construa o provedor antes de registrar o relatório e investigue por que o registro tardio não aparece nele."
     ],
-    "projeto": "Extraia a regra de tarefas para ITarefaService e injete uma implementação em memória nos endpoints, preparando substituição futura por persistência.",
+    "projeto": "Extraia a regra de tarefas para ITarefaService e injete uma implementação em memória nos endpoints, preparando substituição futura por persistência. Separe estado temporário do pedido do armazenamento das tarefas: dados que precisam sobreviver a várias requisições exigem armazenamento definido e seguro para concorrência. Não escolha scoped esperando persistir uma lista entre pedidos.",
     "conexao": "Com regras separadas em serviços, a próxima aula define contratos de entrada e saída usando DTOs e validação."
   },
   "aspnet-dto": {

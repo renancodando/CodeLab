@@ -1,5 +1,11 @@
 # Continuidade do CODELAB
 
+## Rotas publicadas; prática de escopos em validação
+
+A entrega de rotas e as correções das PRs #75, #76 e #77 foram conferidas em main dae4e44e0b24ec4ed3426526e43cf5a61c2f9229. CI de entrada 40219890859 e pós-merge 40227594441 completos: 1.500 testes/84 arquivos, 194 exemplos externos, 15 cenários ASP.NET e 308 fluxos. Revisão do head 6fa89eb sem apontamentos, árvore/pais conferidos, deployment READY/SHA/projeto/alias antes e depois dos 22 fluxos públicos 40227747630. Falhas anteriores preservadas; limites e verificações mantidos. Checkpoint remoto: preservacao/checkpoints/2026-10-25-pr77-publicacao-conferida.md na branch de preservação, que não deve ser integrada.
+
+A aula existente aspnet-di agora pratica identidade por escopo, captura por singleton e composição com descarte. Passaram 91 testes específicos/regressões e 16 cenários nativos .NET 10. O primeiro arranjo nativo gerou ASP0000 por usar SDK Web para contêineres manuais; foi corrigido para console com referência ao framework, sem NoWarn nem afrouxar TreatWarningsAsErrors. Log inicial preservado. Exemplo/exercício originais e projeto continuam; pausas conceituais não executam o programa do aluno. Build concluído: 157 páginas e offline 38+6. Ao ampliar o caso original para duas requisições HTTP, uma guarda de disco interrompeu o início; depois a compilação nativa excedeu 90 s. Logs preservados; a nova versão HTTP ainda não está validada. Navegador, revisão/CI e publicação deste novo head continuam pendentes. Métricas e fila são geradas.
+
 ## Correção de preparação do teste de acessibilidade ASP.NET
 
 A PR #76 foi integrada em db10c3dae681b5ec2e801e3d903911c8fbb72913 pelo head 8a4518f, CI de entrada completo (1.500 testes e 308 fluxos), revisão sem apontamentos e árvore/pais conferidos. A rodada pública anterior ao merge passou 11/11 em ambos os navegadores. Deployment READY/SHA/projeto/alias do merge confirmados. Na rodada posterior 40217741270, Chromium passou 11/11 e Edge 10/11: a montagem, axe e responsividade excedeu 60 s. As seis jornadas C# passaram. Não considerar a conferência pública integral aprovada.

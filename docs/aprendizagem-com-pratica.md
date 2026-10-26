@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Praticar duração, captura e devolução do serviço
+
+Na aula existente aspnet-di, a previsão diferencia duas resoluções do mesmo escopo de um pedido posterior. O diagnóstico confronta silenciar validação, compartilhar estado e reter um transient dentro do singleton. A reconstrução exige registro antes de construir o provedor, resolução pelo escopo e uso antes do descarte, aceitando registros independentes em ordens diferentes. Referências reais verificam essas decisões e o comportamento diante de exceção e escopo vazio. O console didático torna o ciclo observável sem simular requisições HTTP. A pausa offline não executa C# do aluno; leitura não gera domínio, solução aberta é assistência e o projeto continua com aplicação e revisão manual.
+
 ## Contratos HTTP na aula original de ASP.NET
 
 A aula existente aspnet-projeto preserva o exemplo de saúde, o exercício de dobro e o projeto de API em memória. Agora pratica correspondência, método e montagem com validação antes da resposta. O corretor conceitual aceita as duas ordens dos endpoints independentes, sem aceitar registros dentro de outro handler, peças repetidas ou validação depois do retorno. As referências .NET 10 usam Kestrel/HTTP real em loopback, JSON, bordas de int/faixa e métodos recusados; nenhuma API enviada pelo estudante é executada. Leitura não gera domínio, solução registra assistência e o projeto tem rubrica manual. Este lote exige testes locais, build, revisão/CI do head e publicação próprios. Métricas e fila são geradas; presença de pausa não encerra aula ou edição.

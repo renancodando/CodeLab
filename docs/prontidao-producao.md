@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Referências de escopos com contexto de execução explícito
+
+O lote aspnet-di conserva runtime, rede, layout e permissões. A primeira tentativa nativa usou SDK Web para os experimentos manuais e produziu ASP0000; o verificador passou a console .NET 10 com FrameworkReference oficial, mantendo TreatWarningsAsErrors, sem supressão de analisador ou aumento de limites. Compilação e execução conferem identidade, validação, estados retidos e descarte; registrar o endpoint original não é executar sua rota HTTP. As respostas do estudante permanecem conceituais. A etapa ainda exige build, navegador, revisão/CI do próprio head e confirmação de produção; a publicação da base não aprova este lote.
+
 ## Contratos HTTP na aula original de ASP.NET
 
 A aula existente aspnet-projeto preserva o exemplo de saúde, o exercício de dobro e o projeto de API em memória. Agora pratica correspondência, método e montagem com validação antes da resposta. O corretor conceitual aceita as duas ordens dos endpoints independentes, sem aceitar registros dentro de outro handler, peças repetidas ou validação depois do retorno. As referências .NET 10 usam Kestrel/HTTP real em loopback, JSON, bordas de int/faixa e métodos recusados; nenhuma API enviada pelo estudante é executada. Leitura não gera domínio, solução registra assistência e o projeto tem rubrica manual. Este lote exige testes locais, build, revisão/CI do head e publicação próprios. Métricas e fila são geradas; presença de pausa não encerra aula ou edição.

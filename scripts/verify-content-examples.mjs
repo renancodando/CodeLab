@@ -22,6 +22,7 @@ import {verificarObjetosCsharp} from '../tests/fixtures/csharp-objetos.mjs';
 import {verificarColecoesCsharp} from '../tests/fixtures/csharp-colecoes.mjs';
 import {verificarExcecoesCsharp} from '../tests/fixtures/csharp-excecoes.mjs';
 import {verificarRotasAspnet} from '../tests/fixtures/aspnet-rotas.mjs';
+import {verificarEscoposAspnet} from '../tests/fixtures/aspnet-escopos.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
@@ -97,6 +98,7 @@ try{
  const cenariosColecoes=await verificarColecoesCsharp(root,practiceActivities,getPracticeSolution);
  const cenariosExcecoes=await verificarExcecoesCsharp(root,practiceActivities,getPracticeSolution);
  const cenariosRotasAspnet=await verificarRotasAspnet(root,practiceActivities,getPracticeSolution);
+ const cenariosEscoposAspnet=await verificarEscoposAspnet(root,practiceActivities,getPracticeSolution);
  const clienteSqlUrl=asUrl(compileContent(await readFile('src/execution/sql-local.ts','utf8')));
  const fontePraticaSql=compileContent(await readFile('src/learning/pratica-sql.ts','utf8')).replace(/from ['"]\.\.\/execution\/sql-local['"]/g,'from '+JSON.stringify(clienteSqlUrl));
  const {cenariosSql}=await import(asUrl(fontePraticaSql));
@@ -163,5 +165,6 @@ try{
  console.log(cenariosColecoes+' cenários .NET 10 conferidos para busca, materialização e agregação.');
  console.log(cenariosExcecoes+' cenários .NET 10 conferidos para exceções, testes, espera, descarte e arquivos.');
  console.log(cenariosRotasAspnet+' cenários ASP.NET Core .NET 10 conferidos com HTTP real e diagnósticos de compilação.');
+ console.log(cenariosEscoposAspnet+' cenários de escopos ASP.NET Core .NET 10 conferidos com identidade, captura e descarte reais.');
  console.log(cenariosPraticaSql+' bases PostgreSQL conferidas para os novos gabaritos SQL executados em SQLite no navegador.');
 }finally{await rm(root,{recursive:true,force:true});}
