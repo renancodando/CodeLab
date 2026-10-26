@@ -1,0 +1,150 @@
+{
+  "head": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+  "run": {
+    "id": 40320647497,
+    "head": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+    "status": "completed",
+    "result": "success"
+  },
+  "jobs": [
+    {
+      "id": 121564409574,
+      "name": "Testes e compilação",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121564410030,
+      "name": "Auditoria de dependências",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785708,
+      "name": "Navegador (3/8)",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785755,
+      "name": "Navegador (6/8)",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785815,
+      "name": "Navegador (8/8)",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785832,
+      "name": "Navegador (4/8)",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785864,
+      "name": "Navegador (2/8)",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785871,
+      "name": "Navegador (5/8)",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785876,
+      "name": "Navegador (7/8)",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785908,
+      "name": "Navegador (1/8)",
+      "status": "completed",
+      "result": "success"
+    }
+  ],
+  "browser": [
+    {
+      "id": 121565785708,
+      "name": "Navegador (3/8)",
+      "passed": 41,
+      "duration": "6.1m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785755,
+      "name": "Navegador (6/8)",
+      "passed": 33,
+      "duration": "11.8m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785815,
+      "name": "Navegador (8/8)",
+      "passed": 39,
+      "duration": "12.2m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785832,
+      "name": "Navegador (4/8)",
+      "passed": 38,
+      "duration": "9.3m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785864,
+      "name": "Navegador (2/8)",
+      "passed": 36,
+      "duration": "11.4m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785871,
+      "name": "Navegador (5/8)",
+      "passed": 51,
+      "duration": "10.9m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785876,
+      "name": "Navegador (7/8)",
+      "passed": 32,
+      "duration": "12.4m",
+      "status": "completed",
+      "result": "success"
+    },
+    {
+      "id": 121565785908,
+      "name": "Navegador (1/8)",
+      "passed": 44,
+      "duration": "12.9m",
+      "status": "completed",
+      "result": "success"
+    }
+  ],
+  "totalBrowser": 314,
+  "unitarios": 1528,
+  "arquivosUnitarios": 85,
+  "exemplosExternos": 194,
+  "escoposNativos": 16,
+  "auditoriaZero": true,
+  "review": {
+    "commit_sha": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+    "has_any_findings": false,
+    "has_unresolved_findings": false,
+    "status": "completed"
+  },
+  "arvore": "c4083f010bf43a74695aee62db75c09f29396886"
+}
