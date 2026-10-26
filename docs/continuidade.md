@@ -1,5 +1,7 @@
 # Continuidade do CODELAB
 
+A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
+
 ## Backup C# com exportação e restauração separadas
 
 A PR #78 foi integrada em 5a66c2d00f2cb4febe488ff130fd142a04e4bcab pelo head b1a4813, com árvore/pais conferidos, revisão sem apontamentos, CI de entrada completo (1.528 testes/85 arquivos, 194 exemplos externos, 16 cenários de escopos e 314 fluxos) e 17 fluxos locais aprovados. Deployment READY/SHA/projeto/alias conferidos. Na rodada pública 40323519196, Chromium passou 17/17 e Edge 16/17: todos os seis fluxos novos passaram, mas o ciclo de backup C# excedeu 60 s. Não considerar a conferência pública integral aprovada. O CI pós-merge 40323073312 terminou aprovado nos dez jobs, com 1.528 testes e 314 fluxos.

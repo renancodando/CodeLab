@@ -1,0 +1,185 @@
+name: Validação final da edição
+
+on:
+  workflow_dispatch:
+    inputs:
+      segundo_navegador:
+        description: Conferir também os contratos críticos no Edge
+        type: boolean
+        default: true
+
+concurrency:
+  group: completa-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  auditar:
+    name: Auditoria de dependências
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Rejeitar vulnerabilidades altas ou críticas
+        run: npm audit --json --audit-level=high
+
+  validar:
+    name: Testes e compilação
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Preparar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Preparar PostgreSQL 18 com fontes oficiais
+        run: node scripts/preparar-postgres-ci.mjs
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Validar as aulas e a lógica
+        run: npm test
+
+      - name: Validar exemplos de Python, C++, C#, PostgreSQL e TypeScript
+        run: node scripts/verify-content-examples.mjs
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: codelab
+          PGPASSWORD: codelab
+          PGDATABASE: codelab
+
+      - name: Validar isolamento PostgreSQL em conexões distintas
+        run: node scripts/verify-sql-concurrency.mjs
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: codelab
+          PGPASSWORD: codelab
+          PGDATABASE: codelab
+
+      - name: Compilar a aplicação
+        run: npm run build
+
+      - name: Compilar a API
+        run: dotnet build server/CodeLab.Api.csproj --configuration Release
+
+      - name: Validar cache e falhas da observação meteorológica sem rede
+        run: dotnet run --project tests/meteorologia-api/Verificacao.csproj --configuration Release
+
+      - name: Guardar a aplicação compilada
+        uses: actions/upload-artifact@v4
+        with:
+          name: aplicacao-compilada
+          path: |
+            dist/
+            server/Content/curriculum.json
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Encerrar o banco descartável
+        if: always()
+        run: |
+          if docker container inspect codelab-postgres-ci > /dev/null 2>&1; then
+            docker rm --force --volumes codelab-postgres-ci
+          fi
+
+  navegador:
+    name: Navegador (${{ matrix.parcela }}/8)
+    needs: validar
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        parcela: [1, 2, 3, 4, 5, 6, 7, 8]
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Preparar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Instalar dependências
+        run: npm ci
+      - name: Recuperar a aplicação verificada
+        uses: actions/download-artifact@v4
+        with:
+          name: aplicacao-compilada
+          path: .
+      - name: Usar espelhos oficiais disponíveis para instalar o navegador
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
+      - name: Instalar Chromium para os testes de navegador
+        run: npx playwright install --with-deps chromium
+      - name: Validar os fluxos no navegador
+        run: npm run test:e2e -- --shard=${{ matrix.parcela }}/8
+
+      - name: Guardar relatório e cenários atmosféricos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-verificacao-${{ matrix.parcela }}
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+
+  compatibilidade:
+    name: Contratos críticos no segundo navegador
+    needs: validar
+    if: inputs.segundo_navegador
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: aplicacao-compilada
+      - name: Selecionar somente contratos críticos de compatibilidade
+        run: node -e "require('fs').writeFileSync('plano-validacao.json',JSON.stringify({navegador:[],smoke:true,api:false,dev:false}))"
+      - run: npx playwright install --with-deps msedge
+      - run: npx playwright test --config playwright.impacto.config.ts
+        env:
+          CODELAB_CANAL: msedge
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: compatibilidade-final
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore

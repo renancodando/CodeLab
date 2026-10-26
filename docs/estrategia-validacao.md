@@ -1,0 +1,38 @@
+# Validação proporcional ao impacto
+
+A orientação humana de 26/10/2026 substitui a exigência histórica de repetir a suíte completa por entrega. A prioridade é concluir a edição curricular existente. Os registros anteriores de CI integral são evidências históricas, não um roteiro obrigatório para cada commit.
+
+| Momento | Verificação |
+| --- | --- |
+| Desenvolvimento local | Testes específicos da alteração e suas dependências; repetir primeiro só o cenário que falhou. |
+| PR | Plano por arquivos/IDs alterados, catálogo/tipos quando pertinentes, unitários selecionados, referências das famílias afetadas e navegador das áreas alteradas. |
+| Após merge | Build e seis contratos críticos no Chromium. Sem repetir unitários, exemplos de todas as linguagens ou a bateria da PR. |
+| Produção | Conferir SHA/projeto/alias e poucos fluxos críticos. Não repetir a matriz local e da PR. |
+| Fechamento da edição | Workflow manual `Validação final da edição`: suíte completa preservada, exemplos de todas as linguagens, PostgreSQL, API e oito parcelas de navegador. Edge confere os contratos críticos quando solicitado. |
+
+## Seleção e execução
+
+```sh
+node scripts/impacto-validacao.mjs <SHA_BASE>
+npm run test:impacto
+node scripts/validar-alteracoes.mjs exemplos
+npm run test:impacto:e2e
+```
+
+O primeiro comando registra arquivos, IDs, grupos e motivos em `plano-validacao.json`, que não é versionado. Não execute todas as etapas por hábito: use só as selecionadas. Arquivos de teste alterados entram diretamente; atividades em arquivos centrais usam IDs publicados para localizar seus testes. Mudanças compartilhadas mantêm contratos de execução, progresso e backup. Teoria estática recebe catálogo/tipos e dispensa navegador e compiladores. Novas referências precisam ter sua família registrada no seletor e no verificador; família desconhecida é erro, nunca aprovação silenciosa.
+
+Exemplo: a alteração original do backup C# seleciona somente `csharp-excecoes.spec.ts`, sem PostgreSQL, compilação C++/Python/C# ou os demais testes de aulas. Um acréscimo nas pausas de escopos seleciona o corretor comum, os testes dessa aula e suas referências .NET; não seleciona as outras sete linguagens.
+
+O Chromium é o navegador frequente. Alterações de CSS/ambiente recebem também Edge no mesmo sistema; o fechamento da edição reserva a cobertura ampliada. O navegador só inicia a API ou o servidor de desenvolvimento quando o arquivo selecionado usa esses serviços. A aplicação compilada é compartilhada pelo job de navegador.
+
+## Cobertura que permanece
+
+O smoke reutiliza seis cenários existentes: WebAssembly/CSP, cancelamento e recuperação do executor, backup/importação de progresso, isolamento da prévia HTML, estudo offline e axe com conteúdo visível em 220/4000 px. A suíte completa mantém os outros cenários de responsividade, acessibilidade, armazenamento, API, clima, laboratórios e aulas. Nenhuma asserção foi retirada para obter verde.
+
+Documentação Markdown que não participa do produto dispensa workflows de aplicação. JSON usado na geração do catálogo continua validado. Runs substituídos por commits novos são cancelados pela concorrência da branch/PR. Um cancelamento não vira aprovação.
+
+Não aumentar timeout/retries. Falhas intermitentes independentes devem ser registradas com evidência e tratadas separadamente; não prender indefinidamente uma entrega sem relação. Não reutilizar revisão de outro SHA nem declarar produção pelo verde do CI. Revisões externas pendentes continuam pendentes, com checkpoint para retomada.
+
+## Medição
+
+Referência anterior comparável: PR #79, run 40326734056, de 12:58:53 a 13:17:18 UTC em 26/10/2026: **18 min 25 s**, 1.528 unitários, 315 fluxos e todas as referências externas. A redução de tempo só deve ser anunciada depois de medir uma execução da estratégia nova. Selecionar sete fluxos do arquivo de backup em vez de 315 reduz 97,8% das execuções de navegador nesse recorte, mas essa proporção não é uma medição de tempo.

@@ -1,6 +1,6 @@
 import {mkdtemp,readFile,writeFile,rm,mkdir} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
-import {join} from 'node:path';
+import {join,resolve,dirname,basename} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {verificarBancadaGit} from '../tests/fixtures/git-bancada.mjs';
@@ -26,6 +26,11 @@ import {verificarEscoposAspnet} from '../tests/fixtures/aspnet-escopos.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
+const indiceFamilia=process.argv.indexOf('--familia');
+const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
+const grupos=['python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
+const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
 let count=0;
 const run=(command,args,options={})=>{
@@ -41,6 +46,7 @@ function conferirSaidaSql(saida,esperado,nome){
 
 try{
  for(const key of ['python','cpp','csharp','sql','typescript']){
+  if(!selecionar(key))continue;
   const output=ts.transpileModule(await readFile('src/content/deep/'+key+'.ts','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
   const {default:course}=await import('data:text/javascript;base64,'+Buffer.from(output).toString('base64'));
   for(const lesson of course.lessons){
@@ -86,24 +92,25 @@ try{
  const solucoesSqlUrl=asUrl(compileContent(await readFile('src/content/solucoes-sql.ts','utf8')));
  const practiceSource=compileContent(await readFile('src/learning/practice.ts','utf8')).replace(/from ['"]\.\.\/content\/practice['"]/g,'from '+JSON.stringify(metadataUrl)).replace(/from ['"]\.\.\/content\/solucoes-sql['"]/g,'from '+JSON.stringify(solucoesSqlUrl));
  const {getPracticeSolution}=await import(asUrl(practiceSource));
- const cenariosModulos=await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution);
- const cenariosConceitos=await verificarConceitosCpp(root,practiceActivities,getPracticeSolution);
- const cenariosPosse=await verificarPosseCpp(root,practiceActivities,getPracticeSolution);
- const cenariosAusencias=await verificarAusenciasSql(root,practiceActivities,getPracticeSolution);
- const cenariosIteradores=await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution);
- const cenariosLinq=await verificarLinqCsharp(root,montarCasosLinq(practiceActivities,getPracticeSolution));
- const cenariosFundamentos=await verificarFundamentosDotnet(root,practiceActivities,getPracticeSolution);
- const cenariosControle=await verificarControleCsharp(root,practiceActivities,getPracticeSolution);
- const cenariosObjetos=await verificarObjetosCsharp(root,practiceActivities,getPracticeSolution);
- const cenariosColecoes=await verificarColecoesCsharp(root,practiceActivities,getPracticeSolution);
- const cenariosExcecoes=await verificarExcecoesCsharp(root,practiceActivities,getPracticeSolution);
- const cenariosRotasAspnet=await verificarRotasAspnet(root,practiceActivities,getPracticeSolution);
- const cenariosEscoposAspnet=await verificarEscoposAspnet(root,practiceActivities,getPracticeSolution);
+ const cenariosModulos=selecionar('typescript-modulos')?await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution):0;
+ const cenariosConceitos=selecionar('cpp-conceitos')?await verificarConceitosCpp(root,practiceActivities,getPracticeSolution):0;
+ const cenariosPosse=selecionar('cpp-posse')?await verificarPosseCpp(root,practiceActivities,getPracticeSolution):0;
+ const cenariosAusencias=selecionar('sql-null')?await verificarAusenciasSql(root,practiceActivities,getPracticeSolution):0;
+ const cenariosIteradores=selecionar('csharp-iteradores')?await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution):0;
+ const cenariosLinq=selecionar('csharp-linq')?await verificarLinqCsharp(root,montarCasosLinq(practiceActivities,getPracticeSolution)):0;
+ const cenariosFundamentos=selecionar('dotnet-fundamentos')?await verificarFundamentosDotnet(root,practiceActivities,getPracticeSolution):0;
+ const cenariosControle=selecionar('csharp-controle')?await verificarControleCsharp(root,practiceActivities,getPracticeSolution):0;
+ const cenariosObjetos=selecionar('csharp-objetos')?await verificarObjetosCsharp(root,practiceActivities,getPracticeSolution):0;
+ const cenariosColecoes=selecionar('csharp-colecoes')?await verificarColecoesCsharp(root,practiceActivities,getPracticeSolution):0;
+ const cenariosExcecoes=selecionar('csharp-excecoes')?await verificarExcecoesCsharp(root,practiceActivities,getPracticeSolution):0;
+ const cenariosRotasAspnet=selecionar('aspnet-rotas')?await verificarRotasAspnet(root,practiceActivities,getPracticeSolution):0;
+ const cenariosEscoposAspnet=selecionar('aspnet-escopos')?await verificarEscoposAspnet(root,practiceActivities,getPracticeSolution):0;
  const clienteSqlUrl=asUrl(compileContent(await readFile('src/execution/sql-local.ts','utf8')));
  const fontePraticaSql=compileContent(await readFile('src/learning/pratica-sql.ts','utf8')).replace(/from ['"]\.\.\/execution\/sql-local['"]/g,'from '+JSON.stringify(clienteSqlUrl));
  const {cenariosSql}=await import(asUrl(fontePraticaSql));
  let cenariosPraticaSql=0;
  for(const [id,cenarios] of Object.entries(cenariosSql)){
+  if(!selecionar('sql-pratica'))continue;
   for(const [indice,cenario] of cenarios.entries()){
    const fonte=join(root,id+'-'+indice+'.sql');
    await writeFile(fonte,"BEGIN;\nSET LOCAL statement_timeout='5s';\nSET LOCAL lock_timeout='1s';\n"+cenario.preparacao.replaceAll('CREATE TABLE','CREATE TEMP TABLE')+'\n'+getPracticeSolution(id)+'\nROLLBACK;\n');
@@ -114,12 +121,12 @@ try{
  }
 
  const examples=[
-  ...montarCasosEngenharia(practiceActivities,getPracticeSolution),
-  ...montarCasosConcorrencia(practiceActivities,getPracticeSolution),
-  ...montarCasosNumeros(practiceActivities,getPracticeSolution),
-  ...montarCasosDescritores(practiceActivities,getPracticeSolution),
-  ...montarCasosCsv(practiceActivities, getPracticeSolution),
-  ...montarCasosCancelamento(practiceActivities, getPracticeSolution),
+  ...montarCasosEngenharia(practiceActivities,getPracticeSolution).map(caso=>({...caso,familia:'python-engenharia'})),
+  ...montarCasosConcorrencia(practiceActivities,getPracticeSolution).map(caso=>({...caso,familia:'python-concorrencia'})),
+  ...montarCasosNumeros(practiceActivities,getPracticeSolution).map(caso=>({...caso,familia:'python-numeros'})),
+  ...montarCasosDescritores(practiceActivities,getPracticeSolution).map(caso=>({...caso,familia:'python-descritores'})),
+  ...montarCasosCsv(practiceActivities, getPracticeSolution).map(caso=>({...caso,familia:'python-csv'})),
+  ...montarCasosCancelamento(practiceActivities, getPracticeSolution).map(caso=>({...caso,familia:'csharp-cancelamento'})),
   {id:'cpp-prever-intervalo',key:'cpp',source:'#include <iostream>\n#include <vector>\nint main(){\n'+practiceActivities.find(a=>a.id==='cpp-prever-intervalo').code+'\n}',expected:['6,2']},
   {id:'cpp-ordenar-erase',key:'cpp',source:'#include <cassert>\n#include <iostream>\n#include <vector>\nint main(){\nstd::vector<int> dados{0,0,1,0,2,0};\n'+getPracticeSolution('cpp-ordenar-erase')+'\nassert((dados==std::vector<int>{1,2}));\nstd::cout << "zeros conferidos\\n";\n}',expected:['zeros conferidos']},
   {id:'cpp-reobter-reserva',key:'cpp',source:'#include <cassert>\n#include <cstddef>\n#include <iostream>\n#include <stdexcept>\n#include <vector>\nint main(){\nstd::vector<int> dados{4,6,8};\nconst std::size_t indice=1;\nconst auto capacidade=dados.capacity();\nif(capacidade==dados.max_size())throw std::length_error("capacidade máxima");\ndados.reserve(capacidade+1);\n'+getPracticeSolution('cpp-reobter-reserva')+'\nassert(valor==6 && dados.size()==3);\nstd::cout << valor << " " << dados.size() << "\\n";\n}',expected:['6 3']},
@@ -134,6 +141,7 @@ try{
   {id:'cpp-ordenar-raii',key:'cpp',source:'#include <iostream>\n#include <memory>\nint main(){\n'+getPracticeSolution('cpp-ordenar-raii')+'\n}',expected:['7','fim']}
  ];
  for(const sample of examples){
+  if(indiceFamilia>=0&&!familias.has(sample.key)&&!familias.has(sample.familia))continue;
   const folder=join(root,'offline-'+sample.id);await mkdir(folder);let actual;
   if(sample.key==='python'){const path=join(folder,'main.py');await writeFile(path,sample.source);actual=run(process.env.PYTHON??'python3',[path]);}
   else if(sample.key==='cpp'){const path=join(folder,'main.cpp'),binary=join(folder,'programa');await writeFile(path,sample.source);run('g++',['-std=c++20','-Wall','-Wextra','-Wpedantic',path,'-o',binary]);actual=run(binary,[]);}
@@ -141,6 +149,7 @@ try{
   if(JSON.stringify(lines(actual))!==JSON.stringify(sample.expected))throw new Error(sample.id+' saída divergente: '+JSON.stringify({expected:sample.expected,actual:lines(actual)}));
   count++;console.log('OK atividade offline '+sample.id+' — saída conferida no CI');
  }
+ if(selecionar('project-archive')){
  // Interoperabilidade: o ZIP criado no navegador é lido pelo zipfile da biblioteca padrão.
  const projectDataUrl=asUrl(compileContent(await readFile('src/content/project-paths.ts','utf8')));
  const projectsUrl=asUrl(compileContent(await readFile('src/learning/projects.ts','utf8')).replace(/from ['"]\.\.\/content\/project-paths['"]/g,'from '+JSON.stringify(projectDataUrl)));
@@ -149,9 +158,10 @@ try{
  await writeFile(archivePath,new Uint8Array(createProjectArchive({'src/main.py':'print("ação")\n','README.md':'Projeto original'})));
  const zipResult=run(process.env.PYTHON??'python3',['-c','import sys, zipfile; z=zipfile.ZipFile(sys.argv[1]); assert z.testzip() is None; assert z.namelist()==["src/main.py","README.md"]; assert z.read("src/main.py").decode("utf-8")==\'print("ação")\\n\'; assert z.read("README.md").decode("utf-8")=="Projeto original"; print("ZIP interoperável")',archivePath]);
  console.log(zipResult.trim());
+ }
 
 
- await verificarBancadaGit(root);
+ if(selecionar('git-bancada'))await verificarBancadaGit(root);
  console.log(count+' exemplos e soluções externos compilados/executados.');
  console.log(cenariosModulos+' projetos TypeScript conferidos, incluindo diagnósticos e falhas esperadas de resolução.');
  console.log(cenariosConceitos+' cenários C++20 conferidos, incluindo falhas esperadas de instanciação e ambiguidade.');
@@ -167,4 +177,4 @@ try{
  console.log(cenariosRotasAspnet+' cenários ASP.NET Core .NET 10 conferidos com HTTP real e diagnósticos de compilação.');
  console.log(cenariosEscoposAspnet+' cenários de escopos ASP.NET Core .NET 10 conferidos com identidade, captura e descarte reais.');
  console.log(cenariosPraticaSql+' bases PostgreSQL conferidas para os novos gabaritos SQL executados em SQLite no navegador.');
-}finally{await rm(root,{recursive:true,force:true});}
+}finally{const alvo=resolve(root);if(dirname(alvo)!==resolve(tmpdir())||!basename(alvo).startsWith('codelab-content-'))throw new Error('Diretório temporário fora do limite.');await rm(alvo,{recursive:true,force:true});}

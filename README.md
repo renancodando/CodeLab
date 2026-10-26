@@ -157,3 +157,7 @@ O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **
 O resumo acima é gerado com as [métricas do catálogo](docs/metricas-catalogo.md), também usadas pela interface. JavaScript e consultas SQLite possuem atividades executadas localmente. As pausas conceituais continuam identificadas e não comprovam compilação ou comportamento de outros ambientes. O build rejeita resumos desatualizados.
 
 Os gabaritos dessas entregas passam por ferramentas reais no CI. A resposta conceitual do estudante não comprova compilação; projetos abertos têm rubrica manual. Consulte [o checkpoint](docs/continuidade.md) para os heads e gates aprovados, e [as frentes restantes](docs/etapas-restantes.md) para acompanhar o pedido integral. A verificação pública cobre os fluxos registrados em [prontidão de produção](docs/prontidao-producao.md); isso não valida automaticamente todos os ambientes, aparelhos ou configurações externas.
+
+## Validação durante o desenvolvimento
+
+Use a [seleção por impacto](docs/estrategia-validacao.md). A suíte completa fica reservada ao fechamento da edição; documentação sem efeito no produto dispensa build e navegador.

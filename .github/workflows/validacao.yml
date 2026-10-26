@@ -1,147 +1,171 @@
-name: Validação do CODELAB
+name: Validação por impacto
 
 on:
   push:
     branches: [main]
+    paths-ignore: ['docs/**/*.md', 'README.md', 'STATUS.md', '**/*.txt']
   pull_request:
     branches: [main]
+    paths-ignore: ['docs/**/*.md', 'README.md', 'STATUS.md', '**/*.txt']
 
 permissions:
   contents: read
 
+concurrency:
+  group: impacto-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  auditar:
-    name: Auditoria de dependências
+  planejar:
+    name: Selecionar verificações afetadas
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      produto: ${{ steps.plano.outputs.produto }}
+      conteudo: ${{ steps.plano.outputs.conteudo }}
+      tipos: ${{ steps.plano.outputs.tipos }}
+      unidades: ${{ steps.plano.outputs.unidades }}
+      exemplos: ${{ steps.plano.outputs.exemplos }}
+      navegador: ${{ steps.plano.outputs.navegador }}
+      dotnet: ${{ steps.plano.outputs.dotnet }}
+      api: ${{ steps.plano.outputs.api }}
+      postgres: ${{ steps.plano.outputs.postgres }}
+      canais: ${{ steps.plano.outputs.canais }}
+      auditoria: ${{ steps.plano.outputs.auditoria }}
     steps:
-      - name: Baixar o código
-        uses: actions/checkout@v4
-      - name: Preparar Node.js 24
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-      - name: Instalar dependências
-        run: npm ci
-      - name: Rejeitar vulnerabilidades altas ou críticas
-        run: npm audit --json --audit-level=high
+      - run: npm ci
+      - name: Identificar arquivos, contratos e runtimes
+        id: plano
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          EVENTO: ${{ github.event_name }}
+        run: |
+          if [ "$EVENTO" = push ]; then
+            node scripts/impacto-validacao.mjs "$BASE_SHA" --pos-merge
+          else
+            node scripts/impacto-validacao.mjs "$BASE_SHA"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plano-validacao
+          path: plano-validacao.json
+          retention-days: 7
 
   validar:
-    name: Testes e compilação
+    name: Contratos afetados e build necessário
+    needs: planejar
+    if: needs.planejar.outputs.produto == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
-      - name: Baixar o código
-        uses: actions/checkout@v4
-
-      - name: Preparar Node.js 24
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-
-      - name: Preparar .NET 10
-        uses: actions/setup-dotnet@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: plano-validacao
+      - uses: actions/setup-dotnet@v4
+        if: needs.planejar.outputs.dotnet == 'true'
         with:
           dotnet-version: 10.0.x
-
-      - name: Preparar PostgreSQL 18 com fontes oficiais
+      - run: npm ci
+      - name: Conferir catálogo e métricas geradas
+        if: needs.planejar.outputs.conteudo == 'true'
+        run: |
+          node scripts/generate-curriculum-index.mjs --check
+          node scripts/gerar-metricas.mjs --check
+      - name: Conferir tipos
+        if: needs.planejar.outputs.tipos == 'true'
+        run: npx tsc --noEmit
+      - name: Testar apenas contratos afetados
+        if: needs.planejar.outputs.unidades == 'true'
+        run: node scripts/validar-alteracoes.mjs unidades
+      - name: Preparar PostgreSQL somente quando necessário
+        if: needs.planejar.outputs.postgres == 'true'
         run: node scripts/preparar-postgres-ci.mjs
-
-      - name: Instalar dependências
-        run: npm ci
-
-      - name: Validar as aulas e a lógica
-        run: npm test
-
-      - name: Validar exemplos de Python, C++, C#, PostgreSQL e TypeScript
-        run: node scripts/verify-content-examples.mjs
+      - name: Executar referências das famílias afetadas
+        if: needs.planejar.outputs.exemplos == 'true'
+        run: node scripts/validar-alteracoes.mjs exemplos
         env:
           PGHOST: 127.0.0.1
           PGPORT: 5432
           PGUSER: codelab
           PGPASSWORD: codelab
           PGDATABASE: codelab
-
-      - name: Validar isolamento PostgreSQL em conexões distintas
-        run: node scripts/verify-sql-concurrency.mjs
-        env:
-          PGHOST: 127.0.0.1
-          PGPORT: 5432
-          PGUSER: codelab
-          PGPASSWORD: codelab
-          PGDATABASE: codelab
-
-      - name: Compilar a aplicação
+      - name: Auditar alterações de dependências
+        if: needs.planejar.outputs.auditoria == 'true'
+        run: npm audit --json --audit-level=high
+      - name: Compilar uma vez para os fluxos selecionados
+        if: needs.planejar.outputs.navegador == 'true'
         run: npm run build
-
-      - name: Compilar a API
+      - name: Compilar API somente para seus testes
+        if: needs.planejar.outputs.api == 'true'
         run: dotnet build server/CodeLab.Api.csproj --configuration Release
-
-      - name: Validar cache e falhas da observação meteorológica sem rede
-        run: dotnet run --project tests/meteorologia-api/Verificacao.csproj --configuration Release
-
-      - name: Guardar a aplicação compilada
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
+        if: needs.planejar.outputs.navegador == 'true'
         with:
           name: aplicacao-compilada
           path: |
             dist/
             server/Content/curriculum.json
-          if-no-files-found: error
+            server/bin/Release/
+            server/obj/
+            plano-validacao.json
           retention-days: 1
-
       - name: Encerrar o banco descartável
-        if: always()
+        if: always() && needs.planejar.outputs.postgres == 'true'
         run: |
           if docker container inspect codelab-postgres-ci > /dev/null 2>&1; then
             docker rm --force --volumes codelab-postgres-ci
           fi
 
   navegador:
-    name: Navegador (${{ matrix.parcela }}/8)
-    needs: validar
+    name: Fluxos afetados (${{ matrix.canal }})
+    needs: [planejar, validar]
+    if: needs.planejar.outputs.navegador == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
-        parcela: [1, 2, 3, 4, 5, 6, 7, 8]
+        canal: ${{ fromJSON(needs.planejar.outputs.canais) }}
     steps:
-      - name: Baixar o código
-        uses: actions/checkout@v4
-      - name: Preparar Node.js 24
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-      - name: Preparar .NET 10
-        uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v4
+        if: needs.planejar.outputs.api == 'true'
         with:
           dotnet-version: 10.0.x
-      - name: Instalar dependências
-        run: npm ci
-      - name: Recuperar a aplicação verificada
-        uses: actions/download-artifact@v4
+      - run: npm ci
+      - uses: actions/download-artifact@v4
         with:
           name: aplicacao-compilada
-          path: .
-      - name: Usar espelhos oficiais disponíveis para instalar o navegador
+      - name: Usar espelhos oficiais do navegador
         run: |
           if [ -f /etc/apt/apt-mirrors.txt ]; then
             printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
           fi
-      - name: Instalar Chromium para os testes de navegador
-        run: npx playwright install --with-deps chromium
-      - name: Validar os fluxos no navegador
-        run: npm run test:e2e -- --shard=${{ matrix.parcela }}/8
-
-      - name: Guardar relatório e cenários atmosféricos
+      - run: npx playwright install --with-deps ${{ matrix.canal }}
+      - name: Conferir áreas afetadas ou smoke após merge
+        run: npx playwright test --config playwright.impacto.config.ts
+        env:
+          CODELAB_CANAL: ${{ matrix.canal }}
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: playwright-verificacao-${{ matrix.parcela }}
+          name: playwright-afetados-${{ matrix.canal }}
           path: |
             test-results/
             playwright-report/
