@@ -1,5 +1,10 @@
 # Continuidade do CODELAB
 
+## Backup C# com exportação e restauração separadas
+
+A PR #78 foi integrada em 5a66c2d00f2cb4febe488ff130fd142a04e4bcab pelo head b1a4813, com árvore/pais conferidos, revisão sem apontamentos, CI de entrada completo (1.528 testes/85 arquivos, 194 exemplos externos, 16 cenários de escopos e 314 fluxos) e 17 fluxos locais aprovados. Deployment READY/SHA/projeto/alias conferidos. Na rodada pública 40323519196, Chromium passou 17/17 e Edge 16/17: todos os seis fluxos novos passaram, mas o ciclo de backup C# excedeu 60 s. Não considerar a conferência pública integral aprovada. O CI pós-merge 40323073312 terminou aprovado nos dez jobs, com 1.528 testes e 314 fluxos.
+
+O trace 12651130757 preservado mostra fill ~15 s, conferência ~10 s, restauração ~9 s e asserções finais concluídas após o deadline. A causa da lentidão não está comprovada. Exportação e restauração agora são testes seriais ligados aos bytes realmente exportados; a restauração usa outro contexto de navegador, cuja jornada vazia é conferida antes de importar. Isso elimina a limpeza e uma recarga preparatória do contexto anterior, mantendo as verificações e a recarga final. Limites de 60 s, retries zero, produto, corretores e métricas não mudam. Exigir validação local, CI/revisão do novo head, árvore e nova conferência pública; a aprovação do head anterior não aprova esta correção.
 ## Rotas publicadas; prática de escopos em validação
 
 A entrega de rotas e as correções das PRs #75, #76 e #77 foram conferidas em main dae4e44e0b24ec4ed3426526e43cf5a61c2f9229. CI de entrada 40219890859 e pós-merge 40227594441 completos: 1.500 testes/84 arquivos, 194 exemplos externos, 15 cenários ASP.NET e 308 fluxos. Revisão do head 6fa89eb sem apontamentos, árvore/pais conferidos, deployment READY/SHA/projeto/alias antes e depois dos 22 fluxos públicos 40227747630. Falhas anteriores preservadas; limites e verificações mantidos. Checkpoint remoto: preservacao/checkpoints/2026-10-25-pr77-publicacao-conferida.md na branch de preservação, que não deve ser integrada.
