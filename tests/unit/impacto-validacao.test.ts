@@ -45,3 +45,13 @@ it('menções em prosa não selecionam aulas com IDs curtos',()=>{
  const linha='+ {id:"aspnet-dto",prompt:"O contrato http exige armazenamento e não é uma aula de rede."}';
  expect(idsNoDiff(linha,conhecidos)).toEqual(['aspnet-dto']);
 });
+
+it('gabaritos de missão recebem execução comportamental sem puxar o navegador',()=>{
+ const plano=selecionarImpacto(['src/content/missions.ts'],[],catalogo);
+ expect(plano).toMatchObject({conteudo:true,unidades:['tests/unit/execution.test.ts'],navegador:[],smoke:false,familias:[]});
+});
+it('soluções SQL recebem SQLite e a referência PostgreSQL afetada',()=>{
+ const testes={...catalogo,unidades:[...catalogo.unidades,'tests/unit/sql-pratica.test.ts']};
+ const plano=selecionarImpacto(['src/content/solucoes-sql.ts'],[],testes);
+ expect(plano).toMatchObject({unidades:['tests/unit/sql-pratica.test.ts'],familias:['sql-pratica'],postgres:true,dotnet:false,navegador:[]});
+});

@@ -23,7 +23,10 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
     const nome=teste.split('/').at(-1).replace(/\.(test|spec)\.ts$/,'');if(nativas.includes(nome))familias.add(nome);
    }
    if(!ids.length&&p!=='src/content/explicacoes.ts')essenciais.forEach(adicionar);
-  }else if(/^src\/content\/deep\//.test(p)){
+  }else if(p==='src/content/missions.ts')adicionar('execution');
+  else if(p==='src/content/solucoes-sql.ts')adicionar('sql-pratica');
+  else if(p==='src/content/project-paths.ts'){adicionar('projects');adicionar('project-archive');}
+  else if(/^src\/content\/deep\//.test(p)){
    const lingua=p.split('/').at(-1).replace('.ts','');
    for(const teste of catalogo.unidades)if(teste.split('/').at(-1).startsWith(lingua==='typescript'?'typescript':lingua))unidades.add(teste);
    if(['python','cpp','csharp','sql','typescript'].includes(lingua))familias.add(lingua);
