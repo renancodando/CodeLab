@@ -1,0 +1,39 @@
+{
+  "pr": 78,
+  "merge": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+  "run": 40323519196,
+  "workflow": "ad38021ecaa1537883afc1ce8a051f6367ba0ba7",
+  "chromium": {
+    "job": 121574211892,
+    "canal": "chromium",
+    "passaram": 17,
+    "duracao": "5.1m",
+    "testesSha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+    "dominio": "https://code-lab-omega.vercel.app",
+    "status": "completed",
+    "result": "success"
+  },
+  "edge": {
+    "job": 121574211531,
+    "passed": 16,
+    "failed": 1,
+    "duration": "9.9m",
+    "failure": "csharp-excecoes: exportacao e restauracao excederam 60000 ms",
+    "novosFluxosEscopos": 6,
+    "novosFluxosPassaram": 6
+  },
+  "artifact": {
+    "id": 12651130757,
+    "size": 14240053,
+    "sha256": "1020c4e03d030a0094181635e56d5829bd4d49a6751d87efa629c3b3d6349584"
+  },
+  "trace": {
+    "fillMs": 15399.655,
+    "conferirMs": 10401.411,
+    "restaurarMs": 8929.6,
+    "aposHooksInicioAntesUltimoReload": true,
+    "assertionsFinais": "as duas assercoes finais do estado restaurado concluíram após o deadline; sem erro nos eventos",
+    "causaDaLentidao": "nao comprovada"
+  },
+  "publicacaoIntegralAprovada": false
+}
