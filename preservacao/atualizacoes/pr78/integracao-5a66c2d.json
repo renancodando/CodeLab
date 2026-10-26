@@ -1,0 +1,38 @@
+{
+  "pr": 78,
+  "head": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+  "merge": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+  "tree": "c4083f010bf43a74695aee62db75c09f29396886",
+  "parents": [
+    "dae4e44e0b24ec4ed3426526e43cf5a61c2f9229",
+    "b1a4813785b0d33d8eaad8ebfaa51406f517f69e"
+  ],
+  "arvoreCorrespondeAoHead": true,
+  "main": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+  "entrada": {
+    "id": 40320647497,
+    "head": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+    "status": "completed",
+    "result": "success"
+  },
+  "review": {
+    "commit_sha": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+    "has_any_findings": false,
+    "has_unresolved_findings": false,
+    "status": "completed"
+  },
+  "localCleanAfterFastForward": true,
+  "postMergeCi": 40323073312,
+  "publicWorkflowCommit": "ad38021ecaa1537883afc1ce8a051f6367ba0ba7",
+  "publicRun": 40323519196,
+  "deploymentAntes": {
+    "readyState": "READY",
+    "target": "production",
+    "sha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+    "projectMatches": true,
+    "aliasMatches": true,
+    "checkedAt": "2026-10-26T12:33:47Z",
+    "domain": "https://code-lab-omega.vercel.app"
+  },
+  "publicacaoCompleta": false
+}
