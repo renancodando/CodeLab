@@ -1,0 +1,2 @@
+import base from './playwright-aspnet-escopos-20261025.config.mjs';
+export default {...base,outputDir:new URL('./resultados-backup-csharp-local-20261026/',import.meta.url).pathname.replace(/^\/([A-Za-z]:)/,'$1')};
