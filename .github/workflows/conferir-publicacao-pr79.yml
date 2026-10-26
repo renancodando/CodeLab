@@ -1,0 +1,91 @@
+name: Conferência pública da PR 79 — antes da integração
+
+on:
+  push:
+    branches: [verificacao/publicacao-pr79]
+    paths: [.github/workflows/conferir-publicacao-pr79.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  conferir:
+    name: Fluxos públicos em ${{ matrix.canal }}
+    runs-on: ${{ matrix.sistema }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - sistema: ubuntu-latest
+            canal: chromium
+          - sistema: windows-2025
+            canal: msedge
+    defaults:
+      run:
+        shell: bash
+    env:
+      CANAL_NAVEGADOR: ${{ matrix.canal }}
+    steps:
+      - name: Recuperar os testes do head em validação
+        uses: actions/checkout@v4
+        with:
+          ref: 7fcf9be684f7b8728581522ad7c0b04b23e7c4e1
+          persist-credentials: false
+      - name: Conferir o SHA dos testes
+        run: test "$(git rev-parse HEAD)" = "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1"
+      - name: Preparar Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalar as dependências verificadas
+        run: npm ci
+      - name: Usar os espelhos oficiais para o Chromium
+        if: runner.os == 'Linux'
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
+      - name: Instalar Chromium no ambiente descartável
+        if: runner.os == 'Linux'
+        run: npx playwright install --with-deps chromium
+      - name: Conferir o Edge já instalado no Windows descartável
+        if: runner.os == 'Windows'
+        run: |
+          node --input-type=module -e 'import {chromium} from "@playwright/test"; const navegador=await chromium.launch({channel:"msedge",headless:true}); try { console.log("Edge: "+navegador.version()); } finally { await navegador.close(); }'
+      - name: Preparar a conferência do domínio público
+        run: |
+          cat > playwright.publico-pr79.config.mjs <<'CONFIGURACAO'
+          import {defineConfig} from '@playwright/test';
+          export default defineConfig({
+            testDir:'./tests/e2e',
+            testMatch:['aspnet-escopos.spec.ts','aspnet-rotas.spec.ts','csharp-excecoes.spec.ts'],
+            timeout:60000,
+            fullyParallel:false,
+            workers:1,
+            retries:0,
+            reporter:[['list'],['html',{open:'never'}]],
+            outputDir:'test-results-publico',
+            use:{
+              baseURL:'https://code-lab-omega.vercel.app',
+              channel:process.env.CANAL_NAVEGADOR,
+              headless:true,
+              viewport:{width:1440,height:1000},
+              trace:'retain-on-failure',
+              screenshot:'only-on-failure'
+            }
+          });
+          CONFIGURACAO
+      - name: Executar os dezoito fluxos públicos
+        run: npx playwright test --config playwright.publico-pr79.config.mjs
+      - name: Preservar os resultados da conferência
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: conferencia-publica-pr79-${{ matrix.canal }}
+          path: |
+            test-results-publico/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7
