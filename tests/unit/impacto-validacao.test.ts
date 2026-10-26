@@ -20,7 +20,7 @@ it('correção de teoria estática dispensa navegador e compilação nativa',()=
 it('alteração no executor mantém os contratos de isolamento e smoke',()=>{
  const plano=selecionarImpacto(['src/execution/executor.ts'],[],catalogo);
  expect(plano.unidades).toContain('tests/unit/execution.test.ts');
- expect(plano.smoke).toBe(true);
+ expect(plano).toMatchObject({smoke:true,api:true,dotnet:true,dev:false});
 });
 it('uma alteração desconhecida do produto não desaparece da validação',()=>{expect(selecionarImpacto(['src/novo-modulo.ts'],[],catalogo).smoke).toBe(true);});
 it('mudanças de CSS reservam a conferência de compatibilidade',()=>{expect(selecionarImpacto(['src/styles.css'],[],catalogo)).toMatchObject({compatibilidade:true,smoke:true});});
@@ -31,4 +31,11 @@ it('a leitura estática não confunde peças da ordenação com atividades',()=>
  expect([...ids]).toEqual(['aspnet-di-ordenar','aspnet-di']);
  expect(idsNoDiff('+++ b/arquivo\n contexto aspnet-di\n+ {id: \'aspnet-di-ordenar\'}',ids)).toEqual(['aspnet-di-ordenar','aspnet-di']);
  expect(idsNoDiff(' contexto aspnet-di',ids)).toEqual([]);
+});
+
+it('conteúdo web não seleciona uma família nativa inexistente',()=>{
+ for(const linguagem of ['html','css','javascript','index','types']){
+  const plano=selecionarImpacto(['src/content/deep/'+linguagem+'.ts'],[],catalogo);
+  expect(plano.familias).toEqual([]);expect(plano.unidades).toContain('tests/unit/practice.test.ts');
+ }
 });

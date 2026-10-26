@@ -6,8 +6,8 @@ A orientação humana de 26/10/2026 substitui a exigência histórica de repetir
 | --- | --- |
 | Desenvolvimento local | Testes específicos da alteração e suas dependências; repetir primeiro só o cenário que falhou. |
 | PR | Plano por arquivos/IDs alterados, catálogo/tipos quando pertinentes, unitários selecionados, referências das famílias afetadas e navegador das áreas alteradas. |
-| Após merge | Build e seis contratos críticos no Chromium. Sem repetir unitários, exemplos de todas as linguagens ou a bateria da PR. |
-| Produção | Conferir SHA/projeto/alias e poucos fluxos críticos. Não repetir a matriz local e da PR. |
+| Após merge | Build e dois contratos de artefato/isolamento no Chromium. Sem repetir unitários, exemplos de todas as linguagens ou a bateria da PR. |
+| Produção | Conferir SHA/projeto/alias, backup, offline e axe/responsividade: três fluxos diferentes dos dois anteriores. Não repetir a matriz local e da PR. |
 | Fechamento da edição | Workflow manual `Validação final da edição`: suíte completa preservada, exemplos de todas as linguagens, PostgreSQL, API e oito parcelas de navegador. Edge confere os contratos críticos quando solicitado. |
 
 ## Seleção e execução
@@ -27,7 +27,7 @@ O Chromium é o navegador frequente. Alterações de CSS/ambiente recebem també
 
 ## Cobertura que permanece
 
-O smoke reutiliza seis cenários existentes: WebAssembly/CSP, cancelamento e recuperação do executor, backup/importação de progresso, isolamento da prévia HTML, estudo offline e axe com conteúdo visível em 220/4000 px. A suíte completa mantém os outros cenários de responsividade, acessibilidade, armazenamento, API, clima, laboratórios e aulas. Nenhuma asserção foi retirada para obter verde.
+O conjunto compartilhado reutiliza seis cenários existentes: WebAssembly/CSP, cancelamento e recuperação do executor, backup/importação de progresso, isolamento da prévia HTML, estudo offline e axe com conteúdo visível em 220/4000 px. O pós-merge usa os dois de artefato/isolamento; `CODELAB_FASE=publico` seleciona backup, offline e axe/responsividade. A suíte completa mantém os outros cenários de responsividade, acessibilidade, armazenamento, API, clima, laboratórios e aulas. Nenhuma asserção foi retirada para obter verde.
 
 Documentação Markdown que não participa do produto dispensa workflows de aplicação. JSON usado na geração do catálogo continua validado. Runs substituídos por commits novos são cancelados pela concorrência da branch/PR. Um cancelamento não vira aprovação.
 

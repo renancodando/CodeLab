@@ -2,7 +2,7 @@ import {readFileSync} from 'node:fs';
 import {defineConfig} from '@playwright/test';
 import base from './playwright.config';
 const plano=JSON.parse(readFileSync('plano-validacao.json','utf8'));
-const smoke=[
+const contratos=[
  'build de produção executa a missão com WebAssembly e CSP do servidor',
  'cancelamento, limite de memória e recuperação do executor',
  'exportação e importação preservam jornada local',
@@ -10,6 +10,8 @@ const smoke=[
  'Python, C# e C++ continuam offline após preparação, sem submissões externas',
  'escopos mantém axe e os programas completos de 220 a 4000 px'
 ];
+const fase=process.env.CODELAB_FASE??plano.fase;
+const smoke=fase==='pos-merge'?[contratos[0],contratos[3]]:fase==='publico'?[contratos[2],contratos[4],contratos[5]]:contratos;
 const usarSmoke=process.env.CODELAB_SMOKE==='1'||plano.smoke;
 const arquivosSmoke=['local-platform.spec.ts','learning.spec.ts','learning-hub.spec.ts','aspnet-escopos.spec.ts'];
 const nomes=[...plano.navegador.map((p:string)=>p.split('/').at(-1)),...(usarSmoke?arquivosSmoke:[])];

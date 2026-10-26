@@ -3,10 +3,10 @@ name: Validação por impacto
 on:
   push:
     branches: [main]
-    paths-ignore: ['docs/**/*.md', 'README.md', 'STATUS.md', '**/*.txt']
+    paths-ignore: ['docs/**/*.md', 'README.md', 'STATUS.md', 'docs/**/*.txt']
   pull_request:
     branches: [main]
-    paths-ignore: ['docs/**/*.md', 'README.md', 'STATUS.md', '**/*.txt']
+    paths-ignore: ['docs/**/*.md', 'README.md', 'STATUS.md', 'docs/**/*.txt']
 
 permissions:
   contents: read

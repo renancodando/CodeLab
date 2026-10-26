@@ -6,7 +6,7 @@ import ts from 'typescript';
 
 export const essenciais=['execution','progress-migration','hub-backup','practice','adaptive'];
 const centrais=['src/content/practice.ts','src/learning/practice.ts','src/content/explicacoes.ts','src/content/curriculum.ts'];
-const nativas=['aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
+const nativas=['aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
 export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegador:[],textos:{}}){
  const unidades=new Set(),navegador=new Set(),familias=new Set(),motivos=[];
  const produto=arquivos.some(p=>!(/^(docs\/.*\.(md|txt)|README\.md|STATUS\.md|LICENSE|\.github\/ISSUE_TEMPLATE\/)/.test(p)));
@@ -26,7 +26,8 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
   }else if(/^src\/content\/deep\//.test(p)){
    const lingua=p.split('/').at(-1).replace('.ts','');
    for(const teste of catalogo.unidades)if(teste.split('/').at(-1).startsWith(lingua==='typescript'?'typescript':lingua))unidades.add(teste);
-   familias.add(lingua);
+   if(['python','cpp','csharp','sql','typescript'].includes(lingua))familias.add(lingua);
+   else adicionar('practice');
   }else if(/^server\/|^api\//.test(p)){adicionar('observacao-servidor');adicionar('identidade-api');adicionar('api');}
   else if(/^src\/execution\//.test(p)){adicionar('execution');if(p.includes('sql'))adicionar('sql-local');if(p.includes('typescript'))adicionar('typescript-worker');}
   else if(/^src\/learning\//.test(p)){essenciais.forEach(adicionar);adicionar(p.split('/').at(-1).replace('.ts',''));}
@@ -38,11 +39,13 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
  if(compartilhado){essenciais.forEach(adicionar);motivos.push('contratos compartilhados e smoke');}
  if(conteudo)motivos.push('catálogo, métricas e tipos');
  const smoke=produto&&(compartilhado||pipeline||(unidades.size===0&&navegador.size===0&&!conteudo));
- const dotnet=[...familias].some(n=>/csharp|dotnet|aspnet/.test(n))||arquivos.some(p=>/^server\//.test(p));
+ const api=smoke||[...navegador].some(p=>/5080/.test(catalogo.textos[p]??''));
+ const dev=[...navegador].some(p=>/5174/.test(catalogo.textos[p]??''));
+ const dotnet=api||[...familias].some(n=>/csharp|dotnet|aspnet/.test(n))||arquivos.some(p=>/^server\//.test(p));
  const postgres=[...familias].some(n=>/^sql/.test(n));
  const compatibilidade=arquivos.some(p=>/\.css$|src\/environment\/|src\/world/.test(p));
  const tipos=arquivos.some(p=>/^src\/|^api\/|^server\/.*\.ts$|^.*config\.(ts|js|mjs)$|^package(-lock)?\.json$/.test(p));
- return {produto,conteudo,tipos,unidades:[...unidades].sort(),navegador:[...navegador].sort(),familias:[...familias].sort(),smoke,dotnet,dotnetConteudo:dotnet,postgres,compatibilidade,auditoria:arquivos.some(p=>/^package(-lock)?\.json$/.test(p)),motivos};
+ return {produto,conteudo,tipos,unidades:[...unidades].sort(),navegador:[...navegador].sort(),familias:[...familias].sort(),smoke,api,dev,dotnet,postgres,compatibilidade,auditoria:arquivos.some(p=>/^package(-lock)?\.json$/.test(p)),motivos};
 }
 
 export function idsDoConteudo(textos){
@@ -74,14 +77,12 @@ export async function planejar(base){
  const ids=idsNoDiff(git(['diff','--unified=0',base,'HEAD','--',...centrais]),idsDoConteudo(fontes));
  const plano=selecionarImpacto(arquivos,ids,{unidades,navegador,textos});
  plano.arquivos=arquivos;plano.ids=ids;plano.base=base;
- plano.api=navegador.filter(p=>plano.navegador.includes(p)).some(p=>/5080/.test(textos[p]));
- plano.dev=plano.navegador.some(p=>/5174/.test(textos[p]));
  return plano;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const base=process.argv[2];if(!base)throw new Error('Informe o SHA base para selecionar as alterações.');
  const plano=await planejar(base);
- if(process.argv.includes('--pos-merge'))Object.assign(plano,{unidades:[],navegador:[],familias:[],api:false,dev:false,dotnet:false,postgres:false,compatibilidade:false,auditoria:false,tipos:false,conteudo:false,smoke:plano.produto});
+ if(process.argv.includes('--pos-merge'))Object.assign(plano,{fase:'pos-merge',unidades:[],navegador:[],familias:[],api:plano.produto,dev:false,dotnet:plano.produto,postgres:false,compatibilidade:false,auditoria:false,tipos:false,conteudo:false,smoke:plano.produto});
  await writeFile('plano-validacao.json',JSON.stringify(plano,null,2)+'\n');
  console.log(JSON.stringify(plano,null,2));
  if(process.env.GITHUB_OUTPUT)for(const [nome,valor] of Object.entries({produto:plano.produto,conteudo:plano.conteudo,tipos:plano.tipos,unidades:plano.unidades.length>0,exemplos:plano.familias.length>0,navegador:plano.navegador.length>0||plano.smoke,dotnet:plano.dotnet||plano.api,api:plano.api,postgres:plano.postgres,canais:JSON.stringify(plano.compatibilidade?['chromium','msedge']:['chromium']),auditoria:plano.auditoria}))await appendFile(process.env.GITHUB_OUTPUT,nome+'='+valor+'\n');

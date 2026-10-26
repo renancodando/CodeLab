@@ -95,6 +95,8 @@ jobs:
           path: |
             dist/
             server/Content/curriculum.json
+            server/bin/Release/
+            server/obj/
           if-no-files-found: error
           retention-days: 1
 
@@ -165,12 +167,15 @@ jobs:
         with:
           node-version: 24
           cache: npm
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
       - run: npm ci
       - uses: actions/download-artifact@v4
         with:
           name: aplicacao-compilada
       - name: Selecionar somente contratos críticos de compatibilidade
-        run: node -e "require('fs').writeFileSync('plano-validacao.json',JSON.stringify({navegador:[],smoke:true,api:false,dev:false}))"
+        run: node -e "require('fs').writeFileSync('plano-validacao.json',JSON.stringify({navegador:[],smoke:true,api:true,dev:false}))"
       - run: npx playwright install --with-deps msedge
       - run: npx playwright test --config playwright.impacto.config.ts
         env:
