@@ -65,7 +65,16 @@ export function idsDoConteudo(textos){
  }
  return ids;
 }
-export function idsNoDiff(diff,conhecidos){return [...conhecidos].filter(id=>diff.split(/\r?\n/).some(l=>/^[+-](?![+-])/.test(l)&&l.includes(id)));}
+export function idsNoDiff(diff,conhecidos){
+ const encontrados=new Set();
+ for(const linha of diff.split(/\r?\n/)){
+  if(!/^[+-](?![+-])/.test(linha))continue;
+  const leitor=ts.createScanner(ts.ScriptTarget.Latest,true,ts.LanguageVariant.Standard,linha.slice(1));
+  for(let token=leitor.scan();token!==ts.SyntaxKind.EndOfFileToken;token=leitor.scan())
+   if(token===ts.SyntaxKind.StringLiteral||token===ts.SyntaxKind.NoSubstitutionTemplateLiteral)encontrados.add(leitor.getTokenValue());
+ }
+ return [...conhecidos].filter(id=>encontrados.has(id));
+}
 async function listar(pasta){const entradas=await readdir(pasta,{withFileTypes:true});return (await Promise.all(entradas.map(e=>e.isDirectory()?listar(pasta+'/'+e.name):[pasta+'/'+e.name]))).flat();}
 export async function planejar(base){
  const git=args=>execFileSync('git',args,{encoding:'utf8',maxBuffer:8*1024*1024});

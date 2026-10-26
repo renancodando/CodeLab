@@ -29,7 +29,7 @@ it('índices JSON gerados não são confundidos com documentação dispensável'
 it('a leitura estática não confunde peças da ordenação com atividades',()=>{
  const ids=idsDoConteudo(["const atividades=[{id:'aspnet-di-ordenar',lessonIds:['aspnet-di'],lines:[{id:'usar',code:'Usar();'}]}];"]);
  expect([...ids]).toEqual(['aspnet-di-ordenar','aspnet-di']);
- expect(idsNoDiff('+++ b/arquivo\n contexto aspnet-di\n+ {id: \'aspnet-di-ordenar\'}',ids)).toEqual(['aspnet-di-ordenar','aspnet-di']);
+ expect(idsNoDiff('+++ b/arquivo\n contexto aspnet-di\n+ {id: \'aspnet-di-ordenar\'}',ids)).toEqual(['aspnet-di-ordenar']);
  expect(idsNoDiff(' contexto aspnet-di',ids)).toEqual([]);
 });
 
@@ -38,4 +38,10 @@ it('conteúdo web não seleciona uma família nativa inexistente',()=>{
   const plano=selecionarImpacto(['src/content/deep/'+linguagem+'.ts'],[],catalogo);
   expect(plano.familias).toEqual([]);expect(plano.unidades).toContain('tests/unit/practice.test.ts');
  }
+});
+
+it('menções em prosa não selecionam aulas com IDs curtos',()=>{
+ const conhecidos=new Set(['http','armazenamento','aspnet-dto']);
+ const linha='+ {id:"aspnet-dto",prompt:"O contrato http exige armazenamento e não é uma aula de rede."}';
+ expect(idsNoDiff(linha,conhecidos)).toEqual(['aspnet-dto']);
 });
