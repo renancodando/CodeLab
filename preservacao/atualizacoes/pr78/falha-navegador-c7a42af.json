@@ -1,0 +1,12 @@
+{
+  "head": "c7a42afa52abefb6e20126970d1d63d0a39eb5e5",
+  "run": 40318632883,
+  "job": 121558931819,
+  "result": "failure",
+  "falhas": 1,
+  "teste": "escopos conserva a aula e distingue resolução de criação",
+  "esperado": "Revisão manual",
+  "motivo": "O texto do projeto não explicitava a revisão manual.",
+  "correcao": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e acrescenta critérios observáveis, mantém a asserção e os limites.",
+  "naoUsarComoAprovacao": true
+}
