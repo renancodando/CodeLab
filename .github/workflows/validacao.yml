@@ -30,6 +30,8 @@ jobs:
       dotnet: ${{ steps.plano.outputs.dotnet }}
       api: ${{ steps.plano.outputs.api }}
       postgres: ${{ steps.plano.outputs.postgres }}
+      meteorologia: ${{ steps.plano.outputs.meteorologia }}
+      concorrencia_sql: ${{ steps.plano.outputs.concorrencia_sql }}
       canais: ${{ steps.plano.outputs.canais }}
       auditoria: ${{ steps.plano.outputs.auditoria }}
     steps:
@@ -89,12 +91,24 @@ jobs:
       - name: Testar apenas contratos afetados
         if: needs.planejar.outputs.unidades == 'true'
         run: node scripts/validar-alteracoes.mjs unidades
+      - name: Conferir cache, expiração e fallback da meteorologia afetada
+        if: needs.planejar.outputs.meteorologia == 'true'
+        run: dotnet run --project tests/meteorologia-api/Verificacao.csproj --configuration Release
       - name: Preparar PostgreSQL somente quando necessário
         if: needs.planejar.outputs.postgres == 'true'
         run: node scripts/preparar-postgres-ci.mjs
       - name: Executar referências das famílias afetadas
         if: needs.planejar.outputs.exemplos == 'true'
         run: node scripts/validar-alteracoes.mjs exemplos
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: codelab
+          PGPASSWORD: codelab
+          PGDATABASE: codelab
+      - name: Conferir concorrência SQL em conexões distintas
+        if: needs.planejar.outputs.concorrencia_sql == 'true'
+        run: node scripts/verify-sql-concurrency.mjs
         env:
           PGHOST: 127.0.0.1
           PGPORT: 5432

@@ -55,3 +55,17 @@ it('soluções SQL recebem SQLite e a referência PostgreSQL afetada',()=>{
  const plano=selecionarImpacto(['src/content/solucoes-sql.ts'],[],testes);
  expect(plano).toMatchObject({unidades:['tests/unit/sql-pratica.test.ts'],familias:['sql-pratica'],postgres:true,dotnet:false,navegador:[]});
 });
+
+it('mudanças no backend meteorológico mantêm seus contratos nativos',()=>{
+ for(const arquivo of ['server/Meteorologia.cs','server/CodeLab.Api.csproj','tests/meteorologia-api/Program.cs'])expect(selecionarImpacto([arquivo],[],catalogo)).toMatchObject({meteorologia:true,dotnet:true});
+ expect(selecionarImpacto(['server/ExecutionQueue.cs'],[],catalogo).meteorologia).toBe(false);
+});
+it('concorrência SQL mantém conexões PostgreSQL distintas quando afetada',()=>{
+ expect(selecionarImpacto(['src/content/deep/sql.ts'],[],catalogo)).toMatchObject({concorrenciaSql:true,postgres:true});
+ expect(selecionarImpacto(['scripts/verify-sql-concurrency.mjs'],[],catalogo)).toMatchObject({concorrenciaSql:true,postgres:true,smoke:false});
+ expect(selecionarImpacto(['src/content/solucoes-sql.ts'],[],catalogo).concorrenciaSql).toBe(false);
+});
+it('imports diretos cobrem contratos com nome diferente do módulo',()=>{
+ const testes={...catalogo,unidades:['tests/unit/sql-pratica.test.ts'],textos:{'tests/unit/sql-pratica.test.ts':"import {conferirConsultaSql} from '../../src/learning/pratica-sql';"}};
+ expect(selecionarImpacto(['src/learning/pratica-sql.ts'],[],testes)).toMatchObject({unidades:['tests/unit/sql-pratica.test.ts'],familias:['sql-pratica'],postgres:true});
+});
