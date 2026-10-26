@@ -786,7 +786,7 @@ const roteiros:Record<string,Roteiro>={
       "Desative apenas a validação de uma captura inválida e compare dois pedidos: iniciar sem erro não prova isolamento.",
       "Construa o provedor antes de registrar o relatório e investigue por que o registro tardio não aparece nele."
     ],
-    "projeto": "Extraia a regra de tarefas para ITarefaService e injete uma implementação em memória nos endpoints, preparando substituição futura por persistência. Separe estado temporário do pedido do armazenamento das tarefas: dados que precisam sobreviver a várias requisições exigem armazenamento definido e seguro para concorrência. Não escolha scoped esperando persistir uma lista entre pedidos.",
+    "projeto": "Extraia a regra de tarefas para ITarefaService e injete uma implementação em memória nos endpoints, preparando substituição futura por persistência. Separe estado temporário do pedido do armazenamento das tarefas: dados que precisam sobreviver a várias requisições exigem armazenamento definido e seguro para concorrência. Não escolha scoped esperando persistir uma lista entre pedidos. Revisão manual: demonstre duas requisições independentes, explique onde as tarefas são armazenadas e teste como o serviço reage a uma entrada inválida. A pausa conceitual não executa nem aprova esta API.",
     "conexao": "Com regras separadas em serviços, a próxima aula define contratos de entrada e saída usando DTOs e validação."
   },
   "aspnet-dto": {

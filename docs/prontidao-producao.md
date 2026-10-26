@@ -2,7 +2,7 @@
 
 ## Referências de escopos com contexto de execução explícito
 
-O lote aspnet-di conserva runtime, rede, layout e permissões. A primeira tentativa nativa usou SDK Web para os experimentos manuais e produziu ASP0000; o verificador passou a console .NET 10 com FrameworkReference oficial, mantendo TreatWarningsAsErrors, sem supressão de analisador ou aumento de limites. Compilação e execução conferem identidade, validação, estados retidos e descarte; registrar o endpoint original não é executar sua rota HTTP. As respostas do estudante permanecem conceituais. A etapa ainda exige build, navegador, revisão/CI do próprio head e confirmação de produção; a publicação da base não aprova este lote.
+O lote aspnet-di conserva runtime, rede, layout e permissões. A primeira tentativa nativa usou SDK Web para os experimentos manuais e produziu ASP0000; o verificador passou a console .NET 10 com FrameworkReference oficial, mantendo TreatWarningsAsErrors, sem supressão de analisador ou aumento de limites. Compilação e execução conferem identidade, validação, estados retidos e descarte; o exemplo original também recebe duas requisições HTTP reais com soma/JSON e identidade distinta entre pedidos, conferidas no job 121557520040 do head c7a42af. Isso não substitui a execução da API construída pelo aluno. As respostas do estudante permanecem conceituais. O primeiro build passou; a rodada local de navegador encontrou a ausência do aviso de revisão manual no projeto, agora corrigida sem retirar a asserção. A etapa exige novo build/navegador, revisão/CI do próprio head e confirmação de produção; a publicação da base não aprova este lote.
 
 ## Contratos HTTP na aula original de ASP.NET
 
