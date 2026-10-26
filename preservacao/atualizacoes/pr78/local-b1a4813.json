@@ -1,0 +1,78 @@
+{
+  "pr": 78,
+  "head": "b1a4813785b0d33d8eaad8ebfaa51406f517f69e",
+  "branch": "pratica/aspnet-escopos-servicos",
+  "local": {
+    "unitarios": 91,
+    "unitLog": "aspnet-escopos-especificos-final-20261025.log",
+    "build": {
+      "exitCode": 0,
+      "paginas": 157,
+      "offlineEssenciais": 38,
+      "offlineOpcionais": 6,
+      "versao": "f16693eaed96298b9bc8",
+      "log": "aspnet-escopos-build-20261026.log"
+    },
+    "navegador": {
+      "exitCode": 0,
+      "canal": "msedge",
+      "passaram": 17,
+      "duracao": "9.9m",
+      "limitePorTesteMs": 60000,
+      "retries": 0,
+      "log": "aspnet-escopos-navegador-20261026.log",
+      "inclui": [
+        "seis fluxos de escopos",
+        "cinco fluxos de rotas",
+        "seis fluxos de excecoes C#",
+        "teclado",
+        "ordem equivalente",
+        "assistencia",
+        "reload",
+        "backup",
+        "offline sem executor remoto",
+        "axe",
+        "220 e 4000 px"
+      ]
+    },
+    "nativoHTTP": {
+      "resultadoLocal": "duas compilações excederam 90000 ms",
+      "resultadoCI": "mesmo verificador aprovado no job 121564409574",
+      "causaLocal": "nao comprovada"
+    }
+  },
+  "ciAtual": {
+    "run": 40320647497,
+    "coreJob": 121564409574,
+    "auditJob": 121564410030,
+    "auditoriaZero": true,
+    "evidenciasCore": [
+      " Test Files  85 passed (85)",
+      "      Tests  1528 passed (1528)",
+      "OK escopos ASP.NET registro-e-calculadora-originais",
+      "OK escopos ASP.NET scoped-reutiliza-dentro-e-isola-fora",
+      "OK escopos ASP.NET transient-nao-reutiliza-a-outra-resolucao",
+      "OK escopos ASP.NET singleton-compartilha-entre-escopos",
+      "OK escopos ASP.NET valida-captura-scoped-no-build",
+      "OK escopos ASP.NET resumo-scoped-recomeca-por-pedido",
+      "OK escopos ASP.NET silenciar-validacao-nao-isola-pedidos",
+      "OK escopos ASP.NET estado-singleton-mantem-compartilhamento",
+      "OK escopos ASP.NET transient-capturado-continua-retido",
+      "OK escopos ASP.NET montagem-principal-usa-e-descarta",
+      "OK escopos ASP.NET registros-independentes-podem-inverter",
+      "OK escopos ASP.NET registro-tardio-nao-altera-provedor",
+      "OK escopos ASP.NET raiz-nao-substitui-provedor-do-escopo",
+      "OK escopos ASP.NET excecao-no-trabalho-conserva-descarte",
+      "OK escopos ASP.NET escopo-vazio-nao-cria-recurso",
+      "OK escopos ASP.NET referencia-nao-prolonga-recurso-descartado",
+      "194 exemplos e soluções externos compilados/executados.",
+      "16 cenários de escopos ASP.NET Core .NET 10 conferidos com identidade, captura e descarte reais.",
+      "Pré-renderização concluída: 157 páginas educacionais. Indexação desativada até definir CODELAB_PUBLIC_URL.",
+      "Aplicação e conteúdo offline preparados: 38 recursos locais e 6 opcionais sob demanda; versão bc68736af6ef861f2c25."
+    ],
+    "integral": "pendente"
+  },
+  "arvoreComparada": "c4083f010bf43a74695aee62db75c09f29396886",
+  "worktree": "limpa após push; head lido no GitHub",
+  "publicacao": "pendente"
+}
