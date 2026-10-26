@@ -9,7 +9,9 @@
     "preview": "vite preview --configLoader runner --host 127.0.0.1",
     "test": "vitest run --configLoader runner",
     "test:e2e": "playwright test",
-    "content:generate": "node scripts/generate-curriculum-index.mjs && node scripts/gerar-metricas.mjs"
+    "content:generate": "node scripts/generate-curriculum-index.mjs && node scripts/gerar-metricas.mjs",
+    "test:impacto": "node scripts/validar-alteracoes.mjs unidades",
+    "test:impacto:e2e": "playwright test --config playwright.impacto.config.ts"
   },
   "dependencies": {
     "@jitl/quickjs-wasmfile-release-sync": "0.31.0",

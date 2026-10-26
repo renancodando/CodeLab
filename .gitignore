@@ -9,6 +9,7 @@ App_Data/
 *.local
 test-results/
 playwright-report/
+plano-validacao.json
 .DS_Store
 server/Content/curriculum.json
 *.zip

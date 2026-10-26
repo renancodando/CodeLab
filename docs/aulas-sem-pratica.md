@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **37 de 137 aulas sem pausas deste catálogo**. As outras 100 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **36 de 137 aulas sem pausas deste catálogo**. As outras 101 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -13,7 +13,7 @@ Há **37 de 137 aulas sem pausas deste catálogo**. As outras 100 têm ao menos 
 | JavaScript | 30 | 28 | 2 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 6 | 8 |
-| Integração (transversal) | 15 | 2 | 13 |
+| Integração (transversal) | 15 | 3 | 12 |
 | TypeScript | 10 | 7 | 3 |
 
 Trabalhar de cima para baixo dentro das dependências de cada trilha. Em cada aula, escolher previsão, diagnóstico e alteração/produção quando fizer sentido; não acrescentar perguntas apenas para retirar uma linha da lista. Conferir também bordas, feedback, assistência, revisão e aplicação. As contagens descrevem o checkout gerado; publicação exige os gates de produção registrados em continuidade.md.
@@ -30,7 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `aspnet-dto` — DTOs, validação e respostas REST | ASP.NET Core | Integração (transversal) | Original |
 | `aspnet-pipeline` — Middleware, logging e configuração | ASP.NET Core | Integração (transversal) | Original |
 | `aspnet-protecao` — Autenticação, autorização e limites | ASP.NET Core | Integração (transversal) | Original |
 | `sql-modelagem` — Tabelas, tipos e chaves | Banco de dados | SQL/PostgreSQL | Original |

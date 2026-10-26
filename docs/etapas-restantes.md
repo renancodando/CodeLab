@@ -1,5 +1,7 @@
 # Etapas restantes e critério de conclusão
 
+A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
+
 ## Como ler a contagem
 
 A edição a concluir usa o catálogo existente, os seis percursos de engenharia e os oito projetos. A orientação de 12 de outubro substitui a expansão sem limite: aprofundar aprendizagem, prática, correção e estabilidade sem aumentar aulas por quantidade. A [fila gerada de aulas sem pausas](aulas-sem-pratica.md) identifica cada lacuna e sua prioridade; as [métricas geradas](metricas-catalogo.md) são a fonte das contagens atuais.

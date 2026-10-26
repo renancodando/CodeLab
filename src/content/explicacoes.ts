@@ -800,11 +800,13 @@ const roteiros:Record<string,Roteiro>={
       "Não devolva propriedades internas ou sensíveis apenas porque existem na entidade."
     ],
     "experimentos": [
+      "No contrato do exemplo, Length conta unidades UTF-16 recebidas antes de Trim. Teste null, espaços, 80 e 81 unidades, inclusive texto com espaços nas pontas; dois símbolos iguais para a pessoa podem ocupar quantidades diferentes de unidades.",
+      "Compare ||, && e | na guarda. Teste null separadamente: uma tabela de verdadeiro e falso não basta quando avaliar o segundo operando pode lançar exceção.",
       "Adicione uma propriedade interna e confirme que ela não aparece no DTO de saída.",
       "Envie título vazio, longo e null e padronize a resposta de validação.",
       "Compare retornar entidade diretamente com mapear explicitamente."
     ],
-    "projeto": "Implemente CreateTarefaRequest e TarefaResponse separados e um endpoint que devolve 201 com Location após criação.",
+    "projeto": "Implemente CreateTarefaRequest e TarefaResponse separados e um endpoint que devolve 201 com Location após criação. Revisão manual: documente se o limite mede unidades UTF-16 ou caracteres percebidos; cubra null, espaços, limites e tipo JSON inválido. Confira que campos internos não são aceitos nem devolvidos. DTO não substitui autorização: autoria e privilégios vêm de contexto confiável. Só prometa recuperar a tarefa depois de implementar e testar armazenamento e GET; o exemplo desta aula apenas monta a resposta.",
     "conexao": "A próxima aula acompanha a requisição além do endpoint, pela cadeia de middleware, logging e configuração."
   },
   "aspnet-pipeline": {

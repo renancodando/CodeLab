@@ -40,8 +40,14 @@ test('a espera conceitual funciona offline sem executor remoto',async({page:pagi
  finally{if(!pagina.isClosed())await contexto.setOffline(false);}
 });
 
-test('o backup recupera a expressão de leitura e sua assistência',async({page:pagina})=>{
- await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/csharp-async');const pausa=pagina.locator('[data-practice="'+idLeitura+'"]');await pausa.getByLabel('Trecho que falta').fill(expressao);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('assistência');
- await pagina.goto('/#/perfil');const esperar=pagina.waitForEvent('download');await pagina.getByRole('button',{name:'Exportar jornada',exact:true}).click();const arquivo=await readFile((await(await esperar).path())!);await pagina.evaluate(()=>localStorage.removeItem('codelab.progress.v2'));await pagina.reload();expect(await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')??'null')?.adaptive?.skills??{})).toEqual({});
- await pagina.locator('#import-progress').setInputFiles({name:'jornada.json',mimeType:'application/json',buffer:arquivo});await pagina.getByRole('button',{name:'Restaurar jornada',exact:true}).click();await pagina.reload();const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[idLeitura]).toMatchObject({value:expressao,passed:true,assisted:true});expect(salvo.adaptive.skills['csharp.assincrono.descarte'].review.lastOutcome).toBe('assisted');
+test.describe.serial('exportação e restauração da expressão de leitura',()=>{
+ let arquivo:Buffer;
+ test('exporta a expressão de leitura conferida com assistência',async({page:pagina})=>{
+  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/csharp-async');const pausa=pagina.locator('[data-practice="'+idLeitura+'"]');await pausa.getByLabel('Trecho que falta').fill(expressao);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('assistência');
+  await pagina.goto('/#/perfil');const esperar=pagina.waitForEvent('download');await pagina.getByRole('button',{name:'Exportar jornada',exact:true}).click();arquivo=await readFile((await(await esperar).path())!);expect(arquivo.byteLength).toBeGreaterThan(0);
+ });
+ test('restaura o arquivo exportado numa jornada independente',async({page:pagina})=>{
+  await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/perfil');expect(await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')??'null')?.adaptive?.skills??{})).toEqual({});
+  await pagina.locator('#import-progress').setInputFiles({name:'jornada.json',mimeType:'application/json',buffer:arquivo});await pagina.getByRole('button',{name:'Restaurar jornada',exact:true}).click();await pagina.reload();const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[idLeitura]).toMatchObject({value:expressao,passed:true,assisted:true});expect(salvo.adaptive.skills['csharp.assincrono.descarte'].review.lastOutcome).toBe('assisted');
+ });
 });
