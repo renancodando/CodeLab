@@ -1,0 +1,67 @@
+{
+  "pr": 79,
+  "head": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+  "local": {
+    "build": "success",
+    "buildPages": 157,
+    "buildOfflineVersion": "f16693eaed96298b9bc8",
+    "primeiraRodada": {
+      "passaram": 17,
+      "falhou": 1,
+      "falha": "worker process exited unexpectedly (code=3221226505, signal=null)",
+      "teste": "escopos mantém axe e os programas completos de 220 a 4000 px",
+      "duracaoTeste": "0ms",
+      "estado": "falha preservada; nao conta como suite aprovada"
+    },
+    "novaRodada": {
+      "estado": "em andamento",
+      "session": 89534,
+      "log": "backup-csharp-navegador-novo-processo-20261026.log",
+      "codigoAlterado": false,
+      "retries": 0,
+      "limiteMs": 60000
+    }
+  },
+  "publicBefore": {
+    "run": 40327303081,
+    "workflow": "45971f972e74c7f9f11bdbd34b919ff6de1d981b",
+    "testesSha": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+    "produtoSha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+    "browsers": [
+      {
+        "id": 121587211504,
+        "canal": "chromium",
+        "passaram": 18,
+        "duracao": "1.9m",
+        "testesSha": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+        "produtoSha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+        "estado": "success",
+        "passosBackup": [
+          "  ✓  17 tests/e2e/csharp-excecoes.spec.ts:45:2 › exportação e restauração da expressão de leitura › exporta a expressão de leitura conferida com assistência (3.5s)",
+          "  ✓  18 tests/e2e/csharp-excecoes.spec.ts:49:2 › exportação e restauração da expressão de leitura › restaura o arquivo exportado numa jornada independente (5.6s)"
+        ]
+      },
+      {
+        "id": 121587211774,
+        "canal": "msedge",
+        "passaram": 18,
+        "duracao": "7.9m",
+        "testesSha": "7fcf9be684f7b8728581522ad7c0b04b23e7c4e1",
+        "produtoSha": "5a66c2d00f2cb4febe488ff130fd142a04e4bcab",
+        "estado": "success",
+        "passosBackup": [
+          "  ok 17 tests\\e2e\\csharp-excecoes.spec.ts:45:2 › exportação e restauração da expressão de leitura › exporta a expressão de leitura conferida com assistência (22.0s)",
+          "  ok 18 tests\\e2e\\csharp-excecoes.spec.ts:49:2 › exportação e restauração da expressão de leitura › restaura o arquivo exportado numa jornada independente (24.9s)"
+        ]
+      }
+    ]
+  },
+  "ast": {
+    "anteriores": 34,
+    "atuais": 35,
+    "todasPreservadas": true
+  },
+  "integrado": false,
+  "ciCompleto": "pendente",
+  "review": "pendente"
+}
