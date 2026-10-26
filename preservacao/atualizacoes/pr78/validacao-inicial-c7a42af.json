@@ -1,0 +1,49 @@
+{
+  "pr": 78,
+  "head": "c7a42afa52abefb6e20126970d1d63d0a39eb5e5",
+  "run": 40318632883,
+  "coreJob": 121557520040,
+  "core": "success",
+  "unitarios": 1528,
+  "arquivosUnitarios": 85,
+  "exemplosExternos": 194,
+  "cenariosEscopos": 16,
+  "httpReal": {
+    "requisicoes": 2,
+    "rota": "/soma",
+    "valida": [
+      "status",
+      "JSON",
+      "soma",
+      "mesma instancia dentro do pedido",
+      "instancias distintas entre pedidos"
+    ]
+  },
+  "limitesPreservados": true,
+  "local": {
+    "unitarios": 91,
+    "build": {
+      "paginas": 157,
+      "offlineEssenciais": 38,
+      "offlineOpcionais": 6
+    },
+    "browser": {
+      "aprovados": 16,
+      "total": 17,
+      "falha": "O projeto nao explicitava revisao manual. Texto corrigido e assercao preservada; nova rodada pendente."
+    },
+    "nativeHTTP": {
+      "estado": "nao aprovado localmente",
+      "tentativas": 2,
+      "erro": "dotnet build excedeu timeout de 90000 ms",
+      "causa": "nao comprovada"
+    }
+  },
+  "gatesPendentes": [
+    "CI integral",
+    "revisao do head final",
+    "build e navegador apos correcao",
+    "integracao",
+    "deployment e publicacao"
+  ]
+}
