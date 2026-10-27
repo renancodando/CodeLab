@@ -2,6 +2,16 @@
 
 A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
 
+## PR #79 publicada; próxima prática de middleware
+
+A PR #79 foi integrada em 73c6a45d119732e9fc635e6531e4bfa588c81f04 pelo head 0026b3ebdfd132e9461eb0d39c58a10f6293d123, com revisão sem apontamentos, threads resolvidas e árvore/pais conferidos. O CI proporcional 40422431074 passou 204 testes em oito arquivos, 14 fluxos Chromium e 21 cenários .NET das famílias afetadas, com build/API. Durou 6 min 05 s contra 18 min 25 s da referência anterior: redução pontual de cerca de 67%, sem promessa de duração total. O pós-merge 40423190482 passou build e somente dois smokes, sem repetir unitários ou exemplos. Deployment READY, SHA/projeto/alias conferidos antes/depois dos três fluxos públicos: backup, offline e axe/220–4000 px, todos aprovados em 1,3 min. Na retomada de 27/10, main, CI e alias continuam no mesmo SHA; não repetir esses fluxos por rotina.
+
+O novo lote aprofunda apenas `aspnet-pipeline`: retorno das camadas, contrato dos dados do log e precedência dos provedores. Preserva o exemplo e exercício originais, acrescenta investigação de erros e revisão manual ao projeto. As respostas do aluno são conceituais; as referências compilam em .NET 10, recebem HTTP no loopback e inspecionam os campos entregues a um provedor de log. A configuração do exercício usa provedores em memória sem dados privados da máquina.
+
+Passaram 123 testes da aula/corretor comum. A primeira compilação encontrou CS1674 no gabarito: IConfigurationRoot não exige IDisposable. A reconstrução agora usa ConfigurationManager; os onze testes da aula foram repetidos e passaram, assim como dez cenários nativos com status 200/404, credencial fictícia, logging estruturado e precedência/case das chaves. Falha anterior preservada, sem ampliar limites nem retirar asserções. Catálogo/tipos e CI/revisão deste novo head ainda devem ser conferidos. Build e o único fluxo novo de navegador ficam no CI; não repetir localmente os smokes de backup/offline/axe já estáveis. O lote ainda não está publicado.
+
+Referências: [middleware ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-10.0), [logging](https://learn.microsoft.com/en-us/dotnet/core/extensions/logging/overview), [configuração](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-10.0). A compilação real usa net10.0.
+
 ## DTOs: limites, curto-circuito e contrato de criação
 
 A aula existente `aspnet-dto` recebeu três pausas: previsão nos limites de entrada, diagnóstico da guarda e reconstrução da validação antes de criar a resposta. Os exemplos, exercício original e arquitetura continuam. O projeto ganhou revisão manual com bordas, representação de saída, autoria confiável e a distinção entre devolver Location e implementar persistência/GET. As respostas do aluno são conceituais; o verificador executa as referências em .NET 10 e envia HTTP real somente no loopback.

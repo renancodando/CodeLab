@@ -6,7 +6,7 @@ import ts from 'typescript';
 
 export const essenciais=['execution','progress-migration','hub-backup','practice','adaptive'];
 const centrais=['src/content/practice.ts','src/learning/practice.ts','src/content/explicacoes.ts','src/content/curriculum.ts'];
-const nativas=['aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
+const nativas=['aspnet-fluxo','aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
 function importaArquivo(teste,texto,arquivo){
  const fonte=ts.createSourceFile(teste,texto,ts.ScriptTarget.Latest,true);
  let encontrado=false;

@@ -820,11 +820,14 @@ const roteiros:Record<string,Roteiro>={
       "Transforme exceções não tratadas em respostas consistentes no ponto central."
     ],
     "experimentos": [
+      "Compare a volta normal do await com uma exceção no componente interno: o trecho posterior ao await não é um finally. Se um tratador externo só decidir o status depois, um logger interno pode ainda não conhecer esse status final.",
+      "Inspecione o estado estruturado recebido pelo provedor, além da mensagem formatada. Trocar o nome Credencial por Status ou usar Debug não remove o valor confidencial. Use dados fictícios nos testes e uma lista explícita de metadados permitidos.",
+      "Monte dois provedores em memória para a mesma chave e para uma chave ausente no ajuste. O último provedor que fornece uma chave vence; trocar a ordem muda a configuração. Este experimento não modifica as variáveis de ambiente do computador.",
       "Crie dois middleware que registram antes/depois e observe a ordem de retorno.",
       "Lance uma exceção num endpoint e trate-a globalmente.",
       "Mude uma configuração por variável de ambiente e confirme precedência."
     ],
-    "projeto": "Adicione logging estruturado, correlation id e tratamento global de erro à API de tarefas sem duplicar try/catch em cada endpoint.",
+    "projeto": "Adicione logging estruturado, identificador de correlação e tratamento global de erro à API de tarefas sem duplicar try/catch em cada endpoint. Revisão manual: envie requisições normais, inexistentes e com falha controlada; confira a ordem real do middleware e de quem decide a resposta. Não altere headers depois de a resposta começar. Teste a precedência e valide limites de configuração na inicialização. Registre somente metadados permitidos, verificando mensagem e campos; não copie Authorization, cookies ou corpos privados. Documente quais falhas o exemplo simples não registra e como sua implementação as observa sem devolver stack trace ao cliente.",
     "conexao": "A última aula combina identidade, autorização e limites para proteger a aplicação sem confiar no cliente."
   },
   "aspnet-protecao": {
