@@ -22,6 +22,7 @@ import {verificarObjetosCsharp} from '../tests/fixtures/csharp-objetos.mjs';
 import {verificarColecoesCsharp} from '../tests/fixtures/csharp-colecoes.mjs';
 import {verificarExcecoesCsharp} from '../tests/fixtures/csharp-excecoes.mjs';
 import {verificarRotasAspnet} from '../tests/fixtures/aspnet-rotas.mjs';
+import {verificarProtecaoAspnet} from '../tests/fixtures/aspnet-protecao.mjs';
 import {verificarFluxoAspnet} from '../tests/fixtures/aspnet-fluxo.mjs';
 import {verificarDtoAspnet} from '../tests/fixtures/aspnet-dto.mjs';
 import {verificarEscoposAspnet} from '../tests/fixtures/aspnet-escopos.mjs';
@@ -30,7 +31,7 @@ import {verificarEscoposAspnet} from '../tests/fixtures/aspnet-escopos.mjs';
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
 const indiceFamilia=process.argv.indexOf('--familia');
 const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
-const grupos=['aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+const grupos=['aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
 if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
 const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
@@ -106,6 +107,7 @@ try{
  const cenariosColecoes=selecionar('csharp-colecoes')?await verificarColecoesCsharp(root,practiceActivities,getPracticeSolution):0;
  const cenariosExcecoes=selecionar('csharp-excecoes')?await verificarExcecoesCsharp(root,practiceActivities,getPracticeSolution):0;
  const cenariosRotasAspnet=selecionar('aspnet-rotas')?await verificarRotasAspnet(root,practiceActivities,getPracticeSolution):0;
+ const cenariosProtecaoAspnet=selecionar('aspnet-protecao')?await verificarProtecaoAspnet(root,practiceActivities,getPracticeSolution):0;
  const cenariosFluxoAspnet=selecionar('aspnet-fluxo')?await verificarFluxoAspnet(root,practiceActivities,getPracticeSolution):0;
  const cenariosDtoAspnet=selecionar('aspnet-dto')?await verificarDtoAspnet(root,practiceActivities,getPracticeSolution):0;
  const cenariosEscoposAspnet=selecionar('aspnet-escopos')?await verificarEscoposAspnet(root,practiceActivities,getPracticeSolution):0;
@@ -179,6 +181,7 @@ try{
  console.log(cenariosColecoes+' cenários .NET 10 conferidos para busca, materialização e agregação.');
  console.log(cenariosExcecoes+' cenários .NET 10 conferidos para exceções, testes, espera, descarte e arquivos.');
  console.log(cenariosRotasAspnet+' cenários ASP.NET Core .NET 10 conferidos com HTTP real e diagnósticos de compilação.');
+ console.log(cenariosProtecaoAspnet+' cenários de proteção ASP.NET Core .NET 10 conferidos com autorização, recurso e concorrência reais.');
  console.log(cenariosFluxoAspnet+' cenários de fluxo ASP.NET Core .NET 10 conferidos com HTTP, campos de log e provedores reais.');
  console.log(cenariosDtoAspnet+' cenários de DTO ASP.NET Core .NET 10 conferidos com limites, curto-circuito e HTTP reais.');
  console.log(cenariosEscoposAspnet+' cenários de escopos ASP.NET Core .NET 10 conferidos com identidade, captura e descarte reais.');
