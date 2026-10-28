@@ -858,15 +858,18 @@ const roteiros:Record<string,Roteiro>={
       "Defina o que cada linha representa em uma frase.",
       "Escolha uma chave primária estável.",
       "Separe entidades quando grupos de dados possuem ciclos de vida diferentes.",
-      "Use chaves estrangeiras para relações que precisam existir.",
+      "Use REFERENCES para exigir existência e NOT NULL quando a relação também for obrigatória. Só REFERENCES permite ausência.",
       "Adicione NOT NULL, UNIQUE e CHECK quando a regra pertence aos dados."
     ],
     "experimentos": [
       "Tente inserir duas linhas com a mesma chave única.",
       "Crie uma foreign key e tente apontar para registro inexistente.",
-      "Compare armazenar lista separada por vírgulas com modelar uma relação própria."
+      "Compare armazenar lista separada por vírgulas com modelar uma relação própria.",
+      "Num SQLite descartável, habilite foreign_keys antes da transação e confira PRAGMA foreign_keys. Crie um autor e tente gravar livro sem autor, com autor inexistente e dois livros válidos do mesmo autor. Faça cada tentativa em uma base nova para separar causa e efeito.",
+      "Adicione UNIQUE somente em autor_id e reproduza a falha do segundo livro. Explique por que essa restrição muda uma relação de um para muitos. Remova-a na definição de um novo banco de exercício, conservando presença e referência.",
+      "Reconstrua as peças da relação. No SQLite, criar a tabela filha antes do pai pode funcionar, mas inserir a filha exige o pai já existente. No PostgreSQL, declare primeiro a tabela referenciada; PRAGMA e a geração automática de INTEGER PRIMARY KEY não são um contrato portátil."
     ],
-    "projeto": "Modele usuários, projetos e tarefas com chaves, relações e restrições suficientes para impedir tarefas sem projeto válido.",
+    "projeto": "Modele usuários, projetos e tarefas com chaves, relações e restrições suficientes para impedir tarefas sem projeto válido. Construa o esquema num banco descartável e documente o dialeto. Revisão manual: mostre dois projetos do mesmo usuário, duas tarefas do mesmo projeto, chaves repetidas recusadas e tarefas com projeto ausente ou inexistente recusadas. Inclua outra conexão com as restrições configuradas e preserve os dados após uma operação rejeitada. Não entregue apenas um desenho: exporte o SQL de criação e os comandos de verificação. Compare suas tentativas com as garantias do esquema; as pausas conceituais não executam esse projeto nem comprovam sua correção completa.",
     "conexao": "Com o esquema definido, a próxima aula manipula linhas usando SELECT, INSERT, UPDATE e DELETE."
   },
   "sql-crud": {

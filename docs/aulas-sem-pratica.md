@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **34 de 137 aulas sem pausas deste catálogo**. As outras 103 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **33 de 137 aulas sem pausas deste catálogo**. As outras 104 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -12,7 +12,7 @@ Há **34 de 137 aulas sem pausas deste catálogo**. As outras 103 têm ao menos 
 | HTML | 19 | 15 | 4 |
 | JavaScript | 30 | 28 | 2 |
 | Python | 10 | 10 | 0 |
-| SQL/PostgreSQL | 14 | 6 | 8 |
+| SQL/PostgreSQL | 14 | 7 | 7 |
 | Integração (transversal) | 15 | 5 | 10 |
 | TypeScript | 10 | 7 | 3 |
 
@@ -30,7 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `sql-modelagem` — Tabelas, tipos e chaves | Banco de dados | SQL/PostgreSQL | Original |
 | `sql-crud` — SELECT, INSERT, UPDATE e DELETE | Banco de dados | SQL/PostgreSQL | Original |
 | `sql-join` — JOIN, agrupamento e agregações | Banco de dados | SQL/PostgreSQL | Original |
 | `sql-transacao` — Transações e consistência | Banco de dados | SQL/PostgreSQL | Original |

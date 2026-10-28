@@ -14,6 +14,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "sql-modelagem-prever-integridade":{"accepted":["aceito\nrecusado\nrecusado\naceito"],"solution":"aceito\nrecusado\nrecusado\naceito","failure":"Confira cada tentativa na base original. NOT NULL impede ausência, REFERENCES exige um autor existente e título não recebeu UNIQUE neste esquema."},
+ "sql-modelagem-corrigir-cardinalidade":{"accepted":["relacao"],"solution":"autor_id INTEGER NOT NULL REFERENCES autores(id)","failure":"A correção deve permitir dois livros do mesmo autor e continuar recusando tanto NULL quanto um autor inexistente. Remover todas as garantias resolve a mensagem de erro, mas quebra a regra do domínio."},
+ "sql-modelagem-montar-relacao":{"accepted":[],"order":["autores","livros","autor","livro","consulta"],"solution":"PRAGMA foreign_keys = ON;\nCREATE TABLE autores(id INTEGER PRIMARY KEY, nome TEXT NOT NULL);\nCREATE TABLE livros(id INTEGER PRIMARY KEY, titulo TEXT NOT NULL, autor_id INTEGER NOT NULL REFERENCES autores(id));\nINSERT INTO autores(id,nome) VALUES(7,'Ana');\nINSERT INTO livros(id,titulo,autor_id) VALUES(21,'Mapa',7),(22,'Mar',7);\nSELECT id,autor_id FROM livros ORDER BY id;","failure":"Verifique se cada tabela existe antes do INSERT correspondente, se o autor já foi gravado antes dos livros e se a consulta ocorre depois. A ordem de criação das duas tabelas pode variar neste SQLite."},
  "aspnet-protecao-prever-politica":{"accepted":["401\n403\n204"],"solution":"401\n403\n204","failure":"Uma credencial pode estabelecer uma identidade sem satisfazer a política. Confira separadamente ausência de autenticação, ausência da permissão e a resposta do endpoint quando todos os requisitos passam."},
  "aspnet-protecao-corrigir-recurso":{"accepted":["titular"],"solution":"using System.Security.Claims;\n\nstatic bool PodeExcluir(ClaimsPrincipal usuario, string autorDaNota, string autorInformadoNoJson) {\n    return usuario.Identity?.IsAuthenticated == true && usuario.IsInRole(\"editor\") && usuario.FindFirst(ClaimTypes.NameIdentifier)?.Value == autorDaNota;\n}","failure":"Confira as três condições juntas e a origem do identificador. A decisão deve continuar recusando uma pessoa sem o papel exigido, uma nota de outro autor e uma identidade sem identificador; o JSON não deve conceder permissão."},
  "aspnet-protecao-montar-limite":{"accepted":[],"order":["servicos","aplicacao","middleware","rota","executar"],"solution":"using Microsoft.AspNetCore.RateLimiting;\n\nvar construtor = WebApplication.CreateBuilder(args);\nconstrutor.Services.AddRateLimiter(opcoes => {\n    opcoes.RejectionStatusCode = StatusCodes.Status429TooManyRequests;\n    opcoes.AddConcurrencyLimiter(\"execucao\", limite => {\n        limite.PermitLimit = 1;\n        limite.QueueLimit = 0;\n    });\n});\nvar app = construtor.Build();\napp.UseRateLimiter();\napp.MapPost(\"/executar\", () => Results.Ok(\"aceito\")).RequireRateLimiting(\"execucao\");\napp.Run();","failure":"Verifique quando os serviços ficam fixados no contêiner e se a política chega ao endpoint pelo middleware. A rota e o middleware podem ser registrados em qualquer uma das duas ordens descritas; os dois precisam existir antes de iniciar o host."},
@@ -505,6 +508,10 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
     });
    }else if(id==='cs-dotnet-reconstruir-total')passed=submitted.length===4&&new Set(submitted).size===4&&submitted.every(linha=>concept.order!.includes(linha))&&submitted.indexOf('centavos')<submitted.indexOf('preco')&&submitted.indexOf('preco')<submitted.indexOf('saida')&&submitted.indexOf('quantidade')<submitted.indexOf('saida');
    else passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
+   if(id==='sql-modelagem-montar-relacao'){
+    const posicao=(linha:string)=>submitted.indexOf(linha);
+    passed=submitted.length===5&&new Set(submitted).size===5&&submitted.every(linha=>concept.order!.includes(linha))&&posicao('autores')<posicao('autor')&&posicao('livros')<posicao('livro')&&posicao('autor')<posicao('livro')&&posicao('livro')<posicao('consulta');
+   }
    if(id==='aspnet-protecao-montar-limite'){
     const meio=submitted.slice(2,4);
     passed=submitted.length===5&&new Set(submitted).size===5&&submitted[0]==='servicos'&&submitted[1]==='aplicacao'&&submitted[4]==='executar'&&meio.includes('middleware')&&meio.includes('rota');
@@ -522,6 +529,7 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
   else if(id==='css-prever-eixos')passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().replace(/[ \t]+/g,' ')).join('\n')===concept.accepted[0];
   else if(id==='css-flex-quebrar')passed=typeof answer==='string'&&/^wrap$/i.test(normalized(answer));
   else if(id==='css-herdar-caixa')passed=typeof answer==='string'&&/^inherit$/i.test(normalized(answer));
+  else if(id==='sql-modelagem-prever-integridade')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).split('\n').map(linha=>linha.trim().toLowerCase()).join('\n'));
   else if(id==='sql-correlacionar-ausentes')passed=typeof answer==='string'&&/^IS\s+NOT\s+DISTINCT\s+FROM$/i.test(normalized(answer));
   else passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer));
   result.passed=passed;
