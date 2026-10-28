@@ -1,4 +1,6 @@
 import {beforeAll,it,expect} from 'vitest';
+import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
+import {freshAdaptive,buildDailySession} from '../../src/learning/adaptive';
 import iniciarSql from 'sql.js';
 import type {SqlJsStatic} from 'sql.js';
 import {practiceActivities,practicesForLesson} from '../../src/content/practice';
@@ -83,5 +85,6 @@ it('cada conexão precisa habilitar sua própria integridade antes de gravar',()
 });
 it('conserva o exemplo e exercício originais e distribui habilidades distintas',()=>{
  const aula=lessons.find(item=>item.id==='sql-modelagem')!;expect(aula.code).toContain('CREATE TABLE categorias');
+ const estado=freshAdaptive(),sessao=buildDailySession(estado,{...adaptiveCatalog,preferredLanguage:'sql'},{now:Date.parse('2026-10-28T12:00:00Z'),timeZone:'UTC'});expect(sessao.items[0].activityId).toBe(idPreparacao('sql-modelagem'));expect(estado.skills).toEqual({});
  const pausas=practicesForLesson('sql-modelagem');expect(pausas).toHaveLength(3);expect(pausas.map(pausa=>pausa.capability)).toEqual(['leitura','depuracao','alteracao']);expect(new Set(pausas.flatMap(pausa=>pausa.skillIds)).size).toBe(3);expect(pausas.every(pausa=>pausa.requiresConcept&&pausa.prompt.includes('conceitual'))).toBe(true);
 });

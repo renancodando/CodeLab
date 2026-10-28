@@ -79,7 +79,7 @@ it('preparação nova conserva a leitura antiga sem tratá-la como cobertura dos
  expect(antigo).not.toBe(preparacao.id);
  expect(adaptiveCatalog.activities.find(atividade=>atividade.id===antigo)?.kind).toBe('concept');
  const state=freshAdaptive(),clock={now:Date.parse('2026-10-09T12:00:00Z'),timeZone:'UTC'};
- state.seenConcepts=adaptiveCatalog.activities.filter(atividade=>atividade.kind==='concept'&&!atividade.preparacaoAteBloco).map(atividade=>atividade.id);
+ state.seenConcepts=adaptiveCatalog.activities.filter(atividade=>atividade.kind==='concept'&&atividade.id!==preparacao.id).map(atividade=>atividade.id);
  const plano=buildDailySession(state,{...adaptiveCatalog,preferredLanguage:'sql'},clock);
  expect(plano.items[0].activityId).toBe(preparacao.id);
  expect(state.seenConcepts).toContain(antigo);expect(state.seenConcepts).not.toContain(preparacao.id);
