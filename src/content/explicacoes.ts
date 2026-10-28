@@ -841,11 +841,14 @@ const roteiros:Record<string,Roteiro>={
       "Registre eventos úteis sem incluir credenciais ou dados desnecessários."
     ],
     "experimentos": [
+      "Separe o challenge de uma pessoa não autenticada da recusa de uma pessoa autenticada sem permissão. O esquema define a resposta concreta; no exercício ele usa 401/403 sem redirects. As identidades do verificador são sintéticas, não uma validação de tokens reais.",
+      "Teste autorização com uma nota de outro autor, um proprietário sem papel de editor, um identificador ausente e um autor falsificado no JSON. Use o autor persistido e a identidade validada; uma política geral de endpoint não resolve sozinha a permissão sobre cada recurso.",
+      "Mantenha a primeira operação pendente com uma barreira de teste, faça uma segunda chamada e depois libere a primeira. Diferencie limite de concorrência de taxa por segundo. Um limiter em memória de um processo não substitui coordenação entre réplicas nem isolamento do executor.",
       "Tente acessar rota protegida sem credencial, com credencial inválida e sem permissão.",
       "Envie corpo acima do limite e observe rejeição controlada.",
       "Revise logs de falha e procure qualquer token ou segredo exposto."
     ],
-    "projeto": "Proteja um conjunto de endpoints por usuário, acrescente rate limit e escreva testes de integração para acesso permitido, negado e entrada inválida.",
+    "projeto": "Em um projeto separado que realmente precise de usuários, proteja endpoints e recursos, acrescente limites e testes de integração. Revisão manual: justifique autenticação e validação das credenciais; cubra 401/403, autoria por recurso e dados falsificados. Teste limite de entrada, concorrência, cancelamento, tempo e tamanho da saída sem executar código não confiável no processo da API. Confira acesso após liberar uma vaga e documente limites por instância. Identidades de teste e headers sintéticos não são um esquema de autenticação de produção. O CodeLab continua sem contas e com progresso local.",
     "conexao": "A trilha de banco de dados mostra como persistir esse estado preservando relações e consistência."
   },
   "sql-modelagem": {

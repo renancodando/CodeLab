@@ -2,6 +2,12 @@
 
 A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
 
+## Proteção integrada; modelagem atualizada sobre main
+
+A revisão de #81 foi retomada marcando a PR pronta e concluiu sem apontamentos para f648534c50d87e88be5c9ffdbd484cb5da20b6bf, sem reutilizar aprovação antiga nem repetir o CI verde. Merge d9dd6fc7f7defa78bfffaa48477e600197225cf8, pais 8f13fda/f648534 e árvore ff662d0fb8744388036e56811f4235235d932372 igual ao head conferido. Pós-merge/deployment e conferência pública próprios ainda precisam concluir; merge não comprova publicação.
+
+A PR #82 passou no CI proporcional 40688521337 do e72acee26d629220e0548f35d60a9d5c62343d73 em 2 min 04 s e teve revisão desse mesmo head sem apontamentos. Após #81, a main foi incorporada por merge, sem rebase, descarte ou force push. Conflitos de metadados e dos dois corretores foram combinados preservando ambas as aulas; os arquivos gerados foram regenerados. O novo head exige seus próprios checks/revisão antes de integrar. As métricas combinadas são 137 aulas, 228 atividades, 104 aulas com pausas e 33 sem; ainda não são prova do domínio publicado. Os recibos abaixo descrevem os estados anteriores das branches independentes.
+
 ## Modelagem SQL em entrega independente — 28/10/2026
 
 Main e produção foram reconferidos em 8f13fdae2a39f8be12392771cedcf3d988f438f3, READY/production com projeto e alias corretos. Esse merge da PR #80 já possui revisão do head, árvore/pais, CI proporcional 40507629090, pós-merge 40508588674 e três fluxos públicos aprovados, conforme o checkpoint remoto preservacao/checkpoints/2026-10-27-pr80-publicacao-conferida.md. Não repetir a bateria anterior.
@@ -17,6 +23,15 @@ O primeiro CI 40688034647 aprovou 150/151 testes, mas parou no cenário de migra
 As métricas desta branch são 137 aulas, 225 atividades, 103 aulas com pausas e 34 sem. Descrevem somente este lote, sem somar a PR #81 ainda pendente. Atualizar a fila e as métricas se uma entrega entrar antes da outra. Publicação exige revisão do head verdadeiro e deployment/SHA/alias conferidos; nenhuma destas novas pausas está publicada neste momento.
 
 Referências oficiais: [integridade referencial SQLite](https://www.sqlite.org/foreignkeys.html), [restrições SQLite](https://www.sqlite.org/lang_createtable.html), [constraints PostgreSQL 18](https://www.postgresql.org/docs/18/ddl-constraints.html). PRAGMA é específico de SQLite; a tabela referenciada precisa existir ao declarar a foreign key no PostgreSQL. A reconstrução não comprova portabilidade de esquema, migração ou execução do projeto inteiro.
+## PR #80 publicada; proteção ASP.NET em validação
+
+A PR #80 foi integrada em 8f13fdae2a39f8be12392771cedcf3d988f438f3 pelo head fab233608c37127235ed60358a707166c7945443. Revisão do mesmo head sem apontamentos, árvore e pais conferidos. CI proporcional 40507629090 aprovado em 4 min 56 s: 143 testes em quatro arquivos, sete fluxos Chromium e 26 cenários .NET das famílias afetadas. Pós-merge 40508588674 aprovado com build e dois smokes; deployment READY/SHA/projeto/alias conferidos antes/depois dos três fluxos públicos aprovados em 1,8 min. Main local limpa e sincronizada. Checkpoint final: preservacao/checkpoints/2026-10-27-pr80-publicacao-conferida.md na branch de preservação, que não deve ser integrada. Na retomada desta entrega, main/CI/alias continuam no mesmo SHA; não repetir a bateria anterior.
+
+O lote atual trabalha somente `aspnet-protecao`: challenge/forbid, autorização por autoria confiável e limiter de concorrência sem fila. Preserva o exemplo e o exercício originais, amplia investigação e revisão manual do projeto. São respostas conceituais do aluno; o verificador usa identidades sintéticas em servidor no loopback para testar autorização HTTP real, sem validar JWT/cookies. Não copiar o handler de teste para produção. O CodeLab continua sem autenticação de usuários.
+
+Passaram 123 testes específicos/corretor comum e oito cenários nativos .NET 10: 401/403/204 com contagem do handler, oito combinações de autoria por alternativa, duas ordens equivalentes do limiter e recusa do registro tardio de serviços. Barreiras de teste mantêm uma operação pendente, verificam 429 e aguardam a conclusão antes de testar a vaga devolvida; sem sleep, retries ou aumento de limites. Catálogo/tipos e CI/revisão deste head ainda precisam ser conferidos. Build e o único fluxo novo de navegador ficam no CI, sem repetir smokes locais. Este lote ainda não está publicado; a fila deste checkout não é prova de implantação.
+
+Referências: [claims e políticas](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/claims?view=aspnetcore-10.0), [autorização por recurso](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0), [rate limiting](https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-10.0). As referências compilam com net10.0 e o esquema sintético existe apenas no verificador.
 
 ## PR #79 publicada; próxima prática de middleware
 
