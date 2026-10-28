@@ -2,6 +2,20 @@
 
 A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
 
+## Modelagem SQL em entrega independente — 28/10/2026
+
+Main e produção foram reconferidos em 8f13fdae2a39f8be12392771cedcf3d988f438f3, READY/production com projeto e alias corretos. Esse merge da PR #80 já possui revisão do head, árvore/pais, CI proporcional 40507629090, pós-merge 40508588674 e três fluxos públicos aprovados, conforme o checkpoint remoto preservacao/checkpoints/2026-10-27-pr80-publicacao-conferida.md. Não repetir a bateria anterior.
+
+A PR #81 segue aberta no head f648534c50d87e88be5c9ffdbd484cb5da20b6bf: CI proporcional 40581912211 aprovado em 4 min 56 s, mas a revisão automática continua running desde 27/10, sem parecer nem threads. Isso não é aprovação. Não integrar enquanto a revisão necessária não concluir. Fonte e checkpoint de #81 estão salvos remotamente.
+
+Este lote parte da main, sem depender de #81, e aprofunda apenas a aula existente sql-modelagem. Acrescenta previsão de integridade em cópias independentes da base, diagnóstico da unicidade indevida na chave estrangeira e reconstrução por dependências, aceitando três ordens equivalentes no SQLite. Mantém exemplo/exercício e todos os recursos existentes. O projeto tem revisão manual, SQL exportável e verificação de dados recusados; não recebe aprovação automática.
+
+Passaram 127 testes da aula e do corretor comum. As referências usam SQLite real via sql.js: quatro INSERT independentes, quatro alternativas de esquema contra oito situações, três ordens válidas, filho antecipado recusado e configuração da integridade por conexão. Não é compilação PostgreSQL e não executa SQL livre do aluno. Catálogo/métricas foram gerados e conferidos; tipos e CI/revisão do novo head precisam ser conferidos. Build e o único fluxo novo de navegador ficam no CI, sem repetir a suíte completa, outros runtimes ou smokes locais.
+
+As métricas desta branch são 137 aulas, 225 atividades, 103 aulas com pausas e 34 sem. Descrevem somente este lote, sem somar a PR #81 ainda pendente. Atualizar a fila e as métricas se uma entrega entrar antes da outra. Publicação exige revisão do head verdadeiro e deployment/SHA/alias conferidos; nenhuma destas novas pausas está publicada neste momento.
+
+Referências oficiais: [integridade referencial SQLite](https://www.sqlite.org/foreignkeys.html), [restrições SQLite](https://www.sqlite.org/lang_createtable.html), [constraints PostgreSQL 18](https://www.postgresql.org/docs/18/ddl-constraints.html). PRAGMA é específico de SQLite; a tabela referenciada precisa existir ao declarar a foreign key no PostgreSQL. A reconstrução não comprova portabilidade de esquema, migração ou execução do projeto inteiro.
+
 ## PR #79 publicada; próxima prática de middleware
 
 A PR #79 foi integrada em 73c6a45d119732e9fc635e6531e4bfa588c81f04 pelo head 0026b3ebdfd132e9461eb0d39c58a10f6293d123, com revisão sem apontamentos, threads resolvidas e árvore/pais conferidos. O CI proporcional 40422431074 passou 204 testes em oito arquivos, 14 fluxos Chromium e 21 cenários .NET das famílias afetadas, com build/API. Durou 6 min 05 s contra 18 min 25 s da referência anterior: redução pontual de cerca de 67%, sem promessa de duração total. O pós-merge 40423190482 passou build e somente dois smokes, sem repetir unitários ou exemplos. Deployment READY, SHA/projeto/alias conferidos antes/depois dos três fluxos públicos: backup, offline e axe/220–4000 px, todos aprovados em 1,3 min. Na retomada de 27/10, main, CI e alias continuam no mesmo SHA; não repetir esses fluxos por rotina.
