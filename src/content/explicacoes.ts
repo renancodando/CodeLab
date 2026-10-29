@@ -885,9 +885,12 @@ const roteiros:Record<string,Roteiro>={
     "experimentos": [
       "Execute SELECT com o mesmo WHERE de um UPDATE antes da alteração.",
       "Remova o WHERE em um banco descartável para entender o alcance do comando.",
-      "Compare DELETE com marcar um estado de arquivado quando histórico precisa ser preservado."
+      "Compare DELETE com marcar um estado de arquivado quando histórico precisa ser preservado.",
+      "Preveja as linhas após INSERT, UPDATE e DELETE antes de consultar. Use uma base nova para repetir o roteiro; identificadores e ORDER BY precisam estar explícitos para comparar resultados.",
+      "Reproduza um UPDATE cujo OR inclui outras tarefas. Teste a tarefa-alvo pendente, já concluída e ausente. Acrescente um contador de edições e repita a chamada para detectar uma gravação que mantém o status, mas altera outro campo. Essa proteção simples de estado não é uma solução geral de concorrência ou idempotência distribuída.",
+      "Corrija o filtro de pendências no SQLite local. Investigue o caso visível e depois as bases variadas; títulos iguais não autorizam eliminar tarefas distintas. A conferência usa só leitura e mantém a base protegida contra alterações."
     ],
-    "projeto": "Crie operações CRUD para tarefas e um roteiro de teste que prova criação, consulta, edição restrita a um id e remoção.",
+    "projeto": "Crie operações CRUD para tarefas e um roteiro de teste que prova criação, consulta, edição restrita a um id e remoção. Trabalhe em um banco descartável e exporte criação, dados de teste, comandos e resultados esperados. Revisão manual: inclua alvo ausente, alvo já concluído, outras tarefas pendentes, lista sem pendências e tabela vazia; confira todas as colunas das linhas que deveriam continuar intactas. Faça um SELECT com o mesmo filtro antes de gravar, explicando que outra conexão pode mudar os dados depois dessa leitura: a prévia não substitui transação ou controle de concorrência. A correção automática da consulta de leitura não executa nem aprova o CRUD inteiro. Retome os erros da tentativa antes de refazer o projeto.",
     "conexao": "A próxima aula combina tabelas e resume conjuntos com JOIN, GROUP BY e agregações."
   },
   "sql-join": {
