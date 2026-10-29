@@ -22,7 +22,7 @@ function importaArquivo(teste,texto,arquivo){
 }
 function mencionaId(texto,id){
  const literal=id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
- return new RegExp('(^|[^a-zA-Z0-9_-])'+literal+'(?=$|[^a-zA-Z0-9_-])').test(texto);
+ return new RegExp('(^|[^a-zA-Z0-9_-])'+literal+'(?=$|[^a-zA-Z0-9_])').test(texto);
 }
 export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegador:[],textos:{}}){
  const unidades=new Set(),navegador=new Set(),familias=new Set(),motivos=[];

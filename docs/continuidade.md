@@ -1105,3 +1105,5 @@ A PR #40 passou no CI 38259821060 com 706 unidades, 151 fluxos em parcelas de 75
 
 
 Engenharia passou em strict/build: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 207,84 kB gzip e mundo 135,94 kB gzip. O teste do marco exige ao menos uma pausa em cada uma das dez aulas Python, sem afirmar domínio por leitura ou conclusão da linguagem. Dois fluxos locais Edge passaram em 1,5 min: engenharia e regressão de concorrência, incluindo assistência, recarga offline, evidência e 220/4000 px. A publicação de #40 já tem deployment dpl_5fxMM1Q7tCi8cSn7gRCUUXWPeRp2 READY/production, gitSource.sha be777ce404aaa9257eed502d4fa1e0da491f5f66 confirmado e domínio atribuído; os fluxos públicos ainda precisam passar.
+
+A seleção continua conservadora para extensões por hífen: alterar `sql-join` também seleciona um teste que mencione apenas `sql-join-depurar-titulos`. A correção bloqueia a continuação da palavra em `sql-joins-cardinalidade`, sem perder esse vínculo entre aula e atividade. Esse caso faz parte dos testes do novo head.

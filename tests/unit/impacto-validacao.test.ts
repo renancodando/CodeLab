@@ -78,12 +78,12 @@ it('IDs de aulas não selecionam testes de outras aulas por prefixo',()=>{
  }};
  expect(selecionarImpacto(['src/content/practice.ts'],['sql-join'],testes).navegador).toEqual(['tests/e2e/api.spec.ts','tests/e2e/sql-join.spec.ts']);
 });
-it('uma atividade alterada continua selecionando seu teste próprio',()=>{
+it('alterar a aula mantém os testes que só mencionam suas atividades',()=>{
  const testes={...catalogo,navegador:['tests/e2e/sql-join.spec.ts'],textos:{'tests/e2e/sql-join.spec.ts':'sql-join-depurar-titulos'}};
- expect(selecionarImpacto(['src/learning/practice.ts'],['sql-join','sql-join-depurar-titulos'],testes).navegador).toEqual(['tests/e2e/sql-join.spec.ts']);
+ expect(selecionarImpacto(['src/learning/practice.ts'],['sql-join'],testes).navegador).toEqual(['tests/e2e/sql-join.spec.ts']);
 });
-it('o limite do ID distingue prefixos e sufixos sem perder rotas ou seletores',()=>{
+it('o limite do ID distingue palavras e mantém extensões conservadoras por hífen',()=>{
  const nomes=['rota','seletor','prefixo','sufixo','palavra','quase'],navegador=nomes.map(nome=>'tests/e2e/'+nome+'.spec.ts');
  const textos=Object.fromEntries(navegador.map((arquivo,indice)=>[arquivo,["'/#/aula/sql-join'",'`[data-lesson="sql-join"]`',"'outro-sql-join'","'sql-join-extra'","'outrosql-join'","'sql-joins'"][indice]]));
- expect(selecionarImpacto(['src/content/practice.ts'],['sql-join'],{...catalogo,navegador,textos}).navegador).toEqual(['tests/e2e/rota.spec.ts','tests/e2e/seletor.spec.ts']);
+ expect(selecionarImpacto(['src/content/practice.ts'],['sql-join'],{...catalogo,navegador,textos}).navegador).toEqual(['tests/e2e/rota.spec.ts','tests/e2e/seletor.spec.ts','tests/e2e/sufixo.spec.ts']);
 });
