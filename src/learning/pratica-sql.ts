@@ -17,7 +17,17 @@ function pendencias(rotulo:string,dados:(number|string)[][],linhas:(number|strin
 function contagemDeNotas(rotulo:string,categorias:number[],notas:(number|string)[][],linhas:number[][],falha:string):CenarioSql{
  return {rotulo,preparacao:'CREATE TABLE categorias(id INTEGER PRIMARY KEY); CREATE TABLE notas(id INTEGER PRIMARY KEY,categoria_id INTEGER NOT NULL REFERENCES categorias(id),titulo TEXT NOT NULL);'+inserir('categorias',categorias.map(id=>[id]))+inserir('notas',notas),colunas:['categoria_id','quantidade'],linhas,falha};
 }
+function auditoriaDeLancamentos(rotulo:string,dados:number[][],linhas:number[][],falha:string):CenarioSql{
+ return {rotulo,preparacao:'CREATE TABLE lancamentos(transferencia_id INTEGER NOT NULL,conta_id INTEGER NOT NULL,delta_centavos INTEGER NOT NULL CHECK(delta_centavos<>0));'+inserir('lancamentos',dados),colunas:['transferencia_id','total_centavos'],linhas,falha};
+}
 export const cenariosSql:Record<string,CenarioSql[]>={
+ 'sql-transacao-auditar-lancamentos':[
+  auditoriaDeLancamentos('Um débito sem crédito deixa soma diferente de zero.',[[10,1,-200],[10,2,200],[20,3,-100]],[[20,-100]],'Confira quais transferências violam as regras e devolva a soma real de cada uma, sem incluir os pares válidos.'),
+  auditoriaDeLancamentos('Quatro lançamentos equilibrados continuam fora do contrato.',[[40,1,-200],[40,2,200],[40,1,-200],[40,2,200],[7,3,-50],[7,4,50]],[[40,0]],'O caso comum passou, mas a soma zero escondeu uma transferência com lançamentos demais. Confira a quantidade de registros além do total.'),
+  auditoriaDeLancamentos('Duas linhas na mesma conta não formam duas contas distintas.',[[9,8,-80],[9,8,80],[2,1,-10],[2,2,10]],[[9,0]],'A quantidade de linhas e a soma podem estar certas sem haver contas distintas. Confira a identidade das contas do grupo.'),
+  auditoriaDeLancamentos('Inconsistências e sinais variados permanecem em ordem de ID.',[[30,4,-70],[30,5,90],[-2,1,-90],[-2,2,90],[-2,3,-30],[-2,4,30],[0,7,-25],[0,7,25],[5,1,-50],[5,2,50]],[[-2,0],[0,0],[30,20]],'Teste as regras como alternativas: qualquer violação basta. Preserve a soma com seu sinal e ordene pelo ID, não pelo total.'),
+  auditoriaDeLancamentos('Sem lançamentos não há transferências para inventar.',[],[],'Uma tabela vazia produz zero linhas com os dois cabeçalhos, não um total global ou um resultado fixo.')
+ ],
  'sql-join-depurar-titulos':[
   contagemDeNotas("Categorias acima do limite aparecem na ordem pedida.",[10,20,30],[[1,30,"A"],[2,30,"B"],[3,30,"C"],[4,10,"A"],[5,10,"B"],[6,20,"Única"]],[[30,3],[10,2]],"Confira o limite de duas notas, a contagem por categoria e a ordem decrescente das quantidades."),
   contagemDeNotas("Títulos repetidos não eliminam notas com IDs diferentes.",[2,8,15],[[1,2,"SQL"],[2,2,"SQL"],[3,8,"Mesmo"],[4,8,"Mesmo"],[5,8,"Mesmo"]],[[8,3],[2,2]],"O caso visível passou, mas títulos repetidos apagaram registros distintos. Confira a identidade contada e a condição que decide se o grupo continua no relatório."),
