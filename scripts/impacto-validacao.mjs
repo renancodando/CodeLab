@@ -20,6 +20,10 @@ function importaArquivo(teste,texto,arquivo){
  }
  visitar(fonte);return encontrado;
 }
+function mencionaId(texto,id){
+ const literal=id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+ return new RegExp('(^|[^a-zA-Z0-9_-])'+literal+'(?=$|[^a-zA-Z0-9_-])').test(texto);
+}
 export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegador:[],textos:{}}){
  const unidades=new Set(),navegador=new Set(),familias=new Set(),motivos=[];
  const meteorologia=arquivos.some(p=>p==='server/Meteorologia.cs'||p==='server/CodeLab.Api.csproj'||p.startsWith('tests/meteorologia-api/'));
@@ -37,7 +41,7 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
   else if(p.startsWith('tests/fixtures/'))adicionar(p.split('/').at(-1).replace(/\.mjs$/,''));
   else if(centrais.includes(p)){
    if(p!=='src/content/explicacoes.ts')adicionar('practice');
-   if(p!=='src/content/explicacoes.ts')for(const id of ids)for(const [teste,texto] of Object.entries(catalogo.textos))if(texto.includes(id)){
+   if(p!=='src/content/explicacoes.ts')for(const id of ids)for(const [teste,texto] of Object.entries(catalogo.textos))if(mencionaId(texto,id)){
     if(teste.startsWith('tests/unit/'))unidades.add(teste);else navegador.add(teste);
     const nome=teste.split('/').at(-1).replace(/\.(test|spec)\.ts$/,'');if(nativas.includes(nome))familias.add(nome);
    }
