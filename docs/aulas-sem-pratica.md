@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **32 de 137 aulas sem pausas deste catálogo**. As outras 105 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **31 de 137 aulas sem pausas deste catálogo**. As outras 106 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -12,7 +12,7 @@ Há **32 de 137 aulas sem pausas deste catálogo**. As outras 105 têm ao menos 
 | HTML | 19 | 15 | 4 |
 | JavaScript | 30 | 28 | 2 |
 | Python | 10 | 10 | 0 |
-| SQL/PostgreSQL | 14 | 8 | 6 |
+| SQL/PostgreSQL | 14 | 9 | 5 |
 | Integração (transversal) | 15 | 5 | 10 |
 | TypeScript | 10 | 7 | 3 |
 
@@ -30,7 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `sql-join` — JOIN, agrupamento e agregações | Banco de dados | SQL/PostgreSQL | Original |
 | `sql-transacao` — Transações e consistência | Banco de dados | SQL/PostgreSQL | Original |
 | `sql-indices` — Índices, parâmetros e SQL Injection | Banco de dados | SQL/PostgreSQL | Original |
 | `cpp-texto-conversao` — C++: entrada textual, conversão completa e estados de erro | C++ · do zero ao avançado | C++ | Fundamentos |

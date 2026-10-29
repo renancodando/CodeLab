@@ -14,7 +14,17 @@ function totais(rotulo:string,pedidos:number[],itens:number[][],pagamentos:numbe
 function pendencias(rotulo:string,dados:(number|string)[][],linhas:(number|string)[][],falha:string):CenarioSql{
  return {rotulo,preparacao:'CREATE TABLE tarefas(id INTEGER PRIMARY KEY,titulo TEXT NOT NULL,concluida INTEGER NOT NULL CHECK(concluida IN(0,1)));'+inserir('tarefas',dados),colunas:['id','titulo'],linhas,falha};
 }
+function contagemDeNotas(rotulo:string,categorias:number[],notas:(number|string)[][],linhas:number[][],falha:string):CenarioSql{
+ return {rotulo,preparacao:'CREATE TABLE categorias(id INTEGER PRIMARY KEY); CREATE TABLE notas(id INTEGER PRIMARY KEY,categoria_id INTEGER NOT NULL REFERENCES categorias(id),titulo TEXT NOT NULL);'+inserir('categorias',categorias.map(id=>[id]))+inserir('notas',notas),colunas:['categoria_id','quantidade'],linhas,falha};
+}
 export const cenariosSql:Record<string,CenarioSql[]>={
+ 'sql-join-depurar-titulos':[
+  contagemDeNotas("Categorias acima do limite aparecem na ordem pedida.",[10,20,30],[[1,30,"A"],[2,30,"B"],[3,30,"C"],[4,10,"A"],[5,10,"B"],[6,20,"Única"]],[[30,3],[10,2]],"Confira o limite de duas notas, a contagem por categoria e a ordem decrescente das quantidades."),
+  contagemDeNotas("Títulos repetidos não eliminam notas com IDs diferentes.",[2,8,15],[[1,2,"SQL"],[2,2,"SQL"],[3,8,"Mesmo"],[4,8,"Mesmo"],[5,8,"Mesmo"]],[[8,3],[2,2]],"O caso visível passou, mas títulos repetidos apagaram registros distintos. Confira a identidade contada e a condição que decide se o grupo continua no relatório."),
+  contagemDeNotas("No empate, o ID crescente desempata sem depender da inserção.",[20,5],[[1,20,"Teste"],[2,20,"Teste"],[3,5,"D'água"],[4,5,"X"]],[[5,2],[20,2]],"As quantidades podem estar certas e o relatório ainda desempatar de outra forma. A ordem de inserção não define a ordem solicitada."),
+  contagemDeNotas("Categorias com zero ou uma nota não atingem o limite.",[4,9],[[1,4,"Única"]],[],"Nenhum grupo atingiu o limite; retorne zero linhas com os dois cabeçalhos. A linha preservada de uma categoria vazia não representa uma nota."),
+  contagemDeNotas("Tabelas vazias mantêm cabeçalhos e não inventam grupos.",[],[],[],"Sem categorias nem notas, o relatório fica vazio. Não devolva grupos ou contagens fixos para completar o resultado.")
+ ],
  'sql-crud-depurar-pendencias':[
   pendencias("Pendentes aparecem sem as concluídas, em ordem de ID.",[[30,"Testar",0],[10,"Ler",1],[20,"Criar",0]],[[20,"Criar"],[30,"Testar"]],"A lista ainda inclui uma tarefa concluída, omite uma pendente ou usa outra ordem. Confira o significado do estado antes de selecionar as linhas."),
   pendencias("Outros IDs e títulos repetidos ou com apóstrofo são preservados.",[[8,"Ignorar",1],[2,"D'água",0],[200,"Mesmo",0],[-3,"Mesmo",0],[0,"Pronto",1]],[[-3,"Mesmo"],[2,"D'água"],[200,"Mesmo"]],"O caso visível passou, mas outras chaves, textos ou repetições legítimas falharam. Título não identifica a tarefa; não fixe valores do exemplo nem elimine tarefas diferentes com o mesmo título."),
