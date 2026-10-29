@@ -906,9 +906,13 @@ const roteiros:Record<string,Roteiro>={
     "experimentos": [
       "Compare INNER e LEFT JOIN com um registro sem relação.",
       "Crie relação um-para-muitos e observe como a linha do lado um se repete.",
-      "Calcule COUNT(*) e COUNT(coluna) em presença de NULL."
+      "Calcule COUNT(*) e COUNT(coluna) em presença de NULL.",
+      "Desenhe a linha que LEFT JOIN preserva para uma categoria sem notas. Preveja COUNT(*) e COUNT(n.id) separadamente antes de executar: uma linha presente não garante uma chave de nota presente.",
+      "Tente filtrar COUNT em WHERE e reproduza a recusa do banco. Mova o teste do agregado para HAVING e compare os grupos com zero, uma, duas e três notas. Essa ordem lógica ajuda a raciocinar; não descreve obrigatoriamente o plano físico do otimizador.",
+      "Reproduza um relatório que conta títulos distintos em vez de registros. Inclua duas notas diferentes com o mesmo título e compare a quantidade exibida e os grupos que passam no limite. Use uma chave estável para desempatar quantidades iguais.",
+      "Investigue duas soluções equivalentes para o relatório com mínimo de duas notas: agrupar a tabela de notas diretamente ou contar linhas após a junção. COUNT(*) pode produzir o mesmo resultado nesse recorte; no relatório geral que preserva categorias vazias, ele volta a diferir de COUNT(n.id)."
     ],
-    "projeto": "Gere relatório por projeto com quantidade de tarefas, concluídas e última atualização, preservando projetos sem tarefas.",
+    "projeto": "Gere relatório por projeto com quantidade de tarefas, concluídas e última atualização, preservando projetos sem tarefas. Revisão manual: entregue esquema, dados de teste e consultas exportáveis com resultados esperados. Inclua projeto sem tarefa, tarefas diferentes com o mesmo título, duas tarefas no limite e empates de contagem com desempate estável. Defina como a última atualização ausente aparece. Compare esse relatório geral com um segundo recorte que aceita somente projetos acima de um mínimo: não apague zeros do primeiro só porque o segundo os exclui. Justifique a identidade contada e a fase dos filtros; a pausa corrigível não aprova automaticamente todo o relatório ou sua performance.",
     "conexao": "Quando várias alterações precisam ser tratadas como uma unidade, entram transações e consistência."
   },
   "sql-transacao": {

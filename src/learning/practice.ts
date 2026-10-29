@@ -14,6 +14,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "sql-join-prever-contagem":{"accepted":["10|2|2\n20|1|0"],"solution":"10|2|2\n20|1|0","failure":"A categoria vazia ainda produz uma linha na junção externa. Confira separadamente quantas linhas chegaram ao grupo e quantas chaves de nota estão presentes."},
+ "sql-join-diagnosticar-grupo":{"accepted":["grupos"],"solution":"SELECT c.id,COUNT(n.id) AS quantidade\nFROM categorias c LEFT JOIN notas n ON n.categoria_id=c.id\nGROUP BY c.id\nHAVING COUNT(n.id)>=2\nORDER BY c.id;","failure":"Filtrar uma nota existente ainda pode manter um grupo com somente uma nota. A regra deve testar a contagem do grupo e incluir o limite de duas, sem usar a agregação no filtro de linhas."},
+
  "sql-crud-prever-alteracoes":{"accepted":["10|0\n20|1"],"solution":"10|0\n20|1","failure":"Acompanhe o conjunto depois de cada operação e só então leia o SELECT. Confira tanto a tarefa alterada quanto a linha removida; as outras não devem desaparecer."},
  "sql-crud-corrigir-alvo":{"accepted":["intersecao"],"solution":"UPDATE tarefas SET concluida=1, edicoes=edicoes+1\nWHERE id=20 AND concluida=0;","failure":"O filtro precisa proteger as outras tarefas e a tarefa 20 já concluída. Confira os dois lados da condição e a segunda chamada: manter concluida em 1 não basta se edicoes continuar aumentando."},
 
