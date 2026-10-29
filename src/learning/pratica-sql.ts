@@ -11,7 +11,17 @@ function contagem(rotulo:string,clientes:number[],pedidos:(number|string)[][],li
 function totais(rotulo:string,pedidos:number[],itens:number[][],pagamentos:number[][],linhas:number[][],falha:string):CenarioSql{
  return {rotulo,preparacao:'CREATE TABLE pedidos(id INTEGER PRIMARY KEY); CREATE TABLE itens(pedido_id INTEGER NOT NULL REFERENCES pedidos(id),centavos INTEGER NOT NULL CHECK(centavos>=0)); CREATE TABLE pagamentos(pedido_id INTEGER NOT NULL REFERENCES pedidos(id),centavos INTEGER NOT NULL CHECK(centavos>=0));'+inserir('pedidos',pedidos.map(id=>[id]))+inserir('itens',itens)+inserir('pagamentos',pagamentos),colunas:['pedido_id','itens','pagamentos'],linhas,falha};
 }
+function pendencias(rotulo:string,dados:(number|string)[][],linhas:(number|string)[][],falha:string):CenarioSql{
+ return {rotulo,preparacao:'CREATE TABLE tarefas(id INTEGER PRIMARY KEY,titulo TEXT NOT NULL,concluida INTEGER NOT NULL CHECK(concluida IN(0,1)));'+inserir('tarefas',dados),colunas:['id','titulo'],linhas,falha};
+}
 export const cenariosSql:Record<string,CenarioSql[]>={
+ 'sql-crud-depurar-pendencias':[
+  pendencias("Pendentes aparecem sem as concluídas, em ordem de ID.",[[30,"Testar",0],[10,"Ler",1],[20,"Criar",0]],[[20,"Criar"],[30,"Testar"]],"A lista ainda inclui uma tarefa concluída, omite uma pendente ou usa outra ordem. Confira o significado do estado antes de selecionar as linhas."),
+  pendencias("Outros IDs e títulos repetidos ou com apóstrofo são preservados.",[[8,"Ignorar",1],[2,"D'água",0],[200,"Mesmo",0],[-3,"Mesmo",0],[0,"Pronto",1]],[[-3,"Mesmo"],[2,"D'água"],[200,"Mesmo"]],"O caso visível passou, mas outras chaves, textos ou repetições legítimas falharam. Título não identifica a tarefa; não fixe valores do exemplo nem elimine tarefas diferentes com o mesmo título."),
+  pendencias("Uma base só com concluídas não cria pendências.",[[2,"Ler",1],[9,"Entregar",1]],[],"Sem tarefas pendentes, o resultado deve ter zero linhas e manter os dois cabeçalhos. Não substitua a ausência por uma linha fixa."),
+  pendencias("Todas as tarefas pendentes continuam na lista.",[[90,"Revisar",0],[40,"Ler",0]],[[40,"Ler"],[90,"Revisar"]],"Quando todas estão pendentes, todas precisam aparecer. Não dependa de uma quantidade fixa ou de haver uma tarefa concluída."),
+  pendencias("Tabela vazia mantém a estrutura sem inventar registros.",[],[],"A tabela vazia deve retornar zero linhas com id e titulo. Uma saída fixa pode parecer correta em uma base e não representar seus dados.")
+ ],
  'sql-depurar-clientes-pagos':[
   contagem('Clientes com pago, aberto e nenhum pedido permanecem.',[1,2,3],[[10,1,'pago'],[11,1,'aberto'],[12,2,'aberto']],[[1,1],[2,0],[3,0]],'Um cliente sem pedido pago desapareceu ou recebeu uma contagem indevida. Investigue quais linhas sobrevivem à junção e ao filtro.'),
   contagem('Outras chaves, ordem de inserção e múltiplos pagos funcionam.',[8,2,15],[[1,8,'pago'],[2,8,'pago'],[3,2,'cancelado'],[4,15,'pago']],[[2,0],[8,2],[15,1]],'O exemplo funciona, mas outras chaves, vários pedidos ou a ordenação ainda falham. Não fixe as contagens do primeiro conjunto.'),

@@ -2,6 +2,18 @@
 
 A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
 
+## Proteção e modelagem publicadas; CRUD SQL em preparação — 29/10/2026
+
+As PRs #81 e #82 estão integradas e publicadas em main 5724081ec4c266eadd6cdf06f6be3cec496a8d3b. Revisões dos próprios heads sem apontamentos, árvores/pais conferidos. CI #82 40772139051 aprovado em 2 min 12 s, com 151 testes de cinco arquivos e um fluxo Chromium. Pós-merge final 40772556253 passou build e dois smokes. Deployment dpl_59L17yxxj1mS9yC3UNy9YD2uqYPB READY/production, SHA/projeto/alias conferidos antes/depois de três fluxos públicos aprovados em 56,2 s. Recibo remoto: preservacao/checkpoints/2026-10-28-pr81-pr82-publicacao-conferida.md, na branch de preservação que não deve ser integrada. Nesta retomada, main/CI/alias continuam no mesmo SHA e não há PR aberta. Não repetir a bateria anterior.
+
+O lote atual trabalha somente a aula original sql-crud: previsão do estado depois de INSERT/UPDATE/DELETE; diagnóstico do alvo combinado com seu estado; correção de consulta de pendências executada no SQLite local existente. As duas primeiras respostas são conceituais, embora seus exemplos e alternativas sejam executados nos testes. A terceira envia uma única consulta de leitura ao Worker e verifica cinco bases, incluindo títulos repetidos/apóstrofo, IDs variados, todas pendentes, só concluídas e tabela vazia. Aceita SQL equivalente pelo comportamento e mantém bloqueios contra mutação e comandos extras. Nenhum novo runtime, aula, permissão de rede, conta ou visual.
+
+Passaram 170 testes de três arquivos afetados, incluindo referências SQLite reais, alternativas de UPDATE, repetição de chamada, soluções equivalentes e controles de leitura. O PostgreSQL local não está instalado; as referências portáveis da consulta serão verificadas pela família sql-pratica no PostgreSQL real do CI, sem alegar execução PostgreSQL do aluno. Catálogo/métricas, tipos, navegador, CI/revisão deste head e publicação próprios ainda precisam concluir. Não rodar todas as linguagens ou a suíte integral por rotina.
+
+O projeto CRUD ganhou critérios manuais sobre alvo ausente, estado já concluído, outras linhas preservadas e comandos/resultados exportáveis. O SELECT prévio não substitui controle de concorrência; o contador do exemplo não demonstra idempotência distribuída. A consulta corrigível não aprova automaticamente criação, alteração e exclusão do projeto inteiro. As métricas geradas desta branch são 137 aulas, 231 atividades, 105 aulas com pausas e 32 sem; produção permanece em 228/104/33 até os gates próprios. Os registros posteriores são históricos.
+
+Referências oficiais: [UPDATE SQLite](https://www.sqlite.org/lang_update.html), [SELECT SQLite](https://www.sqlite.org/lang_select.html), [DELETE SQLite](https://www.sqlite.org/lang_delete.html). A atividade livre usa SQLite no navegador; PostgreSQL tem seus próprios contratos, ferramentas e aulas.
+
 ## Proteção integrada; modelagem atualizada sobre main
 
 A revisão de #81 foi retomada marcando a PR pronta e concluiu sem apontamentos para f648534c50d87e88be5c9ffdbd484cb5da20b6bf, sem reutilizar aprovação antiga nem repetir o CI verde. Merge d9dd6fc7f7defa78bfffaa48477e600197225cf8, pais 8f13fda/f648534 e árvore ff662d0fb8744388036e56811f4235235d932372 igual ao head conferido. Pós-merge/deployment e conferência pública próprios ainda precisam concluir; merge não comprova publicação.
