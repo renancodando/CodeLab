@@ -928,9 +928,12 @@ const roteiros:Record<string,Roteiro>={
     "experimentos": [
       "Simule falha entre débito e crédito em uma transferência com e sem transação.",
       "Execute duas atualizações concorrentes em um banco de teste e observe conflitos.",
-      "Use uma constraint dentro da transação para provocar rollback."
+      "Diferencie falha de instrução de rollback total: em SQLite, uma violação de CHECK com o comportamento ABORT padrão desfaz a instrução que falhou, mantém alterações anteriores e deixa a transação ativa. O controlador deve executar ROLLBACK no caminho de erro; não confirmar em finally. PostgreSQL deixa a transação em estado abortado até recuperação por rollback ou savepoint apropriado. Confira o comportamento do seu driver.",
+      "Marque o primeiro COMMIT e depois uma segunda transação desfeita: ROLLBACK não desfaz uma unidade já confirmada. Cada execução no laboratório usa um banco descartável novo; comandos enviados em execuções diferentes não compartilham a mesma transação.",
+      "UPDATE que não encontra a conta pode afetar zero linhas sem erro. Simule destino ausente e saldo insuficiente; exigir uma linha em cada etapa é uma regra do controlador deste exemplo, não uma propriedade automática de BEGIN/COMMIT.",
+      "Audite lançamentos por transferência: soma zero, exatamente dois registros e contas distintas são três regras separadas. Um lançamento duplicado pode conservar o total. A auditoria encontra essas violações no recorte, mas não comprova como os registros foram gravados nem garante isolamento."
     ],
-    "projeto": "Implemente transferência de pontos entre duas contas garantindo que saldo não fique negativo e que nenhuma metade da operação seja persistida sozinha.",
+    "projeto": "Construa uma transferência de pontos fictícios usando inteiros, em banco descartável. Entregue esquema, controlador, testes e instruções de reprodução. Exija valor positivo, contas distintas e existentes, saldo suficiente, uma linha afetada por etapa e fechamento correto da transação. Provoque falha entre débito e crédito e registre os saldos antes/depois de rollback; confira também destino ausente e primeira transferência já confirmada. Acrescente a consulta de auditoria e mostre um exemplo em que soma zero não basta. Revisão manual: preservar saldos em toda falha, não confirmar em finally, tratar o estado da conexão e explicar os limites dos testes com uma única conexão. A prática desta aula não certifica concorrência ou um sistema financeiro real; os conflitos entre sessões pertencem à aula própria de isolamento.",
     "conexao": "A última aula trata desempenho por índices e segurança por consultas parametrizadas, incluindo SQL Injection."
   },
   "sql-indices": {

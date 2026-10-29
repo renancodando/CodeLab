@@ -14,6 +14,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "sql-transacao-prever-limite":{"accepted":["1|800\n2|700"],"solution":"1|800\n2|700","failure":"O primeiro COMMIT já encerrou uma unidade de trabalho. Confira o estado confirmado antes da segunda transação e desfaça somente as mudanças ainda não confirmadas dela."},
+ "sql-transacao-diagnosticar-ausencia":{"accepted":["duas-linhas"],"solution":"Exigir exatamente uma linha no débito e uma no crédito. Qualquer outra contagem ou erro: ROLLBACK. Somente as duas etapas corretas: COMMIT.","failure":"Um UPDATE pode terminar sem erro e afetar zero linhas. Saldo não negativo ou débito bem-sucedido não comprovam que o destino recebeu. Confira as duas etapas antes de confirmar."},
+
  "sql-join-prever-contagem":{"accepted":["10|2|2\n20|1|0"],"solution":"10|2|2\n20|1|0","failure":"A categoria vazia ainda produz uma linha na junção externa. Confira separadamente quantas linhas chegaram ao grupo e quantas chaves de nota estão presentes."},
  "sql-join-diagnosticar-grupo":{"accepted":["grupos"],"solution":"SELECT c.id,COUNT(n.id) AS quantidade\nFROM categorias c LEFT JOIN notas n ON n.categoria_id=c.id\nGROUP BY c.id\nHAVING COUNT(n.id)>=2\nORDER BY c.id;","failure":"Filtrar uma nota existente ainda pode manter um grupo com somente uma nota. A regra deve testar a contagem do grupo e incluir o limite de duas, sem usar a agregação no filtro de linhas."},
 
