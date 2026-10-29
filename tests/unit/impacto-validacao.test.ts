@@ -69,3 +69,21 @@ it('imports diretos cobrem contratos com nome diferente do módulo',()=>{
  const testes={...catalogo,unidades:['tests/unit/sql-pratica.test.ts'],textos:{'tests/unit/sql-pratica.test.ts':"import {conferirConsultaSql} from '../../src/learning/pratica-sql';"}};
  expect(selecionarImpacto(['src/learning/pratica-sql.ts'],[],testes)).toMatchObject({unidades:['tests/unit/sql-pratica.test.ts'],familias:['sql-pratica'],postgres:true});
 });
+
+it('IDs de aulas não selecionam testes de outras aulas por prefixo',()=>{
+ const testes={...catalogo,navegador:['tests/e2e/independent-practice.spec.ts','tests/e2e/api.spec.ts','tests/e2e/sql-join.spec.ts'],textos:{
+  'tests/e2e/independent-practice.spec.ts':"const aulas=['sql-joins-cardinalidade'];",
+  'tests/e2e/api.spec.ts':"request.get(base+'/api/licoes/sql-join')",
+  'tests/e2e/sql-join.spec.ts':"pagina.goto('/#/aula/sql-join')"
+ }};
+ expect(selecionarImpacto(['src/content/practice.ts'],['sql-join'],testes).navegador).toEqual(['tests/e2e/api.spec.ts','tests/e2e/sql-join.spec.ts']);
+});
+it('alterar a aula mantém os testes que só mencionam suas atividades',()=>{
+ const testes={...catalogo,navegador:['tests/e2e/sql-join.spec.ts'],textos:{'tests/e2e/sql-join.spec.ts':'sql-join-depurar-titulos'}};
+ expect(selecionarImpacto(['src/learning/practice.ts'],['sql-join'],testes).navegador).toEqual(['tests/e2e/sql-join.spec.ts']);
+});
+it('o limite do ID distingue palavras e mantém extensões conservadoras por hífen',()=>{
+ const nomes=['rota','seletor','prefixo','sufixo','palavra','quase'],navegador=nomes.map(nome=>'tests/e2e/'+nome+'.spec.ts');
+ const textos=Object.fromEntries(navegador.map((arquivo,indice)=>[arquivo,["'/#/aula/sql-join'",'`[data-lesson="sql-join"]`',"'outro-sql-join'","'sql-join-extra'","'outrosql-join'","'sql-joins'"][indice]]));
+ expect(selecionarImpacto(['src/content/practice.ts'],['sql-join'],{...catalogo,navegador,textos}).navegador).toEqual(['tests/e2e/rota.spec.ts','tests/e2e/seletor.spec.ts','tests/e2e/sufixo.spec.ts']);
+});

@@ -1,3 +1,11 @@
+# JOIN publicado; seleção por IDs em correção — 29/10/2026
+
+A PR #84 foi integrada pelo head `55c2cc810dd35b3075c30a337f750281ae890819`, revisão concluída sem apontamentos nesse SHA. Main `d78cfec18b724e7c407747e011b1c3c9c670434e` preserva a árvore do head. CI `40959815984`: 262 unitários, 18 bases PostgreSQL 18, build e 34 fluxos Chromium aprovados; 8 min 33 s. Pós-merge `40961092049`: build e dois smokes em 43,5 s. Deployment `dpl_Am6AtKXv8cVGFiFeXTTt9Z9P4Mek` READY/production no mesmo SHA, projeto/alias conferidos antes e depois de três fluxos públicos aprovados: backup, offline e axe/220–4000 px (2,3 min). Recibo completo remoto em `preservacao/retomada-cloud-20261015:preservacao/checkpoints/2026-10-29-pr84-publicacao-conferida.md`.
+
+Publicado: 234 atividades, 106/137 aulas com pausas, 31 ainda sem. Presença de pausa não conclui profundidade. A próxima lacuna gerada é `sql-transacao`; distinguir erro de instrução de rollback total, executar referências e manter explícito quando a resposta do aluno é conceitual.
+
+Em preparação nesta branch: seleção por limite de ID, evitando que `sql-join` selecione os testes de `sql-joins-cardinalidade`. Comparação do mesmo lote reduz a seleção de 34 para 5 fluxos; SQL, API e PostgreSQL permanecem. Vinte testes específicos do seletor passaram localmente. Não houve nova bateria de navegador local; a alteração de pipeline recebe seus gates na PR. Não declarar ganho de tempo apenas pela contagem reduzida. Nenhum cenário foi apagado ou relaxado.
+
 # Continuidade do CODELAB
 
 A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
@@ -1097,3 +1105,5 @@ A PR #40 passou no CI 38259821060 com 706 unidades, 151 fluxos em parcelas de 75
 
 
 Engenharia passou em strict/build: 157 páginas, 35 recursos essenciais e cinco opcionais; inicial 207,84 kB gzip e mundo 135,94 kB gzip. O teste do marco exige ao menos uma pausa em cada uma das dez aulas Python, sem afirmar domínio por leitura ou conclusão da linguagem. Dois fluxos locais Edge passaram em 1,5 min: engenharia e regressão de concorrência, incluindo assistência, recarga offline, evidência e 220/4000 px. A publicação de #40 já tem deployment dpl_5fxMM1Q7tCi8cSn7gRCUUXWPeRp2 READY/production, gitSource.sha be777ce404aaa9257eed502d4fa1e0da491f5f66 confirmado e domínio atribuído; os fluxos públicos ainda precisam passar.
+
+A seleção continua conservadora para extensões por hífen: alterar `sql-join` também seleciona um teste que mencione apenas `sql-join-depurar-titulos`. A correção bloqueia a continuação da palavra em `sql-joins-cardinalidade`, sem perder esse vínculo entre aula e atividade. Esse caso faz parte dos testes do novo head.
