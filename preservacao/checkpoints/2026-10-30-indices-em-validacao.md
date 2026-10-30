@@ -13,3 +13,7 @@ Local: 130 testes em dois arquivos, catálogo gerado/conferido e tipos sem erros
 Head tem 239 atividades, 108/137 aulas com pausas e 29 sem. Produção está em PR86 com 237 atividades, 107/137 com pausas e 30 sem; publicação PR86 foi conferida em 30/10, recibo 2026-10-30-pr86-publicacao-conferida.md. Toda a implementação deste lote e os recibos estão remotos. Não integrar a branch de preservação.
 
 Próxima lacuna pedagógica após publicação: cpp-texto-conversao. Continuar a fila gerada sem criar aulas por quantidade. Encerrar uma lacuna de pausa não encerra profundidade: ainda faltam revisão dos projetos/percursos, produção independente e fechamento da edição conforme critérios registrados.
+
+## Última conferência dos gates
+
+Run 41100208264, head 870c664b7f58f510180bbfd74913953ea9655413: seleção aprovada; contratos/build ainda reportados em andamento e navegador em fila, sem conclusão. A revisão de código deste mesmo head terminou sem apontamentos. O preview da Vercel está aprovado, mas não comprova CI nem produção. Houve leituras intermitentes com ReadTimeout no conector; uma nova leitura de check-runs e do run confirmou os estados pendentes. Não repetir testes locais, aumentar limites, cancelar o run atual ou integrar usando o preview como aprovação. Próximo passo é conferir a conclusão real deste run e seus logs antes de qualquer merge.
