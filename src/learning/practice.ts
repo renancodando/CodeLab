@@ -14,6 +14,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "sql-indices-prever-parametro":{"accepted":["7\n9"],"solution":"7\n9","failure":"O valor vinculado continua sendo dado, mesmo com aspas e palavras que lembram SQL. Compare o texto completo com os títulos e preserve todas as linhas correspondentes; o parâmetro não acrescenta uma condição à consulta."},
+ "sql-indices-corrigir-unicidade":{"accepted":["comum"],"solution":"CREATE INDEX idx_notas_categoria ON notas(categoria_id);","failure":"O índice precisa usar a coluna pedida e preservar todas as notas. Confira também uma nova inserção na mesma categoria: criar uma restrição ou apagar linhas não cumpre o contrato de otimização."},
+
  "sql-transacao-prever-limite":{"accepted":["1|800\n2|700"],"solution":"1|800\n2|700","failure":"O primeiro COMMIT já encerrou uma unidade de trabalho. Confira o estado confirmado antes da segunda transação e desfaça somente as mudanças ainda não confirmadas dela."},
  "sql-transacao-diagnosticar-ausencia":{"accepted":["duas-linhas"],"solution":"Exigir exatamente uma linha no débito e uma no crédito. Qualquer outra contagem ou erro: ROLLBACK. Somente as duas etapas corretas: COMMIT.","failure":"Um UPDATE pode terminar sem erro e afetar zero linhas. Saldo não negativo ou débito bem-sucedido não comprovam que o destino recebeu. Confira as duas etapas antes de confirmar."},
 

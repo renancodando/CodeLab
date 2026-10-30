@@ -949,9 +949,12 @@ const roteiros:Record<string,Roteiro>={
     "experimentos": [
       "Compare plano de execução antes e depois de um índice relevante.",
       "Crie um índice que não ajuda uma consulta e entenda por que o otimizador pode ignorá-lo.",
-      "Num banco local de laboratório, compare uma consulta concatenada vulnerável com a equivalente parametrizada sem usar o exemplo contra sistemas de terceiros."
+      "Em um banco descartável, prepare WHERE titulo=$titulo e vincule valores como D'água e o texto ' OR 1=1 --. O parâmetro ocupa uma posição de valor; ele não deve ser concatenado nem usado para substituir nomes de tabela, coluna ou direção de ordenação. Para essas escolhas, mapeie uma opção conhecida para uma consulta fixa controlada pelo programa. Para testar a vinculação interativamente, use um projeto com driver: a bancada atual recebe SQL puro, sem interface para esses parâmetros.",
+      "Títulos iguais devem retornar todas as notas correspondentes. Vincular parâmetros não cria unicidade, não valida autorização e não altera automaticamente a semântica de LIKE: curingas continuam sendo parte da linguagem do operador.",
+      "Crie o índice comum de categoria e insira outra nota na mesma categoria. Depois compare com UNIQUE em uma cópia: uma restrição de unicidade muda quais dados são aceitos, não apenas o caminho de leitura. Não apague notas válidas para fazer a criação do índice passar.",
+      "Compare resultados antes/depois do índice e examine EXPLAIN QUERY PLAN com dados representativos. A consulta deve conservar seu contrato e ORDER BY; o plano não substitui uma medição, e seu texto pode variar entre versões. Não presuma que um índice pequeno será escolhido ou que toda consulta ficará mais rápida."
     ],
-    "projeto": "Revise um CRUD local: parametrize todas as entradas, adicione somente os índices justificados por consultas medidas e documente a razão de cada um.",
+    "projeto": "Revise um CRUD local em banco descartável. Entregue consultas e vinculação de parâmetros pelo driver, testes para apóstrofos, títulos iguais, texto que lembra SQL e nenhum resultado. Identificadores dinâmicos devem vir de opções permitidas mapeadas para SQL controlado; vincular um valor não substitui esse mapeamento. Crie somente os índices justificados pela consulta e pelos dados medidos, preservando todas as linhas e novas notas por categoria. Revisão manual: comparar resultados antes/depois, guardar esquema e scripts de dados, informar versão, plano observado, volume, condições e medições de leitura/escrita sem prometer aceleração por existir um índice. As duas pausas desta aula são conceituais para o aluno, com referências executadas nos testes; a produção independente e a medição pertencem ao projeto, não a uma aprovação automática.",
     "conexao": "A trilha full stack conecta banco, API e navegador numa única jornada de dados."
   },
   "fullstack-arquitetura": {
