@@ -1,0 +1,18 @@
+# PR88 publicada e conferida — 31/10/2026
+
+PR: https://github.com/renancodando/CodeLab/pull/88
+Head verificado: b7c1ae064b2785860796317a8633edef588422d9
+Merge main: 00f5e08d9c80defbcf5aff181a6ab4b710547545
+Árvore: 79ac896b622524d8c54a312025701ff93c77cee7, idêntica ao head. Pais: 2fcd45769d480327cff12c6663905087d2506c0f e b7c1ae064b2785860796317a8633edef588422d9. Revisão concluída nesse head sem apontamentos e sem threads pendentes. Nenhuma aprovação de outro SHA foi reutilizada.
+
+CI por impacto 41205972966 aprovado, intervalo observado 13:31:51–13:36:56 UTC: 151 testes em quatro arquivos, onze programas C++20 compilados/executados, catálogo/tipos/build, servidor de apoio e sete fluxos Chromium (2,8 min). O fluxo novo levou 19,3 s e conferiu cache preparado, respostas offline, ausência de submissões, recarga, persistência/assistência e 220/4000 px. Exemplos de outras linguagens e PostgreSQL não foram executados. Os seis contratos compartilhados foram mantidos por haver mudança no seletor/verificador. Local: 148 testes, onze programas com GCC 16.1.0 e tipos/catálogo aprovados; sem repetir navegador local. Não atribuir diferenças de tempo entre PRs de escopos diferentes à estratégia.
+
+Pós-merge 41206432962 aprovado: build e somente dois smokes (30,8 s), sem repetir os programas ou unitários. Deployment dpl_9G67jnwD5aLNC2wpfRHi6Fi9zvrc READY/production no SHA 00f5e08d9c80defbcf5aff181a6ab4b710547545, projeto prj_XgncY54wYGiSgPH0n1JOol3UFWCn e alias code-lab-omega.vercel.app conferidos antes e depois dos três fluxos públicos. Três aprovados em 1,0 min: axe/programas completos 220–4000 px (20,8 s), offline Python/C#/C++ (14,0 s), backup/importação (12,5 s). Logs locais outputs/pr88-publico-20261031.log e alias-pr88-antes/depois-20261031.json. O fluxo da aula já aprovado no CI não foi repetido em produção. Nenhum timeout, retry ou assertiva foi relaxado.
+
+Publicado: duas pausas em cpp-texto-conversao distinguem sucesso, consumo completo, destino inalterado após erro e limites de representação. A entrada grande usa numeric_limits<int> em vez de assumir 32 bits. Respostas do aluno continuam conceituais, não compilação do aluno; os programas de referência foram realmente compilados em C++20. Alternativas defeituosas são detectadas por matriz com prefixo, extremos, estouro nos dois sinais, espaços, sinal de mais, zero, zeros iniciais, byte nulo, dígitos não ASCII e chamadas repetidas. Teoria, exemplos, soluções, dois problemas abertos e projeto originais preservados. A produção independente permanece manual.
+
+Família cpp-texto registrada no seletor e verificador. Uma família explícita evita referências ASP.NET sem relação; o fallback anterior permanece se o script comum mudar sozinho. Regressão cobre ambas as ordens de arquivos. Não confundir compilação do servidor de apoio dos smokes com compilação de exemplos C#.
+
+Métricas geradas: 137 aulas preservadas, 241 atividades, 109 aulas com ao menos uma pausa e 28 sem. Não significa 109 aulas concluídas, C++ concluído ou edição encerrada. Próxima lacuna gerada: html-documentos; depois html-arvore-semantica e html-texto-links. Priorizar prática que use o navegador quando apropriado, sem fingir execução de HTML nem comparar código livre apenas com o texto do gabarito. Manter os seis percursos e os oito projetos no escopo e reservar validação ampla/auditoria para o fechamento real.
+
+Checkout main sincronizado e limpo. Implementação e recibos estão remotos; a branch de preservação não deve ser integrada. Visual, mundo/clima, editor, sandbox, Workers, lazy loading, offline e arquitetura local-first sem login foram preservados.
