@@ -14,6 +14,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "cpp-texto-prever-conversao":{"accepted":["true false 12\ntrue true 12\nfalse false 99\nfalse true 99"],"solution":"true false 12\ntrue true 12\nfalse false 99\nfalse true 99","failure":"Separe sucesso da conversão, consumo do campo e valor do destino. Texto residual pode coexistir com sucesso; erro de faixa pode coexistir com consumo completo. Não trate o 99 inicial como se fosse uma conversão válida."},
+ "cpp-texto-corrigir-inteiro":{"accepted":["ambos"],"solution":"if (r.ec != std::errc{} || r.ptr != fim) return std::nullopt;","failure":"O prefixo 12 de 12kg pode ter código de sucesso, enquanto um número grande demais pode ter ponteiro no fim e ainda falhar. A regra precisa rejeitar cada um desses defeitos separadamente, sem devolver o valor inicial."},
+
  "sql-indices-prever-parametro":{"accepted":["7\n9"],"solution":"7\n9","failure":"O valor vinculado continua sendo dado, mesmo com aspas e palavras que lembram SQL. Compare o texto completo com os títulos e preserve todas as linhas correspondentes; o parâmetro não acrescenta uma condição à consulta."},
  "sql-indices-corrigir-unicidade":{"accepted":["comum"],"solution":"CREATE INDEX idx_notas_categoria ON notas(categoria_id);","failure":"O índice precisa usar a coluna pedida e preservar todas as notas. Confira também uma nova inserção na mesma categoria: criar uma restrição ou apagar linhas não cumpre o contrato de otimização."},
 

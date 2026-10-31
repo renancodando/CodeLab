@@ -6,7 +6,7 @@ import ts from 'typescript';
 
 export const essenciais=['execution','progress-migration','hub-backup','practice','adaptive'];
 const centrais=['src/content/practice.ts','src/learning/practice.ts','src/content/explicacoes.ts','src/content/curriculum.ts'];
-const nativas=['aspnet-protecao','aspnet-fluxo','aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
+const nativas=['aspnet-protecao','aspnet-fluxo','aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','cpp-texto','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
 function importaArquivo(teste,texto,arquivo){
  const fonte=ts.createSourceFile(teste,texto,ts.ScriptTarget.Latest,true);
  let encontrado=false;
@@ -58,8 +58,9 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
   else if(/^src\/execution\//.test(p)){adicionar('execution');if(p.includes('sql'))adicionar('sql-local');if(p.includes('typescript'))adicionar('typescript-worker');}
   else if(/^src\/learning\//.test(p)){essenciais.forEach(adicionar);adicionar(p.split('/').at(-1).replace('.ts',''));}
   else if(/^scripts\/impacto-validacao|^scripts\/validar-alteracoes|^tests\/unit\/impacto-validacao/.test(p))adicionar('impacto-validacao');
-  else if(p==='scripts/verify-content-examples.mjs'){adicionar('impacto-validacao');familias.add('aspnet-escopos');}
+  else if(p==='scripts/verify-content-examples.mjs')adicionar('impacto-validacao');
  }
+ if(arquivos.includes('scripts/verify-content-examples.mjs')&&familias.size===0)familias.add('aspnet-escopos');
  const compartilhado=arquivos.some(p=>/^src\/(main|ui|style|styles|environment|world|execution)|^src\/learning\/(progress|backup|storage|project|adaptive)|^public\/|^index\.html$|^package(-lock)?\.json$/.test(p));
  const pipeline=arquivos.some(p=>/^\.github\/workflows\/|^playwright.*config|^scripts\/(impacto-validacao|validar-alteracoes)/.test(p));
  if(compartilhado){essenciais.forEach(adicionar);motivos.push('contratos compartilhados e smoke');}
