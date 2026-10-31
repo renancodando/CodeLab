@@ -14,6 +14,7 @@ import {montarCasosDescritores} from '../tests/fixtures/python-descritores.mjs';
 import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
 import {verificarConceitosCpp} from '../tests/fixtures/cpp-conceitos.mjs';
 import {verificarPosseCpp} from '../tests/fixtures/cpp-posse.mjs';
+import {verificarTextoCpp} from '../tests/fixtures/cpp-texto.mjs';
 import {verificarAusenciasSql} from '../tests/fixtures/sql-null.mjs';
 import {verificarIteradoresCsharp} from '../tests/fixtures/csharp-iteradores.mjs';
 import {verificarFundamentosDotnet} from '../tests/fixtures/dotnet-fundamentos.mjs';
@@ -31,7 +32,7 @@ import {verificarEscoposAspnet} from '../tests/fixtures/aspnet-escopos.mjs';
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
 const indiceFamilia=process.argv.indexOf('--familia');
 const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
-const grupos=['aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+const grupos=['aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
 if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
 const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
@@ -98,6 +99,11 @@ try{
  const cenariosModulos=selecionar('typescript-modulos')?await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution):0;
  const cenariosConceitos=selecionar('cpp-conceitos')?await verificarConceitosCpp(root,practiceActivities,getPracticeSolution):0;
  const cenariosPosse=selecionar('cpp-posse')?await verificarPosseCpp(root,practiceActivities,getPracticeSolution):0;
+ let cenariosTexto=0;
+ if(selecionar('cpp-texto')){
+  const {default:curso}=await import(asUrl(compileContent(await readFile('src/content/deep/cpp.ts','utf8'))));
+  cenariosTexto=await verificarTextoCpp(root,practiceActivities,getPracticeSolution,curso.lessons.find(aula=>aula.id==='cpp-texto-conversao'));
+ }
  const cenariosAusencias=selecionar('sql-null')?await verificarAusenciasSql(root,practiceActivities,getPracticeSolution):0;
  const cenariosIteradores=selecionar('csharp-iteradores')?await verificarIteradoresCsharp(root,practiceActivities,getPracticeSolution):0;
  const cenariosLinq=selecionar('csharp-linq')?await verificarLinqCsharp(root,montarCasosLinq(practiceActivities,getPracticeSolution)):0;
@@ -172,6 +178,7 @@ try{
  console.log(cenariosModulos+' projetos TypeScript conferidos, incluindo diagnósticos e falhas esperadas de resolução.');
  console.log(cenariosConceitos+' cenários C++20 conferidos, incluindo falhas esperadas de instanciação e ambiguidade.');
  console.log(cenariosPosse+' cenários C++20 de posse conferidos, sem executar acessos pendentes.');
+ console.log(cenariosTexto+' cenários C++20 de texto e conversão conferidos com entradas completas e falhas de faixa.');
  console.log(cenariosAusencias+' cenários PostgreSQL conferidos para ausência, restrições e correspondência.');
  console.log(cenariosIteradores+' cenários .NET conferidos para suspensão, descarte e materialização.');
  console.log(cenariosLinq+' cenários .NET conferidos para igualdade, agrupamento e cópia interna.');

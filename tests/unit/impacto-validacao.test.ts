@@ -87,3 +87,10 @@ it('o limite do ID distingue palavras e mantém extensões conservadoras por hí
  const textos=Object.fromEntries(navegador.map((arquivo,indice)=>[arquivo,["'/#/aula/sql-join'",'`[data-lesson="sql-join"]`',"'outro-sql-join'","'sql-join-extra'","'outrosql-join'","'sql-joins'"][indice]]));
  expect(selecionarImpacto(['src/content/practice.ts'],['sql-join'],{...catalogo,navegador,textos}).navegador).toEqual(['tests/e2e/rota.spec.ts','tests/e2e/seletor.spec.ts','tests/e2e/sufixo.spec.ts']);
 });
+
+it('uma família explícita de C++ impede acrescentar referências .NET sem relação',()=>{
+ for(const arquivos of [
+  ['scripts/verify-content-examples.mjs','tests/fixtures/cpp-texto.mjs'],
+  ['tests/fixtures/cpp-texto.mjs','scripts/verify-content-examples.mjs']
+ ])expect(selecionarImpacto(arquivos,[],catalogo)).toMatchObject({familias:['cpp-texto'],postgres:false});
+});
