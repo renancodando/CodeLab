@@ -2,14 +2,14 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **27 de 137 aulas sem pausas deste catálogo**. As outras 110 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **26 de 137 aulas sem pausas deste catálogo**. As outras 111 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 9 | 1 |
 | C# | 14 | 11 | 3 |
 | CSS | 15 | 13 | 2 |
-| HTML | 19 | 16 | 3 |
+| HTML | 19 | 17 | 2 |
 | JavaScript | 30 | 28 | 2 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 11 | 3 |
@@ -30,7 +30,6 @@ Concluir a prática das aulas originais e dos fundamentos aprofundados antes de 
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `html-arvore-semantica` — HTML: parser, árvore do documento e estrutura semântica | HTML · do zero à plataforma web | HTML | Fundamentos |
 | `html-texto-links` — HTML: texto, links, listas e tabelas | HTML · do zero à plataforma web | HTML | Fundamentos |
 
 ## 3. Integração e consolidação
