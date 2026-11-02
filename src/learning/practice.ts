@@ -14,6 +14,10 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "html-documentos-prever-arvore":{"accepted":["P|SECTION|P\nMAIN\nAntes"],"solution":"P|SECTION|P\nMAIN\nAntes","failure":"A fonte não é a árvore pronta. Confira o fechamento implícito do primeiro parágrafo e o tratamento do fechamento de p sem um parágrafo aberto. Depois localize o pai real da seção e o texto que permaneceu em resumo."},
+ "html-documentos-habilitar-controle":{"accepted":["ausente"],"solution":"<button id=\"continuar\" type=\"button\">Continuar</button>","failure":"Um valor vazio ou parecido com falso ainda deixa o atributo booleano presente. ARIA não altera o comportamento nativo desativado; confira também o foco por teclado."},
+ "html-documentos-montar-guia":{"accepted":[],"order":["inicio","pratica","revisao","fim"],"solution":"<!doctype html><html lang=\"pt-BR\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Guia de prática &amp; revisão</title></head><body><header><h1>Guia de estudo</h1><nav aria-label=\"Seções\"><a href=\"#pratica\">Prática</a> <a href=\"#revisao\">Revisão</a></nav></header><main>\n<section id=\"pratica\"><h2>Prática</h2><p>Faça uma previsão antes de executar.</p></section>\n<section id=\"revisao\"><h2>Revisão</h2><p>Reconstrua o exemplo com outros dados.</p></section>\n</main><footer><p>Guarde suas dúvidas.</p></footer></body></html>","failure":"Mantenha os metadados antes do conteúdo e os dois destinos dentro de main. Trocar as duas seções é permitido; omitir, duplicar ou antecipar o fechamento perde a estrutura pedida."},
+
  "cpp-texto-prever-conversao":{"accepted":["true false 12\ntrue true 12\nfalse false 99\nfalse true 99"],"solution":"true false 12\ntrue true 12\nfalse false 99\nfalse true 99","failure":"Separe sucesso da conversão, consumo do campo e valor do destino. Texto residual pode coexistir com sucesso; erro de faixa pode coexistir com consumo completo. Não trate o 99 inicial como se fosse uma conversão válida."},
  "cpp-texto-corrigir-inteiro":{"accepted":["ambos"],"solution":"if (r.ec != std::errc{} || r.ptr != fim) return std::nullopt;","failure":"O prefixo 12 de 12kg pode ter código de sucesso, enquanto um número grande demais pode ter ponteiro no fim e ainda falhar. A regra precisa rejeitar cada um desses defeitos separadamente, sem devolver o valor inicial."},
 
@@ -521,6 +525,9 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
      const linha=linhas.find(linha=>linha.id===linhaId),esperada=linhas.find(linha=>linha.id===concept.order![indice]);
      return linha?.code.trim()===esperada?.code.trim();
     });
+   }else if(id==='html-documentos-montar-guia'){
+    const meio=submitted.slice(1,3);
+    passed=submitted.length===4&&new Set(submitted).size===4&&submitted[0]==='inicio'&&submitted[3]==='fim'&&meio.includes('pratica')&&meio.includes('revisao');
    }else if(id==='cs-dotnet-reconstruir-total')passed=submitted.length===4&&new Set(submitted).size===4&&submitted.every(linha=>concept.order!.includes(linha))&&submitted.indexOf('centavos')<submitted.indexOf('preco')&&submitted.indexOf('preco')<submitted.indexOf('saida')&&submitted.indexOf('quantidade')<submitted.indexOf('saida');
    else passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
    if(id==='sql-modelagem-montar-relacao'){
