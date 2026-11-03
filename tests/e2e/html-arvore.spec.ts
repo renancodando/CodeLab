@@ -32,7 +32,7 @@ test('árvore semântica preserva previsão e diagnóstico offline sem aprovar o
   await pagina.reload({waitUntil:'domcontentloaded'});const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));
   expect(salvo.practiceAnswers['html-arvore-corrigir-atalho']).toMatchObject({passed:true,assisted:false,attempts:2,value:'destino'});expect(salvo.practiceAnswers['html-arvore-prever-barra'].passed).toBe(true);
   await expect(pagina.locator('#aula-projeto')).toContainText('três aulas');
-  for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:1000});expect(await pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);for(const atividade of atividades)await expect(pagina.locator('[data-practice="'+atividade.id+'"]').getByRole('button',{name:'Conferir comportamento',exact:true})).toBeVisible();}
+  for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:1000});await pagina.evaluate(()=>new Promise<void>(resolver=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolver()))));expect(await pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);for(const atividade of atividades)await expect(pagina.locator('[data-practice="'+atividade.id+'"]').getByRole('button',{name:'Conferir comportamento',exact:true})).toBeVisible();}
   expect(execucoes).toEqual([]);
  }finally{await contexto.setOffline(false);}
 });

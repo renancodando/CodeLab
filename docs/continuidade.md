@@ -1,3 +1,11 @@
+# Retomada da PR #90 — 03/11/2026
+
+Main segue em `5ab7a7d8a9c57d9c89cbcd126845cb35b281f10f`; a PR #90 ainda não foi integrada. O CI `41505001844` aprovou os contratos/build e 30 fluxos, mas falhou na medição imediata de overflow em 220 px do novo cenário offline (436 px). Revisão do head antigo `b4c027a371ed25965b934ac9b8546ad3a13467e7` concluída sem apontamentos; isso não aprova o novo commit.
+
+Investigação limitada ao cenário afetado: reutilizado o artefato da build do próprio CI e o trace da falha, sem repetir os outros 30 fluxos localmente. Na captura após setViewportSize e antes da leitura, o canvas ainda conserva o bounding rect anterior; a captura imediatamente posterior registra 220 px. O DOM capturado, reconstruído sem scripts, tem scrollWidth 220 em viewport 220; medições em desenvolvimento também não reproduzem overflow persistente. A tentativa local completa com a build do CI atingiu o limite de 60 s; não foi aprovada nem teve o timeout aumentado. A build local redundante foi interrompida ao disponibilizar o artefato exato do CI.
+
+A alteração aguarda dois frames de layout após redimensionar e conserva a asserção original de excesso máximo de 1 px, 220/4000 px e visibilidade de todos os controles. Sem mudar CSS, esconder conteúdo, elevar limites ou acrescentar retries. Conferir o cenário e os gates do novo head antes de integrar. Produção continua no lote #89; 246/111/26 são métricas da branch, ainda não publicadas.
+
 # HTML: árvore e foco em preparação — 02/11/2026
 
 A PR #89 está publicada em `5ab7a7d8a9c57d9c89cbcd126845cb35b281f10f`: árvore `0943d718788ddf3d3aca446a5f69e80060f3f1fe` igual ao head `d16054099cc04cd32a0328169134e9673d479603`, revisão desse commit concluída sem apontamentos. CI `41502132031` aprovado em 3 min 54 s, com 126 testes selecionados, build e três fluxos Chromium (40,6 s). Pós-merge `41503010015`: build e dois smokes (42,2 s). Deployment `dpl_29hyBGtS4Y76vqXU9ndMACZkQTL2` READY/production, SHA/projeto/alias corretos antes/depois de três contratos públicos aprovados (1,7 min). Recibo: `preservacao/retomada-cloud-20261015:preservacao/checkpoints/2026-11-02-pr89-publicacao-conferida.md`. Não repetir a bateria publicada.
