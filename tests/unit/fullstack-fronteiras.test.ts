@@ -66,6 +66,7 @@ const cadastro=contratosIntegracao['fullstack-preparar-cadastro'].solution;
 const cadastrosErrados={
  fixo:'function prepararCadastro(){return {titulo:"Estudar"};}',
  semTrim:cadastro.replace('entrada.titulo.trim()','entrada.titulo'),
+ unidades:cadastro.replace('titulo.length>80','[...titulo].length>80'),
  limite:cadastro.replace('titulo.length>80','titulo.length>81'),
  extras:cadastro.replace('return {titulo};','return {...entrada,titulo};'),
  mutacao:cadastro.replace('return {titulo};','entrada.titulo=titulo;return {titulo};'),

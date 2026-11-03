@@ -4,7 +4,10 @@ import {contratosIntegracao} from '../../src/content/contratos-integracao';
 
 const aulas=[
  {id:'fullstack-arquitetura',previsao:'fullstack-prever-autoridade',saida:'99\ntrue',decisao:'fullstack-limitar-campos',errada:'extras',certa:'permitidos',producao:'fullstack-preparar-cadastro',falha:'Confira o título inteiro',offline:true},
- {id:'fullstack-integracao',previsao:'fullstack-prever-rascunho',saida:'Estudar CSS\n42\nfalse',decisao:'fullstack-preservar-falha',errada:'limpar-texto',certa:'encerrar',producao:'fullstack-aplicar-confirmacao',falha:'Use os dados confirmados',offline:false}
+ {id:'fullstack-integracao',previsao:'fullstack-prever-rascunho',saida:'Estudar CSS\n42\nfalse',decisao:'fullstack-preservar-falha',errada:'limpar-texto',certa:'encerrar',producao:'fullstack-aplicar-confirmacao',falha:'Use os dados confirmados',offline:false},
+ {id:'fullstack-testes',previsao:'fullstack-prever-evidencia',saida:'true\nfalse',decisao:'fullstack-testar-fronteira',errada:'mock',certa:'real',producao:'fullstack-testar-cadastro',falha:'Use títulos diferentes',offline:false},
+ {id:'fullstack-config',previsao:'fullstack-prever-configuracao',saida:'true\n""\nfalse',decisao:'fullstack-conferir-publicacao',errada:'preview',certa:'destino',producao:'fullstack-configuracao-publica',falha:'Valide os textos',offline:false},
+ {id:'fullstack-memoria',previsao:'fullstack-prever-descarte',saida:'1\n0',decisao:'fullstack-liberar-modelo',errada:'editor',certa:'ambos',producao:'fullstack-criar-descarte',falha:'A última aquisição',offline:false}
 ];
 async function conferir(pagina:Page,id:string){await pagina.locator('[data-practice="'+id+'"]').getByRole('button',{name:'Conferir comportamento',exact:true}).click();}
 for(const aula of aulas)test(aula.id+': previsão, diagnóstico e produção passam pelo executor local',async({page:pagina,context:contexto})=>{

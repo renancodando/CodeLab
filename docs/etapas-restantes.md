@@ -14,7 +14,7 @@ A orientação humana mais recente fixa uma meta de aproximadamente **12 PRs a p
 
 | Lote | Escopo nas aulas e estruturas existentes | Acompanhamento |
 | --- | --- | --- |
-| L01 | As cinco aulas full stack: fronteiras, estado, testes, configuração e ciclo de vida. | Branch `conteudo/fullstack-pratica-20261103`; preparação em andamento. |
+| L01 | As cinco aulas full stack: fronteiras, estado, testes, configuração e ciclo de vida. | Branch `conteudo/fullstack-pratica-20261103`; cinco aulas preparadas, aguardando gates da entrega consolidada. |
 | L02 | Projetos diário, tarefas e clima: decisões e construção no navegador. | Planejado. |
 | L03 | Projetos API e entrega: persistência, integração e revisão do produto. | Planejado. |
 | L04 | HTML plataforma e as duas aulas avançadas de CSS. | Planejado. |
