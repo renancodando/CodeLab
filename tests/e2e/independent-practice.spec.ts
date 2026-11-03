@@ -45,36 +45,6 @@ test('páginas aprofundadas entregam também os problemas sem JavaScript',async(
  await context.close();
 });
 
-test('HTML: documentos e tabela produzem relações semânticas verificáveis',async({page})=>{
- const entry=html.lessons.find(l=>l.id==='html-arvore-semantica')!;
- await page.setContent(entry.code);
- await expect(page.locator('html')).toHaveAttribute('lang','pt-BR');
- await expect(page).toHaveTitle('Guia de estudos — CodeLab');
- await expect(page.locator('main')).toHaveCount(1);
- expect(await page.locator('h1,h2,h3').evaluateAll(es=>es.map(e=>e.tagName))).toEqual(['H1','H2','H3']);
- await page.getByRole('link',{name:'Ir ao conteúdo',exact:true}).click();
- await expect(page.locator('#conteudo')).toBeFocused();
- await page.setContent(entry.solution);
- await expect(page.locator('main > section')).toHaveCount(2);
- await expect(page.locator('a[href="#pratica"]')).toHaveCount(1);
- await page.setContent(entry.practices[0].solution);
- expect(await page.locator('#intro').evaluate(e=>e.parentElement?.id)).toBe('aula');
- expect(await page.locator('#instrucoes').evaluate(e=>e.parentElement?.id)).toBe('atividade');
- await page.setContent(entry.practices[1].solution);
- await expect(page.locator('caption')).toHaveText('Horas por pessoa nesta semana');
- await expect(page.locator('th[scope="col"]')).toHaveCount(2);
- await expect(page.locator('th[scope="row"]')).toHaveCount(2);
-});
-
-test('HTML: recuperação do parser fecha parágrafo antes de um bloco',async({page})=>{
- await page.setContent('<p id="introducao">Antes<div id="bloco">Bloco</div>Depois</p>');
- expect(await page.locator('#bloco').evaluate(e=>e.parentElement?.tagName)).toBe('BODY');
- await expect(page.locator('#introducao')).toHaveText('Antes');
- const entry=html.lessons.find(l=>l.id==='html-arvore-semantica')!;
- await page.setContent(entry.practices[0].solution);
- await expect(page.locator('p section,p div')).toHaveCount(0);
-});
-
 test('HTML: dados enviados preservam multiplicidade, submitter e texto literal',async({page})=>{
  const entry=html.lessons.find(l=>l.id==='html-dados-formulario')!;
  await page.setContent(entry.code);

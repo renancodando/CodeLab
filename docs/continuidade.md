@@ -1,3 +1,25 @@
+# Retomada da PR #90 — 03/11/2026
+
+Main segue em `5ab7a7d8a9c57d9c89cbcd126845cb35b281f10f`; a PR #90 ainda não foi integrada. O CI `41505001844` aprovou os contratos/build e 30 fluxos, mas falhou na medição imediata de overflow em 220 px do novo cenário offline (436 px). Revisão do head antigo `b4c027a371ed25965b934ac9b8546ad3a13467e7` concluída sem apontamentos; isso não aprova o novo commit.
+
+Investigação limitada ao cenário afetado: reutilizado o artefato da build do próprio CI e o trace da falha, sem repetir os outros 30 fluxos localmente. Na captura após setViewportSize e antes da leitura, o canvas ainda conserva o bounding rect anterior; a captura imediatamente posterior registra 220 px. O DOM capturado, reconstruído sem scripts, tem scrollWidth 220 em viewport 220; medições em desenvolvimento também não reproduzem overflow persistente. A tentativa local completa com a build do CI atingiu o limite de 60 s; não foi aprovada nem teve o timeout aumentado. A build local redundante foi interrompida ao disponibilizar o artefato exato do CI.
+
+A alteração aguarda dois frames de layout após redimensionar e conserva a asserção original de excesso máximo de 1 px, 220/4000 px e visibilidade de todos os controles. Sem mudar CSS, esconder conteúdo, elevar limites ou acrescentar retries. Conferir o cenário e os gates do novo head antes de integrar. Produção continua no lote #89; 246/111/26 são métricas da branch, ainda não publicadas.
+
+# HTML: árvore e foco em preparação — 02/11/2026
+
+A PR #89 está publicada em `5ab7a7d8a9c57d9c89cbcd126845cb35b281f10f`: árvore `0943d718788ddf3d3aca446a5f69e80060f3f1fe` igual ao head `d16054099cc04cd32a0328169134e9673d479603`, revisão desse commit concluída sem apontamentos. CI `41502132031` aprovado em 3 min 54 s, com 126 testes selecionados, build e três fluxos Chromium (40,6 s). Pós-merge `41503010015`: build e dois smokes (42,2 s). Deployment `dpl_29hyBGtS4Y76vqXU9ndMACZkQTL2` READY/production, SHA/projeto/alias corretos antes/depois de três contratos públicos aprovados (1,7 min). Recibo: `preservacao/retomada-cloud-20261015:preservacao/checkpoints/2026-11-02-pr89-publicacao-conferida.md`. Não repetir a bateria publicada.
+
+Este lote acrescenta somente duas pausas em `html-arvore-semantica`: previsão de elemento HTML normal versus void e diagnóstico de destino/foco sem parada adicional de Tab. Não repete a previsão de fechamento de p da aula anterior nem força uma terceira pergunta. Respostas do aluno são conceituais offline; os programas de referência são documentos interpretados pelo navegador. Teoria, exemplo, solução, dois problemas abertos e projeto originais preservados; produção independente continua com revisão manual.
+
+Dois testes antigos de referência desta aula são movidos integralmente de `independent-practice.spec.ts` para `html-arvore.spec.ts`, com as mesmas asserções. Assim a próxima alteração desta aula pode selecionar suas referências sem arrastar as outras aulas. Nesta reorganização o arquivo compartilhado alterado ainda é validado, sem retirar cenários; não declarar ganho de tempo apenas pela separação. As duas novas jornadas verificam void/fechamento, cada alternativa de foco por navegação e teclado, além de tentativas/persistência offline/220–4000 e ausência de submissões externas. Sem repetição local de navegador.
+
+Fontes oficiais: [tags e elementos void](https://html.spec.whatwg.org/multipage/syntax.html#start-tags) e [tabindex e foco](https://html.spec.whatwg.org/multipage/interaction.html#the-tabindex-attribute). O contrato não trata XHTML como text/html nem confunde nome acessível, destino existente, foco recebido e presença na sequência de Tab.
+
+Local: os 121 testes da aula e do corretor comum passaram; catálogo/métricas gerados e conferidos e TypeScript sem erros. O navegador e o build ficam no CI por impacto. A conferência da movimentação comparou os trechos antes/depois e confirmou as duas referências integrais, sem alteração de asserções.
+
+As métricas registram 246 atividades, 111 aulas com pausas e 26 sem, mantendo as 137 aulas. Publicado permanece em 244/110/27 até gates do próprio head e deployment real. Próxima lacuna: `html-texto-links`; edição ainda não concluída.
+
 # HTML: documentos em preparação — 02/11/2026
 
 A PR #88 está publicada: main `00f5e08d9c80defbcf5aff181a6ab4b710547545`, árvore `79ac896b622524d8c54a312025701ff93c77cee7` igual ao head `b7c1ae064b2785860796317a8633edef588422d9`, revisão desse commit concluída sem apontamentos. CI `41205972966`: 151 testes selecionados, onze programas C++20 e sete fluxos Chromium (2,8 min de navegador). Pós-merge `41206432962`: build e dois smokes (30,8 s). Deployment `dpl_9G67jnwD5aLNC2wpfRHi6Fi9zvrc` READY/production no mesmo SHA/projeto/alias antes e depois de três fluxos públicos aprovados (1,0 min): backup, offline e axe/220–4000. Recibo remoto em `preservacao/retomada-cloud-20261015:preservacao/checkpoints/2026-10-31-pr88-publicacao-conferida.md`. Na retomada de 02/11, main, CI e alias permanecem nesse SHA, sem PR aberta e com checkout limpo. Não repetir a bateria anterior.

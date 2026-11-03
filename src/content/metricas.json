@@ -4,9 +4,9 @@
   "aulasOriginais": 60,
   "aulasAprofundadas": 77,
   "problemasIndependentes": 58,
-  "atividadesCorrigiveis": 244,
-  "aulasComPausas": 110,
-  "aulasSemPausas": 27,
+  "atividadesCorrigiveis": 246,
+  "aulasComPausas": 111,
+  "aulasSemPausas": 26,
   "coberturaPorLinguagem": {
     "cpp": {
       "aulas": 10,
@@ -25,8 +25,8 @@
     },
     "html": {
       "aulas": 19,
-      "comPausas": 16,
-      "semPausas": 3
+      "comPausas": 17,
+      "semPausas": 2
     },
     "javascript": {
       "aulas": 30,
@@ -76,7 +76,7 @@
     "cpp": 14,
     "csharp": 42,
     "css": 23,
-    "html": 37,
+    "html": 39,
     "javascript": 76,
     "python": 21,
     "sql": 22,
