@@ -65,6 +65,8 @@ it('aceita reconciliação equivalente e outra mensagem de falha',async()=>{
 const cadastro=contratosIntegracao['fullstack-preparar-cadastro'].solution;
 const cadastrosErrados={
  fixo:'function prepararCadastro(){return {titulo:"Estudar"};}',
+ mutacaoNaRecusa:cadastro.replace("throw new TypeError('Título fora do limite');","{entrada.titulo=titulo;throw new TypeError('Título fora do limite');}"),
+ formatoAlterado:cadastro.replace("throw new TypeError('Entrada inválida');","{if(entrada&&typeof entrada==='object')entrada.titulo='alterado';throw new TypeError('Entrada inválida');}"),
  semTrim:cadastro.replace('entrada.titulo.trim()','entrada.titulo'),
  unidades:cadastro.replace('titulo.length>80','[...titulo].length>80'),
  limite:cadastro.replace('titulo.length>80','titulo.length>81'),
