@@ -20,13 +20,13 @@ for(const aula of aulas)test(aula.id+': previsão, diagnóstico e produção pas
   const decisao=pagina.locator('[data-practice="'+aula.decisao+'"]');await decisao.locator('input[value="'+aula.errada+'"]').check();await conferir(pagina,aula.decisao);await expect(decisao.locator('.practice-feedback')).toContainText('não houve execução de javascript');await expect(decisao.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await expect(decisao.locator('[data-help] pre')).toHaveCount(0);
   await decisao.locator('input[value="'+aula.certa+'"]').check();await conferir(pagina,aula.decisao);await expect(decisao.locator('.practice-feedback')).toContainText('Sua resposta está correta');
   const produzir=pagina.locator('[data-practice="'+aula.producao+'"]');await conferir(pagina,aula.producao);await expect(produzir.locator('.practice-feedback')).toContainText(aula.falha);await expect(produzir.locator('[data-help] pre')).toHaveCount(0);
-  await produzir.getByLabel('Seu código',{exact:true}).fill(contratosIntegracao[aula.producao].solution);await conferir(pagina,aula.producao);await expect(produzir.locator('.practice-feedback')).toContainText('A correção passou');
+  await produzir.getByRole('textbox',{name:'Seu código',exact:true}).fill(contratosIntegracao[aula.producao].solution);await conferir(pagina,aula.producao);await expect(produzir.locator('.practice-feedback')).toContainText('A correção passou');
   if(aula.offline)await produzir.getByRole('button',{name:'Consultar solução',exact:true}).click();
   await pagina.reload({waitUntil:'domcontentloaded'});await expect(pagina.locator('#aula-projeto')).toBeVisible();
   const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[aula.producao]).toMatchObject({passed:true,assisted:aula.offline,attempts:2});expect(salvo.practiceAnswers[aula.decisao].value).toBe(aula.certa);
   if(aula.offline){expect(salvo.adaptive.skills['fullstack.validacao.entrada'].review.lastOutcome).toBe('assisted');expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
-   for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:1000});await pagina.evaluate(()=>new Promise<void>(resolver=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolver()))));expect(await pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(pagina.locator('[data-practice="'+aula.producao+'"]').getByLabel('Seu código',{exact:true})).toBeVisible();}
+   for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:1000});await pagina.evaluate(()=>new Promise<void>(resolver=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolver()))));expect(await pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(pagina.locator('[data-practice="'+aula.producao+'"]').getByRole('textbox',{name:'Seu código',exact:true})).toBeVisible();}
   }
   expect(execucoes).toEqual([]);
- }finally{if(aula.offline)await contexto.setOffline(false);}
+ }finally{if(aula.offline&&!pagina.isClosed())await contexto.setOffline(false);}
 });
