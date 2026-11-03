@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **25 de 137 aulas sem pausas deste catálogo**. As outras 112 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **23 de 137 aulas sem pausas deste catálogo**. As outras 114 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -13,7 +13,7 @@ Há **25 de 137 aulas sem pausas deste catálogo**. As outras 112 têm ao menos 
 | JavaScript | 30 | 28 | 2 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 11 | 3 |
-| Integração (transversal) | 15 | 5 | 10 |
+| Integração (transversal) | 15 | 7 | 8 |
 | TypeScript | 10 | 7 | 3 |
 
 Trabalhar de cima para baixo dentro das dependências de cada trilha. Em cada aula, escolher previsão, diagnóstico e alteração/produção quando fizer sentido; não acrescentar perguntas apenas para retirar uma linha da lista. Conferir também bordas, feedback, assistência, revisão e aplicação. As contagens descrevem o checkout gerado; publicação exige os gates de produção registrados em continuidade.md.
@@ -36,8 +36,6 @@ Combinar contratos, estado, erros e testes; exigir diagnóstico e alteração al
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `fullstack-arquitetura` — As responsabilidades de cada parte | Full stack | Integração (transversal) | Original |
-| `fullstack-integracao` — Integração e estados da interface | Full stack | Integração (transversal) | Original |
 | `fullstack-testes` — Testes de unidade, integração e jornada | Full stack | Integração (transversal) | Original |
 | `fullstack-config` — Configuração, deploy e observação | Full stack | Integração (transversal) | Original |
 | `fullstack-memoria` — Memória, desempenho e ciclo de vida | Full stack | Integração (transversal) | Original |

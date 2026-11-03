@@ -8,6 +8,27 @@ A edição a concluir usa o catálogo existente, os seis percursos de engenharia
 
 Encerrar uma lacuna exige habilidade concreta, teoria que prepare a tentativa, previsão/diagnóstico/alteração quando adequados, casos de borda, feedback, assistência, revisão e aplicação. Ter uma pausa não encerra uma aula. Concluir esta edição exige cobertura ativa próxima de completa, fundamentos densos, projetos utilizáveis e percursos consistentes, exemplos comprovados, nenhuma inconsistência grave conhecida, documentação sincronizada e validação de CI, produção, offline, dados locais, acessibilidade e responsividade. A auditoria final acontece depois da implementação; não há meta de cobrir tudo que existe em programação.
 
+## Agrupamento de fechamento — 03/11/2026
+
+A orientação humana mais recente fixa uma meta de aproximadamente **12 PRs a partir da entrega #91**, main `16fd74d2f3d7863f223408db8f0e2a607974234a`. É um plano finito de agrupamento, mantendo os critérios de conclusão e o catálogo existente. Consultar o estado real das PRs e dos recibos remotos para contar lotes entregues; não reiniciar a contagem de doze a cada retomada. Uma aula com pausa continua sujeita a profundidade, produção, diagnóstico e aplicação.
+
+| Lote | Escopo nas aulas e estruturas existentes | Acompanhamento |
+| --- | --- | --- |
+| L01 | As cinco aulas full stack: fronteiras, estado, testes, configuração e ciclo de vida. | Branch `conteudo/fullstack-pratica-20261103`; preparação em andamento. |
+| L02 | Projetos diário, tarefas e clima: decisões e construção no navegador. | Planejado. |
+| L03 | Projetos API e entrega: persistência, integração e revisão do produto. | Planejado. |
+| L04 | HTML plataforma e as duas aulas avançadas de CSS. | Planejado. |
+| L05 | As duas aulas assíncronas de JavaScript e as três de genéricos/tipos TypeScript. | Planejado. |
+| L06 | As três aulas avançadas de C# e referências .NET 10. | Planejado. |
+| L07 | Concorrência e engenharia C++20, com comportamento definido e ferramentas. | Planejado. |
+| L08 | As três aulas avançadas SQL/PostgreSQL, com verificações próprias de cada mecanismo. | Planejado. |
+| L09 | Consolidar algoritmos, estruturas de dados e testes com transferência e defeitos detectáveis. | Planejado. |
+| L10 | Consolidar redes, Git e arquitetura com experimentos e diagnóstico. | Planejado. |
+| L11 | Revisar os oito projetos, corretores e aprofundamentos residuais, incluindo aplicação Python. | Planejado. |
+| L12 | Fechar a edição: resolver inconsistências, sincronizar documentação, validar amplamente e confirmar produção. | Planejado. |
+
+Os oito primeiros lotes percorrem as lacunas geradas sem criar aulas por quantidade. Os demais consolidam a qualidade já exigida; não representam autorização para funcionalidades avulsas. Cada lote pode ter commits por aula e só é considerado entregue após sua revisão e validação proporcionais. Projetos abertos mantêm rubrica manual e atividades conceituais não comprovam execução.
+
 ## Mapa de trabalho
 
 | # | Área da edição | Aprofundamento nas aulas existentes | Evidência para encerrar uma entrega |
