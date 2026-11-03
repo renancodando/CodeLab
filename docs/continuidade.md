@@ -1,3 +1,17 @@
+# HTML: texto e links em preparação — 03/11/2026
+
+A PR #90 está publicada: main `a2dacf91f0da2128fe9072fb82b92b0d46d07723`, árvore `31d1523fb9b7c87fa4db19219909e2629413ace5` igual ao head `fa13ceac0db38f40626afe4b3b9b0e248f90c7a6`, com revisão própria sem apontamentos. CI `41637900287`: 124 testes selecionados, build e 31 fluxos Chromium (5,2 min), incluindo o cenário corrigido em 18,8 s. A reorganização do arquivo compartilhado foi validada sem retirar asserções. Pós-merge `41639014301`: build e dois smokes (45,9 s). Deployment `dpl_4A8snDbY2UQTUWiVrFZQYPxugqqK` READY/production no mesmo SHA/projeto/alias antes/depois dos três contratos públicos aprovados (2,6 min). Recibo remoto: `preservacao/retomada-cloud-20261015:preservacao/checkpoints/2026-11-03-pr90-publicacao-conferida.md`. Main/CI/alias reconferidos nesta retomada, sem PR aberta e com checkout limpo. Os registros de preparação e falha abaixo são históricos; não repetir a investigação resolvida ou os ensaios locais que atingiram 60 s.
+
+A aula existente `html-texto-links` recebe três pausas: previsão de texto escapado e árvore, diagnóstico de inserção literal e previsão de resolução de URLs. As respostas do aluno são conceituais offline. As referências e todas as alternativas são interpretadas no navegador: strings com marcação, referências escritas por extenso, vazio, Unicode, espaços/quebras, substituição do conteúdo anterior e ausência de elementos filhos. A inserção literal deve preservar a string, não apenas deixar de criar um botão. Os links são inspecionados sem navegação/requisições; não se afirma existência dos destinos ou download.
+
+Teoria, exemplo, exercício, solução e projeto originais preservados. O projeto permanece produção independente com revisão manual, exigindo passos, notas, código literal e tabela de requisitos; as pausas não o aprovam. Não há novo runtime, mudança de aparência ou flexibilização da CSP/sandbox. A execução das alternativas é restrita ao documento de referência dos testes, não à aplicação ou ao código do aluno.
+
+Fontes oficiais consultadas: [textContent](https://dom.spec.whatwg.org/#dom-node-textcontent), [base](https://html.spec.whatwg.org/multipage/semantics.html#the-base-element) e [code](https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-code-element). Navegador/build ficam no CI por impacto; não repetir a bateria localmente ou compilar outras linguagens por rotina.
+
+Local: 122 testes da aula/corretor comum passaram; catálogo/métricas gerados e conferidos e TypeScript sem erros. Os três fluxos de navegador ficam no CI: referências literais e alternativas, URLs/documentos originais com axe e uma jornada offline com erro/assistência/retomada/220–4000, sem submissões externas ou interpretação da resposta HTML como botão na interface.
+
+As métricas geradas registram 249 atividades, 112 aulas com pausas e 25 sem, preservando as 137 aulas. Publicado permanece em 246/111/26 até os gates do head verdadeiro e deployment real. A fila de aulas sem pausas não mede profundidade suficiente nem conclusão da edição.
+
 # Retomada da PR #90 — 03/11/2026
 
 Main segue em `5ab7a7d8a9c57d9c89cbcd126845cb35b281f10f`; a PR #90 ainda não foi integrada. O CI `41505001844` aprovou os contratos/build e 30 fluxos, mas falhou na medição imediata de overflow em 220 px do novo cenário offline (436 px). Revisão do head antigo `b4c027a371ed25965b934ac9b8546ad3a13467e7` concluída sem apontamentos; isso não aprova o novo commit.

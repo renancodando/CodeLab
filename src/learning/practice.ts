@@ -14,6 +14,10 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "html-texto-prever-escape":{"accepted":["<button>A & B</button>\n0"],"solution":"<button>A & B</button>\n0","failure":"Referências de caracteres produzem texto dentro de code; esse resultado não é reinterpretado como uma nova tag. Confira separadamente o texto produzido e a existência de elementos button."},
+ "html-texto-corrigir-insercao":{"accepted":["literal"],"solution":"alvo.textContent = trecho;","failure":"Interpretar HTML muda a árvore; escapar apenas < ainda permite transformar referências de caracteres. Pré-escapar antes de inserir como texto também muda o valor exibido. Compare a saída literal com a entrada completa, inclusive vazio e &lt; escrito por extenso."},
+ "html-links-prever-base":{"accepted":["https://exemplo.invalid/guias/css/?nivel=1#grade\nhttps://exemplo.invalid/laboratorio/#editor\nhttps://exemplo.invalid/guias/html/#comparacao"],"solution":"https://exemplo.invalid/guias/css/?nivel=1#grade\nhttps://exemplo.invalid/laboratorio/#editor\nhttps://exemplo.invalid/guias/html/#comparacao","failure":"O caminho relativo sobe a partir do diretório da base. A barra inicial troca o caminho pela raiz da origem, e o fragmento isolado conserva o caminho da base. Não remova a consulta nem substitua essa base pela URL da aula do CodeLab."},
+
  "html-arvore-prever-barra":{"accepted":["cartao\n2\n0"],"solution":"cartao\n2\n0","failure":"A barra não fecha um elemento HTML normal como div. Refaça os pais e as contagens até o fechamento de main; input, por outro lado, é void e não vira contêiner do texto seguinte."},
  "html-arvore-corrigir-atalho":{"accepted":["destino"],"solution":"<main id=\"conteudo\" tabindex=\"-1\">","failure":"O nome acessível não substitui o ID usado no fragmento. Encontrar o destino também não comprova foco; colocar main na sequência normal acrescenta uma parada que o contrato não permite."},
 
