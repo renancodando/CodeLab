@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## L01 publicado; L02 preserva isolamento e mundo existentes
+
+A entrega full stack da PR #92 tem revisão do head, CI proporcional, árvore, pós-merge e deployment/domínio/fluxos públicos conferidos no recibo remoto. O lote seguinte trabalha somente atividades e corretores de três projetos existentes; não modifica permissões, execução, limites, Workers, clima ou visual. Produções puras não comprovam armazenamento, rede, arquivo enviado ou cancelamento remoto. Os 38 casos próprios foram cobertos localmente e o navegador fica no CI do head consolidado. Exigir gates próprios antes de declarar o L02 publicado; não repetir as baterias anteriores. Métricas e resultados em continuidade.md.
+
 A orientação humana de 26/10/2026 passou a exigir [validação proporcional ao impacto](estrategia-validacao.md). Ela substitui as exigências antigas de suíte completa por alteração e repetição local/PR/pós-merge/produção. Suíte ampla no fechamento; resultados históricos abaixo não são gates obrigatórios de cada entrega.
 
 ## Referências de escopos com contexto de execução explícito
