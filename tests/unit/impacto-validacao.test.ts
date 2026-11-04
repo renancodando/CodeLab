@@ -113,3 +113,11 @@ it('testes específicos alterados continuam selecionados junto com o planejament
  const plano=selecionarImpacto(['src/learning/adaptive.ts',arquivo],[],{...catalogo,unidades:[...catalogo.unidades,arquivo]});
  expect(plano.unidades).toContain(arquivo);expect(plano.unidades).toContain('tests/unit/execution.test.ts');
 });
+
+it('alterações no carregador mantêm integração nativa e corretores novos conferem seus imports',()=>{
+ const testes={...catalogo,unidades:[...catalogo.unidades,'tests/unit/carregamento-praticas.test.ts']};
+ for(const arquivo of ['scripts/carregar-praticas.mjs','scripts/verify-content-examples.mjs']){
+  const plano=selecionarImpacto([arquivo],[],testes);expect(plano.unidades).toContain('tests/unit/carregamento-praticas.test.ts');expect(plano.familias).toEqual(['aspnet-escopos']);
+ }
+ for(const arquivo of ['src/learning/practice.ts','src/content/contratos-integracao.ts','src/content/contratos-projetos.ts'])expect(selecionarImpacto([arquivo],[],testes).unidades).toContain('tests/unit/carregamento-praticas.test.ts');
+});

@@ -3,6 +3,7 @@ import {tmpdir} from 'node:os';
 import {join,resolve,dirname,basename} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
+import {carregarPraticas} from './carregar-praticas.mjs';
 import {verificarBancadaGit} from '../tests/fixtures/git-bancada.mjs';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
 import {montarCasosLinq,verificarLinqCsharp} from '../tests/fixtures/csharp-linq.mjs';
@@ -91,11 +92,7 @@ try{
  // Confirma as saídas usadas nas atividades offline com ferramentas reais no CI.
  const compileContent=source=>ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
  const asUrl=source=>'data:text/javascript;base64,'+Buffer.from(source).toString('base64');
- const metadataUrl=asUrl(compileContent(await readFile('src/content/practice.ts','utf8')));
- const {practiceActivities}=await import(metadataUrl);
- const solucoesSqlUrl=asUrl(compileContent(await readFile('src/content/solucoes-sql.ts','utf8')));
- const practiceSource=compileContent(await readFile('src/learning/practice.ts','utf8')).replace(/from ['"]\.\.\/content\/practice['"]/g,'from '+JSON.stringify(metadataUrl)).replace(/from ['"]\.\.\/content\/solucoes-sql['"]/g,'from '+JSON.stringify(solucoesSqlUrl));
- const {getPracticeSolution}=await import(asUrl(practiceSource));
+ const {practiceActivities,getPracticeSolution}=await carregarPraticas();
  const cenariosModulos=selecionar('typescript-modulos')?await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution):0;
  const cenariosConceitos=selecionar('cpp-conceitos')?await verificarConceitosCpp(root,practiceActivities,getPracticeSolution):0;
  const cenariosPosse=selecionar('cpp-posse')?await verificarPosseCpp(root,practiceActivities,getPracticeSolution):0;

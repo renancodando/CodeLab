@@ -38,6 +38,7 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
    if(teste.startsWith('tests/unit/'))unidades.add(teste);else navegador.add(teste);
    const nome=teste.split('/').at(-1).replace(/\.(test|spec)\.ts$/,'');if(nativas.includes(nome))familias.add(nome);
   }
+  if(p==='src/learning/practice.ts'||/^src\/content\/contratos-/.test(p))adicionar('carregamento-praticas');
   if(p.startsWith('tests/unit/')&&p.endsWith('.test.ts'))unidades.add(p);
   else if(p.startsWith('tests/e2e/')&&p.endsWith('.spec.ts'))navegador.add(p);
   else if(p.startsWith('tests/fixtures/'))adicionar(p.split('/').at(-1).replace(/\.mjs$/,''));
@@ -61,9 +62,9 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
   else if(planejamentoAprendizagem.includes(p)){essenciais.forEach(adicionar);contratosAprendizagem.forEach(adicionar);}
   else if(/^src\/learning\//.test(p)){essenciais.forEach(adicionar);adicionar(p.split('/').at(-1).replace('.ts',''));}
   else if(/^scripts\/impacto-validacao|^scripts\/validar-alteracoes|^tests\/unit\/impacto-validacao/.test(p))adicionar('impacto-validacao');
-  else if(p==='scripts/verify-content-examples.mjs')adicionar('impacto-validacao');
+  else if(p==='scripts/verify-content-examples.mjs'||p==='scripts/carregar-praticas.mjs'){adicionar('impacto-validacao');adicionar('carregamento-praticas');}
  }
- if(arquivos.includes('scripts/verify-content-examples.mjs')&&familias.size===0)familias.add('aspnet-escopos');
+ if(arquivos.some(p=>p==='scripts/verify-content-examples.mjs'||p==='scripts/carregar-praticas.mjs')&&familias.size===0)familias.add('aspnet-escopos');
  const compartilhado=arquivos.some(p=>/^src\/(main|ui|style|styles|environment|world|execution)|^src\/learning\/(progress|backup|storage|project|adaptive)|^public\/|^index\.html$|^package(-lock)?\.json$/.test(p));
  const pipeline=arquivos.some(p=>/^\.github\/workflows\/|^playwright.*config|^scripts\/(impacto-validacao|validar-alteracoes)/.test(p));
  if(compartilhado){essenciais.forEach(adicionar);motivos.push('contratos compartilhados e smoke');}
