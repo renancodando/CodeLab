@@ -15,8 +15,8 @@ A orientação humana mais recente fixa uma meta de aproximadamente **12 PRs a p
 | Lote | Escopo nas aulas e estruturas existentes | Acompanhamento |
 | --- | --- | --- |
 | L01 | As cinco aulas full stack: fronteiras, estado, testes, configuração e ciclo de vida. | Entregue na [PR #92](https://github.com/renancodando/CodeLab/pull/92); main `081f2079`, CI/revisão/deployment e três fluxos públicos conferidos. |
-| L02 | Projetos diário, tarefas e clima: decisões e construção no navegador. | Branch `conteudo/projetos-web-pratica-20261103`; preparada, aguardando revisão/CI/publicação. |
-| L03 | Projetos API e entrega: persistência, integração e revisão do produto. | Planejado. |
+| L02 | Projetos diário, tarefas e clima: decisões e construção no navegador. | Entregue na [PR #93](https://github.com/renancodando/CodeLab/pull/93); main `af7e318e`, CI/revisão/deployment e fluxos públicos conferidos. |
+| L03 | Projetos API e entrega: persistência, integração e revisão do produto. | Branch `conteudo/projetos-api-entrega-20261104`; preparada, aguardando gates próprios. |
 | L04 | HTML plataforma e as duas aulas avançadas de CSS. | Planejado. |
 | L05 | As duas aulas assíncronas de JavaScript e as três de genéricos/tipos TypeScript. | Planejado. |
 | L06 | As três aulas avançadas de C# e referências .NET 10. | Planejado. |

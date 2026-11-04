@@ -1,5 +1,9 @@
 # Currículo do zero à especialização
 
+## Projetos API e entrega em preparação
+
+As aulas existentes praticam transação e parâmetro com referências .NET 10/SQLite reais e produção JavaScript de resumo de evidências da versão atual. As pausas C# são conceituais; não executam C# do aluno ou comprovam HTTP. Reprodução de ambiente e resultados declarados precisam de evidências reais no projeto construído pelo aluno. A dependência SQLite fica apenas no projeto temporário de teste, com auditoria preservada. Gates, limitações, fontes e publicação em [continuidade](continuidade.md); contagens seguem as [métricas geradas](metricas-catalogo.md).
+
 ## Prática nos três projetos Web existentes
 
 Diário pratica identidade e importação versionada sem perda; tarefas praticam estado derivado e transições por ID; painel de clima pratica correlação e recuperação diante de conclusões atrasadas. São funções e decisões ligadas aos projetos originais, sem ampliar aulas ou alterar o motor meteorológico da plataforma. Parsing executado distingue SyntaxError de JSON inválido e TypeError de formato recusado. A guarda do painel preserva zero, origem e horário recebidos; não comprova observação pontual ou fetch. Referências: [JSON.parse](https://tc39.es/ecma262/multipage/structured-data.html#sec-json.parse) e [Fetch](https://fetch.spec.whatwg.org/#abort-fetch). Projetos permanecem construção independente e revisão manual; gates e métricas geradas em continuidade.md.

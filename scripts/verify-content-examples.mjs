@@ -28,12 +28,13 @@ import {verificarProtecaoAspnet} from '../tests/fixtures/aspnet-protecao.mjs';
 import {verificarFluxoAspnet} from '../tests/fixtures/aspnet-fluxo.mjs';
 import {verificarDtoAspnet} from '../tests/fixtures/aspnet-dto.mjs';
 import {verificarEscoposAspnet} from '../tests/fixtures/aspnet-escopos.mjs';
+import {verificarProjetoApi} from '../tests/fixtures/projeto-api.mjs';
 
 // Somente exemplos publicados de autoria do projeto, em recursos temporários.
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
 const indiceFamilia=process.argv.indexOf('--familia');
 const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
-const grupos=['aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+const grupos=['projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
 if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
 const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
@@ -93,6 +94,7 @@ try{
  const compileContent=source=>ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
  const asUrl=source=>'data:text/javascript;base64,'+Buffer.from(source).toString('base64');
  const {practiceActivities,getPracticeSolution}=await carregarPraticas();
+ const cenariosProjetoApi=selecionar('projeto-api')?await verificarProjetoApi(root,practiceActivities,getPracticeSolution):0;
  const cenariosModulos=selecionar('typescript-modulos')?await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution):0;
  const cenariosConceitos=selecionar('cpp-conceitos')?await verificarConceitosCpp(root,practiceActivities,getPracticeSolution):0;
  const cenariosPosse=selecionar('cpp-posse')?await verificarPosseCpp(root,practiceActivities,getPracticeSolution):0;
@@ -171,6 +173,7 @@ try{
 
 
  if(selecionar('git-bancada'))await verificarBancadaGit(root);
+ console.log(cenariosProjetoApi+' verificações .NET 10/SQLite do projeto de API, incluindo reabertura em outro processo.');
  console.log(count+' exemplos e soluções externos compilados/executados.');
  console.log(cenariosModulos+' projetos TypeScript conferidos, incluindo diagnósticos e falhas esperadas de resolução.');
  console.log(cenariosConceitos+' cenários C++20 conferidos, incluindo falhas esperadas de instanciação e ambiguidade.');

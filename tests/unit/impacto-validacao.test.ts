@@ -121,3 +121,9 @@ it('alterações no carregador mantêm integração nativa e corretores novos co
  }
  for(const arquivo of ['src/learning/practice.ts','src/content/contratos-integracao.ts','src/content/contratos-projetos.ts'])expect(selecionarImpacto([arquivo],[],testes).unidades).toContain('tests/unit/carregamento-praticas.test.ts');
 });
+
+it('projeto API recebe somente sua referência C#/SQLite, não PostgreSQL',()=>{
+ const testes={...catalogo,unidades:[...catalogo.unidades,'tests/unit/projeto-api.test.ts'],navegador:[...catalogo.navegador,'tests/e2e/projeto-api.spec.ts'],textos:{...catalogo.textos,'tests/unit/projeto-api.test.ts':'api-prever-transacao','tests/e2e/projeto-api.spec.ts':'projeto-api'}};
+ const plano=selecionarImpacto(['src/content/practice.ts'],['projeto-api','api-prever-transacao'],testes);expect(plano.familias).toEqual(['projeto-api']);expect(plano).toMatchObject({dotnet:true,postgres:false});
+ expect(selecionarImpacto(['tests/fixtures/projeto-api.mjs'],[],testes).familias).toEqual(['projeto-api']);
+});

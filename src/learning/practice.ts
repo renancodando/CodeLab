@@ -16,6 +16,10 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "entrega-prever-status":{"accepted":["true\n0"],"solution":"true\n0","failure":"Cancelado não é aprovação. O resultado antigo pertence a a1 e não comprova a versão b2, mesmo que nenhuma linha contenha falhou."},
+ "entrega-reproduzir-ambiente":{"accepted":["limpo"],"solution":"Node 24; npm ci; npm run build; npm run preview. Documentar a configuração pública de exemplo e os resultados realmente observados.","failure":"O plano precisa usar scripts existentes e instalar a ferramenta antes do build. Omitir devDependencies num ambiente limpo remove Vite; npm start não foi declarado; dev não confere o artefato compilado."},
+ "api-prever-transacao":{"accepted":["0\n1"],"solution":"0\n1","failure":"O descarte da transação sem Commit desfaz o primeiro INSERT. A contagem seguinte ao segundo INSERT já observa uma instrução fora dessa transação, em autocommit."},
+ "api-vincular-parametro":{"accepted":["vincular"],"solution":"comando.Parameters.AddWithValue(\"$nome\", entrada);","failure":"Aspas dentro do SQL não vinculam o parâmetro, e interpolar a entrada muda a própria instrução. Associe o valor ao nome usado na consulta constante, incluindo filtros vazios e com apóstrofo."},
  "diario-prever-indice-filtrado":{"accepted":["n2,n3"],"solution":"n2,n3","failure":"O índice da lista filtrada começa em zero, mas esse zero aponta para outra nota na coleção original. Siga splice sobre notas, não sobre visiveis."},
  "diario-preservar-importacao":{"accepted":["validar-antes"],"solution":"const candidatas = ler(texto); estado.notas = candidatas;","failure":"O parsing e a validação precisam terminar antes da primeira atribuição ao diário. Limpar primeiro perde dados na falha, e JSON.parse sozinho não valida o formato."},
  "tarefas-prever-contador":{"accepted":["1\n0"],"solution":"1\n0","failure":"pendentes guarda o resultado do cálculo anterior, não uma fórmula que será atualizada. A segunda contagem usa a coleção já alterada."},

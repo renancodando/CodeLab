@@ -8,7 +8,7 @@ export const essenciais=['execution','progress-migration','hub-backup','practice
 const centrais=['src/content/practice.ts','src/learning/practice.ts','src/content/explicacoes.ts','src/content/curriculum.ts'];
 const planejamentoAprendizagem=['src/learning/adaptive.ts','src/learning/hub-catalog.ts','src/learning/hub-ui.ts'];
 const contratosAprendizagem=['hub-catalog','catalogo-linguagens','ordem-diaria','learning-hub'];
-const nativas=['aspnet-protecao','aspnet-fluxo','aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','cpp-texto','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
+const nativas=['projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','cpp-texto','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
 function importaArquivo(teste,texto,arquivo){
  const fonte=ts.createSourceFile(teste,texto,ts.ScriptTarget.Latest,true);
  let encontrado=false;
@@ -72,7 +72,7 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
  const smoke=produto&&(compartilhado||pipeline||(unidades.size===0&&navegador.size===0&&!conteudo&&!meteorologia&&!concorrenciaSql));
  const api=smoke||[...navegador].some(p=>/5080/.test(catalogo.textos[p]??''));
  const dev=[...navegador].some(p=>/5174/.test(catalogo.textos[p]??''));
- const dotnet=api||meteorologia||[...familias].some(n=>/csharp|dotnet|aspnet/.test(n))||arquivos.some(p=>/^server\//.test(p));
+ const dotnet=api||meteorologia||[...familias].some(n=>/csharp|dotnet|aspnet|projeto-api/.test(n))||arquivos.some(p=>/^server\//.test(p));
  const postgres=concorrenciaSql||[...familias].some(n=>/^sql/.test(n));
  const compatibilidade=arquivos.some(p=>/\.css$|src\/environment\/|src\/world/.test(p));
  const tipos=arquivos.some(p=>/^src\/|^api\/|^server\/.*\.ts$|^.*config\.(ts|js|mjs)$|^package(-lock)?\.json$/.test(p));

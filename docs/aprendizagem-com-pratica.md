@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Projetos API e entrega em preparação
+
+As aulas existentes praticam transação e parâmetro com referências .NET 10/SQLite reais e produção JavaScript de resumo de evidências da versão atual. As pausas C# são conceituais; não executam C# do aluno ou comprovam HTTP. Reprodução de ambiente e resultados declarados precisam de evidências reais no projeto construído pelo aluno. A dependência SQLite fica apenas no projeto temporário de teste, com auditoria preservada. Gates, limitações, fontes e publicação em [continuidade](continuidade.md); contagens seguem as [métricas geradas](metricas-catalogo.md).
+
 ## Projetos com identidade, recuperação e respostas atrasadas
 
 As aulas existentes de diário, tarefas e painel de clima recebem previsão, diagnóstico e produção executável. O diário valida o arquivo inteiro antes de mesclar por ID; tarefas conservam a fonte e derivam contadores; a consulta só conclui para o local/geração ainda aguardados. Referências, equivalentes, erros de formato, chamadas independentes e mutantes sustentam os corretores. As decisões são conceituais, e as produções são funções JavaScript isoladas. Interface, foco, persistência, arquivos e transporte continuam aplicação do projeto com rubrica manual. Leitura não gera domínio, solução é assistência e métricas seguem a fonte gerada; publicação própria em continuidade.md.

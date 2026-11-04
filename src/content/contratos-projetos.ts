@@ -86,5 +86,38 @@ export const contratosProjetos:Record<string,ContratoProjeto>={
  if(retorno.tipo==='falha')return {...estado,carregando:false,erro:retorno.mensagem};
  return {...estado,carregando:false,dados:retorno.dados,erro:''};
 }`
+ },
+ 'entrega-resumir-verificacoes':{
+  checks:[
+   conferir('Aprovação exige os critérios da versão atual.',casos('resumirVerificacoes',JSON.stringify([
+    {argumentos:['b2',['build','jornada'],[{criterio:'build',sha:'b2',status:'passou'},{criterio:'jornada',sha:'a1',status:'passou'}]],esperado:{aprovados:['build'],falhos:[],pendentes:['jornada'],pronto:false}},
+    {argumentos:['v3',['contrato'],[{criterio:'contrato',sha:'v3',status:'passou'}]],esperado:{aprovados:['contrato'],falhos:[],pendentes:[],pronto:true}}
+   ])),'Separe resultados por SHA e critério. Aprovar um item em outro commit não resolve a ausência de evidência da versão atual.'),
+   conferir('Usa o último registro aplicável, inclusive uma falha após sucesso.',casos('resumirVerificacoes',JSON.stringify([
+    {argumentos:['b',['api','tela'],[{criterio:'api',sha:'b',status:'passou'},{criterio:'tela',sha:'b',status:'falhou'},{criterio:'api',sha:'b',status:'falhou'},{criterio:'tela',sha:'b',status:'passou'},{criterio:'api',sha:'antigo',status:'passou'}]],esperado:{aprovados:['tela'],falhos:['api'],pendentes:[],pronto:false}}
+   ])),'Encontrar algum sucesso ignora o que aconteceu depois. Atualize apenas a evidência da mesma versão e considere a última tentativa de cada critério.'),
+   conferir('Cancelamento, pendência e ausência não viram aprovação.',casos('resumirVerificacoes',JSON.stringify([
+    {argumentos:['x',['a','b','c','d'],[{criterio:'a',sha:'x',status:'cancelado'},{criterio:'b',sha:'x',status:'pendente'},{criterio:'c',sha:'x',status:'falhou'},{criterio:'extra',sha:'x',status:'passou'}]],esperado:{aprovados:[],falhos:['c'],pendentes:['a','b','d'],pronto:false}},
+    {argumentos:['x',[],[{criterio:'extra',sha:'x',status:'passou'}]],esperado:{aprovados:[],falhos:[],pendentes:[],pronto:false}}
+   ])),'Nenhuma falha registrada é diferente de todos os critérios aprovados. Sem critérios, também não há evidência de prontidão.'),
+   conferir('A ordem vem dos critérios, não da chegada das verificações.',casos('resumirVerificacoes',JSON.stringify([
+    {argumentos:['x',['c','a','b'],[{criterio:'b',sha:'x',status:'passou'},{criterio:'c',sha:'x',status:'passou'},{criterio:'a',sha:'x',status:'passou'}]],esperado:{aprovados:['c','a','b'],falhos:[],pendentes:[],pronto:true}},
+    {argumentos:['X',['constructor','__proto__'],[{criterio:'__proto__',sha:'X',status:'passou'},{criterio:'constructor',sha:'x',status:'passou'}]],esperado:{aprovados:['__proto__'],falhos:[],pendentes:['constructor'],pronto:false}}
+   ])),'Preserve a sequência de critérios e compare SHAs exatamente. Identificadores são dados; nomes especiais não podem ser confundidos com propriedades herdadas.'),
+   conferir('Chamadas não alteram entradas ou resultados anteriores.',`const criterios=['a'],registros=[{criterio:'a',sha:'x',status:'passou'}],antes=JSON.stringify([criterios,registros]),a=resumirVerificacoes('x',criterios,registros),foto=JSON.stringify(a),b=resumirVerificacoes('y',['b'],[]);return a!==b&&JSON.stringify([criterios,registros])===antes&&JSON.stringify(a)===foto&&a.pronto===true&&iguais(b,{aprovados:[],falhos:[],pendentes:['b'],pronto:false});`,'Outra chamada não pode limpar arrays ou sobrescrever um resumo já entregue. Preserve as listas de entrada e crie resultados próprios.')
+  ],
+  solution:`function resumirVerificacoes(shaAtual, criterios, registros) {
+ const ultimos=new Map();
+ for(const registro of registros)if(registro.sha===shaAtual)ultimos.set(registro.criterio,registro.status);
+ const aprovados=[],falhos=[],pendentes=[];
+ for(const criterio of criterios){
+  const status=ultimos.get(criterio);
+  if(status==='passou')aprovados.push(criterio);
+  else if(status==='falhou')falhos.push(criterio);
+  else pendentes.push(criterio);
  }
+ return {aprovados,falhos,pendentes,pronto:criterios.length>0&&aprovados.length===criterios.length};
+}`
+ }
+
 };
