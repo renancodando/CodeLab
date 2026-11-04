@@ -19,7 +19,8 @@ export type SkillProgress = {evidence:Record<string,AssessmentEvidence>; review:
 export type DailyItem = {id:string;kind:'review'|'concept'|'practice'|'challenge';activityId:string;skillId?:string;minutes:number};
 export type DailySession = {day:string; items:DailyItem[]; completed:string[]; totalMinutes:number;iniciada?:boolean};
 export type AdaptiveState = {version:1;skills:Record<string,SkillProgress>;eventIds:string[];seenConcepts:string[];daily?:DailySession};
-export type SkillDefinition = {id:string;label:string;path:string[];prerequisites?:string[]};
+export type SkillDefinition = {id:string;label:string;path:string[];prerequisites?:string[];linguagem?:string};
+export const linguagemDaHabilidade=(habilidade:SkillDefinition)=>habilidade.linguagem??habilidade.id.split('.')[0];
 export type LearningActivity = {id:string;title:string;kind:'concept'|'practice'|'challenge';skillIds:string[];minutes:number;lessonId?:string;prerequisites?:string[];requiredConcepts?:string[];incluiConceitos?:string[];preparacaoAteBloco?:number;ordem?:number};
 export type AdaptiveCatalog = {skills:SkillDefinition[];activities:LearningActivity[];preferredLanguage?:string};
 export type EvidenceResult = {accepted:boolean;credited:boolean;reason:'recorded'|'duplicate'|'stale'|'invalid'};
@@ -212,6 +213,8 @@ function weakness(state:AdaptiveState,activity:LearningActivity):number {
 /** A bounded plan, not an endless queue. Empty catalog or unavailable slots are valid. */
 export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,clock:LearningClock):DailySession {
  const day=learningDay(clock);const activities=catalogActivities(catalog);const items:DailyItem[]=[];const used=new Set<string>();
+ const linguagens=new Map(catalog.skills.map(habilidade=>[habilidade.id,linguagemDaHabilidade(habilidade)]));
+ const linguagemCorresponde=(id:string)=>(linguagens.get(id)??id.split('.')[0])===catalog.preferredLanguage;
  const add=(kind:DailyItem['kind'],activity:LearningActivity,skillId?:string)=>{
   const id=activity.id;
   items.push({id,kind,activityId:activity.id,minutes:activity.minutes,...(skillId?{skillId}:{})});used.add(activity.id);
@@ -222,7 +225,7 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
    .sort((a,b)=>Number(b.kind==='practice')-Number(a.kind==='practice')||Number(hasPassed(state,a.id))-Number(hasPassed(state,b.id))||compare(a.id,b.id))[0];
   if(activity)add('review',activity,skillId);
  }
- const preparacoesConhecidas=new Set(activities.filter(atividade=>atividade.preparacaoAteBloco!==undefined&&state.seenConcepts.includes(atividade.id)&&(!catalog.preferredLanguage||atividade.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage))).map(atividade=>atividade.id));
+ const preparacoesConhecidas=new Set(activities.filter(atividade=>atividade.preparacaoAteBloco!==undefined&&state.seenConcepts.includes(atividade.id)&&(!catalog.preferredLanguage||atividade.skillIds.some(linguagemCorresponde))).map(atividade=>atividade.id));
  const preparacoesRetomadas=new Set((state.daily?.day!==day?state.daily?.items??[]:[]).flatMap(item=>{
   const atividade=activities.find(atividade=>atividade.id===item.activityId);
   if(!atividade)return [];
@@ -231,7 +234,7 @@ export function buildDailySession(state:AdaptiveState,catalog:AdaptiveCatalog,cl
  }));
  const praticaPreparadaPendente=(atividade:LearningActivity)=>state.daily!==undefined&&state.daily.day!==day&&!hasPassed(state,atividade.id)&&atividade.requiredConcepts?.some(id=>preparacoesConhecidas.has(id))===true;
  const retomadaPendente=(atividade:LearningActivity)=>praticaPreparadaPendente(atividade)&&atividade.requiredConcepts?.some(id=>preparacoesRetomadas.has(id))===true;
- const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(id=>id.split('.')[0]===catalog.preferredLanguage)||(activity.kind!=='concept'&&!hasPassed(state,activity.id)&&activity.requiredConcepts?.some(id=>preparacoesConhecidas.has(id))));
+ const candidates=activities.filter(activity=>!catalog.preferredLanguage||activity.skillIds.some(linguagemCorresponde)||(activity.kind!=='concept'&&!hasPassed(state,activity.id)&&activity.requiredConcepts?.some(id=>preparacoesConhecidas.has(id))));
  const novosConceitos=candidates.filter(activity=>activity.kind==='concept'&&prerequisitesMet(state,activity,catalog)&&!state.seenConcepts.includes(activity.id)&&!used.has(activity.id));
  const concept=novosConceitos.filter(activity=>!novosConceitos.some(outro=>outro.incluiConceitos?.includes(activity.id))).sort((a,b)=>(a.ordem??10001)-(b.ordem??10001)||compare(a.id,b.id))[0];
  if(concept)add('concept',concept);

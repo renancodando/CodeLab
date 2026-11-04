@@ -24,6 +24,12 @@ for(const aula of aulas)test(aula.id+': previsão, diagnóstico e produção pas
   const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[aula.producao]).toMatchObject({passed:true,assisted:aula.offline,attempts:2});expect(salvo.practiceAnswers[aula.decisao].value).toBe(aula.certa);
   if(aula.offline){expect(salvo.adaptive.skills['projetos.diario.backup-versionado'].review.lastOutcome).toBe('assisted');expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
    for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:1000});await pagina.evaluate(()=>new Promise<void>(resolver=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolver()))));expect(await pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(pagina.locator('[data-practice="'+aula.producao+'"]').getByRole('textbox',{name:'Seu código',exact:true})).toBeVisible();}
+   await pagina.goto('/#/perfil');
+   const grupo=pagina.locator('.skill-tree details').filter({has:pagina.locator('summary',{hasText:/^JavaScript$/})});await grupo.locator('summary').click();
+   await expect(grupo).toContainText('JavaScript → Projetos → Diário → Backup versionado');
+   await expect(grupo.locator('a[href="#/pratica/diario-mesclar-backup"]')).toBeVisible();
+   await expect(grupo.locator('a[href="#/pratica/fullstack-preparar-cadastro"]')).toBeVisible();
+   const habilidades=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!).adaptive.skills);expect(habilidades['projetos.diario.backup-versionado']).toEqual(salvo.adaptive.skills['projetos.diario.backup-versionado']);
   }
   expect(execucoes).toEqual([]);
  }finally{if(aula.offline&&!pagina.isClosed())await contexto.setOffline(false);}
