@@ -1,0 +1,11 @@
+# PR #93: casos de validação independentes
+
+Head atual enviado `3114e6a00c0143c1a8f06f7a7711175c0057dd52`, branch `conteudo/projetos-web-pratica-20261103`. CI `41837043349` em andamento; nova revisão pedida para este SHA por uma transição rascunho/pronta. Run `41835897380` substituído/cancelado não aprova o head atual.
+
+A revisão de `84e68b3` encontrou um P2 verdadeiro no corretor de diário: texto/categoria/data inválidos repetiam o ID da primeira nota, mascarando a ausência de validação por uma recusa de duplicação. Corrigido com IDs distintos e duplicação separada. Quatro mutantes novos omitem validação de cada campo ou tudo exceto ID. Referência adicional preserva todos os textos com espaços externos e um quinto mutante normaliza metadados indevidamente. Quinze casos de diário passaram; depois três casos do gabarito/equivalente/metadados passaram. O arquivo agora tem 43 testes, cobertos nas rodadas proporcionais, sem repetir as demais aulas. Thread resolvida após push.
+
+Mantidas as correções anteriores: linguagem real de projetos/fullstack no catálogo/árvore/plano sem renomear IDs/evidências; regressões de preparação, backup/revisão e fallback; carregador nativo com imports dos corretores separados. A falha real do carregador foi corrigida, não escondida pela seleção menor. 25 testes do carregador/seletor aprovados e tipos conferidos. O CI mantém uma família .NET real de referência para o carregador e build da API para os smokes; não repete seis famílias intactas.
+
+Plano do head: 12 arquivos unitários; learning-hub, ordem-diaria, projetos-web e seis contratos críticos compartilhados; aspnet-escopos; sem PostgreSQL ou segunda matriz. Verificar CI/revisão/threads deste head e árvore antes de merge. Depois dois smokes, deployment READY/SHA/projeto/alias e três contratos públicos distintos. Não presumir gates aprovados nem declarar produção pelo preview.
+
+L01 publicado em main `081f2079a868fccab013650bac06a3867c5032d4`; L02 ainda pendente de publicação. Branch 137/273/120/17, publicado 137/264/117/20. Depois de L02 concluído, aproximadamente dez lotes restantes contados da PR #91; próximo L03 (projeto-api e projeto-entrega), sem criar aulas extras. Não reiniciar doze a cada retomada.
