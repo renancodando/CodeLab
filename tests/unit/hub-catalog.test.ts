@@ -3,7 +3,7 @@ import {lessons} from '../../src/content/curriculum';
 import {practiceActivities} from '../../src/content/practice';
 import {capstoneProjects} from '../../src/content/project-paths';
 import {adaptiveCatalog,idPreparacao} from '../../src/learning/hub-catalog';
-import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen,ADAPTIVE_LIMITS,type DailySession} from '../../src/learning/adaptive';
+import {freshAdaptive,buildDailySession,ensureDailySession,markConceptSeen,ADAPTIVE_LIMITS,linguagemDaHabilidade,type DailySession} from '../../src/learning/adaptive';
 function conferirAssunto(plano:DailySession){
  const conceito=adaptiveCatalog.activities.find(a=>a.id===plano.items.find(i=>i.kind==='concept')?.activityId)!;
  expect(conceito.kind).toBe('concept');expect(plano.items.length).toBeGreaterThan(1);expect(plano.items.length).toBeLessThanOrEqual(4);
@@ -27,7 +27,7 @@ it('cada linguagem pratica o assunto apresentado sem preencher vagas com conteú
  for(const language of ['html','css','javascript','typescript','python','csharp','cpp','sql']){
   const plan=buildDailySession(freshAdaptive(),{...adaptiveCatalog,preferredLanguage:language},{now:Date.parse('2026-10-07T12:00:00Z'),timeZone:'America/Sao_Paulo'});
   conferirAssunto(plan);
-  for(const item of plan.items)expect(adaptiveCatalog.activities.find(a=>a.id===item.activityId)!.skillIds.every(id=>id.startsWith(language+'.'))).toBe(true);
+  for(const item of plan.items)expect(adaptiveCatalog.activities.find(a=>a.id===item.activityId)!.skillIds.every(id=>linguagemDaHabilidade(adaptiveCatalog.skills.find(h=>h.id===id)!)===language)).toBe(true);
  }
 });
 

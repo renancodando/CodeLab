@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Projetos com identidade, recuperação e respostas atrasadas
+
+As aulas existentes de diário, tarefas e painel de clima recebem previsão, diagnóstico e produção executável. O diário valida o arquivo inteiro antes de mesclar por ID; tarefas conservam a fonte e derivam contadores; a consulta só conclui para o local/geração ainda aguardados. Referências, equivalentes, erros de formato, chamadas independentes e mutantes sustentam os corretores. As decisões são conceituais, e as produções são funções JavaScript isoladas. Interface, foco, persistência, arquivos e transporte continuam aplicação do projeto com rubrica manual. Leitura não gera domínio, solução é assistência e métricas seguem a fonte gerada; publicação própria em continuidade.md.
+
 ## Praticar duração, captura e devolução do serviço
 
 Na aula existente aspnet-di, a previsão diferencia duas resoluções do mesmo escopo de um pedido posterior. O diagnóstico confronta silenciar validação, compartilhar estado e reter um transient dentro do singleton. A reconstrução exige registro antes de construir o provedor, resolução pelo escopo e uso antes do descarte, aceitando registros independentes em ordens diferentes. Referências reais verificam essas decisões e o comportamento diante de exceção e escopo vazio. O console didático torna o ciclo observável sem simular requisições HTTP. A pausa offline não executa C# do aluno; leitura não gera domínio, solução aberta é assistência e o projeto continua com aplicação e revisão manual.

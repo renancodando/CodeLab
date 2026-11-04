@@ -25,6 +25,8 @@ Exemplo: a alteração original do backup C# seleciona somente `csharp-excecoes.
 
 O Chromium é o navegador frequente. Alterações de CSS/ambiente recebem também Edge no mesmo sistema; o fechamento da edição reserva a cobertura ampliada. O navegador só inicia a API ou o servidor de desenvolvimento quando o arquivo selecionado usa esses serviços. A aplicação compilada é compartilhada pelo job de navegador.
 
+Alterações no catálogo de habilidades, planejamento adaptativo e árvore usam os contratos próprios de adaptive, hub-catalog, catalogo-linguagens, ordem-diaria e learning-hub, além dos essenciais de execução/progresso/backup/corretores. Imports do helper idPreparacao em testes de conteúdo não exigem recompilar programas nativos que permaneceram iguais. Testes/fixtures ou exemplos efetivamente alterados continuam selecionados e preservam seus runtimes; a suíte completa mantém todos os cenários. A mudança da PR #93 foi o caso concreto: o plano anterior puxava seis famílias nativas por dependências de preparação sem modificação dos programas. Essa comparação mede seleção; não é uma redução de tempo já observada em execuções equivalentes.
+
 ## Cobertura que permanece
 
 O conjunto compartilhado reutiliza seis cenários existentes: WebAssembly/CSP, cancelamento e recuperação do executor, backup/importação de progresso, isolamento da prévia HTML, estudo offline e axe com conteúdo visível em 220/4000 px. O pós-merge usa os dois de artefato/isolamento; `CODELAB_FASE=publico` seleciona backup, offline e axe/responsividade. A suíte completa mantém os outros cenários de responsividade, acessibilidade, armazenamento, API, clima, laboratórios e aulas. Nenhuma asserção foi retirada para obter verde.
