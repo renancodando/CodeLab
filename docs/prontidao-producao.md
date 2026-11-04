@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Projetos API e entrega em preparação
+
+As aulas existentes praticam transação e parâmetro com referências .NET 10/SQLite reais e produção JavaScript de resumo de evidências da versão atual. As pausas C# são conceituais; não executam C# do aluno ou comprovam HTTP. Reprodução de ambiente e resultados declarados precisam de evidências reais no projeto construído pelo aluno. A dependência SQLite fica apenas no projeto temporário de teste, com auditoria preservada. Gates, limitações, fontes e publicação em [continuidade](continuidade.md); contagens seguem as [métricas geradas](metricas-catalogo.md).
+
 ## L01 publicado; L02 preserva isolamento e mundo existentes
 
 A entrega full stack da PR #92 tem revisão do head, CI proporcional, árvore, pós-merge e deployment/domínio/fluxos públicos conferidos no recibo remoto. O lote seguinte trabalha somente atividades e corretores de três projetos existentes; não modifica permissões, execução, limites, Workers, clima ou visual. Produções puras não comprovam armazenamento, rede, arquivo enviado ou cancelamento remoto. Os casos próprios foram cobertos localmente e o navegador fica no CI do head consolidado. Exigir gates próprios antes de declarar o L02 publicado; não repetir as baterias anteriores. Métricas e resultados em continuidade.md.

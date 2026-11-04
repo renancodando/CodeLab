@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import {contratosProjetos} from '../../src/content/contratos-projetos';
 
 const aulas=[
- {id:'projeto-entrega',previsao:'entrega-prever-status',saida:'true\n0',decisao:'entrega-reproduzir-ambiente',errada:'planejado',certa:'limpo',producao:'entrega-resumir-verificacoes',falha:'Separe resultados por SHA',offline:true}
+ {id:'projeto-entrega',previsao:'entrega-prever-status',saida:'true\n0',decisao:'entrega-reproduzir-ambiente',errada:'somente-dev',certa:'limpo',producao:'entrega-resumir-verificacoes',falha:'Separe resultados por SHA',offline:true}
 ];
 async function conferir(pagina:Page,id:string){await pagina.locator('[data-practice="'+id+'"]').getByRole('button',{name:'Conferir comportamento',exact:true}).click();}
 for(const aula of aulas)test(aula.id+': previsão, diagnóstico e produção passam pelo executor local',async({page:pagina,context:contexto})=>{

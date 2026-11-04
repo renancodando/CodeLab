@@ -9,7 +9,7 @@ it('previsão e reprodução do ambiente são decisões conceituais',async()=>{
  expect(await evaluatePractice('entrega-prever-status','true\n0')).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});
  expect((await evaluatePractice('entrega-prever-status','false\n1')).passed).toBe(false);
  expect(await evaluatePractice('entrega-reproduzir-ambiente','limpo')).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});
- for(const opcao of ['captura','pastas','planejado'])expect((await evaluatePractice('entrega-reproduzir-ambiente',opcao)).passed).toBe(false);
+ for(const opcao of ['omitir-ferramenta','script-ausente','somente-dev'])expect((await evaluatePractice('entrega-reproduzir-ambiente',opcao)).passed).toBe(false);
 });
 it('executa a referência que distingue não falhou de aprovação atual',async()=>{
  const resultado=await evaluate(pausas.find(p=>p.kind==='predict')!.code!,'laboratorio');expect(resultado.error).toBeUndefined();expect(resultado.logs).toEqual(['true','0']);
