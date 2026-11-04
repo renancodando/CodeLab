@@ -1,0 +1,13 @@
+# L02 entregue: PR #93 publicada
+
+PR https://github.com/renancodando/CodeLab/pull/93 integrada pelo head verificado `3114e6a00c0143c1a8f06f7a7711175c0057dd52`. Main `af7e318eea3636b9de799009f9f938b109967e91`, árvore `ef94f30dd7431e7cba510c09ba0f9b14b7d7e0ef` igual ao head, pais conferidos (base `081f2079a868fccab013650bac06a3867c5032d4` e head). Checkout main limpo/sincronizado após fast-forward.
+
+Revisão do SHA final concluída sem apontamentos; duas threads anteriores resolvidas após correções. CI `41837043349` aprovado de 13:19:26 a 13:30:44 UTC (11 min 18 s): 306 testes em 12 arquivos, 16 cenários reais ASP.NET Core .NET 10 para o carregador, catálogo/tipos/build e 22 fluxos Chromium em 8 min. Escopo maior que conteúdo puro porque corrigiu árvore, plano e pipeline; não comparar sua duração como promessa de ganho. Sem PostgreSQL, segunda matriz ou seis famílias intactas. Nada foi enfraquecido para obter verde.
+
+Pós-merge `41839055868` aprovado no mesmo main: build e dois smokes (HTML isolado 22,3 s e WebAssembly/CSP 13,2 s), total 40 s. Deployment `dpl_7XFJkjWg9czxHjHQDqohbEh7GFMn` READY/production, projeto `prj_XgncY54wYGiSgPH0n1JOol3UFWCn`, SHA main e alias `code-lab-omega.vercel.app` conferidos antes/depois dos três contratos públicos aprovados em 1,2 min: axe/220–4000 (20,9 s), offline (23,2 s), backup/importação (18,7 s). Publicação confirmada. Não repetir essa bateria.
+
+Nove atividades nas três aulas existentes diário/tarefas/clima; três produções JavaScript reais. Corretor de backup diferencia erros de formato e duplicação com IDs distintos, preserva textos, dados e estados anteriores. Dados atrasados/repetidos não substituem a consulta atual. Projetos/fullstack agora aparecem na árvore e no planejamento de JavaScript pela linguagem real, preservando os IDs/evidências/backup; o carregador nativo dos corretores separados foi corrigido. Ver checkpoints intermediários para falhas reais, timeouts locais, reparos e runs cancelados; não tratá-los como aprovações ou pendências ainda abertas.
+
+Métricas publicadas: 137 aulas, 273 atividades, 120 aulas com pausas e 17 sem. Presença de pausa não encerra profundidade, projetos ou edição. Conceitual não é execução, projetos abertos têm rubrica manual; UI, mundo/clima, sandbox, limites e arquitetura local-first sem login preservados.
+
+Plano contado da PR #91: L01 e L02 entregues, aproximadamente dez lotes restantes. Próximo L03 nas aulas existentes projeto-api e projeto-entrega; depois L04–L08 nas outras lacunas e L09–L12 consolidação/fechamento. Não reiniciar a contagem de doze. Atualizar continuidade e mapa na próxima branch; concluir o que já estiver preparado antes de outro lote.
