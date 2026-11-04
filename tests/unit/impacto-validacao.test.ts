@@ -94,3 +94,22 @@ it('uma família explícita de C++ impede acrescentar referências .NET sem rela
   ['tests/fixtures/cpp-texto.mjs','scripts/verify-content-examples.mjs']
  ])expect(selecionarImpacto(arquivos,[],catalogo)).toMatchObject({familias:['cpp-texto'],postgres:false});
 });
+
+it('planejamento e árvore usam seus contratos sem recompilar exemplos por imports de preparação',()=>{
+ const unidades=['adaptive','hub-catalog','catalogo-linguagens','hub-backup','progress-migration','practice','execution','ordem-diaria','cpp-conceitos'].map(nome=>'tests/unit/'+nome+'.test.ts');
+ const navegador=['learning-hub','ordem-diaria','sql-null'].map(nome=>'tests/e2e/'+nome+'.spec.ts');
+ const testes={unidades,navegador,textos:{'tests/unit/cpp-conceitos.test.ts':"import {idPreparacao} from '../../src/learning/hub-catalog';",'tests/e2e/sql-null.spec.ts':"import {idPreparacao} from '../../src/learning/hub-catalog';"}};
+ for(const arquivo of ['src/learning/adaptive.ts','src/learning/hub-catalog.ts','src/learning/hub-ui.ts']){
+  const plano=selecionarImpacto([arquivo],[],testes);
+  expect(plano.unidades).toEqual(unidades.filter(p=>!p.includes('cpp-conceitos')).sort());
+  expect(plano.navegador).toEqual(navegador.filter(p=>!p.includes('sql-null')).sort());
+  expect(plano.familias).toEqual([]);expect(plano.postgres).toBe(false);
+ }
+ const nativo=selecionarImpacto(['src/learning/hub-catalog.ts','tests/fixtures/sql-null.mjs'],[],testes);
+ expect(nativo.familias).toContain('sql-null');expect(nativo.postgres).toBe(true);expect(nativo.navegador).toContain('tests/e2e/sql-null.spec.ts');
+});
+it('testes específicos alterados continuam selecionados junto com o planejamento',()=>{
+ const arquivo='tests/unit/meu-contrato.test.ts';
+ const plano=selecionarImpacto(['src/learning/adaptive.ts',arquivo],[],{...catalogo,unidades:[...catalogo.unidades,arquivo]});
+ expect(plano.unidades).toContain(arquivo);expect(plano.unidades).toContain('tests/unit/execution.test.ts');
+});

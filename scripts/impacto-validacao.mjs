@@ -6,6 +6,8 @@ import ts from 'typescript';
 
 export const essenciais=['execution','progress-migration','hub-backup','practice','adaptive'];
 const centrais=['src/content/practice.ts','src/learning/practice.ts','src/content/explicacoes.ts','src/content/curriculum.ts'];
+const planejamentoAprendizagem=['src/learning/adaptive.ts','src/learning/hub-catalog.ts','src/learning/hub-ui.ts'];
+const contratosAprendizagem=['hub-catalog','catalogo-linguagens','ordem-diaria','learning-hub'];
 const nativas=['aspnet-protecao','aspnet-fluxo','aspnet-dto','aspnet-escopos','aspnet-rotas','cpp-conceitos','cpp-posse','cpp-texto','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','csharp-cancelamento','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','typescript-modulos','sql-null','sql-pratica','git-bancada'];
 function importaArquivo(teste,texto,arquivo){
  const fonte=ts.createSourceFile(teste,texto,ts.ScriptTarget.Latest,true);
@@ -32,7 +34,7 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
  const conteudo=arquivos.some(p=>/^src\/content\/|^docs\/.*\.json$|generate-curriculum|gerar-metricas/.test(p));
  const adicionar=(nome)=>{for(const p of catalogo.unidades)if(p.endsWith('/'+nome+'.test.ts'))unidades.add(p);for(const p of catalogo.navegador)if(p.endsWith('/'+nome+'.spec.ts'))navegador.add(p);if(nativas.includes(nome))familias.add(nome);};
  for(const p of arquivos){
-  if(p.startsWith('src/')&&!centrais.includes(p))for(const [teste,texto] of Object.entries(catalogo.textos))if(importaArquivo(teste,texto,p)){
+  if(p.startsWith('src/')&&!centrais.includes(p)&&!planejamentoAprendizagem.includes(p))for(const [teste,texto] of Object.entries(catalogo.textos))if(importaArquivo(teste,texto,p)){
    if(teste.startsWith('tests/unit/'))unidades.add(teste);else navegador.add(teste);
    const nome=teste.split('/').at(-1).replace(/\.(test|spec)\.ts$/,'');if(nativas.includes(nome))familias.add(nome);
   }
@@ -56,6 +58,7 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
    else adicionar('practice');
   }else if(/^server\/|^api\//.test(p)){adicionar('observacao-servidor');adicionar('identidade-api');adicionar('api');}
   else if(/^src\/execution\//.test(p)){adicionar('execution');if(p.includes('sql'))adicionar('sql-local');if(p.includes('typescript'))adicionar('typescript-worker');}
+  else if(planejamentoAprendizagem.includes(p)){essenciais.forEach(adicionar);contratosAprendizagem.forEach(adicionar);}
   else if(/^src\/learning\//.test(p)){essenciais.forEach(adicionar);adicionar(p.split('/').at(-1).replace('.ts',''));}
   else if(/^scripts\/impacto-validacao|^scripts\/validar-alteracoes|^tests\/unit\/impacto-validacao/.test(p))adicionar('impacto-validacao');
   else if(p==='scripts/verify-content-examples.mjs')adicionar('impacto-validacao');
