@@ -62,6 +62,11 @@ it('aceita conclusão equivalente com cópias de dados e ordem diferente de camp
 });
 const diario=contratosProjetos['diario-mesclar-backup'].solution;
 const diariosErrados={
+ normalizarMetadados:diario.replace('id:nota.id,texto:nota.texto,categoria:nota.categoria,criadaEm:nota.criadaEm','id:nota.id.trim(),texto:nota.texto,categoria:nota.categoria.trim(),criadaEm:nota.criadaEm.trim()'),
+ somenteId:diario.replace("['id','texto','categoria','criadaEm']","['id']"),
+ semTexto:diario.replace("['id','texto','categoria','criadaEm']","['id','categoria','criadaEm']"),
+ semCategoria:diario.replace("['id','texto','categoria','criadaEm']","['id','texto','criadaEm']"),
+ semData:diario.replace("['id','texto','categoria','criadaEm']","['id','texto','categoria']"),
  idsEspeciais:diario.replace("if(indice<0)saida.push(nota);","if(indice<0){if(nota.id!=='__proto__')saida.push(nota);}"),
  apagar:diario.replace('const saida=atuais.slice();','const saida=[];'),
  duplicar:diario.replace('else saida[indice]=nota;','else saida.push(nota);'),
