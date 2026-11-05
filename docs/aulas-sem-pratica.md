@@ -2,14 +2,14 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **15 de 137 aulas sem pausas deste catálogo**. As outras 122 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **12 de 137 aulas sem pausas deste catálogo**. As outras 125 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
 | C++ | 10 | 9 | 1 |
 | C# | 14 | 11 | 3 |
-| CSS | 15 | 13 | 2 |
-| HTML | 19 | 18 | 1 |
+| CSS | 15 | 15 | 0 |
+| HTML | 19 | 19 | 0 |
 | JavaScript | 30 | 28 | 2 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 11 | 3 |
@@ -48,9 +48,6 @@ Aplicar os pré-requisitos em decisões, concorrência, desempenho e projetos; c
 | `cpp-concorrencia-engenharia` — C++: concorrência, build e desempenho | C++ · do zero ao avançado | C++ | Especialização |
 | `js-assincrono` — JavaScript: promises, concorrência e cancelamento | JavaScript · fundamentos à especialização | JavaScript | Avançado |
 | `js-promessas-contratos` — JavaScript: promises, propagação de falhas e concorrência limitada | JavaScript · fundamentos à especialização | JavaScript | Avançado |
-| `html-plataforma` — HTML: DOM, componentes e integração da plataforma | HTML · do zero à plataforma web | HTML | Especialização |
-| `css-visual-movimento` — CSS: tipografia, cor e movimento | CSS · do zero ao avançado | CSS | Avançado |
-| `css-arquitetura` — CSS: arquitetura, compatibilidade e depuração | CSS · do zero ao avançado | CSS | Especialização |
 | `cs-objetos-contratos` — C#: objetos, interfaces, records e padrões | C# · do zero à engenharia | C# | Avançado |
 | `cs-runtime-avancado` — C#: runtime, memória e recursos avançados | C# · do zero à engenharia | C# | Avançado |
 | `cs-engenharia` — C#: testes, pacotes e arquitetura .NET | C# · do zero à engenharia | C# | Especialização |
