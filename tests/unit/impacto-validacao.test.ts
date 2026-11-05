@@ -142,3 +142,8 @@ it('recorta dados HTML/CSS por aula e conserva os contratos gerais do catálogo'
  expect(plano.navegador).toEqual([proprios]);expect(plano.unidades).toEqual(['tests/unit/expanded-content.test.ts','tests/unit/practice.test.ts']);expect(plano.familias).toEqual([]);
  const amplo=selecionarImpacto([modulo],[],{...dados,aulasPorModulo:{}});expect(amplo.navegador).toContain(alheios);expect(amplo.unidades).toContain('tests/unit/html-arvore.test.ts');
 });
+
+it('genéricos TypeScript selecionam só sua família nativa, sem PostgreSQL ou .NET',()=>{
+ const plano=selecionarImpacto(['tests/fixtures/typescript-genericos.mjs'],[],{unidades:['tests/unit/typescript-genericos.test.ts'],navegador:['tests/e2e/typescript-genericos.spec.ts'],textos:{}});
+ expect(plano.familias).toEqual(['typescript-genericos']);expect(plano.dotnet).toBe(false);expect(plano.postgres).toBe(false);expect(plano.navegador).toEqual(['tests/e2e/typescript-genericos.spec.ts']);
+});

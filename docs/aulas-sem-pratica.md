@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **12 de 137 aulas sem pausas deste catálogo**. As outras 125 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **7 de 137 aulas sem pausas deste catálogo**. As outras 130 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -10,11 +10,11 @@ Há **12 de 137 aulas sem pausas deste catálogo**. As outras 125 têm ao menos 
 | C# | 14 | 11 | 3 |
 | CSS | 15 | 15 | 0 |
 | HTML | 19 | 19 | 0 |
-| JavaScript | 30 | 28 | 2 |
+| JavaScript | 30 | 30 | 0 |
 | Python | 10 | 10 | 0 |
 | SQL/PostgreSQL | 14 | 11 | 3 |
 | Integração (transversal) | 15 | 15 | 0 |
-| TypeScript | 10 | 7 | 3 |
+| TypeScript | 10 | 10 | 0 |
 
 Trabalhar de cima para baixo dentro das dependências de cada trilha. Em cada aula, escolher previsão, diagnóstico e alteração/produção quando fizer sentido; não acrescentar perguntas apenas para retirar uma linha da lista. Conferir também bordas, feedback, assistência, revisão e aplicação. As contagens descrevem o checkout gerado; publicação exige os gates de produção registrados em continuidade.md.
 
@@ -42,12 +42,7 @@ Aplicar os pré-requisitos em decisões, concorrência, desempenho e projetos; c
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `ts-genericos` — TypeScript: genéricos, coleções e variância | TypeScript · do zero ao avançado | TypeScript | Avançado |
-| `ts-genericos-relacoes` — TypeScript: genéricos que preservam relações entre dados | TypeScript · do zero ao avançado | TypeScript | Avançado |
-| `ts-tipos-avancados` — TypeScript: transformação e programação de tipos | TypeScript · do zero ao avançado | TypeScript | Avançado |
 | `cpp-concorrencia-engenharia` — C++: concorrência, build e desempenho | C++ · do zero ao avançado | C++ | Especialização |
-| `js-assincrono` — JavaScript: promises, concorrência e cancelamento | JavaScript · fundamentos à especialização | JavaScript | Avançado |
-| `js-promessas-contratos` — JavaScript: promises, propagação de falhas e concorrência limitada | JavaScript · fundamentos à especialização | JavaScript | Avançado |
 | `cs-objetos-contratos` — C#: objetos, interfaces, records e padrões | C# · do zero à engenharia | C# | Avançado |
 | `cs-runtime-avancado` — C#: runtime, memória e recursos avançados | C# · do zero à engenharia | C# | Avançado |
 | `cs-engenharia` — C#: testes, pacotes e arquitetura .NET | C# · do zero à engenharia | C# | Especialização |

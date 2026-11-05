@@ -820,7 +820,8 @@ export default {
           "title": "async, await e falhas",
           "text": [
             "Uma função async sempre devolve uma Promise. await suspende aquela função até o resultado, sem bloquear necessariamente o restante do ambiente. Um throw dentro dela rejeita a Promise retornada.",
-            "try/catch observa rejeições aguardadas dentro do bloco. Se você devolve uma Promise sem await em certos contextos, a falha pode não ser capturada ali. Use finally para limpeza e não o deixe substituir involuntariamente um resultado ou erro."
+            "try/catch observa rejeições aguardadas dentro do bloco. Se você devolve uma Promise sem await em certos contextos, a falha pode não ser capturada ali. Use finally para limpeza e não o deixe substituir involuntariamente um resultado ou erro.",
+            "Quando um recurso deve permanecer válido até o resultado, retornar uma promise pendente dentro de try deixa o finally executar cedo. Retornar await dentro desse try mantém a espera no bloco, inclusive para observar a rejeição antes da limpeza. Teste valor direto, promise rejeitada e lançamento síncrono, conservando o valor ou motivo recebido. Isso não torna a operação cancelável."
           ]
         },
         {
@@ -926,7 +927,8 @@ export default {
           "title": "Teste ordem, máximo ativo e recuperação",
           "text": [
             "Um teste de concorrência limitada precisa medir quantas tarefas estão ativas, não apenas comparar o resultado final. Incremente um contador no início, atualize o pico, espere uma microtarefa e diminua em finally. Verifique que pico nunca supera o limite e que todos os índices foram processados exatamente uma vez. O caso vazio e um limite inválido pertencem à interface do grupo.",
-            "Para propagação de falha, teste o handler que retorna um fallback e o que relança. Para relatório parcial, inclua um item rejeitado entre dois válidos. Transfira o grupo para importação ou consultas, mantendo a ordem requerida e a política de efeitos. Uma rejeição informada na promise não desfaz automaticamente uma gravação que já ocorreu; idempotência e compensação são contratos adicionais."
+            "Para propagação de falha, teste o handler que retorna um fallback e o que relança. Para relatório parcial, inclua um item rejeitado entre dois válidos. Transfira o grupo para importação ou consultas, mantendo a ordem requerida e a política de efeitos. Uma rejeição informada na promise não desfaz automaticamente uma gravação que já ocorreu; idempotência e compensação são contratos adicionais.",
+            "Um teto de concorrência e o preenchimento das vagas são requisitos diferentes: um laço inteiramente sequencial respeita o teto, mas pode deixar capacidade sem uso. Com tarefas controladas, retenha a conclusão de cada uma, libere-as fora de ordem e observe a próxima partida. Aguarde esses eventos, sem escolher um número mágico de microtarefas ou um atraso de relógio. Confira também um limite maior que a lista e a rejeição de configuração inválida no vazio."
           ]
         }
       ],
