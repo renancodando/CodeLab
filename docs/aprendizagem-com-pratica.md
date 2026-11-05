@@ -1,5 +1,9 @@
 # Aprendizagem com prática, revisão e projetos
 
+## Plataforma HTML e CSS em preparação
+
+O lote L04 distribui prática de fragmentos, ciclo de vida de componentes, montagem segura, composição visual, fases de animação, camadas e capacidades nas três aulas existentes. Previsão, reconstrução, diagnóstico e valores CSS são evidência conceitual; referências executadas no navegador não equivalem a executar o código do estudante. Exercícios e projetos abertos mantêm construção e revisão manual. Teoria, alternativas, bordas e persistência acompanham as pausas. Publicação e limitações do próprio head estão em [continuidade](continuidade.md); contagens vêm das [métricas geradas](metricas-catalogo.md).
+
 ## Projetos API e entrega em preparação
 
 As aulas existentes praticam transação e parâmetro com referências .NET 10/SQLite reais e produção JavaScript de resumo de evidências da versão atual. As pausas C# são conceituais; não executam C# do aluno ou comprovam HTTP. Reprodução de ambiente e resultados declarados precisam de evidências reais no projeto construído pelo aluno. A dependência SQLite fica apenas no projeto temporário de teste, com auditoria preservada. Gates, limitações, fontes e publicação em [continuidade](continuidade.md); contagens seguem as [métricas geradas](metricas-catalogo.md).
