@@ -1,5 +1,9 @@
 # Prontidão de produção
 
+## Assincronismo e genéricos em preparação
+
+O lote L05 pratica as cinco aulas existentes com previsão, diagnóstico, reconstrução e duas produções JavaScript executadas no isolamento. Os corretores verificam validação numérica, fila limitada, rejeições, ordem e independência; tarefas controladas não comprovam HTTP ou threads. As pausas de tipos são conceituais, com referências strict reais e execução dos programas emitidos. Projetos e produção TypeScript de código completo continuam usando a bancada existente e a revisão dos exercícios abertos. Escopo, evidências e limitações estão em [continuidade](continuidade.md); as [métricas geradas](metricas-catalogo.md) evitam contagens manuais divergentes.
+
 ## Plataforma HTML e CSS em preparação
 
 O lote L04 distribui prática de fragmentos, ciclo de vida de componentes, montagem segura, composição visual, fases de animação, camadas e capacidades nas três aulas existentes. Previsão, reconstrução, diagnóstico e valores CSS são evidência conceitual; referências executadas no navegador não equivalem a executar o código do estudante. Exercícios e projetos abertos mantêm construção e revisão manual. Teoria, alternativas, bordas e persistência acompanham as pausas. Publicação e limitações do próprio head estão em [continuidade](continuidade.md); contagens vêm das [métricas geradas](metricas-catalogo.md).
