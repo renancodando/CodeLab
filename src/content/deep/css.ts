@@ -900,7 +900,8 @@ export default {
           "title": "Fundos e decoração",
           "text": [
             "Gradientes, sombras, bordas e imagens de fundo podem reforçar hierarquia, mas não carregam semântica por si. Uma imagem de fundo não oferece alt; se transmite informação necessária, precisa de conteúdo correspondente.",
-            "Múltiplos fundos e filtros podem aumentar custo de pintura. Não avalie apenas um screenshot estático: rolagem e movimento revelam custos que a imagem parada não mostra. Mantenha o conteúdo acessível sem a decoração."
+            "Múltiplos fundos e filtros podem aumentar custo de pintura. Não avalie apenas um screenshot estático: rolagem e movimento revelam custos que a imagem parada não mostra. Mantenha o conteúdo acessível sem a decoração.",
+            "opacity compõe o elemento inteiro com seus descendentes. Dar opacity:1 ao filho não desfaz a transparência aplicada ao grupo. Quando somente o fundo deve ser translúcido, use alfa na cor do fundo e conserve a opacidade do grupo; confira o contraste no fundo real."
           ]
         },
         {
@@ -914,7 +915,8 @@ export default {
           "title": "Animação e preferência",
           "text": [
             "@keyframes define etapas, e animation controla duração, repetição e preenchimento. Uma animação infinita pode distraír e precisa de propósito e controle apropriados. A informação essencial não deve depender de esperar uma animação.",
-            "prefers-reduced-motion permite reduzir movimento para quem solicita. Preserve uma resposta perceptível, como uma mudança imediata de estado. Retirar movimento não significa retirar toda indicação de sucesso ou falha."
+            "prefers-reduced-motion permite reduzir movimento para quem solicita. Preserve uma resposta perceptível, como uma mudança imediata de estado. Retirar movimento não significa retirar toda indicação de sucesso ou falha.",
+            "animation-fill-mode não muda a duração: backwards aplica o primeiro quadro durante o atraso; forwards conserva o último depois; both combina os dois. Com none, os trechos fora do intervalo ativo usam o estilo base. Em uma animação linear normal com atraso, subtraia o atraso antes de calcular o progresso. Não confunda conservar o efeito visual com executar novamente a animação."
           ]
         },
         {
@@ -978,14 +980,16 @@ export default {
           "title": "Camadas e escopo",
           "text": [
             "Camadas organizam precedência deliberada entre resets, fundamentos, componentes e ajustes. Mantenha a ordem em um lugar claro e documente o uso de importância. @scope oferece outro mecanismo de limitar aplicação em ambientes que o suportam.",
-            "Escopo não elimina necessidade de entender a cascata. Uma regra pode herdar valores de fora ou competir com outras origens. Teste componentes em contextos diferentes para verificar se seu contrato depende de um ancestral inesperado."
+            "Escopo não elimina necessidade de entender a cascata. Uma regra pode herdar valores de fora ou competir com outras origens. Teste componentes em contextos diferentes para verificar se seu contrato depende de um ancestral inesperado.",
+            "Na mesma origem, declarações normais fora de camadas superam as normais em camadas. Para !important, as camadas superam as regras sem camada e a ordem das camadas se inverte. Compare isso antes da especificidade. revert-layer retira a camada atual da disputa por aquela propriedade; não apaga as outras propriedades do componente. revert abandona a origem, e initial usa o valor inicial."
           ]
         },
         {
           "title": "Suporte e fallback",
           "text": [
             "@supports verifica suporte a uma declaração ou condição correspondente, não a qualidade de toda implementação. Uma versão básica deve funcionar antes de uma melhoria. Não esconda conteúdo porque uma propriedade nova não está disponível.",
-            "Defina ambientes suportados com base no público e no projeto, e confira recursos antes de adotá-los. Um fallback precisa ser executado em um contexto que o utiliza; apenas escrever a regra não comprova seu comportamento."
+            "Defina ambientes suportados com base no público e no projeto, e confira recursos antes de adotá-los. Um fallback precisa ser executado em um contexto que o utiliza; apenas escrever a regra não comprova seu comportamento.",
+            "Consulte a declaração exata da melhoria: @supports (grid-template-columns:subgrid) testa subgrid nas trilhas; display:subgrid é inválido, e display:grid não distingue Grid básico de subgrid. Conserve o fluxo básico fora do bloco e confira as posições e a ordem de foco na melhoria real."
           ]
         },
         {

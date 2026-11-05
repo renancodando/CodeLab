@@ -16,6 +16,16 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "html-plataforma-prever-fragmento":{"accepted":["2\n0"],"solution":"2\n0","failure":"O fragmento entrega seus filhos à lista e fica vazio. A cópia não consome o original; anexar novamente o original já consumido não cria outra nota."},
+ "html-plataforma-limpar-listener":{"accepted":["referencia"],"solution":"connectedCallback() { window.addEventListener('marcar', this.contar); }\ndisconnectedCallback() { window.removeEventListener('marcar', this.contar); }","failure":"Remover exige a mesma referência usada no registro. Sem limpeza o elemento removido continua reagindo; once deixa de contar os eventos seguintes."},
+ "html-plataforma-montar-nota":{"accepted":[],"solution":"function adicionarNota(lista, texto) {\n const modelo = document.querySelector('#modelo');\n const fragmento = modelo.content.cloneNode(true);\n fragmento.querySelector('span').textContent = texto;\n lista.append(fragmento);\n}","failure":"Crie a cópia antes de procurar seu span e preencha antes de transferir os nós. O molde precisa continuar disponível para a próxima chamada.","order":["abrir","modelo","clonar","texto","anexar","fechar"]},
+ "css-visual-prever-preenchimento":{"accepted":["1\n0.5\n0.8"],"solution":"1\n0.5\n0.8","failure":"O atraso ainda usa a opacidade base com forwards. O progresso começa depois dele, e o último quadro permanece após a duração."},
+ "css-visual-isolar-transparencia":{"accepted":["fundo"],"solution":".aviso { opacity:1; background:rgb(255 255 255 / .25); }","failure":"opacity afeta a composição do elemento com seus descendentes. Alterar só a ênfase não retira a transparência do grupo, e esconder elimina o feedback."},
+ "css-visual-completar-fases":{"accepted":["both"],"solution":"both","failure":"Conservar apenas o fim não cobre o atraso. Conservar apenas o início deixa a opacidade base reaparecer depois; o contrato exige ambos."},
+ "css-arquitetura-prever-camadas":{"accepted":["fora\nbase"],"solution":"fora\nbase","failure":"Uma regra sem camada supera as normais em camadas; nas importantes, as camadas têm prioridade e sua ordem se inverte. Um ID não atravessa essa etapa da cascata."},
+ "css-arquitetura-consultar-subgrid":{"accepted":["propriedade"],"solution":"@supports (grid-template-columns:subgrid)","failure":"A condição precisa verificar a declaração que a melhoria usa. Grid em geral também existe em ambientes sem subgrid; cor não informa nada sobre trilhas."},
+ "css-arquitetura-restaurar-camada":{"accepted":["revert-layer"],"solution":"revert-layer","failure":"initial e inherit não retomam o estado do componente. revert desconsidera a origem autoral; o contrato pede abandonar somente a camada atual dessa propriedade."},
+
  "entrega-prever-status":{"accepted":["true\n0"],"solution":"true\n0","failure":"Cancelado não é aprovação. O resultado antigo pertence a a1 e não comprova a versão b2, mesmo que nenhuma linha contenha falhou."},
  "entrega-reproduzir-ambiente":{"accepted":["limpo"],"solution":"Node 24; npm ci; npm run build; npm run preview. Documentar a configuração pública de exemplo e os resultados realmente observados.","failure":"O plano precisa usar scripts existentes e instalar a ferramenta antes do build. Omitir devDependencies num ambiente limpo remove Vite; npm start não foi declarado; dev não confere o artefato compilado."},
  "api-prever-transacao":{"accepted":["0\n1"],"solution":"0\n1","failure":"O descarte da transação sem Commit desfaz o primeiro INSERT. A contagem seguinte ao segundo INSERT já observa uma instrução fora dessa transação, em autocommit."},
@@ -581,6 +591,11 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    passed=linhas.length===esperadas.length&&linhas.every((linha,indice)=>/^[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?px$/i.test(linha)&&Number(linha.slice(0,-2))===esperadas[indice]);
   }
   else if(id==='css-prever-eixos')passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().replace(/[ \t]+/g,' ')).join('\n')===concept.accepted[0];
+  else if(id==='css-visual-prever-preenchimento'&&typeof answer==='string'){
+   const linhas=normalized(answer).split('\n').map(linha=>linha.trim()),esperadas=concept.accepted[0].split('\n').map(Number);
+   passed=linhas.length===esperadas.length&&linhas.every((linha,indice)=>/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(linha)&&Number(linha)===esperadas[indice]);
+  }
+  else if(['css-visual-completar-fases','css-arquitetura-restaurar-camada'].includes(id))passed=typeof answer==='string'&&normalized(answer).toLowerCase()===concept.accepted[0];
   else if(id==='css-flex-quebrar')passed=typeof answer==='string'&&/^wrap$/i.test(normalized(answer));
   else if(id==='css-herdar-caixa')passed=typeof answer==='string'&&/^inherit$/i.test(normalized(answer));
   else if(id==='sql-modelagem-prever-integridade')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).split('\n').map(linha=>linha.trim().toLowerCase()).join('\n'));

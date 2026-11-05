@@ -852,14 +852,16 @@ export default {
           "title": "Templates e reutilização",
           "text": [
             "template guarda conteúdo que não é renderizado imediatamente; seu content pode ser clonado para criar instâncias. DocumentFragment reúne nós para montagem. Cada instância precisa manter ids e relações sem duplicação no documento.",
-            "Reutilizar uma estrutura não significa compartilhar todo estado. Passe dados por um contrato e inicialize controles por instância. Teste duas instâncias ao mesmo tempo para descobrir referências ou ids globais indevidos."
+            "Reutilizar uma estrutura não significa compartilhar todo estado. Passe dados por um contrato e inicialize controles por instância. Teste duas instâncias ao mesmo tempo para descobrir referências ou ids globais indevidos.",
+            "Anexar template.content transfere os filhos do fragmento e esvazia o molde. Para criar instâncias sem consumir a origem, clone content com cloneNode(true), preencha a cópia e só então a insira. Depois da inserção o fragmento também fica vazio; mantenha uma referência ao nó que precisar usar depois."
           ]
         },
         {
           "title": "Custom elements e Shadow DOM",
           "text": [
             "Custom elements permitem componentes com callbacks de ciclo de vida. connectedCallback pode ocorrer novamente quando o elemento é reconectado; não registre listeners duplicados a cada conexão. Defina limpeza ou idempotência da inicialização.",
-            "Shadow DOM cria uma fronteira de árvore e estilo, com slots para composição. Não é uma barreira de segurança contra todo script da página. Eventos e nomes acessíveis exigem atenção ao atravessar essas fronteiras."
+            "Shadow DOM cria uma fronteira de árvore e estilo, com slots para composição. Não é uma barreira de segurança contra todo script da página. Eventos e nomes acessíveis exigem atenção ao atravessar essas fronteiras.",
+            "removeEventListener precisa da mesma função usada em addEventListener e do mesmo valor de capture. Uma nova chamada a bind não recupera a função anterior. Guarde uma referência por instância e teste eventos enquanto o componente está removido e depois de reinseri-lo; once não substitui esse contrato."
           ]
         },
         {
