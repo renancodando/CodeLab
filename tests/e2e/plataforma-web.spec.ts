@@ -68,7 +68,28 @@ for(const aula of ['html-plataforma','css-visual-movimento','css-arquitetura'])t
   }
   const ultima=pausas.at(-1)!;await pagina.locator('[data-practice="'+ultima.id+'"]').getByRole('button',{name:'Consultar solução',exact:true}).click();await pagina.reload({waitUntil:'domcontentloaded'});await expect(pagina.locator('#aula-projeto')).toBeVisible();
   const salvo=await pagina.evaluate(()=>JSON.parse(localStorage.getItem('codelab.progress.v2')!));expect(salvo.practiceAnswers[ultima.id]).toMatchObject({passed:true,assisted:true,attempts:2});expect(salvo.adaptive.skills[ultima.skillIds[0]].review.lastOutcome).toBe('assisted');
-  if(offline){expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:1000});const excesso=await pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth);if(excesso>1)console.log('Caixas fora da viewport',largura,await pagina.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({tag:e.tagName,classe:e.className,id:e.id,direita:Math.round(e.getBoundingClientRect().right),largura:Math.round(e.getBoundingClientRect().width),minimo:getComputedStyle(e).minWidth,overflow:getComputedStyle(e).overflowX,quebra:getComputedStyle(e).overflowWrap,espacos:getComputedStyle(e).whiteSpace,texto:e.textContent?.slice(0,45)})).filter(e=>e.direita>innerWidth+1&&e.largura>innerWidth-50).sort((a,b)=>a.largura-b.largura).slice(0,30)));expect(excesso).toBeLessThanOrEqual(1);for(const pausa of pausas)await expect(pagina.locator('[data-practice="'+pausa.id+'"]').getByRole('button',{name:'Conferir comportamento',exact:true})).toBeVisible();}}
+
   expect(remotas).toEqual([]);
  }finally{if(offline&&!pagina.isClosed())await contexto.setOffline(false);}
+});
+
+test('HTML retomado conserva conteúdo e controles de 220 a 4000 px após o layout',async({page:pagina})=>{
+ await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/html-plataforma');await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);
+ await pagina.locator('[data-practice="html-plataforma-prever-fragmento"]').getByRole('textbox').fill('2\n0');
+ await pagina.evaluate(()=>{
+  const estado=JSON.parse(localStorage.getItem('codelab.progress.v2')!);
+  estado.practiceAnswers['html-plataforma-montar-nota']={value:['abrir','modelo','clonar','texto','anexar','fechar'],attempts:2,passed:true,assisted:true,hints:0,updatedAt:new Date().toISOString()};
+  localStorage.setItem('codelab.progress.v2',JSON.stringify(estado));
+ });
+ await pagina.reload({waitUntil:'domcontentloaded'});await expect(pagina.locator('#aula-projeto')).toBeVisible();await expect(pagina.locator('[data-practice="html-plataforma-montar-nota"] [data-help] pre')).toContainText('cloneNode(true)');
+ for(const largura of [220,4000]){
+  await pagina.setViewportSize({width:largura,height:1000});await pagina.evaluate(()=>new Promise<void>(resolver=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolver()))));
+  const excesso=await pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+  if(excesso>1)console.log('Caixas fora da viewport',largura,await pagina.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({tag:e.tagName,classe:e.className,id:e.id,direita:Math.round(e.getBoundingClientRect().right),largura:Math.round(e.getBoundingClientRect().width),minimo:getComputedStyle(e).minWidth,overflow:getComputedStyle(e).overflowX})).filter(e=>e.direita>innerWidth+1&&e.largura>innerWidth-50).sort((a,b)=>a.largura-b.largura).slice(0,24)));
+  expect(excesso).toBeLessThanOrEqual(1);
+  for(const pausa of practicesForLesson('html-plataforma'))await expect(pagina.locator('[data-practice="'+pausa.id+'"]').getByRole('button',{name:'Conferir comportamento',exact:true})).toBeVisible();
+  await expect(pagina.locator('.practice-order code')).toHaveCount(6);
+ }
+ await pagina.setViewportSize({width:220,height:1000});await pagina.evaluate(()=>new Promise<void>(resolver=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolver()))));
+ expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
 });
