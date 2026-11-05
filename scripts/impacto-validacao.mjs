@@ -26,6 +26,26 @@ function mencionaId(texto,id){
  const literal=id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
  return new RegExp('(^|[^a-zA-Z0-9_-])'+literal+'(?=$|[^a-zA-Z0-9_])').test(texto);
 }
+export function aulasModificadas(antes,depois){
+ const separar=texto=>{
+  texto=texto.replace(/\r\n/g,'\n');
+  const fonte=ts.createSourceFile('conteudo.ts',texto,ts.ScriptTarget.Latest,true),aulas=new Map(),trechos=[];
+  function visitar(no){
+   if(ts.isObjectLiteralExpression(no)){
+    const campos=new Map(no.properties.filter(ts.isPropertyAssignment).map(p=>[p.name.getText(fonte).replace(/['"]/g,''),p.initializer]));
+    const id=campos.get('id');
+    if(id&&ts.isStringLiteral(id)&&campos.has('summary')&&campos.has('sections')){aulas.set(id.text,no.getText(fonte));trechos.push([no.getStart(fonte),no.end]);return;}
+   }
+   ts.forEachChild(no,visitar);
+  }
+  visitar(fonte);let restante=texto;
+  for(const [inicio,fim] of trechos.reverse())restante=restante.slice(0,inicio)+restante.slice(fim);
+  return {aulas,restante:restante.replace(/\r\n/g,'\n')};
+ };
+ const original=separar(antes),atual=separar(depois);
+ if(!original.aulas.size||original.restante!==atual.restante)return null;
+ return [...new Set([...original.aulas.keys(),...atual.aulas.keys()])].filter(id=>original.aulas.get(id)!==atual.aulas.get(id));
+}
 export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegador:[],textos:{}}){
  const unidades=new Set(),navegador=new Set(),familias=new Set(),motivos=[];
  const meteorologia=arquivos.some(p=>p==='server/Meteorologia.cs'||p==='server/CodeLab.Api.csproj'||p.startsWith('tests/meteorologia-api/'));
@@ -34,7 +54,7 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
  const conteudo=arquivos.some(p=>/^src\/content\/|^docs\/.*\.json$|generate-curriculum|gerar-metricas/.test(p));
  const adicionar=(nome)=>{for(const p of catalogo.unidades)if(p.endsWith('/'+nome+'.test.ts'))unidades.add(p);for(const p of catalogo.navegador)if(p.endsWith('/'+nome+'.spec.ts'))navegador.add(p);if(nativas.includes(nome))familias.add(nome);};
  for(const p of arquivos){
-  if(p.startsWith('src/')&&!centrais.includes(p)&&!planejamentoAprendizagem.includes(p))for(const [teste,texto] of Object.entries(catalogo.textos))if(importaArquivo(teste,texto,p)){
+  if(p.startsWith('src/')&&!centrais.includes(p)&&!planejamentoAprendizagem.includes(p)&&!Array.isArray(catalogo.aulasPorModulo?.[p]))for(const [teste,texto] of Object.entries(catalogo.textos))if(importaArquivo(teste,texto,p)){
    if(teste.startsWith('tests/unit/'))unidades.add(teste);else navegador.add(teste);
    const nome=teste.split('/').at(-1).replace(/\.(test|spec)\.ts$/,'');if(nativas.includes(nome))familias.add(nome);
   }
@@ -54,6 +74,14 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
   else if(p==='src/content/project-paths.ts'){adicionar('projects');adicionar('project-archive');}
   else if(/^src\/content\/deep\//.test(p)){
    const lingua=p.split('/').at(-1).replace('.ts','');
+   if(Array.isArray(catalogo.aulasPorModulo?.[p])){
+    for(const teste of catalogo.unidades)if(teste.endsWith('/expanded-content.test.ts'))unidades.add(teste);
+    adicionar('practice');
+    for(const id of catalogo.aulasPorModulo[p])for(const [teste,texto] of Object.entries(catalogo.textos))if(mencionaId(texto,id)){
+     if(teste.startsWith('tests/unit/'))unidades.add(teste);else navegador.add(teste);
+    }
+    continue;
+   }
    for(const teste of catalogo.unidades)if(teste.split('/').at(-1).startsWith(lingua==='typescript'?'typescript':lingua))unidades.add(teste);
    if(['python','cpp','csharp','sql','typescript'].includes(lingua))familias.add(lingua);
    else adicionar('practice');
@@ -115,7 +143,11 @@ export async function planejar(base){
  const fontes=await Promise.all(['src/content/practice.ts','src/content/curriculum.ts'].map(p=>readFile(p,'utf8')));
  for(const p of ['src/content/practice.ts','src/content/curriculum.ts']){try{fontes.push(git(['show',base+':'+p]));}catch{}}
  const ids=idsNoDiff(git(['diff','--unified=0',base,'HEAD','--',...centrais]),idsDoConteudo(fontes));
- const plano=selecionarImpacto(arquivos,ids,{unidades,navegador,textos});
+ const aulasPorModulo={};
+ for(const p of arquivos.filter(p=>/^src\/content\/deep\/(html|css)\.ts$/.test(p))){
+  try{const alteradas=aulasModificadas(git(['show',base+':'+p]),await readFile(p,'utf8'));if(alteradas)aulasPorModulo[p]=alteradas;}catch{}
+ }
+ const plano=selecionarImpacto(arquivos,ids,{unidades,navegador,textos,aulasPorModulo});
  plano.arquivos=arquivos;plano.ids=ids;plano.base=base;
  return plano;
 }

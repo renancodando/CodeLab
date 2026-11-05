@@ -1,5 +1,5 @@
 import {it,expect} from 'vitest';
-import {selecionarImpacto,idsDoConteudo,idsNoDiff} from '../../scripts/impacto-validacao.mjs';
+import {selecionarImpacto,idsDoConteudo,idsNoDiff,aulasModificadas} from '../../scripts/impacto-validacao.mjs';
 const catalogo={unidades:['tests/unit/practice.test.ts','tests/unit/aspnet-escopos.test.ts','tests/unit/execution.test.ts','tests/unit/impacto-validacao.test.ts'],navegador:['tests/e2e/aspnet-escopos.spec.ts','tests/e2e/csharp-excecoes.spec.ts'],textos:{'tests/unit/aspnet-escopos.test.ts':'aspnet-di-prever-instancias','tests/e2e/aspnet-escopos.spec.ts':'aspnet-di'}};
 it('documentação não instala runtimes nem exige build, tipos ou navegador',()=>{
  const plano=selecionarImpacto(['docs/continuidade.md','README.md'],[],catalogo);
@@ -126,4 +126,19 @@ it('projeto API recebe somente sua referência C#/SQLite, não PostgreSQL',()=>{
  const testes={...catalogo,unidades:[...catalogo.unidades,'tests/unit/projeto-api.test.ts'],navegador:[...catalogo.navegador,'tests/e2e/projeto-api.spec.ts'],textos:{...catalogo.textos,'tests/unit/projeto-api.test.ts':'api-prever-transacao','tests/e2e/projeto-api.spec.ts':'projeto-api'}};
  const plano=selecionarImpacto(['src/content/practice.ts'],['projeto-api','api-prever-transacao'],testes);expect(plano.familias).toEqual(['projeto-api']);expect(plano).toMatchObject({dotnet:true,postgres:false});
  expect(selecionarImpacto(['tests/fixtures/projeto-api.mjs'],[],testes).familias).toEqual(['projeto-api']);
+});
+
+it('identifica a aula editada sem depender de seu ID aparecer na linha do diff',()=>{
+ const antes='export default {title:"HTML",lessons:[{id:"html-a",summary:"Antes",sections:[]},{id:"html-b",summary:"B",sections:[]}]};';
+ expect(aulasModificadas(antes,antes.replace('Antes','Depois'))).toEqual(['html-a']);
+ const multiplas=antes.replace('lessons:[','lessons:[\n');expect(aulasModificadas(multiplas,multiplas.replaceAll('\n','\r\n'))).toEqual([]);
+ expect(aulasModificadas(antes,antes.replace('title:"HTML"','title:"Outra estrutura"'))).toBeNull();
+ expect(aulasModificadas(antes,antes+'export const efeito=1;')).toBeNull();
+});
+it('recorta dados HTML/CSS por aula e conserva os contratos gerais do catálogo',()=>{
+ const modulo='src/content/deep/html.ts',proprios='tests/e2e/plataforma-web.spec.ts',alheios='tests/e2e/independent-practice.spec.ts';
+ const dados={unidades:['tests/unit/practice.test.ts','tests/unit/expanded-content.test.ts','tests/unit/html-arvore.test.ts'],navegador:[proprios,alheios],textos:{[proprios]:"import html from '../../src/content/deep/html'; 'html-plataforma';",[alheios]:"import html from '../../src/content/deep/html'; 'html-outra';",'tests/unit/html-arvore.test.ts':"import html from '../../src/content/deep/html'; 'html-arvore';"},aulasPorModulo:{[modulo]:['html-plataforma']}};
+ const plano=selecionarImpacto([modulo],[],dados);
+ expect(plano.navegador).toEqual([proprios]);expect(plano.unidades).toEqual(['tests/unit/expanded-content.test.ts','tests/unit/practice.test.ts']);expect(plano.familias).toEqual([]);
+ const amplo=selecionarImpacto([modulo],[],{...dados,aulasPorModulo:{}});expect(amplo.navegador).toContain(alheios);expect(amplo.unidades).toContain('tests/unit/html-arvore.test.ts');
 });
