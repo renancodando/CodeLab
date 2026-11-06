@@ -61,3 +61,5 @@ A família cpp-concorrencia usa C++20 e programas definidos para junção e oper
 A família `sql-avancado` verifica referências e exemplos originais das três aulas SQL em PostgreSQL 18. Planos conferem execução e cardinalidade, sem impor tempo, custo ou estratégia do otimizador. A família `sql-pratica` preserva as bases dos corretores em conexões temporárias; as atividades do aluno que executam SQLite não passam a ser execução PostgreSQL.
 
 A família project-archive liga alterações de projetos à conferência de interoperabilidade ZIP com a biblioteca padrão Python. É uma verificação estreita do formato exportado; não compila projetos das oito linguagens nem executa código do aluno. Alterações compartilhadas continuam com seus smokes de isolamento, dados e API.
+
+A família git-percursos executa somente os três gabaritos Bash publicados no percurso Git, em pastas temporárias novas, e confere o estado com Git real. A seleção local pode repetir uma etapa conhecida; IDs inválidos são erro. O modelo visual de trabalho/index/HEAD e seus testes próprios permanecem separados. Não executa comandos em repositórios do usuário.

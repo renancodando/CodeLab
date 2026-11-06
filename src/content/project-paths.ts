@@ -412,12 +412,12 @@ export const learningPaths:LearningPath[] = [
         "minutes": 25,
         "theory": [
           "O diretório de trabalho contém os arquivos que você edita. A área de preparação contém o conteúdo escolhido para o próximo commit. HEAD aponta para o commit atual. Essas três versões podem ser diferentes: preparar um arquivo e continuar editando não atualiza automaticamente a preparação. O commit registra o que estava preparado, não tudo que aparece no editor.",
-          "Uma mudança pequena precisa ser entendida antes de ser registrada. Examine o diff do trabalho e o diff preparado separadamente. Em um repositório descartável, faça duas alterações no mesmo arquivo e prepare somente a primeira; esse experimento torna visível o modelo. Nomes de commit descrevem a intenção e o comportamento alterado, permitindo localizar uma regressão depois."
+          "Uma mudança pequena precisa ser entendida antes de ser registrada. Examine o diff do trabalho e o diff preparado separadamente. Em um repositório descartável, faça duas alterações no mesmo arquivo e prepare somente a primeira; esse experimento torna visível o modelo. Nomes de commit descrevem a intenção e o comportamento alterado, permitindo localizar uma regressão depois. O roteiro completo usa Bash (Git Bash no Windows ou terminal Bash em Linux/macOS), Git e Node no caso da regra JavaScript. Execute em uma pasta de estudo nova: mkdir interrompe o roteiro se o nome já existir. A configuração é só desse repositório, sem remotos ou alterações globais. Não transponha comandos de recuperação para um repositório de trabalho sem compreender o estado."
         ],
-        "example": "git init estudo-git\ncd estudo-git\n# Crie calculo.txt com total=0 e registre a primeira versão.\ngit add calculo.txt\ngit commit -m \"Criar cálculo inicial\"\n# Troque para total=10 e prepare; depois troque para total=20.\ngit diff\ngit diff --cached",
+        "example": "set -eu\nmkdir estudo-preparacao\ncd estudo-preparacao\ngit init -q -b main\ngit config user.name 'Estudo CodeLab'\ngit config user.email 'estudo@example.invalid'\ngit config commit.gpgsign false\ngit config core.autocrlf false\nmkdir .git/sem-hooks\ngit config core.hooksPath .git/sem-hooks\nprintf 'total=0\\n' > calculo.txt\ngit add calculo.txt\ngit commit -qm 'Criar cálculo inicial'\nprintf 'total=10\\n' > calculo.txt\ngit add calculo.txt\nprintf 'total=20\\n' > calculo.txt\ngit show HEAD:calculo.txt\ngit show :calculo.txt\ncat calculo.txt\ngit diff --cached\ngit diff\ngit commit -qm 'Ajustar total para dez'\ngit show HEAD:calculo.txt\ncat calculo.txt\n",
         "bug": "// Suposição quebrada: 'git commit registra a última versão do editor'.\n// Arquivo preparado: total=10; arquivo atual: total=20.",
         "exercise": "No repositório descartável, mostre os três conteúdos após as duas edições. Faça o commit e explique por que ele contém 10 enquanto o trabalho ainda contém 20.",
-        "solution": "git show HEAD:calculo.txt\n# Antes do segundo commit: total=0.\ngit diff --cached # 0 -> 10\ngit diff          # 10 -> 20\ngit commit -m \"Ajustar total para dez\"\n# HEAD passa a 10; trabalho mantém 20.",
+        "solution": "set -eu\nmkdir estudo-preparacao\ncd estudo-preparacao\ngit init -q -b main\ngit config user.name 'Estudo CodeLab'\ngit config user.email 'estudo@example.invalid'\ngit config commit.gpgsign false\ngit config core.autocrlf false\nmkdir .git/sem-hooks\ngit config core.hooksPath .git/sem-hooks\nprintf 'total=0\\n' > calculo.txt\ngit add calculo.txt\ngit commit -qm 'Criar cálculo inicial'\nprintf 'total=10\\n' > calculo.txt\ngit add calculo.txt\nprintf 'total=20\\n' > calculo.txt\ngit show HEAD:calculo.txt\ngit show :calculo.txt\ncat calculo.txt\ngit diff --cached\ngit diff\ngit commit -qm 'Ajustar total para dez'\ngit show HEAD:calculo.txt\ncat calculo.txt\n",
         "explanation": "add copia o conteúdo do arquivo naquele momento para a preparação. A edição posterior muda somente o trabalho. diff sem opção compara trabalho e preparação; --cached compara preparação e HEAD. Essa distinção permite selecionar alterações e evita commits que juntam assuntos sem revisão.",
         "checkpoints": [
           "O experimento usa um repositório descartável.",
@@ -439,7 +439,10 @@ export const learningPaths:LearningPath[] = [
           ]
         },
         "references": [
-          "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
+          "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+          "https://git-scm.com/docs/git-reflog",
+          "https://git-scm.com/docs/git-reset",
+          "https://git-scm.com/docs/git-revert"
         ]
       },
       {
@@ -448,17 +451,17 @@ export const learningPaths:LearningPath[] = [
         "minutes": 30,
         "theory": [
           "Uma branch nomeia uma linha de trabalho, não uma segunda cópia independente de todos os arquivos. Ao integrar mudanças, Git usa a versão comum e as alterações de cada lado. Se os dois lados alteram a mesma região de formas incompatíveis, os marcadores exibem alternativas que precisam de uma decisão humana sobre o comportamento desejado.",
-          "Resolver um conflito não é apagar automaticamente um lado. Leia a mudança, reproduza o caso e forme um resultado coerente. Depois procure marcadores restantes, confira o diff e execute a verificação pertinente. Um arquivo sem marcadores ainda pode estar logicamente errado. O exercício usa uma regra de desconto para mostrar que combinar duas linhas mecanicamente não preserva a intenção."
+          "Resolver um conflito não é apagar automaticamente um lado. Leia a mudança, reproduza o caso e forme um resultado coerente. Depois procure marcadores restantes, confira o diff e execute a verificação pertinente. Um arquivo sem marcadores ainda pode estar logicamente errado. O exercício usa uma regra de desconto para mostrar que combinar duas linhas mecanicamente não preserva a intenção. O roteiro completo usa Bash (Git Bash no Windows ou terminal Bash em Linux/macOS), Git e Node no caso da regra JavaScript. Execute em uma pasta de estudo nova: mkdir interrompe o roteiro se o nome já existir. A configuração é só desse repositório, sem remotos ou alterações globais. Não transponha comandos de recuperação para um repositório de trabalho sem compreender o estado."
         ],
-        "example": "// Base: desconto permitido para total >= 100.\n// Branch A: total >= 100 && clienteAtivo.\n// Branch B: total >= 120.\n// Regra combinada acordada: total >= 120 && clienteAtivo.",
+        "example": "set -eu\nmkdir estudo-conflitos\ncd estudo-conflitos\ngit init -q -b main\ngit config user.name 'Estudo CodeLab'\ngit config user.email 'estudo@example.invalid'\ngit config commit.gpgsign false\ngit config core.autocrlf false\nmkdir .git/sem-hooks\ngit config core.hooksPath .git/sem-hooks\nprintf '{\"type\":\"module\"}\\n' > package.json\nprintf 'export const desconto = (total, ativo) => total >= 100;\\n' > regra.js\ngit add regra.js package.json\ngit commit -qm 'Criar regra base'\ngit switch -qc cliente-ativo\nprintf 'export const desconto = (total, ativo) => total >= 100 && ativo;\\n' > regra.js\ngit commit -qam 'Exigir cliente ativo'\ngit switch -q main\nprintf 'export const desconto = (total, ativo) => total >= 120;\\n' > regra.js\ngit commit -qam 'Ajustar fronteira'\nif git merge --no-edit cliente-ativo; then\n printf 'O conflito esperado não aconteceu\\n' >&2\n exit 1\nfi\ngrep -q '^<<<<<<<' regra.js\nprintf 'export const desconto = (total, ativo) => total >= 120 && ativo;\\n' > regra.js\ngit add regra.js\ngit diff --cached\ngit commit -qm 'Combinar regras por contrato'\nnode --input-type=module -e 'import {desconto} from \"./regra.js\"; for(const [total,ativo,esperado] of [[119,true,false],[120,true,true],[119,false,false],[120,false,false]])if(desconto(total,ativo)!==esperado)throw new Error(\"Regra divergente\");'\ngit log --graph --oneline --all\n",
         "bug": "<<<<<<< HEAD\nreturn total >= 100 && clienteAtivo;\n=======\nreturn total >= 120;\n>>>>>>> limite-novo",
         "exercise": "Resolva preservando o novo limite e a condição de cliente ativo. Liste resultados para total 119/120 e ativo true/false antes de preparar a resolução.",
-        "solution": "return total >= 120 && clienteAtivo;\n// 119,true -> false; 120,true -> true;\n// 119,false -> false; 120,false -> false.\n// Depois: git add regra.js; git diff --cached; concluir merge.",
+        "solution": "set -eu\nmkdir estudo-conflitos\ncd estudo-conflitos\ngit init -q -b main\ngit config user.name 'Estudo CodeLab'\ngit config user.email 'estudo@example.invalid'\ngit config commit.gpgsign false\ngit config core.autocrlf false\nmkdir .git/sem-hooks\ngit config core.hooksPath .git/sem-hooks\nprintf '{\"type\":\"module\"}\\n' > package.json\nprintf 'export const desconto = (total, ativo) => total >= 100;\\n' > regra.js\ngit add regra.js package.json\ngit commit -qm 'Criar regra base'\ngit switch -qc cliente-ativo\nprintf 'export const desconto = (total, ativo) => total >= 100 && ativo;\\n' > regra.js\ngit commit -qam 'Exigir cliente ativo'\ngit switch -q main\nprintf 'export const desconto = (total, ativo) => total >= 120;\\n' > regra.js\ngit commit -qam 'Ajustar fronteira'\nif git merge --no-edit cliente-ativo; then\n printf 'O conflito esperado não aconteceu\\n' >&2\n exit 1\nfi\ngrep -q '^<<<<<<<' regra.js\nprintf 'export const desconto = (total, ativo) => total >= 120 && ativo;\\n' > regra.js\ngit add regra.js\ngit diff --cached\ngit commit -qm 'Combinar regras por contrato'\nnode --input-type=module -e 'import {desconto} from \"./regra.js\"; for(const [total,ativo,esperado] of [[119,true,false],[120,true,true],[119,false,false],[120,false,false]])if(desconto(total,ativo)!==esperado)throw new Error(\"Regra divergente\");'\ngit log --graph --oneline --all\n",
         "explanation": "Os dois caminhos mudaram aspectos distintos da regra na mesma linha. A decisão combinada precisa das duas condições; selecionar só A perde o limite novo e selecionar só B concede desconto a cliente inativo. A tabela confirma os quatro comportamentos de fronteira.",
         "checkpoints": [
           "Não sobram marcadores de conflito.",
           "As duas intenções aparecem na regra final.",
-          "A fronteira 120 e cliente inativo têm testes próprios."
+          "A fronteira 120 e cliente inativo têm testes próprios. O log em grafo mostra o merge com dois pais; marcadores resolvidos não bastam sem conferir as quatro combinações da regra."
         ],
         "assessment": {
           "prompt": "Remover todos os marcadores garante resolução correta?",
@@ -475,7 +478,10 @@ export const learningPaths:LearningPath[] = [
           ]
         },
         "references": [
-          "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
+          "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+          "https://git-scm.com/docs/git-reflog",
+          "https://git-scm.com/docs/git-reset",
+          "https://git-scm.com/docs/git-revert"
         ]
       },
       {
@@ -484,17 +490,17 @@ export const learningPaths:LearningPath[] = [
         "minutes": 30,
         "theory": [
           "Quando um commit já é compartilhado, um novo commit de reversão registra a retirada de seu efeito. Isso preserva os identificadores antigos para quem já trabalhou com eles. Reescrever o histórico muda referências e pode exigir coordenação; não é uma etapa necessária para corrigir uma mudança publicada. Comece identificando exatamente qual comportamento deve sair.",
-          "Uma reversão pode conflitar com mudanças posteriores que dependem da anterior. Também pode retirar mais do que a regressão se o commit juntou assuntos diferentes. No repositório de estudo, crie commits separados para uma mensagem e uma regra; reverta apenas a regra e observe que a mensagem permanece. Uma verificação do estado final complementa a leitura do histórico."
+          "Uma reversão pode conflitar com mudanças posteriores que dependem da anterior. Também pode retirar mais do que a regressão se o commit juntou assuntos diferentes. No repositório de estudo, crie commits separados para uma mensagem e uma regra; reverta apenas a regra e observe que a mensagem permanece. Uma verificação do estado final complementa a leitura do histórico. O roteiro completo usa Bash (Git Bash no Windows ou terminal Bash em Linux/macOS), Git e Node no caso da regra JavaScript. Execute em uma pasta de estudo nova: mkdir interrompe o roteiro se o nome já existir. A configuração é só desse repositório, sem remotos ou alterações globais. Não transponha comandos de recuperação para um repositório de trabalho sem compreender o estado."
         ],
-        "example": "git log --oneline\n# Identifique no repositório de estudo o commit que alterou a regra.\ngit revert <hash-da-regra>\ngit log --oneline\n# O histórico inclui o commit original e um novo commit de reversão.",
+        "example": "set -eu\nmkdir estudo-recuperacao\ncd estudo-recuperacao\ngit init -q -b main\ngit config user.name 'Estudo CodeLab'\ngit config user.email 'estudo@example.invalid'\ngit config commit.gpgsign false\ngit config core.autocrlf false\nmkdir .git/sem-hooks\ngit config core.hooksPath .git/sem-hooks\nprintf 'regra=1\\n' > regra.txt\nprintf 'mensagem inicial\\n' > mensagem.txt\ngit add regra.txt mensagem.txt\ngit commit -qm 'Criar documentos'\nprintf 'regra=2\\n' > regra.txt\ngit commit -qam 'Alterar regra da etapa'\nalteracao=$(git rev-parse HEAD)\nprintf 'mensagem preservada\\n' > mensagem.txt\ngit commit -qam 'Atualizar mensagem independente'\ngit revert --no-edit \"$alteracao\"\ncat regra.txt\ncat mensagem.txt\nprintf 'rascunho recuperável\\n' > reserva.txt\ngit add reserva.txt\ngit commit -qm 'Registrar trabalho ainda não publicado'\nultimo=$(git rev-parse HEAD)\ngit reset --soft HEAD~1\nrecuperado=$(git rev-parse 'HEAD@{1}')\ntest \"$recuperado\" = \"$ultimo\"\ngit branch trabalho-recuperado \"$recuperado\"\ngit reflog --oneline -4\ngit log --graph --oneline --all\ngit show trabalho-recuperado:reserva.txt\n",
         "bug": "// 'Vou remover o commit remoto para todos sem verificar dependências'.\n// Isso altera o histórico compartilhado e não documenta a correção.",
-        "exercise": "Registre mensagem e regra em commits separados. Reverta a regra com git revert; confira que a mensagem continua e que o histórico conserva os commits originais.",
-        "solution": "git revert <hash-da-regra>\ngit show --stat HEAD\ngit diff <hash-anterior> HEAD\n// Verifique a mensagem e rode os casos da regra no estado final.",
+        "exercise": "Registre mensagem e regra em commits separados. Reverta a regra com git revert; confira que a mensagem continua e que o histórico conserva os commits originais. No roteiro completo, compare também reset --soft com revert. Identifique no reflog o commit que saiu da ponta e preserve-o em trabalho-recuperado; a cópia de trabalho e o index continuam com o rascunho. Nenhum reset --hard é necessário.",
+        "solution": "set -eu\nmkdir estudo-recuperacao\ncd estudo-recuperacao\ngit init -q -b main\ngit config user.name 'Estudo CodeLab'\ngit config user.email 'estudo@example.invalid'\ngit config commit.gpgsign false\ngit config core.autocrlf false\nmkdir .git/sem-hooks\ngit config core.hooksPath .git/sem-hooks\nprintf 'regra=1\\n' > regra.txt\nprintf 'mensagem inicial\\n' > mensagem.txt\ngit add regra.txt mensagem.txt\ngit commit -qm 'Criar documentos'\nprintf 'regra=2\\n' > regra.txt\ngit commit -qam 'Alterar regra da etapa'\nalteracao=$(git rev-parse HEAD)\nprintf 'mensagem preservada\\n' > mensagem.txt\ngit commit -qam 'Atualizar mensagem independente'\ngit revert --no-edit \"$alteracao\"\ncat regra.txt\ncat mensagem.txt\nprintf 'rascunho recuperável\\n' > reserva.txt\ngit add reserva.txt\ngit commit -qm 'Registrar trabalho ainda não publicado'\nultimo=$(git rev-parse HEAD)\ngit reset --soft HEAD~1\nrecuperado=$(git rev-parse 'HEAD@{1}')\ntest \"$recuperado\" = \"$ultimo\"\ngit branch trabalho-recuperado \"$recuperado\"\ngit reflog --oneline -4\ngit log --graph --oneline --all\ngit show trabalho-recuperado:reserva.txt\n",
         "explanation": "revert aplica a alteração inversa em um novo commit. Não apaga trabalho de outras pessoas por definição, mas conflitos ou dependências ainda precisam ser resolvidos. A separação inicial torna a correção localizada; se o commit original misturou comportamentos, revise cuidadosamente o efeito inverso.",
         "checkpoints": [
           "O commit original continua no histórico.",
           "A mensagem independente permanece.",
-          "O estado final passa pelos casos da regra anterior."
+          "O estado final passa pelos casos da regra anterior. A recuperação preserva uma referência ao commit e distingue HEAD do index; não promete que reflog seja um backup remoto ou eterno."
         ],
         "assessment": {
           "prompt": "Qual operação cria um novo commit que inverte uma mudança compartilhada?",
@@ -511,7 +517,10 @@ export const learningPaths:LearningPath[] = [
           ]
         },
         "references": [
-          "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
+          "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+          "https://git-scm.com/docs/git-reflog",
+          "https://git-scm.com/docs/git-reset",
+          "https://git-scm.com/docs/git-revert"
         ]
       }
     ]

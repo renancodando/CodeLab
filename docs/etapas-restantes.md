@@ -22,8 +22,8 @@ A orientação humana mais recente fixa uma meta de aproximadamente **12 PRs a p
 | L06 | As três aulas avançadas de C# e referências .NET 10. | Entregue na [PR #97](https://github.com/renancodando/CodeLab/pull/97); main `98b1dcba`, CI/revisão/deployment e contratos públicos conferidos, com falhas iniciais não reproduzidas registradas para L12. |
 | L07 | Concorrência e engenharia C++20, com comportamento definido e ferramentas. | Entregue na [PR #98](https://github.com/renancodando/CodeLab/pull/98); main `3e0f0e01`, CI/revisão/deployment e contratos públicos conferidos. |
 | L08 | As três aulas avançadas SQL/PostgreSQL, com verificações próprias de cada mecanismo. | Entregue na [PR #99](https://github.com/renancodando/CodeLab/pull/99); main `dc186bd`, CI/revisão/deployment e contratos públicos conferidos; instabilidade de axe registrada para L12. |
-| L09 | Consolidar algoritmos, estruturas de dados e testes com transferência e defeitos detectáveis. | Branch `conteudo/percursos-pratica-20261106`: referências completas e execução no laboratório preparadas; CI/revisão/publicação pendentes. |
-| L10 | Consolidar redes, Git e arquitetura com experimentos e diagnóstico. | Planejado. |
+| L09 | Consolidar algoritmos, estruturas de dados e testes com transferência e defeitos detectáveis. | Entregue na [PR #100](https://github.com/renancodando/CodeLab/pull/100); main `5703fd7`, CI/revisão/deployment e contratos públicos conferidos. |
+| L10 | Consolidar redes, Git e arquitetura com experimentos e diagnóstico. | Branch `conteudo/redes-git-arquitetura-20261106`: três roteiros Git preparados e conferidos localmente; redes/arquitetura e gates do lote pendentes. |
 | L11 | Revisar os oito projetos, corretores e aprofundamentos residuais, incluindo aplicação Python. | Planejado. |
 | L12 | Fechar a edição: resolver inconsistências, sincronizar documentação, validar amplamente e confirmar produção. | Planejado. |
 
