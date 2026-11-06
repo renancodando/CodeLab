@@ -18,3 +18,19 @@ it('as pausas de objetos seguem a teoria e habilidades distintas',()=>{
  const pausas=practicesForLesson('cs-objetos-contratos');expect(pausas.map(p=>p.afterBlock)).toEqual([4,5,7]);expect(new Set(pausas.flatMap(p=>p.skillIds)).size).toBe(3);
  for(const pausa of pausas){expect(pausa.requiresConcept).toBe(true);expect(getPracticeSolution(pausa.id)).toBeTruthy();expect('solution' in pausa).toBe(false);}
 });
+
+it('runtime diferencia view, alias e snapshot sem simular execução da previsão',async()=>{
+ const id='cs-runtime-prever-views';expect(await evaluatePractice(id,'40\n4\n40')).toMatchObject({passed:true,execution:'not-run'});
+ for(const errada of ['4\n4\n40','40\n40\n40','40\n4\n4'])expect((await evaluatePractice(id,errada)).passed).toBe(false);
+});
+it('o buffer deve sair do período de aluguel como snapshot do conteúdo válido',async()=>{
+ const id='cs-runtime-encerrar-lease',pausa=practicesForLesson('cs-runtime-avancado').find(p=>p.id===id)!;
+ for(const opcao of pausa.options!)expect((await evaluatePractice(id,opcao.id)).passed).toBe(opcao.id==='snapshot');
+});
+it('soma verificada aceita operandos equivalentes e recusa overflow fora da expressão',async()=>{
+ const id='cs-runtime-somar-checked';for(const certa of ['checked(total + valor)','checked ( valor + total )'])expect(await evaluatePractice(id,certa)).toMatchObject({passed:true,execution:'not-run'});
+ for(const errada of ['total + valor','unchecked(total + valor)','checked((long)total + valor)','checked(total) + valor'])expect((await evaluatePractice(id,errada)).passed).toBe(false);
+});
+it('runtime recebe habilidades separadas depois da preparação teórica',()=>{
+ const pausas=practicesForLesson('cs-runtime-avancado');expect(pausas.map(p=>p.afterBlock)).toEqual([4,5,8]);expect(new Set(pausas.flatMap(p=>p.skillIds)).size).toBe(3);
+});

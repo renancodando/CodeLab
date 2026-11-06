@@ -48,6 +48,47 @@ if(primeiro.Contagem!=1 || segundo.Contagem!=3)throw new InvalidOperationExcepti
 `;
  for(const [indice,expressao] of ['nomes.ToArray()','[.. nomes]','Enumerable.ToArray(nomes)','System.Linq.Enumerable.ToArray(nomes)'].entries())casos.push({id:'snapshot-'+indice,codigo:'static string[] Copiar(List<string> nomes) => '+expressao+';\n'+conferirCopia,saida:''});
  for(const [indice,expressao] of ['Array.Empty<string>()','new string[nomes.Count]','nomes.AsEnumerable().Reverse().ToArray()'].entries())casos.push({id:'snapshot-defeituoso-'+indice,codigo:'static string[] Copiar(List<string> nomes) => '+expressao+';\n'+conferirCopia,saida:'',erro:'contrato-snapshot'});
+ const runtime=curso.lessons.find(a=>a.id==='cs-runtime-avancado');assert(runtime);
+ const views=atividade('cs-runtime-prever-views'),aluguel=atividade('cs-runtime-encerrar-lease');
+ casos.push({id:'runtime-exemplo-original',codigo:runtime.code,saida:'28\n20\n'},{id:'runtime-solucao-original',codigo:runtime.solution,saida:''});
+ casos.push({id:'views-e-snapshot',codigo:views.code,saida:obterSolucao(views.id)+'\n'},{id:'outra-faixa',codigo:views.code.replace('AsSpan(1,2)','AsSpan(2,2)').replace('origem[1]','origem[2]'),saida:'40\n6\n40\n'});
+ const poolControlado=`sealed class PoolControlado : ArrayPool<byte> {
+ readonly byte[] buffer=new byte[32];
+ public int Alugueis {get;private set;}
+ public int Devolucoes {get;private set;}
+ public bool Limpou {get;private set;}
+ public override byte[] Rent(int minimo) {
+  if(minimo>buffer.Length)throw new ArgumentOutOfRangeException(nameof(minimo));
+  Alugueis++;Array.Fill(buffer,(byte)127);return buffer;
+ }
+ public override void Return(byte[] array,bool clearArray=false) {
+  if(!ReferenceEquals(array,buffer))throw new InvalidOperationException("buffer desconhecido");
+  Devolucoes++;Limpou=clearArray;if(clearArray)Array.Clear(array);
+ }
+}`;
+ const conferirAluguel=`foreach(var entrada in new[]{Array.Empty<byte>(),new byte[]{0,2,0,255},Enumerable.Range(0,20).Select(i=>(byte)i).ToArray()}){
+ var pool=new PoolControlado();
+ var resposta=CopiarBuffer(entrada,pool);
+ if(pool.Alugueis!=1 || pool.Devolucoes!=1 || !pool.Limpou || !resposta.Span.SequenceEqual(entrada))throw new InvalidOperationException("contrato-buffer");
+ var segunda=CopiarBuffer(new byte[]{9,8},pool);
+ if(pool.Alugueis!=2 || pool.Devolucoes!=2 || !segunda.Span.SequenceEqual(new byte[]{9,8}) || !resposta.Span.SequenceEqual(entrada))throw new InvalidOperationException("contrato-buffer");
+}
+`;
+ for(const opcao of aluguel.options)casos.push({id:'aluguel-'+opcao.id,codigo:aluguel.code.replace('return buffer.AsMemory(0,entrada.Length);','return '+opcao.text+';')+'\n'+conferirAluguel+poolControlado,saida:'',erro:opcao.id==='snapshot'?undefined:'contrato-buffer'});
+ const conferirSoma=`foreach(var caso in new (int[] Valores,int Esperada)[]{(Array.Empty<int>(),0),(new[]{0},0),(new[]{1,-2,3},2),(new[]{int.MaxValue,-int.MaxValue,int.MaxValue},int.MaxValue),(new[]{int.MinValue,1},int.MinValue+1)}){
+ var antes=caso.Valores.ToArray();
+ if(Somar(caso.Valores)!=caso.Esperada || !caso.Valores.SequenceEqual(antes))throw new InvalidOperationException("contrato-soma");
+}
+foreach(var valores in new[]{new[]{int.MaxValue,1},new[]{int.MinValue,-1},new[]{int.MaxValue,1,-1},new[]{int.MinValue,-1,1}}){
+ bool rejeitou=false;
+ try{Somar(valores);}catch(OverflowException){rejeitou=true;}
+ if(!rejeitou)throw new InvalidOperationException("contrato-soma");
+}
+int[] origem={9,2,3,8};
+if(Somar(origem.AsSpan(1,2))!=5 || !origem.SequenceEqual(new[]{9,2,3,8}))throw new InvalidOperationException("contrato-soma");
+`;
+ for(const [indice,expressao] of ['checked(total + valor)','checked(valor + total)','total + valor','checked(total) + valor'].entries())casos.push({id:'soma-'+indice,codigo:atividade('cs-runtime-somar-checked').code.replace('____',expressao)+'\n'+conferirSoma,saida:'',erro:indice<2?undefined:'contrato-soma'});
+ casos.push({id:'soma-larga-oculta-intermediario',codigo:'static int Somar(ReadOnlySpan<int> valores){long total=0;foreach(int valor in valores)total+=valor;return checked((int)total);}\n'+conferirSoma,saida:'',erro:'contrato-soma'});
  const pasta=join(raiz,'csharp-avancado');await mkdir(pasta);
  await writeFile(join(pasta,'NuGet.Config'),'<configuration><packageSources><clear /></packageSources></configuration>');
  await writeFile(join(pasta,'Avancado.csproj'),'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><LangVersion>14.0</LangVersion><Nullable>enable</Nullable><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup></Project>');
@@ -62,6 +103,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Globalization;
+using System.Buffers;
 CultureInfo.CurrentCulture=CultureInfo.InvariantCulture;
 @CHAMADAS@
 static void Conferir(string nome, Action executar, string esperada, string? erroEsperado){
