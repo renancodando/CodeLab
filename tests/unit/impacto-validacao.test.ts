@@ -160,3 +160,10 @@ it('SQL avançado seleciona PostgreSQL e só a família afetada',()=>{
  const plano=selecionarImpacto(['tests/fixtures/sql-avancado.mjs'],[],{unidades:['tests/unit/sql-avancado.test.ts'],navegador:['tests/e2e/sql-avancado.spec.ts'],textos:{}});
  expect(plano.familias).toEqual(['sql-avancado']);expect(plano.postgres).toBe(true);expect(plano.dotnet).toBe(false);expect(plano.navegador).toEqual(['tests/e2e/sql-avancado.spec.ts']);
 });
+
+it('percursos e projetos preservam a conferência ZIP sem compiladores alheios',()=>{
+ const nativo='tests/unit/project-archive.test.ts',testes={unidades:['tests/unit/projects.test.ts',nativo],navegador:[],textos:{[nativo]:"import {capstoneProjects} from '../../src/content/project-paths'; import {createProjectArchive} from '../../src/learning/project-archive';"}};
+ for(const arquivo of ['src/content/project-paths.ts','src/learning/project-archive.ts']){
+  const plano=selecionarImpacto([arquivo],[],testes);expect(plano.unidades).toContain(nativo);expect(plano.familias).toEqual(['project-archive']);expect(plano.dotnet).toBe(arquivo.startsWith('src/learning/'));expect(plano.api).toBe(arquivo.startsWith('src/learning/'));expect(plano.postgres).toBe(false);
+ }
+});
