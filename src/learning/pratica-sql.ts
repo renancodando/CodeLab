@@ -4,7 +4,7 @@ import type {PracticeResult} from './practice';
 
 type CenarioSql={rotulo:string;preparacao:string;colunas:string[];linhas:(number|string|null)[][];falha:string};
 type ConferenciaSql={aprovado:boolean;verificacoes:{label:string;passed:boolean}[];mensagem:string};
-const inserir=(tabela:string,linhas:(number|string)[][])=>linhas.length?'INSERT INTO '+tabela+' VALUES '+linhas.map(linha=>'('+linha.map(valor=>typeof valor==='number'?String(valor):"'"+valor.replaceAll("'","''")+"'").join(',')+')').join(',')+';':'';
+const inserir=(tabela:string,linhas:(number|string|null)[][])=>linhas.length?'INSERT INTO '+tabela+' VALUES '+linhas.map(linha=>'('+linha.map(valor=>valor===null?'NULL':typeof valor==='number'?String(valor):"'"+valor.replaceAll("'","''")+"'").join(',')+')').join(',')+';':'';
 function contagem(rotulo:string,clientes:number[],pedidos:(number|string)[][],linhas:number[][],falha:string):CenarioSql{
  return {rotulo,preparacao:'CREATE TABLE clientes(id INTEGER PRIMARY KEY); CREATE TABLE pedidos(id INTEGER PRIMARY KEY,cliente_id INTEGER NOT NULL REFERENCES clientes(id),status TEXT NOT NULL);'+inserir('clientes',clientes.map(id=>[id]))+inserir('pedidos',pedidos),colunas:['cliente_id','pagos'],linhas,falha};
 }
@@ -20,7 +20,18 @@ function contagemDeNotas(rotulo:string,categorias:number[],notas:(number|string)
 function auditoriaDeLancamentos(rotulo:string,dados:number[][],linhas:number[][],falha:string):CenarioSql{
  return {rotulo,preparacao:'CREATE TABLE lancamentos(transferencia_id INTEGER NOT NULL,conta_id INTEGER NOT NULL,delta_centavos INTEGER NOT NULL CHECK(delta_centavos<>0));'+inserir('lancamentos',dados),colunas:['transferencia_id','total_centavos'],linhas,falha};
 }
+function movimentosAcumulados(rotulo:string,dados:(number|string|null)[][],linhas:number[][],falha:string):CenarioSql{
+ return {rotulo,preparacao:"CREATE TABLE movimentos(id INTEGER UNIQUE NOT NULL,conta_id INTEGER NOT NULL,instante INTEGER NOT NULL,centavos INTEGER,estado TEXT NOT NULL CHECK(estado IN('confirmado','pendente')));"+inserir('movimentos',dados),colunas:['conta_id','id','acumulado'],linhas,falha};
+}
 export const cenariosSql:Record<string,CenarioSql[]>={
+ 'sql-janelas-acumular-movimentos':[
+  movimentosAcumulados('Contas e movimentos mantêm sua granularidade.',[[10,2,1,5,'confirmado'],[20,2,2,7,'confirmado'],[30,8,1,-3,'confirmado']],[[2,10,5],[2,20,12],[8,30,-3]],'Confira a linha de cada movimento, a separação por conta e a ordem do relatório.'),
+  movimentosAcumulados('Empates e pendentes não alteram a regra.',[[9,1,4,20,'confirmado'],[2,1,4,10,'confirmado'],[5,1,3,999,'pendente'],[12,1,5,-5,'confirmado']],[[1,2,10],[1,9,30],[1,12,25]],'O caso comum passou, mas um empate ou movimento pendente alterou o total. Defina quais linhas entram e como cada posição se distingue.'),
+  movimentosAcumulados('Ausência contribui zero sem apagar a linha.',[[2,7,1,null,'confirmado'],[4,7,2,0,'confirmado'],[6,7,3,-2,'confirmado'],[8,7,4,null,'confirmado']],[[7,2,0],[7,4,0],[7,6,-2],[7,8,-2]],'As bases comuns passaram; confira a primeira contribuição ausente e preserve zero e débitos sem remover movimentos.'),
+  movimentosAcumulados('Cronologia e outras chaves independem da inserção.',[[100,3,1,8,'confirmado'],[1,3,2,4,'confirmado'],[-4,-2,2,7,'confirmado'],[0,-2,1,-1,'confirmado']],[[-2,0,-1],[-2,-4,6],[3,100,8],[3,1,12]],'ID não substitui instante na cronologia. Preserve contas e chaves diferentes das do primeiro exemplo.'),
+  movimentosAcumulados('Sem confirmados não há linhas inventadas.',[[11,2,1,3,'pendente']],[],'Uma base só com pendentes produz zero linhas, mantendo os três cabeçalhos.'),
+  movimentosAcumulados('Base vazia conserva a forma da consulta.',[],[],'A base vazia não produz uma linha global nem totais fixos; conserve os três cabeçalhos.')
+ ],
  'sql-transacao-auditar-lancamentos':[
   auditoriaDeLancamentos('Um débito sem crédito deixa soma diferente de zero.',[[10,1,-200],[10,2,200],[20,3,-100]],[[20,-100]],'Confira quais transferências violam as regras e devolva a soma real de cada uma, sem incluir os pares válidos.'),
   auditoriaDeLancamentos('Quatro lançamentos equilibrados continuam fora do contrato.',[[40,1,-200],[40,2,200],[40,1,-200],[40,2,200],[7,3,-50],[7,4,50]],[[40,0]],'O caso comum passou, mas a soma zero escondeu uma transferência com lançamentos demais. Confira a quantidade de registros além do total.'),

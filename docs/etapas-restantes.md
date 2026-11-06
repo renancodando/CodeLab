@@ -20,8 +20,8 @@ A orientação humana mais recente fixa uma meta de aproximadamente **12 PRs a p
 | L04 | HTML plataforma e as duas aulas avançadas de CSS. | Entregue na [PR #95](https://github.com/renancodando/CodeLab/pull/95); main `ef6ad8ca`, CI/revisão/deployment e contratos públicos conferidos. |
 | L05 | As duas aulas assíncronas de JavaScript e as três de genéricos/tipos TypeScript. | Entregue na [PR #96](https://github.com/renancodando/CodeLab/pull/96); main `6b20f2dc`, CI/revisão/deployment e contratos públicos conferidos. |
 | L06 | As três aulas avançadas de C# e referências .NET 10. | Entregue na [PR #97](https://github.com/renancodando/CodeLab/pull/97); main `98b1dcba`, CI/revisão/deployment e contratos públicos conferidos, com falhas iniciais não reproduzidas registradas para L12. |
-| L07 | Concorrência e engenharia C++20, com comportamento definido e ferramentas. | Branch `conteudo/cpp-concorrencia-20261106`; preparada, aguardando gates próprios. |
-| L08 | As três aulas avançadas SQL/PostgreSQL, com verificações próprias de cada mecanismo. | Planejado. |
+| L07 | Concorrência e engenharia C++20, com comportamento definido e ferramentas. | Entregue na [PR #98](https://github.com/renancodando/CodeLab/pull/98); main `3e0f0e01`, CI/revisão/deployment e contratos públicos conferidos. |
+| L08 | As três aulas avançadas SQL/PostgreSQL, com verificações próprias de cada mecanismo. | Branch `conteudo/sql-avancado-20261106`; agregações/janelas preparadas em SQLite, índices e esquema pendentes. |
 | L09 | Consolidar algoritmos, estruturas de dados e testes com transferência e defeitos detectáveis. | Planejado. |
 | L10 | Consolidar redes, Git e arquitetura com experimentos e diagnóstico. | Planejado. |
 | L11 | Revisar os oito projetos, corretores e aprofundamentos residuais, incluindo aplicação Python. | Planejado. |
