@@ -26,7 +26,19 @@ function movimentosAcumulados(rotulo:string,dados:(number|string|null)[][],linha
 function eventosNoIntervalo(rotulo:string,dados:(number|string|null)[][],inicio:number,fim:number,linhas:number[][],falha:string):CenarioSql{
  return {rotulo,preparacao:'CREATE TABLE eventos(id INTEGER UNIQUE NOT NULL,instante INTEGER,descricao TEXT NOT NULL);CREATE TABLE limites(inicio INTEGER NOT NULL,fim INTEGER NOT NULL CHECK(fim>inicio));'+inserir('eventos',dados)+inserir('limites',[[inicio,fim]]),colunas:['id'],linhas,falha};
 }
+function alcanceDeNos(rotulo:string,nos:number[],arestas:number[][],raiz:number|null,linhas:number[][],falha:string):CenarioSql{
+ return {rotulo,preparacao:'CREATE TABLE nos(id INTEGER PRIMARY KEY);CREATE TABLE arestas(pai INTEGER NOT NULL REFERENCES nos(id),filho INTEGER NOT NULL REFERENCES nos(id));CREATE TABLE parametros(raiz INTEGER);'+inserir('nos',nos.map(id=>[id]))+inserir('arestas',arestas)+inserir('parametros',[[raiz]]),colunas:['id'],linhas,falha};
+}
 export const cenariosSql:Record<string,CenarioSql[]>={
+ 'sql-esquema-alcancar-nos':[
+  alcanceDeNos("Duas rotas não duplicam o nó final.",[1,2,3,4],[[1,2],[1,3],[2,4],[3,4]],1,[[1],[2],[3],[4]],"O primeiro grafo chega ao mesmo nó por dois caminhos. Cada nó deve aparecer uma vez; investigue a multiplicidade da expansão."),
+  alcanceDeNos("Ciclos e arestas repetidas não repetem a expansão.",[2,5,8,9],[[2,5],[5,8],[8,2],[2,5],[8,9],[9,9]],2,[[2],[5],[8],[9]],"O caso comum passou, mas ciclos ou duplicatas quebraram o alcance. Evite expandir novamente uma chave já alcançada."),
+  alcanceDeNos("A direção e a raiz mudam com os dados.",[-3,0,7,10],[[7,0],[0,-3],[-3,7]],7,[[-3],[0],[7]],"Não fixe a raiz ou os IDs do exemplo; siga pai para filho e apresente pela chave."),
+  alcanceDeNos("Raiz isolada ainda é alcançável.",[4,8],[],8,[[8]],"A raiz existente faz parte do alcance, mesmo sem nenhuma aresta."),
+  alcanceDeNos("Raiz inexistente não inventa um nó.",[1,2],[[1,2]],99,[],"O parâmetro não cria um nó. Confira a raiz no conjunto nos antes de expandir."),
+  alcanceDeNos("Raiz ausente não corresponde a uma chave.",[1],[],null,[],"NULL não é uma raiz existente. Não substitua ausência por uma chave fixa."),
+  alcanceDeNos("Um grafo vazio mantém apenas o cabeçalho.",[],[],1,[],"Sem nós, não há alcance. A consulta deve manter a coluna sem fabricar uma linha."),
+ ],
  'sql-indices-consultar-intervalo':[
   eventosNoIntervalo('O começo entra e o fim fica fora.',[[5,150,'B'],[2,100,'A'],[9,200,'Fora'],[1,99,'Antes'],[3,199,'C']],100,200,[[2],[5],[3]],'Confira os dois extremos e a ordem cronológica; incluir o fim ou ordenar só por ID muda o resultado.'),
   eventosNoIntervalo('Limites negativos e empates independem da inserção.',[[8,-1,'Fim'],[4,-10,'Início'],[2,-10,'Empate'],[1,0,'Depois'],[9,-11,'Antes']],-10,0,[[2],[4],[8]],'O primeiro caso passou, mas outros limites ou empates falharam. Use os parâmetros e o desempate por ID.'),

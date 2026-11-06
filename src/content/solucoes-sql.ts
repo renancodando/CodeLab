@@ -1,4 +1,5 @@
 export const solucoesSql:Record<string,string>={
+ "sql-esquema-alcancar-nos":"WITH RECURSIVE alcance(id) AS (SELECT n.id FROM nos n JOIN parametros p ON n.id=p.raiz UNION SELECT a.filho FROM arestas a JOIN alcance r ON a.pai=r.id) SELECT id FROM alcance ORDER BY id;",
  "sql-indices-consultar-intervalo":"SELECT e.id FROM eventos e CROSS JOIN limites l WHERE e.instante>=l.inicio AND e.instante<l.fim ORDER BY e.instante,e.id;",
  "sql-janelas-acumular-movimentos":"SELECT conta_id,id,SUM(COALESCE(centavos,0)) OVER(PARTITION BY conta_id ORDER BY instante,id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS acumulado\nFROM movimentos WHERE estado='confirmado' ORDER BY conta_id,instante,id;",
  "sql-transacao-auditar-lancamentos": "SELECT transferencia_id,SUM(delta_centavos) AS total_centavos\nFROM lancamentos GROUP BY transferencia_id\nHAVING SUM(delta_centavos)<>0 OR COUNT(*)<>2 OR COUNT(DISTINCT conta_id)<>2\nORDER BY transferencia_id;",

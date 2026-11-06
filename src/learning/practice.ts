@@ -16,6 +16,8 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "sql-esquema-prever-caminhos":{"accepted":["1|1\n2|1\n3|1\n4|2"],"solution":"1|1\n2|1\n3|1\n4|2","failure":"Há duas chegadas ao nó 4. UNION ALL conserva ambas; prever o programa vem antes de mudar sua regra."},
+ "sql-esquema-distinguir-json-null":{"accepted":["tipo-json","presenca-e-json"],"solution":"WITH preferencias(id,meta) AS (VALUES (1,'{}'::jsonb),(2,'{\"ativo\":null}'::jsonb),(3,'{\"ativo\":false}'::jsonb),(4,'{\"ativo\":true}'::jsonb),(5,'{\"ativo\":\"null\"}'::jsonb),(6,'{\"ativo\":0}'::jsonb),(7,NULL::jsonb))\nSELECT id FROM preferencias WHERE jsonb_typeof(meta->'ativo')='null' ORDER BY id;","failure":"SQL NULL e null JSON não são o mesmo valor. A extração de texto também perde uma distinção necessária neste contrato."},
  "sql-indices-prever-analyze":{"accepted":["15\n13"],"solution":"15\n13","failure":"A execução observada dentro da transação pode alterar as duas linhas. Depois, o rollback recupera os valores anteriores; não confunda exibir um plano com deixar de executar a operação."},
  "sql-indices-escolher-prefixo":{"accepted":["composto","parcial"],"solution":"CREATE INDEX indice_estudo ON sessoes(aluno_id,id);","failure":"Leia o prefixo e o predicado antes de assumir que o nome do índice basta. Uma chave livre pode espalhar o recorte, mesmo quando o índice ainda participa de algum plano válido."},
 
