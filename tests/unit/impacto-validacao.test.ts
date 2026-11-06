@@ -152,3 +152,7 @@ it('contratos avançados C# usam .NET sem puxar PostgreSQL ou outras famílias',
  const plano=selecionarImpacto(['tests/fixtures/csharp-avancado.mjs'],[],{unidades:['tests/unit/csharp-avancado.test.ts'],navegador:['tests/e2e/csharp-avancado.spec.ts'],textos:{}});
  expect(plano.familias).toEqual(['csharp-avancado']);expect(plano.dotnet).toBe(true);expect(plano.postgres).toBe(false);expect(plano.navegador).toEqual(['tests/e2e/csharp-avancado.spec.ts']);
 });
+it('concorrência C++ usa só sua família nativa sem PostgreSQL ou .NET',()=>{
+ const plano=selecionarImpacto(['tests/fixtures/cpp-concorrencia.mjs'],[],{unidades:['tests/unit/cpp-concorrencia.test.ts'],navegador:['tests/e2e/cpp-concorrencia.spec.ts'],textos:{}});
+ expect(plano.familias).toEqual(['cpp-concorrencia']);expect(plano.dotnet).toBe(false);expect(plano.postgres).toBe(false);expect(plano.navegador).toEqual(['tests/e2e/cpp-concorrencia.spec.ts']);
+});

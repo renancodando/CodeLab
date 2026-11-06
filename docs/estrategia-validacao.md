@@ -54,3 +54,6 @@ A família `typescript-genericos` confere as novas referências de inferência, 
 
 
 A família csharp-avancado usa uma compilação C# 14/.NET 10 para as referências das três aulas, com cópias, eventos, buffers, somas, relógio e oráculos. Um console próprio também é publicado e executado fora do workspace. Alterações nessa família não selecionam PostgreSQL ou runtimes de outras linguagens. Respostas conceituais do aluno não são executadas por esse verificador.
+
+
+A família cpp-concorrencia usa C++20 e programas definidos para junção e operações atômicas; também compila e liga arquivos separados e exige diagnósticos de ligação nos casos negativos. CMake e sanitizers não são presumidos por esses resultados. O seletor específico não acrescenta famílias nativas de outras linguagens; contratos críticos do pipeline continuam preservados.
