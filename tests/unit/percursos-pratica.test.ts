@@ -6,7 +6,7 @@ const percursos=learningPaths.filter(p=>['algoritmos','estruturas-dados','testes
 const etapa=(percurso:string,id:string)=>percursos.find(p=>p.id===percurso)!.stages.find(e=>e.id===id)!;
 const executar=(codigo:string,expressao:string,contexto:Record<string,unknown>={})=>runInNewContext(codigo+'\n'+expressao,contexto,{timeout:500});
 for(const percurso of percursos)for(const e of percurso.stages)it('referências completas executam no QuickJS: '+percurso.id+'/'+e.id,async()=>{
- for(const codigo of new Set([e.example,e.solution])){const r=await evaluate(codigo,'laboratorio');expect(r.error).toBeUndefined();expect(r.logs.length).toBeGreaterThan(0);}
+ for(const codigo of new Set([e.example,e.solution])){const r=await evaluate(codigo,'laboratorio');expect(r.error).toBeUndefined();expect(r.logs.length).toBeGreaterThan(0);if(e.id==='assincronos')expect(r.logs).toEqual(['Rejeições e ordem de respostas conferidas']);}
 });
 it('busca respeita a fronteira inteira e o custo de leituras sem cronometrar',()=>{
  const codigo=etapa('algoritmos','busca-binaria').example;
@@ -42,4 +42,8 @@ it('testes assíncronos aguardam rejeição e detectam resposta antiga sem timer
  const codigo=etapa('testes','assincronos').example.split('conferirAssincrono().then')[0];await expect(executar(codigo,'conferirAssincrono()')).resolves.toBe('Rejeições e ordem de respostas conferidas');
  await expect(executar(codigo.replace('if(versao===ultima)mostrar(dados);','mostrar(dados);'),'conferirAssincrono()')).rejects.toThrow('Resposta antiga');
  await expect(executar(codigo,"conferirRejeicao(async()=>{},'HTTP 404')")).rejects.toThrow('deveria rejeitar');await expect(executar(codigo,"conferirRejeicao(async()=>{throw new Error('outra causa');},'HTTP 404')")).rejects.toThrow('outra causa');
+});
+
+it('o mutante assíncrono mostra a falha no próprio executor do laboratório',async()=>{
+ const codigo=etapa('testes','assincronos').example.replace('if(versao===ultima)mostrar(dados);','mostrar(dados);');const r=await evaluate(codigo,'laboratorio');expect(r.logs.join('\n')).toContain('Falha na conferência: Resposta antiga substituiu a atual');expect(r.logs.join('\n')).not.toContain('Rejeições e ordem de respostas conferidas');
 });
