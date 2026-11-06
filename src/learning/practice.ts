@@ -16,6 +16,10 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "cs-contratos-prever-copia":{"accepted":["Lia,Ana\nTrue\nFalse"],"solution":"Lia,Ana\nTrue\nFalse","failure":"with copia as referências dos membros. A lista continua compartilhada; Nome difere, então os records não são iguais apesar da mesma lista."},
+ "cs-contratos-copiar-nomes":{"accepted":["nomes.ToArray()","[..nomes]","Enumerable.ToArray(nomes)","System.Linq.Enumerable.ToArray(nomes)"],"solution":"nomes.ToArray()","failure":"O resultado precisa ser outro array na mesma ordem, inclusive vazio. Uma interface de leitura não congela a lista; criar um array sem copiar os nomes também perde o contrato."},
+ "cs-contratos-desinscrever-evento":{"accepted":["mesma-instancia"],"solution":"public void Dispose() { fonte.Sinal -= receber; }","failure":"Remover outra lambda deixa o callback original inscrito. Não remover conserva as chamadas; adicionar em Dispose multiplica os sinais. Remova o delegate guardado pelo objeto."},
+
  "ts-genericos-prever-retorno":{"accepted":["aceita\nrejeita\naceita"],"solution":"aceita\nrejeita\naceita","failure":"O tipo inferido mantém nome como string e id como number. Exigir id não apaga os outros campos, nem transforma o nome em boolean."},
  "ts-genericos-construir-subtipo":{"accepted":["fabrica"],"solution":"function criar<T extends {id:number}>(fabrica:()=>T):T { return fabrica(); }","failure":"Construir só id não atende a todos os subtipos. Uma asserção não cria campos nem valida um id literal; um retorno amplo também perde a informação da chamada."},
  "ts-genericos-montar-grupos":{"accepted":[],"solution":"function agrupar<T,K extends string>(itens:readonly T[],chave:(item:T)=>K):Map<K,T[]> {\n const grupos = new Map<K,T[]>();\n for (const item of itens) {\n  const k = chave(item);\n  const grupo = grupos.get(k);\n  if (grupo) grupo.push(item); else grupos.set(k,[item]);\n }\n return grupos;\n}","failure":"O Map precisa existir antes do laço e a lista pertence à chave atual. Retornar dentro do laço abandona os itens seguintes. Preserve as duas fronteiras de bloco.","order":["abrir","mapa","percorrer","inserir","fim-laco","retornar","fechar"]},
@@ -606,6 +610,7 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    }
   }else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
   else if(['ts-genericos-prever-retorno','ts-relacoes-prever-ausencia'].includes(id))passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().toLowerCase()).join('\n')===concept.accepted[0];
+  else if(id==='cs-contratos-copiar-nomes')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).replace(/\s/g,''));
   else if(id==='ts-relacoes-completar-transformacao')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).replace(/\s/g,''));
   else if(id==='ts-avancados-prever-distribuicao')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).split('\n').map(linha=>linha.replace(/\s/g,'')).join('\n'));
   else if(id==='cs-async-aguardar-leitura')passed=typeof answer==='string'&&/^await\s+leitor\s*\.\s*ReadToEndAsync\s*\(\s*token\s*\)(?:\s*\.\s*ConfigureAwait\s*\(\s*(?:true|false)\s*\))?$/.test(normalized(answer));
