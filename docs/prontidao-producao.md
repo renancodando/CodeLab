@@ -356,3 +356,6 @@ A entrega de `csharp-objetos` precisa comprovar previsões de referência, difer
 ## Gate da aula original de coleções C#
 
 Conferir presença/out sem cadastro implícito, lista filtrada independente e soma dos totais dos pedidos certos, com vazio, borda, repetições, chamadas independentes e enumeração única. Executar exemplos/gabaritos reais e diagnósticos em .NET 10, incluindo regressão do verificador LINQ com dois argumentos. Pausas são conceituais; relatório por cliente/período tem revisão manual. Exigir teclado, axe, 220/4000 px, assistência, offline e backup, build, CI/revisão do head verdadeiro e conferência própria de publicação. Não reutilizar a aprovação da base nem apagar falhas anteriores.
+
+
+L06 está preparado, ainda sem declaração de publicação. Referências C# reais, casos de borda e mutantes foram conferidos localmente; três fluxos do aluno ficam no CI do head. Conferir revisão atual, árvore, deployment READY/SHA/projeto/alias e contratos públicos antes de tratar este conteúdo como publicado.

@@ -147,3 +147,8 @@ it('genéricos TypeScript selecionam só sua família nativa, sem PostgreSQL ou 
  const plano=selecionarImpacto(['tests/fixtures/typescript-genericos.mjs'],[],{unidades:['tests/unit/typescript-genericos.test.ts'],navegador:['tests/e2e/typescript-genericos.spec.ts'],textos:{}});
  expect(plano.familias).toEqual(['typescript-genericos']);expect(plano.dotnet).toBe(false);expect(plano.postgres).toBe(false);expect(plano.navegador).toEqual(['tests/e2e/typescript-genericos.spec.ts']);
 });
+
+it('contratos avançados C# usam .NET sem puxar PostgreSQL ou outras famílias',()=>{
+ const plano=selecionarImpacto(['tests/fixtures/csharp-avancado.mjs'],[],{unidades:['tests/unit/csharp-avancado.test.ts'],navegador:['tests/e2e/csharp-avancado.spec.ts'],textos:{}});
+ expect(plano.familias).toEqual(['csharp-avancado']);expect(plano.dotnet).toBe(true);expect(plano.postgres).toBe(false);expect(plano.navegador).toEqual(['tests/e2e/csharp-avancado.spec.ts']);
+});
