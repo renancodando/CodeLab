@@ -1,0 +1,7 @@
+# PR #96 — equivalência de reconstrução corrigida
+
+Head remoto b40c65b484ef5479d6e8cdbc65654d10a525b3c6 da branch conteudo/assincronia-genericos-20261105 conferido. Achado PRRT_kwDOUi7gEc60hWL3 corrigido: as duas peças que mostram } podem trocar de posição; comparar o código aparado mantendo quantidade e unicidade, sem aceitar duplicatas ou IDs inventados. Teste específico passou (1/1, dez outros não repetidos); jornada ts-genericos usa a ordem alternativa. Thread resolvida após push. Um único ciclo draft/ready solicitou nova revisão do head. Revisão e CI de 6f7fc61 não são aprovação do novo commit.
+
+O ramo Python vizinho voltou ao texto original, evitando puxar sua família apenas por deslocamento de else. Plano real agora: nove arquivos unitários, três arquivos de navegador e somente a família typescript-genericos; mantém smokes críticos do pipeline. Sem novas aulas, aparência ou runtimes. Não repetir gabaritos e baterias locais já aprovadas.
+
+CI inicial 42225128080 substituído pelo run 42225881139. Conferir conclusão real/cancelamento pelo GitHub. L05 ainda não integrado/publicado; main ef6ad8ca e quatro dos doze lotes entregues. Após revisão e CI do head atual, conferir árvore, merge, deployment READY/SHA/projeto/alias e três fluxos públicos distintos. Persistem sete aulas sem pausas no checkout, não produção: C#3, C++1 e SQL3. Depois L06–L12, sem reiniciar doze. Recibo anterior 2026-11-06-l05-pr96-preparada.md preserva o restante do escopo/evidências.
