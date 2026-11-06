@@ -1,4 +1,4 @@
-# L10 em preparação: roteiros Git completos — 06/11/2026
+# L10 preparado: redes, Git e arquitetura — 06/11/2026
 
 Nove dos aproximadamente doze lotes publicados (#92–#100); restam L10–L12 (~3). Main `5703fd72ed38b7220999a4dad1a136d0ca0b1e9c`, árvore `f11dc62222496f1723864d1b0e4ffac77e78777f` idêntica ao head revisado `39e8eb1f56bc6f75ef7bcc477fded4413c3d07d1`. CI L09 `42308797900`: 306 contratos, ZIP, tipos/catálogo/build e 20 fluxos Chromium aprovados; revisão renovada e falha assíncrona corrigida com controle/mutante no QuickJS. Pós-merge `42309918225`: build/dois smokes em 41,7 s. Deployment `dpl_27nka8DZjucsWkU7tmKgdXzMCqXz` READY/production no SHA/projeto/alias esperado antes/depois de três públicos aprovados na primeira rodada em 1,8 min. Recibo remoto conferido: `preservacao/retomada-cloud-20261015:preservacao/checkpoints/2026-11-06-pr100-publicacao-conferida.md`.
 
@@ -6,7 +6,11 @@ Na branch `conteudo/redes-git-arquitetura-20261106`, as três etapas Git existen
 
 Local: preparação e conflito passaram na primeira conferência; recuperação passou na repetição isolada. O filtro inicial do verificador contava também o título do revert; foi tornado exato. Um erro de escape introduzido nesse ajuste foi corrigido antes de commit e a sintaxe foi conferida. Asserções e limites preservados. Diretórios temporários novos, sem alterações em repositórios reais do usuário; limpeza limitada ao root temporário verificado. Git Bash local disponível; CI usa Bash. O roteiro da regra também requer Node. Fonte oficial de reflog/reset/revert consultada.
 
-Esta é uma entrega intermediária do L10, ainda sem PR/CI/revisão/publicação. Redes e arquitetura permanecem pendentes no mesmo lote. Concluir antes de iniciar L11. Manter o catálogo existente, modo local-first, sandbox, Workers, lazy loading, aparência e clima. Leitura e execução livre não geram domínio; atividade conceitual e implementação aberta continuam distintas. No L11, tratar projetos/corretores e resíduos TS/SQL; L12 fecha a edição e investiga os timeouts públicos históricos ainda sem causa comprovada.
+Redes e arquitetura também têm referências completas preparadas. São 22 contratos locais aprovados (dez novos e doze existentes): QuickJS, HTTP real em loopback com cinco respostas distintas, descarte de erro antigo, identidade/conflito de intenção, validação antes de gravar e preservação do documento anterior em falha do adaptador. O exemplo de pesquisa usa uma fábrica por consumidor; o teste existente foi adaptado à assinatura, conservando a mesma exigência sobre ordem de respostas. Os controles e o mutante assíncrono são observáveis no QuickJS.
+
+O modelo de reserva continua síncrono, em memória e limitado a um processo; não comprova concorrência ou durabilidade. O exemplo de caderno valida somente envelope/versionamento e pressupõe adaptador síncrono com gravação integral ou erro. A falha injetada não comprova falha real de armazenamento; o produto mantém seus testes próprios. A decisão arquitetural continua manual. Nenhum aluno ganha domínio por executar referência.
+
+Ainda sem PR/CI/revisão/publicação do L10. Plano real, catálogo/tipos pertinentes e gates do lote pendentes. Concluir antes de iniciar L11. Manter o catálogo existente, modo local-first, sandbox, Workers, lazy loading, aparência e clima. Leitura e execução livre não geram domínio; atividade conceitual e implementação aberta continuam distintas. No L11, tratar projetos/corretores e resíduos TS/SQL; L12 fecha a edição e investiga os timeouts públicos históricos ainda sem causa comprovada.
 
 # L09 em preparação: percursos executáveis sem ampliar o catálogo — 06/11/2026
 
