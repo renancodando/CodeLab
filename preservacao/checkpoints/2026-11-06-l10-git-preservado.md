@@ -1,0 +1,11 @@
+# L10 parcial: Git preservado
+
+Nove lotes publicados (#92–#100); restam L10–L12 (~3). Main publicado 5703fd72ed38b7220999a4dad1a136d0ca0b1e9c, recibo PR100 publicado conferido. Branch conteudo/redes-git-arquitetura-20261106, commit remoto 0e026cf923ccccd631e57427645a17578d1eda2b, push e SHA conferidos, checkout limpo. Ainda sem PR para o L10; não contar como entregue.
+
+Três etapas Git existentes agora possuem roteiros Bash/gabaritos completos. Cada um começa com mkdir em nome novo e para se a pasta existir; Git config somente local, sem remotos, hooks locais desativados e nenhum reset --hard. Preparação compara trabalho/index/HEAD; conflito combina duas regras, confere quatro casos JavaScript e dois pais; reversão preserva mensagem e histórico, reset --soft mantém index/trabalho e reflog recupera referência ao commit.
+
+Nova família git-percursos, registrada no seletor e verificador, executa os três gabaritos reais em diretórios temporários próprios. Bash local C:/Program Files/Git/bin/bash.exe via CODELAB_BASH; CI usa bash. Dois primeiros roteiros passaram no primeiro recorte. Recuperação falhou no verificador porque grep amplo contava o revert junto com o commit original; filtro exato corrigido. Um erro autoral de escape na correção foi detectado por sintaxe e corrigido antes de commit. Recuperação passou na repetição isolada. Sintaxe conferida, limites/asserções preservados; não houve alterações em repositórios do usuário. Código de aluno não é executado fora do sandbox: são apenas referências autorais.
+
+O helper nativo aceita lista de etapas conhecidas para repetição específica; IDs vazios/desconhecidos são erro. A bancada Git visual original e seus cinco cenários continuam intactos, com o escopo de trabalho/index/HEAD. A nova família verifica roteiros, sem alegar Git completo no navegador.
+
+Faltam no mesmo L10: completar referências/prática nas etapas redes e arquitetura, conferir gabaritos/casos afetados, plano real, catálogo/tipos pertinentes, revisão/CI do head, merge e produção pelo protocolo proporcional. Não abrir como concluído. Depois L11 oito projetos/corretores/resíduos TS/SQL; L12 fechamento amplo e timeouts públicos históricos de axe ainda sem causa comprovada. Preservar fonte remota diante de limites e não reiniciar doze.
