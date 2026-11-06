@@ -392,3 +392,6 @@ A aula original `csharp-colecoes` distribui previsão de Dictionary, diagnóstic
 
 
 L06 prepara prática de contratos, runtime e engenharia C# nas aulas existentes. As respostas continuam conceituais; referências compiladas, mutantes e um console publicado conferem os programas de autoria do currículo. O aluno continua responsável por implementar os exercícios e projetos completos. Gates e publicação próprios permanecem pendentes.
+
+
+L07 prepara previsão de junção e decisões de atualização atômica e ligação na aula C++ existente. Aceita alternativas equivalentes e mantém explícita a distinção entre resposta conceitual e compilação real das referências. Os exemplos de concorrência executados têm comportamento definido; projetos continuam construção pelo aluno.

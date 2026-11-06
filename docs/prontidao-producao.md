@@ -359,3 +359,6 @@ Conferir presença/out sem cadastro implícito, lista filtrada independente e so
 
 
 L06 está preparado, ainda sem declaração de publicação. Referências C# reais, casos de borda e mutantes foram conferidos localmente; três fluxos do aluno ficam no CI do head. Conferir revisão atual, árvore, deployment READY/SHA/projeto/alias e contratos públicos antes de tratar este conteúdo como publicado.
+
+
+L07 está preparado, sem declaração de publicação: tipos, catálogo, contratos específicos e referências C++20 conferidos localmente. A jornada do aluno e gates do head ficam no CI. As falhas públicas iniciais de L06 foram preservadas e não foram declaradas corrigidas; repetição isolada aprovada no mesmo SHA e investigação retomada no L12.

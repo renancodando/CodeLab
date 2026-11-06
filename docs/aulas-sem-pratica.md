@@ -2,11 +2,11 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **4 de 137 aulas sem pausas deste catálogo**. As outras 133 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **3 de 137 aulas sem pausas deste catálogo**. As outras 134 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
-| C++ | 10 | 9 | 1 |
+| C++ | 10 | 10 | 0 |
 | C# | 14 | 14 | 0 |
 | CSS | 15 | 15 | 0 |
 | HTML | 19 | 19 | 0 |
@@ -42,7 +42,6 @@ Aplicar os pré-requisitos em decisões, concorrência, desempenho e projetos; c
 
 | Aula | Trilha | Linguagem | Nível |
 | --- | --- | --- | --- |
-| `cpp-concorrencia-engenharia` — C++: concorrência, build e desempenho | C++ · do zero ao avançado | C++ | Especialização |
 | `sql-agregacoes-janelas` — SQL: agregações, janelas e análise | SQL · do zero ao avançado | SQL/PostgreSQL | Avançado |
 | `sql-indices-planos` — SQL: índices, planos e otimização | SQL · do zero ao avançado | SQL/PostgreSQL | Especialização |
 | `sql-esquema-avancado` — SQL: views, recursão, JSON e evolução | SQL · do zero ao avançado | SQL/PostgreSQL | Especialização |

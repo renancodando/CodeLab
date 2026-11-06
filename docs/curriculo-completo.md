@@ -811,3 +811,6 @@ O pedido integral reúne [17 frentes abertas](etapas-restantes.md), com próximo
 
 
 L06 prepara as três aulas C# restantes com previsão, diagnóstico e alteração/aplicação. As referências usam C# 14/.NET 10 e incluem publicação de console; não equivalem à compilação da resposta do aluno, a uma API inteira ou à conclusão da linguagem. A cobertura corrente vem das métricas geradas; a publicação é registrada na continuidade.
+
+
+L07 cobre prática de captura/junção, leitura-modificação-escrita e unidades de tradução com C++20 explícito. Referências compiladas/executadas incluem limites de int sem overflow e falhas de ligação esperadas. Não comprova CMake, sanitizers, desempenho ou conclusão de C++; consultar o mapa e os critérios da edição.
