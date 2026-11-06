@@ -588,6 +588,13 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
     const meio=submitted.slice(1,3);
     passed=submitted.length===4&&new Set(submitted).size===4&&submitted[0]==='inicio'&&submitted[3]==='fim'&&meio.includes('pratica')&&meio.includes('revisao');
    }else if(id==='cs-dotnet-reconstruir-total')passed=submitted.length===4&&new Set(submitted).size===4&&submitted.every(linha=>concept.order!.includes(linha))&&submitted.indexOf('centavos')<submitted.indexOf('preco')&&submitted.indexOf('preco')<submitted.indexOf('saida')&&submitted.indexOf('quantidade')<submitted.indexOf('saida');
+   else if(id==='ts-genericos-montar-grupos'){
+    const linhas=activity.lines!;
+    passed=submitted.length===concept.order.length&&new Set(submitted).size===concept.order.length&&submitted.every((linhaId,indice)=>{
+     const linha=linhas.find(linha=>linha.id===linhaId),esperada=linhas.find(linha=>linha.id===concept.order![indice]);
+     return linha?.code.trim()===esperada?.code.trim();
+    });
+   }
    else passed=submitted.length===concept.order.length&&submitted.every((line,index)=>line===concept.order![index]);
    if(id==='sql-modelagem-montar-relacao'){
     const posicao=(linha:string)=>submitted.indexOf(linha);
@@ -597,10 +604,10 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
     const meio=submitted.slice(2,4);
     passed=submitted.length===5&&new Set(submitted).size===5&&submitted[0]==='servicos'&&submitted[1]==='aplicacao'&&submitted[4]==='executar'&&meio.includes('middleware')&&meio.includes('rota');
    }
-  }else if(['ts-genericos-prever-retorno','ts-relacoes-prever-ausencia'].includes(id))passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().toLowerCase()).join('\n')===concept.accepted[0];
+  }else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
+  else if(['ts-genericos-prever-retorno','ts-relacoes-prever-ausencia'].includes(id))passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().toLowerCase()).join('\n')===concept.accepted[0];
   else if(id==='ts-relacoes-completar-transformacao')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).replace(/\s/g,''));
   else if(id==='ts-avancados-prever-distribuicao')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).split('\n').map(linha=>linha.replace(/\s/g,'')).join('\n'));
-  else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
   else if(id==='cs-async-aguardar-leitura')passed=typeof answer==='string'&&/^await\s+leitor\s*\.\s*ReadToEndAsync\s*\(\s*token\s*\)(?:\s*\.\s*ConfigureAwait\s*\(\s*(?:true|false)\s*\))?$/.test(normalized(answer));
   else if(id==='cs-copiar-linhas-array')passed=typeof answer==='string'&&/^linha\s*\.\s*ToArray\s*(?:<\s*(?:int|System\s*\.\s*Int32)\s*>)?\s*\(\s*\)$/.test(normalized(answer));
   else if(id==='cs-materializar-consulta')passed=typeof answer==='string'&&/^To(?:Array|List)\s*\(\s*\)$/.test(normalized(answer));

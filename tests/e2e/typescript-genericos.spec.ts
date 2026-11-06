@@ -8,7 +8,7 @@ for(const aula of ['ts-genericos','ts-genericos-relacoes','ts-tipos-avancados'])
  for(const pausa of pausas){
   const cartao=pagina.locator('[data-practice="'+pausa.id+'"]'),conferir=()=>cartao.getByRole('button',{name:'Conferir comportamento',exact:true}).click();await conferir();await expect(cartao.locator('.practice-feedback')).not.toContainText('Sua resposta está correta');await expect(cartao.locator('[data-help] pre')).toHaveCount(0);
   if(pausa.kind==='choice')await cartao.locator('input[value="'+respostas[pausa.id]+'"]').check();
-  else if(pausa.kind==='order'){const ordem=['abrir','mapa','percorrer','inserir','fim-laco','retornar','fechar'],atuais=pausa.lines!.map(l=>l.id);for(let destino=0;destino<ordem.length;destino++)for(let indice=atuais.indexOf(ordem[destino]);indice>destino;indice--){await cartao.getByRole('button',{name:'Mover linha '+(indice+1)+' para cima'}).click();[atuais[indice-1],atuais[indice]]=[atuais[indice],atuais[indice-1]];}}
+  else if(pausa.kind==='order'){const ordem=['abrir','mapa','percorrer','inserir','fechar','retornar','fim-laco'],atuais=pausa.lines!.map(l=>l.id);for(let destino=0;destino<ordem.length;destino++)for(let indice=atuais.indexOf(ordem[destino]);indice>destino;indice--){await cartao.getByRole('button',{name:'Mover linha '+(indice+1)+' para cima'}).click();[atuais[indice-1],atuais[indice]]=[atuais[indice],atuais[indice-1]];}}
   else await cartao.getByRole('textbox').fill(pausa.kind==='fill'?'Array < U >':getPracticeSolution(pausa.id)!);
   await conferir();await expect(cartao.locator('.practice-feedback')).toContainText('Sua resposta está correta');await expect(cartao.locator('.practice-feedback')).toContainText('não houve execução de typescript');
  }

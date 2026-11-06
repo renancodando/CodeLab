@@ -27,6 +27,9 @@ it('a distribuição distingue a união inteira e aceita as duas notações de a
 it('o agrupamento exige os blocos, a inicialização e o retorno após o laço',async()=>{
  const id='ts-genericos-montar-grupos',ordem=['abrir','mapa','percorrer','inserir','fim-laco','retornar','fechar'];
  expect(await evaluatePractice(id,ordem)).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});
+ expect((await evaluatePractice(id,['abrir','mapa','percorrer','inserir','fechar','retornar','fim-laco'])).passed).toBe(true);
+ expect((await evaluatePractice(id,['abrir','mapa','percorrer','inserir','fim-laco','retornar','fim-laco'])).passed).toBe(false);
+ expect((await evaluatePractice(id,['abrir','mapa','percorrer','inserir','fim-laco','retornar','inventada'])).passed).toBe(false);
  for(const errada of [ordem.slice(0,-1),[...ordem,'outra'],['abrir','retornar','mapa','percorrer','inserir','fim-laco','fechar'],['abrir','mapa','percorrer','inserir','retornar','fim-laco','fechar'],['abrir','mapa','percorrer','inserir','inserir','retornar','fechar']])expect((await evaluatePractice(id,errada)).passed).toBe(false);
 });
 it.each([
