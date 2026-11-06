@@ -23,7 +23,18 @@ function auditoriaDeLancamentos(rotulo:string,dados:number[][],linhas:number[][]
 function movimentosAcumulados(rotulo:string,dados:(number|string|null)[][],linhas:number[][],falha:string):CenarioSql{
  return {rotulo,preparacao:"CREATE TABLE movimentos(id INTEGER UNIQUE NOT NULL,conta_id INTEGER NOT NULL,instante INTEGER NOT NULL,centavos INTEGER,estado TEXT NOT NULL CHECK(estado IN('confirmado','pendente')));"+inserir('movimentos',dados),colunas:['conta_id','id','acumulado'],linhas,falha};
 }
+function eventosNoIntervalo(rotulo:string,dados:(number|string|null)[][],inicio:number,fim:number,linhas:number[][],falha:string):CenarioSql{
+ return {rotulo,preparacao:'CREATE TABLE eventos(id INTEGER UNIQUE NOT NULL,instante INTEGER,descricao TEXT NOT NULL);CREATE TABLE limites(inicio INTEGER NOT NULL,fim INTEGER NOT NULL CHECK(fim>inicio));'+inserir('eventos',dados)+inserir('limites',[[inicio,fim]]),colunas:['id'],linhas,falha};
+}
 export const cenariosSql:Record<string,CenarioSql[]>={
+ 'sql-indices-consultar-intervalo':[
+  eventosNoIntervalo('O começo entra e o fim fica fora.',[[5,150,'B'],[2,100,'A'],[9,200,'Fora'],[1,99,'Antes'],[3,199,'C']],100,200,[[2],[5],[3]],'Confira os dois extremos e a ordem cronológica; incluir o fim ou ordenar só por ID muda o resultado.'),
+  eventosNoIntervalo('Limites negativos e empates independem da inserção.',[[8,-1,'Fim'],[4,-10,'Início'],[2,-10,'Empate'],[1,0,'Depois'],[9,-11,'Antes']],-10,0,[[2],[4],[8]],'O primeiro caso passou, mas outros limites ou empates falharam. Use os parâmetros e o desempate por ID.'),
+  eventosNoIntervalo('Ausência não se transforma em instante zero.',[[3,null,'Ausente'],[4,0,'Zero'],[5,1,'Fim']],0,1,[[4]],'NULL não significa zero. Conserve o evento no instante inicial sem inventar um instante para a ausência.'),
+  eventosNoIntervalo('Eventos fora do recorte não criam uma linha.',[[1,9,'Antes'],[2,20,'Fim']],10,20,[],'Nenhum evento pertence ao recorte. Preserve o cabeçalho e retorne zero linhas.'),
+  eventosNoIntervalo('Outras chaves e várias posições continuam ordenadas.',[[7,2,'Último'],[8,-2,'Primeiro'],[0,2,'Empate'],[9,0,'Meio']],-2,3,[[8],[9],[0],[7]],'O ID não representa o tempo; no empate do instante, use o desempate solicitado.'),
+  eventosNoIntervalo('Base vazia mantém a coluna esperada.',[],1,2,[],'A tabela vazia não deve virar uma resposta fixa ou um resumo global.')
+ ],
  'sql-janelas-acumular-movimentos':[
   movimentosAcumulados('Contas e movimentos mantêm sua granularidade.',[[10,2,1,5,'confirmado'],[20,2,2,7,'confirmado'],[30,8,1,-3,'confirmado']],[[2,10,5],[2,20,12],[8,30,-3]],'Confira a linha de cada movimento, a separação por conta e a ordem do relatório.'),
   movimentosAcumulados('Empates e pendentes não alteram a regra.',[[9,1,4,20,'confirmado'],[2,1,4,10,'confirmado'],[5,1,3,999,'pendente'],[12,1,5,-5,'confirmado']],[[1,2,10],[1,9,30],[1,12,25]],'O caso comum passou, mas um empate ou movimento pendente alterou o total. Defina quais linhas entram e como cada posição se distingue.'),

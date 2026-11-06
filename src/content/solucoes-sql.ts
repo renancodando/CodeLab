@@ -1,4 +1,5 @@
 export const solucoesSql:Record<string,string>={
+ "sql-indices-consultar-intervalo":"SELECT e.id FROM eventos e CROSS JOIN limites l WHERE e.instante>=l.inicio AND e.instante<l.fim ORDER BY e.instante,e.id;",
  "sql-janelas-acumular-movimentos":"SELECT conta_id,id,SUM(COALESCE(centavos,0)) OVER(PARTITION BY conta_id ORDER BY instante,id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS acumulado\nFROM movimentos WHERE estado='confirmado' ORDER BY conta_id,instante,id;",
  "sql-transacao-auditar-lancamentos": "SELECT transferencia_id,SUM(delta_centavos) AS total_centavos\nFROM lancamentos GROUP BY transferencia_id\nHAVING SUM(delta_centavos)<>0 OR COUNT(*)<>2 OR COUNT(DISTINCT conta_id)<>2\nORDER BY transferencia_id;",
  "sql-join-depurar-titulos": "SELECT c.id AS categoria_id,COUNT(n.id) AS quantidade\nFROM categorias c LEFT JOIN notas n ON n.categoria_id=c.id\nGROUP BY c.id HAVING COUNT(n.id)>=2\nORDER BY quantidade DESC,c.id ASC;",

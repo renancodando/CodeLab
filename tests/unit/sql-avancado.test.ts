@@ -35,3 +35,24 @@ it('preparação distingue NULL de texto e preserva apóstrofos existentes',asyn
  const SQL=await iniciarSql();const r=executarConsultaSql(SQL,'SELECT COUNT(*) AS linhas,COUNT(centavos) AS informados,SUM(CASE WHEN centavos IS NULL THEN 1 ELSE 0 END) AS ausentes FROM movimentos;',cenariosSql[idAcumulado][2].preparacao);expect(r.tabelas[0].linhas[0].map(String)).toEqual(['4','2','2']);
  const antiga=executarConsultaSql(SQL,'SELECT titulo FROM tarefas WHERE id=2;',cenariosSql['sql-crud-depurar-pendencias'][1].preparacao);expect(antiga.tabelas[0].linhas).toEqual([["D'água"]]);
 });
+
+const idIntervalo='sql-indices-consultar-intervalo',intervalo=getPracticeSolution(idIntervalo)!;
+it('EXPLAIN ANALYZE é conceitual para o aluno e distingue o rollback',async()=>{
+ expect(await evaluatePractice('sql-indices-prever-analyze','15\n13')).toMatchObject({passed:true,evidence:'conceptual',execution:'not-run'});expect((await evaluatePractice('sql-indices-prever-analyze','13\n13')).passed).toBe(false);
+});
+it('índices aceitam os dois recortes e suas definições portáteis têm as chaves declaradas',async()=>{
+ const id='sql-indices-escolher-prefixo',pausa=practicesForLesson('sql-indices-planos').find(p=>p.id===id)!,SQL=await iniciarSql();
+ const chaves:Record<string,string[]>={composto:['aluno_id','id'],parcial:['id'],trocado:['id','aluno_id'],'outra-chave':['minutos','aluno_id','id']};
+ for(const opcao of pausa.options!){expect((await evaluatePractice(id,opcao.id)).passed).toBe(['composto','parcial'].includes(opcao.id));const r=executarConsultaSql(SQL,'CREATE TABLE sessoes(id INTEGER,aluno_id INTEGER,minutos INTEGER);'+opcao.text+'PRAGMA index_info(indice_estudo);');expect(r.tabelas.at(-1)!.linhas.map(l=>l[2])).toEqual(chaves[opcao.id]);}
+});
+it('intervalo executa seis bases reais com extremos, ausência e outras chaves',async()=>{const r=await evaluatePractice(idIntervalo,intervalo);expect(r).toMatchObject({passed:true,evidence:'executed',execution:'sqlite'});expect(r.tests).toHaveLength(6);});
+it('intervalo aceita subconsultas e o contrato inteiro equivalente',async()=>{const equivalente='SELECT id FROM eventos WHERE instante >=(SELECT inicio FROM limites) AND instante <(SELECT fim FROM limites) ORDER BY instante,id;';expect((await evaluatePractice(idIntervalo,equivalente)).passed).toBe(true);});
+for(const [nome,codigo] of Object.entries({
+ incluiFim:intervalo.replace('e.instante<l.fim','e.instante<=l.fim'),
+ perdeInicio:intervalo.replace('e.instante>=l.inicio','e.instante>l.inicio'),
+ preencheAusencia:intervalo.replaceAll('e.instante','COALESCE(e.instante,0)'),
+ semOrdem:intervalo.replace(' ORDER BY e.instante,e.id',''),
+ ordemID:intervalo.replace('ORDER BY e.instante,e.id','ORDER BY e.id'),
+ fixo:'SELECT 2 AS id UNION ALL SELECT 5 UNION ALL SELECT 3;'
+}))it('intervalo recusa '+nome,async()=>{const r=await evaluatePractice(idIntervalo,codigo);expect(r.passed).toBe(false);expect(r.execution).toBe('sqlite');expect(r.feedback).not.toContain(intervalo);});
+it('índices praticam efeitos, prefixo e consulta sem prometer desempenho',()=>{expect(practicesForLesson('sql-indices-planos').map(p=>p.afterBlock)).toEqual([2,4,8]);});

@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir das definições e da matriz do currículo. O build rejeita divergências. A interface usa o mesmo resumo JSON, sem carregar capítulos adicionais.
 
-O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **316 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **135 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
+O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **319 atividades corrigíveis**. As pausas dessas atividades estão ligadas a **136 aulas**. Há **6 percursos de engenharia com 18 etapas** e **8 projetos de conclusão com 57 marcos e 171 critérios manuais**.
 
 | Medida | Quantidade |
 | --- | ---: |
@@ -23,7 +23,7 @@ O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **
 | HTML | 45 |
 | JavaScript | 109 |
 | Python | 21 |
-| SQL/PostgreSQL | 25 |
+| SQL/PostgreSQL | 28 |
 | TypeScript | 17 |
 
 ## Cobertura das aulas
@@ -36,10 +36,10 @@ O catálogo tem **137 aulas em 20 trilhas**, **58 problemas independentes** e **
 | HTML | 19 | 19 | 0 |
 | JavaScript | 30 | 30 | 0 |
 | Python | 10 | 10 | 0 |
-| SQL/PostgreSQL | 14 | 12 | 2 |
+| SQL/PostgreSQL | 14 | 13 | 1 |
 | Integração (transversal) | 15 | 15 | 0 |
 | TypeScript | 10 | 10 | 0 |
 
-Restam 2 aulas sem pausas deste catálogo. A [fila pedagógica gerada](aulas-sem-pratica.md) lista cada uma e se atualiza junto das métricas.
+Restam 1 aulas sem pausas deste catálogo. A [fila pedagógica gerada](aulas-sem-pratica.md) lista cada uma e se atualiza junto das métricas.
 
 A aula de valores também possui um percurso próprio passo a passo, preservado separadamente da leitura completa. A contagem de pausas não inclui as etapas desse percurso, missões ou experiências dos percursos de engenharia. Contagem não mede domínio nem esgota os ecossistemas. Um tópico pode aparecer em mais de um contexto; entradas da matriz não são conceitos únicos. Problemas independentes têm critérios e soluções, mas não recebem correção automática universal. Atividades conceituais não comprovam compilação; projetos abertos usam revisão manual. Consulte [o mapa de cobertura](curriculo-completo.md) e [as etapas restantes](etapas-restantes.md).

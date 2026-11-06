@@ -16,6 +16,9 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "sql-indices-prever-analyze":{"accepted":["15\n13"],"solution":"15\n13","failure":"A execução observada dentro da transação pode alterar as duas linhas. Depois, o rollback recupera os valores anteriores; não confunda exibir um plano com deixar de executar a operação."},
+ "sql-indices-escolher-prefixo":{"accepted":["composto","parcial"],"solution":"CREATE INDEX indice_estudo ON sessoes(aluno_id,id);","failure":"Leia o prefixo e o predicado antes de assumir que o nome do índice basta. Uma chave livre pode espalhar o recorte, mesmo quando o índice ainda participa de algum plano válido."},
+
  "sql-janelas-contar-ausencias":{"accepted":["linhas-valores"],"solution":"WITH amostras(grupo,valor) AS (VALUES (1,CAST(NULL AS INTEGER)),(1,0),(1,5),(2,CAST(NULL AS INTEGER)))\nSELECT grupo,COUNT(*) AS linhas,COUNT(valor) AS informados,COALESCE(SUM(valor),0) AS total FROM amostras GROUP BY grupo ORDER BY grupo;","failure":"Filtrar a ausência elimina um grupo que ainda possui uma linha. Separe quantidade de linhas, valores conhecidos e contribuição para a soma."},
  "sql-janelas-prever-pares":{"accepted":["1|30\n2|30\n3|25"],"solution":"1|30\n2|30\n3|25","failure":"A ordenação externa não muda o frame já calculado. Os pares do primeiro dia entram juntos no acumulado padrão; o valor negativo do segundo dia reduz o total."},
 
