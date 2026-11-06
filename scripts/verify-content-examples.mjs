@@ -18,6 +18,7 @@ import {verificarConceitosCpp} from '../tests/fixtures/cpp-conceitos.mjs';
 import {verificarConcorrenciaCpp} from '../tests/fixtures/cpp-concorrencia.mjs';
 import {verificarPosseCpp} from '../tests/fixtures/cpp-posse.mjs';
 import {verificarTextoCpp} from '../tests/fixtures/cpp-texto.mjs';
+import {verificarSqlAvancado} from '../tests/fixtures/sql-avancado.mjs';
 import {verificarAusenciasSql} from '../tests/fixtures/sql-null.mjs';
 import {verificarIteradoresCsharp} from '../tests/fixtures/csharp-iteradores.mjs';
 import {verificarFundamentosDotnet} from '../tests/fixtures/dotnet-fundamentos.mjs';
@@ -37,7 +38,7 @@ import {verificarProjetoApi} from '../tests/fixtures/projeto-api.mjs';
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
 const indiceFamilia=process.argv.indexOf('--familia');
 const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
-const grupos=['cpp-concorrencia','csharp-avancado','typescript-genericos','projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+const grupos=['sql-avancado','cpp-concorrencia','csharp-avancado','typescript-genericos','projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
 if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
 const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
@@ -97,6 +98,7 @@ try{
  const compileContent=source=>ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
  const asUrl=source=>'data:text/javascript;base64,'+Buffer.from(source).toString('base64');
  const {practiceActivities,getPracticeSolution}=await carregarPraticas();
+ if(selecionar('sql-avancado'))console.log((await verificarSqlAvancado(root,practiceActivities,getPracticeSolution))+' cenários SQL avançados conferidos em PostgreSQL.');
  if(selecionar('cpp-concorrencia'))console.log((await verificarConcorrenciaCpp(root,practiceActivities,getPracticeSolution))+' cenários C++20 de concorrência e ligação conferidos.');
  if(selecionar('csharp-avancado'))console.log((await verificarCsharpAvancado(root,practiceActivities,getPracticeSolution))+' cenários C# 14/.NET 10 de contratos avançados conferidos.');
  if(selecionar('typescript-genericos'))console.log((await verificarGenericosTypeScript(root,practiceActivities,getPracticeSolution))+' cenários TypeScript strict de genéricos, ausência e correlação conferidos.');

@@ -57,3 +57,5 @@ A família csharp-avancado usa uma compilação C# 14/.NET 10 para as referênci
 
 
 A família cpp-concorrencia usa C++20 e programas definidos para junção e operações atômicas; também compila e liga arquivos separados e exige diagnósticos de ligação nos casos negativos. CMake e sanitizers não são presumidos por esses resultados. O seletor específico não acrescenta famílias nativas de outras linguagens; contratos críticos do pipeline continuam preservados.
+
+A família `sql-avancado` verifica referências e exemplos originais das três aulas SQL em PostgreSQL 18. Planos conferem execução e cardinalidade, sem impor tempo, custo ou estratégia do otimizador. A família `sql-pratica` preserva as bases dos corretores em conexões temporárias; as atividades do aluno que executam SQLite não passam a ser execução PostgreSQL.

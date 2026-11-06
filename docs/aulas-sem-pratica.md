@@ -2,7 +2,7 @@
 
 Gerado por `npm run content:generate` a partir do catálogo e das atividades reais. O build rejeita lista desatualizada. Esta é uma fila pedagógica da edição existente, não uma auditoria final.
 
-Há **3 de 137 aulas sem pausas deste catálogo**. As outras 134 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
+Há **0 de 137 aulas sem pausas deste catálogo**. As outras 137 têm ao menos uma pausa; isso não significa que estejam concluídas ou que suas linguagens tenham prática suficiente. Missões, experimentos de engenharia, projetos e o percurso próprio de valores continuam existindo e não são contados como essas pausas.
 
 | Linguagem | Aulas | Com pausas | Sem pausas |
 | --- | ---: | ---: | ---: |
@@ -12,7 +12,7 @@ Há **3 de 137 aulas sem pausas deste catálogo**. As outras 134 têm ao menos u
 | HTML | 19 | 19 | 0 |
 | JavaScript | 30 | 30 | 0 |
 | Python | 10 | 10 | 0 |
-| SQL/PostgreSQL | 14 | 11 | 3 |
+| SQL/PostgreSQL | 14 | 14 | 0 |
 | Integração (transversal) | 15 | 15 | 0 |
 | TypeScript | 10 | 10 | 0 |
 
@@ -40,8 +40,4 @@ Nenhuma aula sem pausa neste grupo. A profundidade das atividades continua sujei
 
 Aplicar os pré-requisitos em decisões, concorrência, desempenho e projetos; conservar as limitações da correção.
 
-| Aula | Trilha | Linguagem | Nível |
-| --- | --- | --- | --- |
-| `sql-agregacoes-janelas` — SQL: agregações, janelas e análise | SQL · do zero ao avançado | SQL/PostgreSQL | Avançado |
-| `sql-indices-planos` — SQL: índices, planos e otimização | SQL · do zero ao avançado | SQL/PostgreSQL | Especialização |
-| `sql-esquema-avancado` — SQL: views, recursão, JSON e evolução | SQL · do zero ao avançado | SQL/PostgreSQL | Especialização |
+Nenhuma aula sem pausa neste grupo. A profundidade das atividades continua sujeita à revisão pedagógica.
