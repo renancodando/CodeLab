@@ -16,6 +16,10 @@ type ConceptSpec={accepted:string[];failure:string;solution:string;order?:string
 type JSCheck=CodeCheck&{feedback:string};
 type JSSpec={checks:JSCheck[];solution:string};
 const concepts:Record<string,ConceptSpec>={
+ "cs-engenharia-prever-relogio":{"accepted":["2026-10-06\n2026-10-09\n2"],"solution":"2026-10-06\n2026-10-09\n2","failure":"A segunda leitura já representa o dia seguinte; os dois dias solicitados somam a essa data. A chamada negativa sai antes de ler o relógio, conservando duas leituras."},
+ "cs-engenharia-testar-defeitos":{"accepted":["contrato"],"solution":"static bool Conferir(Servico servico,DateTimeOffset origem) {\n if(servico.Agendar(0)!=origem || servico.Agendar(2)!=origem.AddDays(2))return false;\n try { servico.Agendar(-1); return false; }\n catch(ArgumentOutOfRangeException erro) { return erro.ParamName==\"dias\"; }\n}","failure":"Um caso comum não recusa o negativo aceito ou a exceção com outro parâmetro. Capturar tudo e comparar duas chamadas iguais não produz o oráculo exigido."},
+ "cs-engenharia-conferir-artefato":{"accepted":["dll-publicado"],"solution":"dotnet publish Agenda.csproj -c Release -o entrega\ndotnet entrega/Agenda.dll","failure":"dotnet run usa o projeto do workspace e pode construir outra versão. Restore ou existência de DLL não verificam os resultados prometidos pelo artefato publicado."},
+
  "cs-runtime-prever-views":{"accepted":["40\n4\n40"],"solution":"40\n4\n40","failure":"A escrita pela faixa altera a origem e a view de leitura. O array criado por ToArray mantém o valor anterior, pois não é outra view."},
  "cs-runtime-encerrar-lease":{"accepted":["snapshot"],"solution":"buffer.AsMemory(0,entrada.Length).ToArray()","failure":"Return encerra o período de uso daquele aluguel. A view observa o mesmo buffer; copiar toda a capacidade inclui posições além do conteúdo válido. O snapshot precisa nascer antes da devolução e ter o tamanho da entrada."},
  "cs-runtime-somar-checked":{"accepted":["checked(total+valor)","checked(valor+total)"],"solution":"checked(total + valor)","failure":"O overflow intermediário pertence ao contrato, mesmo se um valor posterior o compensaria. Mantenha a adição de int dentro de checked; uma soma larga convertida só ao final testa outra regra."},
@@ -614,7 +618,8 @@ export async function evaluatePractice(id:string,answer:PracticeAnswer,signal?:A
    }
   }else if(id==='py-preservar-primeira-ordem')passed=typeof answer==='string'&&condicaoDeAusencia(answer);
   else if(['ts-genericos-prever-retorno','ts-relacoes-prever-ausencia'].includes(id))passed=typeof answer==='string'&&normalized(answer).split('\n').map(linha=>linha.trim().toLowerCase()).join('\n')===concept.accepted[0];
-  else if(['cs-contratos-copiar-nomes','cs-runtime-somar-checked'].includes(id))passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).replace(/\s/g,''));
+  else if(id==='cs-contratos-copiar-nomes')passed=typeof answer==='string'&&/^(?:nomes\s*\.\s*ToArray\s*\(\s*\)|\[\s*\.\.\s*nomes\s*\]|(?:System\s*\.\s*Linq\s*\.\s*)?Enumerable\s*\.\s*ToArray\s*\(\s*nomes\s*\))$/.test(normalized(answer));
+  else if(id==='cs-runtime-somar-checked')passed=typeof answer==='string'&&/^checked\s*\(\s*(?:total\s*\+\s*valor|valor\s*\+\s*total)\s*\)$/.test(normalized(answer));
   else if(id==='ts-relacoes-completar-transformacao')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).replace(/\s/g,''));
   else if(id==='ts-avancados-prever-distribuicao')passed=typeof answer==='string'&&concept.accepted.includes(normalized(answer).split('\n').map(linha=>linha.replace(/\s/g,'')).join('\n'));
   else if(id==='cs-async-aguardar-leitura')passed=typeof answer==='string'&&/^await\s+leitor\s*\.\s*ReadToEndAsync\s*\(\s*token\s*\)(?:\s*\.\s*ConfigureAwait\s*\(\s*(?:true|false)\s*\))?$/.test(normalized(answer));

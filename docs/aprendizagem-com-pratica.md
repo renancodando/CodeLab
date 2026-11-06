@@ -389,3 +389,6 @@ A aula existente `csharp-objetos` recebe três pausas ligadas à teoria: prever 
 ## Coleções C#: presença, materialização e agregação
 
 A aula original `csharp-colecoes` distribui previsão de Dictionary, diagnóstico de lista filtrada e reconstrução de Where/Select/Sum. Presença não se confunde com valor zero; uma cópia precisa conservar o filtro e a origem; agregar não é contar itens. Respostas são conceituais offline, sem alegar compilação do aluno ou correção de código livre. Referências e exemplos/gabaritos originais são compilados em .NET 10; o projeto de relatório permanece construído pelo aluno e revisado por rubrica manual. Gates próprios em continuidade.md.
+
+
+L06 prepara prática de contratos, runtime e engenharia C# nas aulas existentes. As respostas continuam conceituais; referências compiladas, mutantes e um console publicado conferem os programas de autoria do currículo. O aluno continua responsável por implementar os exercícios e projetos completos. Gates e publicação próprios permanecem pendentes.

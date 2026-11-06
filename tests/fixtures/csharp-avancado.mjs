@@ -89,6 +89,21 @@ if(Somar(origem.AsSpan(1,2))!=5 || !origem.SequenceEqual(new[]{9,2,3,8}))throw n
 `;
  for(const [indice,expressao] of ['checked(total + valor)','checked(valor + total)','total + valor','checked(total) + valor'].entries())casos.push({id:'soma-'+indice,codigo:atividade('cs-runtime-somar-checked').code.replace('____',expressao)+'\n'+conferirSoma,saida:'',erro:indice<2?undefined:'contrato-soma'});
  casos.push({id:'soma-larga-oculta-intermediario',codigo:'static int Somar(ReadOnlySpan<int> valores){long total=0;foreach(int valor in valores)total+=valor;return checked((int)total);}\n'+conferirSoma,saida:'',erro:'contrato-soma'});
+ const engenharia=curso.lessons.find(a=>a.id==='cs-engenharia');assert(engenharia);
+ const relogio=atividade('cs-engenharia-prever-relogio'),testes=atividade('cs-engenharia-testar-defeitos');
+ casos.push({id:'engenharia-exemplo-original',codigo:engenharia.code,saida:'2026-10-08T12:00:00.0000000+00:00\n'},{id:'engenharia-solucao-original',codigo:engenharia.solution,saida:''});
+ casos.push({id:'relogio-com-leituras',codigo:relogio.code,saida:obterSolucao(relogio.id)+'\n'},{id:'relogio-cruza-mes',codigo:relogio.code.replace('2026,10,6','2026,12,31'),saida:'2026-12-31\n2027-01-03\n2\n'});
+ const implementacoes={
+  correto:'if(dias<0)throw new ArgumentOutOfRangeException(nameof(dias));return relogio.Agora.AddDays(dias);',
+  constante:'if(dias<0)throw new ArgumentOutOfRangeException(nameof(dias));return relogio.Agora;',
+  negativo:'return relogio.Agora.AddDays(dias);',
+  parametro:'if(dias<0)throw new ArgumentOutOfRangeException("valor");return relogio.Agora.AddDays(dias);'
+ };
+ for(const opcao of testes.options)for(const [nome,corpo] of Object.entries(implementacoes)){
+  const detectou=opcao.id==='contrato'?nome==='correto':opcao.id==='caso-comum'?nome!=='constante':true;
+  const codigo=opcao.text+'\nvar origem=new DateTimeOffset(2026,10,6,12,0,0,TimeSpan.Zero);\nConsole.WriteLine(Conferir(new Servico(new Relogio(origem)),origem));\ninterface IRelogio {DateTimeOffset Agora {get;}}\nrecord Relogio(DateTimeOffset Agora):IRelogio;\nsealed class Servico(IRelogio relogio) { public DateTimeOffset Agendar(int dias) {'+corpo+'} }';
+  casos.push({id:'oraculo-'+opcao.id+'-'+nome,codigo,saida:detectou?'True\n':'False\n'});
+ }
  const pasta=join(raiz,'csharp-avancado');await mkdir(pasta);
  await writeFile(join(pasta,'NuGet.Config'),'<configuration><packageSources><clear /></packageSources></configuration>');
  await writeFile(join(pasta,'Avancado.csproj'),'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><LangVersion>14.0</LangVersion><Nullable>enable</Nullable><TreatWarningsAsErrors>true</TreatWarningsAsErrors></PropertyGroup></Project>');
@@ -123,5 +138,17 @@ static void Conferir(string nome, Action executar, string esperada, string? erro
  const executar=argumentos=>{const r=spawnSync('dotnet',argumentos,{encoding:'utf8',timeout:90000,maxBuffer:256*1024,env:ambiente});if(r.error)throw r.error;assert.equal(r.status,0,r.stdout+r.stderr);return r.stdout;};
  executar(['build',join(pasta,'Avancado.csproj'),'--configuration','Release','--nologo','--verbosity','quiet','--configfile',join(pasta,'NuGet.Config')]);
  const saida=executar([join(pasta,'bin','Release','net10.0','Avancado.dll')]);assert.equal(saida.trim().split(/\r?\n/).length,casos.length);process.stdout.write(saida);
- return casos.length;
+ const publicacao=join(pasta,'agenda');await mkdir(publicacao);
+ await writeFile(join(publicacao,'NuGet.Config'),'<configuration><packageSources><clear /></packageSources></configuration>');
+ const projeto=join(publicacao,'Agenda.csproj'),entrega=join(publicacao,'entrega');
+ await writeFile(projeto,'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><LangVersion>14.0</LangVersion><Nullable>enable</Nullable><TreatWarningsAsErrors>true</TreatWarningsAsErrors><SelfContained>false</SelfContained><UseAppHost>false</UseAppHost></PropertyGroup></Project>');
+ await writeFile(join(publicacao,'Program.cs'),engenharia.code);
+ executar(['restore',projeto,'--configfile',join(publicacao,'NuGet.Config'),'--nologo','--verbosity','quiet']);
+ executar(['publish',projeto,'--configuration','Release','--no-restore','--nologo','--verbosity','quiet','--output',entrega]);
+ await writeFile(join(publicacao,'Program.cs'),'using System; Console.WriteLine("workspace alterado");');
+ const pastaVazia=join(pasta,'fora-do-workspace');await mkdir(pastaVazia);
+ const smoke=spawnSync('dotnet',[join(entrega,'Agenda.dll')],{cwd:pastaVazia,encoding:'utf8',timeout:10000,maxBuffer:32768,env:ambiente});
+ if(smoke.error)throw smoke.error;assert.equal(smoke.status,0,smoke.stdout+smoke.stderr);assert.equal(smoke.stdout.replace(/\r\n/g,'\n'),'2026-10-08T12:00:00.0000000+00:00\n');
+ console.log('OK C# avançado artefato publicado fora do workspace');
+ return casos.length+1;
 }

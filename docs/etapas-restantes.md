@@ -19,7 +19,7 @@ A orientação humana mais recente fixa uma meta de aproximadamente **12 PRs a p
 | L03 | Projetos API e entrega: persistência, integração e revisão do produto. | Entregue na [PR #94](https://github.com/renancodando/CodeLab/pull/94); main `8bf105b6`, CI/revisão/deployment e fluxos públicos conferidos. |
 | L04 | HTML plataforma e as duas aulas avançadas de CSS. | Entregue na [PR #95](https://github.com/renancodando/CodeLab/pull/95); main `ef6ad8ca`, CI/revisão/deployment e contratos públicos conferidos. |
 | L05 | As duas aulas assíncronas de JavaScript e as três de genéricos/tipos TypeScript. | Entregue na [PR #96](https://github.com/renancodando/CodeLab/pull/96); main `6b20f2dc`, CI/revisão/deployment e contratos públicos conferidos. |
-| L06 | As três aulas avançadas de C# e referências .NET 10. | Branch `conteudo/csharp-avancado-20261106`; objetos preparados e verificados localmente, runtime e engenharia pendentes. |
+| L06 | As três aulas avançadas de C# e referências .NET 10. | Branch `conteudo/csharp-avancado-20261106`; nove pausas e referências preparadas, aguardando gates próprios. |
 | L07 | Concorrência e engenharia C++20, com comportamento definido e ferramentas. | Planejado. |
 | L08 | As três aulas avançadas SQL/PostgreSQL, com verificações próprias de cada mecanismo. | Planejado. |
 | L09 | Consolidar algoritmos, estruturas de dados e testes com transferência e defeitos detectáveis. | Planejado. |
@@ -69,3 +69,5 @@ A revisão espaçada, sessão diária, domínio por habilidade, projetos progres
 ## Frente encerrada nesta retomada: sincronização local
 
 O checkout `work/CodeLab` foi sincronizado com main, mantendo os dois commits anteriores na branch local `local-preservado-20261007`. Os três arquivos não rastreados foram preservados em `outputs/preservado-local-20261007`, com SHA256 no manifest.json. A falha anterior de preparação de ACLs foi contornada sem alterar ACLs do sistema; nesta retomada, leituras/edições no workspace funcionaram no executor padrão, e a publicação usou a autorização de rede necessária. Conferir o estado Git antes das próximas atualizações.
+
+No lote L11, conferir os limites de tokens na normalização das respostas TypeScript (por exemplo, identificadores separados por espaços). A inspeção do normalizador que remove todos os espaços merece um caso próprio; não tratar a revisão de C# como aprovação desse caminho TypeScript. Preservar equivalências válidas sem aceitar tokens quebrados.
