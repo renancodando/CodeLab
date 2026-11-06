@@ -1,0 +1,15 @@
+# L06 publicado — PR #97 — 06/11/2026
+
+Seis dos aproximadamente doze lotes entregues: #92–#97. Restam L07–L12 (~6), sem reiniciar a contagem. Catálogo publicado: 137 aulas, 310 atividades, 133 aulas com pausas e quatro sem (C++1, SQL3). Nove pausas C# conceituais com referências nativas; não concluem a linguagem nem equivalem à compilação da resposta do aluno. Projetos permanecem produção pelo aluno e rubrica manual.
+
+PR https://github.com/renancodando/CodeLab/pull/97. Head 557d669e03d105b19edda40b1f3ee6ccad5b6dbe, revisão desse SHA concluída sem achados/threads pendentes. CI 42239218619 success em 4 min 55 s (15:01:49–15:06:44 UTC): 185 contratos em cinco arquivos, família C# 14/.NET 10 com 47 casos e um console realmente publicado/executado fora do workspace, tipos/catálogo/build e nove fluxos Chromium em 3 min. Sem baterias de outras linguagens ou navegador/build local repetidos.
+
+Merge/main 98b1dcba6cb9fcb3f40d98a539dc190cba7b691a. Árvore 82faad4b884d9422ac71c99c0e78a6958a7fb5c5 igual ao head revisado; pais 6b20f2dce5dd8bdf33ead9a555b8f8bf8872dbe1 e 557d669e03d105b19edda40b1f3ee6ccad5b6dbe conferidos. Checkout sincronizado limpo por fast-forward. Pós-merge 42240149250 success no SHA real: build e dois smokes em 21,8 s, sem repetir unitários/referências.
+
+Deployment dpl_9mufLd8j3o1ofwrwMvSXyDPahXBt READY/production, projeto prj_XgncY54wYGiSgPH0n1JOol3UFWCn e alias code-lab-omega.vercel.app conferidos antes/depois dos contratos públicos, sempre no merge esperado.
+
+Primeira rodada pública: backup/importação passou (39,4 s); axe/responsividade excedeu 60 s; offline chegou à produção JS com feedback de ambiente não iniciado. Traces preservados em test-results local. Worker e WASM retornaram HTTP 200, inclusive no offline; a causa exata não foi estabelecida. Não afirmar defeito corrigido, falha independente ou pressão do computador sem prova. Não houve alteração em timeout/retries, asserções, qualidade visual ou código entre as rodadas.
+
+Repetidos somente os dois cenários afetados, em nova pasta de artefatos outputs/pr97-publico-repeticao-20261106: axe/responsividade 220–4000 px passou em 23,8 s; offline passou em 17,1 s, total 1,8 min, processo exit 0. Backup não foi repetido. Deployment/SHA/projeto/alias reconferidos depois. Contratos públicos validados com registro das falhas iniciais não reproduzidas; investigar novamente no L12, junto ao histórico da PR #95. Não declarar a edição finalizada nem a instabilidade resolvida por esses resultados.
+
+Próximo L07, cpp-concorrencia-engenharia: vida de jthread, atualizações atômicas e ligação entre unidades de tradução, com C++20 explícito e exemplos definidos. G++ local encontrado em C:/msys64/ucrt64/bin/g++.exe, versão 16.1.0; CMake não encontrado no PATH, não alegar build CMake executado. Fontes primárias N4861 consultadas para jthread, atomics e ODR. Sem novas aulas ou expansão de clima. Depois L08 SQL, L09 algoritmos/estruturas/testes, L10 redes/Git/arquitetura, L11 projetos/corretores/resíduos, L12 fechamento amplo. Preservar aparência/local-first/isolamento/limites/offline/backups.
