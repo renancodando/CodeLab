@@ -13,6 +13,7 @@ import {montarCasosNumeros} from '../tests/fixtures/python-numeros.mjs';
 import {montarCasosCsv} from '../tests/fixtures/python-csv.mjs';
 import {montarCasosDescritores} from '../tests/fixtures/python-descritores.mjs';
 import {verificarModulosTypeScript} from '../tests/fixtures/typescript-modulos.mjs';
+import {verificarGenericosTypeScript} from '../tests/fixtures/typescript-genericos.mjs';
 import {verificarConceitosCpp} from '../tests/fixtures/cpp-conceitos.mjs';
 import {verificarPosseCpp} from '../tests/fixtures/cpp-posse.mjs';
 import {verificarTextoCpp} from '../tests/fixtures/cpp-texto.mjs';
@@ -34,7 +35,7 @@ import {verificarProjetoApi} from '../tests/fixtures/projeto-api.mjs';
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
 const indiceFamilia=process.argv.indexOf('--familia');
 const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
-const grupos=['projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+const grupos=['typescript-genericos','projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
 if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
 const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
@@ -94,6 +95,7 @@ try{
  const compileContent=source=>ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
  const asUrl=source=>'data:text/javascript;base64,'+Buffer.from(source).toString('base64');
  const {practiceActivities,getPracticeSolution}=await carregarPraticas();
+ if(selecionar('typescript-genericos'))console.log((await verificarGenericosTypeScript(root,practiceActivities,getPracticeSolution))+' cenários TypeScript strict de genéricos, ausência e correlação conferidos.');
  const cenariosProjetoApi=selecionar('projeto-api')?await verificarProjetoApi(root,practiceActivities,getPracticeSolution):0;
  const cenariosModulos=selecionar('typescript-modulos')?await verificarModulosTypeScript(root,practiceActivities,getPracticeSolution):0;
  const cenariosConceitos=selecionar('cpp-conceitos')?await verificarConceitosCpp(root,practiceActivities,getPracticeSolution):0;
