@@ -1,0 +1,21 @@
+# L09 publicado — PR #100
+
+Nove dos aproximadamente doze lotes entregues: L01 #92, L02 #93, L03 #94, L04 #95, L05 #96, L06 #97, L07 #98, L08 #99, L09 #100. Restam L10–L12 (~3). Não reiniciar doze, não inflar aulas/etapas/recursos.
+
+PR https://github.com/renancodando/CodeLab/pull/100; head revisado 39e8eb1f56bc6f75ef7bcc477fded4413c3d07d1; merge/main 5703fd72ed38b7220999a4dad1a136d0ca0b1e9c. Árvore f11dc62222496f1723864d1b0e4ffac77e78777f igual à revisada, pais dc186bd442afb132779a1acc58333ab044f835d2 e o head. CI/revisão/Vercel status conferidos antes do merge. Checkout main limpo, sincronizado por avanço direto; fonte relevante remota.
+
+CI 42308797900 aprovado em 7 min 01 s (23:00:07–23:07:08 UTC): 306 contratos em 12 arquivos, interoperabilidade ZIP real com Python, tipos/catálogo/build de 157 páginas e 20 fluxos Chromium em 4,9 min. Jobs 128204849240/128204978886/128205452375. Três fluxos próprios passaram: algoritmos 14,2 s, estruturas 10,5 s, testes 17,2 s. Confirmam nova bancada com referência executável, preservação de rascunho anterior, mutante com diagnóstico e persistência, limite 12, 220/4000 no percurso e ausência de domínio por execução livre.
+
+Local: 28 contratos iniciais (16 novos e 12 existentes) aprovados; casos específicos de pagamento/seleção/editorial repetidos quando afetados; catálogo/tipos e descoberta dos três fluxos aprovados. Não repetiu navegador/suíte geral localmente. Família project-archive foi registrada no seletor: somente formato ZIP com Python, sem compilação de projetos/execução de aluno. Plano real selecionou só essa família, PostgreSQL false e a API dos smokes compartilhados.
+
+Primeiro CI 42304855298 parou em contrato editorial após 304 contratos aprovados. Aprofundamentos foram incorporados aos dois parágrafos e três checkpoints existentes, sem remover texto ou enfraquecer asserção (02f85ab). CI 42305283332 desse head passou, mas não foi usado para aprovar o head seguinte.
+
+Revisão encontrou defeito real no exemplo assíncrono: a rejeição final não aparecia no QuickJS. Novo teste reproduziu logs vazios; exemplo e solução agora relatam Falha na conferência pelo console.log suportado. Controle exige conclusão e mutante exige diagnóstico sem sucesso, ambos executados no QuickJS. Não alterou executor/limites. Thread PRRT_kwDOUi7gEc60t8Tm resolvida após correção/teste/push e nova revisão do head 39e8eb1 concluída sem findings/pendências.
+
+Pós-merge 42309918225 aprovado em 23:09:13–23:11:55 UTC no merge exato, build e dois smokes em 41,7 s, jobs 128208522743/128208602016/128208926324. Não repetiu unidades/referências.
+
+Produção dpl_27nka8DZjucsWkU7tmKgdXzMCqXz READY/production, SHA 5703fd72ed38b7220999a4dad1a136d0ca0b1e9c, projeto prj_XgncY54wYGiSgPH0n1JOol3UFWCn, alias code-lab-omega.vercel.app, conferidos antes/depois. Três públicos passaram na primeira rodada em 1,8 min: axe/220–4000 28,8 s, offline 40,0 s, backup/importação 18,4 s. Artefatos em outputs/pr100-publico-artefatos-20261106; metadados pr100-alias-antes/depois-20261106.json. Esse sucesso não resolve a causa dos timeouts públicos históricos registrados para L12.
+
+Mantém 137 aulas, 322 atividades, seis percursos/18 etapas e oito projetos. Referências de algoritmos/estruturas/testes completas; produção independente continua manual, decisão conceitual não equivale à execução, abrir/executar exemplo não gera domínio. Todas as aulas têm presença de pausa; não declarar profundidade/edição concluídas.
+
+Próximo L10: completar referências/aplicação nas etapas existentes de redes/Git/arquitetura. Exemplos atuais incluem fragmentos e dependências externas; bancada Git continua modelo de trabalho/index/HEAD, não simulação completa de Git. Verificador Git existente já confere cinco cenários reais (inclui conflito e revert) em repo descartável. Preservar esses recursos; qualquer novo comando deve ficar em repo de estudo seguro. Fontes oficiais Git reflog/reset/revert e Node HTTP consultadas, sem scraping ou novos serviços. Depois L11 oito projetos/corretores/resíduos (tokens TS e ORDER BY externo SQL) e L12 fechamento amplo, docs e instabilidade pública. Validação proporcional permanece: casos afetados localmente, checks pertinentes na PR, pós-merge dois smokes, produção três contratos distintos; suíte ampla só L12.
