@@ -1,5 +1,8 @@
 # CODELAB
 
+Escopo e limitações desta edição: [contrato curricular](docs/fechamento-edicao.md). As métricas são geradas; CI, revisão e publicação de cada SHA têm recibos próprios.
+
+
 Plataforma de estudo de programação com trilhas, aulas e missões de código. Sem login, contas ou banco de usuários: nome, progresso, rascunhos e projetos ficam somente no `localStorage` deste navegador. Exportação e importação JSON permitem levar a jornada a outro dispositivo.
 
 ## Executar
