@@ -54,6 +54,7 @@ export function selecionarImpacto(arquivos,ids=[],catalogo={unidades:[],navegado
  const conteudo=arquivos.some(p=>/^src\/content\/|^docs\/.*\.json$|generate-curriculum|gerar-metricas/.test(p));
  const adicionar=(nome)=>{for(const p of catalogo.unidades)if(p.endsWith('/'+nome+'.test.ts'))unidades.add(p);for(const p of catalogo.navegador)if(p.endsWith('/'+nome+'.spec.ts'))navegador.add(p);if(nativas.includes(nome))familias.add(nome);};
  for(const p of arquivos){
+  if(p==='src/content/practice.ts'||p.startsWith('src/content/deep/'))adicionar('ancoras-praticas');
   if(p.startsWith('src/')&&!centrais.includes(p)&&!planejamentoAprendizagem.includes(p)&&!Array.isArray(catalogo.aulasPorModulo?.[p]))for(const [teste,texto] of Object.entries(catalogo.textos))if(importaArquivo(teste,texto,p)){
    if(teste.startsWith('tests/unit/'))unidades.add(teste);else navegador.add(teste);
    const nome=teste.split('/').at(-1).replace(/\.(test|spec)\.ts$/,'');if(nativas.includes(nome))familias.add(nome);

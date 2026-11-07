@@ -66,3 +66,6 @@ A família git-percursos executa somente os três gabaritos Bash publicados no p
 
 
 A família projetos-python executa apenas os arquivos iniciais da biblioteca: unittest, mutante and/or, importação silenciosa, CLI inicial e CSV. Usa pasta temporária própria e não executa código recebido do estudante. Não exige .NET/PostgreSQL nem equivale a executar o projeto completo. O L11 repete primeiro os cenários que falharam; catálogo/tipos e contratos gerais ficam no CI do lote.
+
+
+O contrato de âncoras fica em ancoras-praticas.test.ts e confere posições exatas, inclusive aplicações após exemplo/erro e antes da solução. Mudanças em src/content/practice.ts ou nos capítulos profundos o selecionam diretamente, sem exigir a suíte inteira para perceber uma alteração de âncora. A primeira rodada ampla do L12 identificou a premissa histórica de teoria apenas; a correção foi repetida primeiro em dois casos específicos.

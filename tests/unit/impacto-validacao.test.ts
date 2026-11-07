@@ -172,3 +172,7 @@ it('a revisão do projeto Python usa só suas referências e dispensa outros com
  const plano=selecionarImpacto(['tests/fixtures/projetos-python.mjs'],[],{unidades:['tests/unit/projetos-python.test.ts'],navegador:[],textos:{}});
  expect(plano.familias).toEqual(['projetos-python']);expect(plano.unidades).toEqual(['tests/unit/projetos-python.test.ts']);expect(plano.dotnet).toBe(false);expect(plano.postgres).toBe(false);
 });
+
+it('mudanças nas pausas ou capítulos conferem o contrato geral de âncoras',()=>{
+ for(const arquivo of ['src/content/practice.ts','src/content/deep/types.ts']){const plano=selecionarImpacto([arquivo],[],{unidades:['tests/unit/ancoras-praticas.test.ts'],navegador:[],textos:{}});expect(plano.unidades).toContain('tests/unit/ancoras-praticas.test.ts');}
+});
