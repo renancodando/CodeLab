@@ -18,11 +18,11 @@ it.each([
 });
 it('a transformação aceita os dois tipos equivalentes e recusa perda de informação',async()=>{
  const id='ts-relacoes-completar-transformacao';for(const certa of ['U[]','Array<U>',' Array < U > '])expect((await evaluatePractice(id,certa)).passed).toBe(true);
- for(const errada of ['T[]','any[]','unknown[]','U','u[]','readonly U[]','U[]; return []'])expect((await evaluatePractice(id,errada)).passed).toBe(false);
+ for(const errada of ['T[]','any[]','unknown[]','U','u[]','readonly U[]','U[]; return []','Arr ay<U>','A r r a y<U>'])expect((await evaluatePractice(id,errada)).passed).toBe(false);
 });
 it('a distribuição distingue a união inteira e aceita as duas notações de array',async()=>{
  const id='ts-avancados-prever-distribuicao';for(const certa of ['string[]\nnever','Array < string >\nnever'])expect((await evaluatePractice(id,certa)).passed).toBe(true);
- for(const errada of ['string[]\nstring[]','never\nnever','Array<number>\nnever','string[]','String[]\nnever'])expect((await evaluatePractice(id,errada)).passed).toBe(false);
+ for(const errada of ['string[]\nstring[]','never\nnever','Array<number>\nnever','string[]','String[]\nnever','str ing[]\nnever','string[]\nne ver','Arr ay<string>\nnever'])expect((await evaluatePractice(id,errada)).passed).toBe(false);
 });
 it('o agrupamento exige os blocos, a inicialização e o retorno após o laço',async()=>{
  const id='ts-genericos-montar-grupos',ordem=['abrir','mapa','percorrer','inserir','fim-laco','retornar','fechar'];
