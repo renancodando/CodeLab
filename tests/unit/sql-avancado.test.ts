@@ -80,3 +80,13 @@ it('recursão interrompe UNION ALL na primeira divergência antes de consultar c
  const r=await conferirConsultaSql(idAlcance,alcance.replace(' UNION SELECT',' UNION ALL SELECT'),async(codigo,preparacao)=>{chamadas++;if(chamadas>1)throw Error('Não deve alcançar a base cíclica após falhar no DAG.');return executarConsultaSql(SQL,codigo,preparacao);});expect(r.aprovado).toBe(false);expect(chamadas).toBe(1);
 });
 it('esquema prepara multiplicidade e ausência antes da correção recursiva',()=>{expect(practicesForLesson('sql-esquema-avancado').map(p=>p.afterBlock)).toEqual([3,4,8]);});
+
+it('ordem externa é exigida mesmo quando a janela ordena as seis bases por acaso',async()=>{
+ const semOrdem=acumulado.replace(' ORDER BY conta_id,instante,id','');
+ const r=await evaluatePractice(idAcumulado,semOrdem);expect(r).toMatchObject({passed:false,evidence:'executed',execution:'sqlite'});expect(r.tests.filter(t=>t.passed)).toHaveLength(6);expect(r.feedback).toContain('ordem externa');
+});
+it('ordem externa distingue cláusula de texto, comentário e subconsulta',async()=>{
+ const semOrdem=acumulado.replace(' ORDER BY conta_id,instante,id','');
+ for(const consulta of [semOrdem+' -- ORDER BY conta_id,instante,id',semOrdem.replace('SELECT conta_id',"SELECT /* ORDER BY conta_id,instante,id */ conta_id"),'SELECT * FROM ('+acumulado.replace(/;$/,'')+')',semOrdem.replace("estado='confirmado'","estado='confirmado' AND 'ORDER BY'='ORDER BY'")])expect((await evaluatePractice(idAcumulado,consulta)).passed).toBe(false);
+ for(const consulta of [acumulado.replace('ORDER BY conta_id,instante,id','ORDER /* separador */ BY conta_id,instante,id'),'WITH [ORDER BY] AS ('+acumulado.replace(/;$/,'')+') SELECT conta_id,id,acumulado FROM [ORDER BY] JOIN movimentos USING(id,conta_id) ORDER BY conta_id,instante,id;'])expect((await evaluatePractice(idAcumulado,consulta)).passed).toBe(true);
+});

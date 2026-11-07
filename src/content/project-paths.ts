@@ -831,8 +831,8 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Um título usado só para tamanho de fonte altera a hierarquia. Reorganize o conteúdo antes de ajustar a aparência.",
         "transfer": "Acrescente um quinto tema sem quebrar a estrutura.",
         "lessonIds": [
-          "documento",
-          "semantica"
+          "html-documentos",
+          "html-texto-links"
         ]
       },
       {
@@ -864,8 +864,8 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Um placeholder não substitui label. Um botão sem type dentro do formulário pode submeter quando deveria cancelar.",
         "transfer": "Adicione descrição opcional sem transformar campo vazio em erro.",
         "lessonIds": [
-          "formularios",
-          "html-acessivel"
+          "html-formularios",
+          "html-dados-formulario"
         ]
       },
       {
@@ -897,8 +897,8 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "min-width implícito pode fazer um cartão exceder sua trilha. Investigue min-width:0 e quebra de texto em vez de ocultar o overflow.",
         "transfer": "Inclua um painel lateral somente quando houver espaço suficiente.",
         "lessonIds": [
-          "grid-responsivo",
-          "box-model"
+          "css-caixas-intrinseco",
+          "css-responsivo"
         ]
       },
       {
@@ -930,9 +930,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Guardar o índice filtrado como identidade pode editar outro recurso. Use um id estável.",
         "transfer": "Inclua ordenação sem alterar a coleção original.",
         "lessonIds": [
-          "selecionar",
-          "eventos",
-          "estado-formulario"
+          "html-plataforma"
         ]
       },
       {
@@ -964,8 +962,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "fetch não rejeita automaticamente todo status de erro. Valide ok/status e o contrato dos dados separadamente.",
         "transfer": "Troque o transporte falso por HTTP local mantendo os mesmos testes.",
         "lessonIds": [
-          "async",
-          "fetch-estados"
+          "js-assincrono"
         ]
       },
       {
@@ -991,13 +988,13 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Importe versão desconhecida e compare os dados anteriores.",
-          "Simule armazenamento que lança erro ao salvar."
+          "Exporte um catálogo válido e registre sua contagem. Importe JSON truncado e depois uma versão desconhecida: ambos devem conservar os recursos e permitir nova exportação.",
+          "Induza uma falha real de gravação no armazenamento de um perfil descartável; registre o aviso e confira os dados recuperáveis após reload. Um adaptador que lança ajuda no teste de unidade, mas não prova quota real."
         ],
         "diagnosis": "Confirmar 'salvo' depois de capturar uma exceção é um defeito de recuperação. Mostre o estado real e permita exportar.",
         "transfer": "Migre uma versão anterior preservando uma cópia original.",
         "lessonIds": [
-          "armazenamento"
+          "js-modulos-engenharia"
         ]
       },
       {
@@ -1023,13 +1020,13 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Introduza temporariamente o bug de índice filtrado e observe falha.",
-          "Execute o fluxo cadastrar, editar, filtrar, exportar, recarregar."
+          "Crie dois recursos com o mesmo título e IDs diferentes. Edite apenas um; confira identidade, quantidade e o outro título antes/depois. Troque a comparação por título e comprove que o teste falha.",
+          "Controle duas respostas: inicie A, depois B; resolva B e rejeite A. O catálogo continua sendo B e a falha antiga não apaga os dados. Repita invertendo sucesso/erro, sem esperar um tempo arbitrário."
         ],
         "diagnosis": "Uma asserção que somente conta elementos não prova que editou o recurso certo. Compare id e conteúdo.",
         "transfer": "Adicione uma funcionalidade e escreva seu caso de regressão antes de integrá-la.",
         "lessonIds": [
-          "fullstack-testes"
+          "html-acessibilidade"
         ]
       },
       {
@@ -1061,7 +1058,8 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Um link público sem revisão não demonstra que todos os comportamentos funcionam. Registre o que foi observado e o que depende de ambiente.",
         "transfer": "Reutilize o domínio para um caderno de receitas sem copiar a interface inteira.",
         "lessonIds": [
-          "projeto-entrega"
+          "css-responsivo",
+          "html-acessibilidade"
         ]
       }
     ],
@@ -1123,7 +1121,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Um token chamado verde1 não explica sua finalidade; nomeie texto, superfície ou ação.",
         "transfer": "Transfira tokens para outro catálogo.",
         "lessonIds": [
-          "cascata"
+          "css-cascata-camadas"
         ]
       },
       {
@@ -1155,7 +1153,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Fixar height em cartão pode cortar traduções ou texto ampliado.",
         "transfer": "Inclua resumo em outro idioma.",
         "lessonIds": [
-          "box-model"
+          "css-caixas-intrinseco"
         ]
       },
       {
@@ -1186,7 +1184,8 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "1fr sozinho não remove todo mínimo intrínseco; inspecione a trilha e seus filhos.",
         "transfer": "Adicione painel de filtros adaptativo.",
         "lessonIds": [
-          "grid-responsivo"
+          "css-grid-trilhas",
+          "css-flex-grid"
         ]
       },
       {
@@ -1217,8 +1216,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Uma regra global com alta especificidade pode impedir estado local.",
         "transfer": "Inclua novo componente com os mesmos tokens.",
         "lessonIds": [
-          "formularios",
-          "html-acessivel"
+          "html-acessibilidade"
         ]
       },
       {
@@ -1249,7 +1247,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Desligar toda transição não deve remover a indicação de mudança de estado.",
         "transfer": "Inclua impressão legível.",
         "lessonIds": [
-          "animacoes"
+          "css-visual-movimento"
         ]
       },
       {
@@ -1274,13 +1272,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Insira título de 120 caracteres.",
-          "Compare estilos computados em duas larguras."
+          "Em 220, 400, 1280 e 4000 px, use título de 200 caracteres e URL sem espaços. Meça scrollWidth - innerWidth e descubra qual caixa impõe o mínimo; não use overflow:hidden para ocultá-la.",
+          "Com teclado, percorra cartões curtos/longos e a navegação em zoom 200%. Registre a sequência de foco e compare com a ordem no DOM, inclusive com reduced motion."
         ],
         "diagnosis": "overflow:hidden pode esconder o sintoma e o conteúdo. Corrija a restrição responsável.",
         "transfer": "Reproduza um defeito em uma página mínima.",
         "lessonIds": [
-          "flex-position"
+          "css-arquitetura",
+          "css-containers-contexto"
         ]
       },
       {
@@ -1311,7 +1310,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Uma captura de tela só registra um estado. A entrega precisa dos estados e casos extremos.",
         "transfer": "Aplique o sistema a um mural de eventos.",
         "lessonIds": [
-          "projeto-entrega"
+          "css-responsivo"
         ]
       }
     ],
@@ -1374,8 +1373,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "O índice da lista não é identidade duradoura.",
         "transfer": "Adicione um estado arquivado com regra própria.",
         "lessonIds": [
-          "funcoes",
-          "colecoes"
+          "js-funcoes-this"
         ]
       },
       {
@@ -1406,8 +1404,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "O filtro pode mudar posições; procure pelo id antes da alteração.",
         "transfer": "Inclua filtro por prioridade.",
         "lessonIds": [
-          "eventos",
-          "estado-formulario"
+          "html-plataforma"
         ]
       },
       {
@@ -1438,7 +1435,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Spread copia apenas um nível; referência compartilhada pode corromper snapshots.",
         "transfer": "Implemente refazer e explique a invalidação após nova edição.",
         "lessonIds": [
-          "objetos-modulos"
+          "js-closures-estado"
         ]
       },
       {
@@ -1469,8 +1466,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "JSON válido ainda pode quebrar o contrato.",
         "transfer": "Migre um formato antigo documentado.",
         "lessonIds": [
-          "erros-json",
-          "armazenamento"
+          "js-modulos-engenharia"
         ]
       },
       {
@@ -1501,8 +1497,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Uma exceção antiga também pode sobrescrever estado atual.",
         "transfer": "Acrescente chave de idempotência a uma intenção de envio.",
         "lessonIds": [
-          "async",
-          "fetch-estados"
+          "js-assincrono"
         ]
       },
       {
@@ -1527,13 +1522,13 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Introduza os dois defeitos temporariamente.",
-          "Teste tarefa inexistente e histórico vazio."
+          "Crie tarefas A/B, edite A, desfaça e confira B intacta. Depois altere o objeto usado na edição: o snapshot antigo não deve mudar. Substitua a cópia por uma referência e confirme a falha.",
+          "Use promises controladas: B termina antes de A; faça A rejeitar depois. Confira dados, erro e dono do loading. Repita com duas instâncias do quadro para detectar estado global compartilhado."
         ],
         "diagnosis": "Contar tarefas não demonstra que o conteúdo certo foi alterado.",
         "transfer": "Adicione uma operação e seu caso antes de implementar.",
         "lessonIds": [
-          "fullstack-testes"
+          "js-promessas-contratos"
         ]
       },
       {
@@ -1564,8 +1559,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Uma extensão que espalha a regra em cada botão revela uma fronteira fraca.",
         "transfer": "Transforme o quadro em organizador de leitura preservando as funções úteis.",
         "lessonIds": [
-          "fullstack-arquitetura",
-          "projeto-entrega"
+          "js-modulos-engenharia"
         ]
       }
     ],
@@ -1626,7 +1620,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Um objeto com todos os campos opcionais permite combinações inválidas.",
         "transfer": "Adicione estado vazio sem perder a distinção de erro.",
-        "lessonIds": []
+        "lessonIds": [
+          "ts-contratos"
+        ]
       },
       {
         "id": "validacao",
@@ -1655,7 +1651,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "valor as Item muda a visão do compilador, não valida dado real.",
         "transfer": "Valide uma versão de API com campo opcional.",
-        "lessonIds": []
+        "lessonIds": [
+          "ts-validacao-aninhada"
+        ]
       },
       {
         "id": "transporte",
@@ -1685,8 +1683,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Tipar response.json como Item[] não prova formato recebido.",
         "transfer": "Ligue HTTP local sem mudar os validadores.",
         "lessonIds": [
-          "http",
-          "async"
+          "ts-fronteiras-qualidade"
         ]
       },
       {
@@ -1716,7 +1713,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Concatenar páginas cegamente duplica itens e mistura consultas.",
         "transfer": "Acrescente cursor em vez de número de página.",
-        "lessonIds": []
+        "lessonIds": [
+          "ts-genericos-relacoes"
+        ]
       },
       {
         "id": "cache",
@@ -1746,7 +1745,7 @@ export const capstoneProjects:CapstoneProject[] = [
         "diagnosis": "Dados salvos antes também podem estar inválidos.",
         "transfer": "Migre cache antigo por função explícita.",
         "lessonIds": [
-          "armazenamento"
+          "ts-validacao-aninhada"
         ]
       },
       {
@@ -1771,12 +1770,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Teste três casos que compilam mas recebem dados inválidos.",
-          "Teste uma combinação de estado impossível."
+          "Execute tsc -p tsconfig.json e guarde o diagnóstico de um estado de sucesso sem dados. Retire o erro de propósito antes de exigir build verde; transpilar sem conferir tipos não valida esse contrato.",
+          "Execute os validadores com null, [], campo id numérico e título ausente, além de lista vazia e dois itens válidos. Compare o caminho informado no erro. Acrescente um cast que contorne a validação e confirme que o teste de runtime falha."
         ],
         "diagnosis": "Um build verde não prova que um JSON externo é confiável.",
         "transfer": "Adicione uma propriedade e avalie a migração.",
-        "lessonIds": []
+        "lessonIds": [
+          "ts-fronteiras-qualidade"
+        ]
       },
       {
         "id": "entrega",
@@ -1805,7 +1806,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Documentação sem exemplo de falha deixa o contrato incompleto.",
         "transfer": "Troque o catálogo por agenda mantendo fronteiras.",
-        "lessonIds": []
+        "lessonIds": [
+          "ts-modulos-configuracao"
+        ]
       }
     ],
     "references": [
@@ -1836,7 +1839,8 @@ export const capstoneProjects:CapstoneProject[] = [
     "starterFiles": {
       "app.py": "import argparse\n\n\ndef montar_parser():\n    parser = argparse.ArgumentParser(description='Biblioteca local')\n    parser.add_argument('comando', choices=['listar'])\n    return parser\n\n\ndef main():\n    args = montar_parser().parse_args()\n    if args.comando == 'listar':\n        print('Catálogo ainda vazio')\n\n\nif __name__ == '__main__':\n    main()\n",
       "dominio.py": "def pode_emprestar(disponiveis, ativos, limite):\n    return disponiveis > 0 and ativos < limite\n",
-      "dados.csv": "id,titulo,exemplares\n1,Histórias do bairro,3\n2,Primeiros algoritmos,2\n"
+      "dados.csv": "id,titulo,exemplares\n1,Histórias do bairro,3\n2,Primeiros algoritmos,2\n",
+      "test_dominio.py": "import unittest\n\nfrom dominio import pode_emprestar\n\n\nclass RegrasDeEmprestimo(unittest.TestCase):\n    def test_disponibilidade_e_limite(self):\n        casos = [(0, 0, 2, False), (1, 2, 2, False),\n                 (1, 1, 2, True), (0, 2, 2, False)]\n        for disponiveis, ativos, limite, esperado in casos:\n            with self.subTest(disponiveis=disponiveis, ativos=ativos):\n                self.assertIs(pode_emprestar(disponiveis, ativos, limite), esperado)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
     },
     "milestones": [
       {
@@ -1861,12 +1865,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Teste 0/1 exemplar e limite-1/limite.",
-          "Rastreie as entradas sem executor."
+          "Antes de alterar a base, execute python -m unittest -v: test_dominio.py confere quatro combinações de disponibilidade e limite. Esse teste inicial não comprova CLI, banco, devolução ou o projeto completo.",
+          "Troque and por or em pode_emprestar e execute somente python -m unittest -v test_dominio. Deve falhar para estoque zero e para limite atingido. Recupere sua implementação e acrescente o contrato da devolução duplicada."
         ],
         "diagnosis": "Um or pode permitir empréstimo mesmo sem exemplar.",
         "transfer": "Acrescente regra de reserva sem acoplar ao CLI.",
-        "lessonIds": []
+        "lessonIds": [
+          "py-funcoes-contratos"
+        ]
       },
       {
         "id": "cli",
@@ -1895,7 +1901,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Código no topo do módulo pode rodar durante importação de teste.",
         "transfer": "Adicione opção de formato JSON.",
-        "lessonIds": []
+        "lessonIds": [
+          "py-biblioteca-dados"
+        ]
       },
       {
         "id": "persistencia",
@@ -1924,7 +1932,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "SQLite exige configuração de foreign_keys por conexão; apenas declarar FK não basta.",
         "transfer": "Inclua índice para uma consulta medida.",
-        "lessonIds": []
+        "lessonIds": [
+          "py-biblioteca-dados"
+        ]
       },
       {
         "id": "transacoes",
@@ -1953,7 +1963,10 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Ler disponibilidade e atualizar depois sem proteção pode aceitar duas operações.",
         "transfer": "Registre reserva e empréstimo no mesmo contrato.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-transacoes",
+          "py-biblioteca-dados"
+        ]
       },
       {
         "id": "importacao",
@@ -1982,7 +1995,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Converter int pode lançar antes de informar a linha; mantenha contexto.",
         "transfer": "Aceite um segundo formato via adaptador.",
-        "lessonIds": []
+        "lessonIds": [
+          "py-biblioteca-dados"
+        ]
       },
       {
         "id": "testes",
@@ -2006,12 +2021,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Rode testes em ordem diferente.",
-          "Introduza falha entre duas escritas."
+          "Execute python -m unittest discover -v com um banco temporário novo por teste. Confira separadamente stdout, stderr e returncode ao chamar o CLI com subprocess, inclusive comando inválido e catálogo vazio.",
+          "Injete erro depois da atualização e antes do empréstimo. Após rollback, abra outra conexão para conferir estoque e ausência de registro; repita em arquivo temporário, pois duas conexões :memory: comuns não compartilham o mesmo banco."
         ],
         "diagnosis": "Testar somente a função pode não detectar uma transação incompleta.",
         "transfer": "Teste uma migração em uma cópia antiga.",
-        "lessonIds": []
+        "lessonIds": [
+          "py-engenharia"
+        ]
       },
       {
         "id": "entrega",
@@ -2035,12 +2052,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Importe 100 livros e empreste/devolva vários.",
-          "Compare totais antes e depois de restaurar."
+          "Pelo README, crie um banco novo, importe 100 livros, empreste, devolva e registre totais e chaves de empréstimos; nenhuma execução depende de rede.",
+          "Faça backup, restaure em outro arquivo e reabra pelo CLI. Compare livros, empréstimos e relações, depois empreste mais um exemplar na cópia. Existir um arquivo de backup não comprova restauração."
         ],
         "diagnosis": "Um backup sem teste de restore ainda não demonstra recuperação.",
         "transfer": "Adapte as regras a equipamentos emprestados.",
-        "lessonIds": []
+        "lessonIds": [
+          "py-engenharia"
+        ]
       }
     ],
     "references": [
@@ -2101,7 +2120,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Uma propriedade pública gravável pode bypassar invariantes.",
         "transfer": "Acrescente unidade de medida.",
-        "lessonIds": []
+        "lessonIds": [
+          "cs-objetos-contratos"
+        ]
       },
       {
         "id": "comandos",
@@ -2130,7 +2151,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "int.Parse sem tratamento pode converter falha de entrada em encerramento.",
         "transfer": "Inclua comando em lote sem duplicar regras.",
-        "lessonIds": []
+        "lessonIds": [
+          "cs-metodos-parametros"
+        ]
       },
       {
         "id": "movimentos",
@@ -2159,7 +2182,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Gerar id dentro de cada tentativa elimina a identidade da intenção.",
         "transfer": "Acrescente reserva/cancelamento com histórico.",
-        "lessonIds": []
+        "lessonIds": [
+          "cs-colecoes-linq"
+        ]
       },
       {
         "id": "arquivos",
@@ -2188,7 +2213,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Capturar e ignorar IOException gera falsa confirmação.",
         "transfer": "Adicione adaptador em memória para testes.",
-        "lessonIds": []
+        "lessonIds": [
+          "cs-assincrono-recursos"
+        ]
       },
       {
         "id": "assincrono",
@@ -2217,7 +2244,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Cancelar UI não desfaz automaticamente uma escrita concluída.",
         "transfer": "Inclua importação em lote cancelável.",
-        "lessonIds": []
+        "lessonIds": [
+          "cs-assincrono-recursos"
+        ]
       },
       {
         "id": "testes",
@@ -2241,12 +2270,15 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Interrompa um foreach no primeiro item.",
-          "Injete falha de persistência."
+          "Faça saída de 3 a partir de 10 com chave K: saldo 7 e um movimento. Repita K/3 e depois K/4; o primeiro não duplica, o segundo é conflito, ambos conservam saldo e histórico.",
+          "Use um repositório que lança antes da confirmação e confira o saldo anterior. Num iterador com recurso rastreado, interrompa após o primeiro item e confira Dispose. Esses dublês não comprovam falha real de disco."
         ],
         "diagnosis": "Uma contagem correta sem histórico consistente não prova atomicidade.",
         "transfer": "Teste nova regra de estoque mínimo.",
-        "lessonIds": []
+        "lessonIds": [
+          "cs-iteradores-descarte",
+          "cs-engenharia"
+        ]
       },
       {
         "id": "entrega",
@@ -2275,7 +2307,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Um backup apenas exportado precisa de restauração para ser demonstrado.",
         "transfer": "Adapte o aplicativo a almoxarifado com lotes.",
-        "lessonIds": []
+        "lessonIds": [
+          "cs-engenharia"
+        ]
       }
     ],
     "references": [
@@ -2335,7 +2369,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Usar zero para ausência confunde com caminho válido de custo zero.",
         "transfer": "Inclua modo não direcionado explicitamente.",
-        "lessonIds": []
+        "lessonIds": [
+          "cpp-stl-algoritmos"
+        ]
       },
       {
         "id": "parser",
@@ -2364,7 +2400,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Continuar silenciosamente após parse parcial cria rede diferente da pedida.",
         "transfer": "Aceite comentários documentados.",
-        "lessonIds": []
+        "lessonIds": [
+          "cpp-texto-conversao"
+        ]
       },
       {
         "id": "bfs",
@@ -2393,7 +2431,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Marcar somente ao retirar permite enfileirar duplicatas.",
         "transfer": "Inclua múltiplas origens com contrato próprio.",
-        "lessonIds": []
+        "lessonIds": [
+          "cpp-stl-algoritmos"
+        ]
       },
       {
         "id": "dijkstra",
@@ -2422,7 +2462,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Uma fila FIFO não ordena soma de pesos. Uma entrada antiga de prioridade não deve refazer trabalho indiscriminado.",
         "transfer": "Adicione comparação de BFS e Dijkstra no relatório.",
-        "lessonIds": []
+        "lessonIds": [
+          "cpp-stl-algoritmos"
+        ]
       },
       {
         "id": "recursos",
@@ -2451,7 +2493,10 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Guardar referência a elemento de vector e depois aumentar capacidade pode invalidá-la.",
         "transfer": "Troque representação mantendo o contrato público.",
-        "lessonIds": []
+        "lessonIds": [
+          "cpp-raii-posse-unica",
+          "cpp-iteradores-invalidacao"
+        ]
       },
       {
         "id": "testes",
@@ -2475,12 +2520,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Execute 100 vértices/500 arestas e uma cadeia longa.",
-          "Compare operações sem prometer tempo universal."
+          "Teste A-B=10, A-C=1, C-B=1: para A-B, BFS escolhe uma aresta e Dijkstra custo 2. Acrescente ciclo, vértice isolado e A-A; compare custo e arestas do caminho, sem impor um desempate não contratado.",
+          "Crie uma aresta perto do máximo do tipo de custo e outra que excederia o limite na soma. A política deve recusar/reportar antes de somar; não execute overflow assinado para tentar detectá-lo depois. Compile em C++20 e separe essa prova de benchmarks."
         ],
         "diagnosis": "Tempo de uma máquina não prova complexidade; relate também operações e pré-condições.",
         "transfer": "Teste uma representação alternativa.",
-        "lessonIds": []
+        "lessonIds": [
+          "cpp-concorrencia-engenharia"
+        ]
       },
       {
         "id": "entrega",
@@ -2510,7 +2557,10 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "A demonstração precisa separar erro de arquivo e ausência matemática de caminho.",
         "transfer": "Adapte para dependências de tarefas e detecção de ciclos.",
-        "lessonIds": []
+        "lessonIds": [
+          "cpp-fundamentos",
+          "cpp-concorrencia-engenharia"
+        ]
       }
     ],
     "references": [
@@ -2570,7 +2620,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Um comentário de regra não equivale a constraint; indique o que é realmente imposto.",
         "transfer": "Inclua categoria de recurso sem repetir dados.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-modelagem-completa"
+        ]
       },
       {
         "id": "consultas",
@@ -2599,7 +2651,10 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Somar depois de duas junções 1:N pode duplicar cada reserva.",
         "transfer": "Inclua relatório mensal com faixa de datas.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-joins-cardinalidade",
+          "sql-null-logica"
+        ]
       },
       {
         "id": "transacao",
@@ -2628,7 +2683,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Um SELECT seguido de INSERT não protege a regra contra concorrência sozinho.",
         "transfer": "Inclua cancelamento que restitui disponibilidade.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-transacoes"
+        ]
       },
       {
         "id": "concorrencia",
@@ -2652,12 +2709,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Inicie duas sessões e altere o mesmo recurso.",
-          "Compare Read Committed e Repeatable Read."
+          "Use PostgreSQL com duas sessões reais e uma vaga. A e B tentam reservar; registre BEGIN, bloqueio, COMMIT/ROLLBACK e ocupação final, que não ultrapassa a capacidade. Um cronograma desenhado continua sendo previsão.",
+          "Ao receber SQLSTATE 40001, recomece a transação inteira com a mesma intenção, dentro de uma política limitada. Compare reservas por chave antes/depois da repetição; SQLite não comprova essa semântica de PostgreSQL."
         ],
         "diagnosis": "Repetir só a instrução falha pode manter snapshot e decisão antigos.",
         "transfer": "Teste Serializable e explique retry idempotente.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-isolamento-sessoes"
+        ]
       },
       {
         "id": "indices",
@@ -2686,7 +2745,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "Índice existente não garante uso; a decisão depende do plano e dos dados.",
         "transfer": "Revise um índice redundante com evidência.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-indices-planos"
+        ]
       },
       {
         "id": "migracao",
@@ -2710,12 +2771,14 @@ export const capstoneProjects:CapstoneProject[] = [
           }
         ],
         "tests": [
-          "Restaure em novo banco e compare relatórios.",
-          "Execute migração em fixture antiga."
+          "Em uma cópia, inclua uma linha antiga incompatível com a nova restrição. A migração deve diagnosticar ou transformar conforme política documentada; falhar não autoriza apagar o original.",
+          "Restaure em outro banco e compare contagens, somas e referências órfãs. Execute uma reserva e um cancelamento na cópia restaurada, além de conferir que o dump existe."
         ],
         "diagnosis": "Um arquivo de dump sem restauração ainda não demonstra recuperação.",
         "transfer": "Inclua coluna nova com backfill explícito.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-esquema-avancado"
+        ]
       },
       {
         "id": "entrega",
@@ -2744,7 +2807,9 @@ export const capstoneProjects:CapstoneProject[] = [
         ],
         "diagnosis": "O banco não conhece automaticamente a identidade de uma tentativa externa; documente idempotência da aplicação.",
         "transfer": "Adapte para reservas por intervalo de tempo.",
-        "lessonIds": []
+        "lessonIds": [
+          "sql-isolamento-sessoes"
+        ]
       }
     ],
     "references": [

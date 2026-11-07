@@ -92,6 +92,20 @@ export const cenariosSql:Record<string,CenarioSql[]>={
 function mesmoValor(valor:CelulaSql,esperado:number|string|null){
  return valor===esperado||(typeof valor==='bigint'&&typeof esperado==='number'&&Number.isSafeInteger(esperado)&&valor===BigInt(esperado));
 }
+function declaraOrdemExterna(codigo:string){
+ const tokens=codigo.match(/--[^\r\n]*|\/\*[\s\S]*?\*\/|'(?:''|[^'])*'|"(?:""|[^"])*"|`(?:``|[^`])*`|\[[^\]]*\]|[\p{L}_][\p{L}\p{N}_$]*|[^\s]/gu)??[];
+ let profundidade=0,anterior='';
+ for(const token of tokens){
+  if(token.startsWith('--')||token.startsWith('/*'))continue;
+  if(token==='('){profundidade++;anterior='';continue;}
+  if(token===')'){profundidade--;anterior='';continue;}
+  if(profundidade!==0)continue;
+  const atual=token.toUpperCase();
+  if(anterior==='ORDER'&&atual==='BY')return true;
+  anterior=atual;
+ }
+ return false;
+}
 export async function conferirConsultaSql(id:string,codigo:string,consultar:(codigo:string,preparacao:string)=>Promise<ResultadoSql>,sinal?:AbortSignal):Promise<ConferenciaSql>{
  if(!Object.hasOwn(cenariosSql,id))throw new Error('Atividade SQL indisponível.');
  const verificacoes:{label:string;passed:boolean}[]=[];
@@ -105,6 +119,10 @@ export async function conferirConsultaSql(id:string,codigo:string,consultar:(cod
   const aprovado=cabecalhos&&tabela.linhas.length===cenario.linhas.length&&tabela.linhas.every((linha,indice)=>linha.length===cenario.colunas.length&&linha.every((valor,coluna)=>mesmoValor(valor,cenario.linhas[indice][coluna])));
   verificacoes.push({label:cenario.rotulo,passed:aprovado});
   if(!aprovado)return {aprovado:false,verificacoes,mensagem:!cabecalhos?'Retorne uma única tabela, com os cabeçalhos e a ordem de colunas pedidos. Consultas extras também criam resultados.':cenario.falha};
+ }
+ if(id==='sql-janelas-acumular-movimentos'&&!declaraOrdemExterna(codigo)){
+  verificacoes.push({label:'A consulta declara a ordem externa do relatório.',passed:false});
+  return {aprovado:false,verificacoes,mensagem:'Os valores passaram nas bases, mas falta garantir a ordem externa do relatório. A ordem dentro da janela ou de uma subconsulta não garante a apresentação final.'};
  }
  return {aprovado:verificacoes.length>0,verificacoes,mensagem:'A consulta passou nas bases e bordas deste exercício em SQLite. Isso comprova os comportamentos testados; não valida recursos específicos de PostgreSQL nem todos os dados possíveis.'};
 }

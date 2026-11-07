@@ -1,3 +1,4 @@
+import {lessons} from '../../src/content/curriculum';
 import {describe,it,expect} from 'vitest';
 import {learningPaths,capstoneProjects} from '../../src/content/project-paths';
 import {
@@ -172,4 +173,9 @@ describe('projeto retomável e revisão manual',()=>{
   expect(exported['README-CODELAB-2.md']).toContain('Testes/diagnóstico');
   expect(exported['index.html']).toBe(workspace.files['index.html']);
  });
+});
+
+it('os marcos conectam aulas reais sem trocar revisão, critérios ou evidências existentes',()=>{
+ const ids=new Set(lessons.map(aula=>aula.id));
+ for(const projeto of capstoneProjects){expect(projeto.revision).toBe(1);for(const marco of projeto.milestones){expect(marco.lessonIds.length).toBeGreaterThan(0);for(const id of marco.lessonIds)expect(ids.has(id),id).toBe(true);}}
 });

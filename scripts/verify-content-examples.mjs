@@ -4,6 +4,7 @@ import {join,resolve,dirname,basename} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {carregarPraticas} from './carregar-praticas.mjs';
+import {verificarProjetoPython} from '../tests/fixtures/projetos-python.mjs';
 import {verificarPercursosGit} from '../tests/fixtures/git-percursos.mjs';
 import {verificarBancadaGit} from '../tests/fixtures/git-bancada.mjs';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
@@ -39,7 +40,7 @@ import {verificarProjetoApi} from '../tests/fixtures/projeto-api.mjs';
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
 const indiceFamilia=process.argv.indexOf('--familia');
 const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
-const grupos=['git-percursos','sql-avancado','cpp-concorrencia','csharp-avancado','typescript-genericos','projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+const grupos=['projetos-python','git-percursos','sql-avancado','cpp-concorrencia','csharp-avancado','typescript-genericos','projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
 if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
 const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
@@ -182,6 +183,7 @@ try{
  }
 
 
+ if(selecionar('projetos-python'))await verificarProjetoPython(root);
  if(selecionar('git-bancada'))await verificarBancadaGit(root);
  console.log(cenariosProjetoApi+' verificações .NET 10/SQLite do projeto de API, incluindo reabertura em outro processo.');
  console.log(count+' exemplos e soluções externos compilados/executados.');
