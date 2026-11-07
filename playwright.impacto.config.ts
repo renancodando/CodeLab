@@ -12,7 +12,7 @@ const contratos=[
  'escopos mantém axe e os programas completos de 220 a 4000 px'
 ];
 const fase=process.env.CODELAB_FASE??plano.fase;
-const smoke=fase==='pos-merge'?[contratos[0],contratos[3]]:fase==='publico'?[contratos[2],contratos[4],contratos[5]]:[contratos[1]];
+const smoke=fase==='fechamento'?contratos:fase==='pos-merge'?[contratos[0],contratos[3]]:fase==='publico'?[contratos[2],contratos[4],contratos[5]]:[contratos[1]];
 const usarSmoke=process.env.CODELAB_SMOKE==='1'||plano.smoke;
 const arquivosSmoke=['local-platform.spec.ts','learning.spec.ts','learning-hub.spec.ts','aspnet-escopos.spec.ts'];
 const nomes=[...plano.navegador.map((p:string)=>p.split('/').at(-1)),...(usarSmoke?arquivosSmoke:[])];
