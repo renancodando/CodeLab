@@ -814,3 +814,5 @@ L06 prepara as três aulas C# restantes com previsão, diagnóstico e alteraçã
 
 
 L07 cobre prática de captura/junção, leitura-modificação-escrita e unidades de tradução com C++20 explícito. Referências compiladas/executadas incluem limites de int sem overflow e falhas de ligação esperadas. Não comprova CMake, sanitizers, desempenho ou conclusão de C++; consultar o mapa e os critérios da edição.
+
+Preparação L10: as etapas existentes de redes/Git/arquitetura têm referências completas para status/representação, resposta obsoleta, identidade de intenção, snapshots, conflito, revert/reflog e fronteira de persistência. Gabaritos Git foram executados em repositórios novos e as referências JavaScript foram conferidas no QuickJS; HTTP recebeu ensaio real em loopback. São evidências limitadas aos casos testados, sem transformar modelos em serviços completos. CI/revisão/publicação do lote são acompanhados em continuidade.md; não se acrescentam aulas ou etapas.

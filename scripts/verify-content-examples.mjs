@@ -4,6 +4,7 @@ import {join,resolve,dirname,basename} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import ts from 'typescript';
 import {carregarPraticas} from './carregar-praticas.mjs';
+import {verificarPercursosGit} from '../tests/fixtures/git-percursos.mjs';
 import {verificarBancadaGit} from '../tests/fixtures/git-bancada.mjs';
 import {montarCasosCancelamento} from '../tests/fixtures/csharp-cancelamento.mjs';
 import {montarCasosLinq,verificarLinqCsharp} from '../tests/fixtures/csharp-linq.mjs';
@@ -38,7 +39,7 @@ import {verificarProjetoApi} from '../tests/fixtures/projeto-api.mjs';
 // Código recebido do usuário continua restrito ao executor isolado do aplicativo.
 const indiceFamilia=process.argv.indexOf('--familia');
 const familias=new Set(indiceFamilia<0?[]:process.argv.slice(indiceFamilia+1));
-const grupos=['sql-avancado','cpp-concorrencia','csharp-avancado','typescript-genericos','projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
+const grupos=['git-percursos','sql-avancado','cpp-concorrencia','csharp-avancado','typescript-genericos','projeto-api','aspnet-protecao','aspnet-fluxo','aspnet-dto','python','cpp','csharp','sql','typescript','typescript-modulos','cpp-conceitos','cpp-posse','cpp-texto','sql-null','csharp-iteradores','csharp-linq','dotnet-fundamentos','csharp-controle','csharp-objetos','csharp-colecoes','csharp-excecoes','aspnet-rotas','aspnet-escopos','sql-pratica','python-engenharia','python-concorrencia','python-numeros','python-csv','python-descritores','csharp-cancelamento','project-archive','git-bancada'];
 if(indiceFamilia>=0&&(!familias.size||[...familias].some(f=>!grupos.includes(f))))throw new Error('Informe famílias conhecidas de exemplos: '+grupos.join(', '));
 const selecionar=nome=>indiceFamilia<0||familias.has(nome);
 const root=await mkdtemp(join(tmpdir(),'codelab-content-'));
@@ -98,6 +99,7 @@ try{
  const compileContent=source=>ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
  const asUrl=source=>'data:text/javascript;base64,'+Buffer.from(source).toString('base64');
  const {practiceActivities,getPracticeSolution}=await carregarPraticas();
+ if(selecionar('git-percursos'))console.log((await verificarPercursosGit(root))+' roteiros completos Git conferidos em repositórios descartáveis.');
  if(selecionar('sql-avancado'))console.log((await verificarSqlAvancado(root,practiceActivities,getPracticeSolution))+' cenários SQL avançados conferidos em PostgreSQL.');
  if(selecionar('cpp-concorrencia'))console.log((await verificarConcorrenciaCpp(root,practiceActivities,getPracticeSolution))+' cenários C++20 de concorrência e ligação conferidos.');
  if(selecionar('csharp-avancado'))console.log((await verificarCsharpAvancado(root,practiceActivities,getPracticeSolution))+' cenários C# 14/.NET 10 de contratos avançados conferidos.');

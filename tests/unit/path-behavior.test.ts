@@ -36,7 +36,7 @@ describe('comportamento dos exemplos completos dos percursos',()=>{
   await expect(load(async()=>{throw new Error('sem rede');})).rejects.toThrow('sem rede');
  });
  it('resposta antiga não substitui a busca mais recente',async()=>{
-  const shown:string[]=[];const search=sample('redes','cancelamento','pesquisar',{mostrar:(value:string)=>shown.push(value)}) as (term:string,load:(term:string)=>Promise<string>)=>Promise<void>;
+  const shown:string[]=[];const search=sample('redes','cancelamento','criarPesquisa(mostrar,()=>{})',{mostrar:(value:string)=>shown.push(value)}) as (term:string,load:(term:string)=>Promise<string>)=>Promise<void>;
   const pending:Record<string,(value:string)=>void>={};
   const load=(term:string)=>new Promise<string>(resolve=>{pending[term]=resolve;});
   const a=search('A',load),b=search('B',load);pending.B('resultado B');await b;pending.A('resultado A');await a;expect(shown).toEqual(['resultado B']);
