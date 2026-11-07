@@ -167,3 +167,8 @@ it('percursos e projetos preservam a conferência ZIP sem compiladores alheios',
   const plano=selecionarImpacto([arquivo],[],testes);expect(plano.unidades).toContain(nativo);expect(plano.familias).toEqual(['project-archive']);expect(plano.dotnet).toBe(arquivo.startsWith('src/learning/'));expect(plano.api).toBe(arquivo.startsWith('src/learning/'));expect(plano.postgres).toBe(false);
  }
 });
+
+it('a revisão do projeto Python usa só suas referências e dispensa outros compiladores',()=>{
+ const plano=selecionarImpacto(['tests/fixtures/projetos-python.mjs'],[],{unidades:['tests/unit/projetos-python.test.ts'],navegador:[],textos:{}});
+ expect(plano.familias).toEqual(['projetos-python']);expect(plano.unidades).toEqual(['tests/unit/projetos-python.test.ts']);expect(plano.dotnet).toBe(false);expect(plano.postgres).toBe(false);
+});
