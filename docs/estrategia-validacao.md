@@ -5,7 +5,7 @@ A orientação humana de 26/10/2026 substitui a exigência histórica de repetir
 | Momento | Verificação |
 | --- | --- |
 | Desenvolvimento local | Testes específicos da alteração e suas dependências; repetir primeiro só o cenário que falhou. |
-| PR | Plano por arquivos/IDs alterados, catálogo/tipos quando pertinentes, unitários selecionados, referências das famílias afetadas e navegador das áreas alteradas. |
+| PR | Plano por arquivos/IDs alterados, catálogo/tipos quando pertinentes, unitários selecionados, referências das famílias afetadas, navegador das áreas alteradas e contrato compartilhado de cancelamento/memória. |
 | Após merge | Build e dois contratos de artefato/isolamento no Chromium. Sem repetir unitários, exemplos de todas as linguagens ou a bateria da PR. |
 | Produção | Conferir SHA/projeto/alias, backup, offline e axe/responsividade: três fluxos diferentes dos dois anteriores. Não repetir a matriz local e da PR. |
 | Fechamento da edição | Workflow manual `Validação final da edição`: suíte completa preservada, exemplos de todas as linguagens, PostgreSQL, API e oito parcelas de navegador. Edge confere os contratos críticos quando solicitado. |
@@ -29,7 +29,7 @@ Alterações no catálogo de habilidades, planejamento adaptativo e árvore usam
 
 ## Cobertura que permanece
 
-O conjunto compartilhado reutiliza seis cenários existentes: WebAssembly/CSP, cancelamento e recuperação do executor, backup/importação de progresso, isolamento da prévia HTML, estudo offline e axe com conteúdo visível em 220/4000 px. O pós-merge usa os dois de artefato/isolamento; `CODELAB_FASE=publico` seleciona backup, offline e axe/responsividade. A suíte completa mantém os outros cenários de responsividade, acessibilidade, armazenamento, API, clima, laboratórios e aulas. Nenhuma asserção foi retirada para obter verde.
+Os seis cenários compartilhados permanecem na suíte e são distribuídos entre fases: PR confere cancelamento/limite de memória/recuperação; pós-merge confere WebAssembly/CSP e isolamento HTML; produção confere backup/importação, offline e axe/programas visíveis em 220/4000 px. A descoberta real do Playwright confirmou grupos 1/2/3 sem sobreposição. As áreas afetadas mantêm seus cenários próprios, e a validação final preserva a suíte completa. A preparação do smoke de axe não repete a resolução por teclado já verificada no cenário específico; mantém todas as verificações de axe, conteúdo e layout. Nenhum timeout ou retry foi aumentado.
 
 Documentação Markdown que não participa do produto dispensa workflows de aplicação. JSON usado na geração do catálogo continua validado. Runs substituídos por commits novos são cancelados pela concorrência da branch/PR. Um cancelamento não vira aprovação.
 
@@ -66,3 +66,6 @@ A família git-percursos executa somente os três gabaritos Bash publicados no p
 
 
 A família projetos-python executa apenas os arquivos iniciais da biblioteca: unittest, mutante and/or, importação silenciosa, CLI inicial e CSV. Usa pasta temporária própria e não executa código recebido do estudante. Não exige .NET/PostgreSQL nem equivale a executar o projeto completo. O L11 repete primeiro os cenários que falharam; catálogo/tipos e contratos gerais ficam no CI do lote.
+
+
+O contrato de âncoras fica em ancoras-praticas.test.ts e confere posições exatas, inclusive aplicações após exemplo/erro e antes da solução. Mudanças em src/content/practice.ts ou nos capítulos profundos o selecionam diretamente, sem exigir a suíte inteira para perceber uma alteração de âncora. A primeira rodada ampla do L12 identificou a premissa histórica de teoria apenas; a correção foi repetida primeiro em dois casos específicos.
