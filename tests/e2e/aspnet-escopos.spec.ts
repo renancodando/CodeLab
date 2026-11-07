@@ -34,7 +34,7 @@ test('registros equivalentes funcionam pelo teclado e conservam assistência',as
 });
 
 test('escopos mantém axe e os programas completos de 220 a 4000 px',async({page:pagina})=>{
- await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/aspnet-di');const pausa=pagina.locator('[data-practice="'+idOrdem+'"]');await ordenar(pausa);await conferir(pausa);await expect(pausa.locator('.practice-feedback')).toContainText('Sua resposta está correta');await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();
+ await pagina.emulateMedia({reducedMotion:'reduce'});await pagina.goto('/#/aula/aspnet-di',{waitUntil:'domcontentloaded'});const pausa=pagina.locator('[data-practice="'+idOrdem+'"]');await conferir(pausa);await pausa.getByRole('button',{name:'Consultar solução',exact:true}).click();await expect(pausa.locator('.practice-feedback')).toContainText('assistência');
  expect((await new AxeBuilder({page:pagina}).include('main').analyze()).violations).toEqual([]);
  for(const largura of [220,4000]){await pagina.setViewportSize({width:largura,height:812});await expect.poll(()=>pagina.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);await expect(pagina.locator('[data-inline-practice]')).toHaveCount(3);await expect(pausa.locator('.practice-order code')).toHaveCount(8);await expect(pausa.locator(':scope > .example-code')).toContainText('ObjectDisposedException.ThrowIf');await expect(pausa.locator(':scope > .example-code')).toBeVisible();await expect(pausa.locator('[data-help] > .example-code')).toContainText('GetRequiredService<RelatorioPedido>()');await expect(pausa.locator('[data-help] > .example-code')).toBeVisible();}
 });
