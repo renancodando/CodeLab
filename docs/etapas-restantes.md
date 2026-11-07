@@ -24,12 +24,14 @@ A orientação humana mais recente fixa uma meta de aproximadamente **12 PRs a p
 | L08 | As três aulas avançadas SQL/PostgreSQL, com verificações próprias de cada mecanismo. | Entregue na [PR #99](https://github.com/renancodando/CodeLab/pull/99); main `dc186bd`, CI/revisão/deployment e contratos públicos conferidos; instabilidade de axe registrada para L12. |
 | L09 | Consolidar algoritmos, estruturas de dados e testes com transferência e defeitos detectáveis. | Entregue na [PR #100](https://github.com/renancodando/CodeLab/pull/100); main `5703fd7`, CI/revisão/deployment e contratos públicos conferidos. |
 | L10 | Consolidar redes, Git e arquitetura com experimentos e diagnóstico. | Entregue na [PR #101](https://github.com/renancodando/CodeLab/pull/101); main `1271fb9`, CI/revisão/deployment e contratos públicos conferidos; instabilidade axe registrada para L12. |
-| L11 | Revisar os oito projetos, corretores e aprofundamentos residuais, incluindo aplicação Python. | Preparado na branch `conteudo/projetos-corretores-20261107`: oito projetos vinculados às aulas, prática Python e corretores TS/SQL; gates próprios pendentes. |
-| L12 | Fechar a edição: resolver inconsistências, sincronizar documentação, validar amplamente e confirmar produção. | Planejado. |
+| L11 | Revisar os oito projetos, corretores e aprofundamentos residuais, incluindo aplicação Python. | Entregue na [PR #102](https://github.com/renancodando/CodeLab/pull/102); main `1d91b87`, revisão/CI e três públicos na primeira rodada; recibo remoto conferido. |
+| L12 | Fechar a edição: resolver inconsistências, sincronizar documentação, validar amplamente e confirmar produção. | Fechamento conforme [contrato e limites](fechamento-edicao.md); a entrega é comprovada pelos gates e pelo recibo remoto do SHA publicado. |
 
 Os oito primeiros lotes percorrem as lacunas geradas sem criar aulas por quantidade. Os demais consolidam a qualidade já exigida; não representam autorização para funcionalidades avulsas. Cada lote pode ter commits por aula e só é considerado entregue após sua revisão e validação proporcionais. Projetos abertos mantêm rubrica manual e atividades conceituais não comprovam execução.
 
-## Mapa de trabalho
+## Mapa de temas e limites da edição
+
+O mapa reúne direções pedagógicas e evidências, sem acrescentar lotes ao agrupamento L01–L12 ou prometer cobertura exaustiva de cada linguagem. O [contrato de fechamento](fechamento-edicao.md) distingue prática, execução, revisão manual e limites. As publicações são contadas por PRs e recibos reais, não pela presença de um tema nesta tabela.
 
 | # | Área da edição | Aprofundamento nas aulas existentes | Evidência para encerrar uma entrega |
 | --- | --- | --- | --- |

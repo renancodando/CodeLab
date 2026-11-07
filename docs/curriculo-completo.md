@@ -1,5 +1,10 @@
 # Currículo do zero à especialização
 
+O [contrato e os limites da edição curricular](fechamento-edicao.md) organizam o fechamento L01–L12. Contagens vêm das métricas geradas; publicação e verificações do SHA real são comprovadas pelos recibos remotos. As seções datadas abaixo preservam o histórico, sem impor repetição integral por alteração ou prometer currículo exaustivo.
+
+## Mapa e histórico das entregas
+
+
 ## Assincronismo e genéricos em preparação
 
 O lote L05 pratica as cinco aulas existentes com previsão, diagnóstico, reconstrução e duas produções JavaScript executadas no isolamento. Os corretores verificam validação numérica, fila limitada, rejeições, ordem e independência; tarefas controladas não comprovam HTTP ou threads. As pausas de tipos são conceituais, com referências strict reais e execução dos programas emitidos. Projetos e produção TypeScript de código completo continuam usando a bancada existente e a revisão dos exercícios abertos. Escopo, evidências e limitações estão em [continuidade](continuidade.md); as [métricas geradas](metricas-catalogo.md) evitam contagens manuais divergentes.
