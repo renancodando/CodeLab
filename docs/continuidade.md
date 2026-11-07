@@ -1396,3 +1396,10 @@ O controle assíncrono e seu mutante passaram no recorte QuickJS após a correç
 ## Conferência ampla do fechamento: âncoras — 07/11/2026
 
 A primeira execução manual, run 42373859106 no head b3e66ae, aprovou a auditoria de dependências e encontrou uma premissa antiga no teste geral de âncoras: todas as pausas aprofundadas eram comparadas com um bloco de teoria. Foram 2.008 contratos aprovados e um reprovado; exemplos, build e navegadores seguintes não executaram e não são aprovados por essa rodada. Onze pausas dos lotes L04–L08 ficam intencionalmente após código ou erro, antes da solução. O produto e suas posições não foram alterados. O contrato saiu do arquivo de laços para um arquivo próprio, com as onze âncoras explícitas, todas as demais âncoras antigas conservadas e proteção adicional de posição anterior à solução. O seletor inclui esse contrato quando pausas ou capítulos profundos mudam. Dois casos afetados passaram localmente, sem repetir os demais. A nova revisão e validação ampla devem usar o novo head; a revisão/CI proporcional do b3e66ae não aprova essa alteração.
+
+
+## Medição responsiva sincronizada — 07/11/2026
+
+O caso HTML reproduziu localmente a mesma largura656 no viewport220 imediatamente após setViewportSize. Após dois requestAnimationFrame, a largura passou a220, sem excedentes; em4000 permaneceu4000. O teste conserva limite1px, ambas as larguras, controles, persistência e assistência; apenas aguarda a aplicação do viewport, com diagnóstico antes/depois anexado. Caso específico passou7,4s, rodada9s. Não foi necessário mudar CSS, mundo ou produto. A fonte src permanece no mesmo objeto Git10d4e6f1f23d41280610db327a6feead1f1b3010 da produção L11.
+
+A rodada ampla42374560066 validou2010unitários, referências e sete parcelas Chromium mais Edge; parcela4registrou45passes/1falha nas duas tentativas, preservadas. Pelo critério proporcional, a correção somente do preparo do teste exige o arquivo afetado no CI e revisão do novo head, sem repetir os compiladores e parcelas intactos. Não chamar a rodada ampla anterior de integralmente aprovada. A publicação ainda depende de integração/deployment/públicos e recibo real.
